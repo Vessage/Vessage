@@ -81,6 +81,13 @@
 		E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC971C872DFC0071104E /* VessageConfig.swift */; };
 		E708AC9A1C872F030071104E /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC991C872F030071104E /* UserSetting.swift */; };
 		E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E708AC9B1C873A000071104E /* BahamutConfig.json */; };
+		E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC9D1C87503F0071104E /* EntryNavigationController.swift */; };
+		E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AC9F1C8752010071104E /* AccountSign.storyboard */; };
+		E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACA51C87528D0071104E /* SignUpViewController.swift */; };
+		E708ACA81C8752980071104E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACA71C8752980071104E /* SignInViewController.swift */; };
+		E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAA1C87536D0071104E /* LaunchScreen.swift */; };
+		E708ACAD1C8754E20071104E /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708ACAC1C8754E20071104E /* User.storyboard */; };
+		E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,6 +177,13 @@
 		E708AC971C872DFC0071104E /* VessageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageConfig.swift; sourceTree = "<group>"; };
 		E708AC991C872F030071104E /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		E708AC9B1C873A000071104E /* BahamutConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BahamutConfig.json; sourceTree = "<group>"; };
+		E708AC9D1C87503F0071104E /* EntryNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryNavigationController.swift; sourceTree = "<group>"; };
+		E708AC9F1C8752010071104E /* AccountSign.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccountSign.storyboard; sourceTree = "<group>"; };
+		E708ACA51C87528D0071104E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		E708ACA71C8752980071104E /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		E708ACAA1C87536D0071104E /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
+		E708ACAC1C8754E20071104E /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
+		E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatImageViewController.swift; sourceTree = "<group>"; };
 		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,24 +237,10 @@
 		E708AB3B1C86CAA50071104E /* Vessage */ = {
 			isa = PBXGroup;
 			children = (
-				E708AC851C86F0490071104E /* ProgressTaskWatcher */,
+				E708ACA91C8752BF0071104E /* ArchBase */,
 				E708AC0C1C86DEC40071104E /* Assets */,
-				E708ABF41C86D7B70071104E /* BahamutUIKit */,
-				E708ABF31C86D6F20071104E /* RestfulAPI */,
-				E708ABD71C86D37D0071104E /* BahamutRFKit */,
-				E708AB751C86CF8A0071104E /* Persistents */,
-				E708AB5B1C86CE1D0071104E /* BahamutCommon */,
-				E708AB501C86CB6D0071104E /* UIBarButtomItem-Badge */,
-				E708AC631C86EC070071104E /* Service */,
-				E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */,
-				E708AC991C872F030071104E /* UserSetting.swift */,
-				E708AC971C872DFC0071104E /* VessageConfig.swift */,
-				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
-				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
-				E708AB401C86CAA50071104E /* Main.storyboard */,
-				E708AB451C86CAA50071104E /* LaunchScreen.storyboard */,
-				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
-				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
+				E708ACA11C8752090071104E /* UI */,
+				E708ACA21C8752300071104E /* Source */,
 				E708AB4E1C86CB470071104E /* SupportFiles */,
 			);
 			path = Vessage;
@@ -498,6 +498,75 @@
 			path = ../../../bahamut/Bahamut/Bahamut/ProgressTaskWatcher;
 			sourceTree = "<group>";
 		};
+		E708ACA11C8752090071104E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
+				E708AB401C86CAA50071104E /* Main.storyboard */,
+				E708AB451C86CAA50071104E /* LaunchScreen.storyboard */,
+				E708AC9F1C8752010071104E /* AccountSign.storyboard */,
+				E708ACAC1C8754E20071104E /* User.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		E708ACA21C8752300071104E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				E708ACAE1C87550D0071104E /* User */,
+				E708ABF31C86D6F20071104E /* RestfulAPI */,
+				E708AC631C86EC070071104E /* Service */,
+				E708ACA41C87525A0071104E /* Account */,
+				E708ACA31C8752440071104E /* AppMain */,
+				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
+				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
+				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		E708ACA31C8752440071104E /* AppMain */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */,
+				E708AC991C872F030071104E /* UserSetting.swift */,
+				E708AC971C872DFC0071104E /* VessageConfig.swift */,
+				E708AC9D1C87503F0071104E /* EntryNavigationController.swift */,
+				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
+			);
+			name = AppMain;
+			sourceTree = "<group>";
+		};
+		E708ACA41C87525A0071104E /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				E708ACA51C87528D0071104E /* SignUpViewController.swift */,
+				E708ACA71C8752980071104E /* SignInViewController.swift */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		E708ACA91C8752BF0071104E /* ArchBase */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB751C86CF8A0071104E /* Persistents */,
+				E708ABD71C86D37D0071104E /* BahamutRFKit */,
+				E708AB5B1C86CE1D0071104E /* BahamutCommon */,
+				E708AB501C86CB6D0071104E /* UIBarButtomItem-Badge */,
+				E708ABF41C86D7B70071104E /* BahamutUIKit */,
+				E708AC851C86F0490071104E /* ProgressTaskWatcher */,
+			);
+			name = ArchBase;
+			sourceTree = "<group>";
+		};
+		E708ACAE1C87550D0071104E /* User */ = {
+			isa = PBXGroup;
+			children = (
+				E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -561,9 +630,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
+				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
+				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
@@ -630,6 +701,7 @@
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
+				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
 				E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */,
@@ -643,6 +715,7 @@
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
 				E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */,
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
+				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
@@ -651,6 +724,7 @@
 				E708ABA01C86CF8A0071104E /* MessageExtension.swift in Sources */,
 				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
+				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
@@ -660,6 +734,7 @@
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */,
+				E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
@@ -676,6 +751,7 @@
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
+				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E708ABA11C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift in Sources */,

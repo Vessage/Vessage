@@ -9,14 +9,70 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class VessageAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        configureBahamutRFKit()
+        configContryAndLang()
+        configureVessageConfig()
+        configureAliOSSManager()
+        initService()
         return true
+    }
+    
+    private func initService()
+    {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
+        }
+    }
+    
+    private func configureAliOSSManager()
+    {
+        AliOSSManager.sharedInstance.initManager(VessageConfig.bahamutConfig.AliOssAccessKey, aliOssSecretKey: VessageConfig.bahamutConfig.AliOssSecretKey)
+    }
+    
+    private func configContryAndLang()
+    {
+        let countryCode = NSLocale.currentLocale().objectForKey(NSLocaleCountryCode)
+        VessageSetting.contry = countryCode!.description
+        if(countryCode!.description == "CN")
+        {
+            VessageSetting.lang = "ch"
+        }else{
+            VessageSetting.lang = "en"
+        }
+    }
+    
+    private func configureBahamutRFKit()
+    {
+        BahamutRFKit.appkey = VessageConfig.appKey
+        BahamutRFKit.setAppVersion(VessageConfig.appVersion)
+    }
+    
+    private func configureVessageConfig()
+    {
+        loadBahamutConfig("BahamutConfig")
+    }
+    
+    private func loadBahamutConfig(configName:String)
+    {
+        if let bahamutConfigPath = NSBundle.mainBundle().pathForResource(configName, ofType: "json")
+        {
+            if let json = PersistentFileHelper.readTextFile(bahamutConfigPath)
+            {
+                let config = BahamutConfigObject(json: json)
+                VessageConfig.bahamutConfig = config
+            }else
+            {
+                fatalError("Load Config File Error!")
+            }
+        }else
+        {
+            fatalError("No Config File!")
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

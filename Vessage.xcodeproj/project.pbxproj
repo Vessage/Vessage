@@ -7,21 +7,170 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E708AB3D1C86CAA50071104E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* AppDelegate.swift */; };
-		E708AB3F1C86CAA50071104E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ViewController.swift */; };
+		09EEC9AD3D90A19D21086801 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17E4048CD0C3442FF6C01025 /* Pods.framework */; };
+		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
+		E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ConversationViewController.swift */; };
 		E708AB421C86CAA50071104E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AB401C86CAA50071104E /* Main.storyboard */; };
 		E708AB441C86CAA50071104E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E708AB431C86CAA50071104E /* Assets.xcassets */; };
 		E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AB451C86CAA50071104E /* LaunchScreen.storyboard */; };
+		E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = E708AB521C86CB6D0071104E /* UIBarButtonItem+Badge.m */; };
+		E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = E708AB541C86CB6D0071104E /* UIButton+Badge.m */; };
+		E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB591C86CD6D0071104E /* ConversationListController.swift */; };
+		E708AB6C1C86CE1D0071104E /* ArrayUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB5C1C86CE1D0071104E /* ArrayUtil.swift */; };
+		E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB5E1C86CE1D0071104E /* BahamutObject.swift */; };
+		E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */; };
+		E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E708AB631C86CE1D0071104E /* MF_Base64Additions.m */; };
+		E708AB701C86CE1D0071104E /* CommonValueCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB641C86CE1D0071104E /* CommonValueCast.swift */; };
+		E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB651C86CE1D0071104E /* DateHelper.swift */; };
+		E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB671C86CE1D0071104E /* IDUtil.swift */; };
+		E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB691C86CE1D0071104E /* RegexUtil.swift */; };
+		E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB6A1C86CE1D0071104E /* StringHelper.swift */; };
+		E708AB931C86CF8A0071104E /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB771C86CF8A0071104E /* FileType.swift */; };
+		E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB781C86CF8A0071104E /* PersistentBase.swift */; };
+		E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB791C86CF8A0071104E /* PersistentFileHelper.swift */; };
+		E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB7A1C86CF8A0071104E /* PersistentManager.swift */; };
+		E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB7E1C86CF8A0071104E /* CoreDataManager.swift */; };
+		E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E708AB821C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld */; };
+		E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB841C86CF8A0071104E /* FileMgrEntities.swift */; };
+		E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB851C86CF8A0071104E /* LocalFilesExtension.swift */; };
+		E708AB9D1C86CF8A0071104E /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E708AB871C86CF8A0071104E /* BahamutMessage.xcdatamodeld */; };
+		E708AB9E1C86CF8A0071104E /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB891C86CF8A0071104E /* MessageEntity+CoreDataProperties.swift */; };
+		E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB8A1C86CF8A0071104E /* MessageEntity.swift */; };
+		E708ABA01C86CF8A0071104E /* MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB8B1C86CF8A0071104E /* MessageExtension.swift */; };
+		E708ABA11C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB8C1C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift */; };
+		E708ABA21C86CF8A0071104E /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB8D1C86CF8A0071104E /* ShareChatEntity.swift */; };
+		E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E708AB8F1C86CF8A0071104E /* BahamutModel.xcdatamodeld */; };
+		E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB911C86CF8A0071104E /* ModelEntity.swift */; };
+		E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB921C86CF8A0071104E /* ModelExtension.swift */; };
+		E708ABA71C86CFF20071104E /* RecordMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABA61C86CFF20071104E /* RecordMessageController.swift */; };
+		E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABD91C86D37D0071104E /* BahamutRFKit.swift */; };
+		E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABDB1C86D37D0071104E /* BahamutRFClient.swift */; };
+		E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABDC1C86D37D0071104E /* BahamutRFRequestBase.swift */; };
+		E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABEB1C86D3DB0071104E /* AliOSSFile.swift */; };
+		E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABEC1C86D3DB0071104E /* BahamutFire.swift */; };
+		E708ABF01C86D3DB0071104E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABED1C86D3DB0071104E /* File.swift */; };
+		E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF51C86D7B70071104E /* ColorUtil.swift */; };
+		E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF61C86D7B70071104E /* ControllerExtension.swift */; };
+		E708AC031C86D7B70071104E /* HSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF81C86D7B70071104E /* HSL.swift */; };
+		E708AC041C86D7B70071104E /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF91C86D7B70071104E /* UIColor.swift */; };
+		E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFA1C86D7B70071104E /* ImageUtil.swift */; };
+		E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */; };
+		E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */; };
+		E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFD1C86D7B70071104E /* ToastHelper.swift */; };
+		E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */; };
+		E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */; };
+		E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC001C86D7B70071104E /* UserGuide.swift */; };
+		E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AC0D1C86E24D0071104E /* UserGuide.storyboard */; };
+		E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC671C86EC160071104E /* AliOSSManager.swift */; };
+		E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC681C86EC160071104E /* FetchAliOSSExtension.swift */; };
+		E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC691C86EC160071104E /* UploadAliOSSExtension.swift */; };
+		E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC6B1C86EC160071104E /* FetchBahamutFireExtension.swift */; };
+		E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC6C1C86EC160071104E /* UploadBahamutFireExtension.swift */; };
+		E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC6D1C86EC160071104E /* DownloadExtension.swift */; };
+		E708AC7C1C86EC160071104E /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC6E1C86EC160071104E /* FileService.swift */; };
+		E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC721C86EC160071104E /* UploadBaseExtension.swift */; };
+		E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC731C86EC160071104E /* UtilFileServiceExtension.swift */; };
+		E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC741C86EC160071104E /* ServiceContainer.swift */; };
+		E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC751C86EC160071104E /* ServiceProtocol.swift */; };
+		E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC831C86EC6E0071104E /* ServicesConfig.swift */; };
+		E708AC871C86F0490071104E /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */; };
+		E708AC901C871A850071104E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC8F1C871A850071104E /* UserService.swift */; };
+		E708AC921C871B610071104E /* VessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC911C871B610071104E /* VessageService.swift */; };
+		E708AC941C871C000071104E /* ConversationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC931C871C000071104E /* ConversationService.swift */; };
+		E708AC961C872DBC0071104E /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC951C872DBC0071104E /* AccountService.swift */; };
+		E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC971C872DFC0071104E /* VessageConfig.swift */; };
+		E708AC9A1C872F030071104E /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC991C872F030071104E /* UserSetting.swift */; };
+		E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E708AC9B1C873A000071104E /* BahamutConfig.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17E4048CD0C3442FF6C01025 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E708AB3C1C86CAA50071104E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E708AB3E1C86CAA50071104E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
+		E708AB3E1C86CAA50071104E /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		E708AB411C86CAA50071104E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E708AB431C86CAA50071104E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E708AB461C86CAA50071104E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E708AB481C86CAA50071104E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E708AB4F1C86CB570071104E /* Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridge-Header.h"; sourceTree = "<group>"; };
+		E708AB511C86CB6D0071104E /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
+		E708AB521C86CB6D0071104E /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
+		E708AB531C86CB6D0071104E /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
+		E708AB541C86CB6D0071104E /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
+		E708AB591C86CD6D0071104E /* ConversationListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListController.swift; sourceTree = "<group>"; };
+		E708AB5C1C86CE1D0071104E /* ArrayUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayUtil.swift; sourceTree = "<group>"; };
+		E708AB5D1C86CE1D0071104E /* BahamutCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BahamutCommon.h; sourceTree = "<group>"; };
+		E708AB5E1C86CE1D0071104E /* BahamutObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutObject.swift; sourceTree = "<group>"; };
+		E708AB601C86CE1D0071104E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/BahamutCommonLocalized.strings; sourceTree = "<group>"; };
+		E708AB621C86CE1D0071104E /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base64Additions.h; sourceTree = "<group>"; };
+		E708AB631C86CE1D0071104E /* MF_Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base64Additions.m; sourceTree = "<group>"; };
+		E708AB641C86CE1D0071104E /* CommonValueCast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonValueCast.swift; sourceTree = "<group>"; };
+		E708AB651C86CE1D0071104E /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		E708AB661C86CE1D0071104E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BahamutCommonLocalized.strings; sourceTree = "<group>"; };
+		E708AB671C86CE1D0071104E /* IDUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDUtil.swift; sourceTree = "<group>"; };
+		E708AB681C86CE1D0071104E /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
+		E708AB691C86CE1D0071104E /* RegexUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexUtil.swift; sourceTree = "<group>"; };
+		E708AB6A1C86CE1D0071104E /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
+		E708AB6B1C86CE1D0071104E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/BahamutCommonLocalized.strings"; sourceTree = "<group>"; };
+		E708AB771C86CF8A0071104E /* FileType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
+		E708AB781C86CF8A0071104E /* PersistentBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentBase.swift; sourceTree = "<group>"; };
+		E708AB791C86CF8A0071104E /* PersistentFileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentFileHelper.swift; sourceTree = "<group>"; };
+		E708AB7A1C86CF8A0071104E /* PersistentManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentManager.swift; sourceTree = "<group>"; };
+		E708AB7E1C86CF8A0071104E /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E708AB831C86CF8A0071104E /* BahamutLocalFile.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutLocalFile.xcdatamodel; sourceTree = "<group>"; };
+		E708AB841C86CF8A0071104E /* FileMgrEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMgrEntities.swift; sourceTree = "<group>"; };
+		E708AB851C86CF8A0071104E /* LocalFilesExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalFilesExtension.swift; sourceTree = "<group>"; };
+		E708AB881C86CF8A0071104E /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
+		E708AB891C86CF8A0071104E /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E708AB8A1C86CF8A0071104E /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
+		E708AB8B1C86CF8A0071104E /* MessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageExtension.swift; sourceTree = "<group>"; };
+		E708AB8C1C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E708AB8D1C86CF8A0071104E /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
+		E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutModel.xcdatamodel; sourceTree = "<group>"; };
+		E708AB911C86CF8A0071104E /* ModelEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEntity.swift; sourceTree = "<group>"; };
+		E708AB921C86CF8A0071104E /* ModelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelExtension.swift; sourceTree = "<group>"; };
+		E708ABA61C86CFF20071104E /* RecordMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordMessageController.swift; sourceTree = "<group>"; };
+		E708ABD81C86D37D0071104E /* BahamutRFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BahamutRFKit.h; sourceTree = "<group>"; };
+		E708ABD91C86D37D0071104E /* BahamutRFKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutRFKit.swift; sourceTree = "<group>"; };
+		E708ABDB1C86D37D0071104E /* BahamutRFClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutRFClient.swift; sourceTree = "<group>"; };
+		E708ABDC1C86D37D0071104E /* BahamutRFRequestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutRFRequestBase.swift; sourceTree = "<group>"; };
+		E708ABEB1C86D3DB0071104E /* AliOSSFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliOSSFile.swift; sourceTree = "<group>"; };
+		E708ABEC1C86D3DB0071104E /* BahamutFire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutFire.swift; sourceTree = "<group>"; };
+		E708ABED1C86D3DB0071104E /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		E708ABF51C86D7B70071104E /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
+		E708ABF61C86D7B70071104E /* ControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerExtension.swift; sourceTree = "<group>"; };
+		E708ABF81C86D7B70071104E /* HSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSL.swift; sourceTree = "<group>"; };
+		E708ABF91C86D7B70071104E /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		E708ABFA1C86D7B70071104E /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
+		E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAdjustHelper.swift; sourceTree = "<group>"; };
+		E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSoundHelper.swift; sourceTree = "<group>"; };
+		E708ABFD1C86D7B70071104E /* ToastHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastHelper.swift; sourceTree = "<group>"; };
+		E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
+		E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewFlowLayouts.swift; sourceTree = "<group>"; };
+		E708AC001C86D7B70071104E /* UserGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserGuide.swift; sourceTree = "<group>"; };
+		E708AC0D1C86E24D0071104E /* UserGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserGuide.storyboard; sourceTree = "<group>"; };
+		E708AC671C86EC160071104E /* AliOSSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliOSSManager.swift; sourceTree = "<group>"; };
+		E708AC681C86EC160071104E /* FetchAliOSSExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAliOSSExtension.swift; sourceTree = "<group>"; };
+		E708AC691C86EC160071104E /* UploadAliOSSExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadAliOSSExtension.swift; sourceTree = "<group>"; };
+		E708AC6B1C86EC160071104E /* FetchBahamutFireExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchBahamutFireExtension.swift; sourceTree = "<group>"; };
+		E708AC6C1C86EC160071104E /* UploadBahamutFireExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadBahamutFireExtension.swift; sourceTree = "<group>"; };
+		E708AC6D1C86EC160071104E /* DownloadExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadExtension.swift; sourceTree = "<group>"; };
+		E708AC6E1C86EC160071104E /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		E708AC721C86EC160071104E /* UploadBaseExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadBaseExtension.swift; sourceTree = "<group>"; };
+		E708AC731C86EC160071104E /* UtilFileServiceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilFileServiceExtension.swift; sourceTree = "<group>"; };
+		E708AC741C86EC160071104E /* ServiceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
+		E708AC751C86EC160071104E /* ServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
+		E708AC831C86EC6E0071104E /* ServicesConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServicesConfig.swift; path = ../../../../Vessage/Vessage/Vessage/ServicesConfig.swift; sourceTree = "<group>"; };
+		E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
+		E708AC8F1C871A850071104E /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		E708AC911C871B610071104E /* VessageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageService.swift; sourceTree = "<group>"; };
+		E708AC931C871C000071104E /* ConversationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationService.swift; sourceTree = "<group>"; };
+		E708AC951C872DBC0071104E /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
+		E708AC971C872DFC0071104E /* VessageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageConfig.swift; sourceTree = "<group>"; };
+		E708AC991C872F030071104E /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
+		E708AC9B1C873A000071104E /* BahamutConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BahamutConfig.json; sourceTree = "<group>"; };
+		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +178,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09EEC9AD3D90A19D21086801 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0B3CB3182ECA748929509B3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */,
+				6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B024D79892B85EA4D71592BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				17E4048CD0C3442FF6C01025 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E708AB301C86CAA50071104E = {
 			isa = PBXGroup;
 			children = (
 				E708AB3B1C86CAA50071104E /* Vessage */,
 				E708AB3A1C86CAA50071104E /* Products */,
+				A0B3CB3182ECA748929509B3 /* Pods */,
+				B024D79892B85EA4D71592BB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +223,279 @@
 		E708AB3B1C86CAA50071104E /* Vessage */ = {
 			isa = PBXGroup;
 			children = (
-				E708AB3C1C86CAA50071104E /* AppDelegate.swift */,
-				E708AB3E1C86CAA50071104E /* ViewController.swift */,
+				E708AC851C86F0490071104E /* ProgressTaskWatcher */,
+				E708AC0C1C86DEC40071104E /* Assets */,
+				E708ABF41C86D7B70071104E /* BahamutUIKit */,
+				E708ABF31C86D6F20071104E /* RestfulAPI */,
+				E708ABD71C86D37D0071104E /* BahamutRFKit */,
+				E708AB751C86CF8A0071104E /* Persistents */,
+				E708AB5B1C86CE1D0071104E /* BahamutCommon */,
+				E708AB501C86CB6D0071104E /* UIBarButtomItem-Badge */,
+				E708AC631C86EC070071104E /* Service */,
+				E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */,
+				E708AC991C872F030071104E /* UserSetting.swift */,
+				E708AC971C872DFC0071104E /* VessageConfig.swift */,
+				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
+				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
 				E708AB401C86CAA50071104E /* Main.storyboard */,
-				E708AB431C86CAA50071104E /* Assets.xcassets */,
 				E708AB451C86CAA50071104E /* LaunchScreen.storyboard */,
-				E708AB481C86CAA50071104E /* Info.plist */,
+				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
+				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
+				E708AB4E1C86CB470071104E /* SupportFiles */,
 			);
 			path = Vessage;
+			sourceTree = "<group>";
+		};
+		E708AB4E1C86CB470071104E /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB481C86CAA50071104E /* Info.plist */,
+				E708AB4F1C86CB570071104E /* Bridge-Header.h */,
+				E708AC9B1C873A000071104E /* BahamutConfig.json */,
+			);
+			name = SupportFiles;
+			sourceTree = "<group>";
+		};
+		E708AB501C86CB6D0071104E /* UIBarButtomItem-Badge */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB511C86CB6D0071104E /* UIBarButtonItem+Badge.h */,
+				E708AB521C86CB6D0071104E /* UIBarButtonItem+Badge.m */,
+				E708AB531C86CB6D0071104E /* UIButton+Badge.h */,
+				E708AB541C86CB6D0071104E /* UIButton+Badge.m */,
+			);
+			path = "UIBarButtomItem-Badge";
+			sourceTree = "<group>";
+		};
+		E708AB5B1C86CE1D0071104E /* BahamutCommon */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB5C1C86CE1D0071104E /* ArrayUtil.swift */,
+				E708AB5D1C86CE1D0071104E /* BahamutCommon.h */,
+				E708AB5E1C86CE1D0071104E /* BahamutObject.swift */,
+				E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */,
+				E708AB611C86CE1D0071104E /* Base64 */,
+				E708AB641C86CE1D0071104E /* CommonValueCast.swift */,
+				E708AB651C86CE1D0071104E /* DateHelper.swift */,
+				E708AB671C86CE1D0071104E /* IDUtil.swift */,
+				E708AB681C86CE1D0071104E /* module.map */,
+				E708AB691C86CE1D0071104E /* RegexUtil.swift */,
+				E708AB6A1C86CE1D0071104E /* StringHelper.swift */,
+			);
+			name = BahamutCommon;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon;
+			sourceTree = "<group>";
+		};
+		E708AB611C86CE1D0071104E /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB621C86CE1D0071104E /* MF_Base64Additions.h */,
+				E708AB631C86CE1D0071104E /* MF_Base64Additions.m */,
+			);
+			path = Base64;
+			sourceTree = "<group>";
+		};
+		E708AB751C86CF8A0071104E /* Persistents */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB761C86CF8A0071104E /* Base */,
+				E708AB7B1C86CF8A0071104E /* CoreData */,
+				E708AB811C86CF8A0071104E /* LocalFile */,
+				E708AB861C86CF8A0071104E /* Message */,
+				E708AB8E1C86CF8A0071104E /* Model */,
+			);
+			name = Persistents;
+			path = ../../../bahamut/Bahamut/Bahamut/Persistents;
+			sourceTree = "<group>";
+		};
+		E708AB761C86CF8A0071104E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB771C86CF8A0071104E /* FileType.swift */,
+				E708AB781C86CF8A0071104E /* PersistentBase.swift */,
+				E708AB791C86CF8A0071104E /* PersistentFileHelper.swift */,
+				E708AB7A1C86CF8A0071104E /* PersistentManager.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		E708AB7B1C86CF8A0071104E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB7E1C86CF8A0071104E /* CoreDataManager.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E708AB811C86CF8A0071104E /* LocalFile */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB821C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld */,
+				E708AB841C86CF8A0071104E /* FileMgrEntities.swift */,
+				E708AB851C86CF8A0071104E /* LocalFilesExtension.swift */,
+			);
+			path = LocalFile;
+			sourceTree = "<group>";
+		};
+		E708AB861C86CF8A0071104E /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB871C86CF8A0071104E /* BahamutMessage.xcdatamodeld */,
+				E708AB891C86CF8A0071104E /* MessageEntity+CoreDataProperties.swift */,
+				E708AB8A1C86CF8A0071104E /* MessageEntity.swift */,
+				E708AB8B1C86CF8A0071104E /* MessageExtension.swift */,
+				E708AB8C1C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift */,
+				E708AB8D1C86CF8A0071104E /* ShareChatEntity.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		E708AB8E1C86CF8A0071104E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB8F1C86CF8A0071104E /* BahamutModel.xcdatamodeld */,
+				E708AB911C86CF8A0071104E /* ModelEntity.swift */,
+				E708AB921C86CF8A0071104E /* ModelExtension.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E708ABD71C86D37D0071104E /* BahamutRFKit */ = {
+			isa = PBXGroup;
+			children = (
+				E708ABDA1C86D37D0071104E /* Base */,
+				E708ABEA1C86D3DB0071104E /* File */,
+				E708ABD81C86D37D0071104E /* BahamutRFKit.h */,
+				E708ABD91C86D37D0071104E /* BahamutRFKit.swift */,
+			);
+			name = BahamutRFKit;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutRFKit;
+			sourceTree = "<group>";
+		};
+		E708ABDA1C86D37D0071104E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E708ABDB1C86D37D0071104E /* BahamutRFClient.swift */,
+				E708ABDC1C86D37D0071104E /* BahamutRFRequestBase.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		E708ABEA1C86D3DB0071104E /* File */ = {
+			isa = PBXGroup;
+			children = (
+				E708ABEB1C86D3DB0071104E /* AliOSSFile.swift */,
+				E708ABEC1C86D3DB0071104E /* BahamutFire.swift */,
+				E708ABED1C86D3DB0071104E /* File.swift */,
+			);
+			path = File;
+			sourceTree = "<group>";
+		};
+		E708ABF31C86D6F20071104E /* RestfulAPI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RestfulAPI;
+			sourceTree = "<group>";
+		};
+		E708ABF41C86D7B70071104E /* BahamutUIKit */ = {
+			isa = PBXGroup;
+			children = (
+				E708ABF71C86D7B70071104E /* DynamicColor */,
+				E708ABF51C86D7B70071104E /* ColorUtil.swift */,
+				E708ABF61C86D7B70071104E /* ControllerExtension.swift */,
+				E708ABFA1C86D7B70071104E /* ImageUtil.swift */,
+				E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */,
+				E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */,
+				E708ABFD1C86D7B70071104E /* ToastHelper.swift */,
+				E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */,
+				E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */,
+				E708AC001C86D7B70071104E /* UserGuide.swift */,
+			);
+			name = BahamutUIKit;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit;
+			sourceTree = "<group>";
+		};
+		E708ABF71C86D7B70071104E /* DynamicColor */ = {
+			isa = PBXGroup;
+			children = (
+				E708ABF81C86D7B70071104E /* HSL.swift */,
+				E708ABF91C86D7B70071104E /* UIColor.swift */,
+			);
+			path = DynamicColor;
+			sourceTree = "<group>";
+		};
+		E708AC0C1C86DEC40071104E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB431C86CAA50071104E /* Assets.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		E708AC631C86EC070071104E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC641C86EC160071104E /* BahamutServiceContainer */,
+				E708AC8F1C871A850071104E /* UserService.swift */,
+				E708AC911C871B610071104E /* VessageService.swift */,
+				E708AC931C871C000071104E /* ConversationService.swift */,
+				E708AC951C872DBC0071104E /* AccountService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		E708AC641C86EC160071104E /* BahamutServiceContainer */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC651C86EC160071104E /* FileService */,
+				E708AC741C86EC160071104E /* ServiceContainer.swift */,
+				E708AC751C86EC160071104E /* ServiceProtocol.swift */,
+				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
+			);
+			name = BahamutServiceContainer;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutServiceContainer;
+			sourceTree = "<group>";
+		};
+		E708AC651C86EC160071104E /* FileService */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC661C86EC160071104E /* AliOSS */,
+				E708AC6A1C86EC160071104E /* BahamutFire */,
+				E708AC6D1C86EC160071104E /* DownloadExtension.swift */,
+				E708AC6E1C86EC160071104E /* FileService.swift */,
+				E708AC721C86EC160071104E /* UploadBaseExtension.swift */,
+				E708AC731C86EC160071104E /* UtilFileServiceExtension.swift */,
+			);
+			path = FileService;
+			sourceTree = "<group>";
+		};
+		E708AC661C86EC160071104E /* AliOSS */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC671C86EC160071104E /* AliOSSManager.swift */,
+				E708AC681C86EC160071104E /* FetchAliOSSExtension.swift */,
+				E708AC691C86EC160071104E /* UploadAliOSSExtension.swift */,
+			);
+			path = AliOSS;
+			sourceTree = "<group>";
+		};
+		E708AC6A1C86EC160071104E /* BahamutFire */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC6B1C86EC160071104E /* FetchBahamutFireExtension.swift */,
+				E708AC6C1C86EC160071104E /* UploadBahamutFireExtension.swift */,
+			);
+			path = BahamutFire;
+			sourceTree = "<group>";
+		};
+		E708AC851C86F0490071104E /* ProgressTaskWatcher */ = {
+			isa = PBXGroup;
+			children = (
+				E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */,
+			);
+			name = ProgressTaskWatcher;
+			path = ../../../bahamut/Bahamut/Bahamut/ProgressTaskWatcher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +505,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E708AB4B1C86CAA50071104E /* Build configuration list for PBXNativeTarget "Vessage" */;
 			buildPhases = (
+				97C168D3B5D981646B149AE5 /* Check Pods Manifest.lock */,
 				E708AB351C86CAA50071104E /* Sources */,
 				E708AB361C86CAA50071104E /* Frameworks */,
 				E708AB371C86CAA50071104E /* Resources */,
+				41AA22C7203B9A106AB80289 /* Embed Pods Frameworks */,
+				8DC5F1CC1C6B8BE64DD200A8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -106,6 +543,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = E708AB301C86CAA50071104E;
 			productRefGroup = E708AB3A1C86CAA50071104E /* Products */;
@@ -122,21 +560,137 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
+				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
+				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		41AA22C7203B9A106AB80289 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8DC5F1CC1C6B8BE64DD200A8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		97C168D3B5D981646B149AE5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E708AB351C86CAA50071104E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E708AB3F1C86CAA50071104E /* ViewController.swift in Sources */,
-				E708AB3D1C86CAA50071104E /* AppDelegate.swift in Sources */,
+				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
+				E708ABA71C86CFF20071104E /* RecordMessageController.swift in Sources */,
+				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
+				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
+				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
+				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
+				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
+				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
+				E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */,
+				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
+				E708AB701C86CE1D0071104E /* CommonValueCast.swift in Sources */,
+				E708AB9E1C86CF8A0071104E /* MessageEntity+CoreDataProperties.swift in Sources */,
+				E708AB6C1C86CE1D0071104E /* ArrayUtil.swift in Sources */,
+				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
+				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
+				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
+				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
+				E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */,
+				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
+				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
+				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
+				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
+				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
+				E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */,
+				E708ABA01C86CF8A0071104E /* MessageExtension.swift in Sources */,
+				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
+				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
+				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
+				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
+				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
+				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
+				E708AB9D1C86CF8A0071104E /* BahamutMessage.xcdatamodeld in Sources */,
+				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
+				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
+				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
+				E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */,
+				E708AC921C871B610071104E /* VessageService.swift in Sources */,
+				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
+				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
+				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
+				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
+				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
+				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
+				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
+				E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */,
+				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
+				E708AC871C86F0490071104E /* ProgressTaskWatcher.swift in Sources */,
+				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
+				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
+				E708AC901C871A850071104E /* UserService.swift in Sources */,
+				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
+				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
+				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
+				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
+				E708ABA11C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
+				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
+				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
+				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
+				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,
+				E708ABA21C86CF8A0071104E /* ShareChatEntity.swift in Sources */,
+				E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */,
+				E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */,
+				E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */,
+				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
+				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
+				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
+				E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +711,16 @@
 				E708AB461C86CAA50071104E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E708AB601C86CE1D0071104E /* Base */,
+				E708AB661C86CE1D0071104E /* en */,
+				E708AB6B1C86CE1D0071104E /* zh-Hans */,
+			);
+			name = BahamutCommonLocalized.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -247,23 +811,29 @@
 		};
 		E708AB4C1C86CAA50071104E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Vessage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
 			};
 			name = Debug;
 		};
 		E708AB4D1C86CAA50071104E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Vessage/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
 			};
 			name = Release;
 		};
@@ -286,8 +856,42 @@
 				E708AB4D1C86CAA50071104E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E708AB821C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E708AB831C86CF8A0071104E /* BahamutLocalFile.xcdatamodel */,
+			);
+			currentVersion = E708AB831C86CF8A0071104E /* BahamutLocalFile.xcdatamodel */;
+			path = BahamutLocalFile.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E708AB871C86CF8A0071104E /* BahamutMessage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E708AB881C86CF8A0071104E /* BahamutMessage.xcdatamodel */,
+			);
+			currentVersion = E708AB881C86CF8A0071104E /* BahamutMessage.xcdatamodel */;
+			path = BahamutMessage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E708AB8F1C86CF8A0071104E /* BahamutModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */,
+			);
+			currentVersion = E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */;
+			path = BahamutModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E708AB311C86CAA50071104E /* Project object */;
 }

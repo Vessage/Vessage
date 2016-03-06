@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RegistSharelinkModel {
+class RegistNewUserModel {
     var registUserServer:String!
     var accountId:String!
     var accessToken:String!
@@ -26,15 +26,16 @@ class AccountService: ServiceProtocol
         BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.shareLinkApiServer)
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
         BahamutRFKit.sharedInstance.startClients()
+        
         ChicagoClient.sharedInstance.start()
-        ChicagoClient.sharedInstance.connect(SharelinkSetting.chicagoServerHost, port: SharelinkSetting.chicagoServerHostPort)
+        ChicagoClient.sharedInstance.connect(VessageSetting.chicagoServerHost, port: VessageSetting.chicagoServerHostPort)
         ChicagoClient.sharedInstance.startHeartBeat()
         ChicagoClient.sharedInstance.useValidationInfo(userId, appkey: BahamutRFKit.appkey, apptoken: UserSetting.token)
         self.setServiceReady()
     }
     
     @objc func userLogout(userId: String) {
-        MobClick.profileSignOff()
+        //MobClick.profileSignOff()
         ChicagoClient.sharedInstance.logout()
         UserSetting.token = nil
         UserSetting.isUserLogined = false
@@ -73,7 +74,7 @@ class AccountService: ServiceProtocol
             }else if error == nil{
                 self.setLogined(validateResult)
                 callback(loginSuccess: true, message: "")
-                MobClick.profileSignInWithPUID(validateResult.UserId)
+                //MobClick.profileSignInWithPUID(validateResult.UserId)
             }else{
                 callback(loginSuccess: false, message: "VALIDATE_ACCTOKEN_FAILED".localizedString())
             }
@@ -81,9 +82,9 @@ class AccountService: ServiceProtocol
         }
     }
     
-    func registNewUser(registModel:RegistSharelinkModel,newUser:Sharelinker,callback:(isSuc:Bool,msg:String,validateResult:ValidateResult!)->Void)
+    func registNewUser(registModel:RegistNewUserModel,newUser:VessageUser,callback:(isSuc:Bool,msg:String,validateResult:ValidateResult!)->Void)
     {
-        let req = RegistNewSharelinkUserRequest()
+        let req = RegistNewVessageUserRequest()
         req.nickName = newUser.nickName
         req.motto = newUser.motto
         req.accessToken = registModel.accessToken
@@ -115,18 +116,8 @@ class AccountService: ServiceProtocol
     
     func changePassword(oldPsw:String,newPsw:String,callback:(isSuc:Bool)->Void)
     {
-        let req = ChangeAccountPasswordRequest()
-        req.oldPassword = oldPsw.sha256
-        req.newPassword = newPsw.sha256
-        let client = BahamutRFKit.sharedInstance.getShareLinkClient()
-        client.execute(req) { (result) -> Void in
-            if result.isSuccess && String.isNullOrWhiteSpace(result.value) == false && result.value!.lowercaseString == "true"
-            {
-                callback(isSuc: true)
-            }else
-            {
-                callback(isSuc: false)
-            }
+        BahamutRFKit.sharedInstance.changeAccountPassword(VessageConfig.bahamutConfig.accountLoginApiUrl, appkey: VessageConfig.appKey, appToken: BahamutRFKit.sharedInstance.token, accountId: UserSetting.lastLoginAccountId, userId: UserSetting.userId, originPassword: oldPsw, newPassword: newPsw){ suc,msg in
+            callback(isSuc:suc)
         }
     }
 }

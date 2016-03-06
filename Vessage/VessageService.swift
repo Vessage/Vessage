@@ -9,7 +9,7 @@
 import Foundation
 
 //MARK: VessageService
-class VessageService: ServiceProtocol {
+class VessageService:NSNotificationCenter, ServiceProtocol {
     @objc static var ServiceName:String {return "Vessage Service"}
     
     @objc func appStartInit(appName: String) {

@@ -9,6 +9,9 @@
 import Foundation
 let ServicesConfig:ServiceListDict =
 [
+    (AccountService.ServiceName,AccountService()),
     (FileService.ServiceName,FileService(mondBundle: NSBundle.mainBundle(),coreDataUpdater: nil)),
-    (UserService.ServiceName,UserService())
+    (UserService.ServiceName,UserService()),
+    (VessageService.ServiceName,VessageService()),
+    (ConversationService.ServiceName,ConversationService())
 ]

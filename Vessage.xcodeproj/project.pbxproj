@@ -88,6 +88,15 @@
 		E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAA1C87536D0071104E /* LaunchScreen.swift */; };
 		E708ACAD1C8754E20071104E /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708ACAC1C8754E20071104E /* User.storyboard */; };
 		E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */; };
+		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
+		E75A70381C8C0B190029F0BD /* ConversationRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70371C8C0B190029F0BD /* ConversationRF.swift */; };
+		E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */; };
+		E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */; };
+		E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */; };
+		E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A301C87EEFF002F96FB /* UserRF.swift */; };
+		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
+		E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */; };
+		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -168,7 +177,7 @@
 		E708AC731C86EC160071104E /* UtilFileServiceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilFileServiceExtension.swift; sourceTree = "<group>"; };
 		E708AC741C86EC160071104E /* ServiceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		E708AC751C86EC160071104E /* ServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
-		E708AC831C86EC6E0071104E /* ServicesConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServicesConfig.swift; path = ../../../../Vessage/Vessage/Vessage/ServicesConfig.swift; sourceTree = "<group>"; };
+		E708AC831C86EC6E0071104E /* ServicesConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesConfig.swift; sourceTree = "<group>"; };
 		E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E708AC8F1C871A850071104E /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		E708AC911C871B610071104E /* VessageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageService.swift; sourceTree = "<group>"; };
@@ -184,6 +193,15 @@
 		E708ACAA1C87536D0071104E /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		E708ACAC1C8754E20071104E /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatImageViewController.swift; sourceTree = "<group>"; };
+		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
+		E75A70371C8C0B190029F0BD /* ConversationRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRF.swift; sourceTree = "<group>"; };
+		E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClient.swift; sourceTree = "<group>"; };
+		E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClientBase.swift; sourceTree = "<group>"; };
+		E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
+		E7EB9A301C87EEFF002F96FB /* UserRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRF.swift; sourceTree = "<group>"; };
+		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
+		E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmdManager.swift; sourceTree = "<group>"; };
+		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
 		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -394,6 +412,9 @@
 		E708ABF31C86D6F20071104E /* RestfulAPI */ = {
 			isa = PBXGroup;
 			children = (
+				E7EB9A301C87EEFF002F96FB /* UserRF.swift */,
+				E75A70351C8C09360029F0BD /* VessageRF.swift */,
+				E75A70371C8C0B190029F0BD /* ConversationRF.swift */,
 			);
 			name = RestfulAPI;
 			sourceTree = "<group>";
@@ -436,7 +457,7 @@
 		E708AC631C86EC070071104E /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				E708AC641C86EC160071104E /* BahamutServiceContainer */,
+				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
 				E708AC8F1C871A850071104E /* UserService.swift */,
 				E708AC911C871B610071104E /* VessageService.swift */,
 				E708AC931C871C000071104E /* ConversationService.swift */,
@@ -451,7 +472,6 @@
 				E708AC651C86EC160071104E /* FileService */,
 				E708AC741C86EC160071104E /* ServiceContainer.swift */,
 				E708AC751C86EC160071104E /* ServiceProtocol.swift */,
-				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
 			);
 			name = BahamutServiceContainer;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutServiceContainer;
@@ -533,6 +553,7 @@
 				E708AC971C872DFC0071104E /* VessageConfig.swift */,
 				E708AC9D1C87503F0071104E /* EntryNavigationController.swift */,
 				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
+				E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -542,6 +563,7 @@
 			children = (
 				E708ACA51C87528D0071104E /* SignUpViewController.swift */,
 				E708ACA71C8752980071104E /* SignInViewController.swift */,
+				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -549,6 +571,9 @@
 		E708ACA91C8752BF0071104E /* ArchBase */ = {
 			isa = PBXGroup;
 			children = (
+				E708AC641C86EC160071104E /* BahamutServiceContainer */,
+				E75A70391C8C0FFF0029F0BD /* ChicagoClient */,
+				E7EB9A391C87F783002F96FB /* BahamutCmd */,
 				E708AB751C86CF8A0071104E /* Persistents */,
 				E708ABD71C86D37D0071104E /* BahamutRFKit */,
 				E708AB5B1C86CE1D0071104E /* BahamutCommon */,
@@ -565,6 +590,26 @@
 				E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */,
 			);
 			name = User;
+			sourceTree = "<group>";
+		};
+		E75A70391C8C0FFF0029F0BD /* ChicagoClient */ = {
+			isa = PBXGroup;
+			children = (
+				E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */,
+				E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */,
+			);
+			name = ChicagoClient;
+			path = ../../../bahamut/Bahamut/Bahamut/ChicagoClient;
+			sourceTree = "<group>";
+		};
+		E7EB9A391C87F783002F96FB /* BahamutCmd */ = {
+			isa = PBXGroup;
+			children = (
+				E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */,
+				E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */,
+			);
+			name = BahamutCmd;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutCmd;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -701,6 +746,7 @@
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
+				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
 				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
@@ -717,6 +763,7 @@
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
+				E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
@@ -726,24 +773,30 @@
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
+				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
+				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E708AB9D1C86CF8A0071104E /* BahamutMessage.xcdatamodeld in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
+				E75A70381C8C0B190029F0BD /* ConversationRF.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */,
+				E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */,
 				E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
+				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
 				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
 				E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */,
+				E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */,
 				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
 				E708AC871C86F0490071104E /* ProgressTaskWatcher.swift in Sources */,
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
@@ -758,6 +811,7 @@
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
+				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
 				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,
 				E708ABA21C86CF8A0071104E /* ShareChatEntity.swift in Sources */,
 				E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */,

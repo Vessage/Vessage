@@ -15,6 +15,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         configureBahamutRFKit()
+        configureBahamutCmd()
         configContryAndLang()
         configureVessageConfig()
         configureAliOSSManager()
@@ -27,6 +28,11 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
         }
+    }
+    
+    private func configureBahamutCmd()
+    {
+        BahamutCmd.signBahamutCmdSchema("vessage")
     }
     
     private func configureAliOSSManager()

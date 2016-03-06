@@ -10,10 +10,10 @@ import UIKit
 
 class LaunchScreen: UIView {
     
-    static func getInstanceFromStroyboard() -> LaunchScreen
+    static func getInstanceFromStroyboard() -> UIView
     {
         let controller = UIViewController.instanceFromStoryBoard("LaunchScreen", identifier: "LaunchScreenViewController")
-        return controller.view as! LaunchScreen
+        return controller.view
     }
     
 }

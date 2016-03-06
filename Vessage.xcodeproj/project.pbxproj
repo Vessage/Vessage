@@ -533,11 +533,11 @@
 		E708ACA21C8752300071104E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E708ACA31C8752440071104E /* AppMain */,
+				E708AC631C86EC070071104E /* Service */,
 				E708ACAE1C87550D0071104E /* User */,
 				E708ABF31C86D6F20071104E /* RestfulAPI */,
-				E708AC631C86EC070071104E /* Service */,
 				E708ACA41C87525A0071104E /* Account */,
-				E708ACA31C8752440071104E /* AppMain */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
 				E708AB591C86CD6D0071104E /* ConversationListController.swift */,

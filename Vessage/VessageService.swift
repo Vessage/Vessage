@@ -17,7 +17,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLoginInit(userId: String) {
-        
+        setServiceReady()
     }
     
     @objc func userLogout(userId: String) {

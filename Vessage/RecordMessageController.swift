@@ -17,7 +17,7 @@ class RecordMessageController: UIViewController {
     
     //MARK: actions
     @IBAction func cancelRecord(sender: AnyObject) {
-        self.dismissViewControllerAnimated(false) { () -> Void in
+        self.dismissViewControllerAnimated(true) { () -> Void in
             
         }
     }
@@ -43,7 +43,7 @@ class RecordMessageController: UIViewController {
     static func showRecordMessageController(vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("Main", identifier: "RecordMessageController")
-        vc.presentViewController(controller, animated: false) { () -> Void in
+        vc.presentViewController(controller, animated: true) { () -> Void in
             
         }
     }

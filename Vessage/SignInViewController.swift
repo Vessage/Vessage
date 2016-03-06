@@ -23,15 +23,56 @@ class SignInViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistAccountCompleted:", name: RegistAccountCompleted, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    //MARK: OnRegistAccountCompleted
+    func onRegistAccountCompleted(a:NSNotification)
+    {
+        if let accountId = a.userInfo?[RegistAccountIDValue] as? String{
+            if let password = a.userInfo?[RegistAccountPasswordValue] as? String{
+                self.loginInfoTextField.text = accountId
+                self.passwordTextField.text = password
+                login(self)
+            }
+        }
+    }
+    
     //MARK: actions
     @IBAction func login(sender: AnyObject) {
         let hud = self.showActivityHudWithMessage(nil, message: "LOGINING".localizedString())
         BahamutRFKit.sharedInstance.loginBahamutAccount(VessageConfig.bahamutConfig.accountLoginApiUrl, accountInfo: loginInfoTextField.text!, passwordOrigin: passwordTextField.text!) { (isSuc, errorMsg, loginResult) -> Void in
             hud.hide(true)
+            
+            //TODO: delete test
+            let lr = LoginResult()
+            lr.LoginSuccessed = "true"
+            lr.AccountID = "123456"
+            lr.AccountName = "Xman"
+            lr.AccessToken = "jkjkjkjkkj"
+            lr.AppServerIP = ""
+            lr.AppServerPort = ""
+            lr.AppServiceUrl = "http://vessageapi.bahamut.cn"
+            lr.BindMobile = ""
+            lr.BindEmail = ""
+            let testMark = "tn" + ""
+            if testMark == "tn"{
+                self.loginedResult = lr
+                self.validateToken(self.loginedResult.AppServiceUrl, accountId: self.loginedResult.AccountID, accessToken: self.loginedResult.AccessToken)
+                return
+            }
+            
             if isSuc
             {
                 self.loginedResult = loginResult
-                self.validateToken(loginResult.AppServiceUrl, accountId: loginResult.AccountID, accessToken: loginResult.AccessToken)
+                self.validateToken(self.loginedResult.AppServiceUrl, accountId: self.loginedResult.AccountID, accessToken: self.loginedResult.AccessToken)
             }else
             {
                 self.playToast(errorMsg.localizedString())

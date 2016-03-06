@@ -25,7 +25,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     func deInitController(){
-        //ChicagoClient.sharedInstance.removeObserver(self)
+        ChicagoClient.sharedInstance.removeObserver(self)
     }
 
     private func setWaitingScreen() {
@@ -75,7 +75,12 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             if ServiceContainer.isAllServiceReady
             {
                 ServiceContainer.instance.removeObserver(self)
-                showMainView()
+                if ServiceContainer.getService(UserService).isUserMobileValidated
+                {
+                    showMainView()
+                }else{
+                    showValidateMobilView()
+                }
             }else
             {
                 ServiceContainer.instance.userLogin(UserSetting.userId)
@@ -105,11 +110,17 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     func waitTimeShowMainView(_:AnyObject?)
     {
         BahamutCmdManager.sharedInstance.registHandler(self)
+        ConversationListController.showConversationListController(self)
         if self.launchScr != nil
         {
             self.launchScr.removeFromSuperview()
         }
         
+    }
+    
+    private func showValidateMobilView()
+    {
+        ValidateMobileViewController.showValidateMobileViewController(self)
     }
 
     //MARK: handle Bahamut Cmd

@@ -17,10 +17,40 @@ class UserService: ServiceProtocol {
     }
     
     @objc func userLoginInit(userId: String) {
-        
+        self.setServiceReady()
     }
     
     @objc func userLogout(userId: String) {
+        
+    }
+    
+    var isUserMobileValidated:Bool{
+        //TODO: delete test
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            return true
+        }
+        
+        return false
+    }
+    
+    func sendValidateMobilSMS(callback:(suc:Bool)->Void){
+        
+        //TODO: delete test
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            callback(suc: true)
+        }
+        
+    }
+    
+    func validateMobile(mobile:String, smsKey:String,callback:(suc:Bool)->Void){
+        
+        //TODO: delete test
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            callback(suc: true)
+        }
         
     }
 }

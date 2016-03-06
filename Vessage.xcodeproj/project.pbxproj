@@ -92,6 +92,8 @@
 		E75A70381C8C0B190029F0BD /* ConversationRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70371C8C0B190029F0BD /* ConversationRF.swift */; };
 		E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */; };
 		E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */; };
+		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
+		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
 		E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */; };
 		E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A301C87EEFF002F96FB /* UserRF.swift */; };
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
@@ -197,6 +199,8 @@
 		E75A70371C8C0B190029F0BD /* ConversationRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRF.swift; sourceTree = "<group>"; };
 		E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClient.swift; sourceTree = "<group>"; };
 		E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClientBase.swift; sourceTree = "<group>"; };
+		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		E7EB9A301C87EEFF002F96FB /* UserRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRF.swift; sourceTree = "<group>"; };
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */,
+				E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */,
 				09EEC9AD3D90A19D21086801 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,6 +235,8 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E75A70401C8C8FB30029F0BD /* AddressBook.framework */,
+				E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */,
 				17E4048CD0C3442FF6C01025 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -535,12 +543,10 @@
 			children = (
 				E708ACA31C8752440071104E /* AppMain */,
 				E708AC631C86EC070071104E /* Service */,
+				E75A703F1C8C5F0A0029F0BD /* Conversation */,
+				E708ACA41C87525A0071104E /* Account */,
 				E708ACAE1C87550D0071104E /* User */,
 				E708ABF31C86D6F20071104E /* RestfulAPI */,
-				E708ACA41C87525A0071104E /* Account */,
-				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
-				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
-				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -602,6 +608,16 @@
 			path = ../../../bahamut/Bahamut/Bahamut/ChicagoClient;
 			sourceTree = "<group>";
 		};
+		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
+				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
+				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
+			);
+			name = Conversation;
+			sourceTree = "<group>";
+		};
 		E7EB9A391C87F783002F96FB /* BahamutCmd */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +663,12 @@
 				TargetAttributes = {
 					E708AB381C86CAA50071104E = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 2BW6TGDJAV;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -944,10 +966,14 @@
 			baseConfigurationReference = F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Vessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
 			};
@@ -958,10 +984,14 @@
 			baseConfigurationReference = 6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Vessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
 			};

@@ -66,6 +66,22 @@ class AccountService: ServiceProtocol
     
     func validateAccessToken(apiTokenServer:String, accountId:String, accessToken: String,callback:(loginSuccess:Bool,message:String)->Void,registCallback:((registApiServer:String!)->Void)! = nil)
     {
+        //TODO: delete test
+        let vr = ValidateResult()
+        vr.UserId = "goddddddd"
+        vr.APIServer = "sadfasd"
+        vr.AppToken = "asdfas"
+        vr.ChicagoServer = "chicagotest.bahamutt.cn:8888"
+        vr.UserId = "xman"
+        vr.FileAPIServer = "http://test.bahamut.cn"
+        vr.RegistAPIServer = "http://test.bahamut.cn"
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            self.setLogined(vr)
+            callback(loginSuccess: true, message: "")
+            return
+        }
+        
         UserSetting.lastLoginAccountId = accountId
         BahamutRFKit.sharedInstance.validateAccessToken("\(apiTokenServer)/Tokens", accountId: accountId, accessToken: accessToken) { (isNewUser, error,validateResult) -> Void in
             if isNewUser

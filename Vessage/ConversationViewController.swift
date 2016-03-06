@@ -31,7 +31,7 @@ class ConversationViewController: UIViewController {
     }
     
     @IBAction func showRecordMessage(sender: AnyObject) {
-        RecordMessageController.showRecordMessageController(self.navigationController!)
+        RecordMessageController.showRecordMessageController(self)
     }
     
     @IBAction func showUserProfile(sender: AnyObject) {
@@ -51,6 +51,11 @@ class ConversationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    static func showConversationViewController(nvc:UINavigationController)
+    {
+        let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
+        nvc.pushViewController(controller, animated: true)
+    }
 
 }
 

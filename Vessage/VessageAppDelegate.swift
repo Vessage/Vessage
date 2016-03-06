@@ -14,10 +14,10 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        configureVessageConfig()
+        configContryAndLang()
         configureBahamutRFKit()
         configureBahamutCmd()
-        configContryAndLang()
-        configureVessageConfig()
         configureAliOSSManager()
         initService()
         return true
@@ -25,9 +25,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initService()
     {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
-        }
+        ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
     }
     
     private func configureBahamutCmd()

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "96A66FCF9773B139C5D8F7CA46535BB9EAE2B7AB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "96A66FCF9773B139C5D8F7CA46535BB9EAE2B7AB" : 0,
+    "B84DE46359EC6144872C156939360FB1A660D8C3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1EBA0358-0424-4E69-B232-B1F85DE8F400",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "96A66FCF9773B139C5D8F7CA46535BB9EAE2B7AB" : "Vessage\/",
+    "B84DE46359EC6144872C156939360FB1A660D8C3" : "..\/bahamut\/Bahamut"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Vessage",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Vessage.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Vessage\/Vessage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "96A66FCF9773B139C5D8F7CA46535BB9EAE2B7AB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Sharelink\/Bahamut.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B84DE46359EC6144872C156939360FB1A660D8C3"
+    }
+  ]
+}

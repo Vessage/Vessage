@@ -55,13 +55,122 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Vessage/ConversationViewController.swift"
-            timestampString = "478972280.41527"
+            filePath = "Vessage/RecordMessageController.swift"
+            timestampString = "479122214.912832"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "showConversationList(_:)"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "updateRecordingProgress()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.RecordMessageController.sendingHud.getter : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.MBProgressHUD&gt;"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
+                  timestampString = "479057267.718079"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.RecordMessageController.sendingHud.setter : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.MBProgressHUD&gt;"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
+                  timestampString = "479057267.718967"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.RecordMessageController.sendingHud.materializeForSet : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.MBProgressHUD&gt;"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
+                  timestampString = "479057267.719089"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.RecordMessageController.init (Vessage.RecordMessageController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.NSBundle&gt;) -&gt; Vessage.RecordMessageController"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
+                  timestampString = "479057267.719193"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "508">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.RecordMessageController.init (Vessage.RecordMessageController.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Vessage.RecordMessageController&gt;"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
+                  timestampString = "479057267.719294"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128"
+                  offsetFromSymbolStart = "448">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Vessage/RecordMessageController.swift"
+            timestampString = "479127437.464448"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "vessageCameraDidStartRecord()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Vessage/RecordMessageController.swift"
+            timestampString = "479127437.464448"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "vessageCameraDidStopRecord()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

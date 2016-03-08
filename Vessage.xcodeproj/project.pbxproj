@@ -94,11 +94,14 @@
 		E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
+		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */; };
 		E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A301C87EEFF002F96FB /* UserRF.swift */; };
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
 		E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */; };
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
+		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
+		E7F2C3511C8DD2D900F919AE /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -201,11 +204,14 @@
 		E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClientBase.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		E7EB9A301C87EEFF002F96FB /* UserRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRF.swift; sourceTree = "<group>"; };
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
 		E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmdManager.swift; sourceTree = "<group>"; };
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
+		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
+		E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -542,11 +548,11 @@
 			isa = PBXGroup;
 			children = (
 				E708ACA31C8752440071104E /* AppMain */,
+				E708ABF31C86D6F20071104E /* RestfulAPI */,
 				E708AC631C86EC070071104E /* Service */,
 				E75A703F1C8C5F0A0029F0BD /* Conversation */,
 				E708ACA41C87525A0071104E /* Account */,
 				E708ACAE1C87550D0071104E /* User */,
-				E708ABF31C86D6F20071104E /* RestfulAPI */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -614,6 +620,9 @@
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
 				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
+				E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */,
+				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
+				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
@@ -665,6 +674,9 @@
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 2BW6TGDJAV;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -762,6 +774,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */,
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
 				E708ABA71C86CFF20071104E /* RecordMessageController.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
@@ -791,6 +804,7 @@
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
 				E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */,
 				E708ABA01C86CF8A0071104E /* MessageExtension.swift in Sources */,
+				E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */,
 				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
@@ -827,6 +841,7 @@
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
+				E7F2C3511C8DD2D900F919AE /* KDCircularProgress.swift in Sources */,
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E708ABA11C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
@@ -971,11 +986,38 @@
 				INFOPLIST_FILE = Vessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vessage",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AlamofireJsonToObjects\"",
+					"-framework",
+					"\"AliyunOSSiOS\"",
+					"-framework",
+					"\"CocoaAsyncSocket\"",
+					"-framework",
+					"\"EVReflection\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MJRefresh\"",
+					"-framework",
+					"\"Vivid\"",
+					"-framework",
+					"\"YUCIHighPassSkinSmoothing\"",
+					"-Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -989,11 +1031,38 @@
 				INFOPLIST_FILE = Vessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vessage",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"AlamofireJsonToObjects\"",
+					"-framework",
+					"\"AliyunOSSiOS\"",
+					"-framework",
+					"\"CocoaAsyncSocket\"",
+					"-framework",
+					"\"EVReflection\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MJRefresh\"",
+					"-framework",
+					"\"Vivid\"",
+					"-framework",
+					"\"YUCIHighPassSkinSmoothing\"",
+					"-Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

@@ -27,6 +27,13 @@ class AccountService: ServiceProtocol
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
         BahamutRFKit.sharedInstance.startClients()
         
+        //TODO: delete test
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            self.setServiceReady()
+            return
+        }
+        
         ChicagoClient.sharedInstance.start()
         ChicagoClient.sharedInstance.connect(VessageSetting.chicagoServerHost, port: VessageSetting.chicagoServerHostPort)
         ChicagoClient.sharedInstance.startHeartBeat()

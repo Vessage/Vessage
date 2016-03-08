@@ -15,3 +15,4 @@ pod 'AlamofireJsonToObjects'
 
 pod 'AliyunOSSiOS', '~> 2.1.1'
 
+pod 'YUCIHighPassSkinSmoothing'

@@ -91,6 +91,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/EVReflection.framework"
   install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/MJRefresh.framework"
+  install_framework "Pods/Vivid.framework"
+  install_framework "Pods/YUCIHighPassSkinSmoothing.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Alamofire.framework"
@@ -100,4 +102,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/EVReflection.framework"
   install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/MJRefresh.framework"
+  install_framework "Pods/Vivid.framework"
+  install_framework "Pods/YUCIHighPassSkinSmoothing.framework"
 fi

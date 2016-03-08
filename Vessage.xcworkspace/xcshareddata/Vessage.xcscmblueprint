@@ -4,11 +4,13 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F17E1E91C07915BEAF282A48F9104EBF122C26E7" : 0,
     "96A66FCF9773B139C5D8F7CA46535BB9EAE2B7AB" : 0,
     "B84DE46359EC6144872C156939360FB1A660D8C3" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1EBA0358-0424-4E69-B232-B1F85DE8F400",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F17E1E91C07915BEAF282A48F9104EBF122C26E7" : "..\/..\/..\/..\/Volumes\/Mac\/GitHub\/Objective-Zip",
     "96A66FCF9773B139C5D8F7CA46535BB9EAE2B7AB" : "Vessage\/",
     "B84DE46359EC6144872C156939360FB1A660D8C3" : "..\/bahamut\/Bahamut"
   },
@@ -25,6 +27,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Sharelink\/Bahamut.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B84DE46359EC6144872C156939360FB1A660D8C3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gianlucabertani\/Objective-Zip.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F17E1E91C07915BEAF282A48F9104EBF122C26E7"
     }
   ]
 }

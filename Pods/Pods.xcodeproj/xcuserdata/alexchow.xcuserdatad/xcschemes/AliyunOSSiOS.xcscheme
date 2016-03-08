@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '6547724A005F40DA5922AEDD'
+               BlueprintIdentifier = 'D5CD97EE996832CCA6064292'
                BlueprintName = 'AliyunOSSiOS'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'AliyunOSSiOS.framework'>

@@ -23,4 +23,12 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     @objc func userLogout(userId: String) {
         
     }
+    
+    func sendVessage(vessage:Vessage){
+        
+    }
+    
+    func finishSendVessage(vessageId:String){
+        
+    }
 }

@@ -34,6 +34,10 @@ class UserService: ServiceProtocol {
         return false
     }
     
+    func searchUser(keyword:String,callback:(VessageUser?)->Void) -> VessageUser?{
+        return nil
+    }
+    
     func sendValidateMobilSMS(callback:(suc:Bool)->Void){
         
         //TODO: delete test

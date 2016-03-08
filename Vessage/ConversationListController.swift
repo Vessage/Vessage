@@ -25,12 +25,30 @@ class ConversationListCellBase:UITableViewCell{
 }
 
 //MARK: ConversationListCell
+class ConversatinoListCellModel{
+    var orginValue:AnyObject?
+    var avatar:String!
+    var headLine:String!
+    var subLine:String!
+}
+typealias ConversationListCellHandler = (cell:ConversationListCell)->Void
 class ConversationListCell:ConversationListCellBase{
     static let reuseId = "ConversationListCell"
-    
-    override func onCellClicked(a: UITapGestureRecognizer) {
-        ConversationViewController.showConversationViewController(self.rootController.navigationController!)
+    var model:ConversatinoListCellModel!{
+        didSet{
+            self.headLineLabel.text = model.headLine
+            self.subLineLabel.text = model.subLine
+        }
     }
+    var conversationListCellhandler:ConversationListCellHandler!
+    override func onCellClicked(a: UITapGestureRecognizer) {
+        if let handler = conversationListCellhandler{
+            handler(cell: self)
+        }
+    }
+    @IBOutlet weak var avatarView: UIImageView!
+    @IBOutlet weak var headLineLabel: UILabel!
+    @IBOutlet weak var subLineLabel: UILabel!
 }
 
 //MARK: ConversationListContactCell
@@ -54,13 +72,29 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
 //MARK: ConversationListController
 class ConversationListController: UITableViewController {
 
+    let conversationService = ServiceContainer.getService(ConversationService)
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
     }
     
+    //MARK: actions
     @IBAction func showUserSetting(sender: AnyObject) {
+    }
+    
+    func handleSearchResult(cell:ConversationListCell){
+        
+    }
+    
+    func handleConversationListCellItem(cell:ConversationListCell){
+        if let conversation = cell.model.orginValue as? Conversation{
+            ConversationViewController.showConversationViewController(self.navigationController!,conversation: conversation)
+        }else{
+            self.playCrossMark("NO_SUCH_CONVERSATION".localizedString())
+        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -71,7 +105,7 @@ class ConversationListController: UITableViewController {
         if section == 0{
             return 1
         }else{
-            return 2
+            return conversationService.conversations.count
         }
     }
     
@@ -80,7 +114,10 @@ class ConversationListController: UITableViewController {
         if indexPath.section == 0{
             cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
         }else{
-            cell = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
+            let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
+            lc.model.orginValue = conversationService.conversations[indexPath.row]
+            lc.conversationListCellhandler = handleConversationListCellItem
+            cell = lc
         }
         cell.rootController = self
         return cell

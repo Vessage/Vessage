@@ -70,7 +70,7 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     public convenience required init(fileNameInTemp:String) {
         self.init()
         let filePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(fileNameInTemp)
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? NSObject {
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? EVObject {
             EVReflection.setPropertiesfromDictionary( temp.toDictionary(false), anyObject: self)
         }
     }
@@ -83,7 +83,7 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     public convenience required init(fileNameInDocuments:String) {
         self.init()
         let filePath = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString).stringByAppendingPathComponent(fileNameInDocuments)
-        if let temp = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? NSObject {
+        if let temp = NSKeyedUnarchiver.unarchiveObjectWithFile(filePath) as? EVObject {
             EVReflection.setPropertiesfromDictionary( temp.toDictionary(false), anyObject: self)
         }
     }
@@ -206,7 +206,7 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     
     This method is in EVObject and not in extension of NSObject because a functions from extensions cannot be overwritten yet
     
-    :returns: Return an array with valupairs of the object property name and json key name.
+    :returns: Return an array with value pairs of the object property name and json key name.
     */
     public func propertyMapping() -> [(String?, String?)] {
         return []
@@ -219,7 +219,7 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     
     :returns: Returns an array where each item is a combination of the folowing 3 values: A string for the property name where the custom conversion is for, a setter function and a getter function.
     */
-    public func propertyConverters() -> [(String?, (Any?)->(), () -> Any? )] {
+    public func propertyConverters() -> [(String?, ((Any?)->())?, (() -> Any?)? )] {
         return []
     }
 
@@ -233,6 +233,62 @@ public class EVObject: NSObject, NSCoding { // These are redundant in Swift 2+: 
     public func getSpecificType(dict: NSDictionary) -> EVObject {
         return self
     }
+    
+    
+    
+    // MARK: - The code below was originally in a NSObject extension.
+    
+    
+    /**
+    Returns the dictionary representation of this object.
+    
+    :parameter: performKeyCleanup set to true if you want to cleanup the keys
+    
+    :returns: The dictionary
+    */
+    final public func toDictionary(performKeyCleanup:Bool = false) -> NSDictionary {
+        let (reflected, _) = EVReflection.toDictionary(self, performKeyCleanup: performKeyCleanup)
+        return reflected
+    }
+    
+    /**
+     Convert this object to a json string
+     
+     :parameter: performKeyCleanup set to true if you want to cleanup the keys
+     
+     :returns: The json string
+     */
+    final public func toJsonString(performKeyCleanup:Bool = false) -> String {
+        return EVReflection.toJsonString(self, performKeyCleanup: performKeyCleanup)
+    }
+    
+    /**
+     Convenience method for instantiating an array from a json string.
+     
+     :parameter: json The json string
+     
+     :returns: An array of objects
+     */
+    public class func arrayFromJson<T where T:NSObject>(json:String?) -> [T] {
+        return EVReflection.arrayFromJson(T(), json: json)
+    }
+    
+    /**
+     Auto map an opbject to an object of an other type.
+     Properties with the same name will be mapped automattically.
+     Automattic cammpelCase, PascalCase, snake_case conversion
+     Supports propperty mapping and conversion when using EVObject as base class
+     
+     - returns: The targe object with the mapped values
+     */
+    public func mapObjectTo<T where T:NSObject>() -> T {
+        let nsobjectype : NSObject.Type = T.self as NSObject.Type
+        let nsobject: NSObject = nsobjectype.init()
+        let dict = self.toDictionary()
+        let result = EVReflection.setPropertiesfromDictionary(dict, anyObject: nsobject)
+        return result as! T
+    }
+    
 }
 
 

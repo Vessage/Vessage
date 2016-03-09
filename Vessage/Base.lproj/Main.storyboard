@@ -300,7 +300,7 @@
                                     <constraint firstAttribute="height" constant="56" id="fUz-8D-h9f"/>
                                     <constraint firstAttribute="width" constant="56" id="zOV-sZ-ozT"/>
                                 </constraints>
-                                <state key="normal" image="refresh"/>
+                                <state key="normal" image="refreshRound"/>
                                 <connections>
                                     <action selector="cancelRecord:" destination="dZT-Nf-e1e" eventType="touchUpInside" id="5Bg-XG-HV3"/>
                                 </connections>
@@ -408,6 +408,6 @@
         <image name="forward" width="256" height="256"/>
         <image name="movie" width="256" height="256"/>
         <image name="next" width="72" height="72"/>
-        <image name="refresh" width="256" height="256"/>
+        <image name="refreshRound" width="256" height="256"/>
     </resources>
 </document>

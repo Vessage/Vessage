@@ -12,9 +12,27 @@ import MBProgressHUD
 
 //MARK: RecordMessageController
 class RecordMessageController: UIViewController,VessageCameraDelegate {
-
+    
+    let userService = ServiceContainer.getService(UserService)
     private static var instance:RecordMessageController!
-    private var conversation:ConversationViewModel!
+    private var conversationId:String!
+    
+    private var chatter:VessageUser!{
+        didSet{
+            if let oldv = oldValue{
+                oldv.removeObserver(self, forKeyPath: "mainChatImage")
+            }
+            chatter.addObserver(self, forKeyPath: "mainChatImage", options: .New, context: nil)
+        }
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        if keyPath == "mainChatImage"{
+            ServiceContainer.getService(FileService).setAvatar(self.smileFaceImageView, iconFileId: chatter.mainChatImage)
+        }
+    }
+    
     private var recording = false{
         didSet{
             if cancelRecordButton != nil{
@@ -81,6 +99,10 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         }
     }
     //MARK: life circle
+    deinit{
+        chatter = nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         camera = VessageCamera()
@@ -92,6 +114,14 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         self.view.bringSubviewToFront(recordButton)
         self.view.bringSubviewToFront(closeRecordViewButton)
         self.view.bringSubviewToFront(cancelRecordButton)
+        userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let imgId = self.chatter.mainChatImage{
+            self.chatter.mainChatImage = imgId
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -102,6 +132,13 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
+    }
+    
+    //MARK:notifications
+    func onUserProfileUpdated(a:NSNotification){
+        if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
+            self.chatter = chatter
+        }
     }
     
     //MARK: actions
@@ -118,10 +155,10 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     }
     
     @IBAction func recordButtonClicked(sender: AnyObject) {
-        if recording{
-            prepareSendRecord()
+        if self.recording{
+            self.prepareSendRecord()
         }else{
-            startRecord()
+            self.startRecord()
         }
     }
     
@@ -164,7 +201,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     }
     
     private func sendVessage(url:NSURL){
-        VessageQueue.sharedInstance.pushNewVideoTo(self.conversation.id, fileUrl:url)
+        VessageQueue.sharedInstance.pushNewVideoTo(conversationId, fileUrl:url)
     }
     
     var tmpFilmZipURL:NSURL {
@@ -208,12 +245,23 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         confirmSend(videoSavedUrl)
     }
     
-    static func showRecordMessageController(vc:UIViewController,conversation:ConversationViewModel)
+    static func showRecordMessageController(vc:UIViewController,conversation:Conversation)
     {
         if RecordMessageController.instance == nil{
             RecordMessageController.instance = instanceFromStoryBoard("Main", identifier: "RecordMessageController") as! RecordMessageController
         }
-        instance.conversation = conversation
+        instance.conversationId = conversation.conversationId
+        if String.isNullOrEmpty(conversation.chatterId) == false{
+            instance.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterId){ chatter in
+                
+            }
+        }else if String.isNullOrEmpty(conversation.chatterMobile) == false{
+            instance.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterMobile){ chatter in
+                
+            }
+        }else{
+            return
+        }
         vc.presentViewController(instance, animated: true) { () -> Void in
             
         }

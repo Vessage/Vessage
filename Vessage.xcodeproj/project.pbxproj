@@ -95,6 +95,8 @@
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
+		E7C16B601C901F750090D477 /* ShareLinkFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C16B5F1C901F750090D477 /* ShareLinkFilmView.swift */; };
+		E7C16B621C901F8E0090D477 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C16B611C901F8E0090D477 /* Player.swift */; };
 		E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */; };
 		E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A301C87EEFF002F96FB /* UserRF.swift */; };
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
@@ -130,7 +132,6 @@
 		E708AB651C86CE1D0071104E /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		E708AB661C86CE1D0071104E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BahamutCommonLocalized.strings; sourceTree = "<group>"; };
 		E708AB671C86CE1D0071104E /* IDUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDUtil.swift; sourceTree = "<group>"; };
-		E708AB681C86CE1D0071104E /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		E708AB691C86CE1D0071104E /* RegexUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexUtil.swift; sourceTree = "<group>"; };
 		E708AB6A1C86CE1D0071104E /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		E708AB6B1C86CE1D0071104E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/BahamutCommonLocalized.strings"; sourceTree = "<group>"; };
@@ -205,6 +206,8 @@
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
+		E7C16B5F1C901F750090D477 /* ShareLinkFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareLinkFilmView.swift; sourceTree = "<group>"; };
+		E7C16B611C901F8E0090D477 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		E7EB9A301C87EEFF002F96FB /* UserRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRF.swift; sourceTree = "<group>"; };
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
@@ -302,17 +305,16 @@
 		E708AB5B1C86CE1D0071104E /* BahamutCommon */ = {
 			isa = PBXGroup;
 			children = (
+				E708AB611C86CE1D0071104E /* Base64 */,
 				E708AB5C1C86CE1D0071104E /* ArrayUtil.swift */,
 				E708AB5D1C86CE1D0071104E /* BahamutCommon.h */,
 				E708AB5E1C86CE1D0071104E /* BahamutObject.swift */,
-				E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */,
-				E708AB611C86CE1D0071104E /* Base64 */,
 				E708AB641C86CE1D0071104E /* CommonValueCast.swift */,
 				E708AB651C86CE1D0071104E /* DateHelper.swift */,
 				E708AB671C86CE1D0071104E /* IDUtil.swift */,
-				E708AB681C86CE1D0071104E /* module.map */,
 				E708AB691C86CE1D0071104E /* RegexUtil.swift */,
 				E708AB6A1C86CE1D0071104E /* StringHelper.swift */,
+				E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */,
 			);
 			name = BahamutCommon;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon;
@@ -617,14 +619,24 @@
 		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				E7C16B631C90211C0090D477 /* UIComponents */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
 				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
-				E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */,
 				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
 				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 			);
 			name = Conversation;
+			sourceTree = "<group>";
+		};
+		E7C16B631C90211C0090D477 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */,
+				E7C16B5F1C901F750090D477 /* ShareLinkFilmView.swift */,
+				E7C16B611C901F8E0090D477 /* Player.swift */,
+			);
+			name = UIComponents;
 			sourceTree = "<group>";
 		};
 		E7EB9A391C87F783002F96FB /* BahamutCmd */ = {
@@ -802,6 +814,7 @@
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
+				E7C16B601C901F750090D477 /* ShareLinkFilmView.swift in Sources */,
 				E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */,
 				E708ABA01C86CF8A0071104E /* MessageExtension.swift in Sources */,
 				E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */,
@@ -857,6 +870,7 @@
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
 				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
 				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
+				E7C16B621C901F8E0090D477 /* Player.swift in Sources */,
 				E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -989,6 +1003,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage",
+					"$(SDKROOT)/usr/lib/system",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1034,6 +1049,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage",
+					"$(SDKROOT)/usr/lib/system",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

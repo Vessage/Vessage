@@ -8,8 +8,11 @@
 
 import Foundation
 
+let NewVessageReceivedValue = "NewVessageReceivedValue"
+
 //MARK: VessageService
 class VessageService:NSNotificationCenter, ServiceProtocol {
+    static let onNewVessageReceived = "onNewVessageReceived"
     @objc static var ServiceName:String {return "Vessage Service"}
     
     @objc func appStartInit(appName: String) {
@@ -30,5 +33,18 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     
     func finishSendVessage(vessageId:String){
         
+    }
+    
+    func newVessageFromServer(){
+        //TODO:
+    }
+    
+    private func notifyVessageGot(){
+        //TODO:
+    }
+    
+    func getConversationNotReadVessage(conversationId:String) -> [Vessage]{
+        //TODO:
+        return [Vessage]()
     }
 }

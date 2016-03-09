@@ -9,7 +9,7 @@
 #ifndef Bridging_Header_h
 #define Bridging_Header_h
 
-#import "BahamutCommon.h"
+#import "BahamutRFKit.h"
 
 #import "UIBarButtomItem-Badge/UIButton+Badge.h"
 #import "UIBarButtomItem-Badge/UIbarButtonItem+Badge.h"

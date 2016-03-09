@@ -8,8 +8,12 @@
 
 import Foundation
 
+let ConversationUpdatedValue = "ConversationUpdatedValue"
+
 //MARK:ConversationService
-class ConversationService: ServiceProtocol {
+class ConversationService:NSNotificationCenter, ServiceProtocol {
+    static let conversationListUpdated = "conversationListUpdated"
+    static let conversationUpdated = "conversationUpdated"
     @objc static var ServiceName:String {return "Conversation Service"}
     
     @objc func appStartInit(appName: String) {
@@ -18,11 +22,9 @@ class ConversationService: ServiceProtocol {
     
     @objc func userLoginInit(userId: String) {
         self.setServiceReady()
-        
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            conversations.append(testConversation)
+        refreshConversations()
+        if conversations.count == 0{
+            getConversationListFromServer()
         }
     }
     
@@ -32,35 +34,83 @@ class ConversationService: ServiceProtocol {
     
     private(set) var conversations = [Conversation]()
     
-    func openConversationBy(accountId:String,callback:(updatedConversation:Conversation)->Void) -> Conversation {
+    private func refreshConversations(){
+        conversations.removeAll()
+        conversations.appendContentsOf(PersistentManager.sharedInstance.getAllModel(Conversation))
+        conversations.sortInPlace { (a, b) -> Bool in
+            a.lastMessageTime.dateTimeOfAccurateString.timeIntervalSince1970 > b.lastMessageTime.dateTimeOfAccurateString.timeIntervalSince1970
+        }
+        self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+    }
+    
+    func getConversationListFromServer(callback:(()->Void)! = nil){
         //TODO: delete test
-        let conversation = Conversation()
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            conversations.append(testConversation)
+            return
+        }
+        
+        let req = GetConversationListRequest()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Conversation]>) -> Void in
+            if let returns = result.returnObject{
+                Conversation.saveObjectOfArray(returns)
+                self.refreshConversations()
+                if let handler = callback{
+                    handler()
+                }
+            }
+        }
+    }
+    
+    func openConversationByMobile(mobile:String,callback:(updatedConversation:Conversation?)->Void) -> Conversation? {
+        //TODO: delete test
+        let testMark = "tn" + ""
+        if testMark == "tn"{
+            callback(updatedConversation: testConversation)
+            return testConversation
+        }
+        
+        if let conversation = (conversations.filter{$0.chatterMobile == mobile}).first{
+            return conversation
+        }else{
+            let req = CreateConversationRequest()
+            req.mobile = mobile
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<Conversation>) -> Void in
+                if let c = result.returnObject{
+                    c.saveModel()
+                    callback(updatedConversation: c)
+                }else{
+                    callback(updatedConversation: nil)
+                }
+            }
+        }
+        return nil
+    }
+    
+    func openConversationByUserId(userId:String,callback:(updatedConversation:Conversation?)->Void) -> Conversation? {
+        //TODO: delete test
         let testMark = "tn" + ""
         if testMark == "tn"{
             return testConversation
         }
         
-        return conversation
-    }
-    
-    func openConversationByMobile(mobile:String,callback:(updatedConversation:Conversation)->Void) -> Conversation {
-        //TODO: delete test
-        let conversation = Conversation()
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            return testConversation
+        
+        if let conversation = (conversations.filter{$0.chatterId == userId}).first{
+            return conversation
+        }else{
+            let req = CreateConversationRequest()
+            req.userId = userId
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<Conversation>) -> Void in
+                if let c = result.returnObject{
+                    c.saveModel()
+                    callback(updatedConversation: c)
+                }else{
+                    callback(updatedConversation: nil)
+                }
+            }
         }
-        return conversation
-    }
-    
-    func openConversationByUserId(mobile:String,callback:(updatedConversation:Conversation)->Void) -> Conversation {
-        //TODO: delete test
-        let conversation = Conversation()
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            return testConversation
-        }
-        return conversation
+        return nil
     }
     
     //MARK:TODO: delete test
@@ -70,19 +120,20 @@ class ConversationService: ServiceProtocol {
         conversation.chatterMobile = "15800038672"
         conversation.chatterNoteName = "xxx"
         conversation.conversationId = "asdfasdddd"
+        conversation.lastMessageTime = NSDate().toFriendlyString()
         return conversation
     }
     
     func removeConversation(conversation:Conversation,callback:(suc:Bool)->Void){
-        
+        //TODO: no api
     }
     
     func searchConversation(keyword:String)->[Conversation]{
-        var result = [Conversation]()
+        let result = conversations.filter{$0.chatterNoteName.containsString(keyword) || $0.chatterMobile == keyword}
         return result
     }
     
     func noteConversation(conversation:Conversation,noteName:String,callback:(suc:Bool)->Void){
-        
+        //TODO: no api
     }
 }

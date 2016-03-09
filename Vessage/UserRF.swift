@@ -25,6 +25,12 @@ class GetUserInfoRequest: BahamutRFRequestBase {
         self.method = .GET
         self.api = "/VessageUsers"
     }
+    
+    var userId:String!{
+        didSet{
+            self.paramenters["userId"] = userId
+        }
+    }
 }
 
 class GetUserInfoByAccountIdRequest: BahamutRFRequestBase {
@@ -81,6 +87,12 @@ class ValidateMobileVSMSRequest: BahamutRFRequestBase{
     var mobile:String!{
         didSet{
             self.paramenters["mobile"] = mobile
+        }
+    }
+    
+    var vsms:String!{
+        didSet{
+            self.paramenters["vsms"] = mobile
         }
     }
 }

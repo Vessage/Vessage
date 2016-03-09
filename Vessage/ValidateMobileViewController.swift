@@ -15,7 +15,7 @@ class ValidateMobileViewController: UIViewController {
     @IBOutlet weak var sendSMSButton: UIButton!
     
     @IBAction func sendSMS(sender: AnyObject) {
-        ServiceContainer.getService(UserService).sendValidateMobilSMS { (suc) -> Void in
+        ServiceContainer.getService(UserService).sendValidateMobilSMS(mobileTextField.text!) { (suc) -> Void in
             if suc{
                 self.playToast("SEND_SMS_KEY_SUCCESS".localizedString())
             }else{

@@ -27,24 +27,42 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         
     }
     
-    func sendVessage(vessage:Vessage){
-        
+    func sendVessage(vessage:Vessage,callback:(sended:Bool)->Void){
+        let req = SendNewVessageRequest()
+        req.conversationId = vessage.conversationId
+        req.fileId = vessage.fileId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            callback(sended: result.isSuccess)
+        }
     }
     
-    func finishSendVessage(vessageId:String){
-        
+    func readVessage(vessageId:String){
+        let req = SetVessageRead()
+        req.vessageId = vessageId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+        }
     }
     
     func newVessageFromServer(){
-        //TODO:
+        let req = GetNewVessagesRequest()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Vessage]>) -> Void in
+            if let vsgs = result.returnObject{
+                vsgs.saveBahamutObjectModels()
+                vsgs.forEach({ (vsg) -> () in
+                    self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [NewVessageReceivedValue:vsg])
+                })
+                self.notifyVessageGot()
+            }
+        }
     }
     
     private func notifyVessageGot(){
-        //TODO:
+        let req = NotifyGotNewVessagesRequest()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+        }
     }
     
     func getConversationNotReadVessage(conversationId:String) -> [Vessage]{
-        //TODO:
-        return [Vessage]()
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && $0.conversationId == conversationId }
     }
 }

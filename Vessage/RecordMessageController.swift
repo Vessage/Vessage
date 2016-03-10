@@ -15,7 +15,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     let userService = ServiceContainer.getService(UserService)
     private static var instance:RecordMessageController!
-    private var conversationId:String!
+    private var conversation:Conversation!
     
     private var chatter:VessageUser!{
         didSet{
@@ -201,7 +201,48 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     }
     
     private func sendVessage(url:NSURL){
-        VessageQueue.sharedInstance.pushNewVideoTo(conversationId, fileUrl:url)
+        let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
+        ServiceContainer.getService(FileService).sendFileToAliOSS(url.path!, type: .Video) { (taskId, fileKey) -> Void in
+            if fileKey != nil{
+                let vessage = Vessage()
+                vessage.conversationId = self.conversation.conversationId
+                vessage.fileId = fileKey.fileId
+                ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+                    hud.hideAsync(false)
+                    self.retrySendVessage(vessage)
+                }
+            }else{
+                hud.hideAsync(false)
+                self.retrySendFile(url)
+            }
+        }
+        
+        //primary version do not use queue
+        //VessageQueue.sharedInstance.pushNewVideoTo(conversationId, fileUrl:url)
+    }
+    
+    private func retrySendVessage(vessage:Vessage){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
+            ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+                hud.hideAsync(false)
+                self.retrySendVessage(vessage)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+            
+        }
+        self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+    }
+    
+    private func retrySendFile(url:NSURL){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            self.sendVessage(url)
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+            
+        }
+        self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
     var tmpFilmZipURL:NSURL {
@@ -217,7 +258,8 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
             
         }
-        self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+        let conversationNoteName = conversation.chatterNoteName
+        self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: conversationNoteName, actions: [okAction,cancelAction])
     }
     
     //MARK: VessageCamera Delegate
@@ -250,7 +292,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         if RecordMessageController.instance == nil{
             RecordMessageController.instance = instanceFromStoryBoard("Main", identifier: "RecordMessageController") as! RecordMessageController
         }
-        instance.conversationId = conversation.conversationId
+        instance.conversation = conversation
         if String.isNullOrEmpty(conversation.chatterId) == false{
             instance.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterId){ chatter in
                 

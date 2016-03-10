@@ -13,6 +13,7 @@ class ConversationViewController: UIViewController {
     
     let conversationService = ServiceContainer.getService(ConversationService)
     let userService = ServiceContainer.getService(UserService)
+    let fileService = ServiceContainer.getService(FileService)
     let vessageService = ServiceContainer.getService(VessageService)
     @IBOutlet weak var vessagebadgeButton: UIButton!{
         didSet{
@@ -20,8 +21,14 @@ class ConversationViewController: UIViewController {
         }
     }
     @IBOutlet weak var avatarButton: UIButton!
-    @IBOutlet weak var vessageView: UIView!{
+    @IBOutlet weak var nextVessageButton: UIButton!{
         didSet{
+            nextVessageButton.hidden = conversationNotReadCount < 2
+        }
+    }
+    @IBOutlet weak var vessageView: ShareLinkFilmView!{
+        didSet{
+            vessageView.fileFetcher = fileService.getFileFetcherOfFileId(.Video)
             vessageView.hidden = (presentingVesseage == nil)
             if presentingVesseage != nil{
                 
@@ -41,7 +48,9 @@ class ConversationViewController: UIViewController {
     }
     private var presentingVesseage:Vessage!{
         didSet{
-            
+            if presentingVesseage != nil{
+                vessageView.filePath = presentingVesseage.fileId
+            }
         }
     }
     
@@ -58,17 +67,22 @@ class ConversationViewController: UIViewController {
             }else{
                 vessagebadgeButton.badgeValue = "\(conversationNotReadCount)"
             }
+            nextVessageButton?.hidden = conversationNotReadCount < 2
         }
     }
     
     //MARK: actions
     
-    func playPresentingVessage(){
-        
-    }
-    
     func loadNextVessage(){
-        
+        if notReadVessages.count == 0{
+            self.playToast("NO_VESSAGE".localizedString())
+        }else if notReadVessages.count == 1{
+            self.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
+        }else{
+            notReadVessages.removeFirst()
+            self.presentingVesseage = notReadVessages.first
+            vessageService.readVessage(presentingVesseage.vessageId)
+        }
     }
     
     @IBAction func showRecordMessage(sender: AnyObject) {
@@ -80,6 +94,38 @@ class ConversationViewController: UIViewController {
     }
     
     @IBAction func noteConversation(sender: AnyObject) {
+        showNoteConversationAlert()
+    }
+    
+    private func showNoteConversationAlert(){
+        let title = "NOTE_CONVERSATION_A_NAME".localizedString()
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
+        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
+            textfield.placeholder = "CONVERSATION_NAME".localizedString()
+            textfield.borderStyle = .None
+            textfield.text = self.controllerTitle
+        })
+        
+        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
+            let newNoteName = alertController.textFields?[0].text ?? ""
+            if String.isNullOrEmpty(newNoteName)
+            {
+                self.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
+            }else{
+                
+                self.conversationService.noteConversation(self.conversationId, noteName: newNoteName, callback: { (suc) -> Void in
+                    if suc{
+                        self.controllerTitle = newNoteName
+                    }else{
+                        self.playToast("CHANGE_NOTE_NAME_ERROR".localizedString())
+                    }
+                })
+            }
+        })
+        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
+        alertController.addAction(no)
+        alertController.addAction(yes)
+        self.showAlert(alertController)
     }
     
     @IBAction func showUserProfile(sender: AnyObject) {
@@ -103,6 +149,13 @@ class ConversationViewController: UIViewController {
         super.viewDidLoad()
         userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: "onNewVessageReveiced:", name: VessageService.onNewVessageReceived, object: nil)
+        ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
+    }
+    
+    deinit{
+        userService.removeObserver(self)
+        vessageService.removeObserver(self)
+        ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -116,6 +169,10 @@ class ConversationViewController: UIViewController {
     }
     
     //MARK: notifications
+    func onNewVessageNotify(a:NSNotification){
+        vessageService.newVessageFromServer()
+    }
+    
     func onUserProfileUpdated(a:NSNotification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
             self.chatter = chatter

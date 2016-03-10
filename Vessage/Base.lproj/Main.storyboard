@@ -120,6 +120,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="avatarButton" destination="oKl-m5-vDr" id="cNQ-q3-lZR"/>
+                        <outlet property="nextVessageButton" destination="m3d-1d-8Nj" id="Xup-az-ezt"/>
                         <outlet property="vessageView" destination="sed-Es-EFJ" id="cbW-Nq-HnS"/>
                         <outlet property="vessagebadgeButton" destination="xcS-R4-JGd" id="3vH-Ae-VFK"/>
                     </connections>

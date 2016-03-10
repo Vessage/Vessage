@@ -8,8 +8,45 @@
 
 import Foundation
 
+class SendVessageFileStep:BahamutTaskStepWorker{
+    func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
+        let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
+        ServiceContainer.getService(FileService).sendFileToAliOSS(model.filePath, type: .Video) { (taskId, fileKey) -> Void in
+            if fileKey != nil{
+                model.fileId = fileKey.fileId
+                step.finishedStep(nil)
+            }else{
+                step.failStep(nil)
+            }
+        }
+    }
+}
+
+class PostVessageToServer:BahamutTaskStepWorker{
+    func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
+        let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
+        let vessage = Vessage()
+        vessage.conversationId = model.conversationId
+        vessage.fileId = model.fileId
+        ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+            if sended{
+                step.finishedStep(nil)
+            }else{
+                step.failStep(nil)
+            }
+        }
+    }
+}
+
+class SendVessageTaskInfo:BahamutObject{
+    var filePath:String!
+    var fileId:String!
+    var conversationId:String!
+}
+
 class VessageQueue{
-    
+    let sendVessageQueueName = "SendVessage"
+    let sendVessageQueueWorkStep = ["SendAliOSSFile","PostVessage"]
     static var sharedInstance:VessageQueue{
         return VessageQueue()
     }
@@ -21,15 +58,10 @@ class VessageQueue{
             return
         }
         
-        ServiceContainer.getService(FileService).sendFileToAliOSS(fileUrl.path!, type: .Video) { (taskId, fileKey) -> Void in
-            if fileKey != nil{
-                let vessage = Vessage()
-                vessage.conversationId = conversationId
-                vessage.fileId = fileKey.fileId
-                ServiceContainer.getService(VessageService).sendVessage(vessage)
-            }else{
-                
-            }
-        }
+        let userInfoModel = SendVessageTaskInfo()
+        userInfoModel.conversationId = conversationId
+        userInfoModel.filePath = fileUrl.path!
+        BahamutTaskQueue.getQueue(sendVessageQueueName).pushTask(userInfoModel.toJsonString(), step: sendVessageQueueWorkStep)
+        
     }
 }

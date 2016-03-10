@@ -73,7 +73,6 @@
 		E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC741C86EC160071104E /* ServiceContainer.swift */; };
 		E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC751C86EC160071104E /* ServiceProtocol.swift */; };
 		E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC831C86EC6E0071104E /* ServicesConfig.swift */; };
-		E708AC871C86F0490071104E /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */; };
 		E708AC901C871A850071104E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC8F1C871A850071104E /* UserService.swift */; };
 		E708AC921C871B610071104E /* VessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC911C871B610071104E /* VessageService.swift */; };
 		E708AC941C871C000071104E /* ConversationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC931C871C000071104E /* ConversationService.swift */; };
@@ -102,6 +101,8 @@
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
 		E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */; };
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
+		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
+		E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */; };
 		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
 		E7F2C3511C8DD2D900F919AE /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */; };
 /* End PBXBuildFile section */
@@ -184,7 +185,6 @@
 		E708AC741C86EC160071104E /* ServiceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
 		E708AC751C86EC160071104E /* ServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
 		E708AC831C86EC6E0071104E /* ServicesConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesConfig.swift; sourceTree = "<group>"; };
-		E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E708AC8F1C871A850071104E /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		E708AC911C871B610071104E /* VessageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageService.swift; sourceTree = "<group>"; };
 		E708AC931C871C000071104E /* ConversationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationService.swift; sourceTree = "<group>"; };
@@ -213,6 +213,8 @@
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
 		E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmdManager.swift; sourceTree = "<group>"; };
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
+		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
+		E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
 		E7F2C3501C8DD2D900F919AE /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -525,15 +527,6 @@
 			path = BahamutFire;
 			sourceTree = "<group>";
 		};
-		E708AC851C86F0490071104E /* ProgressTaskWatcher */ = {
-			isa = PBXGroup;
-			children = (
-				E708AC861C86F0490071104E /* ProgressTaskWatcher.swift */,
-			);
-			name = ProgressTaskWatcher;
-			path = ../../../bahamut/Bahamut/Bahamut/ProgressTaskWatcher;
-			sourceTree = "<group>";
-		};
 		E708ACA11C8752090071104E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,6 +578,7 @@
 		E708ACA91C8752BF0071104E /* ArchBase */ = {
 			isa = PBXGroup;
 			children = (
+				E7ED38FB1C912F8E002126F4 /* BahamutTask */,
 				E708AC641C86EC160071104E /* BahamutServiceContainer */,
 				E75A70391C8C0FFF0029F0BD /* ChicagoClient */,
 				E7EB9A391C87F783002F96FB /* BahamutCmd */,
@@ -593,7 +587,6 @@
 				E708AB5B1C86CE1D0071104E /* BahamutCommon */,
 				E708AB501C86CB6D0071104E /* UIBarButtomItem-Badge */,
 				E708ABF41C86D7B70071104E /* BahamutUIKit */,
-				E708AC851C86F0490071104E /* ProgressTaskWatcher */,
 			);
 			name = ArchBase;
 			sourceTree = "<group>";
@@ -647,6 +640,16 @@
 			);
 			name = BahamutCmd;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutCmd;
+			sourceTree = "<group>";
+		};
+		E7ED38FB1C912F8E002126F4 /* BahamutTask */ = {
+			isa = PBXGroup;
+			children = (
+				E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */,
+				E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */,
+			);
+			name = BahamutTask;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutTask;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -806,6 +809,7 @@
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
+				E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */,
 				E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */,
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
@@ -839,6 +843,7 @@
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
+				E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
@@ -847,7 +852,6 @@
 				E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */,
 				E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */,
 				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
-				E708AC871C86F0490071104E /* ProgressTaskWatcher.swift in Sources */,
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,

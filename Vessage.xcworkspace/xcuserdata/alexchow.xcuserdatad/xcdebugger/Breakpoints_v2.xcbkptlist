@@ -149,11 +149,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479230553.529694"
+            timestampString = "479307804.309483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "vessageCameraDidStartRecord()"
             landmarkType = "5">
          </BreakpointContent>
@@ -165,11 +165,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479230553.529694"
+            timestampString = "479307804.309483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "vessageCameraDidStopRecord()"
             landmarkType = "5">
          </BreakpointContent>
@@ -213,11 +213,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479230553.529694"
+            timestampString = "479307804.309483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "showRecordMessageController(_:conversation:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -229,11 +229,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479230553.529694"
+            timestampString = "479307804.309483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "296"
+            endingLineNumber = "296"
             landmarkName = "showRecordMessageController(_:conversation:)"
             landmarkType = "5">
          </BreakpointContent>

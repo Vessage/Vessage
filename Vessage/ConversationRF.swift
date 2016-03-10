@@ -43,3 +43,37 @@ class CreateConversationRequest: BahamutRFRequestBase {
         }
     }
 }
+
+class NoteConversationRequest:BahamutRFRequestBase{
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/Conversations/NoteName"
+    }
+    
+    var conversationId:String!{
+        didSet{
+            self.paramenters["conversationId"] = conversationId
+        }
+    }
+    
+    var noteName:String!{
+        didSet{
+            self.paramenters["noteName"] = noteName
+        }
+    }
+}
+
+class RemoveConversationRequest:BahamutRFRequestBase{
+    override init() {
+        super.init()
+        self.method = .DELETE
+        self.api = "/Conversations"
+    }
+    
+    var conversationId:String!{
+        didSet{
+            self.paramenters["conversationId"] = conversationId
+        }
+    }
+}

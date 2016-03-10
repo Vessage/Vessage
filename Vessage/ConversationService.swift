@@ -124,8 +124,17 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversation
     }
     
-    func removeConversation(conversation:Conversation,callback:(suc:Bool)->Void){
-        //TODO: no api
+    func removeConversation(conversationId:String,callback:(suc:Bool)->Void){
+        let req = RemoveConversationRequest()
+        req.conversationId = conversationId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
+            if result.isSuccess{
+                if let c = (self.conversations.removeElement{$0.conversationId == conversationId}).first{
+                    PersistentManager.sharedInstance.removeModel(c)
+                }
+            }
+            callback(suc: result.isSuccess)
+        }
     }
     
     func searchConversation(keyword:String)->[Conversation]{
@@ -133,7 +142,17 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return result
     }
     
-    func noteConversation(conversation:Conversation,noteName:String,callback:(suc:Bool)->Void){
-        //TODO: no api
+    func noteConversation(conversationId:String,noteName:String,callback:(suc:Bool)->Void){
+        let req = NoteConversationRequest()
+        req.conversationId = conversationId
+        req.noteName = noteName
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
+            if result.isSuccess{
+                if let c = PersistentManager.sharedInstance.getModel(Conversation.self, idValue: conversationId){
+                    c.chatterNoteName = noteName
+                }
+            }
+            callback(suc: result.isSuccess)
+        }
     }
 }

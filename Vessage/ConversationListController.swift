@@ -210,6 +210,8 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                 if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1)) as? ConversationListCell{
                     if let cv = cell.originModel as? Conversation{
                         if cv.conversationId == msg.conversationId{
+                            cv.lastMessageTime = msg.sendTime
+                            cv.saveModel()
                             cell.badge = (cell.badge ?? 0) + 1
                         }
                         

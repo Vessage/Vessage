@@ -111,7 +111,7 @@ class ChangeAvatarRequest: BahamutRFRequestBase {
     }
 }
 
-class ChangeNickRequest: BahamutRFRequestBase {
+class ChangeMainChatImageRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.method = .PUT
@@ -125,7 +125,7 @@ class ChangeNickRequest: BahamutRFRequestBase {
     }
 }
 
-class ChangeMainChatImageRequest: BahamutRFRequestBase {
+class ChangeNickRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.method = .PUT

@@ -28,7 +28,7 @@ class GetUserInfoRequest: BahamutRFRequestBase {
     
     var userId:String!{
         didSet{
-            self.paramenters["userId"] = userId
+            self.api = "/VessageUsers/UserId/\(userId)"
         }
     }
 }
@@ -37,12 +37,12 @@ class GetUserInfoByAccountIdRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.method = .GET
-        self.api = "/VessageUsers"
+        self.api = "/VessageUsers/AccountId"
     }
     
     var accountId:String!{
         didSet{
-            self.api = "/VessageUsers/\(accountId)"
+            self.api = "/VessageUsers/AccountId/\(accountId)"
         }
     }
 }

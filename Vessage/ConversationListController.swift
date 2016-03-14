@@ -88,7 +88,9 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
     //MARK: ABPeoplePickerNavigationControllerDelegate
     func peoplePickerNavigationController(peoplePicker: ABPeoplePickerNavigationController, didSelectPerson person: ABRecord) {
         peoplePicker.dismissViewControllerAnimated(true) { () -> Void in
-            
+            let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
+            let lname = ABRecordCopyValue(person, kABPersonLastNameProperty)?.takeRetainedValue() ?? ""
+            let title = "\(lname!) \(fname!)"
             if let phones = ABRecordCopyValue(person, kABPersonPhoneProperty)?.takeRetainedValue(){
                 if ABMultiValueGetCount(phones) > 0{
                     var actions = [UIAlertAction]()
@@ -105,21 +107,14 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
                         phoneNos.append(phone)
                         let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .Default, handler: { (action) -> Void in
                             if let i = actions.indexOf(action){
-                                let hud = self.rootController.showActivityHud()
-                                self.rootController.conversationService.openConversationByMobile(phoneNos[i], callback: { (updatedConversation) -> Void in
-                                    hud.hideAsync(true)
-                                    if let c = updatedConversation{
-                                        ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: c)
-                                    }
-                                })
+                                let conversation = self.rootController.conversationService.openConversationByMobile(phoneNos[i],noteName: title)
+                                ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: conversation)
                             }
                         })
                         actions.append(action)
                     }
                     if actions.count > 0{
-                        let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
-                        let lname = ABRecordCopyValue(person, kABPersonLastNameProperty)?.takeRetainedValue() ?? ""
-                        let title = "\(lname!) \(fname!)"
+                        
                         let msg = "CHOOSE_PHONE_NO".localizedString()
                         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
                         actions.forEach{alertController.addAction($0)}
@@ -181,7 +176,6 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         self.conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
         userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: "onNewVessageReveiced:", name: VessageService.onNewVessageReceived, object: nil)
-        self.conversationService.getConversationListFromServer()
     }
     
     //MARK: notifications
@@ -237,19 +231,9 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                     ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
                 }
             }else if let u = result.user{
-                conversationService.openConversationByUserId(u.userId, callback: { (updatedConversation) -> Void in
-                    hud.hideAsync(true)
-                    if let c = updatedConversation{
-                        ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
-                    }
-                })
+                conversationService.openConversationByUserId(u.userId,noteName: u.nickName)
             }else if let mobile = result.mobile{
-                conversationService.openConversationByMobile(mobile, callback: { (updatedConversation) -> Void in
-                    hud.hideAsync(true)
-                    if let c = updatedConversation{
-                        ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
-                    }
-                })
+                conversationService.openConversationByMobile(mobile,noteName: nil)
             }
         }
     }
@@ -318,7 +302,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                 let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
                 let conversation = conversationService.conversations[indexPath.row]
                 lc.originModel = conversation
-                lc.headLine = conversation.chatterNoteName ?? conversation.chatterMobile
+                lc.headLine = conversation.noteName ?? conversation.chatterMobile
                 lc.subLine = conversation.lastMessageTime
                 lc.badge = vessageService.getConversationNotReadVessage(conversation.conversationId).count
                 lc.conversationListCellHandler = handleConversationListCellItem

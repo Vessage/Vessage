@@ -88,7 +88,6 @@
 		E708ACAD1C8754E20071104E /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708ACAC1C8754E20071104E /* User.storyboard */; };
 		E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
-		E75A70381C8C0B190029F0BD /* ConversationRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70371C8C0B190029F0BD /* ConversationRF.swift */; };
 		E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */; };
 		E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
@@ -200,7 +199,6 @@
 		E708ACAC1C8754E20071104E /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatImageViewController.swift; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
-		E75A70371C8C0B190029F0BD /* ConversationRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRF.swift; sourceTree = "<group>"; };
 		E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClient.swift; sourceTree = "<group>"; };
 		E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClientBase.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -432,7 +430,6 @@
 			children = (
 				E7EB9A301C87EEFF002F96FB /* UserRF.swift */,
 				E75A70351C8C09360029F0BD /* VessageRF.swift */,
-				E75A70371C8C0B190029F0BD /* ConversationRF.swift */,
 			);
 			name = RestfulAPI;
 			sourceTree = "<group>";
@@ -834,7 +831,6 @@
 				E708AB9D1C86CF8A0071104E /* BahamutMessage.xcdatamodeld in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
-				E75A70381C8C0B190029F0BD /* ConversationRF.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */,
 				E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */,

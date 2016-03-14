@@ -258,7 +258,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
             
         }
-        let conversationNoteName = conversation.chatterNoteName
+        let conversationNoteName = conversation.noteName
         self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: conversationNoteName, actions: [okAction,cancelAction])
     }
     

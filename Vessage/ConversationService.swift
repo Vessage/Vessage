@@ -8,6 +8,16 @@
 
 import Foundation
 
+//MARK: Conversation
+class Conversation:BahamutObject
+{
+    var conversationId:String!
+    var chatterId:String!
+    var chatterMobile:String!
+    var noteName:String!
+    var lastMessageTime:String!
+}
+
 let ConversationUpdatedValue = "ConversationUpdatedValue"
 
 //MARK:ConversationService
@@ -23,9 +33,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     @objc func userLoginInit(userId: String) {
         self.setServiceReady()
         refreshConversations()
-        if conversations.count == 0{
-            getConversationListFromServer()
-        }
     }
     
     @objc func userLogout(userId: String) {
@@ -43,116 +50,56 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
     
-    func getConversationListFromServer(callback:(()->Void)! = nil){
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            conversations.append(testConversation)
-            return
-        }
-        
-        let req = GetConversationListRequest()
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Conversation]>) -> Void in
-            if let returns = result.returnObject{
-                Conversation.saveObjectOfArray(returns)
-                self.refreshConversations()
-                if let handler = callback{
-                    handler()
-                }
-            }
-        }
-    }
-    
-    func openConversationByMobile(mobile:String,callback:(updatedConversation:Conversation?)->Void) -> Conversation? {
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            callback(updatedConversation: testConversation)
-            return testConversation
-        }
+    func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
         
         if let conversation = (conversations.filter{$0.chatterMobile == mobile}).first{
             return conversation
         }else{
-            let req = CreateConversationRequest()
-            req.mobile = mobile
-            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<Conversation>) -> Void in
-                if let c = result.returnObject{
-                    c.saveModel()
-                    callback(updatedConversation: c)
-                }else{
-                    callback(updatedConversation: nil)
-                }
-            }
+            let conversation = Conversation()
+            conversation.conversationId = IdUtil.generateUniqueId()
+            conversation.noteName = String.isNullOrWhiteSpace(noteName) ? mobile : noteName
+            conversation.chatterMobile = mobile
+            conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+            conversation.saveModel()
+            return conversation
         }
-        return nil
     }
     
-    func openConversationByUserId(userId:String,callback:(updatedConversation:Conversation?)->Void) -> Conversation? {
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            return testConversation
-        }
-        
+    func openConversationByUserId(userId:String,noteName:String?) -> Conversation {
         
         if let conversation = (conversations.filter{$0.chatterId == userId}).first{
             return conversation
         }else{
-            let req = CreateConversationRequest()
-            req.userId = userId
-            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<Conversation>) -> Void in
-                if let c = result.returnObject{
-                    c.saveModel()
-                    callback(updatedConversation: c)
-                }else{
-                    callback(updatedConversation: nil)
-                }
-            }
+            let conversation = Conversation()
+            conversation.conversationId = IdUtil.generateUniqueId()
+            conversation.chatterId = userId
+            conversation.noteName = noteName
+            conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+            return conversation
         }
-        return nil
     }
     
-    //MARK:TODO: delete test
-    var testConversation:Conversation{
-        let conversation = Conversation()
-        conversation.chatterId = "asdfasd"
-        conversation.chatterMobile = "15800038672"
-        conversation.chatterNoteName = "xxx"
-        conversation.conversationId = "asdfasdddd"
-        conversation.lastMessageTime = NSDate().toFriendlyString()
-        return conversation
-    }
-    
-    func removeConversation(conversationId:String,callback:(suc:Bool)->Void){
-        let req = RemoveConversationRequest()
-        req.conversationId = conversationId
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
-            if result.isSuccess{
-                if let c = (self.conversations.removeElement{$0.conversationId == conversationId}).first{
-                    PersistentManager.sharedInstance.removeModel(c)
-                }
-            }
-            callback(suc: result.isSuccess)
+    func removeConversation(conversationId:String) -> Bool{
+        if let c = (self.conversations.removeElement{$0.conversationId == conversationId}).first{
+            PersistentManager.sharedInstance.removeModel(c)
+            return true
+        }else{
+            return false
         }
     }
     
     func searchConversation(keyword:String)->[Conversation]{
-        let result = conversations.filter{$0.chatterNoteName.containsString(keyword) || $0.chatterMobile == keyword}
+        let result = conversations.filter{$0.noteName.containsString(keyword) || $0.chatterMobile == keyword}
         return result
     }
     
-    func noteConversation(conversationId:String,noteName:String,callback:(suc:Bool)->Void){
-        let req = NoteConversationRequest()
-        req.conversationId = conversationId
-        req.noteName = noteName
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
-            if result.isSuccess{
-                if let c = PersistentManager.sharedInstance.getModel(Conversation.self, idValue: conversationId){
-                    c.chatterNoteName = noteName
-                }
-            }
-            callback(suc: result.isSuccess)
+    func noteConversation(conversationId:String,noteName:String) -> Bool{
+        if let conversation = PersistentManager.sharedInstance.getModel(Conversation.self, idValue: conversationId){
+            conversation.noteName = noteName
+            conversation.saveModel()
+            return true
+        }else{
+            return false
         }
     }
 }

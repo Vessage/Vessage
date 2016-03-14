@@ -113,13 +113,7 @@ class ConversationViewController: UIViewController {
                 self.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
             }else{
                 
-                self.conversationService.noteConversation(self.conversationId, noteName: newNoteName, callback: { (suc) -> Void in
-                    if suc{
-                        self.controllerTitle = newNoteName
-                    }else{
-                        self.playToast("CHANGE_NOTE_NAME_ERROR".localizedString())
-                    }
-                })
+                self.conversationService.noteConversation(self.conversationId, noteName: newNoteName)
             }
         })
         let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
@@ -204,7 +198,7 @@ class ConversationViewController: UIViewController {
         }else{
             return
         }
-        controller.controllerTitle = conversation.chatterNoteName
+        controller.controllerTitle = conversation.noteName
         nvc.pushViewController(controller, animated: true)
     }
 

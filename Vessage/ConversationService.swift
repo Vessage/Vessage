@@ -11,6 +11,9 @@ import Foundation
 //MARK: Conversation
 class Conversation:BahamutObject
 {
+    override func getObjectUniqueIdName() -> String {
+        return "conversationId"
+    }
     var conversationId:String!
     var chatterId:String!
     var chatterMobile:String!
@@ -61,6 +64,8 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             conversation.chatterMobile = mobile
             conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
             conversation.saveModel()
+            conversations.append(conversation)
+            self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
     }
@@ -75,13 +80,26 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             conversation.chatterId = userId
             conversation.noteName = noteName
             conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+            conversations.append(conversation)
+            self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
+    }
+    
+    func updateConversationChatterIdWithMobile(chatterId:String,mobile:String){
+        self.conversations.forEach { (con) -> () in
+            if String.isNullOrWhiteSpace(con.chatterId) && con.chatterMobile == mobile{
+                con.chatterId = chatterId
+                con.saveModel()
+            }
+        }
+        PersistentManager.sharedInstance.saveAll()
     }
     
     func removeConversation(conversationId:String) -> Bool{
         if let c = (self.conversations.removeElement{$0.conversationId == conversationId}).first{
             PersistentManager.sharedInstance.removeModel(c)
+            self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return true
         }else{
             return false
@@ -89,7 +107,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     func searchConversation(keyword:String)->[Conversation]{
-        let result = conversations.filter{$0.noteName.containsString(keyword) || $0.chatterMobile == keyword}
+        let result = conversations.filter{
+            ($0.noteName ?? "").containsString(keyword) || keyword == $0.chatterMobile
+        }
         return result
     }
     

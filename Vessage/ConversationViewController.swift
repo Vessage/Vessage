@@ -86,11 +86,7 @@ class ConversationViewController: UIViewController {
     }
     
     @IBAction func showRecordMessage(sender: AnyObject) {
-        let conversation = Conversation()
-        conversation.conversationId = self.conversationId
-        conversation.chatterId = self.chatter.userId
-        conversation.chatterMobile = self.chatter.mobile
-        RecordMessageController.showRecordMessageController(self,conversation: conversation)
+        RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
     }
     
     @IBAction func noteConversation(sender: AnyObject) {
@@ -159,7 +155,7 @@ class ConversationViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        notReadVessages = vessageService.getConversationNotReadVessage(self.conversationId)
+        notReadVessages = vessageService.getNotReadVessage(self.chatter)
     }
     
     //MARK: notifications
@@ -169,13 +165,17 @@ class ConversationViewController: UIViewController {
     
     func onUserProfileUpdated(a:NSNotification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            self.chatter = chatter
+            if self.chatter != nil{                
+                if chatter.userId == self.chatter.userId || chatter.mobile == self.chatter.mobile{
+                    self.chatter = chatter
+                }
+            }
         }
     }
     
     func onNewVessageReveiced(a:NSNotification){
         if let msg = a.userInfo?[NewVessageReceivedValue] as? Vessage{
-            if msg.conversationId == conversationId{
+            if msg.sender == self.chatter?.userId ?? ""{
                 self.notReadVessages.append(msg)
                 conversationNotReadCount++
             }
@@ -188,15 +188,16 @@ class ConversationViewController: UIViewController {
         let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversationId = conversation.conversationId
         if String.isNullOrEmpty(conversation.chatterId) == false{
-            controller.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterId){ user in
-                
-            }
+            controller.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterId){ user in }
         }else if String.isNullOrEmpty(conversation.chatterMobile) == false{
-            controller.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterMobile){ user in
-                
-            }
-        }else{
-            return
+            controller.chatter = ServiceContainer.getService(UserService).getUserProfileByMobile(conversation.chatterMobile){ user in }
+        }
+        if controller.chatter == nil{
+            let chatter = VessageUser()
+            chatter.nickName = conversation.noteName
+            chatter.userId = conversation.chatterId
+            chatter.mobile = conversation.chatterMobile
+            controller.chatter = chatter
         }
         controller.controllerTitle = conversation.noteName
         nvc.pushViewController(controller, animated: true)

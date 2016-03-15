@@ -27,10 +27,19 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         
     }
     
-    func sendVessage(vessage:Vessage,callback:(sended:Bool)->Void){
-        let req = SendNewVessageRequest()
-        req.conversationId = vessage.conversationId
-        req.fileId = vessage.fileId
+    func sendVessage(receiverId:String?, receiverMobile:String?, fileId:String,callback:(sended:Bool)->Void){
+        var req:BahamutRFRequestBase! = nil
+        if let rId = receiverId{
+            let r = SendNewVessageForUserRequest()
+            r.receiverId = rId
+            r.fileId = fileId
+            req = r
+        }else if let m = receiverMobile{
+            let r = SendNewVessageForMobileRequest()
+            r.receiverMobile = m
+            r.fileId = fileId
+            req = r
+        }
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
             callback(sended: result.isSuccess)
         }
@@ -62,7 +71,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func getConversationNotReadVessage(conversationId:String) -> [Vessage]{
-        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && $0.conversationId == conversationId }
+    func getNotReadVessage(chatter:VessageUser) -> [Vessage]{
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && ($0.sender == chatter.userId) }
     }
 }

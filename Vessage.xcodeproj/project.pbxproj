@@ -95,6 +95,7 @@
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7C16B601C901F750090D477 /* ShareLinkFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C16B5F1C901F750090D477 /* ShareLinkFilmView.swift */; };
 		E7C16B621C901F8E0090D477 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C16B611C901F8E0090D477 /* Player.swift */; };
+		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
 		E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */; };
 		E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A301C87EEFF002F96FB /* UserRF.swift */; };
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
@@ -206,6 +207,7 @@
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7C16B5F1C901F750090D477 /* ShareLinkFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareLinkFilmView.swift; sourceTree = "<group>"; };
 		E7C16B611C901F8E0090D477 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		E7EB9A301C87EEFF002F96FB /* UserRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRF.swift; sourceTree = "<group>"; };
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
@@ -610,11 +612,9 @@
 			isa = PBXGroup;
 			children = (
 				E7C16B631C90211C0090D477 /* UIComponents */,
+				E7C387F31C982FC10096AF85 /* RecordMessage */,
+				E7C387EF1C982F510096AF85 /* ConversationList */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
-				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
-				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
-				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
-				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
@@ -627,6 +627,25 @@
 				E7C16B611C901F8E0090D477 /* Player.swift */,
 			);
 			name = UIComponents;
+			sourceTree = "<group>";
+		};
+		E7C387EF1C982F510096AF85 /* ConversationList */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
+				E7C387F01C982F640096AF85 /* ConversationListCell.swift */,
+			);
+			name = ConversationList;
+			sourceTree = "<group>";
+		};
+		E7C387F31C982FC10096AF85 /* RecordMessage */ = {
+			isa = PBXGroup;
+			children = (
+				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
+				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
+				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
+			);
+			name = RecordMessage;
 			sourceTree = "<group>";
 		};
 		E7EB9A391C87F783002F96FB /* BahamutCmd */ = {
@@ -836,6 +855,7 @@
 				E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */,
 				E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
+				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,

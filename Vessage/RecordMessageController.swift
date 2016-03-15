@@ -15,7 +15,6 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     let userService = ServiceContainer.getService(UserService)
     private static var instance:RecordMessageController!
-    private var conversation:Conversation!
     
     private var chatter:VessageUser!{
         didSet{
@@ -204,12 +203,13 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
         ServiceContainer.getService(FileService).sendFileToAliOSS(url.path!, type: .Video) { (taskId, fileKey) -> Void in
             if fileKey != nil{
-                let vessage = Vessage()
-                vessage.conversationId = self.conversation.conversationId
-                vessage.fileId = fileKey.fileId
-                ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+                ServiceContainer.getService(VessageService).sendVessage(self.chatter.userId ?? nil, receiverMobile: self.chatter.mobile ?? nil, fileId: fileKey.fileId){ sended in
                     hud.hideAsync(false)
-                    self.retrySendVessage(vessage)
+                    if sended == false{
+                        self.retrySendVessage(fileKey.fileId)
+                    }else{
+                        self.playCheckMark("VESSAGE_SENDED".localizedString())
+                    }
                 }
             }else{
                 hud.hideAsync(false)
@@ -221,16 +221,16 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         //VessageQueue.sharedInstance.pushNewVideoTo(conversationId, fileUrl:url)
     }
     
-    private func retrySendVessage(vessage:Vessage){
+    private func retrySendVessage(fileId:String){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
             let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
-            ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+            ServiceContainer.getService(VessageService).sendVessage(self.chatter.userId ?? nil, receiverMobile: self.chatter.mobile ?? nil, fileId:fileId){ sended in
                 hud.hideAsync(false)
-                self.retrySendVessage(vessage)
+                self.retrySendVessage(fileId)
             }
         }
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
-            
+            self.playCrossMark("CANCEL".localizedString())
         }
         self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
@@ -240,7 +240,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
             self.sendVessage(url)
         }
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
-            
+            self.playCrossMark("CANCEL".localizedString())
         }
         self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
@@ -258,7 +258,9 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
             
         }
-        let conversationNoteName = conversation.noteName
+        let size = PersistentFileHelper.fileSizeOf(url.path!)
+        print("\(size/1024)kb")
+        let conversationNoteName = chatter.nickName
         self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: conversationNoteName, actions: [okAction,cancelAction])
     }
     
@@ -282,28 +284,24 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     func vessageCamera(videoSavedUrl: NSURL) {
         self.sendingHud.hideAsync(true)
-        let size = PersistentFileHelper.fileSizeOf(videoSavedUrl.path!)
-        print("\(size/1024)kb")
-        confirmSend(videoSavedUrl)
+        let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
+        if PersistentFileHelper.moveFile(videoSavedUrl.path!, destinationPath: newFilePath)
+        {
+            self.playToast("VIDEO_SAVED".localizedString())
+            confirmSend(NSURL(fileURLWithPath: newFilePath))
+        }else
+        {
+            self.showAlert("SAVE_VIDEO_FAILED".localizedString(), msg: "")
+        }
+        
     }
     
-    static func showRecordMessageController(vc:UIViewController,conversation:Conversation)
+    static func showRecordMessageController(vc:UIViewController,chatter:VessageUser)
     {
         if RecordMessageController.instance == nil{
             RecordMessageController.instance = instanceFromStoryBoard("Main", identifier: "RecordMessageController") as! RecordMessageController
         }
-        instance.conversation = conversation
-        if String.isNullOrEmpty(conversation.chatterId) == false{
-            instance.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterId){ chatter in
-                
-            }
-        }else if String.isNullOrEmpty(conversation.chatterMobile) == false{
-            instance.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterMobile){ chatter in
-                
-            }
-        }else{
-            return
-        }
+        instance.chatter = chatter
         vc.presentViewController(instance, animated: true) { () -> Void in
             
         }

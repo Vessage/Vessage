@@ -25,11 +25,13 @@ class SignInViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        ServiceContainer.instance.addObserver(self, selector: "onInitServiceFailed:", name: ServiceContainer.ServiceInitFailed, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistAccountCompleted:", name: RegistAccountCompleted, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        ServiceContainer.instance.removeObserver(self)
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -51,24 +53,6 @@ class SignInViewController: UIViewController {
         BahamutRFKit.sharedInstance.loginBahamutAccount(VessageConfig.bahamutConfig.accountLoginApiUrl, accountInfo: loginInfoTextField.text!, passwordOrigin: passwordTextField.text!) { (isSuc, errorMsg, loginResult) -> Void in
             hud.hide(true)
             
-            //TODO: delete test
-            let lr = LoginResult()
-            lr.LoginSuccessed = "true"
-            lr.AccountID = "123456"
-            lr.AccountName = "Xman"
-            lr.AccessToken = "jkjkjkjkkj"
-            lr.AppServerIP = ""
-            lr.AppServerPort = ""
-            lr.AppServiceUrl = "http://vessageapi.bahamut.cn"
-            lr.BindMobile = ""
-            lr.BindEmail = ""
-            let testMark = "tn" + ""
-            if testMark == "tn"{
-                self.loginedResult = lr
-                self.validateToken(self.loginedResult.AppServiceUrl, accountId: self.loginedResult.AccountID, accessToken: self.loginedResult.AccessToken)
-                return
-            }
-            
             if isSuc
             {
                 self.loginedResult = loginResult
@@ -77,6 +61,15 @@ class SignInViewController: UIViewController {
             {
                 self.playToast(errorMsg.localizedString())
             }
+        }
+    }
+    
+    func onInitServiceFailed(a:NSNotification){
+        if let hud = refreshingHud{
+            hud.hideAsync(false)
+        }
+        if let reason = a.userInfo?[InitServiceFailedReason] as? String{
+            self.playToast(reason.localizedString())
         }
     }
     

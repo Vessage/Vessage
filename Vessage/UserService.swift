@@ -29,18 +29,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                     self.myProfile = user
                 }
             }else if self.myProfile == nil{
-                //TODO: delete test
-                let user = VessageUser()
-                user.userId = "testuserid"
-                user.mobile = "15800038888"
-                user.accountId = "102938"
-                self.myProfile = user
-                self.setServiceReady()
-                let testMark = "tn" + ""
-                if testMark == "tn"{
-                    return
-                }
-                
                 ServiceContainer.instance.postInitServiceFailed("INIT_USER_DATA_ERROR")
             }
         })
@@ -56,82 +44,61 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private(set) var myProfile:VessageUser!
     
     var isUserMobileValidated:Bool{
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            return true
-        }
-        
         return !String.isNullOrWhiteSpace(myProfile?.mobile ?? "")
     }
     
     private func initMyProfile(updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         let req = GetUserInfoRequest()
         let user = PersistentManager.sharedInstance.getModel(VessageUser.self, idValue: UserSetting.userId)
-        getUserProfileByReq(req, updatedCallback: updatedCallback)
+        getUserProfileByReq(req){ user in
+            updatedCallback(user: user)
+        }
         return user
     }
     
     func getUserProfileByMobile(mobile:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
-        //TODO: delete test
-        
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            let user = VessageUser()
-            user.userId = "testuserid"
-            user.mobile = "15800038888"
-            return user
-        }
         
         let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ mobile == $0.mobile}.first
         
         let req = GetUserInfoByMobileRequest()
         req.mobile = mobile
-        getUserProfileByReq(req, updatedCallback: updatedCallback)
+        getUserProfileByReq(req){ user in
+            updatedCallback(user: user)
+        }
         return user
     }
     
     func getUserProfileByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            let user = VessageUser()
-            user.userId = "testuserid"
-            user.mobile = "15800038888"
-            user.accountId = accountId
-            return user
-        }
         
         let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ accountId == $0.accountId}.first
         
         let req = GetUserInfoByAccountIdRequest()
         req.accountId = accountId
-        getUserProfileByReq(req, updatedCallback: updatedCallback)
+        getUserProfileByReq(req){ user in
+            updatedCallback(user: user)
+        }
         return user
     }
     
     func getUserProfile(userId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            let user = VessageUser()
-            user.userId = "testuserid"
-            user.mobile = "15800038888"
-            user.accountId = "102938"
-            return user
-        }
         
         let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ userId == $0.userId}.first
         let req = GetUserInfoRequest()
         req.userId = userId
-        getUserProfileByReq(req, updatedCallback: updatedCallback)
+        getUserProfileByReq(req){ user in
+            updatedCallback(user: user)
+        }
         return user
     }
     
     private func getUserProfileByReq(req:BahamutRFRequestBase,updatedCallback:(user:VessageUser?)->Void){
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
+            if result.isFailure{
+                updatedCallback(user: nil)
+            }
             if let user = result.returnObject{
                 user.saveModel()
+                PersistentManager.sharedInstance.saveAll()
                 updatedCallback(user: user)
                 self.postNotificationName(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
             }else{
@@ -140,17 +107,36 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func searchUser(keyword:String,callback:(VessageUser?)->Void) -> VessageUser?{
-        return nil
+    func searchUser(keyword:String,callback:([VessageUser])->Void){
+        if keyword == UserSetting.lastLoginAccountId{
+            return
+        }
+        let users = PersistentManager.sharedInstance.getAllModel(VessageUser).filter { (user) -> Bool in
+            if keyword == user.mobile || keyword == user.accountId{
+                return true
+            }else if let nickName = user.nickName{
+                return nickName.containsString(keyword)
+            }
+            return false
+        }
+        if users.count > 0{
+            callback(users)
+        }else if keyword.isChinaMobileNo(){
+            getUserProfileByMobile(keyword, updatedCallback: { (user) -> Void in
+                if let u = user{
+                    callback([u])
+                }
+            })
+        }else if keyword.isBahamutAccount(){
+            getUserProfileByAccountId(keyword, updatedCallback: { (user) -> Void in
+                if let u = user{
+                    callback([u])
+                }
+            })
+        }
     }
     
     func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
-        
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            callback(suc: true)
-        }
         
         let req = SendMobileVSMSRequest()
         req.mobile = mobile
@@ -165,12 +151,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     func validateMobile(mobile:String, smsKey:String,callback:(suc:Bool)->Void){
-        
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            callback(suc: true)
-        }
         
         let req = ValidateMobileVSMSRequest()
         req.mobile = mobile

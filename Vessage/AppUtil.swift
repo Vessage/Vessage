@@ -42,3 +42,17 @@ extension FileService
         }
     }
 }
+
+//MARK: String Util
+extension String{
+    func isChinaMobileNo() -> Bool{
+        return self =~ "^((13[0-9])|(15[^4,\\D])|(18[0,2,5-9]))\\d{8}$"
+    }
+    
+    func isBahamutAccount() -> Bool{
+        if let aId = Int(self){
+            return aId > 147258
+        }
+        return false
+    }
+}

@@ -26,15 +26,16 @@ class PostVessageToServer:BahamutTaskStepWorker{
     func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
         let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
         let vessage = Vessage()
-        vessage.conversationId = model.conversationId
+        vessage.sender = ServiceContainer.getService(UserService).myProfile.userId
         vessage.fileId = model.fileId
-        ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
-            if sended{
-                step.finishedStep(nil)
-            }else{
-                step.failStep(nil)
-            }
-        }
+        //TODO: high version finish
+//        ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+//            if sended{
+//                step.finishedStep(nil)
+//            }else{
+//                step.failStep(nil)
+//            }
+//        }
     }
 }
 

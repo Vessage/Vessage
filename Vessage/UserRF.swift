@@ -9,6 +9,9 @@
 import Foundation
 
 class VessageUser: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "userId"
+    }
     var userId:String!
     var nickName:String!
     var motto:String!
@@ -56,7 +59,7 @@ class GetUserInfoByMobileRequest: BahamutRFRequestBase {
     
     var mobile:String!{
         didSet{
-            self.api = "/VessageUsers/Mobile/\(mobile)"
+            self.paramenters["mobile"] = mobile
         }
     }
 }

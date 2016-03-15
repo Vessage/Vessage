@@ -9,135 +9,44 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Vessage/VessageServices.swift"
-            timestampString = "478606953.018031"
+            filePath = "Vessage/VessageService.swift"
+            timestampString = "479727243.418505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../bahamut/Bahamut/Bahamut/BahamutServiceContainer/ServiceContainer.swift"
-            timestampString = "478968800.100755"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "initContainer(_:services:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../bahamut/Bahamut/Bahamut/BahamutServiceContainer/ServiceContainer.swift"
-            timestampString = "478968801.228655"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "initContainer(_:services:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479230553.529694"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
-            landmarkName = "updateRecordingProgress()"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "sendVessage(_:receiverMobile:fileId:callback:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Vessage.RecordMessageController.sendingHud.getter : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.MBProgressHUD&gt;"
+                  symbolName = "Vessage.VessageService.sendVessage (Vessage.VessageService)(Swift.Optional&lt;Swift.String&gt;, receiverMobile : Swift.Optional&lt;Swift.String&gt;, fileId : Swift.String, callback : (sended : Swift.Bool) -&gt; ()) -&gt; ()"
                   moduleName = "Vessage"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
-                  timestampString = "479057267.718079"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/VessageService.swift"
+                  timestampString = "479727456.287817"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "24">
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "852">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Vessage.RecordMessageController.sendingHud.setter : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.MBProgressHUD&gt;"
+                  symbolName = "Vessage.VessageService.(sendVessage (Vessage.VessageService) -&gt; (Swift.Optional&lt;Swift.String&gt;, receiverMobile : Swift.Optional&lt;Swift.String&gt;, fileId : Swift.String, callback : (sended : Swift.Bool) -&gt; ()) -&gt; ()).(closure #1)"
                   moduleName = "Vessage"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
-                  timestampString = "479057267.718967"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/VessageService.swift"
+                  timestampString = "479727456.2883"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Vessage.RecordMessageController.sendingHud.materializeForSet : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.MBProgressHUD&gt;"
-                  moduleName = "Vessage"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
-                  timestampString = "479057267.719089"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Vessage.RecordMessageController.init (Vessage.RecordMessageController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.NSBundle&gt;) -&gt; Vessage.RecordMessageController"
-                  moduleName = "Vessage"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
-                  timestampString = "479057267.719193"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "128"
-                  endingLineNumber = "128"
-                  offsetFromSymbolStart = "508">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Vessage.RecordMessageController.init (Vessage.RecordMessageController.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Vessage.RecordMessageController&gt;"
-                  moduleName = "Vessage"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/RecordMessageController.swift"
-                  timestampString = "479057267.719294"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "128"
-                  endingLineNumber = "128"
-                  offsetFromSymbolStart = "448">
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "32">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -148,13 +57,61 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479307804.309483"
+            filePath = "Vessage/VessageService.swift"
+            timestampString = "479727243.418505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "vessageCameraDidStartRecord()"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "sendVessage(_:receiverMobile:fileId:callback:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.VessageService.sendVessage (Vessage.VessageService)(Swift.Optional&lt;Swift.String&gt;, receiverMobile : Swift.Optional&lt;Swift.String&gt;, vessage : Vessage.Vessage, callback : (sended : Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/VessageService.swift"
+                  timestampString = "479725471.62038"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "688">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vessage.VessageService.(sendVessage (Vessage.VessageService) -&gt; (Swift.Optional&lt;Swift.String&gt;, receiverMobile : Swift.Optional&lt;Swift.String&gt;, vessage : Vessage.Vessage, callback : (sended : Swift.Bool) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "Vessage"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexchow/GitHub/Vessage/Vessage/Vessage/VessageService.swift"
+                  timestampString = "479725471.620526"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Vessage/VessageService.swift"
+            timestampString = "479727243.418505"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "sendVessage(_:receiverMobile:fileId:callback:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -164,141 +121,125 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479307804.309483"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725823.645603"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725825.877332"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725828.157354"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725837.805637"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725838.269405"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725839.005422"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../bahamut/Bahamut/Bahamut/BahamutRFKit/Base/BahamutRFClient.swift"
+            timestampString = "479725839.741398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "execute(_:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Vessage/ConversationListController.swift"
+            timestampString = "479735589.795391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "273"
             endingLineNumber = "273"
-            landmarkName = "vessageCameraDidStopRecord()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Vessage/ConversationListController.swift"
-            timestampString = "479233801.839294"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "onConversationListUpdated(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Vessage/ConversationListController.swift"
-            timestampString = "479197654.47696"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "onCellClicked(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479307804.309483"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
-            landmarkName = "showRecordMessageController(_:conversation:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Vessage/RecordMessageController.swift"
-            timestampString = "479307804.309483"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
-            landmarkName = "showRecordMessageController(_:conversation:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../bahamut/Bahamut/Bahamut/ChicagoClient/ChicagoClient.swift"
-            timestampString = "479229800.24721"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "logout()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../bahamut/Bahamut/Bahamut/ChicagoClient/ChicagoClient.swift"
-            timestampString = "479229801.230896"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "onLogoutReturn(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Vessage/UserService.swift"
-            timestampString = "479230633.089019"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "userLoginInit(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../../bahamut/Bahamut/Bahamut/BahamutServiceContainer/ServiceContainer.swift"
-            timestampString = "479230654.449204"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "userLogout()"
+            landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

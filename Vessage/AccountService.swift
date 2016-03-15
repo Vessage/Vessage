@@ -23,16 +23,9 @@ class AccountService: ServiceProtocol
     @objc func userLoginInit(userId:String)
     {
         BahamutRFKit.sharedInstance.resetUser(userId,token:UserSetting.token)
-        BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.shareLinkApiServer)
+        BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
         BahamutRFKit.sharedInstance.startClients()
-        
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            self.setServiceReady()
-            return
-        }
         
         ChicagoClient.sharedInstance.start()
         ChicagoClient.sharedInstance.connect(VessageSetting.chicagoServerHost, port: VessageSetting.chicagoServerHostPort)
@@ -47,7 +40,7 @@ class AccountService: ServiceProtocol
         UserSetting.token = nil
         UserSetting.isUserLogined = false
         VessageSetting.fileApiServer = nil
-        VessageSetting.shareLinkApiServer = nil
+        VessageSetting.apiServerUrl = nil
         VessageSetting.chicagoServerHost = nil
         VessageSetting.chicagoServerHostPort = 0
         UserSetting.userId = nil
@@ -62,7 +55,7 @@ class AccountService: ServiceProtocol
     {
         UserSetting.token = validateResult.AppToken
         UserSetting.isUserLogined = true
-        VessageSetting.shareLinkApiServer = validateResult.APIServer
+        VessageSetting.apiServerUrl = validateResult.APIServer
         VessageSetting.fileApiServer = validateResult.FileAPIServer
         let chicagoStrs = validateResult.ChicagoServer.split(":")
         VessageSetting.chicagoServerHost = chicagoStrs[0]
@@ -73,21 +66,6 @@ class AccountService: ServiceProtocol
     
     func validateAccessToken(apiTokenServer:String, accountId:String, accessToken: String,callback:(loginSuccess:Bool,message:String)->Void,registCallback:((registApiServer:String!)->Void)! = nil)
     {
-        //TODO: delete test
-        let vr = ValidateResult()
-        vr.UserId = "goddddddd"
-        vr.APIServer = "sadfasd"
-        vr.AppToken = "asdfas"
-        vr.ChicagoServer = "chicagotest.bahamutt.cn:8888"
-        vr.UserId = "xman"
-        vr.FileAPIServer = "http://test.bahamut.cn"
-        vr.RegistAPIServer = "http://test.bahamut.cn"
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            self.setLogined(vr)
-            callback(loginSuccess: true, message: "")
-            return
-        }
         
         UserSetting.lastLoginAccountId = accountId
         BahamutRFKit.sharedInstance.validateAccessToken("\(apiTokenServer)/Tokens", accountId: accountId, accessToken: accessToken) { (isNewUser, error,validateResult) -> Void in

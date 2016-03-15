@@ -13,6 +13,9 @@ let AppleStoreReviewAccountIds = ["147275","147276"];
 
 class BahamutConfigObject:EVObject
 {
+    var appkey:String!
+    var appName:String!
+    
     var accountRegistApiUrl:String!
     var accountLoginApiUrl:String!
     
@@ -70,12 +73,12 @@ class VessageSetting{
         }
     }
     
-    static var shareLinkApiServer:String!{
+    static var apiServerUrl:String!{
         get{
-        return NSUserDefaults.standardUserDefaults().valueForKey("shareLinkApiServer") as? String
+        return NSUserDefaults.standardUserDefaults().valueForKey("apiServerUrl") as? String
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "shareLinkApiServer")
+            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "apiServerUrl")
         }
     }
     
@@ -109,8 +112,8 @@ class VessageSetting{
 }
 
 class VessageConfig{
-    static let appName = "Vessage"
-    static let appKey = "asdfasdfasdfasdfas"
+    static var appName:String { return bahamutConfig.appName }
+    static var appKey:String { return bahamutConfig.appkey }
     static var bahamutConfig:BahamutConfigObject!
     static var appVersion:String{
         if let infoDic = NSBundle.mainBundle().infoDictionary

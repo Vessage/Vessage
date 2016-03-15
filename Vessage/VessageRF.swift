@@ -8,10 +8,12 @@
 
 import Foundation
 class Vessage: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "vessageId"
+    }
     var vessageId:String!
     var fileId:String!
     var sender:String!
-    var conversationId:String!
     var isRead = false
     var sendTime:String!
 }
@@ -46,16 +48,40 @@ class GetConversationVessagesRequest: BahamutRFRequestBase {
     }
 }
 
-class SendNewVessageRequest: BahamutRFRequestBase {
+class SendNewVessageForMobileRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.method = .POST
-        self.api = "/Vessage"
+        self.api = "/Vessages/ForMobile"
     }
     
-    var conversationId:String!{
+    var receiverMobile:String!{
         didSet{
-            self.paramenters["conversationId"] = conversationId
+            if String.isNullOrWhiteSpace(receiverMobile) == false{
+                self.paramenters["receiverMobile"] = receiverMobile
+            }
+        }
+    }
+    
+    var fileId:String!{
+        didSet{
+            self.paramenters["fileId"] = fileId
+        }
+    }
+}
+
+class SendNewVessageForUserRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .POST
+        self.api = "/Vessages/ForUser"
+    }
+    
+    var receiverId:String!{
+        didSet{
+            if String.isNullOrWhiteSpace(receiverId) == false{
+                self.paramenters["receiverId"] = receiverId
+            }
         }
     }
     

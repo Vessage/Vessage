@@ -29,6 +29,10 @@ class GetUserInfoRequest: BahamutRFRequestBase {
         self.api = "/VessageUsers"
     }
     
+    override func getMaxRequestCount() -> Int32 {
+        return 10
+    }
+    
     var userId:String!{
         didSet{
             self.api = "/VessageUsers/UserId/\(userId)"

@@ -21,6 +21,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     
     @objc func userLoginInit(userId: String) {
         setServiceReady()
+        self.newVessageFromServer()
     }
     
     @objc func userLogout(userId: String) {
@@ -60,7 +61,9 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                 vsgs.forEach({ (vsg) -> () in
                     self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [NewVessageReceivedValue:vsg])
                 })
-                self.notifyVessageGot()
+                
+                //TODO: remove mark
+                //self.notifyVessageGot()
             }
         }
     }

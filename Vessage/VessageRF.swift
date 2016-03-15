@@ -22,7 +22,7 @@ class GetNewVessagesRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.method = .GET
-        self.api = "/Vessage/New"
+        self.api = "/Vessages/New"
     }
 }
 
@@ -30,21 +30,7 @@ class NotifyGotNewVessagesRequest:BahamutRFRequestBase{
     override init() {
         super.init()
         self.method = .PUT
-        self.api = "/Vessage/Got"
-    }
-}
-
-class GetConversationVessagesRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.method = .GET
-        self.api = "/Vessage/Conversation"
-    }
-    
-    var conversationId:String!{
-        didSet{
-            self.api = "/Vessage/Conversation/\(conversationId)"
-        }
+        self.api = "/Vessages/Got"
     }
 }
 
@@ -96,12 +82,12 @@ class SetVessageRead:BahamutRFRequestBase{
     override init() {
         super.init()
         self.method = .PUT
-        self.api = "/Vessage/Read"
+        self.api = "/Vessages/Read"
     }
     
     var vessageId:String!{
         didSet{
-            self.api = "/Vessage/Read/\(vessageId)"
+            self.api = "/Vessages/Read/\(vessageId)"
         }
     }
 }

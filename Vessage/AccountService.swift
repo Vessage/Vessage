@@ -22,6 +22,10 @@ class AccountService: ServiceProtocol
     
     @objc func userLoginInit(userId:String)
     {
+        #if DEBUG
+            print("userId=\(userId)")
+            print("userId=\(UserSetting.token)")
+        #endif
         BahamutRFKit.sharedInstance.resetUser(userId,token:UserSetting.token)
         BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)

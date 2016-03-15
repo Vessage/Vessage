@@ -51,7 +51,7 @@ extension String{
     
     func isBahamutAccount() -> Bool{
         if let aId = Int(self){
-            return aId > 147258
+            return aId >= 147258
         }
         return false
     }

@@ -36,6 +36,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                 tableView.reloadData()
             }
             if searchBar != nil{
+                searchBar.text = nil
                 searchBar.showsCancelButton = isSearching
                 if isSearching == false{
                     searchBar.endEditing(false)
@@ -66,7 +67,9 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     func onUserProfileUpdated(a:NSNotification){
         
         if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if let index = (conversationService.conversations.indexOf{ user.userId == $0.chatterId  || user.mobile == $0.chatterMobile}){
+            if let index = (conversationService.conversations.indexOf{ user.userId == ($0.chatterId ?? "")  ||
+                (String.isNullOrWhiteSpace(user.mobile) == false && ((user.mobile ?? "") == $0.chatterMobile))}){
+                    
                 if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1)) as? ConversationListCell{
                     if let cv = cell.originModel as? Conversation{
                         cv.chatterMobile = user.mobile
@@ -90,6 +93,18 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                         }
                         
                     }
+                }
+            }else{
+                if let user = userService.getCachedUserProfile(msg.sender){
+                    conversationService.openConversationByUserId(msg.sender, noteName: user.nickName)
+                }else{
+                    userService.getUserProfile(msg.sender, updatedCallback: { (user) -> Void in
+                        if let newUser = user{
+                            self.conversationService.openConversationByUserId(newUser.userId, noteName: newUser.nickName)
+                        }else{
+                            self.conversationService.openConversationByUserId(msg.sender, noteName: "NewUser")
+                        }
+                    })
                 }
             }
             

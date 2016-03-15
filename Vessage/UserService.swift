@@ -80,9 +80,13 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return user
     }
     
+    func getCachedUserProfile(userId:String) -> VessageUser?{
+        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ userId == $0.userId}.first
+    }
+    
     func getUserProfile(userId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         
-        let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ userId == $0.userId}.first
+        let user = getCachedUserProfile(userId)
         let req = GetUserInfoRequest()
         req.userId = userId
         getUserProfileByReq(req){ user in

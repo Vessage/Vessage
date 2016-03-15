@@ -1047,6 +1047,7 @@
 					"\"YUCIHighPassSkinSmoothing\"",
 					"-Objc",
 				);
+				OTHER_SWIFT_FLAGS = "\"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1093,6 +1094,7 @@
 					"\"YUCIHighPassSkinSmoothing\"",
 					"-Objc",
 				);
+				OTHER_SWIFT_FLAGS = "\"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

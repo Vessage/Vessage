@@ -72,7 +72,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func openConversationByUserId(userId:String,noteName:String?) -> Conversation {
         
-        if let conversation = (conversations.filter{$0.chatterId == userId}).first{
+        if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
             return conversation
         }else{
             let conversation = Conversation()

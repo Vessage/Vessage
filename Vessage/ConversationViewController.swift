@@ -26,9 +26,15 @@ class ConversationViewController: UIViewController {
             nextVessageButton.hidden = conversationNotReadCount < 2
         }
     }
-    @IBOutlet weak var vessageView: ShareLinkFilmView!{
+    
+    private var vessagePlayer:ShareLinkFilmView!
+    @IBOutlet weak var vessageView: UIView!{
         didSet{
-            vessageView.fileFetcher = fileService.getFileFetcherOfFileId(.Video)
+            vessagePlayer = ShareLinkFilmView(frame: vessageView.bounds)
+            vessagePlayer.fileFetcher = fileService.getFileFetcherOfFileId(.Video)
+            vessagePlayer.autoPlay = false
+            vessageView.addSubview(vessagePlayer)
+            vessageView.sendSubviewToBack(vessagePlayer)
             vessageView.hidden = (presentingVesseage == nil)
             if presentingVesseage != nil{
                 
@@ -49,8 +55,9 @@ class ConversationViewController: UIViewController {
     private var presentingVesseage:Vessage!{
         didSet{
             if presentingVesseage != nil{
-                vessageView.filePath = presentingVesseage.fileId
+                vessagePlayer.filePath = presentingVesseage.fileId
             }
+            vessageView.hidden = presentingVesseage == nil
         }
     }
     

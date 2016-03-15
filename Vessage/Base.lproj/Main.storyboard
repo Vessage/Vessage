@@ -76,33 +76,31 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sed-Es-EFJ" customClass="ShareLinkFilmView" customModule="Vessage" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sed-Es-EFJ">
                                 <rect key="frame" x="87" y="199" width="240" height="320"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcS-R4-JGd">
-                                        <rect key="frame" x="161" y="0.0" width="75" height="30"/>
-                                        <color key="backgroundColor" red="0.2156862745" green="0.44705882349999998" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="badgeRect">
-                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="Aah-wS-2PE"/>
                                     <constraint firstAttribute="height" constant="320" id="p1s-sY-Cye"/>
-                                    <constraint firstItem="xcS-R4-JGd" firstAttribute="top" secondItem="sed-Es-EFJ" secondAttribute="top" id="xhx-SG-eW8"/>
-                                    <constraint firstAttribute="trailing" secondItem="xcS-R4-JGd" secondAttribute="trailing" constant="4" id="yr0-tZ-hrB"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcS-R4-JGd">
+                                <rect key="frame" x="249" y="199" width="75" height="30"/>
+                                <color key="backgroundColor" red="0.2156862745" green="0.44705882349999998" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="badgeRect">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="xcS-R4-JGd" firstAttribute="trailing" secondItem="sed-Es-EFJ" secondAttribute="trailing" constant="-3" id="40h-w6-pNl"/>
                             <constraint firstItem="WcH-SK-qwL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4ry-mr-P91"/>
                             <constraint firstItem="WcH-SK-qwL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="FXb-sr-SpJ"/>
                             <constraint firstItem="fSR-sM-NGC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Osi-MF-mjT"/>
                             <constraint firstAttribute="trailing" secondItem="fSR-sM-NGC" secondAttribute="trailing" id="TGs-Tp-hJc"/>
                             <constraint firstItem="fSR-sM-NGC" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="dZe-Je-afN"/>
+                            <constraint firstItem="xcS-R4-JGd" firstAttribute="top" secondItem="sed-Es-EFJ" secondAttribute="top" id="evF-lr-RVF"/>
                             <constraint firstItem="sed-Es-EFJ" firstAttribute="centerX" secondItem="WcH-SK-qwL" secondAttribute="centerX" id="pRJ-yw-tcL"/>
                             <constraint firstItem="sed-Es-EFJ" firstAttribute="centerY" secondItem="WcH-SK-qwL" secondAttribute="centerY" constant="-10" id="wCo-9V-4gZ"/>
                         </constraints>

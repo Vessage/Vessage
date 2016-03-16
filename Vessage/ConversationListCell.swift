@@ -7,42 +7,65 @@
 //
 
 import Foundation
-import AddressBook
-import AddressBookUI
-
-//MARK: ConversationListCellBase
-class ConversationListCellBase:UITableViewCell{
-    var rootController:ConversationListController!
-    
-    func onCellClicked(){
-        
-    }
-}
 
 //MARK: ConversationListCell
 typealias ConversationListCellHandler = (cell:ConversationListCell)->Void
 class ConversationListCell:ConversationListCellBase{
     static let reuseId = "ConversationListCell"
-    var originModel:AnyObject?
-    var avatar:String!{
+    
+    override var rootController:ConversationListController!{
+        didSet{
+            if oldValue == nil{
+                self.addObservers()
+            }
+        }
+    }
+    
+    @IBOutlet weak var badgeButton: UIButton!{
+        didSet{
+            badgeButton.backgroundColor = UIColor.clearColor()
+        }
+    }
+    @IBOutlet weak var avatarView: UIImageView!
+    @IBOutlet weak var headLineLabel: UILabel!
+    @IBOutlet weak var subLineLabel: UILabel!
+    
+    var conversationListCellHandler:ConversationListCellHandler!
+    var originModel:AnyObject?{
+        didSet{
+            if let conversation = originModel as? Conversation{
+                updateWithConversation(conversation)
+            }else if let searchResult = originModel as? SearchResultModel{
+                if let conversation = searchResult.conversation{
+                    updateWithConversation(conversation)
+                }else if let user = searchResult.user{
+                    updateWithUser(user)
+                }else if let mobile = searchResult.mobile{
+                    updateWithMobile(mobile)
+                }
+            }
+        }
+    }
+    
+    private var avatar:String!{
         didSet{
             if let imgView = self.avatarView{
                 ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
             }
         }
     }
-    var headLine:String!{
+    private var headLine:String!{
         didSet{
             self.headLineLabel?.text = headLine
         }
     }
-    var subLine:String!{
+    private var subLine:String!{
         didSet{
             self.subLineLabel?.text = subLine
         }
     }
     
-    var badge:Int = 0{
+    private var badge:Int = 0{
         didSet{
             if badge == 0{
                 badgeButton.badgeValue = ""
@@ -52,77 +75,82 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
-    var conversationListCellHandler:ConversationListCellHandler!
+    deinit{
+        ServiceContainer.getService(UserService).removeObserver(self)
+        ServiceContainer.getService(VessageService).removeObserver(self)
+        ServiceContainer.getService(ConversationService).removeObserver(self)
+    }
+    
     override func onCellClicked() {
         if let handler = conversationListCellHandler{
             handler(cell: self)
         }
     }
-    @IBOutlet weak var badgeButton: UIButton!{
-        didSet{
-            badgeButton.backgroundColor = UIColor.clearColor()
-        }
-    }
-    @IBOutlet weak var avatarView: UIImageView!
-    @IBOutlet weak var headLineLabel: UILabel!
-    @IBOutlet weak var subLineLabel: UILabel!
-}
-
-//MARK: ConversationListContactCell
-class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigationControllerDelegate{
-    static let reuseId = "ConversationListContactCell"
     
-    override func onCellClicked() {
-        let controller = ABPeoplePickerNavigationController()
-        controller.peoplePickerDelegate = self
-        self.rootController.presentViewController(controller, animated: true) { () -> Void in
-            
+    //MARK: update actions
+    private func updateWithConversation(conversation:Conversation){
+        self.headLine = conversation.noteName
+        self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
+        if let uId = conversation.chatterId{
+            if let user = rootController.userService.getCachedUserProfile(uId){
+                self.avatar = user.avatar
+            }else{
+                self.rootController.userService.fetchUserProfile(uId)
+            }
         }
     }
     
-    //MARK: ABPeoplePickerNavigationControllerDelegate
-    func peoplePickerNavigationController(peoplePicker: ABPeoplePickerNavigationController, didSelectPerson person: ABRecord) {
-        peoplePicker.dismissViewControllerAnimated(true) { () -> Void in
-            let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
-            let lname = ABRecordCopyValue(person, kABPersonLastNameProperty)?.takeRetainedValue() ?? ""
-            let title = "\(lname!)\(fname!)"
-            if let phones = ABRecordCopyValue(person, kABPersonPhoneProperty)?.takeRetainedValue(){
-                if ABMultiValueGetCount(phones) > 0{
-                    var actions = [UIAlertAction]()
-                    var phoneNos = [String]()
-                    for i in 0 ..< ABMultiValueGetCount(phones){
-                        
-                        let phoneLabel = ABMultiValueCopyLabelAtIndex(phones, i).takeRetainedValue()
-                            as CFStringRef;
-                        let localizedPhoneLabel = ABAddressBookCopyLocalizedLabel(phoneLabel)
-                            .takeRetainedValue() as String
-                        
-                        let value = ABMultiValueCopyValueAtIndex(phones, i)
-                        var phone = value.takeRetainedValue() as! String
-                        phone = phone.stringByReplacingOccurrencesOfString("+86", withString: "").stringByReplacingOccurrencesOfString("-", withString: "")
-                        if phone.isChinaMobileNo(){
-                            phoneNos.append(phone)
-                            let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .Default, handler: { (action) -> Void in
-                                if let i = actions.indexOf(action){
-                                    let conversation = self.rootController.conversationService.openConversationByMobile(phoneNos[i],noteName: title)
-                                    ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: conversation)
-                                }
-                            })
-                            actions.append(action)
-                        }
-                    }
-                    if actions.count > 0{
-                        
-                        let msg = "CHOOSE_PHONE_NO".localizedString()
-                        let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
-                        actions.forEach{alertController.addAction($0)}
-                        alertController.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil))
-                        self.rootController.showAlert(alertController)
-                        return
-                    }
+    private func updateWithUser(user:VessageUser){
+        self.headLine = user.nickName ?? user.accountId
+        self.subLine = user.accountId
+        self.avatar = user.avatar
+    }
+    
+    private func updateWithMobile(mobile:String){
+        self.headLine = mobile
+        let msg = String(format: "OPEN_NEW_CHAT_WITH_MOBILE".localizedString(), mobile)
+        self.subLine = msg
+        self.avatar = nil
+    }
+    
+    //MARK: notifications
+    private func addObservers(){
+        ServiceContainer.getService(UserService).addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageReadAndReceived:", name: VessageService.onNewVessageReceived, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageReadAndReceived:", name: VessageService.onVessageRead, object: nil)
+        ServiceContainer.getService(ConversationService).addObserver(self, selector: "onConversationUpdated:", name: ConversationService.conversationUpdated, object: nil)
+    }
+    
+    func onConversationUpdated(a:NSNotification){
+        if let conversation = self.originModel as? Conversation{
+            if let con = a.userInfo?[ConversationUpdatedValue] as? Conversation{
+                if conversation.conversationId == con.conversationId{
+                    self.originModel = con
                 }
             }
-            self.rootController.playToast("PEOPLE_NO_MOBILE".localizedString())
         }
     }
+    
+    func onUserProfileUpdated(a:NSNotification){
+        if let conversation = self.originModel as? Conversation{
+            if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
+                if ConversationService.isConversationWithUser(conversation, user: user){
+                    self.avatar = user.avatar
+                }
+            }
+        }
+    }
+    
+    func onVessageReadAndReceived(a:NSNotification){
+        if let conversation = self.originModel as? Conversation{
+            if let vsg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
+                if ConversationService.isConversationVessage(conversation, vsg: vsg){
+                    self.badge = self.rootController.vessageService.getNotReadVessage(conversation.chatterId).count
+                }
+            }
+        }
+    }
+
+    
 }
+

@@ -44,13 +44,72 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     private(set) var conversations = [Conversation]()
     
+    func indexOfConversationOfUser(user:VessageUser) -> Int?{
+        let updatedIndex = conversations.indexOf { (c) -> Bool in
+            return ConversationService.isConversationWithUser(c, user: user)
+        }
+        return updatedIndex
+    }
+    
+    static func isConversationWithUser(c:Conversation,user:VessageUser) -> Bool{
+        if !String.isNullOrWhiteSpace(c.chatterId) && user.userId == c.chatterId{
+            return true
+        }else if let mobileHash = user.mobile{
+            if let cMobile = c.chatterMobile?.md5{
+                if mobileHash == cMobile{
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
+        if vsg.sender == c.chatterId{
+            c.lastMessageTime = vsg.sendTime
+            return true
+        }else if let ei = vsg.getExtraInfoObject(){
+            if ei.mobileHash != nil && ei.mobileHash == c.chatterMobile?.md5{
+                return true
+            }
+        }
+        return false
+    }
+    
+    func updateConversationWithVessage(vsg:Vessage) -> Int?{
+        if let index = (conversations.indexOf { ConversationService.isConversationVessage($0, vsg: vsg)}){
+            let conversation = conversations[index]
+            if let ei = vsg.getExtraInfoObject(){
+                if conversation.chatterId == nil{
+                    conversation.chatterId = vsg.sender
+                }
+                if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(vsg.sendTime.dateTimeOfAccurateString){
+                    conversation.lastMessageTime = vsg.sendTime
+                }
+                if conversation.noteName?.md5 == ei.mobileHash || conversation.noteName == ei.accountId{
+                    conversation.noteName = ei.nickName ?? conversation.noteName
+                }
+                conversation.saveModel()
+                self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
+            }
+            return index
+        }else{
+            return nil
+        }
+    }
+    
+    func createConverationWithVessage(vsg:Vessage) -> Conversation{
+        let ei = vsg.getExtraInfoObject()
+        return self.openConversationByUserId(vsg.sender, noteName: ei?.nickName ?? ei?.accountId ?? "UNKNOW_USER".localizedString())
+    }
+    
     private func refreshConversations(){
         conversations.removeAll()
         conversations.appendContentsOf(PersistentManager.sharedInstance.getAllModel(Conversation))
         conversations.sortInPlace { (a, b) -> Bool in
-            a.lastMessageTime.dateTimeOfAccurateString.timeIntervalSince1970 > b.lastMessageTime.dateTimeOfAccurateString.timeIntervalSince1970
+            a.lastMessageTime.dateTimeOfAccurateString.isAfter(b.lastMessageTime.dateTimeOfAccurateString)
         }
-        self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+        self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
     
     func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
@@ -65,7 +124,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
             conversation.saveModel()
             conversations.append(conversation)
-            self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
     }
@@ -80,8 +139,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             conversation.chatterId = userId
             conversation.noteName = noteName
             conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+            conversation.saveModel()
             conversations.append(conversation)
-            self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
     }
@@ -91,6 +151,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             if String.isNullOrWhiteSpace(con.chatterId) && con.chatterMobile == mobile{
                 con.chatterId = chatterId
                 con.saveModel()
+                self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:con])
             }
         }
         PersistentManager.sharedInstance.saveAll()
@@ -99,7 +160,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     func removeConversation(conversationId:String) -> Bool{
         if let c = (self.conversations.removeElement{$0.conversationId == conversationId}).first{
             PersistentManager.sharedInstance.removeModel(c)
-            self.postNotificationName(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return true
         }else{
             return false
@@ -107,19 +168,29 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     func searchConversation(keyword:String)->[Conversation]{
-        let result = conversations.filter{
-            ($0.noteName ?? "").containsString(keyword) || keyword == $0.chatterMobile
+        let result = conversations.filter{ c in
+            if let noteName = c.noteName{
+                if noteName.containsString(keyword){
+                    return true
+                }
+            }
+            if let mobile = c.chatterMobile{
+                if mobile.hasBegin(keyword){
+                    return true
+                }
+            }
+            return false
         }
         return result
     }
     
     func noteConversation(conversationId:String,noteName:String) -> Bool{
-        if let conversation = PersistentManager.sharedInstance.getModel(Conversation.self, idValue: conversationId){
+        if let conversation = (self.conversations.filter{$0.conversationId == conversationId}).first{
             conversation.noteName = noteName
             conversation.saveModel()
+            self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
             return true
-        }else{
-            return false
         }
+        return false
     }
 }

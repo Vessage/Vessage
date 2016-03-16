@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class Vessage: BahamutObject {
     override func getObjectUniqueIdName() -> String {
         return "vessageId"
@@ -16,6 +17,30 @@ class Vessage: BahamutObject {
     var sender:String!
     var isRead = false
     var sendTime:String!
+    var extraInfo:String!
+}
+
+class VessageExtraInfoModel:BahamutObject{
+    var accountId:String!
+    var nickName:String!
+    var mobileHash:String!
+}
+
+class SendVessageResultModel:BahamutObject{
+    override func getObjectUniqueIdName() -> String {
+        return "vessageId"
+    }
+    var vessageId:String!
+    var vessageBoxId:String!
+}
+
+extension Vessage{
+    func getExtraInfoObject() -> VessageExtraInfoModel?{
+        if String.isNullOrWhiteSpace(self.extraInfo) == false{
+            return VessageExtraInfoModel(json: self.extraInfo)
+        }
+        return nil
+    }
 }
 
 class GetNewVessagesRequest: BahamutRFRequestBase {
@@ -34,10 +59,23 @@ class NotifyGotNewVessagesRequest:BahamutRFRequestBase{
     }
 }
 
-class SendNewVessageForMobileRequest: BahamutRFRequestBase {
+class SendNewVessageRequestBase:BahamutRFRequestBase{
+    
     override init() {
         super.init()
         self.method = .POST
+    }
+    
+    var extraInfo:String!{
+        didSet{
+            self.paramenters["extraInfo"] = extraInfo
+        }
+    }
+}
+
+class SendNewVessageToMobileRequest: SendNewVessageRequestBase {
+    override init() {
+        super.init()
         self.api = "/Vessages/ForMobile"
     }
     
@@ -48,18 +86,12 @@ class SendNewVessageForMobileRequest: BahamutRFRequestBase {
             }
         }
     }
-    
-    var fileId:String!{
-        didSet{
-            self.paramenters["fileId"] = fileId
-        }
-    }
+
 }
 
-class SendNewVessageForUserRequest: BahamutRFRequestBase {
+class SendNewVessageToUserRequest: SendNewVessageRequestBase {
     override init() {
         super.init()
-        self.method = .POST
         self.api = "/Vessages/ForUser"
     }
     
@@ -69,6 +101,37 @@ class SendNewVessageForUserRequest: BahamutRFRequestBase {
                 self.paramenters["receiverId"] = receiverId
             }
         }
+    }
+
+}
+
+class CancelSendVessageRequest:BahamutRFRequestBase{
+    
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/Vessages/CancelSendVessage"
+    }
+    
+    var vessageId:String!{
+        didSet{
+            self.paramenters["vessageId"] = vessageId
+        }
+    }
+    
+    var vessageBoxId:String!{
+        didSet{
+            self.paramenters["vessageBoxId"] = vessageBoxId
+        }
+    }
+}
+
+class FinishSendVessageRequest:CancelSendVessageRequest{
+    
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/Vessages/FinishSendVessage"
     }
     
     var fileId:String!{

@@ -84,6 +84,12 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ userId == $0.userId}.first
     }
     
+    func fetchUserProfile(userId:String){
+        let req = GetUserInfoRequest()
+        req.userId = userId
+        getUserProfileByReq(req){ user in}
+    }
+    
     func getUserProfile(userId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         
         let user = getCachedUserProfile(userId)
@@ -104,7 +110,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                 user.saveModel()
                 PersistentManager.sharedInstance.saveAll()
                 updatedCallback(user: user)
-                self.postNotificationName(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
+                self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
             }else{
                 updatedCallback(user: nil)
             }
@@ -116,10 +122,23 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             return
         }
         let users = PersistentManager.sharedInstance.getAllModel(VessageUser).filter { (user) -> Bool in
-            if keyword == user.mobile || keyword == user.accountId{
-                return true
-            }else if let nickName = user.nickName{
-                return nickName.containsString(keyword)
+            if self.myProfile.userId == user.userId{
+                return false
+            }
+            if let mobile = user.mobile{
+                if mobile.hasBegin(keyword){
+                    return true
+                }
+            }
+            if let aId = user.accountId{
+                if aId.hasBegin(keyword){
+                    return true
+                }
+            }
+            if let nickName = user.nickName{
+                if nickName.containsString(keyword){
+                    return true
+                }
             }
             return false
         }
@@ -129,12 +148,16 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             getUserProfileByMobile(keyword, updatedCallback: { (user) -> Void in
                 if let u = user{
                     callback([u])
+                }else{
+                    callback([])
                 }
             })
         }else if keyword.isBahamutAccount(){
             getUserProfileByAccountId(keyword, updatedCallback: { (user) -> Void in
                 if let u = user{
                     callback([u])
+                }else{
+                    callback([])
                 }
             })
         }

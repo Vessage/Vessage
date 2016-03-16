@@ -8,11 +8,21 @@
 
 import UIKit
 
+//MARK: SearchResultModel
 class SearchResultModel{
     var keyword:String!
     var conversation:Conversation!
     var user:VessageUser!
     var mobile:String!
+}
+
+//MARK: ConversationListCellBase
+class ConversationListCellBase:UITableViewCell{
+    var rootController:ConversationListController!
+    
+    func onCellClicked(){
+        
+    }
 }
 
 //MARK: ConversationListController
@@ -54,60 +64,34 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
-        self.conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
-        userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
+        conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
         vessageService.addObserver(self, selector: "onNewVessageReveiced:", name: VessageService.onNewVessageReceived, object: nil)
+        ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
+        vessageService.newVessageFromServer()
+    }
+    
+    deinit{
+        ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
+        ServiceContainer.getService(ConversationService).removeObserver(self)
+        ServiceContainer.getService(VessageService).removeObserver(self)
     }
     
     //MARK: notifications
+    func onNewVessageNotify(a:NSNotification){
+        vessageService.newVessageFromServer()
+    }
+    
     func onConversationListUpdated(a:NSNotification){
         self.tableView.reloadData()
     }
-
-    func onUserProfileUpdated(a:NSNotification){
-        
-        if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if let index = (conversationService.conversations.indexOf{ user.userId == ($0.chatterId ?? "")  ||
-                (String.isNullOrWhiteSpace(user.mobile) == false && ((user.mobile ?? "") == $0.chatterMobile))}){
-                    
-                if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1)) as? ConversationListCell{
-                    if let cv = cell.originModel as? Conversation{
-                        cv.chatterMobile = user.mobile
-                        cell.avatar = user.avatar
-                        
-                    }
-                }
-            }
-        }
-    }
     
     func onNewVessageReveiced(a:NSNotification){
-        if let msg = a.userInfo?[NewVessageReceivedValue] as? Vessage{
-            if let index = (conversationService.conversations.indexOf{ $0.chatterId == msg.sender }){
-                if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1)) as? ConversationListCell{
-                    if let cv = cell.originModel as? Conversation{
-                        if cv.chatterId == msg.sender{
-                            cv.lastMessageTime = msg.sendTime
-                            cv.saveModel()
-                            cell.badge = (cell.badge ?? 0) + 1
-                        }
-                        
-                    }
-                }
-            }else{
-                if let user = userService.getCachedUserProfile(msg.sender){
-                    conversationService.openConversationByUserId(msg.sender, noteName: user.nickName)
-                }else{
-                    userService.getUserProfile(msg.sender, updatedCallback: { (user) -> Void in
-                        if let newUser = user{
-                            self.conversationService.openConversationByUserId(newUser.userId, noteName: newUser.nickName)
-                        }else{
-                            self.conversationService.openConversationByUserId(msg.sender, noteName: "NewUser")
-                        }
-                    })
-                }
+        if let vsg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
+            let index = conversationService.updateConversationWithVessage(vsg)
+            if index == nil{
+                userService.fetchUserProfile(vsg.sender)
+                conversationService.createConverationWithVessage(vsg)    
             }
-            
         }
     }
     
@@ -116,15 +100,22 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         //TODO: open user setting view
     }
     
+    private func removeConversation(conversation:Conversation){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            self.conversationService.removeConversation(conversation.conversationId)
+        }
+        let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
+        self.showAlert("ASK_REMOVE_CONVERSATION_TITLE", msg: conversation.noteName, actions: [okAction,cancel])
+    }
+    
+    //MARK: handle click list cell
     func handleSearchResult(cell:ConversationListCell){
         isSearching = false
         if let result = cell.originModel as? SearchResultModel{
-            if let cid = result.conversation?.conversationId{
-                if let c = (conversationService.conversations.filter{cid == $0.conversationId}).first{
-                    ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
-                }
+            if let c = result.conversation{
+                ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
             }else if let u = result.user{
-                let conversation = conversationService.openConversationByUserId(u.userId,noteName: u.nickName ?? result.keyword)
+                let conversation = conversationService.openConversationByUserId(u.userId,noteName: u.nickName ?? u.accountId ?? result.keyword)
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
             }else if let mobile = result.mobile{
                 let conversation = conversationService.openConversationByMobile(mobile,noteName: result.mobile ?? result.keyword)
@@ -154,14 +145,13 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        searchResult.removeAll()
         if String.isNullOrWhiteSpace(searchText) == false{
-            searchResult.removeAll()
             let conversations = conversationService.searchConversation(searchText)
             let res = conversations.map({ (c) -> SearchResultModel in
                 let model = SearchResultModel()
                 model.keyword = searchText
                 model.conversation = c
-                model.mobile = c.chatterMobile
                 return model
             })
             searchResult.appendContentsOf(res)
@@ -173,9 +163,13 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                     return model
                 })
                 self.searchResult.insertContentsOf(results, at: 0)
-                
+                if self.searchResult.count == 0 && searchText.isChinaMobileNo(){
+                    let model = SearchResultModel()
+                    model.keyword = searchText
+                    model.mobile = searchText
+                    self.searchResult.append(model)
+                }
             })
-            
         }
     }
     
@@ -207,16 +201,9 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     private func searchingTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
         let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
         let sr = searchResult[indexPath.row]
+        lc.rootController = self
         lc.conversationListCellHandler = handleSearchResult
         lc.originModel = sr
-        if let con = sr.conversation{
-            lc.headLine = con.noteName
-            lc.subLine = con.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
-        }else if let u = sr.user{
-            lc.headLine = u.nickName ?? u.accountId
-            lc.subLine = u.accountId
-        }
-        lc.rootController = self
         return lc
     }
     
@@ -228,19 +215,9 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         }else{
             let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
             let conversation = conversationService.conversations[indexPath.row]
-            lc.originModel = conversation
-            lc.headLine = conversation.noteName ?? conversation.chatterMobile
-            lc.subLine = conversation.lastMessageTime.dateTimeOfAccurateString?.toFriendlyString() ?? ""
-            if conversation.chatterId != nil{
-                let chatter = userService.getUserProfile(conversation.chatterId, updatedCallback: { (user) -> Void in
-                    
-                })
-                if let user = chatter{
-                    lc.badge = vessageService.getNotReadVessage(user).count
-                }
-            }
-            lc.conversationListCellHandler = handleConversationListCellItem
             lc.rootController = self
+            lc.conversationListCellHandler = handleConversationListCellItem
+            lc.originModel = conversation
             return lc
         }
     }
@@ -277,6 +254,29 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         }
     }
     
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if isSearching == false && indexPath.section == 1{
+            return true
+        }
+        return false
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        if isSearching == false && indexPath.section == 1{
+            let actionTitle = "REMOVE".localizedString()
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ConversationListCell{
+                if let conversation = cell.originModel as? Conversation{
+                    let action = UITableViewRowAction(style: .Default, title: actionTitle, handler: { (ac, indexPath) -> Void in
+                        self.removeConversation(conversation)
+                    })
+                    return [action]
+                }
+            }
+        }
+        return nil
+    }
+    
+    //MARK: showConversationListController
     static func showConversationListController(viewController:UIViewController)
     {
         let controller = instanceFromStoryBoard("Main", identifier: "ConversationListController") as! ConversationListController

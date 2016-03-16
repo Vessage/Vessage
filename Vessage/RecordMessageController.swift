@@ -18,17 +18,10 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     private var chatter:VessageUser!{
         didSet{
-            if let oldv = oldValue{
-                oldv.removeObserver(self, forKeyPath: "mainChatImage")
+            let oldChatImage = oldValue?.mainChatImage
+            if oldChatImage != chatter?.mainChatImage{
+                self.updateChatImage(chatter?.mainChatImage)
             }
-            chatter.addObserver(self, forKeyPath: "mainChatImage", options: .New, context: nil)
-        }
-    }
-    
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
-        if keyPath == "mainChatImage"{
-            ServiceContainer.getService(FileService).setAvatar(self.smileFaceImageView, iconFileId: chatter.mainChatImage)
         }
     }
     
@@ -136,11 +129,19 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     //MARK:notifications
     func onUserProfileUpdated(a:NSNotification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            self.chatter = chatter
+            if self.chatter.userId == chatter.userId || self.chatter.mobile == chatter.mobile || self.chatter.mobile.md5 == chatter.mobile{
+                self.chatter = chatter
+            }
         }
     }
     
     //MARK: actions
+    func updateChatImage(mainChatImage:String?){
+        if let imgView = self.smileFaceImageView{
+            ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: mainChatImage)
+        }
+    }
+    
     @IBAction func cancelRecord(sender: AnyObject) {
         camera.cancelRecord()
         self.playToast("CANCEL_RECORD".localizedString())
@@ -199,21 +200,14 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         camera.saveRecordedVideo()
     }
     
-    private func sendVessage(url:NSURL){
+    private func sendVessageFile(vessageId:String, url:NSURL){
         let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
         ServiceContainer.getService(FileService).sendFileToAliOSS(url.path!, type: .Video) { (taskId, fileKey) -> Void in
+            hud.hideAsync(false)
             if fileKey != nil{
-                ServiceContainer.getService(VessageService).sendVessage(self.chatter.userId ?? nil, receiverMobile: self.chatter.mobile ?? nil, fileId: fileKey.fileId){ sended in
-                    hud.hideAsync(false)
-                    if sended == false{
-                        self.retrySendVessage(fileKey.fileId)
-                    }else{
-                        self.playCheckMark("VESSAGE_SENDED".localizedString())
-                    }
-                }
+                ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(vessageId, fileKey: fileKey)
             }else{
-                hud.hideAsync(false)
-                self.retrySendFile(url)
+                self.retrySendFile(vessageId,url: url)
             }
         }
         
@@ -221,21 +215,40 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         //VessageQueue.sharedInstance.pushNewVideoTo(conversationId, fileUrl:url)
     }
     
-    private func retrySendVessage(fileId:String){
+    
+    private func retrySendFile(vessageId:String,url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
-            ServiceContainer.getService(VessageService).sendVessage(self.chatter.userId ?? nil, receiverMobile: self.chatter.mobile ?? nil, fileId:fileId){ sended in
-                hud.hideAsync(false)
-                self.retrySendVessage(fileId)
-            }
+            self.sendVessageFile(vessageId,url: url)
         }
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+            ServiceContainer.getService(VessageService).cancelSendVessage(vessageId)
             self.playCrossMark("CANCEL".localizedString())
         }
         self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
-    private func retrySendFile(url:NSURL){
+    private func sendVessage(url:NSURL){
+        let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
+        func sendedCallback(vessageId:String?){
+            hud.hideAsync(false)
+            if let vid = vessageId{
+                self.sendVessageFile(vid, url: url)
+            }else{
+                self.retrySendVessage(url)
+            }
+        }
+        let sendNick = self.userService.myProfile.nickName
+        let sendMobile = self.userService.myProfile.mobile
+        if let receiverId = self.chatter?.userId{
+            ServiceContainer.getService(VessageService).sendVessageToUser(receiverId, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+        }else if let receiverMobile = self.chatter.mobile{
+            ServiceContainer.getService(VessageService).sendVessageToMobile(receiverMobile, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+        }else{
+            hud.hideAsync(false)
+        }
+    }
+    
+    private func retrySendVessage(url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
             self.sendVessage(url)
         }
@@ -244,12 +257,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         }
         self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
-    
-    var tmpFilmZipURL:NSURL {
-        let tempDir = NSTemporaryDirectory()
-        let url = NSURL(fileURLWithPath: tempDir).URLByAppendingPathComponent("tmpVessage.zip")
-        return url
-    }
+
     
     private func confirmSend(url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in

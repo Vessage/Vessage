@@ -9,7 +9,7 @@
 import UIKit
 
 //MARK: ConversationViewController
-class ConversationViewController: UIViewController {
+class ConversationViewController: UIViewController,PlayerDelegate {
     
     let conversationService = ServiceContainer.getService(ConversationService)
     let userService = ServiceContainer.getService(UserService)
@@ -23,16 +23,23 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var avatarButton: UIButton!
     @IBOutlet weak var nextVessageButton: UIButton!{
         didSet{
-            nextVessageButton.hidden = conversationNotReadCount < 2
+            nextVessageButton.hidden = true
+        }
+    }
+    @IBOutlet weak var noMessageTipsLabel: UILabel!{
+        didSet{
+            noMessageTipsLabel.hidden = true
         }
     }
     
-    private var vessagePlayer:ShareLinkFilmView!
+    private var vessagePlayer:BahamutFilmView!
     @IBOutlet weak var vessageView: UIView!{
         didSet{
-            vessagePlayer = ShareLinkFilmView(frame: vessageView.bounds)
+            vessagePlayer = BahamutFilmView(frame: vessageView.bounds)
             vessagePlayer.fileFetcher = fileService.getFileFetcherOfFileId(.Video)
             vessagePlayer.autoPlay = false
+            vessagePlayer.isPlaybackLoops = false
+            vessagePlayer.delegate = self
             vessageView.addSubview(vessagePlayer)
             vessageView.sendSubviewToBack(vessagePlayer)
             vessageView.hidden = (presentingVesseage == nil)
@@ -43,13 +50,31 @@ class ConversationViewController: UIViewController {
     }
     
     var conversationId:String!
-    var chatter:VessageUser!
+    var chatterChanged = true
+    private var chatter:VessageUser!{
+        didSet{
+            let oldAvatar = oldValue?.avatar
+            if oldAvatar != chatter?.avatar{
+                self.updateAvatar(chatter?.avatar)
+            }
+        }
+    }
+    
     var notReadVessages = [Vessage](){
         didSet{
-            conversationNotReadCount = notReadVessages.count
-            if conversationNotReadCount > 0{
+            conversationNotReadCount = (notReadVessages.filter{$0.isRead == false}).count
+            if notReadVessages.count > 0{
                 presentingVesseage = notReadVessages.first
+            }else{
+                if let chatterId = self.chatter?.userId{
+                    presentingVesseage = vessageService.getCachedNewestVessage(chatterId)
+                }else{
+                    presentingVesseage = nil
+                }
             }
+            nextVessageButton?.hidden = notReadVessages.count <= 1
+            vessageView?.hidden = presentingVesseage == nil
+            noMessageTipsLabel?.hidden = presentingVesseage != nil
         }
     }
     private var presentingVesseage:Vessage!{
@@ -57,7 +82,7 @@ class ConversationViewController: UIViewController {
             if presentingVesseage != nil{
                 vessagePlayer.filePath = presentingVesseage.fileId
             }
-            vessageView.hidden = presentingVesseage == nil
+            
         }
     }
     
@@ -74,11 +99,27 @@ class ConversationViewController: UIViewController {
             }else{
                 vessagebadgeButton.badgeValue = "\(conversationNotReadCount)"
             }
-            nextVessageButton?.hidden = conversationNotReadCount < 2
+        }
+    }
+    
+    var otherConversationNewVessageReceivedCount:Int = 0{
+        didSet{
+            if otherConversationNewVessageReceivedCount <= 0{
+                return
+            }
+            if let item = self.navigationController?.navigationBar.backItem?.backBarButtonItem{
+                item.title = "( \(otherConversationNewVessageReceivedCount) )"
+            }
         }
     }
     
     //MARK: actions
+    
+    private func updateAvatar(avatar:String?){
+        if let imgView = self.avatarButton?.imageView{
+            ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
+        }
+    }
     
     func loadNextVessage(){
         if notReadVessages.count == 0{
@@ -87,8 +128,8 @@ class ConversationViewController: UIViewController {
             self.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
         }else{
             notReadVessages.removeFirst()
+            vessageService.removeVessage(self.presentingVesseage)
             self.presentingVesseage = notReadVessages.first
-            vessageService.readVessage(presentingVesseage.vessageId)
         }
     }
     
@@ -115,8 +156,12 @@ class ConversationViewController: UIViewController {
             {
                 self.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
             }else{
-                
-                self.conversationService.noteConversation(self.conversationId, noteName: newNoteName)
+                if self.conversationService.noteConversation(self.conversationId, noteName: newNoteName){
+                    self.controllerTitle = newNoteName
+                    self.playCheckMark("SAVE_NOTE_NAME_SUC")
+                }else{
+                    self.playCrossMark("SAVE_NOTE_NAME_ERROR".localizedString())
+                }
             }
         })
         let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
@@ -146,49 +191,74 @@ class ConversationViewController: UIViewController {
         super.viewDidLoad()
         userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: "onNewVessageReveiced:", name: VessageService.onNewVessageReceived, object: nil)
-        ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
     }
     
     deinit{
         userService.removeObserver(self)
         vessageService.removeObserver(self)
-        ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        if chatterChanged{
+            chatterChanged = false
+            var vessages = vessageService.getNotReadVessage(self.chatter.userId)
+            vessages.sortInPlace({ (a, b) -> Bool in
+                a.sendTime.dateTimeOfAccurateString.isBefore(b.sendTime.dateTimeOfAccurateString)
+            })
+            notReadVessages = vessages
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        notReadVessages = vessageService.getNotReadVessage(self.chatter)
     }
     
     //MARK: notifications
-    func onNewVessageNotify(a:NSNotification){
-        vessageService.newVessageFromServer()
-    }
     
     func onUserProfileUpdated(a:NSNotification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if self.chatter != nil{                
-                if chatter.userId == self.chatter.userId || chatter.mobile == self.chatter.mobile{
-                    self.chatter = chatter
-                }
+            if self.chatter.userId == chatter.userId || self.chatter.mobile == chatter.mobile || self.chatter.mobile.md5 == chatter.mobile{
+                self.chatter = chatter
             }
         }
     }
     
     func onNewVessageReveiced(a:NSNotification){
-        if let msg = a.userInfo?[NewVessageReceivedValue] as? Vessage{
+        if let msg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
             if msg.sender == self.chatter?.userId ?? ""{
                 self.notReadVessages.append(msg)
-                conversationNotReadCount++
+            }else{
+                self.otherConversationNewVessageReceivedCount++
             }
         }
     }
 
+    //MARK: Player Delegate
+    
+    func playerBufferingStateDidChange(player: Player) {
+        
+    }
+    
+    func playerPlaybackDidEnd(player: Player) {
+        
+    }
+    
+    func playerPlaybackStateDidChange(player: Player) {
+        
+    }
+    
+    func playerPlaybackWillStartFromBeginning(player: Player) {
+        if self.presentingVesseage?.isRead == false {
+            self.vessageService.readVessage(self.presentingVesseage)
+            self.conversationNotReadCount--
+        }
+    }
+    
+    func playerReady(player: Player) {
+        
+    }
+    
     //MARK: showConversationViewController
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation)
     {
@@ -206,6 +276,8 @@ class ConversationViewController: UIViewController {
             chatter.mobile = conversation.chatterMobile
             controller.chatter = chatter
         }
+        controller.chatterChanged = true
+        controller.otherConversationNewVessageReceivedCount = 0
         controller.controllerTitle = conversation.noteName
         nvc.pushViewController(controller, animated: true)
     }

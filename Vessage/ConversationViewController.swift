@@ -17,10 +17,15 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     let vessageService = ServiceContainer.getService(VessageService)
     @IBOutlet weak var vessagebadgeButton: UIButton!{
         didSet{
+            vessagebadgeButton.shouldHideBadgeAtZero = true
             vessagebadgeButton.backgroundColor = UIColor.clearColor()
         }
     }
-    @IBOutlet weak var avatarButton: UIButton!
+    @IBOutlet weak var avatarButton: UIButton!{
+        didSet{
+            avatarButton.imageView?.layer.cornerRadius = avatarButton.frame.height / 2
+        }
+    }
     @IBOutlet weak var nextVessageButton: UIButton!{
         didSet{
             nextVessageButton.hidden = true
@@ -94,11 +99,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     private var conversationNotReadCount:Int = 0{
         didSet{
-            if conversationNotReadCount == 0{
-                vessagebadgeButton.badgeValue = ""
-            }else{
-                vessagebadgeButton.badgeValue = "\(conversationNotReadCount)"
-            }
+            vessagebadgeButton.badgeValue = "\(conversationNotReadCount)"
         }
     }
     
@@ -116,8 +117,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     //MARK: actions
     
     private func updateAvatar(avatar:String?){
-        if let imgView = self.avatarButton?.imageView{
-            ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
+        if let btn = self.avatarButton{
+            ServiceContainer.getService(FileService).setAvatar(btn, iconFileId: avatar)
         }
     }
     
@@ -174,13 +175,11 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     }
     
     @IBAction func showNextMessage(sender: AnyObject) {
-        let userSettingKey = "IS_CLICK_NEXT_MESSAGE_TIPS_SHOWN"
-        if UserSetting.isSettingEnable(userSettingKey){
+        if self.presentingVesseage.isRead{
             loadNextVessage()
         }else{
             let continueAction = UIAlertAction(title: "CONTINUE", style: .Default, handler: { (action) -> Void in
                 self.loadNextVessage()
-                UserSetting.enableSetting(userSettingKey)
             })
             self.showAlert("CLICK_NEXT_MESSAGE_TIPS".localizedString(), msg: nil, actions: [ALERT_ACTION_I_SEE.first!,continueAction])
         }
@@ -207,6 +206,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
                 a.sendTime.dateTimeOfAccurateString.isBefore(b.sendTime.dateTimeOfAccurateString)
             })
             notReadVessages = vessages
+            updateAvatar(self.chatter.avatar)
         }
     }
     
@@ -271,8 +271,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         }
         if controller.chatter == nil{
             let chatter = VessageUser()
+            chatter.userId = conversation.chatterMobile.md5
             chatter.nickName = conversation.noteName
-            chatter.userId = conversation.chatterId
             chatter.mobile = conversation.chatterMobile
             controller.chatter = chatter
         }

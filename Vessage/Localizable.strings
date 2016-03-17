@@ -1,0 +1,169 @@
+/* 
+  Localizable.strings
+  Vessage
+
+  Created by AlexChow on 16/3/17.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+
+//Date Time
+Sunday = "星期日";
+Monday = "星期一";
+Tuesday = "星期二";
+Wednesday = "星期三";
+Thursday = "星期四";
+Friday = "星期五";
+Saturday = "星期六";
+Today = "今天";
+Tomorrow = "明天";
+Yesterday = "昨天";
+
+//BahamutRFKit
+VALIDATE_DATA_ERROR = "数据有误";
+NETWORK_ERROR = "网络错误";
+NOT_LOGIN = "没有登录";
+LOGOUTED = "已经注销";
+OTHER_DEVICE_HAD_LOGIN = "另一设备使用相同账号登陆，本设备将退出Sharelink";
+
+//MJRefresh
+RefreshHeaderIdleText = "下拉加载最新分享";
+RefreshHeaderPullingText = "松开立即刷新";
+RefreshHeaderRefreshingText = "加载中...";
+MJRefreshAutoFooterIdleText = "点击或上拉加载更多";
+MJRefreshAutoFooterRefreshingText = "正在加载...";
+RefreshAutoFooterNoMoreDataText = "全部加载完毕！";
+
+//Common
+YES = "是";
+UMMM = "不要";
+LOADING = "加载中";
+FINISH = "完成";
+EDIT = "编辑";
+CANCEL = "取消";
+CANCELED = "取消";
+FAILED = "失败";
+DONE = "完成";
+SHARE = "分享";
+SUCCESS = "成功";
+FAIL = "失败";
+NO = "否";
+OK = "好";
+I_SEE = "知道了";
+REMOVE = "移除";
+INVALID_VALUE = "设置无效";
+USE_ANOTHER_VALUE = "请使用另外的值!";
+CONTINUE = "继续";
+LOGIN = "登录";
+LOGINING = "登录中";
+SERVER_ERROR = "服务器错误";
+SHARELINK = "Sharelink";
+SHARELINK_NAME = "Sharelink";
+RECORD_CANCELED = "录制取消";
+VIDEO_SAVED = "视频已经保存";
+SAVE_VIDEO_FAILED = "保存视频失败";
+UPDATING = "更新中";
+IGNORE = "忽略";
+ADD_IMAGE_LIMIT_AT_X = "最多只能添加%@张图片";
+HARMFUL_CONTENT = "不良信息";
+COPY_SHARE_MESSAGE = "复制分享的文字";
+COPY_SHARE_MESSAGE_SUC = "复制成功";
+SHARELINK_MOTTO = "与朋友分享和交流喜欢的话题!";
+UNKNOW_ACTION = "未知操作";
+INIT_USER_DATA_ERROR = "获取用户数据失败，请重新登录!";
+
+//System
+SETTING = "Setting";
+ME = "我";
+
+VALIDATE_ACCTOKEN_FAILED = "验证Token失败";
+NO_MORE_MESSAGE = "没有更多消息了";
+SEND_WHITE_SPACE_ERROR = "不能发送空白字符";
+CONNECTING = "连接中";
+CONNECTED = "已连接";
+CONNECT_ERROR = "网络错误";
+CHICAGO_VALIDATE_FAILED = "服务器验证错误!";
+CONNECT_ERROR_TAP_RETRY = "网络错误，点我重试!";
+
+ILLEGLE_VALUE = "非法数据";
+LOAD_IMG_ERROR = "加载图片失败";
+
+MSG_IS_TOO_LONG = "超过限制的长度了";
+
+SENDING_FILM = "视频发送中";
+NO_FILM_SELECTED = "需要录制或者选择一个视频!";
+SEND_FILM_SUC = "上传视频成功！";
+
+SENDING_FILE = "文件传送中";
+SEND_FILE_SUC = "传送文件成功";
+SEND_FILE_FAILED = "传送文件错误";
+
+//SignInViewController
+REFRESHING = "刷新中";
+
+//MainNavicationController
+USER_APP_TOKEN_TIMEOUT = "用户认证失效，需要重新登录";
+
+OPERATE_ERROR = "操作失败，请检查网络";
+
+//SigninViewController
+REGISTING = "注册中";
+REGIST_SUC_TITLE = "注册成功";
+REGIST_SUC_MSG = "你的Sharelink ID:\n%@";
+
+
+//MyDetailViewController
+USER_DATA_NOT_READY_RETRY = "用户数据没准备好，请稍后重试";
+NICK = "名字";
+NICK_REGEX_TIPS = "昵称必须是1到23个字符";
+LEVEL = "等级";
+JOIN = "注册时间";
+ACCOUNT_ID = "Sharelink ID";
+MOTTO = "签名";
+LOGOUT_CONFIRM_TITLE = "确定退出?";
+USER_DATA_WILL_SAVED = "用户数据将会保留,以便下次登录使用";
+CONFIRM_CLEAR_CACHE_TITLE = "确定清除所有缓存文件?";
+CLEAR_CACHE_SUCCESS = "清除缓存成功!";
+SET_KEY_FAILED = "修改%@出错";
+MODIFY_KEY_SUC = "修改%@成功!";
+
+CHANGE_AVATAR = "修改头像";
+TAKE_NEW_PHOTO = "拍照";
+SELECT_PHOTO = "选择一个照片";
+SET_PROFILE_VIDEO_SUC = "设置个人视频成功";
+SET_PROFILE_VIDEO_FAILED = "设置个人视频失败";
+SET_AVATAR_SUC = "设置头像成功";
+SET_AVATAR_FAILED = "设置头像失败";
+
+//
+UNKNOW_SHARELINK_CMD = "非法命令";
+SHARELINK_CMD_TIMEOUT = "命令已经失效";
+
+//notification format
+NEW_MSG_NOTIFICATION = "你有新的未读消息!";
+NEW_SHARE_NOTIFICATION = "新的分享!";
+NEW_FRI_MSG_NOTIFICATION = "你收到新的好友信息!";
+
+
+REGIST_FAILED = "注册失败";
+REGIST_SUC = "注册成功";
+DATA_ERROR = "数据有误";
+
+USER_NAME_EXISTS = "用户名已存在，请更换一个!";
+
+SERVER_ERROR = "服务器错误";
+ALLOC_TOKEN_FAILED = "Token服务器错误";
+NO_APP_INSTANCE = "App服务器错误";
+
+VALIDATE_INFO_INVALID = "非法登录数据";
+VALIDATE_FAILED = "用户不存在或密码错误";
+
+BIND_MOBILE = "手机";
+
+OLD_PSW_NULL = "旧密码不能为空";
+WRONG_PSW_FORMAT = "密码格式错误";
+PSW_FORMAT = "密码由6到23个数字、字母和特殊字符组成";
+CHANGE_PASSWORD_SUCCESS = "密码修改成功!";
+CHANGE_PASSWORD_ERROR = "密码修改失败, 请检查旧密码是否正确.";
+CHANGE_PSW = "修改密码";
+CONFIRM_PSW = "修改新密码为";
+OLD_NEW_PSW_SAME = "新旧密码相同";

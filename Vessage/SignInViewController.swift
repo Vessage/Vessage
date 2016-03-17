@@ -49,6 +49,7 @@ class SignInViewController: UIViewController {
     
     //MARK: actions
     @IBAction func login(sender: AnyObject) {
+        self.hideKeyBoard()
         let hud = self.showActivityHudWithMessage(nil, message: "LOGINING".localizedString())
         BahamutRFKit.sharedInstance.loginBahamutAccount(VessageConfig.bahamutConfig.accountLoginApiUrl, accountInfo: loginInfoTextField.text!, passwordOrigin: passwordTextField.text!) { (isSuc, errorMsg, loginResult) -> Void in
             hud.hide(true)

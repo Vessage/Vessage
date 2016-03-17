@@ -20,6 +20,8 @@ class VessageUser: BahamutObject {
     var mainChatImage:String!
     var avatar:String!
     var mobile:String!
+    
+    var lastUpdatedTime:NSDate!
 }
 
 class GetUserInfoRequest: BahamutRFRequestBase {

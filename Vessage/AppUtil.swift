@@ -41,6 +41,32 @@ extension FileService
             }
         }
     }
+    
+    func setAvatar(button:UIButton,iconFileId fileId:String!)
+    {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            let image = UIImage(named: "defaultAvatar")
+            button.setImage(image, forState: .Normal)
+            if String.isNullOrWhiteSpace(fileId) == false
+            {
+                if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
+                {
+                    button.setImage(uiimage, forState: .Normal)
+                }else
+                {
+                    self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
+                        if filePath != nil
+                        {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                let img = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
+                                button.setImage(img, forState: .Normal)
+                            })
+                        }
+                    })
+                }
+            }
+        }
+    }
 }
 
 //MARK: String Util

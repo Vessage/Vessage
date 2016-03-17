@@ -68,19 +68,20 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     
     class FileUploadTask: BahamutObject {
         override func getObjectUniqueIdName() -> String {
-            return "fileId"
+            return "taskId"
         }
-        
+        var taskId:String!
         var fileId:String!
         var vessageId:String!
     }
     
-    func observeOnFileUploadedForVessage(vessageId:String,fileKey:FileAccessInfo){
+    func observeOnFileUploadedForVessage(taskId:String,vessageId:String,fileKey:FileAccessInfo){
         let task = FileUploadTask()
+        task.taskId = taskId
         task.fileId = fileKey.fileId
         task.vessageId = vessageId
         task.saveModel()
-        ProgressTaskWatcher.sharedInstance.addTaskObserver(fileKey.fileId, delegate: self)
+        ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
     }
     
     //MARK: ProgressTask Delegate
@@ -149,8 +150,10 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Vessage]>) -> Void in
             if let vsgs = result.returnObject{
                 vsgs.saveBahamutObjectModels()
-                vsgs.forEach({ (vsg) -> () in
-                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    vsgs.forEach({ (vsg) -> () in
+                        self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
+                    })
                 })
                 
                 self.notifyVessageGot()

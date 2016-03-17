@@ -40,17 +40,24 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     @objc func userLogout(userId: String) {
         myProfile = nil
     }
-
+    
+    private var forceGetUserProfileOnce:Bool = false
+    private let notUpdateUserInMinutes:Int = 20
     private(set) var myProfile:VessageUser!
     
     var isUserMobileValidated:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mobile ?? "")
     }
     
+    func setForeceGetUserProfileIgnoreTimeLimit(){
+        forceGetUserProfileOnce = true
+    }
+    
     private func initMyProfile(updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         let req = GetUserInfoRequest()
         let user = PersistentManager.sharedInstance.getModel(VessageUser.self, idValue: UserSetting.userId)
-        getUserProfileByReq(req){ user in
+        setForeceGetUserProfileIgnoreTimeLimit()
+        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
             updatedCallback(user: user)
         }
         return user
@@ -62,7 +69,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         
         let req = GetUserInfoByMobileRequest()
         req.mobile = mobile
-        getUserProfileByReq(req){ user in
+        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
             updatedCallback(user: user)
         }
         return user
@@ -71,10 +78,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     func getUserProfileByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         
         let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ accountId == $0.accountId}.first
-        
         let req = GetUserInfoByAccountIdRequest()
         req.accountId = accountId
-        getUserProfileByReq(req){ user in
+        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
             updatedCallback(user: user)
         }
         return user
@@ -87,7 +93,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     func fetchUserProfile(userId:String){
         let req = GetUserInfoRequest()
         req.userId = userId
-        getUserProfileByReq(req){ user in}
+        getUserProfileByReq(nil, req: req){ user in}
     }
     
     func getUserProfile(userId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
@@ -95,18 +101,27 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         let user = getCachedUserProfile(userId)
         let req = GetUserInfoRequest()
         req.userId = userId
-        getUserProfileByReq(req){ user in
+        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
             updatedCallback(user: user)
         }
         return user
     }
     
-    private func getUserProfileByReq(req:BahamutRFRequestBase,updatedCallback:(user:VessageUser?)->Void){
+    private func getUserProfileByReq(lastUpdatedTime:NSDate?,req:BahamutRFRequestBase,updatedCallback:(user:VessageUser?)->Void){
+        if forceGetUserProfileOnce == false{
+            if let lt = lastUpdatedTime{
+                if NSDate().totalMinutesSince1970 - lt.totalMinutesSince1970 < notUpdateUserInMinutes{
+                    return
+                }
+            }
+        }
+        forceGetUserProfileOnce = false
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
             if result.isFailure{
                 updatedCallback(user: nil)
             }
             if let user = result.returnObject{
+                user.lastUpdatedTime = NSDate()
                 user.saveModel()
                 PersistentManager.sharedInstance.saveAll()
                 updatedCallback(user: user)
@@ -114,6 +129,26 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }else{
                 updatedCallback(user: nil)
             }
+        }
+    }
+    
+    func changeUserNickName(newNickName:String,callback:(Bool)->Void){
+        let req = ChangeNickRequest()
+        req.nick = newNickName
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                self.myProfile.nickName = newNickName
+                self.myProfile.saveModel()
+            }
+            callback(result.isSuccess)
+        }
+    }
+    
+    func setMyAvatar(avatar:String,callback:(Bool)->Void){
+        let req = ChangeAvatarRequest()
+        req.avatar = avatar
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            callback(result.isSuccess)
         }
     }
     

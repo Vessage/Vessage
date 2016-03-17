@@ -94,6 +94,12 @@
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
+		E7D2D56E1C9A776500DD7D9B /* MyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */; };
+		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
+		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
+		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
+		E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */; };
+		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
 		E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */; };
 		E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */; };
 		E7E237D71C998AEB008FF893 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D41C998AEB008FF893 /* Player.swift */; };
@@ -207,6 +213,12 @@
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
+		E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailViewController.swift; sourceTree = "<group>"; };
+		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
+		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEditTextPropertyViewController.swift; sourceTree = "<group>"; };
+		E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListContactCell.swift; sourceTree = "<group>"; };
 		E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutFilmView.swift; sourceTree = "<group>"; };
 		E7E237D41C998AEB008FF893 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -291,6 +303,7 @@
 				E708AB481C86CAA50071104E /* Info.plist */,
 				E708AB4F1C86CB570071104E /* Bridge-Header.h */,
 				E708AC9B1C873A000071104E /* BahamutConfig.json */,
+				E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */,
 			);
 			name = SupportFiles;
 			sourceTree = "<group>";
@@ -538,6 +551,7 @@
 				E708AB451C86CAA50071104E /* LaunchScreen.storyboard */,
 				E708AC9F1C8752010071104E /* AccountSign.storyboard */,
 				E708ACAC1C8754E20071104E /* User.storyboard */,
+				E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -597,6 +611,10 @@
 		E708ACAE1C87550D0071104E /* User */ = {
 			isa = PBXGroup;
 			children = (
+				E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */,
+				E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */,
+				E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */,
+				E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */,
 				E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */,
 			);
 			name = User;
@@ -747,8 +765,10 @@
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
+				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
+				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -814,10 +834,12 @@
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
 				E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */,
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
+				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
 				E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
+				E7D2D56E1C9A776500DD7D9B /* MyDetailViewController.swift in Sources */,
 				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
@@ -855,6 +877,7 @@
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E708AB9D1C86CF8A0071104E /* BahamutMessage.xcdatamodeld in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
+				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */,
@@ -883,6 +906,7 @@
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E708ABA11C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
+				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,

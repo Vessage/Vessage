@@ -97,7 +97,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     
     //MARK: actions
     @IBAction func showUserSetting(sender: AnyObject) {
-        //TODO: open user setting view
+        MyDetailViewController.showMyDetailViewController(self.navigationController!)
     }
     
     private func removeConversation(conversation:Conversation){
@@ -156,13 +156,23 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
             })
             searchResult.appendContentsOf(res)
             userService.searchUser(searchText, callback: { (resultUsers) -> Void in
-                let results = resultUsers.map({ (resultUser) -> SearchResultModel in
+                if let currentText = searchBar.text{
+                    if currentText != searchText{
+                        print("ignore search result")
+                        return
+                    }
+                }
+                let results = resultUsers.filter({ (resultUser) -> Bool in
+                    return conversations.count == 0 || !conversations.contains({ (c) -> Bool in
+                        c.chatterId == resultUser.userId
+                    })
+                }).map({ (resultUser) -> SearchResultModel in
                     let model = SearchResultModel()
                     model.user = resultUser
                     model.keyword = searchText
                     return model
                 })
-                self.searchResult.insertContentsOf(results, at: 0)
+                self.searchResult.appendContentsOf(results)
                 if self.searchResult.count == 0 && searchText.isChinaMobileNo(){
                     let model = SearchResultModel()
                     model.keyword = searchText
@@ -284,5 +294,37 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         viewController.presentViewController(nvc, animated: false) { () -> Void in
             
         }
+    }
+}
+
+extension ConversationListController{
+    func changeNickName(){
+        let title = "CHANGE_NICK_NAME".localizedString()
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
+        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
+            textfield.placeholder = "NEW_NICK_NAME".localizedString()
+            textfield.borderStyle = .None
+            textfield.text = self.userService.myProfile.nickName ?? ""
+        })
+        
+        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
+            let newNickName = alertController.textFields?[0].text ?? ""
+            if String.isNullOrEmpty(newNickName)
+            {
+                self.playToast("NEW_NICK_NAME_CANT_NULL".localizedString())
+            }else{
+                self.userService.changeUserNickName(newNickName, callback: { (suc) -> Void in                    
+                    if suc{
+                        self.playCheckMark("SAVE_NOTE_NAME_SUC")
+                    }else{
+                        self.playCrossMark("SAVE_NOTE_NAME_ERROR".localizedString())
+                    }
+                })
+            }
+        })
+        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
+        alertController.addAction(no)
+        alertController.addAction(yes)
+        self.showAlert(alertController)
     }
 }

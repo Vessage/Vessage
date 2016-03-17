@@ -23,10 +23,15 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var badgeButton: UIButton!{
         didSet{
+            badgeButton.shouldHideBadgeAtZero = true
             badgeButton.backgroundColor = UIColor.clearColor()
         }
     }
-    @IBOutlet weak var avatarView: UIImageView!
+    @IBOutlet weak var avatarView: UIImageView!{
+        didSet{
+            avatarView.layer.cornerRadius = 6
+        }
+    }
     @IBOutlet weak var headLineLabel: UILabel!
     @IBOutlet weak var subLineLabel: UILabel!
     
@@ -67,11 +72,7 @@ class ConversationListCell:ConversationListCellBase{
     
     private var badge:Int = 0{
         didSet{
-            if badge == 0{
-                badgeButton.badgeValue = ""
-            }else{
-                badgeButton.badgeValue = "\(badge)"
-            }
+            badgeButton.badgeValue = "\(badge)"
         }
     }
     
@@ -91,6 +92,9 @@ class ConversationListCell:ConversationListCellBase{
     private func updateWithConversation(conversation:Conversation){
         self.headLine = conversation.noteName
         self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
+        if let chatterId = conversation.chatterId{
+            self.badge = self.rootController.vessageService.getNotReadVessage(chatterId).count
+        }
         if let uId = conversation.chatterId{
             if let user = rootController.userService.getCachedUserProfile(uId){
                 self.avatar = user.avatar

@@ -205,7 +205,8 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         ServiceContainer.getService(FileService).sendFileToAliOSS(url.path!, type: .Video) { (taskId, fileKey) -> Void in
             hud.hideAsync(false)
             if fileKey != nil{
-                ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(vessageId, fileKey: fileKey)
+                ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId,vessageId: vessageId, fileKey: fileKey)
+                self.playCheckMark("VESSAGE_PUSH_IN_QUEUE".localizedString())
             }else{
                 self.retrySendFile(vessageId,url: url)
             }

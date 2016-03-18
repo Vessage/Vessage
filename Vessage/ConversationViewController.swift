@@ -48,9 +48,6 @@ class ConversationViewController: UIViewController,PlayerDelegate {
             vessageView.addSubview(vessagePlayer)
             vessageView.sendSubviewToBack(vessagePlayer)
             vessageView.hidden = (presentingVesseage == nil)
-            if presentingVesseage != nil{
-                
-            }
         }
     }
     
@@ -82,10 +79,20 @@ class ConversationViewController: UIViewController,PlayerDelegate {
             noMessageTipsLabel?.hidden = presentingVesseage != nil
         }
     }
+    
     private var presentingVesseage:Vessage!{
         didSet{
+            
             if presentingVesseage != nil{
-                vessagePlayer.filePath = presentingVesseage.fileId
+                
+                if oldValue != nil{
+                    UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
+                        self.vessagePlayer.filePath = nil
+                        self.vessagePlayer.filePath = self.presentingVesseage.fileId
+                    })
+                }else{
+                    vessagePlayer.filePath = presentingVesseage.fileId
+                }
             }
             
         }
@@ -123,9 +130,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     }
     
     func loadNextVessage(){
-        if notReadVessages.count == 0{
-            self.playToast("NO_VESSAGE".localizedString())
-        }else if notReadVessages.count == 1{
+        if notReadVessages.count <= 1{
             self.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
         }else{
             notReadVessages.removeFirst()

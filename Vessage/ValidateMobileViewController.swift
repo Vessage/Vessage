@@ -10,29 +10,27 @@ import UIKit
 
 class ValidateMobileViewController: UIViewController {
     
-    @IBOutlet weak var mobileTextField: UITextField!
-    @IBOutlet weak var smsTextField: UITextField!
-    @IBOutlet weak var sendSMSButton: UIButton!
-    
-    @IBAction func sendSMS(sender: AnyObject) {
-        ServiceContainer.getService(UserService).sendValidateMobilSMS(mobileTextField.text!) { (suc) -> Void in
-            if suc{
-                self.playToast("SEND_SMS_KEY_SUCCESS".localizedString())
-            }else{
-                self.playToast("SEND_SMS_KEY_FAILED".localizedString())
+    @IBAction func validateMobile(sender: AnyObject) {
+        SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
+            if responseState == SMSUIResponseStateSelfVerify{
+                let hud = self.showActivityHud()
+                ServiceContainer.getService(UserService).validateMobile(phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
+                    hud.hideAsync(false)
+                    if suc{
+                        self.dismissViewControllerAnimated(false, completion: { () -> Void in
+                            EntryNavigationController.start()
+                        })
+                    }
+                })
             }
         }
     }
     
-    @IBAction func validateMobile(sender: AnyObject) {
-        
-    }
-    
     static func showValidateMobileViewController(vc:UIViewController)
     {
-        let controller = instanceFromStoryBoard("AccountSign", identifier: "ValidateMobileViewController")
-        vc.presentViewController(controller, animated: true) { () -> Void in
-            
+        let controller = instanceFromStoryBoard("AccountSign", identifier: "ValidateMobileViewController") as! ValidateMobileViewController
+        vc.presentViewController(controller, animated: false) { () -> Void in
+            controller.validateMobile(vc)
         }
     }
 }

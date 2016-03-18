@@ -239,7 +239,6 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
                     }
                 })
             }
-            
         }
     }
     

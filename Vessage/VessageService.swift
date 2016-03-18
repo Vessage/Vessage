@@ -150,6 +150,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Vessage]>) -> Void in
             if let vsgs = result.returnObject{
                 vsgs.saveBahamutObjectModels()
+                PersistentManager.sharedInstance.refreshCache(Vessage)
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     vsgs.forEach({ (vsg) -> () in
                         self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
@@ -176,6 +177,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     }
     
     func getNotReadVessage(chatterId:String) -> [Vessage]{
-        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && ($0.sender == chatterId) }
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == true && ($0.sender == chatterId) }
     }
 }

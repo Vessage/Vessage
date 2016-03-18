@@ -144,39 +144,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UHZ-aG-or8">
-                                <rect key="frame" x="136" y="83" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M0s-Kx-GLz">
-                                <rect key="frame" x="136" y="138" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Pf-K1-RPj">
-                                <rect key="frame" x="262" y="138" width="46" height="30"/>
-                                <state key="normal" title="验证"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bm-wK-JkY">
+                                <rect key="frame" x="162" y="353" width="90" height="30"/>
+                                <state key="normal" title="验证你的手机"/>
                                 <connections>
-                                    <action selector="validateMobile:" destination="Eqh-NK-jrz" eventType="touchUpInside" id="07c-Ez-VZb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfY-sp-zcR">
-                                <rect key="frame" x="262" y="77" width="46" height="30"/>
-                                <state key="normal" title="发送验证码"/>
-                                <connections>
-                                    <action selector="sendSMS:" destination="Eqh-NK-jrz" eventType="touchUpInside" id="cA6-LT-i14"/>
+                                    <action selector="validateMobile:" destination="Eqh-NK-jrz" eventType="touchUpInside" id="4rL-af-hKy"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6bm-wK-JkY" firstAttribute="centerX" secondItem="SDN-Gu-Y09" secondAttribute="centerX" id="9Ta-C2-iuA"/>
+                            <constraint firstItem="6bm-wK-JkY" firstAttribute="centerY" secondItem="SDN-Gu-Y09" secondAttribute="centerY" id="cRf-wZ-9ct"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <connections>
-                        <outlet property="mobileTextField" destination="UHZ-aG-or8" id="RJ3-rm-61N"/>
-                        <outlet property="sendSMSButton" destination="BfY-sp-zcR" id="6oo-5x-E3f"/>
-                        <outlet property="smsTextField" destination="M0s-Kx-GLz" id="I6s-nF-X9H"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cr4-nQ-zCu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

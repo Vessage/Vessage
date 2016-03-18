@@ -296,7 +296,6 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
         if PersistentFileHelper.moveFile(videoSavedUrl.path!, destinationPath: newFilePath)
         {
-            self.playToast("VIDEO_SAVED".localizedString())
             confirmSend(NSURL(fileURLWithPath: newFilePath))
         }else
         {

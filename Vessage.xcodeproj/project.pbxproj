@@ -111,8 +111,28 @@
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
 		E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */; };
+		E7F22C301C9BE5A500CD38D1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C2F1C9BE5A500CD38D1 /* libz.tbd */; };
+		E7F22C321C9BE5B400CD38D1 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C311C9BE5B400CD38D1 /* libicucore.tbd */; };
+		E7F22C341C9BE5C100CD38D1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */; };
+		E7F22C361C9BE5D000CD38D1 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */; };
+		E7F22C381C9BE5DC00CD38D1 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */; };
+		E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */; };
+		E7F22C581C9BF19800CD38D1 /* country.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C571C9BF19800CD38D1 /* country.plist */; };
+		E7F22C5B1C9C202200CD38D1 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C591C9C202200CD38D1 /* SMS_SDK.framework */; };
+		E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */; };
+		E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */; };
 		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E7F22C551C9BF13600CD38D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7B2A62491C4F66BE00A160C8;
+			remoteInfo = SMSSDUI;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		17E4048CD0C3442FF6C01025 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +250,17 @@
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
+		E7F22C2F1C9BE5A500CD38D1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		E7F22C311C9BE5B400CD38D1 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSMSSDUI.a; path = "SMSSDKUI/build/Debug-iphoneos/libSMSSDUI.a"; sourceTree = "<group>"; };
+		E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SMSSDUI.xcodeproj; path = Vessage/Libs/SMSSDK/SMSSDKUI/SMSSDUI.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E7F22C571C9BF19800CD38D1 /* country.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country.plist; sourceTree = "<group>"; };
+		E7F22C591C9C202200CD38D1 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SMSSDKUI.bundle; path = Vessage/Libs/SMSSDK/SMSSDKUI.bundle; sourceTree = SOURCE_ROOT; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
 		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -239,7 +270,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */,
+				E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */,
+				E7F22C381C9BE5DC00CD38D1 /* libstdc++.tbd in Frameworks */,
+				E7F22C361C9BE5D000CD38D1 /* JavaScriptCore.framework in Frameworks */,
+				E7F22C341C9BE5C100CD38D1 /* MessageUI.framework in Frameworks */,
+				E7F22C321C9BE5B400CD38D1 /* libicucore.tbd in Frameworks */,
+				E7F22C301C9BE5A500CD38D1 /* libz.tbd in Frameworks */,
 				E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */,
+				E7F22C5B1C9C202200CD38D1 /* SMS_SDK.framework in Frameworks */,
 				E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */,
 				09EEC9AD3D90A19D21086801 /* Pods.framework in Frameworks */,
 			);
@@ -260,6 +299,12 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */,
+				E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */,
+				E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */,
+				E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */,
+				E7F22C311C9BE5B400CD38D1 /* libicucore.tbd */,
+				E7F22C2F1C9BE5A500CD38D1 /* libz.tbd */,
 				E75A70401C8C8FB30029F0BD /* AddressBook.framework */,
 				E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */,
 				17E4048CD0C3442FF6C01025 /* Pods.framework */,
@@ -288,6 +333,7 @@
 		E708AB3B1C86CAA50071104E /* Vessage */ = {
 			isa = PBXGroup;
 			children = (
+				E7F22C271C9BE57800CD38D1 /* Libs */,
 				E708ACA91C8752BF0071104E /* ArchBase */,
 				E708AC0C1C86DEC40071104E /* Assets */,
 				E708ACA11C8752090071104E /* UI */,
@@ -300,6 +346,7 @@
 		E708AB4E1C86CB470071104E /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E7F22C571C9BF19800CD38D1 /* country.plist */,
 				E708AB481C86CAA50071104E /* Info.plist */,
 				E708AB4F1C86CB570071104E /* Bridge-Header.h */,
 				E708AC9B1C873A000071104E /* BahamutConfig.json */,
@@ -689,6 +736,34 @@
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutTask;
 			sourceTree = "<group>";
 		};
+		E7F22C271C9BE57800CD38D1 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				E7F22C4A1C9BF12700CD38D1 /* SMS_SDK */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		E7F22C4A1C9BF12700CD38D1 /* SMS_SDK */ = {
+			isa = PBXGroup;
+			children = (
+				E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */,
+				E7F22C591C9C202200CD38D1 /* SMS_SDK.framework */,
+				E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */,
+				E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */,
+			);
+			name = SMS_SDK;
+			path = SMSSDK/SMS_SDK;
+			sourceTree = "<group>";
+		};
+		E7F22C521C9BF13600CD38D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E7F22C561C9BF13600CD38D1 /* libSMSSDUI.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -748,12 +823,28 @@
 			mainGroup = E708AB301C86CAA50071104E;
 			productRefGroup = E708AB3A1C86CAA50071104E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E7F22C521C9BF13600CD38D1 /* Products */;
+					ProjectRef = E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E708AB381C86CAA50071104E /* Vessage */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E7F22C561C9BF13600CD38D1 /* libSMSSDUI.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSMSSDUI.a;
+			remoteRef = E7F22C551C9BF13600CD38D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E708AB371C86CAA50071104E /* Resources */ = {
@@ -763,12 +854,14 @@
 				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
+				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
+				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1045,6 +1138,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vessage/Libs/SMSSDK/SMS_SDK",
+				);
 				INFOPLIST_FILE = Vessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1092,6 +1189,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vessage/Libs/SMSSDK/SMS_SDK",
+				);
 				INFOPLIST_FILE = Vessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

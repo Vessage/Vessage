@@ -19,6 +19,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         configureBahamutRFKit()
         configureBahamutCmd()
         configureAliOSSManager()
+        configureSmsSDK()
         initService()
         return true
     }
@@ -26,6 +27,12 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func initService()
     {
         ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
+    }
+    
+    private func configureSmsSDK()
+    {
+        SMSSDK.registerApp(VessageConfig.bahamutConfig.smsSDKAppkey, withSecret: VessageConfig.bahamutConfig.smsSDKSecretKey)
+        //SMSSDK.registerApp("f3fc6baa9ac4", withSecret: "7f3dedcb36d92deebcb373af921d635a")
     }
     
     private func configureBahamutCmd()

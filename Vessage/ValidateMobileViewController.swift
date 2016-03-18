@@ -25,13 +25,7 @@ class ValidateMobileViewController: UIViewController {
     }
     
     @IBAction func validateMobile(sender: AnyObject) {
-        ServiceContainer.getService(UserService).validateMobile(mobileTextField.text!, smsKey: smsTextField.text!) { (suc) -> Void in
-            if suc{
-                EntryNavigationController.start()
-            }else{
-                self.playToast("SMS_KEY_NOT_CORRECT".localizedString())
-            }
-        }
+        
     }
     
     static func showValidateMobileViewController(vc:UIViewController)

@@ -43,6 +43,9 @@ class BahamutConfigObject:EVObject
     var weiboAppkey:String!
     var weiboAppScrect:String!
     
+    var smsSDKAppkey:String!
+    var smsSDKSecretKey:String!
+    
 }
 
 class VessageSetting{

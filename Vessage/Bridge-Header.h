@@ -14,4 +14,7 @@
 #import "UIBarButtomItem-Badge/UIButton+Badge.h"
 #import "UIBarButtomItem-Badge/UIbarButtonItem+Badge.h"
 
+#import <SMS_SDK/SMSSDK.h>
+#import "SMSSDKUI.h"
+
 #endif /* Bridge_Header_h */

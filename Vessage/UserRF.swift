@@ -99,9 +99,15 @@ class ValidateMobileVSMSRequest: BahamutRFRequestBase{
         }
     }
     
-    var vsms:String!{
+    var code:String!{
         didSet{
-            self.paramenters["vsms"] = mobile
+            self.paramenters["code"] = code
+        }
+    }
+    
+    var zoneCode:String!{
+        didSet{
+            self.paramenters["zone"] = zoneCode
         }
     }
 }

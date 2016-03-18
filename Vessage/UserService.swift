@@ -212,15 +212,21 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         
     }
     
-    func validateMobile(mobile:String, smsKey:String,callback:(suc:Bool)->Void){
+    func validateMobile(mobile:String!,zone:String!, code:String!,callback:(suc:Bool)->Void){
         
         let req = ValidateMobileVSMSRequest()
         req.mobile = mobile
-        req.vsms = smsKey
+        req.zoneCode = zone
+        req.code = code
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
             if result.isSuccess{
+                self.myProfile.mobile = mobile
+                self.myProfile.saveModel()
+                NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: nil, userInfo: nil)
                 callback(suc: true)
             }else{
+                let error = NSError(domain: "", code: result.statusCode ?? 999, userInfo: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: error, userInfo: nil)
                 callback(suc: false)
             }
         }

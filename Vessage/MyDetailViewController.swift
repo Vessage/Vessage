@@ -229,7 +229,18 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
     //MARK: bind mobile
     func bindMobile(_:UITapGestureRecognizer)
     {
-        self.navigationController?.pushViewController(ChangePasswordViewController.instanceFromStoryBoard(), animated: true)
+        SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
+            if responseState == SMSUIResponseStateSelfVerify{
+                let hud = self.showActivityHud()
+                ServiceContainer.getService(UserService).validateMobile(phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
+                    hud.hideAsync(false)
+                    if suc{   
+                        self.tableView.reloadData()
+                    }
+                })
+            }
+            
+        }
     }
     
     //MARK: change password

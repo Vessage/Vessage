@@ -173,7 +173,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                     return model
                 })
                 self.searchResult.appendContentsOf(results)
-                if self.searchResult.count == 0 && searchText.isChinaMobileNo(){
+                if self.searchResult.count == 0 && searchText.isMobileNumber(){
                     let model = SearchResultModel()
                     model.keyword = searchText
                     model.mobile = searchText

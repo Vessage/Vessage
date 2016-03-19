@@ -260,7 +260,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="X6A-r5-2zZ">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultFace" translatesAutoresizingMaskIntoConstraints="NO" id="X6A-r5-2zZ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="352-wx-WAX">
@@ -400,15 +400,110 @@
             </objects>
             <point key="canvasLocation" x="185" y="1089"/>
         </scene>
+        <!--Chat Background Picker Controller-->
+        <scene sceneID="qMq-0L-chF">
+            <objects>
+                <viewController storyboardIdentifier="ChatBackgroundPickerController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iYq-gG-qSo" customClass="ChatBackgroundPickerController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KHU-5h-aGP"/>
+                        <viewControllerLayoutGuide type="bottom" id="D6e-32-sVg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mpW-bC-gdg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="PQl-Zn-64g">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FqE-0D-vW7">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dI5-r3-m8D">
+                                <rect key="frame" x="20" y="660" width="56" height="56"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="5Vc-uq-xON"/>
+                                    <constraint firstAttribute="width" constant="56" id="mqC-HC-USH"/>
+                                </constraints>
+                                <state key="normal" image="close"/>
+                                <connections>
+                                    <action selector="closeRecordView:" destination="iYq-gG-qSo" eventType="touchUpInside" id="ImM-MW-SFM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znZ-0S-bbY">
+                                <rect key="frame" x="174" y="649" width="67" height="67"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="67" id="I0y-eV-Res"/>
+                                    <constraint firstAttribute="height" constant="67" id="dfa-nQ-pah"/>
+                                </constraints>
+                                <state key="normal" image="camera"/>
+                                <connections>
+                                    <action selector="middleButtonClicked:" destination="iYq-gG-qSo" eventType="touchUpInside" id="HiI-38-fJB"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="aAI-QS-ID4">
+                                <rect key="frame" x="338" y="660" width="56" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="rbu-n1-EQa"/>
+                                    <constraint firstAttribute="height" constant="56" id="wAj-Fe-J1r"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="示例(长按)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGd-1w-a0f">
+                                <rect key="frame" x="338" y="715" width="57" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FqE-0D-vW7" firstAttribute="bottom" secondItem="D6e-32-sVg" secondAttribute="top" id="3zT-ze-7Mt"/>
+                            <constraint firstItem="FqE-0D-vW7" firstAttribute="leading" secondItem="mpW-bC-gdg" secondAttribute="leading" id="57e-kE-0UO"/>
+                            <constraint firstItem="znZ-0S-bbY" firstAttribute="centerX" secondItem="mpW-bC-gdg" secondAttribute="centerX" id="6Ky-Qz-TGL"/>
+                            <constraint firstItem="dI5-r3-m8D" firstAttribute="leading" secondItem="mpW-bC-gdg" secondAttribute="leadingMargin" id="DEM-0y-iRi"/>
+                            <constraint firstItem="TGd-1w-a0f" firstAttribute="top" secondItem="aAI-QS-ID4" secondAttribute="bottom" constant="-1" id="FqL-Zd-J4L"/>
+                            <constraint firstAttribute="bottom" secondItem="znZ-0S-bbY" secondAttribute="bottom" constant="20" symbolic="YES" id="MSs-Vw-kAi"/>
+                            <constraint firstItem="PQl-Zn-64g" firstAttribute="leading" secondItem="FqE-0D-vW7" secondAttribute="leading" id="NJw-6h-yVJ"/>
+                            <constraint firstItem="PQl-Zn-64g" firstAttribute="top" secondItem="FqE-0D-vW7" secondAttribute="top" id="NLh-kI-Rj3"/>
+                            <constraint firstItem="TGd-1w-a0f" firstAttribute="centerX" secondItem="aAI-QS-ID4" secondAttribute="centerX" id="We5-6q-wI4"/>
+                            <constraint firstItem="dI5-r3-m8D" firstAttribute="bottom" secondItem="znZ-0S-bbY" secondAttribute="bottom" id="a4v-DQ-ysR"/>
+                            <constraint firstItem="aAI-QS-ID4" firstAttribute="trailing" secondItem="mpW-bC-gdg" secondAttribute="trailingMargin" id="dec-0F-aEh"/>
+                            <constraint firstItem="aAI-QS-ID4" firstAttribute="bottom" secondItem="znZ-0S-bbY" secondAttribute="bottom" id="e1P-SQ-0v4"/>
+                            <constraint firstItem="PQl-Zn-64g" firstAttribute="trailing" secondItem="FqE-0D-vW7" secondAttribute="trailing" id="e9Z-Jo-CiU"/>
+                            <constraint firstItem="FqE-0D-vW7" firstAttribute="top" secondItem="mpW-bC-gdg" secondAttribute="top" id="nxO-Ec-yFO"/>
+                            <constraint firstItem="FqE-0D-vW7" firstAttribute="centerX" secondItem="mpW-bC-gdg" secondAttribute="centerX" id="pys-Fc-pQt"/>
+                            <constraint firstItem="PQl-Zn-64g" firstAttribute="bottom" secondItem="FqE-0D-vW7" secondAttribute="bottom" id="t04-ZW-HcG"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="closeRecordViewButton" destination="dI5-r3-m8D" id="7V5-pl-8gD"/>
+                        <outlet property="demoFaceView" destination="PQl-Zn-64g" id="JvZ-Fn-qIq"/>
+                        <outlet property="middleButton" destination="znZ-0S-bbY" id="EKk-rF-Oxy"/>
+                        <outlet property="previewRectView" destination="FqE-0D-vW7" id="tvq-ZR-EbV"/>
+                        <outlet property="rightButton" destination="aAI-QS-ID4" id="bQx-JU-z2o"/>
+                        <outlet property="rightTipsLabel" destination="TGd-1w-a0f" id="iFo-hH-ep7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OC0-MX-0gK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1164" y="1904"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="camera" width="128" height="128"/>
         <image name="chat" width="256" height="256"/>
         <image name="close" width="256" height="256"/>
         <image name="defaultAvatar" width="128" height="128"/>
+        <image name="defaultFace" width="300" height="300"/>
         <image name="face" width="437" height="400"/>
         <image name="forward" width="256" height="256"/>
         <image name="movie" width="256" height="256"/>
         <image name="next" width="72" height="72"/>
+        <image name="profile" width="128" height="128"/>
         <image name="refreshRound" width="256" height="256"/>
         <image name="settings" width="21" height="21"/>
     </resources>

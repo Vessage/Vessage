@@ -18,15 +18,18 @@ extension String
 //MARK: Set avatar Util
 extension FileService
 {
-    func setAvatar(imageView:UIImageView,iconFileId fileId:String!)
+    func setAvatar(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage = UIImage(named: "defaultAvatar")!,callback:((suc:Bool)->Void)! = nil)
     {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            imageView.image = UIImage(named: "defaultAvatar")
+            imageView.image = defaultImage
             if String.isNullOrWhiteSpace(fileId) == false
             {
                 if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
                 {
                     imageView.image = uiimage
+                    if let handler = callback{
+                        handler(suc:true)
+                    }
                 }else
                 {
                     self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
@@ -34,9 +37,20 @@ extension FileService
                         {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 imageView.image = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
+                                if let handler = callback{
+                                    handler(suc:true)
+                                }
                             })
+                        }else{
+                            if let handler = callback{
+                                handler(suc:false)
+                            }
                         }
                     })
+                }
+            }else{
+                if let handler = callback{
+                    handler(suc:false)
                 }
             }
         }
@@ -69,15 +83,13 @@ extension FileService
     }
 }
 
-//MARK: String Util
 extension String{
-    func isChinaMobileNo() -> Bool{
-        return self =~ "^((13[0-9])|(15[^4,\\D])|(18[0,2,5-9]))\\d{8}$"
-    }
-    
     func isBahamutAccount() -> Bool{
-        if let aId = Int(self){
-            return aId >= 147258
+        
+        if self =~ "^\\d{6,9}$"{
+            if let aId = Int(self){
+                return aId >= 147258
+            }
         }
         return false
     }

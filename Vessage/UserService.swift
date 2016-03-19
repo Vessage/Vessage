@@ -179,7 +179,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
         if users.count > 0{
             callback(users)
-        }else if keyword.isChinaMobileNo(){
+        }else if keyword.isMobileNumber(){
             getUserProfileByMobile(keyword, updatedCallback: { (user) -> Void in
                 if let u = user{
                     callback([u])

@@ -41,7 +41,7 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
                         let value = ABMultiValueCopyValueAtIndex(phones, i)
                         var phone = value.takeRetainedValue() as! String
                         phone = phone.stringByReplacingOccurrencesOfString("+86", withString: "").stringByReplacingOccurrencesOfString("-", withString: "")
-                        if phone.isChinaMobileNo(){
+                        if phone.isMobileNumber(){
                             phoneNos.append(phone)
                             let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .Default, handler: { (action) -> Void in
                                 if let i = actions.indexOf(action){

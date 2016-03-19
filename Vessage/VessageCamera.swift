@@ -1,5 +1,5 @@
-//
 //  VessageCamera.swift
+//
 //  Vessage
 //
 //  Created by AlexChow on 16/3/7.
@@ -13,7 +13,8 @@ import YUCIHighPassSkinSmoothing
 
 //MARK:VessageCamera Delegate
 @objc protocol VessageCameraDelegate{
-    optional func vessageCamera(videoSavedUrl:NSURL)
+    optional func vessageCamera(videoSavedUrl video:NSURL)
+    optional func vessageCameraImage(image:UIImage)
     optional func vessageCameraReady()
     optional func vessageCameraSessionClosed()
     optional func vessageCameraDidStartRecord()
@@ -24,6 +25,7 @@ import YUCIHighPassSkinSmoothing
 class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCaptureMetadataOutputObjectsDelegate,AVCaptureAudioDataOutputSampleBufferDelegate {
     
     var delegate:VessageCameraDelegate?
+    var isRecordVideo:Bool = true
     private var cameraInited = false
     private var rootViewController:UIViewController!
     private var view:UIView!
@@ -110,13 +112,20 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         previewLayer.bounds.size = size
     }
     
-    func setupCaptureSession() {
+    private func setupCaptureSession() {
         captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
+        captureSession.sessionPreset = isRecordVideo ? AVCaptureSessionPresetMedium : AVCaptureSessionPresetPhoto
+        setupVideoSession()
+        setupAudioSession()
+        setupFaceDetect()
+        captureSession.commitConfiguration()
         
-        captureSession.sessionPreset = AVCaptureSessionPresetMedium
-        
+    }
+    
+    private func setupVideoSession(){
         let queue = dispatch_queue_create("VMCQueue", DISPATCH_QUEUE_SERIAL)
+        
         //视频
         let captureDevice = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo).filter{$0.position == AVCaptureDevicePosition.Front}.first as! AVCaptureDevice
         let deviceInput = try! AVCaptureDeviceInput(device: captureDevice)
@@ -131,6 +140,16 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             captureSession.addOutput(dataOutput)
         }
         dataOutput.setSampleBufferDelegate(self, queue: queue)
+        //MARK: 调整方向为自然方向
+        let con = dataOutput.connectionWithMediaType(AVMediaTypeVideo)
+        con.videoMirrored = true
+        con.videoOrientation = .Portrait
+    }
+    
+    private func setupAudioSession(){
+        if !isRecordVideo{
+            return
+        }
         
         //声音
         let captureAudioDev = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
@@ -147,7 +166,9 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         //音频与视频的队列需要分开，否则加入滤镜后没有声音输出
         let aqueue = dispatch_queue_create("VMCAQueue", DISPATCH_QUEUE_SERIAL)
         audioOutput.setSampleBufferDelegate(self, queue: aqueue)
-        
+    }
+    
+    private func setupFaceDetect(){
         // 为了检测人脸
         if enableFaceMark{
             let metadataOutput = AVCaptureMetadataOutput()
@@ -158,14 +179,6 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
                 metadataOutput.metadataObjectTypes = [AVMetadataObjectTypeFace]
             }
         }
-        
-        //MARK: 调整方向为自然方向
-        let con = dataOutput.connectionWithMediaType(AVMediaTypeVideo)
-        con.videoMirrored = true
-        con.videoOrientation = .Portrait
-        
-        captureSession.commitConfiguration()
-        
     }
     
     func openCamera() {
@@ -194,6 +207,25 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         return false
     }
     
+    func takePicture() {
+        if ciImage == nil || isWriting {
+            return
+        }
+        let cgImage = context.createCGImage(ciImage, fromRect: ciImage.extent)
+        let image = UIImage(CGImage: cgImage)
+        if let saveHandler = self.delegate?.vessageCameraImage{
+            saveHandler(image)
+        }
+    }
+    
+    func resumeCaptureSession(){
+        captureSession.startRunning()
+    }
+    
+    func pauseCaptureSession(){
+        captureSession.stopRunning()
+    }
+    
     func saveRecordedVideo(){
         if isWriting {
             self.isWriting = false
@@ -207,7 +239,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
                     exportSession?.outputFileType = AVFileTypeMPEG4
                     exportSession?.shouldOptimizeForNetworkUse = true
                     exportSession?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
-                        saveHandler(self.tmpCompressedFilmURL)
+                        saveHandler(videoSavedUrl: self.tmpCompressedFilmURL)
                     })
                 })
             }
@@ -372,19 +404,6 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             }
         }
         
-//        let orientation = UIDevice.currentDevice().orientation
-//        var t: CGAffineTransform!
-//        if orientation == UIDeviceOrientation.Portrait {
-//            t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
-//        } else if orientation == UIDeviceOrientation.PortraitUpsideDown {
-//            t = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
-//        } else if (orientation == UIDeviceOrientation.LandscapeRight) {
-//            t = CGAffineTransformMakeRotation(CGFloat(M_PI))
-//        } else {
-//            t = CGAffineTransformMakeRotation(0)
-//        }
-//        outputImage = outputImage.imageByApplyingTransform(t)
-        
         let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent)
         self.ciImage = outputImage
         
@@ -395,12 +414,9 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
-        // print(metadataObjects)
         if metadataObjects.count > 0 {
             //识别到的第一张脸
             faceObject = metadataObjects.first as? AVMetadataFaceObject
-            
-            
             if faceLayer == nil {
                 faceLayer = CALayer()
                 faceLayer?.borderColor = UIColor.redColor().CGColor

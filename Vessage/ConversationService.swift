@@ -114,7 +114,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
         
-        if let conversation = (conversations.filter{$0.chatterMobile == mobile}).first{
+        if let conversation = (conversations.filter{!String.isNullOrWhiteSpace($0.chatterMobile) && $0.chatterMobile == mobile}).first{
             return conversation
         }else{
             let conversation = Conversation()

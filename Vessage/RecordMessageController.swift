@@ -21,6 +21,8 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
             let oldChatImage = oldValue?.mainChatImage
             if oldChatImage != chatter?.mainChatImage{
                 self.updateChatImage(chatter?.mainChatImage)
+            }else{
+                self.updateChatImage(nil)
             }
         }
     }
@@ -138,7 +140,14 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     //MARK: actions
     func updateChatImage(mainChatImage:String?){
         if let imgView = self.smileFaceImageView{
-            ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: mainChatImage)
+            if let imgId = mainChatImage{
+                imgView.contentMode = .Center
+                ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: imgId,defaultImage: UIImage(named: "defaultFace")!){ suc in
+                    if suc{
+                        imgView.contentMode = .ScaleAspectFit
+                    }
+                }
+            }
         }
     }
     

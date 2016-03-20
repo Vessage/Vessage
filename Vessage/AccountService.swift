@@ -68,14 +68,14 @@ class AccountService: ServiceProtocol
         ServiceContainer.instance.userLogin(validateResult.UserId)
     }
     
-    func validateAccessToken(apiTokenServer:String, accountId:String, accessToken: String,callback:(loginSuccess:Bool,message:String)->Void,registCallback:((registApiServer:String!)->Void)! = nil)
+    func validateAccessToken(apiTokenServer:String, accountId:String, accessToken: String,callback:(loginSuccess:Bool,message:String)->Void,registCallback:((registValidateResult:ValidateResult!)->Void)! = nil)
     {
         
         UserSetting.lastLoginAccountId = accountId
         BahamutRFKit.sharedInstance.validateAccessToken("\(apiTokenServer)/Tokens", accountId: accountId, accessToken: accessToken) { (isNewUser, error,validateResult) -> Void in
             if isNewUser
             {
-                registCallback(registApiServer:validateResult.RegistAPIServer)
+                registCallback(registValidateResult:validateResult)
             }else if error == nil{
                 self.setLogined(validateResult)
                 callback(loginSuccess: true, message: "")

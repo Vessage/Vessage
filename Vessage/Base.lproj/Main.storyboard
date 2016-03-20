@@ -334,12 +334,19 @@
                                     <constraint firstAttribute="width" constant="18" id="vvQ-XJ-fx4"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="对方未设置聊天头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQs-7U-KKN">
+                                <rect key="frame" x="131" y="538" width="153" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3fs-Ay-8sP" firstAttribute="centerX" secondItem="M7M-Y7-pvL" secondAttribute="centerX" id="5aA-RN-Ia0"/>
                             <constraint firstItem="X6A-r5-2zZ" firstAttribute="centerX" secondItem="qjs-WW-7FZ" secondAttribute="centerX" id="8k8-dn-vu2"/>
                             <constraint firstItem="3fs-Ay-8sP" firstAttribute="top" secondItem="kNs-Ra-jnf" secondAttribute="bottom" id="Asi-dH-yIg"/>
+                            <constraint firstItem="qQs-7U-KKN" firstAttribute="centerY" secondItem="X6A-r5-2zZ" secondAttribute="centerY" constant="180" id="FPR-sM-HA3"/>
                             <constraint firstItem="3fs-Ay-8sP" firstAttribute="centerY" secondItem="M7M-Y7-pvL" secondAttribute="centerY" id="Gs4-e7-KI9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M7M-Y7-pvL" secondAttribute="trailing" id="Hmy-ix-YjO"/>
                             <constraint firstItem="3fs-Ay-8sP" firstAttribute="leading" secondItem="kNs-Ra-jnf" secondAttribute="trailing" id="J2u-Lc-zzE"/>
@@ -357,6 +364,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="kNs-Ra-jnf" secondAttribute="trailing" id="oUI-ga-7JF"/>
                             <constraint firstItem="X6A-r5-2zZ" firstAttribute="bottom" secondItem="pUs-7S-Hfi" secondAttribute="top" id="rl7-BW-Z4j"/>
                             <constraint firstItem="3fs-Ay-8sP" firstAttribute="trailing" secondItem="kNs-Ra-jnf" secondAttribute="trailing" id="svT-hV-EAb"/>
+                            <constraint firstItem="qQs-7U-KKN" firstAttribute="centerX" secondItem="X6A-r5-2zZ" secondAttribute="centerX" id="vCB-xC-NOd"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -373,6 +381,7 @@
                     <connections>
                         <outlet property="cancelRecordButton" destination="HG6-mD-gtt" id="Z9n-3y-3lk"/>
                         <outlet property="closeRecordViewButton" destination="352-wx-WAX" id="GNy-8T-05l"/>
+                        <outlet property="noSmileFaceTipsLabel" destination="qQs-7U-KKN" id="PjC-Gu-Wab"/>
                         <outlet property="previewRectView" destination="kNs-Ra-jnf" id="nlQ-uS-wsV"/>
                         <outlet property="recordButton" destination="mMi-Fq-OsR" id="gKg-nP-w33"/>
                         <outlet property="recordingFlashView" destination="3fs-Ay-8sP" id="6eN-lj-zzZ"/>
@@ -415,9 +424,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="PQl-Zn-64g">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FqE-0D-vW7">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FqE-0D-vW7">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dI5-r3-m8D">
                                 <rect key="frame" x="20" y="660" width="56" height="56"/>
@@ -456,7 +465,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="FqE-0D-vW7" firstAttribute="bottom" secondItem="D6e-32-sVg" secondAttribute="top" id="3zT-ze-7Mt"/>
                             <constraint firstItem="FqE-0D-vW7" firstAttribute="leading" secondItem="mpW-bC-gdg" secondAttribute="leading" id="57e-kE-0UO"/>

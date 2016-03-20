@@ -119,6 +119,12 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
+        propertySet.propertyLabel = "CHANGE_CHAT_BCG".localizedString()
+        propertySet.propertyValue = ""
+        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: "changeChatBcg:"))
+        
+        propertySet = UIEditTextPropertySet()
+        propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "CHANGE_PSW".localizedString()
         propertySet.propertyValue = ""
         textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: "changePassword:"))
@@ -126,11 +132,15 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "BIND_MOBILE".localizedString()
-        let mobile = myInfo.mobile
-        let length = mobile.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
-        let subfix = mobile.substringFromIndex(length - 4)
-        propertySet.propertyValue = "***\(subfix)"
+        if let mobile = myInfo.mobile{
+            let length = mobile.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+            let subfix = mobile.substringFromIndex(length - 4)
+            propertySet.propertyValue = "***\(subfix)"
+        }else{
+            propertySet.propertyValue = "NOT_SET".localizedString()
+        }
         textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: "bindMobile:"))
+        
     }
     
     @IBAction func logout(sender: AnyObject)
@@ -192,7 +202,6 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0
         {
-            //Avatar(1) + textPropertyCells.count
             return 1 + textPropertyCells.count
         }else
         {
@@ -223,6 +232,16 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
             let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailViewController.aboutSharelinkReuseId,forIndexPath: indexPath)
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "aboutSharelink:"))
             return cell
+        }
+    }
+    
+    //MARK: change chat background
+    func changeChatBcg(_:UITapGestureRecognizer)
+    {
+        ChatBackgroundPickerController.showPickerController(self) { (sender) -> Void in
+            sender.dismissViewControllerAnimated(true, completion: { () -> Void in
+                
+            })
         }
     }
     

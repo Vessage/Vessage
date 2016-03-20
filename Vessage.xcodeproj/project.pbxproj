@@ -100,6 +100,7 @@
 		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
 		E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */; };
 		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
+		E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */; };
 		E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */; };
 		E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */; };
 		E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */; };
@@ -240,6 +241,7 @@
 		E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEditTextPropertyViewController.swift; sourceTree = "<group>"; };
 		E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupChatBcgImageController.swift; sourceTree = "<group>"; };
 		E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBackgroundPickerController.swift; sourceTree = "<group>"; };
 		E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListContactCell.swift; sourceTree = "<group>"; };
 		E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutFilmView.swift; sourceTree = "<group>"; };
@@ -634,9 +636,9 @@
 		E708ACA41C87525A0071104E /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				E7DBF2E91C9E94BA00850A45 /* UserGuide */,
 				E708ACA51C87528D0071104E /* SignUpViewController.swift */,
 				E708ACA71C8752980071104E /* SignInViewController.swift */,
-				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -708,6 +710,15 @@
 				E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */,
 			);
 			name = RecordMessage;
+			sourceTree = "<group>";
+		};
+		E7DBF2E91C9E94BA00850A45 /* UserGuide */ = {
+			isa = PBXGroup;
+			children = (
+				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
+				E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */,
+			);
+			name = UserGuide;
 			sourceTree = "<group>";
 		};
 		E7E237D21C998AEB008FF893 /* BahamutFilmView */ = {
@@ -970,6 +981,7 @@
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
+				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E708AB9D1C86CF8A0071104E /* BahamutMessage.xcdatamodeld in Sources */,

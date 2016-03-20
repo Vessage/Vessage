@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController {
 
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,17 @@ class SignUpViewController: UIViewController {
     }
     
     private func checkRegistValid() -> Bool{
-        return true
+        if (userNameTextField.text ?? "" ).isUsername(){
+            if (passwordTextField.text ?? "" ).isPassword(){
+                return true
+            }else{
+                passwordTextField.shakeAnimationForView()
+            }
+        }else{
+            userNameTextField.shakeAnimationForView()
+        }
+        SystemSoundHelper.vibrate()
+        return false
     }
     
     @IBAction func showSignIn(sender: AnyObject) {

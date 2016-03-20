@@ -8,6 +8,24 @@
 
 import Foundation
 
+extension VessageUser{
+    static func isTheSameUser(usera:VessageUser?,userb:VessageUser?) ->Bool{
+        if let a = usera{
+            if let b = userb{
+                if !String.isNullOrWhiteSpace(a.userId) && !String.isNullOrWhiteSpace(b.userId) && a.userId == b.userId{
+                    return true
+                }
+                if !String.isNullOrWhiteSpace(a.mobile) && !String.isNullOrWhiteSpace(b.mobile){
+                    if a.mobile == b.mobile || a.mobile.md5 == b.mobile || a.mobile == b.mobile.md5{
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+}
+
 let UserProfileUpdatedUserValue = "UserProfileUpdatedUserIdValue"
 
 //MARK:UserService
@@ -47,6 +65,10 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     
     var isUserMobileValidated:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mobile ?? "")
+    }
+    
+    var isUserChatBackgroundIsSeted:Bool{
+        return !String.isNullOrWhiteSpace(myProfile?.mainChatImage ?? "")
     }
     
     func setForeceGetUserProfileIgnoreTimeLimit(){
@@ -91,6 +113,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     func fetchUserProfile(userId:String){
+        setForeceGetUserProfileIgnoreTimeLimit()
         let req = GetUserInfoRequest()
         req.userId = userId
         getUserProfileByReq(nil, req: req){ user in}
@@ -138,6 +161,18 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
             if result.isSuccess{
                 self.myProfile.nickName = newNickName
+                self.myProfile.saveModel()
+            }
+            callback(result.isSuccess)
+        }
+    }
+    
+    func setChatBackground(imageId:String,callback:(Bool)->Void){
+        let req = ChangeMainChatImageRequest()
+        req.image = imageId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                self.myProfile.mainChatImage = imageId
                 self.myProfile.saveModel()
             }
             callback(result.isSuccess)

@@ -14,7 +14,7 @@ import MBProgressHUD
 class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     let userService = ServiceContainer.getService(UserService)
-    private static var instance:RecordMessageController!
+    private(set) static var instance:RecordMessageController!
     
     private var chatter:VessageUser!{
         didSet{
@@ -68,7 +68,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     private var camera:VessageCamera!
     private var recordingTimer:NSTimer!
     @IBOutlet weak var smileFaceImageView: UIImageView!
-    
+    @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
     @IBOutlet weak var recordingFlashView: UIView!{
         didSet{
             recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
@@ -131,7 +131,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     //MARK:notifications
     func onUserProfileUpdated(a:NSNotification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if self.chatter.userId == chatter.userId || self.chatter.mobile == chatter.mobile || self.chatter.mobile.md5 == chatter.mobile{
+            if VessageUser.isTheSameUser(chatter, userb: self.chatter){
                 self.chatter = chatter
             }
         }
@@ -142,9 +142,11 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         if let imgView = self.smileFaceImageView{
             if let imgId = mainChatImage{
                 imgView.contentMode = .Center
+                noSmileFaceTipsLabel.hidden = false
                 ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: imgId,defaultImage: UIImage(named: "defaultFace")!){ suc in
                     if suc{
-                        imgView.contentMode = .ScaleAspectFit
+                        imgView.contentMode = .ScaleAspectFill
+                        self.noSmileFaceTipsLabel.hidden = true
                     }
                 }
             }
@@ -160,6 +162,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         camera.cancelRecord()
         camera.closeCamera()
         self.dismissViewControllerAnimated(false) { () -> Void in
+            self.chatter = nil
         }
     }
     
@@ -202,76 +205,16 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         camera.startRecord()
     }
     
-    var sendingHud:MBProgressHUD!
+    var prepareHud:MBProgressHUD!
     private func prepareSendRecord()
     {
-        sendingHud = self.showActivityHud()
+        prepareHud = self.showActivityHud()
         camera.saveRecordedVideo()
     }
     
-    private func sendVessageFile(vessageId:String, url:NSURL){
-        let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
-        ServiceContainer.getService(FileService).sendFileToAliOSS(url.path!, type: .Video) { (taskId, fileKey) -> Void in
-            hud.hideAsync(false)
-            if fileKey != nil{
-                ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId,vessageId: vessageId, fileKey: fileKey)
-                self.playCheckMark("VESSAGE_PUSH_IN_QUEUE".localizedString())
-            }else{
-                self.retrySendFile(vessageId,url: url)
-            }
-        }
-        
-        //primary version do not use queue
-        //VessageQueue.sharedInstance.pushNewVideoTo(conversationId, fileUrl:url)
-    }
-    
-    
-    private func retrySendFile(vessageId:String,url:NSURL){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            self.sendVessageFile(vessageId,url: url)
-        }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
-            ServiceContainer.getService(VessageService).cancelSendVessage(vessageId)
-            self.playCrossMark("CANCEL".localizedString())
-        }
-        self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
-    }
-    
-    private func sendVessage(url:NSURL){
-        let hud = self.showActivityHudWithMessage(nil, message: "SENDING_VESSAGE".localizedString())
-        func sendedCallback(vessageId:String?){
-            hud.hideAsync(false)
-            if let vid = vessageId{
-                self.sendVessageFile(vid, url: url)
-            }else{
-                self.retrySendVessage(url)
-            }
-        }
-        let sendNick = self.userService.myProfile.nickName
-        let sendMobile = self.userService.myProfile.mobile
-        if let receiverId = self.chatter?.userId{
-            ServiceContainer.getService(VessageService).sendVessageToUser(receiverId, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
-        }else if let receiverMobile = self.chatter.mobile{
-            ServiceContainer.getService(VessageService).sendVessageToMobile(receiverMobile, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
-        }else{
-            hud.hideAsync(false)
-        }
-    }
-    
-    private func retrySendVessage(url:NSURL){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            self.sendVessage(url)
-        }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
-            self.playCrossMark("CANCEL".localizedString())
-        }
-        self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
-    }
-
-    
     private func confirmSend(url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            self.sendVessage(url)
+            VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
         }
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
             
@@ -300,17 +243,21 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         recordButton.hidden = true
     }
     
-    func vessageCamera(videoSavedUrl: NSURL) {
-        self.sendingHud.hideAsync(true)
+    func vessageCameraVideoSaved(videoSavedUrl video: NSURL) {
+        self.prepareHud.hideAsync(true)
         let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
-        if PersistentFileHelper.moveFile(videoSavedUrl.path!, destinationPath: newFilePath)
+        if PersistentFileHelper.moveFile(video.path!, destinationPath: newFilePath)
         {
             confirmSend(NSURL(fileURLWithPath: newFilePath))
         }else
         {
             self.showAlert("SAVE_VIDEO_FAILED".localizedString(), msg: "")
         }
-        
+    }
+    
+    func vessageCameraSaveVideoError(saveVideoError msg: String?) {
+        self.prepareHud.hideAsync(true)
+        self.playToast("SAVE_VIDEO_FAILED".localizedString())
     }
     
     static func showRecordMessageController(vc:UIViewController,chatter:VessageUser)
@@ -320,7 +267,9 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         }
         instance.chatter = chatter
         vc.presentViewController(instance, animated: true) { () -> Void in
-            
+            if String.isNullOrWhiteSpace(chatter.userId) == false && String.isNullOrWhiteSpace(chatter.mainChatImage){
+                ServiceContainer.getService(UserService).fetchUserProfile(chatter.userId)
+            }
         }
     }
 }

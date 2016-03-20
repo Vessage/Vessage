@@ -43,7 +43,20 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             EntryNavigationController.start()
         }else
         {
-            showMainView()
+            allServiceReadyGo()
+        }
+    }
+    
+    private func allServiceReadyGo(){
+        if ServiceContainer.getService(UserService).isUserMobileValidated
+        {
+            if ServiceContainer.getService(UserService).isUserChatBackgroundIsSeted{
+                showMainView()
+            }else{
+                SetupChatBcgImageController.showSetupViewController(self)
+            }
+        }else{
+            ValidateMobileViewController.showValidateMobileViewController(self)
         }
     }
     
@@ -75,12 +88,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             if ServiceContainer.isAllServiceReady
             {
                 ServiceContainer.instance.removeObserver(self)
-                if ServiceContainer.getService(UserService).isUserMobileValidated
-                {
-                    showMainView()
-                }else{
-                    showValidateMobilView()
-                }
+                allServiceReadyGo()
             }else
             {
                 ServiceContainer.instance.userLogin(UserSetting.userId)
@@ -116,11 +124,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             self.launchScr.removeFromSuperview()
         }
         
-    }
-    
-    private func showValidateMobilView()
-    {
-        ValidateMobileViewController.showValidateMobileViewController(self)
     }
 
     //MARK: handle Bahamut Cmd

@@ -177,6 +177,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     }
     
     func getNotReadVessage(chatterId:String) -> [Vessage]{
-        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == true && ($0.sender == chatterId) }
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && ($0.sender == chatterId) }
     }
 }

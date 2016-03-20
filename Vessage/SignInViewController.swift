@@ -14,8 +14,6 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var loginInfoTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    private var loginedResult:LoginResult!
-    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +33,7 @@ class SignInViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    //MARK: OnRegistAccountCompleted
+    //MARK: notifications
     func onRegistAccountCompleted(a:NSNotification)
     {
         if let accountId = a.userInfo?[RegistAccountIDValue] as? String{
@@ -43,24 +41,6 @@ class SignInViewController: UIViewController {
                 self.loginInfoTextField.text = accountId
                 self.passwordTextField.text = password
                 login(self)
-            }
-        }
-    }
-    
-    //MARK: actions
-    @IBAction func login(sender: AnyObject) {
-        self.hideKeyBoard()
-        let hud = self.showActivityHudWithMessage(nil, message: "LOGINING".localizedString())
-        BahamutRFKit.sharedInstance.loginBahamutAccount(VessageConfig.bahamutConfig.accountLoginApiUrl, accountInfo: loginInfoTextField.text!, passwordOrigin: passwordTextField.text!) { (isSuc, errorMsg, loginResult) -> Void in
-            hud.hide(true)
-            
-            if isSuc
-            {
-                self.loginedResult = loginResult
-                self.validateToken(self.loginedResult.AppServiceUrl, accountId: self.loginedResult.AccountID, accessToken: self.loginedResult.AccessToken)
-            }else
-            {
-                self.playToast(errorMsg.localizedString())
             }
         }
     }
@@ -74,46 +54,86 @@ class SignInViewController: UIViewController {
         }
     }
     
-    private var refreshingHud:MBProgressHUD!
-    private func validateToken(serverUrl:String, accountId:String, accessToken: String)
+    //MARK: actions
+    private func loginWith(userInfo:String,psw:String){
+        self.hideKeyBoard()
+        let hud = self.showActivityHudWithMessage(nil, message: "LOGINING".localizedString())
+        BahamutRFKit.sharedInstance.loginBahamutAccount(VessageConfig.bahamutConfig.accountLoginApiUrl, accountInfo: userInfo, passwordOrigin: psw) { (isSuc, errorMsg, loginResult) -> Void in
+            hud.hide(true)
+            
+            if isSuc
+            {
+                self.validateToken(loginResult)
+            }else
+            {
+                self.playToast(errorMsg.localizedString())
+            }
+        }
+    }
+    
+    @IBAction func login(sender: AnyObject) {
+        if (loginInfoTextField.text ?? "" ).isUsername(){
+            if (passwordTextField.text ?? "" ).isPassword(){
+                self.loginWith(loginInfoTextField.text!, psw: passwordTextField.text!)
+            }else{
+                passwordTextField.shakeAnimationForView()
+                SystemSoundHelper.vibrate()
+            }
+        }else{
+            loginInfoTextField.shakeAnimationForView()
+            SystemSoundHelper.vibrate()
+        }
+        
+    }
+    
+    
+    private var refreshingHud:MBProgressHUD!{
+        didSet{
+            if let old = oldValue{
+                old.hideAsync(true)
+            }
+        }
+    }
+    private func validateToken(loginedResult:LoginResult)
     {
         let accountService = ServiceContainer.getService(AccountService)
-        let hud = self.showActivityHudWithMessage("",message: "LOGINING".localizedString() )
-        accountService.validateAccessToken(serverUrl, accountId: accountId, accessToken: accessToken, callback: { (loginSuccess, message) -> Void in
-            hud.hideAsync(true)
+        let hud = self.showActivityHudWithMessage("",message: "LOGINING".localizedString() ,async: false)
+        accountService.validateAccessToken(loginedResult.AppServiceUrl, accountId: loginedResult.AccountID, accessToken: loginedResult.AccessToken, callback: { (loginSuccess, message) -> Void in
+            hud.hide(false)
             if loginSuccess{
                 self.refreshingHud = self.showActivityHudWithMessage("",message:"REFRESHING".localizedString())
             }else{
                 self.playToast( message)
             }
             
-            }) { (registApiServer) -> Void in
-                self.registNewUser(accountId,registApi: registApiServer,accessToken:accessToken)
+            }) { (registValidateResult) -> Void in
+                hud.hide(false)
+                self.registNewUser(loginedResult,registValidateResult:registValidateResult)
         }
     }
     
     private var refreshHud:MBProgressHUD!
-    private func registNewUser(accountId:String,registApi:String,accessToken:String)
+    private func registNewUser(loginedResult:LoginResult, registValidateResult:ValidateResult)
     {
         let registModel = RegistNewUserModel()
-        registModel.accessToken = accessToken
-        registModel.registUserServer = registApi
-        registModel.accountId = accountId
+        registModel.accessToken = loginedResult.AccessToken
+        registModel.registUserServer = registValidateResult.RegistAPIServer
+        registModel.accountId = loginedResult.AccountID
         registModel.region = VessageSetting.contry.lowercaseString
         
         let newUser = VessageUser()
         newUser.motto = "Vessage Is Video Message"
-        newUser.nickName = loginedResult.AccountName ?? accountId
+        newUser.nickName = loginedResult.AccountName ?? loginedResult.AccountID
         
-        let hud = self.showActivityHudWithMessage("",message:"REGISTING".localizedString())
+        let hud = self.showActivityHudWithMessage("",message:"REGISTING".localizedString(),async: false)
         ServiceContainer.getService(AccountService).registNewUser(registModel, newUser: newUser){ isSuc,msg,validateResult in
-            hud.hideAsync(true)
+            hud.hide(false)
             if isSuc
             {
                 self.refreshHud = self.showActivityHudWithMessage("",message:"REFRESHING".localizedString())
             }else
             {
-                self.playToast(msg)
+                self.showAlert(nil, msg: msg)
             }
         }
     }

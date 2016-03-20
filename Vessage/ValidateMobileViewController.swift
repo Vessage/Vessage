@@ -8,6 +8,7 @@
 
 import UIKit
 
+//MARK: ValidateMobileViewController
 class ValidateMobileViewController: UIViewController {
     
     @IBAction func validateMobile(sender: AnyObject) {
@@ -17,9 +18,7 @@ class ValidateMobileViewController: UIViewController {
                 ServiceContainer.getService(UserService).validateMobile(phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
                     hud.hideAsync(false)
                     if suc{
-                        self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                            EntryNavigationController.start()
-                        })
+                        SetupChatBcgImageController.showSetupViewController(self)
                     }
                 })
             }
@@ -28,7 +27,7 @@ class ValidateMobileViewController: UIViewController {
     
     static func showValidateMobileViewController(vc:UIViewController)
     {
-        let controller = instanceFromStoryBoard("AccountSign", identifier: "ValidateMobileViewController") as! ValidateMobileViewController
+        let controller = instanceFromStoryBoard("UserGuide", identifier: "ValidateMobileViewController") as! ValidateMobileViewController
         vc.presentViewController(controller, animated: false) { () -> Void in
             controller.validateMobile(vc)
         }

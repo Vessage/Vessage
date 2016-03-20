@@ -13,7 +13,8 @@ import YUCIHighPassSkinSmoothing
 
 //MARK:VessageCamera Delegate
 @objc protocol VessageCameraDelegate{
-    optional func vessageCamera(videoSavedUrl video:NSURL)
+    optional func vessageCameraVideoSaved(videoSavedUrl video:NSURL)
+    optional func vessageCameraSaveVideoError(saveVideoError msg:String?)
     optional func vessageCameraImage(image:UIImage)
     optional func vessageCameraReady()
     optional func vessageCameraSessionClosed()
@@ -230,7 +231,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         if isWriting {
             self.isWriting = false
             assetWriterPixelBufferInput = nil
-            if let saveHandler = self.delegate?.vessageCamera{
+            if let saveHandler = self.delegate?.vessageCameraVideoSaved{
                 assetWriter?.finishWritingWithCompletionHandler({ () -> Void in
                     let avAssets = AVURLAsset(URL: self.tmpFilmURL)
                     let exportSession = AVAssetExportSession(asset: avAssets, presetName: AVAssetExportPresetMediumQuality)

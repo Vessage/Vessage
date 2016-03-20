@@ -42,27 +42,104 @@ class PostVessageToServer:BahamutTaskStepWorker{
 class SendVessageTaskInfo:BahamutObject{
     var filePath:String!
     var fileId:String!
-    var conversationId:String!
+    
+    var receiverId:String!
+    var receiverMobile:String!
 }
 
 class VessageQueue{
     let sendVessageQueueName = "SendVessage"
     let sendVessageQueueWorkStep = ["SendAliOSSFile","PostVessage"]
+    private var taskInfoDict = [String:SendVessageTaskInfo]()
     static var sharedInstance:VessageQueue{
         return VessageQueue()
     }
     
-    func pushNewVideoTo(conversationId:String,fileUrl:NSURL){
-        //TODO: delete test
-        let testMark = "tn" + ""
-        if testMark == "tn"{
-            return
-        }
-        
+    //primary version do not use queue
+//    func pushNewVideoTo(conversationId:String,fileUrl:NSURL){
+//        //TODO: delete test
+//        let testMark = "tn" + ""
+//        if testMark == "tn"{
+//            return
+//        }
+//        
+//        let userInfoModel = SendVessageTaskInfo()
+//        userInfoModel.filePath = fileUrl.path!
+//        BahamutTaskQueue.getQueue(sendVessageQueueName).pushTask(userInfoModel.toJsonString(), step: sendVessageQueueWorkStep)
+//        
+//    }
+    
+    func pushNewVessageTo(receiverId:String?,receiverMobile:String?,videoUrl:NSURL){
         let userInfoModel = SendVessageTaskInfo()
-        userInfoModel.conversationId = conversationId
-        userInfoModel.filePath = fileUrl.path!
-        BahamutTaskQueue.getQueue(sendVessageQueueName).pushTask(userInfoModel.toJsonString(), step: sendVessageQueueWorkStep)
-        
+        userInfoModel.receiverId = receiverId
+        userInfoModel.receiverMobile = receiverMobile
+        userInfoModel.filePath = videoUrl.path!
+        let taskInfoKey = IdUtil.generateUniqueId()
+        taskInfoDict[taskInfoKey] = userInfoModel
+        sendVessage(taskInfoKey)
     }
+    
+    
+    private func sendVessageFile(vessageId:String, taskInfoKey:String){
+        
+        let sendingHud = RecordMessageController.instance.showActivityHud()
+        if let taskInfo = taskInfoDict[taskInfoKey]{
+            ServiceContainer.getService(FileService).sendFileToAliOSS(taskInfo.filePath, type: .Video) { (taskId, fileKey) -> Void in
+                if fileKey != nil{
+                    ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId,vessageId: vessageId, fileKey: fileKey)
+                    sendingHud.hideAsync(false)
+                    RecordMessageController.instance.playCheckMark("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false)
+                    self.taskInfoDict.removeValueForKey(taskInfoKey)
+                }else{
+                    sendingHud.hideAsync(false)
+                    self.retrySendFile(vessageId,taskInfoKey: taskInfoKey)
+                }
+            }
+        }
+    }
+    
+    
+    private func retrySendFile(vessageId:String,taskInfoKey:String){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            self.sendVessageFile(vessageId,taskInfoKey: taskInfoKey)
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+            ServiceContainer.getService(VessageService).cancelSendVessage(vessageId)
+            RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
+        }
+        RecordMessageController.instance.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+    }
+    
+    private func sendVessage(taskInfoKey:String){
+        func sendedCallback(vessageId:String?){
+            if let vid = vessageId{
+                self.sendVessageFile(vid, taskInfoKey: taskInfoKey)
+            }else{
+                self.retrySendVessage(taskInfoKey)
+            }
+        }
+        let userService = ServiceContainer.getService(UserService)
+        let sendNick = userService.myProfile.nickName
+        let sendMobile = userService.myProfile.mobile
+        if let taskInfo = taskInfoDict[taskInfoKey]{
+            if let receiverId = taskInfo.receiverId{
+                ServiceContainer.getService(VessageService).sendVessageToUser(receiverId, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+            }else if let receiverMobile = taskInfo.receiverMobile{
+                ServiceContainer.getService(VessageService).sendVessageToMobile(receiverMobile, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+            }else{
+            }
+        }
+    }
+    
+    private func retrySendVessage(taskInfoKey:String){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            self.sendVessage(taskInfoKey)
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+            RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
+        }
+        RecordMessageController.instance.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+    }
+    
+
 }

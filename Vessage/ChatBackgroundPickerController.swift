@@ -8,7 +8,11 @@
 
 import Foundation
 
-class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate {
+typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
+
+//MARK: ChatBackgroundPickerController
+class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate {
+    private var setImageSuccessHandler:ChatBackgroundPickerSetImageSuccessHandler!
     @IBOutlet weak var previewRectView: UIImageView!{
         didSet{
             previewRectView.backgroundColor = UIColor.clearColor()
@@ -59,6 +63,12 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate {
         }
     }
     
+    private var takedImage:UIImage!{
+        didSet{
+            self.previewRectView.image = takedImage
+        }
+    }
+    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,8 +113,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate {
         if self.previewing{
             self.camera.takePicture()
         }else{
-            //accept
-            print("accept")
+            self.sendTakedImage()
         }
     }
     
@@ -145,14 +154,62 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate {
     }
     
     func vessageCameraImage(image: UIImage) {
-        self.previewRectView.image = image
+        self.takedImage = image
         previewing = false
     }
     
-    static func showPickerController(vc:UIViewController)
+    //MARK: upload image
+    private var taskFileMap = [String:FileAccessInfo]()
+    
+    private func sendTakedImage(){
+        let fService = ServiceContainer.getService(FileService)
+        let imageData = UIImageJPEGRepresentation(self.takedImage, 0.7)
+        let localPath = fService.createLocalStoreFileName(FileType.Image)
+        if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
+        {
+            fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in
+                ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
+                if let fk = fileKey
+                {
+                    self.taskFileMap[taskId] = fk
+                }
+            })
+        }else
+        {
+            self.playToast("SET_CHAT_BCG_FAILED".localizedString())
+        }
+    }
+    
+    func taskCompleted(taskIdentifier: String, result: AnyObject!) {
+        if let fileKey = taskFileMap.removeValueForKey(taskIdentifier)
+        {
+            let uService = ServiceContainer.getService(UserService)
+            uService.setChatBackground(fileKey.fileId, callback: { (isSuc) -> Void in
+                if isSuc{
+                    let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+                        if let handler = self.setImageSuccessHandler{
+                            handler(sender: self)
+                        }
+                    })
+                    self.showAlert(nil, msg: "SET_CHAT_BCG_SUCCESS".localizedString(), actions: [okAction])
+                }else{
+                    self.showAlert(nil, msg: "SET_CHAT_BCG_FAILED".localizedString())
+                }
+            })
+        }
+    }
+    
+    func taskFailed(taskIdentifier: String, result: AnyObject!) {
+        taskFileMap.removeValueForKey(taskIdentifier)
+        self.showAlert(nil, msg: "SET_CHAT_BCG_FAILED".localizedString())
+    }
+    
+    //MARK: showPickerController
+    
+    static func showPickerController(vc:UIViewController,setImageSuccessHandler:ChatBackgroundPickerSetImageSuccessHandler)
     {
-        
         let instance = instanceFromStoryBoard("Main", identifier: "ChatBackgroundPickerController") as! ChatBackgroundPickerController
+        instance.setImageSuccessHandler = setImageSuccessHandler
         vc.presentViewController(instance, animated: true) { () -> Void in
             
         }

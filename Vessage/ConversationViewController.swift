@@ -140,11 +140,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     }
     
     @IBAction func showRecordMessage(sender: AnyObject) {
-        if String.isNullOrWhiteSpace(self.userService.myProfile.mainChatImage){
-            ChatBackgroundPickerController.showPickerController(self)
-        }else{
-            RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
-        }
+        RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
     }
     
     @IBAction func noteConversation(sender: AnyObject) {

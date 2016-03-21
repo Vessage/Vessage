@@ -106,6 +106,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
             req.fileId = fileId
             BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
                 if result.isSuccess{
+                    MobClick.event("TotalPostVessages")
                     if let task = PersistentManager.sharedInstance.getModel(FileUploadTask.self, idValue: fileId){
                         PersistentManager.sharedInstance.removeModel(task)
                     }

@@ -202,6 +202,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     private func startRecord()
     {
+        MobClick.event("RecordVessage")
         camera.startRecord()
     }
     
@@ -214,10 +215,11 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     private func confirmSend(url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            MobClick.event("ConfirmSendVessage")
             VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
         }
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
-            
+            MobClick.event("CancelSendVessage")
         }
         let size = PersistentFileHelper.fileSizeOf(url.path!)
         print("\(size/1024)kb")

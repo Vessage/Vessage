@@ -19,6 +19,7 @@ class ValidateMobileViewController: UIViewController {
                     hud.hideAsync(false)
                     if suc{
                         SetupChatBcgImageController.showSetupViewController(self)
+                        MobClick.event("FinishValidateMobile")
                     }
                 })
             }

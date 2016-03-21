@@ -112,12 +112,14 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     func handleSearchResult(cell:ConversationListCell){
         isSearching = false
         if let result = cell.originModel as? SearchResultModel{
+            MobClick.event("OpenSearchResultConversation")
             if let c = result.conversation{
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
             }else if let u = result.user{
                 let conversation = conversationService.openConversationByUserId(u.userId,noteName: u.nickName ?? u.accountId ?? result.keyword)
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
             }else if let mobile = result.mobile{
+                MobClick.event("OpenSearchResultMobileConversation")
                 let conversation = conversationService.openConversationByMobile(mobile,noteName: result.mobile ?? result.keyword)
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
             }
@@ -126,6 +128,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     
     func handleConversationListCellItem(cell:ConversationListCell){
         if let conversation = cell.originModel as? Conversation{
+            MobClick.event("OpenConversation")
             ConversationViewController.showConversationViewController(self.navigationController!,conversation: conversation)
         }else{
             self.playCrossMark("NO_SUCH_CONVERSATION".localizedString())

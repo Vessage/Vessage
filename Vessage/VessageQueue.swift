@@ -151,6 +151,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
             RecordMessageController.instance.playCrossMark("FAIL".localizedString())
         case MessageComposeResultSent:
             RecordMessageController.instance.playCheckMark("SUCCESS".localizedString())
+            MobClick.event("UserSendSMSToFriend")
         default:break;
         }
     }

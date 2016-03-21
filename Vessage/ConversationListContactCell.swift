@@ -17,7 +17,7 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
         let controller = ABPeoplePickerNavigationController()
         controller.peoplePickerDelegate = self
         self.rootController.presentViewController(controller, animated: true) { () -> Void in
-            
+            MobClick.event("OpenContactView")
         }
     }
     
@@ -45,6 +45,7 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
                             phoneNos.append(phone)
                             let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .Default, handler: { (action) -> Void in
                                 if let i = actions.indexOf(action){
+                                    MobClick.event("SelectContactMobile")
                                     let conversation = self.rootController.conversationService.openConversationByMobile(phoneNos[i],noteName: title)
                                     ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: conversation)
                                 }
@@ -57,7 +58,10 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
                         let msg = "CHOOSE_PHONE_NO".localizedString()
                         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
                         actions.forEach{alertController.addAction($0)}
-                        alertController.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil))
+                        let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { (ac) -> Void in
+                            MobClick.event("CancelSelectContactMobile")
+                        })
+                        alertController.addAction(cancel)
                         self.rootController.showAlert(alertController)
                         return
                     }

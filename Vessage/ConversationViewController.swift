@@ -192,6 +192,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
             loadNextVessage()
         }else{
             let continueAction = UIAlertAction(title: "CONTINUE", style: .Default, handler: { (action) -> Void in
+                MobClick.event("JumpVessage")
                 self.loadNextVessage()
             })
             self.showAlert("CLICK_NEXT_MESSAGE_TIPS".localizedString(), msg: nil, actions: [ALERT_ACTION_I_SEE.first!,continueAction])
@@ -263,6 +264,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     func playerPlaybackWillStartFromBeginning(player: Player) {
         if self.presentingVesseage?.isRead == false {
+            MobClick.event("ReadVessage")
             self.vessageService.readVessage(self.presentingVesseage)
             self.conversationNotReadCount--
         }

@@ -23,7 +23,7 @@ VALIDATE_DATA_ERROR = "数据有误";
 NETWORK_ERROR = "网络错误";
 NOT_LOGIN = "没有登录";
 LOGOUTED = "已经注销";
-OTHER_DEVICE_HAD_LOGIN = "另一设备使用相同账号登陆，本设备将退出Sharelink";
+OTHER_DEVICE_HAD_LOGIN = "另一设备使用相同账号登陆，本设备将注销登陆";
 
 //MJRefresh
 RefreshHeaderIdleText = "下拉加载最新分享";
@@ -135,8 +135,8 @@ SET_AVATAR_SUC = "设置头像成功";
 SET_AVATAR_FAILED = "设置头像失败";
 
 //
-UNKNOW_SHARELINK_CMD = "非法命令";
-SHARELINK_CMD_TIMEOUT = "命令已经失效";
+UNKNOW_BAHAMUT_CMD = "非法命令";
+BAHAMUT_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
 NEW_VMSG_NOTIFICATION = "你有新的视频短信!";

@@ -126,10 +126,10 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="CHd-PZ-7ZE"/>
-                                <exclude reference="chG-8k-ZDZ"/>
                                 <exclude reference="2Py-E6-2qH"/>
+                                <exclude reference="CHd-PZ-7ZE"/>
                                 <exclude reference="cZP-Lc-wRI"/>
+                                <exclude reference="chG-8k-ZDZ"/>
                             </mask>
                         </variation>
                     </view>

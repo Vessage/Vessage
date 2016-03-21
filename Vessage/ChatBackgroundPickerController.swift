@@ -142,8 +142,8 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
             middleButton?.setImage(UIImage(named: "camera"), forState: .Normal)
             middleButton?.setImage(UIImage(named: "camera"), forState: .Highlighted)
         }else{
-            middleButton?.setImage(UIImage(named: "check"), forState: .Normal)
-            middleButton?.setImage(UIImage(named: "check"), forState: .Highlighted)
+            middleButton?.setImage(UIImage(named: "checkRound"), forState: .Normal)
+            middleButton?.setImage(UIImage(named: "checkRound"), forState: .Highlighted)
         }
     }
     

@@ -17,6 +17,8 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         setWaitingScreen()
+        ChicagoClient.sharedInstance.addObserver(self, selector: "onAppTokenInvalid:", name: AppTokenInvalided, object: nil)
+        ChicagoClient.sharedInstance.addObserver(self, selector: "onOtherDeviceLogin:", name: OtherDeviceLoginChicagoServer, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -25,6 +27,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     func deInitController(){
+        ServiceContainer.instance.removeObserver(self)
         ChicagoClient.sharedInstance.removeObserver(self)
     }
 
@@ -67,7 +70,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             ServiceContainer.instance.userLogout()
             EntryNavigationController.start()
         }))
-        showAlert(self,alertController: alert)
+        self.showAlert(alert)
     }
     
     func onAppTokenInvalid(_:AnyObject)
@@ -77,7 +80,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             ServiceContainer.instance.userLogout()
             EntryNavigationController.start()
         }))
-        showAlert(self,alertController: alert)
+        self.showAlert(alert)
     }
     
     private func go()

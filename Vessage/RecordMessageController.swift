@@ -192,8 +192,8 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     private func updateRecordButton(){
         if recording{
-            recordButton.setImage(UIImage(named: "check"), forState: .Normal)
-            recordButton.setImage(UIImage(named: "check"), forState: .Highlighted)
+            recordButton.setImage(UIImage(named: "checkRound"), forState: .Normal)
+            recordButton.setImage(UIImage(named: "checkRound"), forState: .Highlighted)
         }else{
             recordButton.setImage(UIImage(named: "movie"), forState: .Normal)
             recordButton.setImage(UIImage(named: "movie"), forState: .Highlighted)

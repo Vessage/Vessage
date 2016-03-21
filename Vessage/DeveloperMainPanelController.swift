@@ -41,8 +41,8 @@ class DeveloperMainPanelController: UIViewController
     
     @IBAction func useRemoteServer(sender: AnyObject)
     {
-        VessageSetting.loginApi = "http://auth.sharelink.online:8086/Account/AjaxLogin"
-        VessageSetting.registAccountApi = "http://auth.sharelink.online:8086/Account/AjaxRegist"
+        VessageSetting.loginApi = "http://auth.bahamut.cn:8086/Account/AjaxLogin"
+        VessageSetting.registAccountApi = "http://auth.bahamut.cn:8086/Account/AjaxRegist"
         self.playToast("Change to remote")
     }
     

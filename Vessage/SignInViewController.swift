@@ -48,8 +48,11 @@ class SignInViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if String.isNullOrWhiteSpace(UserSetting.lastLoginAccountId){
-            showSignUp(self)
+        if UserSetting.isSettingEnable("FirstLogined") == false{
+            UserSetting.setSetting("FirstLogined", enable: true)
+            if String.isNullOrWhiteSpace(UserSetting.lastLoginAccountId){
+                showSignUp(self)
+            }
         }
     }
     

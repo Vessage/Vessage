@@ -26,6 +26,11 @@ class ValidateMobileViewController: UIViewController {
         }
     }
     
+    @IBAction func logout(sender: AnyObject) {
+        ServiceContainer.instance.userLogout()
+        EntryNavigationController.start()
+    }
+    
     static func showValidateMobileViewController(vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("UserGuide", identifier: "ValidateMobileViewController") as! ValidateMobileViewController

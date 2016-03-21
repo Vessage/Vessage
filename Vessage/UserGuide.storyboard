@@ -38,12 +38,23 @@
                                     <action selector="validateMobile:" destination="Iwc-kq-ANA" eventType="touchUpInside" id="DXE-5C-Krc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ITl-NH-whM">
+                                <rect key="frame" x="192" y="698" width="30" height="30"/>
+                                <state key="normal" title="注销">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="Iwc-kq-ANA" eventType="touchUpInside" id="2Ws-dL-L4y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="U9R-iD-xcE" firstAttribute="top" secondItem="ITl-NH-whM" secondAttribute="bottom" constant="8" symbolic="YES" id="7O8-ub-dQX"/>
                             <constraint firstItem="2mn-IZ-4Fd" firstAttribute="centerX" secondItem="bCq-nB-t8u" secondAttribute="centerX" id="H1B-H2-Z56"/>
                             <constraint firstItem="bCq-nB-t8u" firstAttribute="centerY" secondItem="O1A-UX-Yr6" secondAttribute="centerY" id="KyH-m8-kiN"/>
                             <constraint firstItem="bCq-nB-t8u" firstAttribute="centerX" secondItem="O1A-UX-Yr6" secondAttribute="centerX" id="MPe-08-f4p"/>
+                            <constraint firstItem="ITl-NH-whM" firstAttribute="centerX" secondItem="2mn-IZ-4Fd" secondAttribute="centerX" id="Tx9-oR-WYF"/>
                             <constraint firstItem="2mn-IZ-4Fd" firstAttribute="top" secondItem="bCq-nB-t8u" secondAttribute="bottom" constant="8" symbolic="YES" id="vHi-P1-7cQ"/>
                         </constraints>
                     </view>
@@ -92,12 +103,23 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-I1-BwL">
+                                <rect key="frame" x="192" y="698" width="30" height="30"/>
+                                <state key="normal" title="注销">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="dE9-hh-AEN" eventType="touchUpInside" id="4OQ-gR-a0t"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3tw-1V-o1h" firstAttribute="top" secondItem="5Vi-fb-MxV" secondAttribute="bottom" constant="8" symbolic="YES" id="16m-07-Bgr"/>
+                            <constraint firstItem="qdG-I1-BwL" firstAttribute="centerX" secondItem="xBe-8E-r79" secondAttribute="centerX" id="MFL-YG-V2l"/>
                             <constraint firstItem="xBe-8E-r79" firstAttribute="centerX" secondItem="3tw-1V-o1h" secondAttribute="centerX" id="YFg-j5-A49"/>
                             <constraint firstItem="5Vi-fb-MxV" firstAttribute="centerY" secondItem="xYF-Kj-i4J" secondAttribute="centerY" id="nar-VK-LLk"/>
+                            <constraint firstItem="eHb-rn-Vfo" firstAttribute="top" secondItem="qdG-I1-BwL" secondAttribute="bottom" constant="8" symbolic="YES" id="ndr-JD-qMq"/>
                             <constraint firstItem="xBe-8E-r79" firstAttribute="top" secondItem="3tw-1V-o1h" secondAttribute="bottom" constant="8" symbolic="YES" id="qR7-Kj-5eu"/>
                             <constraint firstItem="5Vi-fb-MxV" firstAttribute="centerX" secondItem="xYF-Kj-i4J" secondAttribute="centerX" id="qhq-ng-ZFh"/>
                             <constraint firstItem="3tw-1V-o1h" firstAttribute="centerX" secondItem="5Vi-fb-MxV" secondAttribute="centerX" id="tfv-Jp-mji"/>

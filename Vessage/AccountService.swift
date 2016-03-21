@@ -79,7 +79,7 @@ class AccountService: ServiceProtocol
             }else if error == nil{
                 self.setLogined(validateResult)
                 callback(loginSuccess: true, message: "")
-                //MobClick.profileSignInWithPUID(validateResult.UserId)
+                MobClick.profileSignInWithPUID(validateResult.UserId)
             }else{
                 callback(loginSuccess: false, message: "VALIDATE_ACCTOKEN_FAILED".localizedString())
             }
@@ -98,23 +98,26 @@ class AccountService: ServiceProtocol
         req.region = registModel.region
         let client = BahamutRFKit.sharedInstance.getBahamutClient()
         client.execute(req) { (result:SLResult<ValidateResult>) -> Void in
-            if result.isFailure
+            if result.isSuccess
             {
-                callback(isSuc:false,msg: "REGIST_FAILED".localizedString(),validateResult: nil);
-            }else if let validateResult = result.returnObject
-            {
-                if validateResult.isValidateResultDataComplete()
+                if let validateResult = result.returnObject
                 {
-                    BahamutRFKit.sharedInstance.useValidateData(validateResult)
-                    self.setLogined(validateResult)
-                    callback(isSuc: true, msg: "REGIST_SUC".localizedString(),validateResult:validateResult)
+                    if validateResult.isValidateResultDataComplete()
+                    {
+                        BahamutRFKit.sharedInstance.useValidateData(validateResult)
+                        self.setLogined(validateResult)
+                        callback(isSuc: true, msg: "REGIST_SUC".localizedString(),validateResult:validateResult)
+                    }else
+                    {
+                        callback(isSuc: false, msg:"DATA_ERROR".localizedString(),validateResult:nil)
+                    }
                 }else
                 {
-                    callback(isSuc: false, msg:"DATA_ERROR".localizedString(),validateResult:nil)
+                    callback(isSuc:false,msg:"REGIST_FAILED".localizedString(),validateResult:nil);
                 }
             }else
             {
-                callback(isSuc:false,msg:"REGIST_FAILED".localizedString(),validateResult:nil);
+                callback(isSuc:false,msg: "REGIST_FAILED".localizedString(),validateResult: nil);
             }
         }
     }

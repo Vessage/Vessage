@@ -21,6 +21,11 @@ class SetupChatBcgImageController: UIViewController {
         }
     }
     
+    @IBAction func logout(sender: AnyObject) {
+        ServiceContainer.instance.userLogout()
+        EntryNavigationController.start()
+    }
+    
     static func showSetupViewController(vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("UserGuide", identifier: "SetupChatBcgImageController") as! SetupChatBcgImageController

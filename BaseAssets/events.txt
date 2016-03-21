@@ -11,5 +11,7 @@ JumpVessage,跳过一条消息,0
 ReadVessage,阅读一条消息,0
 FinishValidateMobile,完成手机号认证,0
 FinishSetupChatBcg,完成设置聊天头像,0
-UserSendSMSToFriend,用户发送推荐短信,1
+OpenSendNotifySMS,用户打开发送推荐短信界面,1
+CancelSendNotifySMS,用户取消发送推荐短信,1
+UserSendSMSToFriend,用户成功发送推荐短信,1
 TotalPostVessages,发送消息总数,1

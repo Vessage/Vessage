@@ -139,10 +139,7 @@ UNKNOW_SHARELINK_CMD = "非法命令";
 SHARELINK_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
-NEW_MSG_NOTIFICATION = "你有新的未读消息!";
-NEW_SHARE_NOTIFICATION = "新的分享!";
-NEW_FRI_MSG_NOTIFICATION = "你收到新的好友信息!";
-
+NEW_VMSG_NOTIFICATION = "你有新的视频短信!";
 
 REGIST_FAILED = "注册失败";
 REGIST_SUC = "注册成功";
@@ -203,3 +200,6 @@ RETRY_SEND_VESSAGE_TITLE = "发送出错，重试？";
 
 REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
 REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";
+
+SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用App，是否发送一条短信通知Ta？";
+NOTIFY_SMS_FORMAT = "%@：我发送了一条视频短信给你，快点下载Vege查看吧！%@";

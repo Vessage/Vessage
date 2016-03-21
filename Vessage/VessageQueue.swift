@@ -90,6 +90,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
                     ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId,vessageId: vessageId, fileKey: fileKey)
                     sendingHud.hideAsync(false)
                     RecordMessageController.instance.playCheckMark("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false)
+                    
                     self.taskInfoDict.removeValueForKey(taskInfoKey)
                 }else{
                     sendingHud.hideAsync(false)
@@ -143,10 +144,28 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
     }
     
     //MARK: send sms to people
+    func sendSMSToFriend(taskInfo:SendVessageTaskInfo){
+        if String.isNullOrWhiteSpace(taskInfo.receiverId){
+            if !UserSetting.isSettingEnable("InviteSMS:\(taskInfo.receiverMobile)"){
+                let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+                    let senderNick = ServiceContainer.getService(UserService).myProfile.nickName
+                    let url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick
+                    self.showMessageView(taskInfo.receiverMobile, body: String(format: "NOTIFY_SMS_FORMAT".localizedString(),senderNick,url))
+                })
+                let cancel = UIAlertAction(title: "NO".localizedString(), style: .Cancel, handler: { (ac) -> Void in
+                    
+                })
+                
+                RecordMessageController.instance.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send,cancel])
+            }
+        }
+    }
+    
     func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         switch result{
         case MessageComposeResultCancelled:
             RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
+            MobClick.event("CancelSendNotifySMS")
         case MessageComposeResultFailed:
             RecordMessageController.instance.playCrossMark("FAIL".localizedString())
         case MessageComposeResultSent:
@@ -163,7 +182,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
             controller.body = body
             controller.delegate = self
             RecordMessageController.instance.presentViewController(controller, animated: true, completion: { () -> Void in
-                
+                MobClick.event("OpenSendNotifySMS")
             })
         }else{
             RecordMessageController.instance.showAlert("REQUIRE_SMS_FUNCTION_TITLE".localizedString(), msg: "REQUIRE_SMS_FUNCTION_MSG".localizedString())

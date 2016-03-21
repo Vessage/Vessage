@@ -108,7 +108,7 @@ OPERATE_ERROR = "操作失败，请检查网络";
 //SigninViewController
 REGISTING = "注册中";
 REGIST_SUC_TITLE = "注册成功";
-REGIST_SUC_MSG = "你的Sharelink ID:\n%@";
+REGIST_SUC_MSG = "请记住您的账号:\n%@";
 
 
 //MyDetailViewController
@@ -167,3 +167,39 @@ CHANGE_PASSWORD_ERROR = "密码修改失败, 请检查旧密码是否正确.";
 CHANGE_PSW = "修改密码";
 CONFIRM_PSW = "修改新密码为";
 OLD_NEW_PSW_SAME = "新旧密码相同";
+
+//vessage
+SET_CHAT_BCG_FAILED = "设置失败";
+SET_CHAT_BCG_SUCCESS = "设置成功";
+
+OPEN_NEW_CHAT_WITH_MOBILE = "开始新的对话";
+
+CHOOSE_PHONE_NO = "选择手机号";
+PEOPLE_NO_MOBILE = "没有手机号";
+
+ASK_REMOVE_CONVERSATION_TITLE = "确定移除对话？";
+NO_SUCH_CONVERSATION = "";
+
+UNKNOW_USER = "未知用户";
+THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
+NOTE_CONVERSATION_A_NAME = "修改当前对话的备注";
+CONVERSATION_NAME = "备注";
+NEW_NOTE_NAME_CANT_NULL = "备注名不能为空";
+SAVE_NOTE_NAME_SUC = "修改成功";
+SAVE_NOTE_NAME_ERROR = "修改出错";
+CONTINUE = "继续";
+CLICK_NEXT_MESSAGE_TIPS = "确定跳过这一条消息？跳过后将不能再看到了";
+
+CHANGE_CHAT_BCG = "聊天背景";
+BIND_MOBILE = "手机";
+NOT_SET = "未设置";
+
+CANCEL_RECORD = "取消录制";
+CONFIRM_SEND_VESSAGE_TITLE = "确定发送视频消息？";
+SAVE_VIDEO_FAILED = "保存视频出错";
+
+VESSAGE_PUSH_IN_QUEUE = "添加到发送队列";
+RETRY_SEND_VESSAGE_TITLE = "发送出错，重试？";
+
+REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
+REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";

@@ -17,4 +17,8 @@
 #import <SMS_SDK/SMSSDK.h>
 #import "SMSSDKUI.h"
 
+#import "UMessage.h"
+
+#import "MobClick.h"
+
 #endif /* Bridge_Header_h */

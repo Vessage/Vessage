@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MessageUI
 
 class SendVessageFileStep:BahamutTaskStepWorker{
     func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
@@ -47,7 +48,7 @@ class SendVessageTaskInfo:BahamutObject{
     var receiverMobile:String!
 }
 
-class VessageQueue{
+class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate{
     let sendVessageQueueName = "SendVessage"
     let sendVessageQueueWorkStep = ["SendAliOSSFile","PostVessage"]
     private var taskInfoDict = [String:SendVessageTaskInfo]()
@@ -141,5 +142,30 @@ class VessageQueue{
         RecordMessageController.instance.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
-
+    //MARK: send sms to people
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        switch result{
+        case MessageComposeResultCancelled:
+            RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
+        case MessageComposeResultFailed:
+            RecordMessageController.instance.playCrossMark("FAIL".localizedString())
+        case MessageComposeResultSent:
+            RecordMessageController.instance.playCheckMark("SUCCESS".localizedString())
+        default:break;
+        }
+    }
+    
+    private func showMessageView(phone:String,body:String){
+        if MFMessageComposeViewController.canSendText(){
+            let controller = MFMessageComposeViewController()
+            controller.recipients = [phone]
+            controller.body = body
+            controller.delegate = self
+            RecordMessageController.instance.presentViewController(controller, animated: true, completion: { () -> Void in
+                
+            })
+        }else{
+            RecordMessageController.instance.showAlert("REQUIRE_SMS_FUNCTION_TITLE".localizedString(), msg: "REQUIRE_SMS_FUNCTION_MSG".localizedString())
+        }
+    }
 }

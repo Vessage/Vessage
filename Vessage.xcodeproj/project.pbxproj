@@ -86,7 +86,11 @@
 		E708ACA81C8752980071104E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACA71C8752980071104E /* SignInViewController.swift */; };
 		E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAA1C87536D0071104E /* LaunchScreen.swift */; };
 		E708ACAD1C8754E20071104E /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708ACAC1C8754E20071104E /* User.storyboard */; };
-		E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */; };
+		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
+		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
+		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
+		E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */; };
+		E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867F1CA000880028B016 /* libMobClickLibrary.a */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
 		E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */; };
 		E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */; };
@@ -227,7 +231,14 @@
 		E708ACA71C8752980071104E /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		E708ACAA1C87536D0071104E /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		E708ACAC1C8754E20071104E /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
-		E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatImageViewController.swift; sourceTree = "<group>"; };
+		E71886731C9FBBCA0028B016 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
+		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
+		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
+		E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.2.6.a; sourceTree = "<group>"; };
+		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		E718867F1CA000880028B016 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		E71886801CA000880028B016 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		E71886811CA000880028B016 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClient.swift; sourceTree = "<group>"; };
 		E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClientBase.swift; sourceTree = "<group>"; };
@@ -274,7 +285,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */,
 				E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */,
+				E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */,
 				E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */,
 				E7F22C381C9BE5DC00CD38D1 /* libstdc++.tbd in Frameworks */,
 				E7F22C361C9BE5D000CD38D1 /* JavaScriptCore.framework in Frameworks */,
@@ -597,12 +610,14 @@
 		E708ACA11C8752090071104E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */,
 				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
 				E708AB401C86CAA50071104E /* Main.storyboard */,
 				E708AB451C86CAA50071104E /* LaunchScreen.storyboard */,
 				E708AC9F1C8752010071104E /* AccountSign.storyboard */,
 				E708ACAC1C8754E20071104E /* User.storyboard */,
 				E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */,
+				E71886731C9FBBCA0028B016 /* Camera.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -629,6 +644,7 @@
 				E708AC9D1C87503F0071104E /* EntryNavigationController.swift */,
 				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
 				E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */,
+				E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -662,13 +678,32 @@
 		E708ACAE1C87550D0071104E /* User */ = {
 			isa = PBXGroup;
 			children = (
+				E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */,
 				E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */,
 				E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */,
 				E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */,
 				E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */,
-				E708ACAF1C87588F0071104E /* UserChatImageViewController.swift */,
 			);
 			name = User;
+			sourceTree = "<group>";
+		};
+		E718867A1C9FFD840028B016 /* UMessageSdk */ = {
+			isa = PBXGroup;
+			children = (
+				E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */,
+				E718867C1C9FFD840028B016 /* UMessage.h */,
+			);
+			path = UMessageSdk;
+			sourceTree = "<group>";
+		};
+		E718867E1CA000880028B016 /* UMAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				E718867F1CA000880028B016 /* libMobClickLibrary.a */,
+				E71886801CA000880028B016 /* MobClick.h */,
+				E71886811CA000880028B016 /* MobClickSocialAnalytics.h */,
+			);
+			path = UMAnalytics;
 			sourceTree = "<group>";
 		};
 		E75A70391C8C0FFF0029F0BD /* ChicagoClient */ = {
@@ -707,7 +742,6 @@
 				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
 				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
-				E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */,
 			);
 			name = RecordMessage;
 			sourceTree = "<group>";
@@ -753,6 +787,8 @@
 		E7F22C271C9BE57800CD38D1 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				E718867E1CA000880028B016 /* UMAnalytics */,
+				E718867A1C9FFD840028B016 /* UMessageSdk */,
 				E7F22C4A1C9BF12700CD38D1 /* SMS_SDK */,
 			);
 			path = Libs;
@@ -867,6 +903,7 @@
 			files = (
 				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
+				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
@@ -876,6 +913,7 @@
 				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
+				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -991,7 +1029,6 @@
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AB9F1C86CF8A0071104E /* MessageEntity.swift in Sources */,
 				E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */,
-				E708ACB01C87588F0071104E /* UserChatImageViewController.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
@@ -1016,6 +1053,7 @@
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E708ABA11C86CF8A0071104E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
+				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
@@ -1165,6 +1203,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage",
 					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/Vessage/Libs/UMessageSdk",
+					"$(PROJECT_DIR)/Vessage/Libs/UMAnalytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1216,6 +1256,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage",
 					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/Vessage/Libs/UMessageSdk",
+					"$(PROJECT_DIR)/Vessage/Libs/UMAnalytics",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

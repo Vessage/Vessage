@@ -263,7 +263,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     static func showRecordMessageController(vc:UIViewController,chatter:VessageUser)
     {
         if RecordMessageController.instance == nil{
-            RecordMessageController.instance = instanceFromStoryBoard("Main", identifier: "RecordMessageController") as! RecordMessageController
+            RecordMessageController.instance = instanceFromStoryBoard("Camera", identifier: "RecordMessageController") as! RecordMessageController
         }
         instance.chatter = chatter
         vc.presentViewController(instance, animated: true) { () -> Void in

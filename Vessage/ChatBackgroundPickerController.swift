@@ -208,7 +208,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     static func showPickerController(vc:UIViewController,setImageSuccessHandler:ChatBackgroundPickerSetImageSuccessHandler)
     {
-        let instance = instanceFromStoryBoard("Main", identifier: "ChatBackgroundPickerController") as! ChatBackgroundPickerController
+        let instance = instanceFromStoryBoard("Camera", identifier: "ChatBackgroundPickerController") as! ChatBackgroundPickerController
         instance.setImageSuccessHandler = setImageSuccessHandler
         vc.presentViewController(instance, animated: true) { () -> Void in
             

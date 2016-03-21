@@ -20,6 +20,8 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         configureBahamutCmd()
         configureAliOSSManager()
         configureSmsSDK()
+        configureUMessage(launchOptions)
+        configureUmeng()
         initService()
         return true
     }
@@ -32,7 +34,6 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func configureSmsSDK()
     {
         SMSSDK.registerApp(VessageConfig.bahamutConfig.smsSDKAppkey, withSecret: VessageConfig.bahamutConfig.smsSDKSecretKey)
-        //SMSSDK.registerApp("f3fc6baa9ac4", withSecret: "7f3dedcb36d92deebcb373af921d635a")
     }
     
     private func configureBahamutCmd()
@@ -85,7 +86,68 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
             fatalError("No Config File!")
         }
     }
+    
+    //MARK: Umeng
+    private func configureUmeng()
+    {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            MobClick.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, reportPolicy: BATCH, channelId: nil)
+            MobClick.setAppVersion(VessageConfig.appVersion)
+            MobClick.setEncryptEnabled(true)
+            MobClick.setLogEnabled(false)
+        }
+    }
+    
+    //MARK: APNS and UMessage
+    
+    private func configureUMessage(launchOptions: [NSObject: AnyObject]?)
+    {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
+            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: launchOptions)
+            UMessage.setAutoAlert(false)
+            //register remoteNotification types
+            let action1 = UIMutableUserNotificationAction()
+            action1.identifier = "action1_identifier"
+            action1.title="Accept";
+            action1.activationMode = UIUserNotificationActivationMode.Foreground //当点击的时候启动程序
+            
+            let action2 = UIMutableUserNotificationAction()  //第二按钮
+            action2.identifier = "action2_identifier"
+            action2.title="Reject"
+            action2.activationMode = UIUserNotificationActivationMode.Background //当点击的时候不启动程序，在后台处理
+            action2.authenticationRequired = true //需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+            action2.destructive = true;
+            
+            let categorys = UIMutableUserNotificationCategory()
+            categorys.identifier = "category1" //这组动作的唯一标示
+            categorys.setActions([action1,action2], forContext: .Default)
+            
+            let userSettings = UIUserNotificationSettings(forTypes: [.Sound,.Badge,.Alert], categories: [categorys])
+            UMessage.registerRemoteNotificationAndUserNotificationSettings(userSettings)
+            
+        }
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        UMessage.registerDeviceToken(deviceToken)
+        VessageSetting.deviceToken = deviceToken.description
+            .stringByReplacingOccurrencesOfString("<", withString: "")
+            .stringByReplacingOccurrencesOfString(">", withString: "")
+            .stringByReplacingOccurrencesOfString(" ", withString: "")
+        ChicagoClient.sharedInstance.registDeviceToken(VessageSetting.deviceToken)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        UMessage.didReceiveRemoteNotification(userInfo)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        NSLog("%@", error.description)
+    }
 
+
+    //MARK: life circle
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -115,6 +177,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        PersistentManager.sharedInstance.saveAll()
     }
 
 

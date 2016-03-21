@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="用户名" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t4n-g9-e71">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="账号或用户名" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t4n-g9-e71">
                                 <rect key="frame" x="20" y="261" width="374" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -30,10 +30,10 @@
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxd-xU-Q17">
-                                <rect key="frame" x="179" y="352" width="56" height="56"/>
+                                <rect key="frame" x="186" y="352" width="42" height="42"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="yti-32-f0C"/>
-                                    <constraint firstAttribute="width" constant="56" id="zr8-Ed-FVe"/>
+                                    <constraint firstAttribute="height" constant="42" id="yti-32-f0C"/>
+                                    <constraint firstAttribute="width" constant="42" id="zr8-Ed-FVe"/>
                                 </constraints>
                                 <state key="normal" title="登陆" image="check"/>
                                 <connections>
@@ -41,8 +41,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vege" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3py-xH-yl4">
-                                <rect key="frame" x="133" y="118" width="149" height="80"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="67"/>
+                                <rect key="frame" x="135" y="111" width="145" height="95"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="67"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -55,6 +55,9 @@
                                     <action selector="showSignUp:" destination="5v0-ja-IQg" eventType="touchUpInside" id="a29-FE-orN"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yvx-aG-VCC">
+                                <rect key="frame" x="197" y="363" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -62,6 +65,7 @@
                             <constraint firstItem="3py-xH-yl4" firstAttribute="centerX" secondItem="Jh0-KG-h4h" secondAttribute="centerX" id="BAV-Bb-3Wa"/>
                             <constraint firstItem="jxd-xU-Q17" firstAttribute="top" secondItem="Lji-PX-bQM" secondAttribute="bottom" constant="23" id="Cbe-Tp-Lh1"/>
                             <constraint firstItem="3py-xH-yl4" firstAttribute="centerY" secondItem="Jh0-KG-h4h" secondAttribute="centerY" multiplier="3:7" id="Ndh-Zg-P9G"/>
+                            <constraint firstItem="yvx-aG-VCC" firstAttribute="centerY" secondItem="jxd-xU-Q17" secondAttribute="centerY" id="P0g-p4-lUp"/>
                             <constraint firstItem="Lji-PX-bQM" firstAttribute="top" secondItem="t4n-g9-e71" secondAttribute="bottom" constant="8" id="QbB-Wh-wZ6"/>
                             <constraint firstItem="Yd8-PL-l6b" firstAttribute="centerX" secondItem="Jh0-KG-h4h" secondAttribute="centerX" id="U3X-nv-TWW"/>
                             <constraint firstItem="Lji-PX-bQM" firstAttribute="leading" secondItem="t4n-g9-e71" secondAttribute="leading" id="ZD8-cb-cnS"/>
@@ -70,12 +74,15 @@
                             <constraint firstAttribute="bottom" secondItem="Yd8-PL-l6b" secondAttribute="bottom" constant="20" symbolic="YES" id="caU-MS-qIc"/>
                             <constraint firstItem="t4n-g9-e71" firstAttribute="centerY" secondItem="Jh0-KG-h4h" secondAttribute="centerY" multiplier="3:4" id="eet-HZ-9Bq"/>
                             <constraint firstItem="jxd-xU-Q17" firstAttribute="centerX" secondItem="Jh0-KG-h4h" secondAttribute="centerX" id="mET-gD-H4X"/>
+                            <constraint firstItem="yvx-aG-VCC" firstAttribute="centerX" secondItem="jxd-xU-Q17" secondAttribute="centerX" id="tEO-n4-ocf"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="loginButton" destination="jxd-xU-Q17" id="eQz-Ud-aIO"/>
                         <outlet property="loginInfoTextField" destination="t4n-g9-e71" id="epN-kd-KzN"/>
                         <outlet property="passwordTextField" destination="Lji-PX-bQM" id="rXM-L9-IS3"/>
+                        <outlet property="refreshingIndicator" destination="yvx-aG-VCC" id="xnt-7Y-37j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UNx-CL-lo4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -105,10 +112,10 @@
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sWb-YJ-RrT">
-                                <rect key="frame" x="179" y="352" width="56" height="56"/>
+                                <rect key="frame" x="186" y="352" width="42" height="42"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="HcM-ex-lHT"/>
-                                    <constraint firstAttribute="height" constant="56" id="THn-l5-T15"/>
+                                    <constraint firstAttribute="width" constant="42" id="HcM-ex-lHT"/>
+                                    <constraint firstAttribute="height" constant="42" id="THn-l5-T15"/>
                                 </constraints>
                                 <state key="normal" title="注册" image="nextRound"/>
                                 <connections>
@@ -116,8 +123,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vege" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d33-PO-7xZ">
-                                <rect key="frame" x="133" y="118" width="149" height="80"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="67"/>
+                                <rect key="frame" x="135" y="111" width="145" height="95"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="67"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -130,6 +137,9 @@
                                     <action selector="showSignIn:" destination="ifR-cW-1ax" eventType="touchUpInside" id="UFh-0a-a1X"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-5g-aDl">
+                                <rect key="frame" x="197" y="363" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -140,7 +150,9 @@
                             <constraint firstItem="d33-PO-7xZ" firstAttribute="centerX" secondItem="F1a-pm-84x" secondAttribute="centerX" id="LkO-L4-vDN"/>
                             <constraint firstItem="aS6-Mh-7OT" firstAttribute="centerY" secondItem="F1a-pm-84x" secondAttribute="centerY" multiplier="3:4" id="ODY-a3-MHj"/>
                             <constraint firstItem="1H0-d1-16j" firstAttribute="leading" secondItem="aS6-Mh-7OT" secondAttribute="leading" id="WHx-KI-U52"/>
+                            <constraint firstItem="7tD-5g-aDl" firstAttribute="centerY" secondItem="sWb-YJ-RrT" secondAttribute="centerY" id="ZtL-B4-Gpt"/>
                             <constraint firstItem="5J4-Ma-210" firstAttribute="top" secondItem="sWb-YJ-RrT" secondAttribute="bottom" constant="76" id="aNU-sK-EBr"/>
+                            <constraint firstItem="7tD-5g-aDl" firstAttribute="centerX" secondItem="sWb-YJ-RrT" secondAttribute="centerX" id="bOh-N6-pPC"/>
                             <constraint firstItem="sWb-YJ-RrT" firstAttribute="centerX" secondItem="F1a-pm-84x" secondAttribute="centerX" id="d7z-Qz-BmE"/>
                             <constraint firstItem="1H0-d1-16j" firstAttribute="trailing" secondItem="aS6-Mh-7OT" secondAttribute="trailing" id="daT-yZ-VdD"/>
                             <constraint firstItem="d33-PO-7xZ" firstAttribute="centerY" secondItem="F1a-pm-84x" secondAttribute="centerY" multiplier="3:7" id="oCS-6X-5xg"/>
@@ -156,6 +168,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="passwordTextField" destination="1H0-d1-16j" id="EBW-N1-JuD"/>
+                        <outlet property="refreshingIndicator" destination="7tD-5g-aDl" id="3Yd-3M-CtJ"/>
+                        <outlet property="signupButton" destination="sWb-YJ-RrT" id="UeC-Hl-eoj"/>
                         <outlet property="userNameTextField" destination="aS6-Mh-7OT" id="P8s-pa-0qh"/>
                     </connections>
                 </viewController>
@@ -165,7 +179,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="check" width="256" height="256"/>
+        <image name="check" width="128" height="128"/>
         <image name="nextRound" width="128" height="128"/>
     </resources>
 </document>

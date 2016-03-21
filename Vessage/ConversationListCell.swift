@@ -23,6 +23,7 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var badgeButton: UIButton!{
         didSet{
+            badgeButton.badgeValue = ""
             badgeButton.shouldHideBadgeAtZero = true
             badgeButton.backgroundColor = UIColor.clearColor()
         }
@@ -38,6 +39,7 @@ class ConversationListCell:ConversationListCellBase{
     var conversationListCellHandler:ConversationListCellHandler!
     var originModel:AnyObject?{
         didSet{
+            badge = 0
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
             }else if let searchResult = originModel as? SearchResultModel{
@@ -72,7 +74,7 @@ class ConversationListCell:ConversationListCellBase{
     
     private var badge:Int = 0{
         didSet{
-            badgeButton.badgeValue = "\(badge)"
+            badgeButton.badgeValue = badge > 0 ? "\(badge)" : ""
         }
     }
     

@@ -12,25 +12,45 @@ import MBProgressHUD
 //MARK: SignInViewController
 class SignInViewController: UIViewController {
     
+    @IBOutlet weak var refreshingIndicator: UIActivityIndicatorView!{
+        didSet{
+            refreshingIndicator.hidesWhenStopped = true
+            refreshingIndicator.stopAnimating()
+        }
+    }
+    @IBOutlet weak var loginButton: UIButton!{
+        didSet{
+            let img = UIImage(named: "check")!.imageWithRenderingMode(.AlwaysTemplate)
+            loginButton.setImage(img, forState: .Normal)
+            loginButton.tintColor = UIColor.whiteColor()
+        }
+    }
     @IBOutlet weak var loginInfoTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         ServiceContainer.instance.addObserver(self, selector: "onInitServiceFailed:", name: ServiceContainer.ServiceInitFailed, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "onRegistAccountCompleted:", name: RegistAccountCompleted, object: nil)
+        self.loginInfoTextField.text = UserSetting.lastLoginAccountId
+        self.passwordTextField.text = nil
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         ServiceContainer.instance.removeObserver(self)
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if String.isNullOrWhiteSpace(UserSetting.lastLoginAccountId){
+            showSignUp(self)
+        }
     }
     
     //MARK: notifications
@@ -46,9 +66,7 @@ class SignInViewController: UIViewController {
     }
     
     func onInitServiceFailed(a:NSNotification){
-        if let hud = refreshingHud{
-            hud.hideAsync(false)
-        }
+        hideIndicator()
         if let reason = a.userInfo?[InitServiceFailedReason] as? String{
             self.playToast(reason.localizedString())
         }
@@ -56,16 +74,19 @@ class SignInViewController: UIViewController {
     
     //MARK: actions
     private func loginWith(userInfo:String,psw:String){
+        if DeveloperMainPanelController.isShowDeveloperPanel(self,id:userInfo,psw:psw){
+            return
+        }
+        
         self.hideKeyBoard()
-        let hud = self.showActivityHudWithMessage(nil, message: "LOGINING".localizedString())
-        BahamutRFKit.sharedInstance.loginBahamutAccount(VessageConfig.bahamutConfig.accountLoginApiUrl, accountInfo: userInfo, passwordOrigin: psw) { (isSuc, errorMsg, loginResult) -> Void in
-            hud.hide(true)
-            
+        self.showIndicator()
+        BahamutRFKit.sharedInstance.loginBahamutAccount(VessageSetting.loginApi, accountInfo: userInfo, passwordOrigin: psw) { (isSuc, errorMsg, loginResult) -> Void in
             if isSuc
             {
                 self.validateToken(loginResult)
             }else
             {
+                self.hideIndicator()
                 self.playToast(errorMsg.localizedString())
             }
         }
@@ -86,33 +107,36 @@ class SignInViewController: UIViewController {
         
     }
     
-    
-    private var refreshingHud:MBProgressHUD!{
-        didSet{
-            if let old = oldValue{
-                old.hideAsync(true)
-            }
-        }
+    private func showIndicator(){
+        self.refreshingIndicator.startAnimating()
+        self.refreshingIndicator.hidden = false
+        self.loginButton.hidden = true
+        self.view.userInteractionEnabled = false
     }
+    
+    private func hideIndicator(){
+        self.refreshingIndicator.stopAnimating()
+        self.loginButton.hidden = false
+        self.view.userInteractionEnabled = true
+    }
+    
     private func validateToken(loginedResult:LoginResult)
     {
         let accountService = ServiceContainer.getService(AccountService)
-        let hud = self.showActivityHudWithMessage("",message: "LOGINING".localizedString() ,async: false)
+        self.showIndicator()
         accountService.validateAccessToken(loginedResult.AppServiceUrl, accountId: loginedResult.AccountID, accessToken: loginedResult.AccessToken, callback: { (loginSuccess, message) -> Void in
-            hud.hide(false)
             if loginSuccess{
-                self.refreshingHud = self.showActivityHudWithMessage("",message:"REFRESHING".localizedString())
+                self.showIndicator()
             }else{
+                self.hideIndicator()
                 self.playToast( message)
             }
             
             }) { (registValidateResult) -> Void in
-                hud.hide(false)
                 self.registNewUser(loginedResult,registValidateResult:registValidateResult)
         }
     }
     
-    private var refreshHud:MBProgressHUD!
     private func registNewUser(loginedResult:LoginResult, registValidateResult:ValidateResult)
     {
         let registModel = RegistNewUserModel()
@@ -125,14 +149,14 @@ class SignInViewController: UIViewController {
         newUser.motto = "Vessage Is Video Message"
         newUser.nickName = loginedResult.AccountName ?? loginedResult.AccountID
         
-        let hud = self.showActivityHudWithMessage("",message:"REGISTING".localizedString(),async: false)
+        self.showIndicator()
         ServiceContainer.getService(AccountService).registNewUser(registModel, newUser: newUser){ isSuc,msg,validateResult in
-            hud.hide(false)
             if isSuc
             {
-                self.refreshHud = self.showActivityHudWithMessage("",message:"REFRESHING".localizedString())
+                self.showIndicator()
             }else
             {
+                self.hideIndicator()
                 self.showAlert(nil, msg: msg)
             }
         }

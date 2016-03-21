@@ -105,7 +105,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
             self.conversationService.removeConversation(conversation.conversationId)
         }
         let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
-        self.showAlert("ASK_REMOVE_CONVERSATION_TITLE", msg: conversation.noteName, actions: [okAction,cancel])
+        self.showAlert("ASK_REMOVE_CONVERSATION_TITLE".localizedString(), msg: conversation.noteName, actions: [okAction,cancel])
     }
     
     //MARK: handle click list cell
@@ -294,37 +294,5 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         viewController.presentViewController(nvc, animated: false) { () -> Void in
             
         }
-    }
-}
-
-extension ConversationListController{
-    func changeNickName(){
-        let title = "CHANGE_NICK_NAME".localizedString()
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
-            textfield.placeholder = "NEW_NICK_NAME".localizedString()
-            textfield.borderStyle = .None
-            textfield.text = self.userService.myProfile.nickName ?? ""
-        })
-        
-        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
-            let newNickName = alertController.textFields?[0].text ?? ""
-            if String.isNullOrEmpty(newNickName)
-            {
-                self.playToast("NEW_NICK_NAME_CANT_NULL".localizedString())
-            }else{
-                self.userService.changeUserNickName(newNickName, callback: { (suc) -> Void in                    
-                    if suc{
-                        self.playCheckMark("SAVE_NOTE_NAME_SUC")
-                    }else{
-                        self.playCrossMark("SAVE_NOTE_NAME_ERROR".localizedString())
-                    }
-                })
-            }
-        })
-        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
-        alertController.addAction(no)
-        alertController.addAction(yes)
-        self.showAlert(alertController)
     }
 }

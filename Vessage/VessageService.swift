@@ -131,6 +131,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     func readVessage(vessage:Vessage){
         vessage.isRead = true
         vessage.saveModel()
+        PersistentManager.sharedInstance.refreshCache(Vessage)
         self.postNotificationNameWithMainAsync(VessageService.onVessageRead, object: self, userInfo: [VessageServiceNotificationValue:vessage])
     }
     
@@ -139,6 +140,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
             self.postNotificationNameWithMainAsync(VessageService.onVessageRead, object: self, userInfo: [VessageServiceNotificationValue:vessage])
         }
         PersistentManager.sharedInstance.removeModel(vessage)
+        PersistentManager.sharedInstance.refreshCache(Vessage)
         let req = SetVessageRead()
         req.vessageId = vessage.vessageId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in

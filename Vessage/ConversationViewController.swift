@@ -36,6 +36,11 @@ class ConversationViewController: UIViewController,PlayerDelegate {
             noMessageTipsLabel.hidden = true
         }
     }
+    @IBOutlet weak var vessageSendTimeLabel: UILabel!{
+        didSet{
+            vessageSendTimeLabel.hidden = true
+        }
+    }
     
     private var vessagePlayer:BahamutFilmView!
     @IBOutlet weak var vessageView: UIView!{
@@ -84,7 +89,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         didSet{
             
             if presentingVesseage != nil{
-                
+                vessageSendTimeLabel.hidden = false
+                vessageSendTimeLabel.text = presentingVesseage.sendTime.dateTimeOfAccurateString.toFriendlyString()
                 if oldValue != nil{
                     UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
                         self.vessagePlayer.filePath = nil
@@ -93,6 +99,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
                 }else{
                     vessagePlayer.filePath = presentingVesseage.fileId
                 }
+            }else{
+                vessageSendTimeLabel.hidden = true
             }
             
         }

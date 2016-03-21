@@ -80,7 +80,7 @@ struct MyDetailCellModel {
 //MARK:MyDetailViewController
 class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProgressTaskDelegate
 {
-    static let aboutSharelinkReuseId = "aboutsharelink"
+    static let aboutAppReuseId = "aboutApp"
     static let clearCacheCellReuseId = "clearCache"
     struct InfoIds
     {
@@ -229,8 +229,8 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
             return cell
         }else
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailViewController.aboutSharelinkReuseId,forIndexPath: indexPath)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "aboutSharelink:"))
+            let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailViewController.aboutAppReuseId,forIndexPath: indexPath)
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "aboutApp:"))
             return cell
         }
     }
@@ -384,7 +384,7 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
         self.playToast("SET_AVATAR_FAILED".localizedString())
     }
     
-    func aboutSharelink(_:UITapGestureRecognizer)
+    func aboutApp(_:UITapGestureRecognizer)
     {
         AboutViewController.showAbout(self)
     }

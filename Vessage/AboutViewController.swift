@@ -33,7 +33,7 @@ class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
     @IBAction func mailToBahamutSharelink(sender: AnyObject) {
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
-        mail.setSubject("Sharelink Feedback")
+        mail.setSubject("Vege Feedback")
         mail.setToRecipients([VessageConfig.bahamutConfig.bahamutAppEmail])
         self.presentViewController(mail, animated: true, completion: nil)
 

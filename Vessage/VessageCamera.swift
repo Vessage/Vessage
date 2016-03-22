@@ -326,7 +326,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         if audioCompressionSettings == nil{
             self.audioCompressionSettings = [
                 AVFormatIDKey : NSNumber(unsignedInt: kAudioFormatMPEG4AAC),
-                AVNumberOfChannelsKey : NSNumber(unsignedInt: 2),
+                AVNumberOfChannelsKey : NSNumber(unsignedInt: 1),
                 AVSampleRateKey :  NSNumber(double: 44100),
                 AVEncoderBitRateKey : NSNumber(int: 64000)
             ]
@@ -349,11 +349,16 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
                 }
             }else if isWriting{
                 self.writeAudioMedia(sampleBuffer)
+            }else if isRecordVideo{
+                setAudioCompressSetting(sampleBuffer)
             }
         }
     }
     
     private func setAudioCompressSetting(sampleBuffer: CMSampleBuffer!){
+        if self.audioCompressionSettings != nil{
+            return
+        }
         if let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer){
             let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
             if (asbd != nil) {

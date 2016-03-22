@@ -65,8 +65,10 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
         conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
-        vessageService.addObserver(self, selector: "onNewVessageReveiced:", name: VessageService.onNewVessageReceived, object: nil)
+        vessageService.addObserver(self, selector: "onNewVessagesReceived:", name: VessageService.onNewVessagesReceived, object: nil)
         ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSendFail:", name: VessageService.onNewVessageSendFail, object: nil)
         vessageService.newVessageFromServer()
     }
     
@@ -77,6 +79,22 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     }
     
     //MARK: notifications
+    func onVessageSendFail(a:NSNotification){
+        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
+            if let receiverId = task.receiverId{
+                conversationService.setConversationNewestModified(receiverId)
+            }
+        }
+    }
+    
+    func onVessageSended(a:NSNotification){
+        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
+            if let receiverId = task.receiverId{
+                conversationService.setConversationNewestModified(receiverId)
+            }
+        }
+    }
+    
     func onNewVessageNotify(a:NSNotification){
         vessageService.newVessageFromServer()
     }
@@ -85,13 +103,15 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         self.tableView.reloadData()
     }
     
-    func onNewVessageReveiced(a:NSNotification){
-        if let vsg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
-            let index = conversationService.updateConversationWithVessage(vsg)
-            if index == nil{
-                userService.fetchUserProfile(vsg.sender)
-                conversationService.createConverationWithVessage(vsg)    
-            }
+    func onNewVessagesReceived(a:NSNotification){
+        if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
+            
+            let newConversations = conversationService.updateConversationListWithVessagesReturnNewConversations(vsgs)
+            newConversations.forEach({ (c) in
+                if let chatter = c.chatterId{
+                    userService.fetchUserProfile(chatter)
+                }
+            })
         }
     }
     

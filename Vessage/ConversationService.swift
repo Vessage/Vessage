@@ -79,7 +79,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return false
     }
     
-    func updateConversationWithVessage(vsg:Vessage) -> Int?{
+    private func updateConversationWithVessage(vsg:Vessage) -> Int?{
         if let index = (conversations.indexOf { ConversationService.isConversationVessage($0, vsg: vsg)}){
             let conversation = conversations[index]
             if let ei = vsg.getExtraInfoObject(){
@@ -101,18 +101,55 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func createConverationWithVessage(vsg:Vessage) -> Conversation{
+    func setConversationNewestModified(chatterId:String){
+        let index = conversations.indexOf { (c) -> Bool in
+            if let chatter = c.chatterId{
+                if chatter == chatterId{
+                    return true
+                }
+            }
+            return false
+        }
+        if let i = index{
+            let c = conversations.removeAtIndex(i)
+            c.lastMessageTime = NSDate().toAccurateDateTimeString()
+            c.saveModel()
+            conversations.insert(c, atIndex: 0)
+            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+        }
+    }
+    
+    func updateConversationListWithVessagesReturnNewConversations(vsgs:[Vessage]) -> [Conversation] {
+        var newConversations = [Conversation]()
+        vsgs.forIndexEach { (i, element) in
+            if let _ = self.updateConversationWithVessage(element){
+                
+            }else{
+                let conversation = self.createConverationWithVessage(element)
+                newConversations.append(conversation)
+            }
+        }
+        sortConversationList()
+        self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+        return newConversations
+    }
+    
+    private func createConverationWithVessage(vsg:Vessage) -> Conversation{
         let ei = vsg.getExtraInfoObject()
-        return self.openConversationByUserId(vsg.sender, noteName: ei?.nickName ?? ei?.accountId ?? "UNKNOW_USER".localizedString())
+        return self.addNewConversationWithUserId(vsg.sender, noteName: ei?.nickName ?? ei?.accountId ?? "UNKNOW_USER".localizedString())
     }
     
     private func refreshConversations(){
         conversations.removeAll()
         conversations.appendContentsOf(PersistentManager.sharedInstance.getAllModel(Conversation))
+        sortConversationList()
+        self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+    }
+    
+    private func sortConversationList(){
         conversations.sortInPlace { (a, b) -> Bool in
             a.lastMessageTime.dateTimeOfAccurateString.isAfter(b.lastMessageTime.dateTimeOfAccurateString)
         }
-        self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
     
     func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
@@ -137,16 +174,21 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
             return conversation
         }else{
-            let conversation = Conversation()
-            conversation.conversationId = IdUtil.generateUniqueId()
-            conversation.chatterId = userId
-            conversation.noteName = noteName
-            conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
-            conversation.saveModel()
-            conversations.append(conversation)
+            let conversation = addNewConversationWithUserId(userId, noteName: noteName)
             self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
+    }
+    
+    private func addNewConversationWithUserId(userId:String,noteName:String?) -> Conversation {
+        let conversation = Conversation()
+        conversation.conversationId = IdUtil.generateUniqueId()
+        conversation.chatterId = userId
+        conversation.noteName = noteName
+        conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+        conversation.saveModel()
+        conversations.append(conversation)
+        return conversation
     }
     
     func updateConversationChatterIdWithMobile(chatterId:String,mobile:String){

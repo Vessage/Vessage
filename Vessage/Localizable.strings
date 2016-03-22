@@ -198,6 +198,8 @@ SAVE_VIDEO_FAILED = "保存视频出错";
 
 VESSAGE_PUSH_IN_QUEUE = "添加到发送队列";
 RETRY_SEND_VESSAGE_TITLE = "发送出错，重试？";
+VESSAGE_SENDED = "已发送";
+VESSAGE_SEND_FAIL = "发送出错";
 
 REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
 REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";

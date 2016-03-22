@@ -72,20 +72,26 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
     
     func initObservers(){
         ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSendFail:", name: VessageService.onNewVessageSendFail, object: nil)
     }
     
     func removeObservers(){
         ServiceContainer.getService(VessageService).removeObserver(self)
     }
     
+    func onVessageSendFail(a:NSNotification){
+        RecordMessageController.instance.playCrossMark("VESSAGE_SEND_FAIL".localizedString())
+    }
+    
     func onVessageSended(a:NSNotification){
         if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
             if let path = ServiceContainer.getService(FileService).getFilePath(task.fileId, type: .Video){
                 if !PersistentFileHelper.deleteFile(path){
-                    NSLog("Delete Sended Vessage Failed Error:%@", task.fileId)
+                    NSLog("Delete Sended Vessage Failed Error:%@", path)
                 }
             }
         }
+        RecordMessageController.instance.playCheckMark("VESSAGE_SENDED".localizedString())
     }
     
     func pushNewVessageTo(receiverId:String?,receiverMobile:String?,videoUrl:NSURL){
@@ -104,7 +110,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
         if let taskInfo = taskInfoDict[taskInfoKey]{
             ServiceContainer.getService(FileService).sendFileToAliOSS(taskInfo.filePath, type: .Video) { (taskId, fileKey) -> Void in
                 if fileKey != nil{
-                    ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId,vessageId: vessageId, fileKey: fileKey)
+                    ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId, receiverId: taskInfo.receiverId,vessageId: vessageId, fileKey: fileKey)
                     sendingHud.hideAsync(false)
                     RecordMessageController.instance.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false)
                     

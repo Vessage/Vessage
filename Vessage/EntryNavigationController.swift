@@ -27,7 +27,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     func deInitController(){
-        VessageQueue.sharedInstance.removeObservers()
         ServiceContainer.instance.removeObserver(self)
         ChicagoClient.sharedInstance.removeObserver(self)
     }

@@ -52,9 +52,9 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
     let sendVessageQueueName = "SendVessage"
     let sendVessageQueueWorkStep = ["SendAliOSSFile","PostVessage"]
     private var taskInfoDict = [String:SendVessageTaskInfo]()
-    static var sharedInstance:VessageQueue{
+    static var sharedInstance:VessageQueue = {
         return VessageQueue()
-    }
+    }()
     
     //primary version do not use queue
 //    func pushNewVideoTo(conversationId:String,fileUrl:NSURL){
@@ -70,6 +70,24 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
 //        
 //    }
     
+    func initObservers(){
+        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
+    }
+    
+    func removeObservers(){
+        ServiceContainer.getService(VessageService).removeObserver(self)
+    }
+    
+    func onVessageSended(a:NSNotification){
+        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
+            if let path = ServiceContainer.getService(FileService).getFilePath(task.fileId, type: .Video){
+                if !PersistentFileHelper.deleteFile(path){
+                    NSLog("Delete Sended Vessage Failed Error:%@", task.fileId)
+                }
+            }
+        }
+    }
+    
     func pushNewVessageTo(receiverId:String?,receiverMobile:String?,videoUrl:NSURL){
         let userInfoModel = SendVessageTaskInfo()
         userInfoModel.receiverId = receiverId
@@ -80,7 +98,6 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
         sendVessage(taskInfoKey)
     }
     
-    
     private func sendVessageFile(vessageId:String, taskInfoKey:String){
         
         let sendingHud = RecordMessageController.instance.showActivityHud()
@@ -89,7 +106,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
                 if fileKey != nil{
                     ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId,vessageId: vessageId, fileKey: fileKey)
                     sendingHud.hideAsync(false)
-                    RecordMessageController.instance.playCheckMark("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false)
+                    RecordMessageController.instance.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false)
                     
                     self.taskInfoDict.removeValueForKey(taskInfoKey)
                 }else{
@@ -105,7 +122,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
             self.sendVessageFile(vessageId,taskInfoKey: taskInfoKey)
         }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
             ServiceContainer.getService(VessageService).cancelSendVessage(vessageId)
             RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
         }

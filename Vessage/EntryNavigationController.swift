@@ -27,6 +27,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     func deInitController(){
+        VessageQueue.sharedInstance.removeObservers()
         ServiceContainer.instance.removeObserver(self)
         ChicagoClient.sharedInstance.removeObserver(self)
     }
@@ -41,6 +42,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     func allServicesReady(_:AnyObject)
     {
         ServiceContainer.instance.removeObserver(self)
+        VessageQueue.sharedInstance.initObservers()
         if let _ = self.presentedViewController
         {
             EntryNavigationController.start()

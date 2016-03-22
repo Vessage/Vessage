@@ -18,12 +18,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     private var chatter:VessageUser!{
         didSet{
-            let oldChatImage = oldValue?.mainChatImage
-            if oldChatImage != chatter?.mainChatImage{
-                self.updateChatImage(chatter?.mainChatImage)
-            }else{
-                self.updateChatImage(nil)
-            }
+            self.updateChatImage(chatter?.mainChatImage)
         }
     }
     
@@ -113,9 +108,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if let imgId = self.chatter.mainChatImage{
-            self.chatter.mainChatImage = imgId
-        }
+        updateChatImage(self.chatter?.mainChatImage)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -140,15 +133,20 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     //MARK: actions
     func updateChatImage(mainChatImage:String?){
         if let imgView = self.smileFaceImageView{
+            let defaultFace = UIImage(named: "defaultFace")!
             if let imgId = mainChatImage{
                 imgView.contentMode = .Center
                 noSmileFaceTipsLabel.hidden = false
-                ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: imgId,defaultImage: UIImage(named: "defaultFace")!){ suc in
+                ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: imgId,defaultImage: defaultFace){ suc in
                     if suc{
                         imgView.contentMode = .ScaleAspectFill
                         self.noSmileFaceTipsLabel.hidden = true
                     }
                 }
+            }else {
+                imgView.image = defaultFace
+                imgView.contentMode = .Center
+                noSmileFaceTipsLabel.hidden = false
             }
         }
     }
@@ -176,7 +174,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     func recordingFlashing(_:AnyObject?){
         if recording{
-            recordingTime++
+            recordingTime += 1
             self.recordingFlashView.hidden = !self.recordingFlashView.hidden
         }else{
             self.recordingFlashView.hidden = true
@@ -218,7 +216,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
             MobClick.event("ConfirmSendVessage")
             VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
         }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
             MobClick.event("CancelSendVessage")
         }
         let size = PersistentFileHelper.fileSizeOf(url.path!)

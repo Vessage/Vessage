@@ -185,7 +185,8 @@ NEW_NOTE_NAME_CANT_NULL = "备注名不能为空";
 SAVE_NOTE_NAME_SUC = "修改成功";
 SAVE_NOTE_NAME_ERROR = "修改出错";
 CONTINUE = "继续";
-CLICK_NEXT_MESSAGE_TIPS = "确定跳过这一条消息？跳过后将不能再看到了";
+CLICK_NEXT_MESSAGE_TIPS_TITLE = "跳过未读的消息？";
+CLICK_NEXT_MESSAGE_TIPS = "跳过后该消息将会被删除且不能恢复，确定要跳过？";
 
 CHANGE_CHAT_BCG = "聊天背景";
 BIND_MOBILE = "手机";

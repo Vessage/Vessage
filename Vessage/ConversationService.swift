@@ -65,10 +65,13 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
-        if vsg.sender == c.chatterId{
-            c.lastMessageTime = vsg.sendTime
-            return true
-        }else if let ei = vsg.getExtraInfoObject(){
+        if let chatterId = c.chatterId{
+            if vsg.sender == chatterId{
+                c.lastMessageTime = vsg.sendTime
+                return true
+            }
+        }
+        if let ei = vsg.getExtraInfoObject(){
             if ei.mobileHash != nil && ei.mobileHash == c.chatterMobile?.md5{
                 return true
             }

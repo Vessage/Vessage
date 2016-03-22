@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -93,7 +93,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="对方未设置聊天头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ppt-ZN-4mR">
-                                <rect key="frame" x="131" y="538" width="153" height="21"/>
+                                <rect key="frame" x="131" y="518" width="153" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -101,18 +101,15 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aUH-we-X8q" firstAttribute="bottom" secondItem="MNu-fw-20A" secondAttribute="bottom" id="2Py-E6-2qH"/>
                             <constraint firstItem="MNu-fw-20A" firstAttribute="bottom" secondItem="Gic-ah-z5m" secondAttribute="bottom" id="3CZ-C5-ZFz"/>
-                            <constraint firstItem="Ppt-ZN-4mR" firstAttribute="centerY" secondItem="MFZ-hc-E4j" secondAttribute="centerY" constant="180" id="9bu-Gp-dTd"/>
-                            <constraint firstItem="aUH-we-X8q" firstAttribute="top" secondItem="MNu-fw-20A" secondAttribute="bottom" id="CHd-PZ-7ZE"/>
+                            <constraint firstItem="Ppt-ZN-4mR" firstAttribute="centerY" secondItem="SaZ-P6-leU" secondAttribute="centerY" constant="160" id="DJs-5W-p06"/>
                             <constraint firstItem="Gic-ah-z5m" firstAttribute="centerX" secondItem="SaZ-P6-leU" secondAttribute="centerX" id="E0j-0m-oIS"/>
                             <constraint firstItem="7M9-ZX-sdn" firstAttribute="bottom" secondItem="Gic-ah-z5m" secondAttribute="bottom" id="Rpn-fD-uCX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MNu-fw-20A" secondAttribute="trailing" id="ZKP-o5-TK8"/>
                             <constraint firstItem="MFZ-hc-E4j" firstAttribute="top" secondItem="SaZ-P6-leU" secondAttribute="top" id="a3V-Re-Xao"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h2t-Hh-ys7" secondAttribute="trailing" id="c4W-M8-rAK"/>
                             <constraint firstItem="6GF-jH-qR8" firstAttribute="leading" secondItem="SaZ-P6-leU" secondAttribute="leadingMargin" id="cMk-Od-oyM"/>
-                            <constraint firstItem="aUH-we-X8q" firstAttribute="trailing" secondItem="MNu-fw-20A" secondAttribute="trailing" id="cZP-Lc-wRI"/>
-                            <constraint firstItem="aUH-we-X8q" firstAttribute="leading" secondItem="MNu-fw-20A" secondAttribute="trailing" id="chG-8k-ZDZ"/>
+                            <constraint firstItem="Ppt-ZN-4mR" firstAttribute="centerX" secondItem="Gic-ah-z5m" secondAttribute="centerX" id="cWX-C9-npJ"/>
                             <constraint firstItem="aUH-we-X8q" firstAttribute="centerX" secondItem="h2t-Hh-ys7" secondAttribute="centerX" id="fnw-AD-GBv"/>
                             <constraint firstAttribute="bottom" secondItem="Gic-ah-z5m" secondAttribute="bottom" constant="20" symbolic="YES" id="g3Q-y1-Cfj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7M9-ZX-sdn" secondAttribute="trailing" id="gty-2o-d7F"/>
@@ -122,16 +119,7 @@
                             <constraint firstItem="6GF-jH-qR8" firstAttribute="bottom" secondItem="Gic-ah-z5m" secondAttribute="bottom" id="nzp-aj-dAY"/>
                             <constraint firstItem="MFZ-hc-E4j" firstAttribute="bottom" secondItem="RAE-4A-pjS" secondAttribute="top" id="qrp-Ld-xeN"/>
                             <constraint firstItem="aUH-we-X8q" firstAttribute="centerY" secondItem="h2t-Hh-ys7" secondAttribute="centerY" id="snq-1j-6Qa"/>
-                            <constraint firstItem="Ppt-ZN-4mR" firstAttribute="centerX" secondItem="MFZ-hc-E4j" secondAttribute="centerX" id="t3f-Tq-dry"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="2Py-E6-2qH"/>
-                                <exclude reference="CHd-PZ-7ZE"/>
-                                <exclude reference="cZP-Lc-wRI"/>
-                                <exclude reference="chG-8k-ZDZ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>

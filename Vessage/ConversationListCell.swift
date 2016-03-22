@@ -23,8 +23,6 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var badgeButton: UIButton!{
         didSet{
-            badgeButton.badgeValue = ""
-            badgeButton.shouldHideBadgeAtZero = true
             badgeButton.backgroundColor = UIColor.clearColor()
         }
     }
@@ -39,7 +37,7 @@ class ConversationListCell:ConversationListCellBase{
     var conversationListCellHandler:ConversationListCellHandler!
     var originModel:AnyObject?{
         didSet{
-            badge = 0
+            
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
             }else if let searchResult = originModel as? SearchResultModel{
@@ -96,12 +94,10 @@ class ConversationListCell:ConversationListCellBase{
         self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
         if let chatterId = conversation.chatterId{
             self.badge = self.rootController.vessageService.getNotReadVessage(chatterId).count
-        }
-        if let uId = conversation.chatterId{
-            if let user = rootController.userService.getCachedUserProfile(uId){
+            if let user = rootController.userService.getCachedUserProfile(chatterId){
                 self.avatar = user.avatar
             }else{
-                self.rootController.userService.fetchUserProfile(uId)
+                self.rootController.userService.fetchUserProfile(chatterId)
             }
         }
     }
@@ -110,6 +106,7 @@ class ConversationListCell:ConversationListCellBase{
         self.headLine = user.nickName ?? user.accountId
         self.subLine = user.accountId
         self.avatar = user.avatar
+        self.badge = 0
     }
     
     private func updateWithMobile(mobile:String){
@@ -117,6 +114,7 @@ class ConversationListCell:ConversationListCellBase{
         let msg = String(format: "OPEN_NEW_CHAT_WITH_MOBILE".localizedString(), mobile)
         self.subLine = msg
         self.avatar = nil
+        self.badge = 0
     }
     
     //MARK: notifications

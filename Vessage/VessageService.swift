@@ -16,6 +16,7 @@ class VessageFileUploadTask: BahamutObject {
     var fileId:String!
     var vessageId:String!
     var receiverId:String!
+    var receiverMobile:String!
 }
 
 let VessageServiceNotificationValue = "VessageServiceNotificationValue"
@@ -82,14 +83,9 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         return PersistentManager.sharedInstance.getModel(SendVessageResultModel.self, idValue: vessageId)
     }
     
-    func observeOnFileUploadedForVessage(taskId:String,receiverId:String!,vessageId:String,fileKey:FileAccessInfo){
-        let task = VessageFileUploadTask()
-        task.taskId = taskId
-        task.receiverId = receiverId
-        task.fileId = fileKey.fileId
-        task.vessageId = vessageId
+    func observeOnVessageFileUploadTask(task:VessageFileUploadTask){
         task.saveModel()
-        ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
+        ProgressTaskWatcher.sharedInstance.addTaskObserver(task.taskId, delegate: self)
     }
     
     //MARK: ProgressTask Delegate

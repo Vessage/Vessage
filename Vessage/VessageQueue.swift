@@ -48,7 +48,7 @@ class SendVessageTaskInfo:BahamutObject{
     var receiverMobile:String!
 }
 
-class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate{
+class VessageQueue:NSObject{
     let sendVessageQueueName = "SendVessage"
     let sendVessageQueueWorkStep = ["SendAliOSSFile","PostVessage"]
     private var taskInfoDict = [String:SendVessageTaskInfo]()
@@ -110,11 +110,20 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
         if let taskInfo = taskInfoDict[taskInfoKey]{
             ServiceContainer.getService(FileService).sendFileToAliOSS(taskInfo.filePath, type: .Video) { (taskId, fileKey) -> Void in
                 if fileKey != nil{
-                    ServiceContainer.getService(VessageService).observeOnFileUploadedForVessage(taskId, receiverId: taskInfo.receiverId,vessageId: vessageId, fileKey: fileKey)
-                    sendingHud.hideAsync(false)
-                    RecordMessageController.instance.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false)
-                    
                     self.taskInfoDict.removeValueForKey(taskInfoKey)
+                    
+                    let task = VessageFileUploadTask()
+                    task.taskId = taskId
+                    task.receiverId = taskInfo.receiverId
+                    task.receiverMobile = taskInfo.receiverMobile
+                    task.fileId = fileKey.fileId
+                    task.vessageId = vessageId
+                    ServiceContainer.getService(VessageService).observeOnVessageFileUploadTask(task)
+                    sendingHud.hideAsync(false)
+                    RecordMessageController.instance.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false){
+                        self.sendSMSToFriend(taskInfo)
+                    }
+                    
                 }else{
                     sendingHud.hideAsync(false)
                     self.retrySendFile(vessageId,taskInfoKey: taskInfoKey)
@@ -167,13 +176,17 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
     }
     
     //MARK: send sms to people
-    func sendSMSToFriend(taskInfo:SendVessageTaskInfo){
+    private func sendSMSToFriend(taskInfo:SendVessageTaskInfo){
         if String.isNullOrWhiteSpace(taskInfo.receiverId){
             if !UserSetting.isSettingEnable("InviteSMS:\(taskInfo.receiverMobile)"){
                 let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-                    let senderNick = ServiceContainer.getService(UserService).myProfile.nickName
-                    let url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick
-                    self.showMessageView(taskInfo.receiverMobile, body: String(format: "NOTIFY_SMS_FORMAT".localizedString(),senderNick,url))
+                    var url = ""
+                    if let senderNick = ServiceContainer.getService(UserService).myProfile.nickName{
+                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick.base64String()
+                    }else{
+                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getService(UserService).myProfile.accountId)"
+                    }
+                    RecordMessageController.instance.showMessageView(taskInfo.receiverMobile, body: String(format: "NOTIFY_SMS_FORMAT".localizedString(),url))
                 })
                 let cancel = UIAlertAction(title: "NO".localizedString(), style: .Cancel, handler: { (ac) -> Void in
                     
@@ -183,18 +196,22 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
             }
         }
     }
-    
+}
+
+extension RecordMessageController:MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate{
     func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        switch result{
-        case MessageComposeResultCancelled:
-            RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
-            MobClick.event("CancelSendNotifySMS")
-        case MessageComposeResultFailed:
-            RecordMessageController.instance.playCrossMark("FAIL".localizedString())
-        case MessageComposeResultSent:
-            RecordMessageController.instance.playCheckMark("SUCCESS".localizedString())
-            MobClick.event("UserSendSMSToFriend")
-        default:break;
+        controller.dismissViewControllerAnimated(true) { 
+            switch result{
+            case MessageComposeResultCancelled:
+                self.playCrossMark("CANCEL".localizedString())
+                MobClick.event("CancelSendNotifySMS")
+            case MessageComposeResultFailed:
+                self.playCrossMark("FAIL".localizedString())
+            case MessageComposeResultSent:
+                self.playCheckMark("SUCCESS".localizedString())
+                MobClick.event("UserSendSMSToFriend")
+            default:break;
+            }
         }
     }
     
@@ -204,6 +221,7 @@ class VessageQueue:NSObject,MFMessageComposeViewControllerDelegate,UINavigationC
             controller.recipients = [phone]
             controller.body = body
             controller.delegate = self
+            controller.messageComposeDelegate = self
             RecordMessageController.instance.presentViewController(controller, animated: true, completion: { () -> Void in
                 MobClick.event("OpenSendNotifySMS")
             })

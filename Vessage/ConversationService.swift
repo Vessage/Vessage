@@ -110,6 +110,22 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             }
             return false
         }
+        setConversationNewestModifiedAt(index)
+    }
+    
+    func setConversationNewestModifiedByMobile(mobile:String){
+        let index = conversations.indexOf { (c) -> Bool in
+            if let cmobile = c.chatterMobile{
+                if cmobile == mobile{
+                    return true
+                }
+            }
+            return false
+        }
+        setConversationNewestModifiedAt(index)
+    }
+    
+    private func setConversationNewestModifiedAt(index:Int?){
         if let i = index{
             let c = conversations.removeAtIndex(i)
             c.lastMessageTime = NSDate().toAccurateDateTimeString()

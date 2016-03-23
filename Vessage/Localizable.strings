@@ -204,5 +204,5 @@ VESSAGE_SEND_FAIL = "发送出错";
 REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
 REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";
 
-SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用App，是否发送一条短信通知Ta？";
-NOTIFY_SMS_FORMAT = "%@：我发送了一条视频短信给你，快点下载Vege查看吧！%@";
+SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用App，请先发送一条短信通知Ta吧？";
+NOTIFY_SMS_FORMAT = "我发送了一条视频短信给你，赶快下载Vege查看吧！\n%@";

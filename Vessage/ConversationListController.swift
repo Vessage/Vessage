@@ -91,6 +91,8 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
             if let receiverId = task.receiverId{
                 conversationService.setConversationNewestModified(receiverId)
+            }else if let mobile = task.receiverMobile{
+                conversationService.setConversationNewestModifiedByMobile(mobile)
             }
         }
     }

@@ -64,18 +64,26 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
-        conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
-        vessageService.addObserver(self, selector: "onNewVessagesReceived:", name: VessageService.onNewVessagesReceived, object: nil)
-        ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSendFail:", name: VessageService.onNewVessageSendFail, object: nil)
+        initObservers()
         vessageService.newVessageFromServer()
     }
     
-    deinit{
+    private func initObservers(){
+        conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
+        vessageService.addObserver(self, selector: "onNewVessagesReceived:", name: VessageService.onNewVessagesReceived, object: nil)
+        vessageService.addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
+        vessageService.addObserver(self, selector: "onVessageSendFail:", name: VessageService.onNewVessageSendFail, object: nil)
+        ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
+    }
+    
+    private func removeObservers(){
         ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
         ServiceContainer.getService(ConversationService).removeObserver(self)
         ServiceContainer.getService(VessageService).removeObserver(self)
+    }
+    
+    deinit{
+        removeObservers()
     }
     
     //MARK: notifications
@@ -189,7 +197,10 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
                 }
                 let results = resultUsers.filter({ (resultUser) -> Bool in
                     return conversations.count == 0 || !conversations.contains({ (c) -> Bool in
-                        c.chatterId == resultUser.userId
+                        if let chatterId = c.chatterId{
+                            return chatterId == resultUser.userId
+                        }
+                        return false
                     })
                 }).map({ (resultUser) -> SearchResultModel in
                     let model = SearchResultModel()
@@ -245,6 +256,11 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     private func normalTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
+            if conversationService.conversations.count > 0{
+                cell.titleLabel.text = "CONTACTS".localizedString()
+            }else{
+                cell.titleLabel.text = "OPEN_A_CONTACT_CONVERSATION".localizedString()
+            }
             cell.rootController = self
             return cell
         }else{

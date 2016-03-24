@@ -117,7 +117,7 @@ NICK = "名字";
 NICK_REGEX_TIPS = "昵称必须是1到23个字符";
 LEVEL = "等级";
 JOIN = "注册时间";
-ACCOUNT_ID = "Sharelink ID";
+ACCOUNT_ID = "账号";
 MOTTO = "签名";
 LOGOUT_CONFIRM_TITLE = "确定退出?";
 USER_DATA_WILL_SAVED = "用户数据将会保留,以便下次登录使用";
@@ -206,3 +206,6 @@ REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";
 
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用App，请先发送一条短信通知Ta吧？";
 NOTIFY_SMS_FORMAT = "我发送了一条视频短信给你，赶快下载Vege查看吧！\n%@";
+
+CONTACTS = "通讯录";
+OPEN_A_CONTACT_CONVERSATION = "开始新对话！";

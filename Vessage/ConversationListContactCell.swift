@@ -13,6 +13,7 @@ import AddressBookUI
 class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigationControllerDelegate{
     static let reuseId = "ConversationListContactCell"
     
+    @IBOutlet weak var titleLabel: UILabel!
     override func onCellClicked() {
         let controller = ABPeoplePickerNavigationController()
         controller.peoplePickerDelegate = self

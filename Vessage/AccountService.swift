@@ -39,7 +39,7 @@ class AccountService: ServiceProtocol
     }
     
     @objc func userLogout(userId: String) {
-        //MobClick.profileSignOff()
+        MobClick.profileSignOff()
         ChicagoClient.sharedInstance.logout()
         UserSetting.token = nil
         UserSetting.isUserLogined = false

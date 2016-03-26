@@ -91,12 +91,10 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func configureUmeng()
     {
         #if RELEASE
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                MobClick.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, reportPolicy: BATCH, channelId: nil)
-                MobClick.setAppVersion(VessageConfig.appVersion)
-                MobClick.setEncryptEnabled(true)
-                MobClick.setLogEnabled(false)
-            }
+            MobClick.setAppVersion(VessageConfig.appVersion)
+            MobClick.setEncryptEnabled(true)
+            MobClick.setLogEnabled(false)
+            MobClick.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, reportPolicy: BATCH, channelId: nil)
         #endif
     }
     

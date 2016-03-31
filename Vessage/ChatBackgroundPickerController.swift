@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MBProgressHUD
 
 typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
 
@@ -111,6 +112,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     @IBAction func middleButtonClicked(sender: AnyObject) {
         if self.previewing{
+            SystemSoundHelper.cameraShutter()
             self.camera.takePicture()
         }else{
             self.sendTakedImage()
@@ -160,11 +162,12 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     //MARK: upload image
     private var taskFileMap = [String:FileAccessInfo]()
-    
+    private var taskHud:MBProgressHUD!
     private func sendTakedImage(){
         let fService = ServiceContainer.getService(FileService)
         let imageData = UIImageJPEGRepresentation(self.takedImage, 0.7)
         let localPath = fService.createLocalStoreFileName(FileType.Image)
+        taskHud = self.showActivityHud()
         if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
         {
             fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in
@@ -172,10 +175,13 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
                 if let fk = fileKey
                 {
                     self.taskFileMap[taskId] = fk
+                }else{
+                    self.taskHud.hideAsync(false)
                 }
             })
         }else
         {
+            taskHud.hideAsync(false)
             self.playToast("SET_CHAT_BCG_FAILED".localizedString())
         }
     }
@@ -185,21 +191,23 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         {
             let uService = ServiceContainer.getService(UserService)
             uService.setChatBackground(fileKey.fileId, callback: { (isSuc) -> Void in
+                self.taskHud.hideAsync(false)
                 if isSuc{
                     let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
                         if let handler = self.setImageSuccessHandler{
                             handler(sender: self)
                         }
                     })
-                    self.showAlert(nil, msg: "SET_CHAT_BCG_SUCCESS".localizedString(), actions: [okAction])
+                    self.showAlert("SET_CHAT_BCG_SUCCESS".localizedString(), msg: nil , actions: [okAction])
                 }else{
-                    self.showAlert(nil, msg: "SET_CHAT_BCG_FAILED".localizedString())
+                    self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
                 }
             })
         }
     }
     
     func taskFailed(taskIdentifier: String, result: AnyObject!) {
+        taskHud.hideAsync(false)
         taskFileMap.removeValueForKey(taskIdentifier)
         self.showAlert(nil, msg: "SET_CHAT_BCG_FAILED".localizedString())
     }

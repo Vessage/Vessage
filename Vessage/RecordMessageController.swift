@@ -222,7 +222,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         let size = PersistentFileHelper.fileSizeOf(url.path!)
         print("\(size/1024)kb")
         let conversationNoteName = chatter.nickName
-        self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: conversationNoteName, actions: [okAction,cancelAction])
+        self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
     //MARK: VessageCamera Delegate

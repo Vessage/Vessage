@@ -13,6 +13,8 @@ pod 'CocoaAsyncSocket'
 
 pod 'AlamofireJsonToObjects'
 
+pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
+
 pod 'AliyunOSSiOS', '~> 2.1.1'
 
 pod 'YUCIHighPassSkinSmoothing'

@@ -193,7 +193,8 @@ BIND_MOBILE = "手机";
 NOT_SET = "未设置";
 
 CANCEL_RECORD = "取消录制";
-CONFIRM_SEND_VESSAGE_TITLE = "确定发送视频消息？";
+CONFIRM_SEND_VESSAGE_TITLE = "发送视频消息？";
+VESSAGE_RECEIVER = "收件人:%@";
 SAVE_VIDEO_FAILED = "保存视频出错";
 
 VESSAGE_PUSH_IN_QUEUE = "添加到发送队列";

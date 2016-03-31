@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import ReachabilitySwift
 
 //MARK: ConversationViewController
 class ConversationViewController: UIViewController,PlayerDelegate {
     
+    var reachability:Reachability?
     let conversationService = ServiceContainer.getService(ConversationService)
     let userService = ServiceContainer.getService(UserService)
     let fileService = ServiceContainer.getService(FileService)

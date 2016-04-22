@@ -6,8 +6,8 @@
 #import "VerifyViewController.h"
 #import "YJLocalCountryData.h"
 #import <SMS_SDK/SMSSDK.h>
-#import <SMS_SDK/Extend/SMSSDKAddressBook.h>
-#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
+//#import <SMS_SDK/Extend/SMSSDKAddressBook.h>
+//#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
 #import <SMS_SDK/Extend/SMSSDK+ExtexdMethods.h>
 #import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
 
@@ -145,8 +145,8 @@
     
     search.delegate = self;
     _other = [NSMutableArray array];
-    _addressBookData = [SMSSDK addressBook];
-    
+    //_addressBookData = [SMSSDK addressBook];
+    _addressBookData = [NSMutableArray alloc];
     
     NSLog(@"获取到了%zi条通讯录信息",_addressBookData.count);
     
@@ -158,39 +158,39 @@
         NSDictionary* dict1 = [_friendsData objectAtIndex:i];
         NSString* phone1 = [dict1 objectForKey:@"phone"];
         NSString* name1 = [dict1 objectForKey:@"nickname"];
-        for (int j = 0; j < _addressBookData.count; j++) {
-            SMSSDKAddressBook* person1 = [_addressBookData objectAtIndex:j];
-            for (int k = 0; k < person1.phonesEx.count; k++) {
-                if ([phone1 isEqualToString:[person1.phonesEx objectAtIndex:k]])
-                {
-                    if (person1.name)
-                    {
-                        NSString* str1 = [NSString stringWithFormat:@"%@+%@",name1,person1.name];
-                        NSString* str2 = [str1 stringByAppendingString:@"@"];
-                
-                        [_friendsData2 addObject:str2];
-                    }
-                    else
-                    {
-                        //[_friendsData2 addObject:@""];
-                    }
-                    
-                    [_addressBookData removeObjectAtIndex:j];
-                }
-
-            }
-        }
+//        for (int j = 0; j < _addressBookData.count; j++) {
+//            SMSSDKAddressBook* person1 = [_addressBookData objectAtIndex:j];
+//            for (int k = 0; k < person1.phonesEx.count; k++) {
+//                if ([phone1 isEqualToString:[person1.phonesEx objectAtIndex:k]])
+//                {
+//                    if (person1.name)
+//                    {
+//                        NSString* str1 = [NSString stringWithFormat:@"%@+%@",name1,person1.name];
+//                        NSString* str2 = [str1 stringByAppendingString:@"@"];
+//                
+//                        [_friendsData2 addObject:str2];
+//                    }
+//                    else
+//                    {
+//                        //[_friendsData2 addObject:@""];
+//                    }
+//                    
+//                    [_addressBookData removeObjectAtIndex:j];
+//                }
+//
+//            }
+//        }
     }
     NSLog(@"_friends1:%zi",_friendsData.count);
     NSLog(@"_friends2:%zi",_friendsData2.count);
     
-    for (int i = 0; i < _addressBookData.count; i++) {
-        SMSSDKAddressBook* person1 = [_addressBookData objectAtIndex:i];
-        NSString* str1 = [NSString stringWithFormat:@"%@+%@",person1.name,person1.phones];
-        NSString* str2 = [str1 stringByAppendingString:@"#"];
-//        NSLog(@"%@",str2);
-        [_other addObject:str2];
-    }
+//    for (int i = 0; i < _addressBookData.count; i++) {
+//        SMSSDKAddressBook* person1 = [_addressBookData objectAtIndex:i];
+//        NSString* str1 = [NSString stringWithFormat:@"%@+%@",person1.name,person1.phones];
+//        NSString* str2 = [str1 stringByAppendingString:@"#"];
+////        NSLog(@"%@",str2);
+//        [_other addObject:str2];
+//    }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     

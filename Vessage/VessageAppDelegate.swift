@@ -12,7 +12,7 @@ import UIKit
 class VessageAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         configureVessageConfig()
         configContryAndLang()
@@ -34,6 +34,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func configureSmsSDK()
     {
         SMSSDK.registerApp(VessageConfig.bahamutConfig.smsSDKAppkey, withSecret: VessageConfig.bahamutConfig.smsSDKSecretKey)
+        SMSSDK.enableAppContactFriends(false)
     }
     
     private func configureBahamutCmd()

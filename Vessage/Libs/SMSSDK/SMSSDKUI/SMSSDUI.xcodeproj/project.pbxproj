@@ -16,16 +16,15 @@
 		7B4910EC1C96A41D00EDD0D0 /* SMSSDKUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63021C4F711B00A160C8 /* SMSSDKUI.m */; };
 		7B4910ED1C96A41D00EDD0D0 /* SMSUIVerificationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B4910D81C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.m */; };
 		7B4910EE1C96A41D00EDD0D0 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63051C4F711B00A160C8 /* CustomCell.m */; };
-		7B4910EF1C96A41D00EDD0D0 /* InvitationViewControllerEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63071C4F711B00A160C8 /* InvitationViewControllerEx.m */; };
 		7B4910F01C96A41D00EDD0D0 /* RegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A630A1C4F711B00A160C8 /* RegViewController.m */; };
 		7B4910F11C96A41D00EDD0D0 /* VerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A630C1C4F711B00A160C8 /* VerifyViewController.m */; };
 		7B4910F21C96A41D00EDD0D0 /* SectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A630E1C4F711B00A160C8 /* SectionsViewController.m */; };
-		7B4910F31C96A41D00EDD0D0 /* SectionsViewControllerFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A63101C4F711B00A160C8 /* SectionsViewControllerFriends.m */; };
 		7B80CB7C1C96A50A00B067C3 /* SMS_HYZBadgeView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A62FB1C4F711B00A160C8 /* SMS_HYZBadgeView.h */; };
-		7B80CB7F1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B80CB7E1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m */; };
-		7B80CB801C96AAD900B067C3 /* SMSUIContactsFriendsViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B80CB7D1C96A70100B067C3 /* SMSUIContactsFriendsViewController.h */; };
 		7B80CB811C96AF2500B067C3 /* YJLocalCountryData.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A62FF1C4F711B00A160C8 /* YJLocalCountryData.h */; };
 		7B80CB821C96AF3E00B067C3 /* SMS_MBProgressHUD.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B2A62FD1C4F711B00A160C8 /* SMS_MBProgressHUD.h */; };
+		E73D6CBA1CC9A04500A119B7 /* InvitationViewControllerEx.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D6CB51CC9A04500A119B7 /* InvitationViewControllerEx.m */; };
+		E73D6CBB1CC9A04500A119B7 /* SectionsViewControllerFriends.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D6CB71CC9A04500A119B7 /* SectionsViewControllerFriends.m */; };
+		E73D6CBC1CC9A04500A119B7 /* SMSUIContactsFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D6CB91CC9A04500A119B7 /* SMSUIContactsFriendsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,7 +36,6 @@
 			files = (
 				7B80CB821C96AF3E00B067C3 /* SMS_MBProgressHUD.h in CopyFiles */,
 				7B80CB811C96AF2500B067C3 /* YJLocalCountryData.h in CopyFiles */,
-				7B80CB801C96AAD900B067C3 /* SMSUIContactsFriendsViewController.h in CopyFiles */,
 				7B80CB7C1C96A50A00B067C3 /* SMS_HYZBadgeView.h in CopyFiles */,
 				7B4910E51C96A11600EDD0D0 /* SMSUIVerificationCodeViewResultDef.h in CopyFiles */,
 				7B4910E41C96A11100EDD0D0 /* SMSUIVerificationCodeViewController.h in CopyFiles */,
@@ -59,21 +57,21 @@
 		7B2A63021C4F711B00A160C8 /* SMSSDKUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSSDKUI.m; sourceTree = "<group>"; };
 		7B2A63041C4F711B00A160C8 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		7B2A63051C4F711B00A160C8 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
-		7B2A63061C4F711B00A160C8 /* InvitationViewControllerEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationViewControllerEx.h; sourceTree = "<group>"; };
-		7B2A63071C4F711B00A160C8 /* InvitationViewControllerEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationViewControllerEx.m; sourceTree = "<group>"; };
 		7B2A63091C4F711B00A160C8 /* RegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegViewController.h; sourceTree = "<group>"; };
 		7B2A630A1C4F711B00A160C8 /* RegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegViewController.m; sourceTree = "<group>"; };
 		7B2A630B1C4F711B00A160C8 /* VerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyViewController.h; sourceTree = "<group>"; };
 		7B2A630C1C4F711B00A160C8 /* VerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyViewController.m; sourceTree = "<group>"; };
 		7B2A630D1C4F711B00A160C8 /* SectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SectionsViewController.h; path = ../SectionsViewController.h; sourceTree = "<group>"; };
 		7B2A630E1C4F711B00A160C8 /* SectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewController.m; sourceTree = "<group>"; };
-		7B2A630F1C4F711B00A160C8 /* SectionsViewControllerFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionsViewControllerFriends.h; sourceTree = "<group>"; };
-		7B2A63101C4F711B00A160C8 /* SectionsViewControllerFriends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewControllerFriends.m; sourceTree = "<group>"; };
 		7B4910D71C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIVerificationCodeViewController.h; sourceTree = "<group>"; };
 		7B4910D81C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSUIVerificationCodeViewController.m; sourceTree = "<group>"; };
 		7B4910D91C9668CF00EDD0D0 /* SMSUIVerificationCodeViewResultDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIVerificationCodeViewResultDef.h; sourceTree = "<group>"; };
-		7B80CB7D1C96A70100B067C3 /* SMSUIContactsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIContactsFriendsViewController.h; sourceTree = "<group>"; };
-		7B80CB7E1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSUIContactsFriendsViewController.m; sourceTree = "<group>"; };
+		E73D6CB41CC9A04500A119B7 /* InvitationViewControllerEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationViewControllerEx.h; sourceTree = "<group>"; };
+		E73D6CB51CC9A04500A119B7 /* InvitationViewControllerEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationViewControllerEx.m; sourceTree = "<group>"; };
+		E73D6CB61CC9A04500A119B7 /* SectionsViewControllerFriends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionsViewControllerFriends.h; sourceTree = "<group>"; };
+		E73D6CB71CC9A04500A119B7 /* SectionsViewControllerFriends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionsViewControllerFriends.m; sourceTree = "<group>"; };
+		E73D6CB81CC9A04500A119B7 /* SMSUIContactsFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMSUIContactsFriendsViewController.h; sourceTree = "<group>"; };
+		E73D6CB91CC9A04500A119B7 /* SMSUIContactsFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMSUIContactsFriendsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,19 +128,19 @@
 		7B2A63031C4F711B00A160C8 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				7B80CB7D1C96A70100B067C3 /* SMSUIContactsFriendsViewController.h */,
-				7B80CB7E1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m */,
+				E73D6CB41CC9A04500A119B7 /* InvitationViewControllerEx.h */,
+				E73D6CB51CC9A04500A119B7 /* InvitationViewControllerEx.m */,
+				E73D6CB61CC9A04500A119B7 /* SectionsViewControllerFriends.h */,
+				E73D6CB71CC9A04500A119B7 /* SectionsViewControllerFriends.m */,
+				E73D6CB81CC9A04500A119B7 /* SMSUIContactsFriendsViewController.h */,
+				E73D6CB91CC9A04500A119B7 /* SMSUIContactsFriendsViewController.m */,
 				7B4910D71C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.h */,
 				7B4910D81C9668CF00EDD0D0 /* SMSUIVerificationCodeViewController.m */,
 				7B4910D91C9668CF00EDD0D0 /* SMSUIVerificationCodeViewResultDef.h */,
 				7B2A63041C4F711B00A160C8 /* CustomCell.h */,
 				7B2A63051C4F711B00A160C8 /* CustomCell.m */,
-				7B2A63061C4F711B00A160C8 /* InvitationViewControllerEx.h */,
-				7B2A63071C4F711B00A160C8 /* InvitationViewControllerEx.m */,
 				7B2A63081C4F711B00A160C8 /* Rigister */,
 				7B2A630E1C4F711B00A160C8 /* SectionsViewController.m */,
-				7B2A630F1C4F711B00A160C8 /* SectionsViewControllerFriends.h */,
-				7B2A63101C4F711B00A160C8 /* SectionsViewControllerFriends.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -216,17 +214,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B4910E91C96A41C00EDD0D0 /* SMS_HYZBadgeView.m in Sources */,
-				7B80CB7F1C96A70100B067C3 /* SMSUIContactsFriendsViewController.m in Sources */,
+				E73D6CBC1CC9A04500A119B7 /* SMSUIContactsFriendsViewController.m in Sources */,
 				7B4910EA1C96A41D00EDD0D0 /* SMS_MBProgressHUD.m in Sources */,
 				7B4910EB1C96A41D00EDD0D0 /* YJLocalCountryData.m in Sources */,
 				7B4910EC1C96A41D00EDD0D0 /* SMSSDKUI.m in Sources */,
+				E73D6CBB1CC9A04500A119B7 /* SectionsViewControllerFriends.m in Sources */,
 				7B4910ED1C96A41D00EDD0D0 /* SMSUIVerificationCodeViewController.m in Sources */,
 				7B4910EE1C96A41D00EDD0D0 /* CustomCell.m in Sources */,
-				7B4910EF1C96A41D00EDD0D0 /* InvitationViewControllerEx.m in Sources */,
+				E73D6CBA1CC9A04500A119B7 /* InvitationViewControllerEx.m in Sources */,
 				7B4910F01C96A41D00EDD0D0 /* RegViewController.m in Sources */,
 				7B4910F11C96A41D00EDD0D0 /* VerifyViewController.m in Sources */,
 				7B4910F21C96A41D00EDD0D0 /* SectionsViewController.m in Sources */,
-				7B4910F31C96A41D00EDD0D0 /* SectionsViewControllerFriends.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

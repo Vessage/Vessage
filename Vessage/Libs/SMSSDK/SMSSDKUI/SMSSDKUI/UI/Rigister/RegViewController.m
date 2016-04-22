@@ -11,7 +11,7 @@
 #import "SectionsViewController.h"
 #import <SMS_SDK/SMSSDK.h>
 #import <SMS_SDK/Extend/SMSSDKCountryAndAreaCode.h>
-#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
+//#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
 #import <SMS_SDK/Extend/SMSSDK+ExtexdMethods.h>
 #import <MOBFoundation/MOBFoundation.h>
 #import "YJLocalCountryData.h"

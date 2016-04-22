@@ -10,7 +10,7 @@
 #import "RegViewController.h"
 #import <SMS_SDK/Extend/SMSSDK+ExtexdMethods.h>
 #import <SMS_SDK/Extend/SMSSDKUserInfo.h>
-#import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
+//#import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
 #import "SMSUIVerificationCodeViewController.h"
 
 @interface SMSSDKUI()
@@ -33,16 +33,16 @@
 
 
 
-+ (SMSUIContactsFriendsViewController *)showGetContactsFriendsViewWithNewFriends:(NSMutableArray *)newFriends newFriendClock:(SMSShowNewFriendsCountBlock)newFriendsCountBlock  result:(SMSUIOnCloseResultHandler)result
-{
-    SMSUIContactsFriendsViewController *contactsFriendsViewController = [[SMSUIContactsFriendsViewController alloc] initWithNewFriends:newFriends newFriendsCountBlock:newFriendsCountBlock];
-    
-    [contactsFriendsViewController onCloseResult:result];
-    
-    [contactsFriendsViewController show];
-    
-    return contactsFriendsViewController;
-}
+//+ (SMSUIContactsFriendsViewController *)showGetContactsFriendsViewWithNewFriends:(NSMutableArray *)newFriends newFriendClock:(SMSShowNewFriendsCountBlock)newFriendsCountBlock  result:(SMSUIOnCloseResultHandler)result
+//{
+//    SMSUIContactsFriendsViewController *contactsFriendsViewController = [[SMSUIContactsFriendsViewController alloc] initWithNewFriends:newFriends newFriendsCountBlock:newFriendsCountBlock];
+//    
+//    [contactsFriendsViewController onCloseResult:result];
+//    
+//    [contactsFriendsViewController show];
+//    
+//    return contactsFriendsViewController;
+//}
 
 
 @end

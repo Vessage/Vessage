@@ -168,6 +168,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         if self.recording{
             self.prepareSendRecord()
         }else{
+            SystemSoundHelper.keyTink()
             self.startRecord()
         }
     }

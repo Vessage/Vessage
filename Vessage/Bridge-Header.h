@@ -15,6 +15,7 @@
 #import "UIBarButtomItem-Badge/UIbarButtonItem+Badge.h"
 
 #import <SMS_SDK/SMSSDK.h>
+#import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
 #import "SMSSDKUI.h"
 
 #import "UMessage.h"

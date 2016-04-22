@@ -7,12 +7,12 @@
 //
 
 #import "VerifyViewController.h"
-#import <AddressBook/AddressBook.h>
+//#import <AddressBook/AddressBook.h>
 #import "YJLocalCountryData.h"
 #import <SMS_SDK/SMSSDK.h>
 #import <SMS_SDK/Extend/SMSSDKUserInfo.h>
-#import <SMS_SDK/Extend/SMSSDKAddressBook.h>
-#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
+//#import <SMS_SDK/Extend/SMSSDKAddressBook.h>
+//#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
 
 @interface VerifyViewController ()
 {

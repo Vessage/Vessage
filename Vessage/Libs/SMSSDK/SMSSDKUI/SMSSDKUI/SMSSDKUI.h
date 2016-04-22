@@ -10,7 +10,7 @@
 #import <SMS_SDK/Extend/SMSSDKUserInfo.h>
 #import <SMS_SDK/Extend/SMSSDKResultHanderDef.h>
 #import "SMSUIVerificationCodeViewController.h"
-#import "SMSUIContactsFriendsViewController.h"
+//#import "SMSUIContactsFriendsViewController.h"
 
 
 @interface SMSSDKUI : NSObject
@@ -29,8 +29,8 @@
  * @brief 向服务端请求获取通讯录好友信息(Get the data of address book which save in the server)
  * @param result 请求结果回调(Results of the request)
  */
-
-+ (SMSUIContactsFriendsViewController *)showGetContactsFriendsViewWithNewFriends:(NSMutableArray *)newFriends newFriendClock:(SMSShowNewFriendsCountBlock)newFriendsCountBlock  result:(SMSUIOnCloseResultHandler)result;
+//
+//+ (SMSUIContactsFriendsViewController *)showGetContactsFriendsViewWithNewFriends:(NSMutableArray *)newFriends newFriendClock:(SMSShowNewFriendsCountBlock)newFriendsCountBlock  result:(SMSUIOnCloseResultHandler)result;
 
 
 @end

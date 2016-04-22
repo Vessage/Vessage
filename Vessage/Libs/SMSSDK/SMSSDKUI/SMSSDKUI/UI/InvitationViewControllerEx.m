@@ -9,7 +9,7 @@
 #import "InvitationViewControllerEx.h"
 
 #import <SMS_SDK/SMSSDK.h>
-#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
+//#import <SMS_SDK/Extend/SMSSDK+DeprecatedMethods.h>
 
 @interface InvitationViewControllerEx ()
 {
@@ -57,7 +57,7 @@
     }
     else
     {
-        [SMSSDK sendSMS:_phone?_phone:@"" AndMessage:NSLocalizedStringFromTableInBundle(@"smsmessage", @"Localizable", _bundle, nil)];
+        //[SMSSDK sendSMS:_phone?_phone:@"" AndMessage:NSLocalizedStringFromTableInBundle(@"smsmessage", @"Localizable", _bundle, nil)];
     }
 }
 
@@ -65,12 +65,12 @@
 {
     if (1 == buttonIndex)
     {
-        [SMSSDK sendSMS:_phone?_phone:@"" AndMessage:NSLocalizedStringFromTableInBundle(@"smsmessage", @"Localizable", _bundle, nil)];
+        //[SMSSDK sendSMS:_phone?_phone:@"" AndMessage:NSLocalizedStringFromTableInBundle(@"smsmessage", @"Localizable", _bundle, nil)];
         
     }
     if (0 == buttonIndex)
     {
-        [SMSSDK sendSMS:_phone?_phone:@"" AndMessage:NSLocalizedStringFromTableInBundle(@"smsmessage", @"Localizable", _bundle, nil)];
+        //[SMSSDK sendSMS:_phone?_phone:@"" AndMessage:NSLocalizedStringFromTableInBundle(@"smsmessage", @"Localizable", _bundle, nil)];
     }
 }
 

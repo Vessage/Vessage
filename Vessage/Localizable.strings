@@ -209,4 +209,8 @@ SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用App，请先发送一条短信通
 NOTIFY_SMS_FORMAT = "我发送了一条视频短信给你，赶快下载Vege查看吧！\n%@";
 
 CONTACTS = "通讯录";
+REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
+REQUEST_ACCESS_CONTACT = "需要获取手机联系人打开新的对话";
+NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
+NO_CONTACT_PERSIMISSION = "请在系统设置找到Vege应用选项并开启通讯录权限，然后重启Vege";
 OPEN_A_CONTACT_CONVERSATION = "开始新对话！";

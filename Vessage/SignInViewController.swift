@@ -63,7 +63,12 @@ class SignInViewController: UIViewController {
             if let password = a.userInfo?[RegistAccountPasswordValue] as? String{
                 self.loginInfoTextField.text = accountId
                 self.passwordTextField.text = password
-                login(self)
+                
+                let action = UIAlertAction(title: "OK".localizedString(), style:.Cancel){ action in
+                    self.login(self)
+                }
+                self.showAlert("REGIST_SUC_TITLE".localizedString(), msg: String(format: "REGIST_SUC_MSG".localizedString(), accountId),actions: [action])
+                
             }
         }
     }

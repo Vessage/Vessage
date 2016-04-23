@@ -1,6 +1,5 @@
 //
 //  DeveloperMainPanelController.swift
-//  Sharelink
 //
 //  Created by AlexChow on 16/1/29.
 //  Copyright © 2016年 GStudio. All rights reserved.

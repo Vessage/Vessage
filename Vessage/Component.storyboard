@@ -110,7 +110,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="mailToBahamutSharelink:" destination="0MV-u5-SjZ" eventType="touchUpInside" id="vzn-ZE-MgL"/>
+                                    <action selector="mailToBahamutSupport:" destination="0MV-u5-SjZ" eventType="touchUpInside" id="vzn-ZE-MgL"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反馈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCL-D7-Wl8">

@@ -195,7 +195,7 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        //user infos + about sharelink + clear tmp file
+        //user infos + about + clear tmp file
         return 3
     }
     

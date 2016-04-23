@@ -56,8 +56,6 @@ CONTINUE = "继续";
 LOGIN = "登录";
 LOGINING = "登录中";
 SERVER_ERROR = "服务器错误";
-SHARELINK = "Sharelink";
-SHARELINK_NAME = "Sharelink";
 RECORD_CANCELED = "录制取消";
 VIDEO_SAVED = "视频已经保存";
 SAVE_VIDEO_FAILED = "保存视频失败";
@@ -67,7 +65,6 @@ ADD_IMAGE_LIMIT_AT_X = "最多只能添加%@张图片";
 HARMFUL_CONTENT = "不良信息";
 COPY_SHARE_MESSAGE = "复制分享的文字";
 COPY_SHARE_MESSAGE_SUC = "复制成功";
-SHARELINK_MOTTO = "与朋友分享和交流喜欢的话题!";
 UNKNOW_ACTION = "未知操作";
 INIT_USER_DATA_ERROR = "获取用户数据失败，请重新登录!";
 
@@ -147,7 +144,6 @@ DATA_ERROR = "数据有误";
 
 USER_NAME_EXISTS = "用户名已存在，请更换一个!";
 
-SERVER_ERROR = "服务器错误";
 ALLOC_TOKEN_FAILED = "Token服务器错误";
 NO_APP_INSTANCE = "App服务器错误";
 

@@ -30,7 +30,7 @@ class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
     }
 
-    @IBAction func mailToBahamutSharelink(sender: AnyObject) {
+    @IBAction func mailToBahamutSupport(sender: AnyObject) {
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
         mail.setSubject("Vege Feedback")

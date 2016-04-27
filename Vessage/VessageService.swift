@@ -187,7 +187,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     }
     
     func getCachedNewestVessage(chatterId:String) -> Vessage?{
-        var vsgs = PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{($0.sender == chatterId) }
+        var vsgs = PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{ !String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId }
         vsgs.sortInPlace { (a, b) -> Bool in
             a.sendTime.dateTimeOfAccurateString.isAfter(b.sendTime.dateTimeOfAccurateString)
         }
@@ -195,6 +195,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     }
     
     func getNotReadVessage(chatterId:String) -> [Vessage]{
-        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && ($0.sender == chatterId) }
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
     }
 }

@@ -86,20 +86,20 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getUserProfileByMobile(mobile:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
-        
-        let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ mobile == $0.mobile}.first
-        
+        let result:VessageUser? = PersistentManager.sharedInstance.getAllModelFromCache(VessageUser).filter{ !String.isNullOrWhiteSpace($0.mobile) && mobile == $0.mobile}.first
         let req = GetUserInfoByMobileRequest()
         req.mobile = mobile
-        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
+        getUserProfileByReq(result?.lastUpdatedTime, req: req){ user in
             updatedCallback(user: user)
         }
-        return user
+        return result
+        
+        
     }
     
     func getUserProfileByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         
-        let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ accountId == $0.accountId}.first
+        let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.accountId) && accountId == $0.accountId}.first
         let req = GetUserInfoByAccountIdRequest()
         req.accountId = accountId
         getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
@@ -109,7 +109,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getCachedUserProfile(userId:String) -> VessageUser?{
-        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ userId == $0.userId}.first
+        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.userId) && userId == $0.userId}.first
     }
     
     func fetchUserProfile(userId:String){

@@ -73,6 +73,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
         if let ei = vsg.getExtraInfoObject(){
             if ei.mobileHash != nil && ei.mobileHash == c.chatterMobile?.md5{
+                if String.isNullOrWhiteSpace(c.chatterId){
+                    c.chatterId = vsg.sender
+                    c.saveModel()
+                }
                 return true
             }
         }

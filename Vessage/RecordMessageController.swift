@@ -38,7 +38,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
             }
         }
     }
-    private let maxRecordTime:CGFloat = 10
+    private let maxRecordTime:CGFloat = 16
     private var recordingTime:CGFloat = 0{
         didSet{
             if recordingProgress != nil{

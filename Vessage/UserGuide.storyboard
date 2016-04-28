@@ -39,14 +39,20 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ITl-NH-whM">
-                                <rect key="frame" x="192" y="698" width="30" height="30"/>
-                                <state key="normal" title="注销">
+                                <rect key="frame" x="177" y="698" width="60" height="30"/>
+                                <state key="normal" title="切换账号">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="logout:" destination="Iwc-kq-ANA" eventType="touchUpInside" id="2Ws-dL-L4y"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用于接收您的朋友发给手机的消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cts-wG-qyh">
+                                <rect key="frame" x="110" y="452" width="195" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -55,6 +61,8 @@
                             <constraint firstItem="bCq-nB-t8u" firstAttribute="centerY" secondItem="O1A-UX-Yr6" secondAttribute="centerY" id="KyH-m8-kiN"/>
                             <constraint firstItem="bCq-nB-t8u" firstAttribute="centerX" secondItem="O1A-UX-Yr6" secondAttribute="centerX" id="MPe-08-f4p"/>
                             <constraint firstItem="ITl-NH-whM" firstAttribute="centerX" secondItem="2mn-IZ-4Fd" secondAttribute="centerX" id="Tx9-oR-WYF"/>
+                            <constraint firstItem="cts-wG-qyh" firstAttribute="top" secondItem="2mn-IZ-4Fd" secondAttribute="bottom" constant="8" symbolic="YES" id="rzi-A6-Ltd"/>
+                            <constraint firstItem="cts-wG-qyh" firstAttribute="centerX" secondItem="2mn-IZ-4Fd" secondAttribute="centerX" id="u9J-04-rci"/>
                             <constraint firstItem="2mn-IZ-4Fd" firstAttribute="top" secondItem="bCq-nB-t8u" secondAttribute="bottom" constant="8" symbolic="YES" id="vHi-P1-7cQ"/>
                         </constraints>
                     </view>
@@ -104,8 +112,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-I1-BwL">
-                                <rect key="frame" x="192" y="698" width="30" height="30"/>
-                                <state key="normal" title="注销">
+                                <rect key="frame" x="177" y="698" width="60" height="30"/>
+                                <state key="normal" title="切换账号">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

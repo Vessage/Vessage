@@ -236,7 +236,7 @@
         <image name="camera" width="128" height="128"/>
         <image name="close" width="256" height="256"/>
         <image name="defaultFace" width="300" height="300"/>
-        <image name="face" width="437" height="400"/>
+        <image name="face" width="450" height="600"/>
         <image name="movie" width="256" height="256"/>
         <image name="profile" width="128" height="128"/>
         <image name="refreshRound" width="256" height="256"/>

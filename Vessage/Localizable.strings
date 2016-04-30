@@ -137,6 +137,7 @@ BAHAMUT_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
 NEW_VMSG_NOTIFICATION = "你有新的视频短信!";
+NewVessageNotify = "你有新的视频短信!";
 
 REGIST_FAILED = "注册失败";
 REGIST_SUC = "注册成功";
@@ -162,6 +163,9 @@ CONFIRM_PSW = "修改新密码为";
 OLD_NEW_PSW_SAME = "新旧密码相同";
 
 //vessage
+CHATTER_INFO = "用户";
+MOBILE_USER = "手机用户";
+USER_ACCOUNT_FORMAT = "账号:%@";
 SET_CHAT_BCG_FAILED = "设置失败";
 SET_CHAT_BCG_SUCCESS = "设置成功";
 

@@ -192,6 +192,11 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     }
     
     @IBAction func showUserProfile(sender: AnyObject) {
+        if String.isNullOrWhiteSpace(chatter.accountId) {
+            showAlert("CHATTER_INFO".localizedString(), msg: "MOBILE_USER".localizedString())
+        }else{
+            showAlert("CHATTER_INFO".localizedString(), msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId))
+        }
     }
     
     @IBAction func showNextMessage(sender: AnyObject) {

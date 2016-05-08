@@ -41,9 +41,10 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     private var ciImage: CIImage!
     
     // 标记人脸
-    private var enableFaceMark = false
+    var enableFaceMark = false
     private var faceLayer: CALayer?
     private var faceObject: AVMetadataFaceObject?
+    private(set) var detectedFaces = false
     
     private var assetWriter: AVAssetWriter?
     private var assetWriterPixelBufferInput: AVAssetWriterInputPixelBufferAdaptor?
@@ -93,8 +94,8 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     //MARK: notification
     private func initNotification(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSessionStartRunning:", name: AVCaptureSessionDidStartRunningNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSessionStopRunning:", name: AVCaptureSessionDidStopRunningNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VessageCamera.didSessionStartRunning(_:)), name: AVCaptureSessionDidStartRunningNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VessageCamera.didSessionStopRunning(_:)), name: AVCaptureSessionDidStopRunningNotification, object: nil)
     }
     
     func didSessionStartRunning(a:NSNotification){
@@ -212,6 +213,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         if ciImage == nil || isWriting {
             return
         }
+        faceLayer?.hidden = true
         let cgImage = context.createCGImage(ciImage, fromRect: ciImage.extent)
         let image = UIImage(CGImage: cgImage)
         if let saveHandler = self.delegate?.vessageCameraImage{
@@ -220,6 +222,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     }
     
     func resumeCaptureSession(){
+        detectedFaces = false
         captureSession.startRunning()
     }
     
@@ -420,24 +423,26 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
-        if metadataObjects.count > 0 {
-            //识别到的第一张脸
-            faceObject = metadataObjects.first as? AVMetadataFaceObject
+        //识别到的第一张脸
+        if let faceObject = metadataObjects?.first as? AVMetadataFaceObject{
+            detectedFaces = true
             if faceLayer == nil {
                 faceLayer = CALayer()
                 faceLayer?.borderColor = UIColor.redColor().CGColor
                 faceLayer?.borderWidth = 1
                 view.layer.addSublayer(faceLayer!)
             }
-            let faceBounds = faceObject!.bounds
+            let faceBounds = faceObject.bounds
             let viewSize = view.bounds.size
             
             faceLayer?.position = CGPoint(x: viewSize.width * (1 - faceBounds.origin.y - faceBounds.size.height / 2),
-                y: viewSize.height * (faceBounds.origin.x + faceBounds.size.width / 2))
+                                          y: viewSize.height * (faceBounds.origin.x + faceBounds.size.width / 2))
             
             faceLayer?.bounds.size = CGSize(width: faceBounds.size.height * viewSize.width,
-                height: faceBounds.size.width * viewSize.height)
-            
+                                            height: faceBounds.size.width * viewSize.height)
+        }else if detectedFaces{
+            detectedFaces = false
         }
+        faceLayer?.hidden = !detectedFaces
     }
 }

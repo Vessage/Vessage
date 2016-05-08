@@ -85,9 +85,9 @@
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
 		E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */; };
 		E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867F1CA000880028B016 /* libMobClickLibrary.a */; };
+		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
+		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
-		E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */; };
-		E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
 		E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */; };
@@ -97,8 +97,17 @@
 		E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */; };
 		E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
+		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
+		E7BFC3931CDB6CCF00CDB392 /* ExtraServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC3921CDB6CCF00CDB392 /* ExtraServicesViewController.swift */; };
+		E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */; };
+		E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */; };
+		E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */; };
+		E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */; };
+		E7C04AFE1CDF3AFE00093E6C /* MessagePostmenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF71CDF3AFE00093E6C /* MessagePostmenViewController.swift */; };
+		E7C04AFF1CDF3AFE00093E6C /* SelectPostmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF81CDF3AFE00093E6C /* SelectPostmanViewController.swift */; };
+		E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
-		E7D2D56E1C9A776500DD7D9B /* MyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */; };
+		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
 		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
@@ -233,9 +242,9 @@
 		E718867F1CA000880028B016 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		E71886801CA000880028B016 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		E71886811CA000880028B016 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
-		E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClient.swift; sourceTree = "<group>"; };
-		E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChicagoClientBase.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
@@ -245,8 +254,17 @@
 		E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
+		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		E7BFC3921CDB6CCF00CDB392 /* ExtraServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtraServicesViewController.swift; sourceTree = "<group>"; };
+		E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMainController.swift; sourceTree = "<group>"; };
+		E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperManager.swift; sourceTree = "<group>"; };
+		E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LittlePaperMessage.storyboard; path = LittlePaper/LittlePaperMessage.storyboard; sourceTree = "<group>"; };
+		E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperRF.swift; sourceTree = "<group>"; };
+		E7C04AF71CDF3AFE00093E6C /* MessagePostmenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagePostmenViewController.swift; sourceTree = "<group>"; };
+		E7C04AF81CDF3AFE00093E6C /* SelectPostmanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPostmanViewController.swift; sourceTree = "<group>"; };
+		E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
-		E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailViewController.swift; sourceTree = "<group>"; };
+		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +303,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */,
 				E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */,
 				E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */,
 				E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */,
@@ -316,6 +335,7 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */,
 				E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */,
 				E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */,
 				E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */,
@@ -498,6 +518,7 @@
 			children = (
 				E7EB9A301C87EEFF002F96FB /* UserRF.swift */,
 				E75A70351C8C09360029F0BD /* VessageRF.swift */,
+				E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */,
 			);
 			name = RestfulAPI;
 			sourceTree = "<group>";
@@ -539,7 +560,7 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		E708AC631C86EC070071104E /* Service */ = {
+		E708AC631C86EC070071104E /* CoreService */ = {
 			isa = PBXGroup;
 			children = (
 				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
@@ -548,7 +569,7 @@
 				E708AC931C871C000071104E /* ConversationService.swift */,
 				E708AC951C872DBC0071104E /* AccountService.swift */,
 			);
-			name = Service;
+			name = CoreService;
 			sourceTree = "<group>";
 		};
 		E708AC641C86EC160071104E /* BahamutServiceContainer */ = {
@@ -597,6 +618,7 @@
 		E708ACA11C8752090071104E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */,
 				E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */,
 				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
 				E708AB401C86CAA50071104E /* Main.storyboard */,
@@ -612,9 +634,10 @@
 		E708ACA21C8752300071104E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E7BFC3911CDB1C2C00CDB392 /* ExtraServices */,
 				E708ACA31C8752440071104E /* AppMain */,
 				E708ABF31C86D6F20071104E /* RestfulAPI */,
-				E708AC631C86EC070071104E /* Service */,
+				E708AC631C86EC070071104E /* CoreService */,
 				E75A703F1C8C5F0A0029F0BD /* Conversation */,
 				E708ACA41C87525A0071104E /* Account */,
 				E708ACAE1C87550D0071104E /* User */,
@@ -632,6 +655,7 @@
 				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
 				E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */,
 				E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */,
+				E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -651,7 +675,6 @@
 			children = (
 				E7ED38FB1C912F8E002126F4 /* BahamutTask */,
 				E708AC641C86EC160071104E /* BahamutServiceContainer */,
-				E75A70391C8C0FFF0029F0BD /* ChicagoClient */,
 				E7EB9A391C87F783002F96FB /* BahamutCmd */,
 				E708AB751C86CF8A0071104E /* Persistents */,
 				E708ABD71C86D37D0071104E /* BahamutRFKit */,
@@ -669,7 +692,7 @@
 				E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */,
 				E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */,
 				E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */,
-				E7D2D56D1C9A776500DD7D9B /* MyDetailViewController.swift */,
+				E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -693,16 +716,6 @@
 			path = UMAnalytics;
 			sourceTree = "<group>";
 		};
-		E75A70391C8C0FFF0029F0BD /* ChicagoClient */ = {
-			isa = PBXGroup;
-			children = (
-				E75A703A1C8C0FFF0029F0BD /* ChicagoClient.swift */,
-				E75A703B1C8C0FFF0029F0BD /* ChicagoClientBase.swift */,
-			);
-			name = ChicagoClient;
-			path = ../../../bahamut/Bahamut/Bahamut/ChicagoClient;
-			sourceTree = "<group>";
-		};
 		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +737,28 @@
 				E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */,
 			);
 			path = Message;
+			sourceTree = "<group>";
+		};
+		E7BFC3911CDB1C2C00CDB392 /* ExtraServices */ = {
+			isa = PBXGroup;
+			children = (
+				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
+				E7BFC3921CDB6CCF00CDB392 /* ExtraServicesViewController.swift */,
+			);
+			name = ExtraServices;
+			sourceTree = "<group>";
+		};
+		E7C04AF21CDF3AFE00093E6C /* LittlePaper */ = {
+			isa = PBXGroup;
+			children = (
+				E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */,
+				E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */,
+				E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */,
+				E7C04AF71CDF3AFE00093E6C /* MessagePostmenViewController.swift */,
+				E7C04AF81CDF3AFE00093E6C /* SelectPostmanViewController.swift */,
+				E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */,
+			);
+			path = LittlePaper;
 			sourceTree = "<group>";
 		};
 		E7C387EF1C982F510096AF85 /* ConversationList */ = {
@@ -905,6 +940,7 @@
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
+				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
@@ -986,8 +1022,10 @@
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
 				E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */,
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
-				E7D2D56E1C9A776500DD7D9B /* MyDetailViewController.swift in Sources */,
+				E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */,
 				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
+				E7C04AFF1CDF3AFE00093E6C /* SelectPostmanViewController.swift in Sources */,
+				E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */,
 				E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
@@ -1005,7 +1043,7 @@
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
-				E75A703D1C8C0FFF0029F0BD /* ChicagoClientBase.swift in Sources */,
+				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
@@ -1013,6 +1051,7 @@
 				E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */,
 				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
+				E7BFC3931CDB6CCF00CDB392 /* ExtraServicesViewController.swift in Sources */,
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
@@ -1022,13 +1061,14 @@
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
+				E7C04AFE1CDF3AFE00093E6C /* MessagePostmenViewController.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
+				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
-				E75A703C1C8C0FFF0029F0BD /* ChicagoClient.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
@@ -1045,6 +1085,7 @@
 				E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */,
 				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
+				E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
@@ -1054,7 +1095,9 @@
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
+				E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */,
 				E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */,
+				E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,

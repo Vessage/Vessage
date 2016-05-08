@@ -18,6 +18,10 @@ class Vessage: BahamutObject {
     var isRead = false
     var sendTime:String!
     var extraInfo:String!
+    
+    func getSendTime()->NSDate!{
+        return sendTime.dateTimeOfAccurateString
+    }
 }
 
 class VessageExtraInfoModel:BahamutObject{

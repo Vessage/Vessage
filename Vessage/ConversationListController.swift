@@ -69,15 +69,19 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     }
     
     private func initObservers(){
-        conversationService.addObserver(self, selector: "onConversationListUpdated:", name: ConversationService.conversationListUpdated, object: nil)
-        vessageService.addObserver(self, selector: "onNewVessagesReceived:", name: VessageService.onNewVessagesReceived, object: nil)
-        vessageService.addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
-        vessageService.addObserver(self, selector: "onVessageSendFail:", name: VessageService.onNewVessageSendFail, object: nil)
-        ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
+        conversationService.addObserver(self, selector: #selector(ConversationListController.onConversationListUpdated(_:)), name: ConversationService.conversationListUpdated, object: nil)
+        vessageService.addObserver(self, selector: #selector(ConversationListController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
+        vessageService.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
+        vessageService.addObserver(self, selector: #selector(ConversationListController.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
+        
+        //MARK: Chicago
+        //ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
     }
     
     private func removeObservers(){
-        ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
+        //MARK: Chicago
+        //ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
+        
         ServiceContainer.getService(ConversationService).removeObserver(self)
         ServiceContainer.getService(VessageService).removeObserver(self)
     }
@@ -127,7 +131,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     
     //MARK: actions
     @IBAction func showUserSetting(sender: AnyObject) {
-        MyDetailViewController.showMyDetailViewController(self.navigationController!)
+        UserSettingViewController.showUserSettingViewController(self.navigationController!)
     }
     
     private func removeConversation(conversation:Conversation){

@@ -31,16 +31,21 @@ class AccountService: ServiceProtocol
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
         BahamutRFKit.sharedInstance.startClients()
         
-        ChicagoClient.sharedInstance.start()
-        ChicagoClient.sharedInstance.connect(VessageSetting.chicagoServerHost, port: VessageSetting.chicagoServerHostPort)
-        ChicagoClient.sharedInstance.startHeartBeat()
-        ChicagoClient.sharedInstance.useValidationInfo(userId, appkey: BahamutRFKit.appkey, apptoken: UserSetting.token)
+        //MARK: Chicago
+//        ChicagoClient.sharedInstance.start()
+//        ChicagoClient.sharedInstance.connect(VessageSetting.chicagoServerHost, port: VessageSetting.chicagoServerHostPort)
+//        ChicagoClient.sharedInstance.startHeartBeat()
+//        ChicagoClient.sharedInstance.useValidationInfo(userId, appkey: BahamutRFKit.appkey, apptoken: UserSetting.token)
+
         self.setServiceReady()
     }
     
     @objc func userLogout(userId: String) {
         MobClick.profileSignOff()
-        ChicagoClient.sharedInstance.logout()
+        
+        //MARK: Chicago
+        //ChicagoClient.sharedInstance.logout()
+        
         UserSetting.token = nil
         UserSetting.isUserLogined = false
         VessageSetting.fileApiServer = nil

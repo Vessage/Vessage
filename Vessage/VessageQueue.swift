@@ -71,8 +71,8 @@ class VessageQueue:NSObject{
 //    }
     
     func initObservers(){
-        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSended:", name: VessageService.onNewVessageSended, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageSendFail:", name: VessageService.onNewVessageSendFail, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(VessageQueue.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(VessageQueue.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
     }
     
     func removeObservers(){

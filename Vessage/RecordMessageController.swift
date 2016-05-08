@@ -97,13 +97,13 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         camera = VessageCamera()
         camera.delegate = self
         camera.initCamera(self,previewView: self.previewRectView)
-        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recordingFlashing:", userInfo: nil, repeats: true)
+        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordMessageController.recordingFlashing(_:)), userInfo: nil, repeats: true)
         self.view.bringSubviewToFront(recordingProgress)
         self.view.bringSubviewToFront(recordingFlashView)
         self.view.bringSubviewToFront(recordButton)
         self.view.bringSubviewToFront(closeRecordViewButton)
         self.view.bringSubviewToFront(cancelRecordButton)
-        userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
+        userService.addObserver(self, selector: #selector(RecordMessageController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -222,7 +222,6 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         }
         let size = PersistentFileHelper.fileSizeOf(url.path!)
         print("\(size/1024)kb")
-        let conversationNoteName = chatter.nickName
         self.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     

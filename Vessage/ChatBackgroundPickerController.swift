@@ -56,9 +56,9 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
             rightButton.layer.cornerRadius = rightButton.frame.size.height / 2
             rightButton.hidden = !previewing
             rightButton.userInteractionEnabled = true
-            let longPress = UILongPressGestureRecognizer(target: self, action: "longPressRightButton:")
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.longPressRightButton(_:)))
             rightButton.addGestureRecognizer(longPress)
-            let tap = UITapGestureRecognizer(target: self, action: "rightButtonClicked:")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.rightButtonClicked(_:)))
             tap.requireGestureRecognizerToFail(longPress)
             rightButton.addGestureRecognizer(tap)
         }
@@ -76,6 +76,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         camera = VessageCamera()
         camera.delegate = self
         camera.isRecordVideo = false
+        camera.enableFaceMark = true
         camera.initCamera(self,previewView: self.previewRectView)
         self.view.bringSubviewToFront(middleButton)
         self.view.bringSubviewToFront(closeRecordViewButton)
@@ -112,8 +113,12 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     @IBAction func middleButtonClicked(sender: AnyObject) {
         if self.previewing{
-            SystemSoundHelper.cameraShutter()
-            self.camera.takePicture()
+            if camera.detectedFaces{
+                SystemSoundHelper.cameraShutter()
+                self.camera.takePicture()
+            }else{
+                self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
+            }
         }else{
             self.sendTakedImage()
         }

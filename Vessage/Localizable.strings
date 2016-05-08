@@ -108,7 +108,7 @@ REGIST_SUC_TITLE = "注册成功";
 REGIST_SUC_MSG = "请记住您的账号:\n%@";
 
 
-//MyDetailViewController
+//UserSettingViewController
 USER_DATA_NOT_READY_RETRY = "用户数据没准备好，请稍后重试";
 NICK = "名字";
 NICK_REGEX_TIPS = "昵称必须是1到23个字符";
@@ -137,7 +137,6 @@ BAHAMUT_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
 NEW_VMSG_NOTIFICATION = "你有新的视频短信!";
-NewVessageNotify = "你有新的视频短信!";
 
 REGIST_FAILED = "注册失败";
 REGIST_SUC = "注册成功";
@@ -214,3 +213,5 @@ REQUEST_ACCESS_CONTACT = "需要获取手机联系人打开新的对话";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到Vege应用选项并开启通讯录权限，然后重启Vege";
 OPEN_A_CONTACT_CONVERSATION = "开始新对话！";
+
+NO_HUMEN_FACES_DETECTED = "请露脸~~";

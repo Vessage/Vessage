@@ -31,18 +31,49 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     static let onNewVessageSended = "onNewVessageSended"
     static let onNewVessageSendFail = "onNewVessageSendFail"
     static let onVessageRead = "onVessageRead"
+    //private static let notReadVessageCountStoreKey = "NewVsgCntKey"
     @objc static var ServiceName:String {return "Vessage Service"}
+    
+    private var notReadVessageCountMap:[String:Int]!
     
     @objc func appStartInit(appName: String) {
         
     }
     
     @objc func userLoginInit(userId: String) {
+        initNotReadVessageCountMap()
         setServiceReady()
     }
     
     @objc func userLogout(userId: String) {
-        
+    }
+    
+    private func initNotReadVessageCountMap(){
+        notReadVessageCountMap = [String:Int]()
+        var newestVsgMap = [String:Vessage]()
+        let vsgs = PersistentManager.sharedInstance.getAllModel(Vessage)
+        vsgs.forEach { (vsg) in
+            if !vsg.isRead{
+                if let cnt = notReadVessageCountMap[vsg.sender]{
+                    notReadVessageCountMap[vsg.sender] = cnt + 1
+                }else{
+                    notReadVessageCountMap[vsg.sender] = 1
+                }
+            }else{
+                if let nvsg = newestVsgMap[vsg.sender]{
+                    if nvsg.getSendTime().compare(vsg.getSendTime()) == .OrderedDescending{
+                        PersistentManager.sharedInstance.removeModel(vsg)
+                    }else{
+                        newestVsgMap[vsg.sender] = vsg
+                        PersistentManager.sharedInstance.removeModel(nvsg)
+                    }
+                }else{
+                    newestVsgMap[vsg.sender] = vsg
+                }
+            }
+        }
+        PersistentManager.sharedInstance.saveAll()
+        PersistentManager.sharedInstance.refreshCache(Vessage)
     }
     
     func sendVessageToMobile(receiverMobile:String,sendNick:String?,sendMobile:String?,callback:(vessageId:String?)->Void){
@@ -138,17 +169,25 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         }
     }
     
-    func readVessage(vessage:Vessage){
-        vessage.isRead = true
-        vessage.saveModel()
-        PersistentManager.sharedInstance.refreshCache(Vessage)
-        self.postNotificationNameWithMainAsync(VessageService.onVessageRead, object: self, userInfo: [VessageServiceNotificationValue:vessage])
+    func readVessage(vessage:Vessage,refresh:Bool = true){
+        if vessage.isRead == false{
+            vessage.isRead = true
+            if var cnt = notReadVessageCountMap[vessage.sender]{
+                cnt = cnt > 1 ? cnt - 1 : 0
+                notReadVessageCountMap[vessage.sender] = cnt
+            }else{
+                notReadVessageCountMap[vessage.sender] = 0
+            }
+            self.postNotificationNameWithMainAsync(VessageService.onVessageRead, object: self, userInfo: [VessageServiceNotificationValue:vessage])
+        }
+        if refresh{
+            vessage.saveModel()
+            PersistentManager.sharedInstance.refreshCache(Vessage)
+        }
     }
     
     func removeVessage(vessage:Vessage){
-        if vessage.isRead == false{
-            self.postNotificationNameWithMainAsync(VessageService.onVessageRead, object: self, userInfo: [VessageServiceNotificationValue:vessage])
-        }
+        readVessage(vessage,refresh: false)
         PersistentManager.sharedInstance.removeModel(vessage)
         PersistentManager.sharedInstance.refreshCache(Vessage)
         let req = SetVessageRead()
@@ -165,6 +204,13 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
                     vsgs.saveBahamutObjectModels()
                     PersistentManager.sharedInstance.saveAll()
                     PersistentManager.sharedInstance.refreshCache(Vessage)
+                    vsgs.forEach({ (vsg) in
+                        if let cnt = self.notReadVessageCountMap[vsg.sender]{
+                            self.notReadVessageCountMap[vsg.sender] = cnt + 1
+                        }else{
+                            self.notReadVessageCountMap[vsg.sender] = 1
+                        }
+                    })
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         SystemSoundHelper.vibrate()
                         vsgs.forEach({ (vsg) -> () in
@@ -194,7 +240,14 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         return vsgs.first
     }
     
-    func getNotReadVessage(chatterId:String) -> [Vessage]{
+    func getChatterNotReadVessageCount(chatterId:String) -> Int{
+        if let cnt = notReadVessageCountMap[chatterId] {
+            return cnt
+        }
+        return notReadVessageCountMap[chatterId] ?? 0
+    }
+    
+    func getNotReadVessages(chatterId:String) -> [Vessage]{
         return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
     }
 }

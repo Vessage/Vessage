@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Me-->
+        <!--我-->
         <scene sceneID="PYJ-RO-3ZC">
             <objects>
-                <viewController storyboardIdentifier="MyDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GGv-fN-r6R" customClass="MyDetailViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserSettingViewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GGv-fN-r6R" customClass="UserSettingViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bVD-L8-zaT"/>
                         <viewControllerLayoutGuide type="bottom" id="kpk-ld-Mh4"/>
@@ -171,10 +171,8 @@
                             <constraint firstAttribute="trailing" secondItem="JY5-mA-p4l" secondAttribute="trailing" id="UbY-BN-33G"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Me" id="dKB-5a-7Ev">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="CG6-bM-mWb">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="我" id="dKB-5a-7Ev">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="dBZ-hy-oVS"/>
                         <barButtonItem key="rightBarButtonItem" image="shutdown" id="LQ5-Ns-zpK">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

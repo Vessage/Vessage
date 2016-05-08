@@ -42,6 +42,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             if user != nil{
                 if self.myProfile == nil{
                     self.myProfile = user
+                    self.registUserDeviceToken(VessageSetting.deviceToken)
                     self.setServiceReady()
                 }else{
                     self.myProfile = user
@@ -51,11 +52,13 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }
         })
         if myProfile != nil{
+            self.registUserDeviceToken(VessageSetting.deviceToken)
             self.setServiceReady()
         }
     }
     
     @objc func userLogout(userId: String) {
+        removeUserDeviceTokenFromServer()
         myProfile = nil
     }
     
@@ -109,7 +112,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getCachedUserProfile(userId:String) -> VessageUser?{
-        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.userId) && userId == $0.userId}.first
+        return PersistentManager.sharedInstance.getModel(VessageUser.self, idValue: userId)
     }
     
     func fetchUserProfile(userId:String){
@@ -154,39 +157,36 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }
         }
     }
-    
-    func changeUserNickName(newNickName:String,callback:(Bool)->Void){
-        let req = ChangeNickRequest()
-        req.nick = newNickName
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+}
+
+//MARK: User Device Token
+extension UserService{
+    func registUserDeviceToken(deviceToken:String!){
+        if String.isNullOrEmpty(deviceToken){
+            return
+        }
+        let req = RegistUserDeviceRequest()
+        req.setDeviceType(RegistUserDeviceRequest.DEVICE_TYPE_IOS)
+        req.setDeviceToken(deviceToken)
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
-                self.myProfile.nickName = newNickName
-                self.myProfile.saveModel()
+                
             }
-            callback(result.isSuccess)
         }
     }
     
-    func setChatBackground(imageId:String,callback:(Bool)->Void){
-        let req = ChangeMainChatImageRequest()
-        req.image = imageId
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+    func removeUserDeviceTokenFromServer(){
+        let req = RemoveUserDeviceRequest()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
-                self.myProfile.mainChatImage = imageId
-                self.myProfile.saveModel()
+                
             }
-            callback(result.isSuccess)
         }
     }
-    
-    func setMyAvatar(avatar:String,callback:(Bool)->Void){
-        let req = ChangeAvatarRequest()
-        req.avatar = avatar
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
-            callback(result.isSuccess)
-        }
-    }
-    
+}
+
+//MARK: Search User
+extension UserService{
     func searchUser(keyword:String,callback:([VessageUser])->Void){
         if keyword == UserSetting.lastLoginAccountId{
             return
@@ -232,7 +232,45 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             })
         }
     }
+}
+
+//MARK: User Profile
+extension UserService{
+    func changeUserNickName(newNickName:String,callback:(Bool)->Void){
+        let req = ChangeNickRequest()
+        req.nick = newNickName
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                self.myProfile.nickName = newNickName
+                self.myProfile.saveModel()
+            }
+            callback(result.isSuccess)
+        }
+    }
     
+    func setChatBackground(imageId:String,callback:(Bool)->Void){
+        let req = ChangeMainChatImageRequest()
+        req.image = imageId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                self.myProfile.mainChatImage = imageId
+                self.myProfile.saveModel()
+            }
+            callback(result.isSuccess)
+        }
+    }
+    
+    func setMyAvatar(avatar:String,callback:(Bool)->Void){
+        let req = ChangeAvatarRequest()
+        req.avatar = avatar
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            callback(result.isSuccess)
+        }
+    }
+}
+
+//MARK: User Mobile
+extension UserService{
     func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
         
         let req = SendMobileVSMSRequest()
@@ -265,6 +303,5 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                 callback(suc: false)
             }
         }
-        
     }
 }

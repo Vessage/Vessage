@@ -21,11 +21,13 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
-    @IBOutlet weak var badgeButton: UIButton!{
+    @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
-            badgeButton.backgroundColor = UIColor.clearColor()
+            badgeLabel.clipsToBounds = true
+            badgeLabel.layer.cornerRadius = 10
         }
     }
+    
     @IBOutlet weak var avatarView: UIImageView!{
         didSet{
             avatarView.layer.cornerRadius = 6
@@ -69,13 +71,19 @@ class ConversationListCell:ConversationListCellBase{
             self.subLineLabel?.text = subLine
         }
     }
-    
-    private var badge:Int = 0{
+
+    private var badgeValue:Int = 0 {
         didSet{
-            badgeButton.badgeValue = badge > 0 ? "\(badge)" : ""
+            if badgeLabel != nil{
+                if badgeValue == 0{
+                    badgeLabel.hidden = true
+                }else{
+                    badgeLabel.text = "\(badgeValue)"
+                }
+            }
         }
     }
-    
+
     deinit{
         ServiceContainer.getService(UserService).removeObserver(self)
         ServiceContainer.getService(VessageService).removeObserver(self)
@@ -93,7 +101,7 @@ class ConversationListCell:ConversationListCellBase{
         self.headLine = conversation.noteName
         self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
         if let chatterId = conversation.chatterId{
-            self.badge = self.rootController.vessageService.getNotReadVessage(chatterId).count
+            self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(chatterId)
             if let user = rootController.userService.getCachedUserProfile(chatterId){
                 self.avatar = user.avatar
             }else{
@@ -106,7 +114,7 @@ class ConversationListCell:ConversationListCellBase{
         self.headLine = user.nickName ?? user.accountId
         self.subLine = user.accountId
         self.avatar = user.avatar
-        self.badge = 0
+        self.badgeValue = 0
     }
     
     private func updateWithMobile(mobile:String){
@@ -114,15 +122,15 @@ class ConversationListCell:ConversationListCellBase{
         let msg = String(format: "OPEN_NEW_CHAT_WITH_MOBILE".localizedString(), mobile)
         self.subLine = msg
         self.avatar = nil
-        self.badge = 0
+        self.badgeValue = 0
     }
     
     //MARK: notifications
     private func addObservers(){
-        ServiceContainer.getService(UserService).addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageReadAndReceived:", name: VessageService.onNewVessageReceived, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: "onVessageReadAndReceived:", name: VessageService.onVessageRead, object: nil)
-        ServiceContainer.getService(ConversationService).addObserver(self, selector: "onConversationUpdated:", name: ConversationService.conversationUpdated, object: nil)
+        ServiceContainer.getService(UserService).addObserver(self, selector: #selector(ConversationListCell.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onNewVessageReceived, object: nil)
+        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onVessageRead, object: nil)
+        ServiceContainer.getService(ConversationService).addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
     }
     
     func onConversationUpdated(a:NSNotification){
@@ -149,7 +157,7 @@ class ConversationListCell:ConversationListCellBase{
         if let conversation = self.originModel as? Conversation{
             if let vsg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
                 if ConversationService.isConversationVessage(conversation, vsg: vsg){
-                    self.badge = self.rootController.vessageService.getNotReadVessage(conversation.chatterId).count
+                    self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(conversation.chatterId)
                 }
             }
         }

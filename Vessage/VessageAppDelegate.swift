@@ -136,11 +136,33 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
             .stringByReplacingOccurrencesOfString("<", withString: "")
             .stringByReplacingOccurrencesOfString(">", withString: "")
             .stringByReplacingOccurrencesOfString(" ", withString: "")
-        ChicagoClient.sharedInstance.registDeviceToken(VessageSetting.deviceToken)
+        
+        if ServiceContainer.isAllServiceReady{
+            ServiceContainer.getService(UserService).registUserDeviceToken(VessageSetting.deviceToken)
+        }
+        //MARK: Chicago
+        //ChicagoClient.sharedInstance.registDeviceToken(VessageSetting.deviceToken)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         UMessage.didReceiveRemoteNotification(userInfo)
+        if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
+            if ServiceContainer.isAllServiceReady{
+                if let apsDict = userInfo["aps"] as? [NSObject : AnyObject]{
+                    if let json = apsDict["alert"] as? String{
+                        if let data = json.dataUsingEncoding(NSUTF8StringEncoding){
+                            let jsonObj = try! NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers)
+                            if let locKey = jsonObj.objectForKey("loc-key") as? String{
+                                if locKey == "NEW_VMSG_NOTIFICATION"{
+                                    ServiceContainer.getService(VessageService).newVessageFromServer()
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -158,13 +180,14 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         PersistentManager.sharedInstance.saveAll()
-        ChicagoClient.sharedInstance.inBackground()
+        
+        //MARK: Chicago
+        //ChicagoClient.sharedInstance.inBackground()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         if ServiceContainer.isAllServiceReady{
-            
             ServiceContainer.getService(VessageService).newVessageFromServer()
         }
     }
@@ -172,7 +195,9 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         if ServiceContainer.isAllServiceReady{
-            ChicagoClient.sharedInstance.reConnect()
+            
+            ////MARK: Chicago
+            //ChicagoClient.sharedInstance.reConnect()
         }
     }
 

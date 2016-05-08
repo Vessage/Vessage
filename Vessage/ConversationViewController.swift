@@ -17,10 +17,15 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     let userService = ServiceContainer.getService(UserService)
     let fileService = ServiceContainer.getService(FileService)
     let vessageService = ServiceContainer.getService(VessageService)
-    @IBOutlet weak var vessagebadgeButton: UIButton!{
+    @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
-            
-            vessagebadgeButton.backgroundColor = UIColor.clearColor()
+            badgeLabel.clipsToBounds = true
+            badgeLabel.layer.cornerRadius = 10
+        }
+    }
+    @IBOutlet weak var bottomBar: UIVisualEffectView!{
+        didSet{
+            bottomBar.hidden = true
         }
     }
     @IBOutlet weak var avatarButton: UIButton!{
@@ -73,7 +78,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     var notReadVessages = [Vessage](){
         didSet{
-            conversationNotReadCount = (notReadVessages.filter{$0.isRead == false}).count
+            badgeValue = (notReadVessages.filter{$0.isRead == false}).count
             if notReadVessages.count > 0{
                 presentingVesseage = notReadVessages.first
             }else{
@@ -119,9 +124,15 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         }
     }
     
-    private var conversationNotReadCount:Int = 0{
+    private var badgeValue:Int = 0 {
         didSet{
-            vessagebadgeButton.badgeValue = conversationNotReadCount > 0 ? "\(conversationNotReadCount)" : ""
+            if badgeLabel != nil{
+                if badgeValue == 0{
+                    badgeLabel.hidden = true
+                }else{
+                    badgeLabel.text = "\(badgeValue)"
+                }
+            }
         }
     }
     
@@ -150,6 +161,9 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         }else{
             notReadVessages.removeFirst()
             vessageService.removeVessage(self.presentingVesseage)
+            if let filePath = fileService.getFilePath(self.presentingVesseage.fileId, type: .Video){
+                PersistentFileHelper.deleteFile(filePath)
+            }
             self.presentingVesseage = notReadVessages.first
         }
     }
@@ -214,8 +228,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        userService.addObserver(self, selector: "onUserProfileUpdated:", name: UserService.userProfileUpdated, object: nil)
-        vessageService.addObserver(self, selector: "onNewVessageReveiced:", name: VessageService.onNewVessageReceived, object: nil)
+        userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
+        vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
     }
     
     deinit{
@@ -228,7 +242,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         if chatterChanged{
             chatterChanged = false
             if !String.isNullOrWhiteSpace(self.chatter.userId) {
-                var vessages = vessageService.getNotReadVessage(self.chatter.userId)
+                var vessages = vessageService.getNotReadVessages(self.chatter.userId)
                 vessages.sortInPlace({ (a, b) -> Bool in
                     a.sendTime.dateTimeOfAccurateString.isBefore(b.sendTime.dateTimeOfAccurateString)
                 })
@@ -244,6 +258,17 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        showBottomBar()
+    }
+    
+    private func showBottomBar(){
+        if(bottomBar.hidden){
+            bottomBar.frame.origin.y = view.frame.height
+            UIView.animateWithDuration(0.08) {
+                self.bottomBar.hidden = false
+                self.bottomBar.frame.origin.y = self.view.frame.height - self.bottomBar.frame.height
+            }
+        }
     }
     
     //MARK: notifications
@@ -285,7 +310,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         if self.presentingVesseage?.isRead == false {
             MobClick.event("ReadVessage")
             self.vessageService.readVessage(self.presentingVesseage)
-            self.conversationNotReadCount -= 1
+            self.badgeValue -= 1
         }
     }
     

@@ -1,5 +1,5 @@
 //
-//  MyDetailViewController.swift
+//  UserSettingViewController.swift
 //  Bahamut
 //
 //  Created by AlexChow on 15/9/18.
@@ -12,7 +12,7 @@ extension UserService
 {
     func showMyDetailView(currentViewController:UIViewController)
     {
-        let controller = MyDetailViewController.instanceFromStoryBoard()
+        let controller = UserSettingViewController.instanceFromStoryBoard()
         currentViewController.navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -65,6 +65,7 @@ class MyDetailAvatarCell:UITableViewCell
     
     @IBOutlet weak var avatarImageView: UIImageView!{
         didSet{
+            avatarImageView.clipsToBounds = true
             avatarImageView.layer.cornerRadius = 7
         }
     }
@@ -77,8 +78,8 @@ struct MyDetailCellModel {
     var selector:Selector!
 }
 
-//MARK:MyDetailViewController
-class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProgressTaskDelegate
+//MARK:UserSettingViewController
+class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProgressTaskDelegate
 {
     static let aboutAppReuseId = "aboutApp"
     static let clearCacheCellReuseId = "clearCache"
@@ -115,19 +116,19 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
         propertySet.propertyIdentifier = InfoIds.nickName
         propertySet.propertyLabel = "NICK".localizedString()
         propertySet.propertyValue = myInfo.nickName
-        textPropertyCells.append(MyDetailCellModel(propertySet: propertySet, editable: true, selector: "tapTextProperty:"))
+        textPropertyCells.append(MyDetailCellModel(propertySet: propertySet, editable: true, selector: #selector(UserSettingViewController.tapTextProperty(_:))))
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "CHANGE_CHAT_BCG".localizedString()
         propertySet.propertyValue = ""
-        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: "changeChatBcg:"))
+        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changeChatBcg(_:))))
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "CHANGE_PSW".localizedString()
         propertySet.propertyValue = ""
-        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: "changePassword:"))
+        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changePassword(_:))))
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
@@ -139,7 +140,7 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
         }else{
             propertySet.propertyValue = "NOT_SET".localizedString()
         }
-        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: "bindMobile:"))
+        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.bindMobile(_:))))
         
     }
     
@@ -224,13 +225,13 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
             return cell
         }else if indexPath.section == 1
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailViewController.clearCacheCellReuseId,forIndexPath: indexPath)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "clearTempDir:"))
+            let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.clearCacheCellReuseId,forIndexPath: indexPath)
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.clearTempDir(_:))))
             return cell
         }else
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailViewController.aboutAppReuseId,forIndexPath: indexPath)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "aboutApp:"))
+            let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.aboutAppReuseId,forIndexPath: indexPath)
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.aboutApp(_:))))
             return cell
         }
     }
@@ -288,10 +289,10 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailAvatarCell.reuseIdentifier) as! MyDetailAvatarCell
         
-        let tapCell = UITapGestureRecognizer(target: self, action: "tapAvatarCell:")
+        let tapCell = UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.tapAvatarCell(_:)))
         cell.addGestureRecognizer(tapCell)
         ServiceContainer.getService(FileService).setAvatar(cell.avatarImageView, iconFileId: myInfo.avatar)
-        let tapIcon = UITapGestureRecognizer(target: self, action: "tapAvatar:")
+        let tapIcon = UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.tapAvatar(_:)))
         cell.avatarImageView?.addGestureRecognizer(tapIcon)
         cell.avatarImageView.userInteractionEnabled = true
         avatarImageView = cell.avatarImageView
@@ -440,12 +441,12 @@ class MyDetailViewController: UIViewController,UITableViewDataSource,UIEditTextP
         }
     }
     
-    static func showMyDetailViewController(navController:UINavigationController){
+    static func showUserSettingViewController(navController:UINavigationController){
         let c = instanceFromStoryBoard()
         navController.pushViewController(c, animated: true)
     }
     
-    static func instanceFromStoryBoard()->MyDetailViewController{
-        return instanceFromStoryBoard("User", identifier: "MyDetailViewController") as! MyDetailViewController
+    static func instanceFromStoryBoard()->UserSettingViewController{
+        return instanceFromStoryBoard("User", identifier: "UserSettingViewController") as! UserSettingViewController
     }
 }

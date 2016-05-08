@@ -61,6 +61,7 @@ class SignUpViewController: UIViewController {
             BahamutRFKit.sharedInstance.registBahamutAccount(VessageSetting.registAccountApi, username: userNameTextField.text!, passwordOrigin: passwordTextField.text!, phone_number: nil, email: nil) { (isSuc, errorMsg, registResult) -> Void in
                 if isSuc
                 {
+                    MobClick.event("RegistedNewUser")
                     self.dismissViewControllerAnimated(false, completion: { () -> Void in
                         let userInfo = [RegistAccountIDValue:registResult.accountId,RegistAccountPasswordValue:self.passwordTextField.text!]
                         NSNotificationCenter.defaultCenter().postNotificationName(RegistAccountCompleted, object: self, userInfo: userInfo)

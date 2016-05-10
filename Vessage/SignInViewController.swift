@@ -130,7 +130,7 @@ class SignInViewController: UIViewController {
     
     private func validateToken(loginedResult:LoginResult)
     {
-        let accountService = ServiceContainer.getService(AccountService)
+        let accountService = ServiceContainer.getAccountService()
         self.showIndicator()
         accountService.validateAccessToken(loginedResult.AppServiceUrl, accountId: loginedResult.AccountID, accessToken: loginedResult.AccessToken, callback: { (loginSuccess, message) -> Void in
             if loginSuccess{
@@ -158,7 +158,7 @@ class SignInViewController: UIViewController {
         newUser.nickName = loginedResult.AccountName ?? loginedResult.AccountID
         
         self.showIndicator()
-        ServiceContainer.getService(AccountService).registNewUser(registModel, newUser: newUser){ isSuc,msg,validateResult in
+        ServiceContainer.getAccountService().registNewUser(registModel, newUser: newUser){ isSuc,msg,validateResult in
             if isSuc
             {
                 self.showIndicator()

@@ -13,7 +13,7 @@ import MBProgressHUD
 //MARK: RecordMessageController
 class RecordMessageController: UIViewController,VessageCameraDelegate {
     
-    let userService = ServiceContainer.getService(UserService)
+    let userService = ServiceContainer.getUserService()
     private(set) static var instance:RecordMessageController!
     
     private var chatter:VessageUser!{
@@ -268,7 +268,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         instance.chatter = chatter
         vc.presentViewController(instance, animated: true) { () -> Void in
             if String.isNullOrWhiteSpace(chatter.userId) == false && String.isNullOrWhiteSpace(chatter.mainChatImage){
-                ServiceContainer.getService(UserService).fetchUserProfile(chatter.userId)
+                ServiceContainer.getUserService().fetchUserProfile(chatter.userId)
             }
         }
     }

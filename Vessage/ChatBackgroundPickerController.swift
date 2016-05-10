@@ -194,7 +194,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let fileKey = taskFileMap.removeValueForKey(taskIdentifier)
         {
-            let uService = ServiceContainer.getService(UserService)
+            let uService = ServiceContainer.getUserService()
             uService.setChatBackground(fileKey.fileId, callback: { (isSuc) -> Void in
                 self.taskHud.hideAsync(false)
                 if isSuc{

@@ -56,9 +56,11 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     private func allServiceReadyGo(){
-        if ServiceContainer.getService(UserService).isUserMobileValidated
+        let userService = ServiceContainer.getUserService()
+        let isUserMobileValidated = userService.isUserMobileValidated
+        if isUserMobileValidated
         {
-            if ServiceContainer.getService(UserService).isUserChatBackgroundIsSeted{
+            if userService.isUserChatBackgroundIsSeted{
                 showMainView()
             }else{
                 SetupChatBcgImageController.showSetupViewController(self)

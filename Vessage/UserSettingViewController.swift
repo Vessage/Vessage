@@ -96,6 +96,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        myInfo = ServiceContainer.getUserService().myProfile
         self.navigationItem.title = UserSetting.lastLoginAccountId
         initPropertySet()
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -105,9 +106,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         tableView.tableFooterView = uiview
     }
     
-    private var myInfo:VessageUser!{
-        return ServiceContainer.getService(UserService).myProfile
-    }
+    private var myInfo:VessageUser!
     
     private func initPropertySet()
     {
@@ -252,7 +251,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
             if responseState == SMSUIResponseStateSelfVerify{
                 let hud = self.showActivityHud()
-                ServiceContainer.getService(UserService).validateMobile(phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
+                ServiceContainer.getUserService().validateMobile(phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
                     hud.hideAsync(false)
                     if suc{   
                         self.tableView.reloadData()
@@ -367,7 +366,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let fileKey = taskFileMap.removeValueForKey(taskIdentifier)
         {
-            let uService = ServiceContainer.getService(UserService)
+            let uService = ServiceContainer.getUserService()
             uService.setMyAvatar(fileKey.fileId){ (isSuc) -> Void in
                 if isSuc
                 {
@@ -419,7 +418,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     func editPropertySave(propertyIdentifier: String!, newValue: String!)
     {
-        let userService = ServiceContainer.getService(UserService)
+        let userService = ServiceContainer.getUserService()
         let ppt = self.textPropertyCells.filter{$0.propertySet.propertyIdentifier == propertyIdentifier}.first!
         ppt.propertySet.propertyValue = newValue
         switch propertyIdentifier

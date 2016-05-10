@@ -26,6 +26,13 @@ extension VessageUser{
     }
 }
 
+//MARK: ServiceContainer DI
+extension ServiceContainer{
+    static func getUserService() -> UserService{
+        return ServiceContainer.getService(UserService)
+    }
+}
+
 let UserProfileUpdatedUserValue = "UserProfileUpdatedUserIdValue"
 
 //MARK:UserService
@@ -33,11 +40,39 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     static let userProfileUpdated = "userProfileUpdated"
     @objc static var ServiceName:String {return "User Service"}
     
+    private var forceGetUserProfileOnce:Bool = false
+    private let notUpdateUserInMinutes:Int = 20
+    private var userNoteNames = [String:String]()
+    private(set) var myProfile:VessageUser!
+    private(set) var activeUsers:[VessageUser]!
+    
+    var isUserMobileValidated:Bool{
+        return !String.isNullOrWhiteSpace(myProfile?.mobile)
+    }
+    
+    var isUserChatBackgroundIsSeted:Bool{
+        return !String.isNullOrWhiteSpace(myProfile?.mainChatImage)
+    }
+    
     @objc func appStartInit(appName: String) {
         
     }
     
     @objc func userLoginInit(userId: String) {
+        initServiceData(userId)
+        getActiveUsers()
+    }
+    
+    @objc func userLogout(userId: String) {
+        removeUserDeviceTokenFromServer()
+        myProfile = nil
+    }
+    
+    func setForeceGetUserProfileIgnoreTimeLimit(){
+        forceGetUserProfileOnce = true
+    }
+    
+    private func initServiceData(userId: String){
         myProfile = initMyProfile({ (user) -> Void in
             if user != nil{
                 if self.myProfile == nil{
@@ -55,27 +90,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             self.registUserDeviceToken(VessageSetting.deviceToken)
             self.setServiceReady()
         }
-    }
-    
-    @objc func userLogout(userId: String) {
-        removeUserDeviceTokenFromServer()
-        myProfile = nil
-    }
-    
-    private var forceGetUserProfileOnce:Bool = false
-    private let notUpdateUserInMinutes:Int = 20
-    private(set) var myProfile:VessageUser!
-    
-    var isUserMobileValidated:Bool{
-        return !String.isNullOrWhiteSpace(myProfile?.mobile ?? "")
-    }
-    
-    var isUserChatBackgroundIsSeted:Bool{
-        return !String.isNullOrWhiteSpace(myProfile?.mainChatImage ?? "")
-    }
-    
-    func setForeceGetUserProfileIgnoreTimeLimit(){
-        forceGetUserProfileOnce = true
+        if let notes = NSUserDefaults.standardUserDefaults().dictionaryForKey("UserNoteNames:\(userId)") as? [String:String]{
+            self.userNoteNames = notes
+        }
     }
     
     private func initMyProfile(updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
@@ -154,6 +171,25 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                 self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
             }else{
                 updatedCallback(user: nil)
+            }
+        }
+    }
+    
+    func getUserNotedName(userId:String) -> String? {
+        return userNoteNames[userId] ?? getCachedUserProfile(userId)?.nickName
+    }
+    
+    func setUserNoteName(userId:String,noteName:String){
+        userNoteNames[userId] = noteName
+        NSUserDefaults.standardUserDefaults().setObject(userNoteNames, forKey: "UserNoteNames:\(myProfile.userId)")
+    }
+    
+    func getActiveUsers(){
+        let req = GetActiveUsersInfoRequest()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
+            if let users = result.returnObject{
+                users.saveBahamutObjectModels()
+                self.activeUsers = users
             }
         }
     }

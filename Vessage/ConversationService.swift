@@ -23,6 +23,13 @@ class Conversation:BahamutObject
 
 let ConversationUpdatedValue = "ConversationUpdatedValue"
 
+//MARK: ServiceContainer DI
+extension ServiceContainer{
+    static func getConversationService() -> ConversationService{
+        return ServiceContainer.getService(ConversationService)
+    }
+}
+
 //MARK:ConversationService
 class ConversationService:NSNotificationCenter, ServiceProtocol {
     static let conversationListUpdated = "conversationListUpdated"

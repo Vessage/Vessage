@@ -6,19 +6,12 @@
 //  Copyright © 2016年 Bahamut. All rights reserved.
 //
 
-class ExtraServiceInfo{
-    var cellTitle:String!
-    var cellIconName:String!
-    var storyBoardName:String!
-    var controllerIdentifier:String!
-    var isPushController:Bool = false
-}
-
 class ExtraServiceCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
+            badgeLabel.hidden = true
             badgeLabel.clipsToBounds = true
             badgeLabel.layer.cornerRadius = 10
         }
@@ -76,7 +69,7 @@ class ExtraServicesListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return ExtraServiceInfoList.count
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -86,12 +79,7 @@ class ExtraServicesListController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ExtraServiceCell.reuseId, forIndexPath: indexPath) as! ExtraServiceCell
         cell.rootController = self
-        let serviceInfo = ExtraServiceInfo()
-        serviceInfo.cellIconName = "littlePaperIcon"
-        serviceInfo.cellTitle = "小纸条"
-        serviceInfo.storyBoardName = "LittlePaperMessage"
-        serviceInfo.controllerIdentifier = "LittlePaperMainController"
-        cell.serviceInfo = serviceInfo
+        cell.serviceInfo = ExtraServiceInfoList[indexPath.row]
         return cell
     }
     

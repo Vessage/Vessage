@@ -23,6 +23,7 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
+            badgeLabel.hidden = true
             badgeLabel.clipsToBounds = true
             badgeLabel.layer.cornerRadius = 10
         }
@@ -85,9 +86,9 @@ class ConversationListCell:ConversationListCellBase{
     }
 
     deinit{
-        ServiceContainer.getService(UserService).removeObserver(self)
-        ServiceContainer.getService(VessageService).removeObserver(self)
-        ServiceContainer.getService(ConversationService).removeObserver(self)
+        ServiceContainer.getUserService().removeObserver(self)
+        ServiceContainer.getVessageService().removeObserver(self)
+        ServiceContainer.getConversationService().removeObserver(self)
     }
     
     override func onCellClicked() {
@@ -127,10 +128,10 @@ class ConversationListCell:ConversationListCellBase{
     
     //MARK: notifications
     private func addObservers(){
-        ServiceContainer.getService(UserService).addObserver(self, selector: #selector(ConversationListCell.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onNewVessageReceived, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onVessageRead, object: nil)
-        ServiceContainer.getService(ConversationService).addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
+        ServiceContainer.getUserService().addObserver(self, selector: #selector(ConversationListCell.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onNewVessageReceived, object: nil)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onVessageRead, object: nil)
+        ServiceContainer.getConversationService().addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
     }
     
     func onConversationUpdated(a:NSNotification){

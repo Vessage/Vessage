@@ -6,12 +6,84 @@
 //  Copyright © 2016年 Bahamut. All rights reserved.
 //
 
-class WritePaperMessageViewController: UIViewController {
+class WritePaperMessageViewController: UIViewController ,SelectVessageUserViewControllerDelegate{
 
-    @IBOutlet weak var messageTextView: UITextView!
-    @IBOutlet weak var receiverInfoTextField: UITextField!
+    @IBOutlet weak var messageTextView: UITextView!{
+        didSet{
+            messageTextView.text = nil
+            messageTextView.clipsToBounds = true
+            messageTextView.layer.cornerRadius = 6
+        }
+    }
+    @IBOutlet weak var receiverInfoTextField: UITextField!{
+        didSet{
+            receiverInfoTextField.text = nil
+        }
+    }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+    }
+    
+    //MARK: SelectVessageUserViewControllerDelegate
+    func onFinishSelect(sender:SelectVessageUserViewController,selectedUsers: [VessageUser]) {
+        let message = messageTextView.text!
+        let receiverInfo = receiverInfoTextField.text!
+        let hud = self.showActivityHudWithMessage(nil, message: nil)
+        LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: selectedUsers.first!.userId) { (suc) in
+            hud.hideAsync(true)
+            if suc{
+                self.playCheckMark("SUCCESS".localizedString(),async:false){
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }else{
+                self.playCrossMark("FAIL".localizedString())
+            }
+        }
+    }
     
     @IBAction func onClickPostButton(sender: AnyObject) {
+        hideKeyBoard()
+        if String.isNullOrWhiteSpace(receiverInfoTextField.text) {
+            self.playToast("PAPER_RECEIVER_IS_NULL".localizedString()){
+                self.receiverInfoTextField.becomeFirstResponder()
+            }
+            return
+        }
+        if String.isNullOrWhiteSpace(messageTextView.text) {
+            self.playToast("PAPER_MESSAGE_IS_NULL".localizedString()){
+                self.messageTextView.becomeFirstResponder()
+            }
+            return
+        }
+        if String.isNullOrWhiteSpace(receiverInfoTextField.text) {
+            self.playToast("PAPER_RECEIVER_IS_NULL".localizedString())
+            return
+        }
+        
+        let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
+        controller.title = "SELECT_POST_MAN".localizedString()
+        controller.delegate = self
+        controller.allowsMultipleSelection = false
+    }
+    
+    @IBAction func onClickCancelButton() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    static func showWritePaperMessageViewController(vc:UIViewController){
+        let controller = instanceFromStoryBoard("LittlePaperMessage", identifier: "WritePaperMessageViewController")
+        let nvc = UINavigationController(rootViewController: controller)
+        vc.presentViewController(nvc, animated: true, completion: nil)
     }
 }

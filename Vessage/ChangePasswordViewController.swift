@@ -28,7 +28,7 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate
             showAlert("CONFIRM_PSW".localizedString(), msg: newPsw, actions: [
                 UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (action) -> Void in
                     let hud = self.showActivityHud()
-                    ServiceContainer.getService(AccountService).changePassword(oldPsw, newPsw: newPsw) { (isSuc,msg) -> Void in
+                    ServiceContainer.getAccountService().changePassword(oldPsw, newPsw: newPsw) { (isSuc,msg) -> Void in
                         hud.hideAsync(true)
                         if isSuc
                         {

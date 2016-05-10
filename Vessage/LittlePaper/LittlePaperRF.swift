@@ -19,8 +19,30 @@ class LittlePaperMessage: BahamutObject {
     var receiverInfo:String!
     var message:String!
     var postmen:String!
-    var sendTime:String!
+    var updatedTime:String!
     var isOpened = false
+    
+    var isUpdated = false
+    
+    func isMySended(myUserId:String!) -> Bool{
+        return myUserId == sender
+    }
+    
+    func isMyReceived(myUserId:String) -> Bool {
+        return !isMySended(myUserId)
+    }
+    
+    func isReceivedNotDeal(myUserId:String) -> Bool {
+        return isMyReceived(myUserId) && !isMyOpened(myUserId) && !isMyPosted(myUserId)
+    }
+    
+    func isMyPosted(myUserId:String!) -> Bool{
+        return postmen != nil && postmen.containsString(myUserId)
+    }
+    
+    func isMyOpened(myUserId:String!) -> Bool{
+        return receiver != nil && myUserId == receiver
+    }
 }
 
 class NewPaperMessageRequest: BahamutRFRequestBase {
@@ -30,16 +52,16 @@ class NewPaperMessageRequest: BahamutRFRequestBase {
         self.method = .POST
     }
     
-    func setSender(sender:String){
-        self.paramenters["sender"] = sender
-    }
-    
     func setReceiverInfo(receiverInfo:String){
         self.paramenters["receiverInfo"] = receiverInfo
     }
     
     func setMessage(message:String){
         self.paramenters["message"] = message
+    }
+    
+    func setNextReceiver(receiver:String){
+        self.paramenters["nextReceiver"] = receiver
     }
 }
 
@@ -79,7 +101,7 @@ class GetPaperMessagesStatusRequest: BahamutRFRequestBase {
     }
 }
 
-class OpenPaperMessage: BahamutRFRequestBase {
+class OpenPaperMessageRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/LittlePaperMessages/OpenPaperId"

@@ -27,10 +27,10 @@ class PostVessageToServer:BahamutTaskStepWorker{
     func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
         let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
         let vessage = Vessage()
-        vessage.sender = ServiceContainer.getService(UserService).myProfile.userId
+        vessage.sender = ServiceContainer.getUserService().myProfile.userId
         vessage.fileId = model.fileId
         //TODO: high version finish
-//        ServiceContainer.getService(VessageService).sendVessage(vessage){ sended in
+//        ServiceContainer.getVessageService().sendVessage(vessage){ sended in
 //            if sended{
 //                step.finishedStep(nil)
 //            }else{
@@ -71,12 +71,12 @@ class VessageQueue:NSObject{
 //    }
     
     func initObservers(){
-        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(VessageQueue.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
-        ServiceContainer.getService(VessageService).addObserver(self, selector: #selector(VessageQueue.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
     }
     
     func removeObservers(){
-        ServiceContainer.getService(VessageService).removeObserver(self)
+        ServiceContainer.getVessageService().removeObserver(self)
     }
     
     func onVessageSendFail(a:NSNotification){
@@ -118,7 +118,7 @@ class VessageQueue:NSObject{
                     task.receiverMobile = taskInfo.receiverMobile
                     task.fileId = fileKey.fileId
                     task.vessageId = vessageId
-                    ServiceContainer.getService(VessageService).observeOnVessageFileUploadTask(task)
+                    ServiceContainer.getVessageService().observeOnVessageFileUploadTask(task)
                     sendingHud.hideAsync(false)
                     RecordMessageController.instance.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false){
                         self.sendSMSToFriend(taskInfo)
@@ -138,7 +138,7 @@ class VessageQueue:NSObject{
             self.sendVessageFile(vessageId,taskInfoKey: taskInfoKey)
         }
         let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
-            ServiceContainer.getService(VessageService).cancelSendVessage(vessageId)
+            ServiceContainer.getVessageService().cancelSendVessage(vessageId)
             RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
         }
         RecordMessageController.instance.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
@@ -152,14 +152,14 @@ class VessageQueue:NSObject{
                 self.retrySendVessage(taskInfoKey)
             }
         }
-        let userService = ServiceContainer.getService(UserService)
+        let userService = ServiceContainer.getUserService()
         let sendNick = userService.myProfile.nickName
         let sendMobile = userService.myProfile.mobile
         if let taskInfo = taskInfoDict[taskInfoKey]{
             if let receiverId = taskInfo.receiverId{
-                ServiceContainer.getService(VessageService).sendVessageToUser(receiverId, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+                ServiceContainer.getVessageService().sendVessageToUser(receiverId, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
             }else if let receiverMobile = taskInfo.receiverMobile{
-                ServiceContainer.getService(VessageService).sendVessageToMobile(receiverMobile, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+                ServiceContainer.getVessageService().sendVessageToMobile(receiverMobile, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
             }else{
             }
         }
@@ -181,10 +181,10 @@ class VessageQueue:NSObject{
             if !UserSetting.isSettingEnable("InviteSMS:\(taskInfo.receiverMobile)"){
                 let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
                     var url = ""
-                    if let senderNick = ServiceContainer.getService(UserService).myProfile.nickName{
+                    if let senderNick = ServiceContainer.getUserService().myProfile.nickName{
                         url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick.base64String()
                     }else{
-                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getService(UserService).myProfile.accountId)"
+                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getUserService().myProfile.accountId)"
                     }
                     RecordMessageController.instance.showMessageView(taskInfo.receiverMobile, body: String(format: "NOTIFY_SMS_FORMAT".localizedString(),url))
                 })

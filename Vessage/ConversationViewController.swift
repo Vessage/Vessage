@@ -13,12 +13,13 @@ import ReachabilitySwift
 class ConversationViewController: UIViewController,PlayerDelegate {
     
     var reachability:Reachability?
-    let conversationService = ServiceContainer.getService(ConversationService)
-    let userService = ServiceContainer.getService(UserService)
+    let conversationService = ServiceContainer.getConversationService()
+    let userService = ServiceContainer.getUserService()
     let fileService = ServiceContainer.getService(FileService)
-    let vessageService = ServiceContainer.getService(VessageService)
+    let vessageService = ServiceContainer.getVessageService()
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
+            badgeLabel.hidden = true
             badgeLabel.clipsToBounds = true
             badgeLabel.layer.cornerRadius = 10
         }
@@ -193,6 +194,9 @@ class ConversationViewController: UIViewController,PlayerDelegate {
             }else{
                 if self.conversationService.noteConversation(self.conversationId, noteName: newNoteName){
                     self.controllerTitle = newNoteName
+                    if String.isNullOrWhiteSpace(self.chatter?.userId) == false{
+                        ServiceContainer.getUserService().setUserNoteName(self.chatter.userId, noteName: newNoteName)
+                    }
                     self.playCheckMark("SAVE_NOTE_NAME_SUC".localizedString())
                 }else{
                     self.playCrossMark("SAVE_NOTE_NAME_ERROR".localizedString())
@@ -324,9 +328,9 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversationId = conversation.conversationId
         if String.isNullOrEmpty(conversation.chatterId) == false{
-            controller.chatter = ServiceContainer.getService(UserService).getUserProfile(conversation.chatterId){ user in }
+            controller.chatter = ServiceContainer.getUserService().getUserProfile(conversation.chatterId){ user in }
         }else if String.isNullOrEmpty(conversation.chatterMobile) == false{
-            controller.chatter = ServiceContainer.getService(UserService).getUserProfileByMobile(conversation.chatterMobile){ user in }
+            controller.chatter = ServiceContainer.getUserService().getUserProfileByMobile(conversation.chatterMobile){ user in }
         }
         if controller.chatter == nil{
             let chatter = VessageUser()

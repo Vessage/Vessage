@@ -22,6 +22,13 @@ class VessageUser: BahamutObject {
     var mobile:String!
     
     var lastUpdatedTime:NSDate!
+    
+    static func getUnLoadedUser(userId:String) -> VessageUser{
+        let user = VessageUser()
+        user.userId = userId
+        user.nickName = "UNLOADED_USER".localizedString()
+        return user
+    }
 }
 
 class GetUserInfoRequest: BahamutRFRequestBase {
@@ -39,6 +46,14 @@ class GetUserInfoRequest: BahamutRFRequestBase {
         didSet{
             self.api = "/VessageUsers/UserId/\(userId)"
         }
+    }
+}
+
+class GetActiveUsersInfoRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .GET
+        self.api = "/VessageUsers/Active"
     }
 }
 

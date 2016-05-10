@@ -16,6 +16,14 @@ class RegistNewUserModel {
     var region:String!
 }
 
+//MARK: ServiceContainer DI
+extension ServiceContainer{
+    static func getAccountService() -> AccountService{
+        return ServiceContainer.getService(AccountService)
+    }
+}
+
+//MARK: AccountService
 class AccountService: ServiceProtocol
 {
     @objc static var ServiceName:String{return "Account Service"}

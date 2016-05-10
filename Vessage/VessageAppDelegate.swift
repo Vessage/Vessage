@@ -138,7 +138,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
             .stringByReplacingOccurrencesOfString(" ", withString: "")
         
         if ServiceContainer.isAllServiceReady{
-            ServiceContainer.getService(UserService).registUserDeviceToken(VessageSetting.deviceToken)
+            ServiceContainer.getUserService().registUserDeviceToken(VessageSetting.deviceToken)
         }
         //MARK: Chicago
         //ChicagoClient.sharedInstance.registDeviceToken(VessageSetting.deviceToken)
@@ -154,7 +154,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
                             let jsonObj = try! NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers)
                             if let locKey = jsonObj.objectForKey("loc-key") as? String{
                                 if locKey == "NEW_VMSG_NOTIFICATION"{
-                                    ServiceContainer.getService(VessageService).newVessageFromServer()
+                                    ServiceContainer.getVessageService().newVessageFromServer()
                                 }
                             }
                         }
@@ -188,7 +188,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         if ServiceContainer.isAllServiceReady{
-            ServiceContainer.getService(VessageService).newVessageFromServer()
+            ServiceContainer.getVessageService().newVessageFromServer()
         }
     }
 

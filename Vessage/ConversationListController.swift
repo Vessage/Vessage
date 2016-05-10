@@ -28,9 +28,9 @@ class ConversationListCellBase:UITableViewCell{
 //MARK: ConversationListController
 class ConversationListController: UITableViewController,UISearchBarDelegate {
 
-    let conversationService = ServiceContainer.getService(ConversationService)
-    let vessageService = ServiceContainer.getService(VessageService)
-    let userService = ServiceContainer.getService(UserService)
+    let conversationService = ServiceContainer.getConversationService()
+    let vessageService = ServiceContainer.getVessageService()
+    let userService = ServiceContainer.getUserService()
     
     //MARK: search property
     private var searchResult = [SearchResultModel](){
@@ -63,6 +63,7 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         initObservers()
         vessageService.newVessageFromServer()
@@ -82,8 +83,8 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         //MARK: Chicago
         //ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
         
-        ServiceContainer.getService(ConversationService).removeObserver(self)
-        ServiceContainer.getService(VessageService).removeObserver(self)
+        ServiceContainer.getConversationService().removeObserver(self)
+        ServiceContainer.getVessageService().removeObserver(self)
     }
     
     deinit{

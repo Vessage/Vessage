@@ -24,6 +24,13 @@ let VessageServiceNotificationValues = "VessageServiceNotificationValue"
 let SendedVessageResultModelValue = "SendedVessageResultModelValue"
 let SendedVessageTaskValue = "SendedVessageTaskValue"
 
+//MARK: ServiceContainer DI
+extension ServiceContainer{
+    static func getVessageService() -> VessageService{
+        return ServiceContainer.getService(VessageService)
+    }
+}
+
 //MARK: VessageService
 class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate {
     static let onNewVessageReceived = "onNewVessageReceived"

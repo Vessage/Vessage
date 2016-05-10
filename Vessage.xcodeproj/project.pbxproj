@@ -87,6 +87,10 @@
 		E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867F1CA000880028B016 /* libMobClickLibrary.a */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
+		E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */; };
+		E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */; };
+		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
+		E72F66011CE0DB180094BA10 /* PaperMessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
@@ -103,9 +107,8 @@
 		E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */; };
 		E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */; };
 		E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */; };
-		E7C04AFE1CDF3AFE00093E6C /* MessagePostmenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF71CDF3AFE00093E6C /* MessagePostmenViewController.swift */; };
-		E7C04AFF1CDF3AFE00093E6C /* SelectPostmanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF81CDF3AFE00093E6C /* SelectPostmanViewController.swift */; };
 		E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */; };
+		E7C04B021CDF7FAD00093E6C /* ExtraServicesConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04B011CDF7FAD00093E6C /* ExtraServicesConfig.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
@@ -244,6 +247,10 @@
 		E71886811CA000880028B016 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
+		E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMessageListController.swift; sourceTree = "<group>"; };
+		E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVessageUserViewController.swift; sourceTree = "<group>"; };
+		E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCollectionViewController.swift; sourceTree = "<group>"; };
+		E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperMessageDetailViewController.swift; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -260,9 +267,8 @@
 		E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperManager.swift; sourceTree = "<group>"; };
 		E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LittlePaperMessage.storyboard; path = LittlePaper/LittlePaperMessage.storyboard; sourceTree = "<group>"; };
 		E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperRF.swift; sourceTree = "<group>"; };
-		E7C04AF71CDF3AFE00093E6C /* MessagePostmenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagePostmenViewController.swift; sourceTree = "<group>"; };
-		E7C04AF81CDF3AFE00093E6C /* SelectPostmanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPostmanViewController.swift; sourceTree = "<group>"; };
 		E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
+		E7C04B011CDF7FAD00093E6C /* ExtraServicesConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtraServicesConfig.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
@@ -373,7 +379,6 @@
 				E7F22C271C9BE57800CD38D1 /* Libs */,
 				E708ACA91C8752BF0071104E /* ArchBase */,
 				E708AC0C1C86DEC40071104E /* Assets */,
-				E708ACA11C8752090071104E /* UI */,
 				E708ACA21C8752300071104E /* Source */,
 				E708AB4E1C86CB470071104E /* SupportFiles */,
 			);
@@ -556,6 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
+				E708ACA11C8752090071104E /* UI */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -688,6 +694,8 @@
 		E708ACAE1C87550D0071104E /* User */ = {
 			isa = PBXGroup;
 			children = (
+				E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */,
+				E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */,
 				E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */,
 				E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */,
 				E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */,
@@ -744,6 +752,7 @@
 			children = (
 				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
 				E7BFC3921CDB6CCF00CDB392 /* ExtraServicesViewController.swift */,
+				E7C04B011CDF7FAD00093E6C /* ExtraServicesConfig.swift */,
 			);
 			name = ExtraServices;
 			sourceTree = "<group>";
@@ -751,12 +760,12 @@
 		E7C04AF21CDF3AFE00093E6C /* LittlePaper */ = {
 			isa = PBXGroup;
 			children = (
+				E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */,
 				E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */,
 				E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */,
 				E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */,
-				E7C04AF71CDF3AFE00093E6C /* MessagePostmenViewController.swift */,
-				E7C04AF81CDF3AFE00093E6C /* SelectPostmanViewController.swift */,
 				E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */,
+				E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */,
 			);
 			path = LittlePaper;
 			sourceTree = "<group>";
@@ -1013,6 +1022,7 @@
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
 				E708ABA71C86CFF20071104E /* RecordMessageController.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
+				E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */,
 				E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */,
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
 				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
@@ -1024,7 +1034,6 @@
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
 				E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */,
 				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
-				E7C04AFF1CDF3AFE00093E6C /* SelectPostmanViewController.swift in Sources */,
 				E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */,
 				E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
@@ -1041,6 +1050,7 @@
 				E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */,
 				E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */,
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
+				E72F66011CE0DB180094BA10 /* PaperMessageDetailViewController.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
@@ -1061,10 +1071,10 @@
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
-				E7C04AFE1CDF3AFE00093E6C /* MessagePostmenViewController.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
+				E7C04B021CDF7FAD00093E6C /* ExtraServicesConfig.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
@@ -1079,6 +1089,7 @@
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
+				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
 				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
 				E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */,
@@ -1091,6 +1102,7 @@
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
+				E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */,
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,

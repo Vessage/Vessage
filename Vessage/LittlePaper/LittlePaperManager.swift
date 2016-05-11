@@ -18,18 +18,121 @@ class LittlePaperManager {
         instance = nil
     }
     
-    private(set) var mySendedMessages = [LittlePaperMessage]()
-    private(set) var myOpenedMessages = [LittlePaperMessage]()
-    private(set) var myPostededMessages = [LittlePaperMessage]()
-    private(set) var myNotDealMessages = [LittlePaperMessage]()
+    static let TYPE_MY_SENDED = 3
+    static let TYPE_MY_OPENED = 2
+    static let TYPE_MY_POSTED = 1
+    static let TYPE_MY_NOT_DEAL = 0
+    
+    private(set) var paperMessagesList = [[LittlePaperMessage]](count: 4, repeatedValue: [LittlePaperMessage]())
+    
+    private(set) var mySendedMessages:[LittlePaperMessage]{
+        get{
+            return paperMessagesList[LittlePaperManager.TYPE_MY_SENDED]
+        }
+        set{
+            paperMessagesList[LittlePaperManager.TYPE_MY_SENDED] = newValue
+        }
+    }
+    private(set) var myOpenedMessages:[LittlePaperMessage]{
+        get{
+            return paperMessagesList[LittlePaperManager.TYPE_MY_OPENED]
+        }
+        set{
+            paperMessagesList[LittlePaperManager.TYPE_MY_OPENED] = newValue
+        }
+    }
+    private(set) var myPostededMessages:[LittlePaperMessage]{
+        get{
+            return paperMessagesList[LittlePaperManager.TYPE_MY_POSTED]
+        }
+        set{
+            paperMessagesList[LittlePaperManager.TYPE_MY_POSTED] = newValue
+        }
+    }
+    private(set) var myNotDealMessages:[LittlePaperMessage]{
+        get{
+            return paperMessagesList[LittlePaperManager.TYPE_MY_NOT_DEAL]
+        }
+        set{
+            paperMessagesList[LittlePaperManager.TYPE_MY_NOT_DEAL] = newValue
+        }
+    }
+    
+    private var myUserId:String!
     
     private func loadCachedData(){
-        let myUserId = ServiceContainer.getUserService().myProfile.userId
+        myUserId = ServiceContainer.getUserService().myProfile.userId
         var msgs = PersistentManager.sharedInstance.getAllModel(LittlePaperMessage)
-        mySendedMessages.appendContentsOf(msgs.removeElement{$0.isMySended(myUserId)})
-        myOpenedMessages.appendContentsOf(msgs.removeElement{$0.isMyOpened(myUserId)})
-        myPostededMessages.appendContentsOf(msgs.removeElement{$0.isMyPosted(myUserId)})
-        myNotDealMessages.appendContentsOf(msgs.removeElement{$0.isReceivedNotDeal(myUserId)})
+        
+        
+//        AccountId=147258,UserId=56e659cbdba47c3604b1384e
+//        AccountId=147259,UserId=56e6c6b0dba47c0d58cb6429
+//        AccountId=147260,UserId=56ee6cd3fa1de5319005954a
+//        AccountId=147261,UserId=56ee7110fa1de5319005954b
+//        AccountId=147262,UserId=56f01076fa1de5617886a889
+//        AccountId=147263,UserId=56f00ea7fa1de5617886a888
+        
+        let sendedmsg = LittlePaperMessage()
+        sendedmsg.isOpened = false
+        sendedmsg.sender = "56e659cbdba47c3604b1384e"
+        sendedmsg.message = "Test"
+        sendedmsg.paperId = "123456"
+        sendedmsg.receiverInfo = "Test Receiver Send Not Open"
+        sendedmsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(sendedmsg)
+        
+        let sendedOpedMsg = LittlePaperMessage()
+        sendedOpedMsg.paperId = "dddd"
+        sendedOpedMsg.isOpened = true
+        sendedOpedMsg.sender = "56e659cbdba47c3604b1384e"
+        sendedOpedMsg.postmen = "56e659cbdba47c3604b1384e,56ee7110fa1de5319005954b,56ee6cd3fa1de5319005954a,56e6c6b0dba47c0d58cb6429"
+        sendedOpedMsg.receiver = "56f00ea7fa1de5617886a888"
+        sendedOpedMsg.receiverInfo = "Test Receiver Send Opened"
+        sendedOpedMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(sendedOpedMsg)
+        
+        var notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = false
+        notDealMsg.message = "Test"
+        notDealMsg.paperId = "sdfasdfs"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b"
+        notDealMsg.receiverInfo = "Test Receiver Not Deal"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = false
+        notDealMsg.message = "Test"
+        notDealMsg.paperId = "sdfasdfsss"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e659cbdba47c3604b1384e"
+        notDealMsg.receiverInfo = "Test Receiver Posted"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = true
+        notDealMsg.message = "Test"
+        notDealMsg.paperId = "sdfddasdfsss"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e659cbdba47c3604b1384e"
+        notDealMsg.receiverInfo = "Test Receiver Posted Opened"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = true
+        notDealMsg.message = "Test My Opened"
+        notDealMsg.paperId = "sdfasdfsssss"
+        notDealMsg.sender = "56f01076fa1de5617886a889"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e6c6b0dba47c0d58cb6429"
+        notDealMsg.receiverInfo = "Test Receiver I Opened"
+        notDealMsg.receiver = "56e659cbdba47c3604b1384e"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        mySendedMessages.appendContentsOf(msgs.removeElement{$0.isMySended(self.myUserId)})
+        myOpenedMessages.appendContentsOf(msgs.removeElement{$0.isMyOpened(self.myUserId)})
+        myPostededMessages.appendContentsOf(msgs.removeElement{$0.isMyPosted(self.myUserId)})
+        myNotDealMessages.appendContentsOf(msgs.removeElement{$0.isReceivedNotDeal(self.myUserId)})
     }
     
     func openPaperMessage(paperId:String,callback:(openedMsg:LittlePaperMessage?)->Void) -> Void {
@@ -44,14 +147,21 @@ class LittlePaperManager {
         }
     }
     
-    func postPaperToNextUser(paperId:String,userId:String,callback:(suc:Bool)->Void) -> Void {
+    func postPaperToNextUser(paperId:String,userId:String,isAnonymous: Bool,callback:(suc:Bool)->Void) -> Void {
         let req = PostPaperMessageRequest()
+        req.setIsAnonymous(isAnonymous)
         req.setNextReceiver(userId)
         req.setPaperId(paperId)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
-                let msg = self.myNotDealMessages.removeElement{$0.paperId == paperId}
-                self.myPostededMessages.insertContentsOf(msg, at: 0)
+                if let msg = (self.myNotDealMessages.removeElement{$0.paperId == paperId}).first{
+                    if String.isNullOrWhiteSpace(msg.postmen){
+                        msg.postmen.appendContentsOf(self.myUserId)
+                    }else{
+                        msg.postmen.appendContentsOf(",\(self.myUserId)")
+                    }
+                    self.myPostededMessages.insert(msg, atIndex: 0)
+                }
             }
             callback(suc: result.isSuccess)
         }
@@ -60,8 +170,8 @@ class LittlePaperManager {
     func refreshPaperMessage(callback:(updated:Int)->Void) {
         let req = GetPaperMessagesStatusRequest()
         var msgs = [LittlePaperMessage]()
-        msgs.appendContentsOf(mySendedMessages)
-        msgs.appendContentsOf(myPostededMessages)
+        msgs.appendContentsOf(mySendedMessages.filter{!$0.isOpened})
+        msgs.appendContentsOf(myPostededMessages.filter{!$0.isOpened})
         let ids = msgs.map{$0.paperId!}
         req.setPaperId(ids.joinWithSeparator(","))
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[LittlePaperMessage]>) in
@@ -83,6 +193,20 @@ class LittlePaperManager {
                 }
             }
             callback(updated:updated)
+        }
+    }
+    
+    func removePaperMessage(type:Int,index:Int) {
+        if paperMessagesList.count > type && paperMessagesList[type].count > index  {
+            BahamutObject.deleteObjectArray([paperMessagesList[type][index]])
+            paperMessagesList[type].removeAtIndex(index)
+        }
+    }
+    
+    func clearPaperMessageList(type:Int) {
+        if paperMessagesList.count > type {
+            BahamutObject.deleteObjectArray(paperMessagesList[type])
+            paperMessagesList[type].removeAll()
         }
     }
     

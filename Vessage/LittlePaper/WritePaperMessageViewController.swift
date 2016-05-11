@@ -8,21 +8,15 @@
 
 class WritePaperMessageViewController: UIViewController ,SelectVessageUserViewControllerDelegate{
 
-    @IBOutlet weak var messageTextView: UITextView!{
-        didSet{
-            messageTextView.text = nil
-            messageTextView.clipsToBounds = true
-            messageTextView.layer.cornerRadius = 6
-        }
-    }
-    @IBOutlet weak var receiverInfoTextField: UITextField!{
-        didSet{
-            receiverInfoTextField.text = nil
-        }
-    }
+    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var receiverInfoTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(animated: Bool) {

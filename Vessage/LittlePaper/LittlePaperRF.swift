@@ -25,7 +25,7 @@ class LittlePaperMessage: BahamutObject {
     var isUpdated = false
     
     func isMySended(myUserId:String!) -> Bool{
-        return myUserId == sender
+        return !String.isNullOrWhiteSpace(sender) && myUserId == sender
     }
     
     func isMyReceived(myUserId:String) -> Bool {
@@ -37,11 +37,11 @@ class LittlePaperMessage: BahamutObject {
     }
     
     func isMyPosted(myUserId:String!) -> Bool{
-        return postmen != nil && postmen.containsString(myUserId)
+        return !String.isNullOrWhiteSpace(postmen) && postmen.containsString(myUserId)
     }
     
     func isMyOpened(myUserId:String!) -> Bool{
-        return receiver != nil && myUserId == receiver
+        return !String.isNullOrWhiteSpace(receiver) && myUserId == receiver
     }
 }
 
@@ -70,6 +70,10 @@ class PostPaperMessageRequest: BahamutRFRequestBase {
         super.init()
         self.api = "/LittlePaperMessages/PostMessage"
         self.method = .PUT
+    }
+    
+    func setIsAnonymous(isAnonymous:Bool) {
+        self.paramenters["isAnonymousPost"] = "\(isAnonymous)"
     }
     
     func setPaperId(paperId:String){

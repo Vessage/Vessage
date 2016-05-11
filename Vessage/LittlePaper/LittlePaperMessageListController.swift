@@ -34,6 +34,8 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     @IBOutlet weak var sendedButton: UIButton!
     @IBOutlet weak var openedButton: UIButton!
     
+    private var trashButton: UIBarButtonItem!
+    
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.backgroundColor = UIColor.clearColor()
@@ -41,11 +43,19 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
             tableView.dataSource = self
         }
     }
-    private var paperMessages:[LittlePaperMessage]!{
+    
+    private var paperListType:Int = 0{
         didSet{
-            tableView.reloadData()
-            refreshTableViewFooter()
+            if tableView != nil{
+                tableView.reloadData()
+                refreshTableViewFooter()
+            }
         }
+    }
+    
+    private var paperMessages:[LittlePaperMessage]!{
+        return LittlePaperManager.instance.paperMessagesList.count > paperListType ?
+            LittlePaperManager.instance.paperMessagesList[paperListType] : nil
     }
 
     private var isNothing:Bool{
@@ -84,6 +94,7 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        trashButton = UIBarButtonItem(barButtonSystemItem: .Trash, target: self, action: #selector(LittlePaperMessageListController.onClickTrash(_:)))
         emptyTableViewFooter.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LittlePaperMessageListController.onClickEmptyTableViewFooter(_:))))
         self.myProfile = ServiceContainer.getUserService().myProfile
         onClickReceived()
@@ -98,27 +109,35 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     
     //MARK: actions
     
+    func onClickTrash(sender: AnyObject) {
+        let alertYes = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+            LittlePaperManager.instance.clearPaperMessageList(self.paperListType)
+            self.paperListType = self.paperListType + 0
+        })
+        self.showAlert("CORFIRM_CLEAR_ALL_PAPER_MESSAGES".localizedString(), msg: "CLEAR_ALL_PAPER_MESSAGES_TIPS".localizedString(), actions: [ALERT_ACTION_CANCEL,alertYes])
+    }
+    
     func onClickEmptyTableViewFooter(_:UITapGestureRecognizer) {
         WritePaperMessageViewController.showWritePaperMessageViewController(self)
     }
     
     @IBAction func onClickReceived() {
-        paperMessages = LittlePaperManager.instance.myNotDealMessages
+        paperListType = LittlePaperManager.TYPE_MY_NOT_DEAL
         refreshButtons(receivedButton)
     }
     
     @IBAction func onClickPosted() {
-        paperMessages = LittlePaperManager.instance.myPostededMessages
+        paperListType = LittlePaperManager.TYPE_MY_POSTED
         refreshButtons(postedButton)
     }
     
     @IBAction func onClickOpened() {
-        paperMessages = LittlePaperManager.instance.myOpenedMessages
+        paperListType = LittlePaperManager.TYPE_MY_OPENED
         refreshButtons(openedButton)
     }
     
     @IBAction func onClickSended() {
-        paperMessages = LittlePaperManager.instance.mySendedMessages
+        paperListType = LittlePaperManager.TYPE_MY_SENDED
         refreshButtons(sendedButton)
     }
     
@@ -127,6 +146,11 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
         postedButton.enabled = postedButton != clickedButton
         openedButton.enabled = openedButton != clickedButton
         sendedButton.enabled = sendedButton != clickedButton
+        if receivedButton != clickedButton {
+            self.navigationItem.rightBarButtonItem = trashButton
+        }else{
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
     @IBAction func onClickBack(sender: AnyObject) {
@@ -139,7 +163,9 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return paperMessages?.count ?? 0
+        let cnt = paperMessages?.count ?? 0
+        self.trashButton.enabled = cnt > 0
+        return cnt
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -157,6 +183,22 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
             let controller = PaperMessageDetailViewController.showPaperMessageDetailViewController(self.navigationController!)
             controller.paperMessage = msg
         }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return self.navigationItem.rightBarButtonItem != nil
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let actionTitle = "REMOVE".localizedString()
+        let action = UITableViewRowAction(style: .Default, title: actionTitle, handler: { (ac, indexPath) -> Void in
+            let alertYes = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+                LittlePaperManager.instance.removePaperMessage(self.paperListType, index: indexPath.row)
+                self.paperListType = self.paperListType + 0
+            })
+            self.showAlert("CORFIRM_CLEAR_PAPER_MESSAGE".localizedString(), msg: "CLEAR_ALL_PAPER_MESSAGES_TIPS".localizedString(), actions: [ALERT_ACTION_CANCEL,alertYes])
+        })
+        return [action]
     }
 
     static func showLittlePaperMessageListController(vc:UIViewController){

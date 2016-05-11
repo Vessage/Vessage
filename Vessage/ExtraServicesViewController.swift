@@ -69,6 +69,11 @@ class ExtraServicesListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if ExtraServiceInfoList.count > 1 {
+            tableView.separatorStyle = .SingleLine
+        }else{
+            tableView.separatorStyle = .None
+        }
         return ExtraServiceInfoList.count
     }
     

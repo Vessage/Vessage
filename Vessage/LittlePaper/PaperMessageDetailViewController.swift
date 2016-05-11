@@ -10,14 +10,16 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
 
     var paperMessage:LittlePaperMessage!{
         didSet{
-            refreshPaper()
+            if self.paperReceiverInfoLabel != nil {
+                refreshPaper()
+            }
         }
     }
     
     private var myProfile:VessageUser = ServiceContainer.getUserService().myProfile
-    @IBOutlet weak var senderButton: UIButton!{
+    @IBOutlet weak var userTipsButton: UIButton!{
         didSet{
-            senderButton.layer.cornerRadius = 28
+            userTipsButton.layer.cornerRadius = 28
         }
     }
     @IBOutlet weak var openPaperButton: UIButton!{
@@ -33,19 +35,89 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     @IBOutlet weak var paperReceiverInfoLabel: UILabel!
     @IBOutlet weak var messageContentLabel: UITextView!{
         didSet{
-            
+            messageContentLabel.layer.cornerRadius = 3
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        refreshPaper()
+    }
     
+    //MARK: Refresh Paper Bottom Buttons
     private func refreshPaper(){
         paperReceiverInfoLabel.text = paperMessage.receiverInfo
         messageContentLabel.text = paperMessage.message
-        
-        senderButton.hidden = !paperMessage.isMyOpened(myProfile.userId)
-        openPaperButton.hidden = !paperMessage.isReceivedNotDeal(myProfile.userId)
-        postButton.hidden = openPaperButton.hidden
-        messageContentLabel.hidden = senderButton.hidden
+        userTipsButton.hidden = true
+        userTipsButton.enabled = false
+        openPaperButton.hidden = true
+        postButton.hidden = true
+        messageContentLabel.hidden = true
+        if paperMessage.isMySended(myProfile.userId) {
+            updateUserTipsButtonOfSendedMessage()
+        }else if paperMessage.isMyOpened(myProfile.userId){
+            updateUserTipsButtonOfOpenedMessage()
+        }else if paperMessage.isMyPosted(myProfile.userId){
+            updateUserTipsButtonOfPostedMessage()
+        }else if paperMessage.isReceivedNotDeal(myProfile.userId){
+            openPaperButton.hidden = false
+            postButton.hidden = false
+        }
+    }
+    
+    private func updateUserTipsButtonOfPostedMessage(){
+        if paperMessage.isOpened {
+            userTipsButton.setTitle("PAPER_POSTED_TO_RECEIVER".localizedString(), forState: .Normal)
+        }else{
+            userTipsButton.setTitle("PAPER_POSTED".localizedString(), forState: .Normal)
+        }
+        userTipsButton.hidden = false
+    }
+    
+    private func updateUserTipsButtonOfOpenedMessage(){
+        if let sender = ServiceContainer.getUserService().getCachedUserProfile(paperMessage.sender){
+            let titleFormat = "PAPER_SEND_BY".localizedString()
+            let nick = ServiceContainer.getUserService().getUserNotedName(sender.userId)
+            userTipsButton.setTitle(String(format: titleFormat,nick), forState: .Normal)
+            userTipsButton.hidden = false
+            userTipsButton.enabled = true
+        }else{
+            ServiceContainer.getUserService().getUserProfile(paperMessage.sender, updatedCallback: { (user) in
+                if user != nil{
+                    let titleFormat = "PAPER_SEND_BY".localizedString()
+                    let nick = ServiceContainer.getUserService().getUserNotedName(self.paperMessage.sender)
+                    self.userTipsButton.setTitle(String(format: titleFormat,nick), forState: .Normal)
+                    self.userTipsButton.hidden = false
+                    self.userTipsButton.enabled = true
+                }
+            })
+        }
+    }
+    
+    private func updateUserTipsButtonOfSendedMessage(){
+        if paperMessage.isOpened {
+            if let receiver = ServiceContainer.getUserService().getCachedUserProfile(paperMessage.receiver){
+                let titleFormat = "PAPER_OPEN_BY".localizedString()
+                let nick = ServiceContainer.getUserService().getUserNotedName(receiver.userId)
+                userTipsButton.setTitle(String(format: titleFormat,nick), forState: .Normal)
+                userTipsButton.hidden = false
+                userTipsButton.enabled = true
+            }else{
+                ServiceContainer.getUserService().getUserProfile(paperMessage.receiver, updatedCallback: { (u) in
+                    if let user = u{
+                        let titleFormat = "PAPER_OPEN_BY".localizedString()
+                        let nick = ServiceContainer.getUserService().getUserNotedName(user.userId)
+                        self.userTipsButton.setTitle(String(format: titleFormat,nick), forState: .Normal)
+                        self.userTipsButton.hidden = false
+                        self.userTipsButton.enabled = true
+                        
+                    }
+                })
+            }
+        }else{
+            userTipsButton.hidden = false
+            userTipsButton.setTitle("PAPER_POSTING".localizedString(), forState: .Normal)
+        }
     }
     
     //MARK: actions
@@ -75,15 +147,10 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     //MARK: SelectVessageUserViewControllerDelegate
     func onFinishSelect(sender:SelectVessageUserViewController,selectedUsers: [VessageUser]) {
         let hud = self.showActivityHudWithMessage(nil, message: nil)
-        LittlePaperManager.instance.postPaperToNextUser(paperMessage.paperId, userId: selectedUsers.first!.userId) { (suc) in
+        LittlePaperManager.instance.postPaperToNextUser(paperMessage.paperId,userId: selectedUsers.first!.userId,isAnonymous: false) { (suc) in
             hud.hideAsync(true)
             if suc{
                 self.playCheckMark("SUCCESS".localizedString())
-                if String.isNullOrWhiteSpace(self.paperMessage.postmen){
-                    self.paperMessage.postmen.appendContentsOf(self.myProfile.userId)
-                }else{
-                    self.paperMessage.postmen.appendContentsOf(",\(self.myProfile.userId)")
-                }
                 self.refreshPaper()
             }else{
                 self.playCrossMark("FAIL".localizedString())
@@ -104,6 +171,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
             hud.hideAsync(true)
             if openedMsg != nil{
                 self.paperMessage = openedMsg
+                self.refreshPaper()
             }
         }
     }

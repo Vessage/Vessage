@@ -62,72 +62,11 @@ class LittlePaperManager {
     
     private func loadCachedData(){
         myUserId = ServiceContainer.getUserService().myProfile.userId
+        
         var msgs = PersistentManager.sharedInstance.getAllModel(LittlePaperMessage)
         
-        
-//        AccountId=147258,UserId=56e659cbdba47c3604b1384e
-//        AccountId=147259,UserId=56e6c6b0dba47c0d58cb6429
-//        AccountId=147260,UserId=56ee6cd3fa1de5319005954a
-//        AccountId=147261,UserId=56ee7110fa1de5319005954b
-//        AccountId=147262,UserId=56f01076fa1de5617886a889
-//        AccountId=147263,UserId=56f00ea7fa1de5617886a888
-        
-        let sendedmsg = LittlePaperMessage()
-        sendedmsg.isOpened = false
-        sendedmsg.sender = "56e659cbdba47c3604b1384e"
-        sendedmsg.message = "Test"
-        sendedmsg.paperId = "123456"
-        sendedmsg.receiverInfo = "Test Receiver Send Not Open"
-        sendedmsg.updatedTime = NSDate().toAccurateDateTimeString()
-        msgs.append(sendedmsg)
-        
-        let sendedOpedMsg = LittlePaperMessage()
-        sendedOpedMsg.paperId = "dddd"
-        sendedOpedMsg.isOpened = true
-        sendedOpedMsg.sender = "56e659cbdba47c3604b1384e"
-        sendedOpedMsg.postmen = "56e659cbdba47c3604b1384e,56ee7110fa1de5319005954b,56ee6cd3fa1de5319005954a,56e6c6b0dba47c0d58cb6429"
-        sendedOpedMsg.receiver = "56f00ea7fa1de5617886a888"
-        sendedOpedMsg.receiverInfo = "Test Receiver Send Opened"
-        sendedOpedMsg.updatedTime = NSDate().toAccurateDateTimeString()
-        msgs.append(sendedOpedMsg)
-        
-        var notDealMsg = LittlePaperMessage()
-        notDealMsg.isOpened = false
-        notDealMsg.message = "Test"
-        notDealMsg.paperId = "sdfasdfs"
-        notDealMsg.postmen = "56ee7110fa1de5319005954b"
-        notDealMsg.receiverInfo = "Test Receiver Not Deal"
-        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
-        msgs.append(notDealMsg)
-        
-        notDealMsg = LittlePaperMessage()
-        notDealMsg.isOpened = false
-        notDealMsg.message = "Test"
-        notDealMsg.paperId = "sdfasdfsss"
-        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e659cbdba47c3604b1384e"
-        notDealMsg.receiverInfo = "Test Receiver Posted"
-        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
-        msgs.append(notDealMsg)
-        
-        notDealMsg = LittlePaperMessage()
-        notDealMsg.isOpened = true
-        notDealMsg.message = "Test"
-        notDealMsg.paperId = "sdfddasdfsss"
-        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e659cbdba47c3604b1384e"
-        notDealMsg.receiverInfo = "Test Receiver Posted Opened"
-        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
-        msgs.append(notDealMsg)
-        
-        notDealMsg = LittlePaperMessage()
-        notDealMsg.isOpened = true
-        notDealMsg.message = "Test My Opened"
-        notDealMsg.paperId = "sdfasdfsssss"
-        notDealMsg.sender = "56f01076fa1de5617886a889"
-        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e6c6b0dba47c0d58cb6429"
-        notDealMsg.receiverInfo = "Test Receiver I Opened"
-        notDealMsg.receiver = "56e659cbdba47c3604b1384e"
-        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
-        msgs.append(notDealMsg)
+        //TODO:Delete Test
+        msgs = test()
         
         mySendedMessages.appendContentsOf(msgs.removeElement{$0.isMySended(self.myUserId)})
         myOpenedMessages.appendContentsOf(msgs.removeElement{$0.isMyOpened(self.myUserId)})
@@ -235,5 +174,76 @@ class LittlePaperManager {
                 callback(suc: false)
             }
         }
+    }
+    
+    //TODO:Delete Test
+    private func test() -> [LittlePaperMessage]{
+        
+//        AccountId=147258,UserId=56e659cbdba47c3604b1384e
+//        AccountId=147259,UserId=56e6c6b0dba47c0d58cb6429
+//        AccountId=147260,UserId=56ee6cd3fa1de5319005954a
+//        AccountId=147261,UserId=56ee7110fa1de5319005954b
+//        AccountId=147262,UserId=56f01076fa1de5617886a889
+//        AccountId=147263,UserId=56f00ea7fa1de5617886a888
+        
+        var msgs = [LittlePaperMessage]()
+        let sendedmsg = LittlePaperMessage()
+        sendedmsg.isOpened = false
+        sendedmsg.sender = myUserId
+        sendedmsg.message = "Test"
+        sendedmsg.paperId = "123456"
+        sendedmsg.receiverInfo = "Test Receiver Send Not Open"
+        sendedmsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(sendedmsg)
+        
+        let sendedOpedMsg = LittlePaperMessage()
+        sendedOpedMsg.paperId = "dddd"
+        sendedOpedMsg.isOpened = true
+        sendedOpedMsg.sender = myUserId
+        sendedOpedMsg.postmen = "\(myUserId),56ee7110fa1de5319005954b,56ee6cd3fa1de5319005954a,56e6c6b0dba47c0d58cb6429"
+        sendedOpedMsg.receiver = "56f00ea7fa1de5617886a888"
+        sendedOpedMsg.receiverInfo = "Test Receiver Send Opened"
+        sendedOpedMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(sendedOpedMsg)
+        
+        var notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = false
+        notDealMsg.message = "Test"
+        notDealMsg.paperId = "sdfasdfs"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b"
+        notDealMsg.receiverInfo = "Test Receiver Not Deal"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = false
+        notDealMsg.message = "Test"
+        notDealMsg.paperId = "sdfasdfsss"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b,\(myUserId)"
+        notDealMsg.receiverInfo = "Test Receiver Posted"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = true
+        notDealMsg.message = "Test"
+        notDealMsg.paperId = "sdfddasdfsss"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b,\(myUserId)"
+        notDealMsg.receiverInfo = "Test Receiver Posted Opened"
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        notDealMsg = LittlePaperMessage()
+        notDealMsg.isOpened = true
+        notDealMsg.message = "Test My Opened"
+        notDealMsg.paperId = "sdfasdfsssss"
+        notDealMsg.sender = "56f01076fa1de5617886a889"
+        notDealMsg.postmen = "56ee7110fa1de5319005954b,56e6c6b0dba47c0d58cb6429"
+        notDealMsg.receiverInfo = "Test Receiver I Opened"
+        notDealMsg.receiver = myUserId
+        notDealMsg.updatedTime = NSDate().toAccurateDateTimeString()
+        msgs.append(notDealMsg)
+        
+        return msgs
     }
 }

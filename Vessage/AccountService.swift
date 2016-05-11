@@ -32,7 +32,7 @@ class AccountService: ServiceProtocol
     {
         #if DEBUG
             print("userId=\(userId)")
-            print("userId=\(UserSetting.token)")
+            print("userToken=\(UserSetting.token)")
         #endif
         BahamutRFKit.sharedInstance.resetUser(userId,token:UserSetting.token)
         BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)

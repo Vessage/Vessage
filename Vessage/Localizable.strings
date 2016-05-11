@@ -215,10 +215,19 @@ NO_CONTACT_PERSIMISSION = "请在系统设置找到Vege应用选项并开启通�
 OPEN_A_CONTACT_CONVERSATION = "开始新对话！";
 
 NO_HUMEN_FACES_DETECTED = "请露脸~~";
-
 UNLOADED_USER = "Vege用户";
+
+//Little Paper
 NEW_FRIEND = "新朋友";
 SELECT_POST_MAN = "选择接收的人";
 NO_PAPER_MESSAGE = "空空的盒子\n给别人传一条小纸条吧！~";
 PAPER_RECEIVER_IS_NULL = "你忘了写上纸条接收人的信息了~ ~";
 PAPER_MESSAGE_IS_NULL = "纸条上是不是少写了内容呢~ ~";
+PAPER_POSTED = "纸条已经传递出去";
+PAPER_POSTED_TO_RECEIVER = "纸条已经传递到接收人";
+PAPER_POSTING = "你的纸条正在传递中";
+PAPER_OPEN_BY = "你的纸条已经被 %@ 打开";
+PAPER_SEND_BY = "%@ 发出的纸条";
+CORFIRM_CLEAR_PAPER_MESSAGE = "删除纸条？";
+CORFIRM_CLEAR_ALL_PAPER_MESSAGES = "清空当前盒子？";
+CLEAR_ALL_PAPER_MESSAGES_TIPS = "纸条删除后不能看到该纸条传递中的状态更新";

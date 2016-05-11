@@ -164,6 +164,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                 updatedCallback(user: nil)
             }
             if let user = result.returnObject{
+                #if DEBUG
+                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
+                #endif
                 user.lastUpdatedTime = NSDate()
                 user.saveModel()
                 PersistentManager.sharedInstance.saveAll()
@@ -175,8 +178,8 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func getUserNotedName(userId:String) -> String? {
-        return userNoteNames[userId] ?? getCachedUserProfile(userId)?.nickName
+    func getUserNotedName(userId:String) -> String {
+        return userNoteNames[userId] ?? getCachedUserProfile(userId)?.nickName ?? "UNLOADED_USER".localizedString()
     }
     
     func setUserNoteName(userId:String,noteName:String){

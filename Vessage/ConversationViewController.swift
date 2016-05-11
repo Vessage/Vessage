@@ -225,7 +225,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
                 MobClick.event("JumpVessage")
                 self.loadNextVessage()
             })
-            self.showAlert("CLICK_NEXT_MESSAGE_TIPS_TITLE".localizedString(), msg: "CLICK_NEXT_MESSAGE_TIPS".localizedString(), actions: [ALERT_ACTION_I_SEE.first!,continueAction])
+            self.showAlert("CLICK_NEXT_MESSAGE_TIPS_TITLE".localizedString(), msg: "CLICK_NEXT_MESSAGE_TIPS".localizedString(), actions: [ALERT_ACTION_I_SEE,continueAction])
         }
     }
     

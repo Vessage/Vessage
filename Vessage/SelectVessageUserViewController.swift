@@ -59,13 +59,22 @@ class SelectVessageUserViewController: UITableViewController {
         }
     }
     
+    var showActiveUsers:Bool = false{
+        didSet{
+            if tableView != nil{
+                tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            }
+        }
+    }
+    var activeUsers = [VessageUser]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = true
         let conversations = ServiceContainer.getConversationService().conversations.filter{!String.isNullOrEmpty($0.chatterId)}
         let userService = ServiceContainer.getUserService()
-        
+        activeUsers = userService.activeUsers
         userInfos = conversations.map { (c) -> VessageUser in
             if let res = userService.getCachedUserProfile(c.chatterId){
                 return res
@@ -99,10 +108,13 @@ class SelectVessageUserViewController: UITableViewController {
     
     //MARK: Table View delegate
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return activeUsers.count
+        }
         return userInfos.count
     }
     
@@ -129,12 +141,19 @@ class SelectVessageUserViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "CONTACTS".localizedString()
+        if section == 0 {
+            return showActiveUsers && activeUsers.count > 0 ? "ACTIVE_USERS".localizedString() : nil
+        }
+        return userInfos.count > 0 ? "CONTACTS".localizedString() : "INVITE_FRIENDS_TO_CONVERSATION".localizedString()
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SelectVessageUserListCell.reuseId, forIndexPath: indexPath) as! SelectVessageUserListCell
-        cell.user = userInfos[indexPath.row]
+        if indexPath.section == 0 {
+            cell.user = activeUsers[indexPath.row]
+        }else{
+            cell.user = userInfos[indexPath.row]
+        }
         cell.selected = false
         return cell
     }

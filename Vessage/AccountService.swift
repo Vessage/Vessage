@@ -51,6 +51,7 @@ class AccountService: ServiceProtocol
     @objc func userLogout(userId: String) {
         MobClick.profileSignOff()
         
+        self.setServiceNotReady()
         //MARK: Chicago
         //ChicagoClient.sharedInstance.logout()
         

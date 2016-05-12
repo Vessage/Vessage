@@ -46,7 +46,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLogout(userId: String) {
-        
+        setServiceNotReady()
     }
     
     private(set) var conversations = [Conversation]()

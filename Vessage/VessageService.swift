@@ -53,6 +53,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     }
     
     @objc func userLogout(userId: String) {
+        setServiceNotReady()
     }
     
     private func initNotReadVessageCountMap(){

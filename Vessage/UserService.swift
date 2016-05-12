@@ -44,7 +44,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private let notUpdateUserInMinutes:Int = 20
     private var userNoteNames = [String:String]()
     private(set) var myProfile:VessageUser!
-    private(set) var activeUsers:[VessageUser]!
+    private(set) var activeUsers = [VessageUser]()
     
     var isUserMobileValidated:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mobile)
@@ -60,10 +60,10 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     
     @objc func userLoginInit(userId: String) {
         initServiceData(userId)
-        getActiveUsers()
     }
     
     @objc func userLogout(userId: String) {
+        setServiceNotReady()
         removeUserDeviceTokenFromServer()
         myProfile = nil
     }
@@ -78,6 +78,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                 if self.myProfile == nil{
                     self.myProfile = user
                     self.registUserDeviceToken(VessageSetting.deviceToken)
+                    self.getActiveUsers()
                     self.setServiceReady()
                 }else{
                     self.myProfile = user
@@ -88,6 +89,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         })
         if myProfile != nil{
             self.registUserDeviceToken(VessageSetting.deviceToken)
+            self.getActiveUsers()
             self.setServiceReady()
         }
         if let notes = NSUserDefaults.standardUserDefaults().dictionaryForKey("UserNoteNames:\(userId)") as? [String:String]{
@@ -190,9 +192,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     func getActiveUsers(){
         let req = GetActiveUsersInfoRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
-            if let users = result.returnObject{
-                users.saveBahamutObjectModels()
-                self.activeUsers = users
+            if let activeUsers = result.returnObject{
+                activeUsers.saveBahamutObjectModels()
+                self.activeUsers = activeUsers
             }
         }
     }

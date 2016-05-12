@@ -124,7 +124,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     @IBAction func onClickAllPeople(sender: AnyObject) {
         let userService = ServiceContainer.getUserService()
         var unloadedUsers = [VessageUser]()
-        let users = paperMessage.postmen.split(",").map { (userId) -> VessageUser in
+        let users = paperMessage.postmen?.map { (userId) -> VessageUser in
             if let user = userService.getCachedUserProfile(userId){
                 return user
             }else{
@@ -133,7 +133,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
                 return user
             }
         }
-        UserCollectionViewController.showUserCollectionViewController(self.navigationController!,users: users)
+        UserCollectionViewController.showUserCollectionViewController(self.navigationController!,users: users ?? [])
         for user in unloadedUsers {
             userService.fetchUserProfile(user.userId)
         }
@@ -147,13 +147,13 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     //MARK: SelectVessageUserViewControllerDelegate
     func onFinishSelect(sender:SelectVessageUserViewController,selectedUsers: [VessageUser]) {
         let hud = self.showActivityHudWithMessage(nil, message: nil)
-        LittlePaperManager.instance.postPaperToNextUser(paperMessage.paperId,userId: selectedUsers.first!.userId,isAnonymous: false) { (suc) in
+        LittlePaperManager.instance.postPaperToNextUser(paperMessage.paperId,userId: selectedUsers.first!.userId,isAnonymous: false) { (suc,errorMsg) in
             hud.hideAsync(true)
             if suc{
                 self.playCheckMark("SUCCESS".localizedString())
                 self.refreshPaper()
             }else{
-                self.playCrossMark("FAIL".localizedString())
+                self.playCrossMark((errorMsg ?? "UNKNOW_ERROR").localizedString())
             }
         }
     }
@@ -167,11 +167,13 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     
     @IBAction func onClickOpenPaper(sender: AnyObject) {
         let hud = self.showActivityHudWithMessage(nil, message: nil)
-        LittlePaperManager.instance.openPaperMessage(paperMessage.paperId) { (openedMsg) in
+        LittlePaperManager.instance.openPaperMessage(paperMessage.paperId) { (openedMsg,errorMsg) in
             hud.hideAsync(true)
-            if openedMsg != nil{
-                self.paperMessage = openedMsg
+            if let m = openedMsg{
+                self.paperMessage = m
                 self.refreshPaper()
+            }else{
+                self.playCrossMark((errorMsg ?? "UNKNOW_ERROR").localizedString())
             }
         }
     }

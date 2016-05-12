@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Bahamut. All rights reserved.
 //
 
-class WritePaperMessageViewController: UIViewController ,SelectVessageUserViewControllerDelegate{
+class WritePaperMessageViewController: UIViewController,SelectVessageUserViewControllerDelegate{
 
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var receiverInfoTextField: UITextField!
@@ -68,6 +68,7 @@ class WritePaperMessageViewController: UIViewController ,SelectVessageUserViewCo
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
         controller.title = "SELECT_POST_MAN".localizedString()
         controller.delegate = self
+        controller.showActiveUsers = true
         controller.allowsMultipleSelection = false
     }
     
@@ -76,7 +77,7 @@ class WritePaperMessageViewController: UIViewController ,SelectVessageUserViewCo
     }
     
     static func showWritePaperMessageViewController(vc:UIViewController){
-        let controller = instanceFromStoryBoard("LittlePaperMessage", identifier: "WritePaperMessageViewController")
+        let controller = instanceFromStoryBoard("LittlePaperMessage", identifier: "WritePaperMessageViewController") as! WritePaperMessageViewController
         let nvc = UINavigationController(rootViewController: controller)
         vc.presentViewController(nvc, animated: true, completion: nil)
     }

@@ -18,7 +18,7 @@ class LittlePaperMessage: BahamutObject {
     var receiver:String!
     var receiverInfo:String!
     var message:String!
-    var postmen:String!
+    var postmen:[String]!
     var updatedTime:String!
     var isOpened = false
     
@@ -36,8 +36,11 @@ class LittlePaperMessage: BahamutObject {
         return isMyReceived(myUserId) && !isMyOpened(myUserId) && !isMyPosted(myUserId)
     }
     
-    func isMyPosted(myUserId:String!) -> Bool{
-        return !String.isNullOrWhiteSpace(postmen) && postmen.containsString(myUserId)
+    func isMyPosted(myUserId:String) -> Bool{
+        if let pms = postmen{
+            return pms.contains(myUserId)
+        }
+        return false
     }
     
     func isMyOpened(myUserId:String!) -> Bool{
@@ -88,7 +91,7 @@ class PostPaperMessageRequest: BahamutRFRequestBase {
 class GetReceivedPaperMessagesRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.api = "/LittlePaperMessages"
+        self.api = "/LittlePaperMessages/Received"
         self.method = .GET
     }
 }

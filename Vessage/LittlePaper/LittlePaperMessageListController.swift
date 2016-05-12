@@ -101,10 +101,38 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
         emptyTableViewFooter.hidden = true
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setButtonBadges()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         refreshTableViewFooter()
         emptyTableViewFooter.hidden = false
+    }
+    
+    private func setButtonBadges(){
+        var cnt = 0
+        receivedButton.badgeOriginX = -6
+        receivedButton.badgeOriginY = -6
+        cnt = LittlePaperManager.instance.myNotDealMessages.count
+        receivedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        
+        postedButton.badgeOriginX = -6
+        postedButton.badgeOriginY = -6
+        cnt = LittlePaperManager.instance.myPostededMessageUpdatedCount
+        postedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        
+        sendedButton.badgeOriginX = -6
+        sendedButton.badgeOriginY = -6
+        cnt = LittlePaperManager.instance.mySendedMessageUpdatedCount
+        sendedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        
+        openedButton.badgeOriginX = -6
+        openedButton.badgeOriginY = -6
+        cnt = LittlePaperManager.instance.myOpenedMessageUpdatedCount
+        openedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
     }
     
     //MARK: actions
@@ -151,6 +179,7 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
         }else{
             self.navigationItem.rightBarButtonItem = nil
         }
+        setButtonBadges()
     }
     
     @IBAction func onClickBack(sender: AnyObject) {
@@ -180,6 +209,7 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let msg = paperMessages?[indexPath.row]{
+            LittlePaperManager.instance.clearPaperMessageUpdated(paperListType, index: indexPath.row)
             let controller = PaperMessageDetailViewController.showPaperMessageDetailViewController(self.navigationController!)
             controller.paperMessage = msg
         }

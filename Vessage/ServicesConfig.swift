@@ -13,5 +13,6 @@ let ServicesConfig:ServiceListDict =
     (FileService.ServiceName,FileService(mondBundle: NSBundle.mainBundle(),coreDataUpdater: nil)),
     (UserService.ServiceName,UserService()),
     (VessageService.ServiceName,VessageService()),
-    (ConversationService.ServiceName,ConversationService())
+    (ConversationService.ServiceName,ConversationService()),
+    (ActivityService.ServiceName,ActivityService())
 ]

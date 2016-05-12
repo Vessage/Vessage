@@ -170,13 +170,13 @@
         <!--奇趣-->
         <scene sceneID="6RM-39-W1b">
             <objects>
-                <tableViewController id="wPu-tu-atQ" customClass="ExtraServicesListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ActivityListController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wPu-tu-atQ" customClass="ActivityListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YX3-Ju-1g4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ExtraServiceCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExtraServiceCell" id="YE7-6d-8ZT" customClass="ExtraServiceCell" customModule="Vessage" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ActivityListCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActivityListCell" id="YE7-6d-8ZT" customClass="ActivityListCell" customModule="Vessage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YE7-6d-8ZT" id="qhQ-0l-EBc">

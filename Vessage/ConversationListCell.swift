@@ -48,6 +48,9 @@ class ConversationListCell:ConversationListCellBase{
                     updateWithConversation(conversation)
                 }else if let user = searchResult.user{
                     updateWithUser(user)
+                    if searchResult.activeUser {
+                        subLine = "ACTIVE_USER".localizedString()
+                    }
                 }else if let mobile = searchResult.mobile{
                     updateWithMobile(mobile)
                 }

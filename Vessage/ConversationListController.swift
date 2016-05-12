@@ -13,6 +13,7 @@ class SearchResultModel{
     var keyword:String!
     var conversation:Conversation!
     var user:VessageUser!
+    var activeUser:Bool = false
     var mobile:String!
 }
 
@@ -26,7 +27,7 @@ class ConversationListCellBase:UITableViewCell{
 }
 
 //MARK: ConversationListController
-class ConversationListController: UITableViewController,UISearchBarDelegate {
+class ConversationListController: UITableViewController {
 
     let conversationService = ServiceContainer.getConversationService()
     let vessageService = ServiceContainer.getVessageService()
@@ -170,64 +171,6 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         }
     }
     
-    //MARK: search bar delegate
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        isSearching = true
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        if String.isNullOrWhiteSpace(searchBar.text){
-            isSearching = false
-        }
-    }
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        searchResult.removeAll()
-        if String.isNullOrWhiteSpace(searchText) == false{
-            let conversations = conversationService.searchConversation(searchText)
-            let res = conversations.map({ (c) -> SearchResultModel in
-                let model = SearchResultModel()
-                model.keyword = searchText
-                model.conversation = c
-                return model
-            })
-            searchResult.appendContentsOf(res)
-            userService.searchUser(searchText, callback: { (resultUsers) -> Void in
-                if let currentText = searchBar.text{
-                    if currentText != searchText{
-                        print("ignore search result")
-                        return
-                    }
-                }
-                let results = resultUsers.filter({ (resultUser) -> Bool in
-                    return conversations.count == 0 || !conversations.contains({ (c) -> Bool in
-                        if let chatterId = c.chatterId{
-                            return chatterId == resultUser.userId
-                        }
-                        return false
-                    })
-                }).map({ (resultUser) -> SearchResultModel in
-                    let model = SearchResultModel()
-                    model.user = resultUser
-                    model.keyword = searchText
-                    return model
-                })
-                self.searchResult.appendContentsOf(results)
-                if self.searchResult.count == 0 && searchText.isMobileNumber(){
-                    let model = SearchResultModel()
-                    model.keyword = searchText
-                    model.mobile = searchText
-                    self.searchResult.append(model)
-                }
-            })
-        }
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        isSearching = false
-    }
-    
     //MARK: table view delegate
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if self.isSearching{
@@ -340,5 +283,76 @@ class ConversationListController: UITableViewController,UISearchBarDelegate {
         viewController.presentViewController(nvc, animated: false) { () -> Void in
             
         }
+    }
+}
+
+extension ConversationListController:UISearchBarDelegate
+{
+    //MARK: search bar delegate
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchResult.removeAll()
+        let users = userService.activeUsers.getRandomSubArray(3)
+        let hotUserRes = users.map({ (resultUser) -> SearchResultModel in
+            let model = SearchResultModel()
+            model.user = resultUser
+            model.activeUser = true
+            model.keyword = resultUser.accountId
+            return model
+        })
+        searchResult.appendContentsOf(hotUserRes)
+        isSearching = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        if String.isNullOrWhiteSpace(searchBar.text){
+            isSearching = false
+        }
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        searchResult.removeAll()
+        if String.isNullOrWhiteSpace(searchText) == false{
+            let conversations = conversationService.searchConversation(searchText)
+            let res = conversations.map({ (c) -> SearchResultModel in
+                let model = SearchResultModel()
+                model.keyword = searchText
+                model.conversation = c
+                return model
+            })
+            searchResult.appendContentsOf(res)
+            userService.searchUser(searchText, callback: { (resultUsers) -> Void in
+                if let currentText = searchBar.text{
+                    if currentText != searchText{
+                        print("ignore search result")
+                        return
+                    }
+                }
+                let results = resultUsers.filter({ (resultUser) -> Bool in
+                    return conversations.count == 0 || !conversations.contains({ (c) -> Bool in
+                        if let chatterId = c.chatterId{
+                            return chatterId == resultUser.userId
+                        }
+                        return false
+                    })
+                }).map({ (resultUser) -> SearchResultModel in
+                    let model = SearchResultModel()
+                    model.user = resultUser
+                    model.keyword = searchText
+                    return model
+                })
+                self.searchResult.appendContentsOf(results)
+                if self.searchResult.count == 0 && searchText.isMobileNumber(){
+                    let model = SearchResultModel()
+                    model.keyword = searchText
+                    model.mobile = searchText
+                    self.searchResult.append(model)
+                }
+            })
+        }
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        isSearching = false
     }
 }

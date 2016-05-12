@@ -67,6 +67,7 @@ COPY_SHARE_MESSAGE = "复制分享的文字";
 COPY_SHARE_MESSAGE_SUC = "复制成功";
 UNKNOW_ACTION = "未知操作";
 INIT_USER_DATA_ERROR = "获取用户数据失败，请重新登录!";
+UNKNOW_ERROR = "发生未知错误";
 
 //System
 SETTING = "Setting";
@@ -216,6 +217,9 @@ OPEN_A_CONTACT_CONVERSATION = "开始新对话！";
 
 NO_HUMEN_FACES_DETECTED = "请露脸~~";
 UNLOADED_USER = "Vege用户";
+ACTIVE_USERS = "广场";
+INVITE_FRIENDS_TO_CONVERSATION = "还没有联系人，邀请朋友一起玩吧";
+ACTIVE_USER = "活跃的用户";
 
 //Little Paper
 NEW_FRIEND = "新朋友";
@@ -231,3 +235,8 @@ PAPER_SEND_BY = "%@ 发出的纸条";
 CORFIRM_CLEAR_PAPER_MESSAGE = "删除纸条？";
 CORFIRM_CLEAR_ALL_PAPER_MESSAGES = "清空当前盒子？";
 CLEAR_ALL_PAPER_MESSAGES_TIPS = "纸条删除后不能看到该纸条传递中的状态更新";
+
+PAPER_OPENED = "消息已经被打开，不能再次打开";
+NO_SUCH_PAPER_ID = "没找到该纸条";
+USER_POSTED_THIS_PAPER = "纸条由该用户传递过来，不能传回去";
+SELF_IS_RECEIVER = "不能传递纸条给自己";

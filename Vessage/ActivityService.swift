@@ -21,7 +21,6 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
     
     @objc func userLoginInit(userId:String)
     {
-        getActivitiesBoardData()
         setServiceReady()
     }
     

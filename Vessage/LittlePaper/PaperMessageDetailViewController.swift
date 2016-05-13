@@ -47,7 +47,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     //MARK: Refresh Paper Bottom Buttons
     private func refreshPaper(){
         paperReceiverInfoLabel.text = paperMessage.receiverInfo
-        messageContentLabel.text = paperMessage.message
+        messageContentLabel.text = nil
         userTipsButton.hidden = true
         userTipsButton.enabled = false
         openPaperButton.hidden = true
@@ -55,8 +55,15 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         messageContentLabel.hidden = true
         if paperMessage.isMySended(myProfile.userId) {
             updateUserTipsButtonOfSendedMessage()
+            messageContentLabel.text = paperMessage.message
+            messageContentLabel.hidden = false
         }else if paperMessage.isMyOpened(myProfile.userId){
             updateUserTipsButtonOfOpenedMessage()
+            messageContentLabel.hidden = false
+            UIAnimationHelper.animationPageCurlView(messageContentLabel, duration: 0.3, completion: {
+                self.messageContentLabel.text = self.paperMessage.message
+            })
+            messageContentLabel.hidden = false
         }else if paperMessage.isMyPosted(myProfile.userId){
             updateUserTipsButtonOfPostedMessage()
         }else if paperMessage.isReceivedNotDeal(myProfile.userId){
@@ -140,8 +147,17 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     }
     
     @IBAction func onClickSender(sender: AnyObject) {
-        let conversation = ServiceContainer.getConversationService().openConversationByUserId(paperMessage.sender,noteName: "NEW_FRIEND".localizedString())
-        ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+        if let user = ServiceContainer.getUserService().getCachedUserProfile(paperMessage.sender){
+            let conversation = ServiceContainer.getConversationService().openConversationByUserId(paperMessage.sender,noteName: user.nickName)
+            ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+        }else{
+            ServiceContainer.getUserService().getUserProfile(paperMessage.sender, updatedCallback: { (u) in
+                if let user = u{
+                    let conversation = ServiceContainer.getConversationService().openConversationByUserId(self.paperMessage.sender,noteName: user.nickName)
+                    ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+                }
+            })
+        }
     }
     
     //MARK: SelectVessageUserViewControllerDelegate
@@ -167,16 +183,19 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     }
     
     @IBAction func onClickOpenPaper(sender: AnyObject) {
-        let hud = self.showActivityHudWithMessage(nil, message: nil)
-        LittlePaperManager.instance.openPaperMessage(paperMessage.paperId) { (openedMsg,errorMsg) in
-            hud.hideAsync(true)
-            if let m = openedMsg{
-                self.paperMessage = m
-                self.refreshPaper()
-            }else{
-                self.playCrossMark((errorMsg ?? "UNKNOW_ERROR").localizedString())
+        let oKAction = UIAlertAction(title: "CONTINUE_OPEN_PAPER".localizedString(), style: .Default) { (ac) in
+            let hud = self.showActivityHudWithMessage(nil, message: nil)
+            LittlePaperManager.instance.openPaperMessage(self.paperMessage.paperId) { (openedMsg,errorMsg) in
+                hud.hideAsync(true)
+                if let m = openedMsg{
+                    self.paperMessage = m
+                    self.refreshPaper()
+                }else{
+                    self.playCrossMark((errorMsg ?? "UNKNOW_ERROR").localizedString())
+                }
             }
         }
+        self.showAlert("OPEN_PAPER_CONFIRM_TITLE".localizedString(), msg: "OPEN_PAPER_CONFIRM_MSG".localizedString(), actions: [ALERT_ACTION_CANCEL,oKAction])
     }
     
     static func showPaperMessageDetailViewController(nvc:UINavigationController) -> PaperMessageDetailViewController{

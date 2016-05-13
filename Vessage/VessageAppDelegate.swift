@@ -155,10 +155,11 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
                             if let locKey = jsonObj.objectForKey("loc-key") as? String{
                                 if locKey == "NEW_VMSG_NOTIFICATION"{
                                     ServiceContainer.getVessageService().newVessageFromServer()
+                                }else if locKey == "ACTIVITY_UPDATED_NOTIFICATION"{
+                                    ServiceContainer.getActivityService().getActivitiesBoardData()
                                 }
                             }
                         }
-                        
                     }
                 }
             }
@@ -190,6 +191,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         if ServiceContainer.isAllServiceReady{
             ServiceContainer.getVessageService().newVessageFromServer()
             ServiceContainer.getActivityService().getActivitiesBoardData()
+            ServiceContainer.getUserService().registUserDeviceToken(VessageSetting.deviceToken,checkTime: true)
         }
     }
 

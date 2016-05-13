@@ -94,11 +94,15 @@ class LittlePaperManager {
         req.setPaperId(paperId)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<LittlePaperMessage>) in
             if result.isSuccess{
-                let msg = self.myNotDealMessages.removeElement{$0.paperId == paperId}
-                self.myOpenedMessages.insertContentsOf(msg, at: 0)
-                callback(openedMsg: result.returnObject,errorMsg: nil)
-            }else if result.statusCode == 404{
-                callback(openedMsg: result.returnObject,errorMsg: "PAPER_OPENED")
+                let paper = result.returnObject
+                paper.saveModel()
+                self.myNotDealMessages.removeElement{$0.paperId == paperId}
+                self.myOpenedMessages.insert(paper, atIndex: 0)
+                callback(openedMsg: paper,errorMsg: nil)
+            }else if result.statusCode == 400{
+                callback(openedMsg: nil, errorMsg: "NO_SUCH_PAPER_ID")
+            }else if result.statusCode == 403{
+                callback(openedMsg: nil, errorMsg: "PAPER_OPENED")
             }else{
                 callback(openedMsg: nil, errorMsg: "UNKNOW_ERROR")
             }
@@ -111,17 +115,23 @@ class LittlePaperManager {
         req.setNextReceiver(userId)
         req.setPaperId(paperId)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
+            var msg = "SUCCESS"
+            if result.statusCode == 400{
+                msg = "NO_SUCH_PAPER_ID"
+            }else if result.statusCode == 403{
+                msg = "USER_POSTED_THIS_PAPER"
+            }
             if result.isSuccess{
-                if let msg = (self.myNotDealMessages.removeElement{$0.paperId == paperId}).first{
-                    if msg.postmen == nil{
-                        msg.postmen = [self.myUserId]
+                if let paper = (self.myNotDealMessages.removeElement{$0.paperId == paperId}).first{
+                    if paper.postmen == nil{
+                        paper.postmen = [self.myUserId]
                     }else{
-                        msg.postmen.append(self.myUserId)
+                        paper.postmen.append(self.myUserId)
                     }
-                    self.myPostededMessages.insert(msg, atIndex: 0)
+                    self.myPostededMessages.insert(paper, atIndex: 0)
                 }
             }
-            callback(suc: result.isSuccess,msg: result.returnObject?.msg)
+            callback(suc: result.isSuccess,msg: msg)
         }
     }
     

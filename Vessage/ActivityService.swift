@@ -8,7 +8,9 @@
 
 import Foundation
 
-let UpdatedActivityBadgeInfoValue = "UpdatedActivityBadgeInfoValue"
+let UpdatedActivityIdValue = "UpdatedActivityIdValue"
+let UpdatedActivityBadgeValue = "UpdatedActivityBadgeValue"
+let UpdatedActivityMiniBadgeValue = "UpdatedActivityMiniBadgeValue"
 let UpdatedActivitiesBadgeValue = "UpdatedActivitiesBadgeValue"
 class ActivityService: NSNotificationCenter, ServiceProtocol
 {
@@ -39,7 +41,11 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
                 for ac in acs{
                     if self.isActivityEnabled(ac.id){
                         totalBadge += ac.badge
-                        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityBadgeInfoValue:ac])
+                        let badge = self.getActivityBadge(ac.id) + ac.badge
+                        self.setActivityBadge(ac.id, badgeValue: badge)
+                        if ac.miniBadge{
+                            self.setActivityMiniBadgeShow(ac.id)
+                        }
                     }
                 }
                 self.postNotificationName(ActivityService.onEnabledActivitiesBadgeUpdated, object: self, userInfo: [UpdatedActivitiesBadgeValue:totalBadge])
@@ -51,12 +57,31 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         return true
     }
     
+    func clearActivityMiniBadge(id:String) {
+        UserSetting.disableSetting("ActivityMiniBadge\(id)")
+        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:false])
+    }
+    
+    func setActivityMiniBadgeShow(id:String){
+        UserSetting.enableSetting("ActivityMiniBadge\(id)")
+        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:true])
+    }
+    
+    func setActivityBadge(id:String,badgeValue:Int) {
+        UserSetting.setUserIntValue("ActivityBadge:\(id)",value: badgeValue)
+        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityBadgeValue:badgeValue])
+    }
+    
+    func clearActivityBadge(id:String) {
+        setActivityBadge(id, badgeValue: 0)
+    }
+    
     func getActivityBadge(id:String) -> Int {
-        return 10
+        return UserSetting.getUserIntValue("ActivityBadge:\(id)")
     }
     
     func isActivityShowMiniBadge(id:String) -> Bool {
-        return true
+        return UserSetting.isSettingEnable("ActivityMiniBadge\(id)")
     }
 
 }

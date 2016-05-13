@@ -202,16 +202,22 @@ class UserService:NSNotificationCenter, ServiceProtocol {
 
 //MARK: User Device Token
 extension UserService{
-    func registUserDeviceToken(deviceToken:String!){
+    func registUserDeviceToken(deviceToken:String!, checkTime:Bool = false){
         if String.isNullOrEmpty(deviceToken){
             return
+        }
+        if checkTime {
+            let time = UserSetting.getUserIntValue("USER_REGIST_DEVICE_TOKEN_TIME")
+            if time >= NSDate().totalDaysSince1970{
+                return
+            }
         }
         let req = RegistUserDeviceRequest()
         req.setDeviceType(RegistUserDeviceRequest.DEVICE_TYPE_IOS)
         req.setDeviceToken(deviceToken)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
-                
+                UserSetting.setUserIntValue("USER_REGIST_DEVICE_TOKEN_TIME", value: NSDate().totalDaysSince1970)
             }
         }
     }

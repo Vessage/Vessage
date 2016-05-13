@@ -108,6 +108,7 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        tableView.reloadData()
         refreshTableViewFooter()
         emptyTableViewFooter.hidden = false
     }

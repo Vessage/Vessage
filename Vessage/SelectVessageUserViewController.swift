@@ -99,7 +99,13 @@ class SelectVessageUserViewController: UITableViewController {
         self.navigationController?.popViewControllerAnimated(true)
         if let handler = delegate?.onFinishSelect{
             if let rows = tableView.indexPathsForSelectedRows{
-                handler(self, selectedUsers: rows.map{userInfos[$0.row]})
+                handler(self, selectedUsers: rows.map{
+                    if $0.section == 0{
+                        return activeUsers[$0.row]
+                    }
+                        return userInfos[$0.row]
+                    }
+                )
             }else{
                 handler(self, selectedUsers: [])
             }

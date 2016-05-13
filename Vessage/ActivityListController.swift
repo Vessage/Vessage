@@ -81,8 +81,8 @@ class ActivityListController: UITableViewController {
         self.tableView.scrollEnabled = false
         self.tableView.allowsSelection = true
         self.tableView.allowsMultipleSelection = false
-        self.activityService.addObserver(self, selector: #selector(MainTabBarController.onActivitiesBadgeUpdated(_:)), name: ActivityService.onEnabledActivitiesBadgeUpdated, object: nil)
-        ServiceContainer.instance.addObserver(self, selector: #selector(MainTabBarController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
+        self.activityService.addObserver(self, selector: #selector(ActivityListController.onActivityBadgeUpdated(_:)), name: ActivityService.onEnabledActivityBadgeUpdated, object: nil)
+        ServiceContainer.instance.addObserver(self, selector: #selector(ActivityListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
     }
     
     func onServicesWillLogout(a:NSNotification) {
@@ -90,10 +90,14 @@ class ActivityListController: UITableViewController {
         self.activityService.removeObserver(self)
     }
 
-    func onActivitiesBadgeUpdated(a:NSNotification){
+    func onActivityBadgeUpdated(a:NSNotification){
         for cell in self.tableView.visibleCells{
             if let c = cell as? ActivityListCell{
-                c.refreshCellBadge()
+                if let id = a.userInfo?[UpdatedActivityIdValue] as? String{
+                    if id == c.activityInfo.activityId{
+                        c.refreshCellBadge()
+                    }
+                }
             }
         }
     }
@@ -128,6 +132,8 @@ class ActivityListController: UITableViewController {
         }else{
             self.presentViewController(controller, animated: true, completion: nil)
         }
+        activityService.clearActivityBadge(activityInfo.activityId)
+        activityService.clearActivityMiniBadge(activityInfo.activityId)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

@@ -56,6 +56,9 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     }
     
     func onActivitiesBadgeUpdated(a:NSNotification){
+        if self.selectedIndex == 1 {
+            return
+        }
         if let count = a.userInfo?[UpdatedActivitiesBadgeValue] as? Int{
             if let ac = activityBadge{
                 activityBadge = ac + count
@@ -66,6 +69,9 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     }
     
     func onNewVessagesReceived(a:NSNotification){
+        if self.selectedIndex == 0{
+            return
+        }
         if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
             if let badge = conversationBadge{
                 conversationBadge = badge + vsgs.count

@@ -11,7 +11,7 @@ import Foundation
 class ActivityBoardData: BahamutObject {
     var id:String!
     var badge:Int = 0
-    var littleBadge = false
+    var miniBadge = false
 }
 
 class GetActivitiesBoardDataRequest: BahamutRFRequestBase {

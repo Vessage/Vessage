@@ -162,6 +162,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
         controller.title = "SELECT_POST_MAN".localizedString()
         controller.delegate = self
+        controller.showActiveUsers = true
         controller.allowsMultipleSelection = false
     }
     

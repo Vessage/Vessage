@@ -7,7 +7,74 @@
 //
 
 import Foundation
-class MainTabBarController: UITabBarController {
+
+//MARK:MainTabBarController
+class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
+    
+    var conversationBadge:Int!{
+        didSet{
+            if let value = conversationBadge {
+                UserSetting.setUserIntValue("ConversationListBadge", value: value)
+                
+            }
+            self.viewControllers?[0].tabBarItem?.badgeValue = conversationBadge != nil && conversationBadge > 0 ? "\(conversationBadge!)" : nil
+        }
+    }
+    
+    var activityBadge:Int!{
+        didSet{
+            if let value = activityBadge {
+                UserSetting.setUserIntValue("ActivityListBadge", value: value)
+                
+            }
+            self.viewControllers?[1].tabBarItem?.badgeValue = activityBadge != nil && activityBadge > 0 ? "\(activityBadge!)" : nil
+        }
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if viewControllers?[0] == viewController {
+            conversationBadge = 0
+        }else if viewControllers?[1] == viewController {
+            activityBadge = 0
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        delegate = self
+        conversationBadge = UserSetting.getUserIntValue("ConversationListBadge")
+        activityBadge = UserSetting.getUserIntValue("ActivityListBadge")
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(MainTabBarController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
+        ServiceContainer.getActivityService().addObserver(self, selector: #selector(MainTabBarController.onActivitiesBadgeUpdated(_:)), name: ActivityService.onEnabledActivitiesBadgeUpdated, object: nil)
+        ServiceContainer.instance.addObserver(self, selector: #selector(MainTabBarController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
+    }
+    
+    func onServicesWillLogout(a:NSNotification) {
+        ServiceContainer.instance.removeObserver(self)
+        ServiceContainer.getVessageService().removeObserver(self)
+        ServiceContainer.getActivityService().removeObserver(self)
+    }
+    
+    func onActivitiesBadgeUpdated(a:NSNotification){
+        if let count = a.userInfo?[UpdatedActivitiesBadgeValue] as? Int{
+            if let ac = activityBadge{
+                activityBadge = ac + count
+            }else{
+                activityBadge = count
+            }
+        }
+    }
+    
+    func onNewVessagesReceived(a:NSNotification){
+        if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
+            if let badge = conversationBadge{
+                conversationBadge = badge + vsgs.count
+            }else{
+                conversationBadge = vsgs.count
+            }
+        }
+    }
+    
     static func showMainController(viewController:UIViewController){
         let controller = instanceFromStoryBoard("Main", identifier: "MainTabBarController") as! MainTabBarController
         viewController.presentViewController(controller, animated: false) { () -> Void in

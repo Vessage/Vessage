@@ -42,7 +42,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     
     private var forceGetUserProfileOnce:Bool = false
     private let notUpdateUserInMinutes:Int = 20
-    private var userNoteNames = [String:String]()
+    private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
     private(set) var activeUsers = [VessageUser]()
     
@@ -92,8 +92,8 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             self.getActiveUsers()
             self.setServiceReady()
         }
-        if let notes = NSUserDefaults.standardUserDefaults().dictionaryForKey("UserNoteNames:\(userId)") as? [String:String]{
-            self.userNoteNames = notes
+        if let notedNames = UserSetting.getUserValue("UserNotedNames") as? [String:String]{
+            self.userNotedNames = notedNames
         }
     }
     
@@ -181,12 +181,12 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getUserNotedName(userId:String) -> String {
-        return userNoteNames[userId] ?? getCachedUserProfile(userId)?.nickName ?? "UNLOADED_USER".localizedString()
+        return userNotedNames[userId] ?? getCachedUserProfile(userId)?.nickName ?? "UNLOADED_USER".localizedString()
     }
     
     func setUserNoteName(userId:String,noteName:String){
-        userNoteNames[userId] = noteName
-        NSUserDefaults.standardUserDefaults().setObject(userNoteNames, forKey: "UserNoteNames:\(myProfile.userId)")
+        userNotedNames[userId] = noteName
+        UserSetting.setUserValue("UserNotedNames", value: userNotedNames)
     }
     
     func getActiveUsers(){

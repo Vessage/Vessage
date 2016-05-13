@@ -86,4 +86,24 @@ class UserSetting
     {
         setSetting(setting, enable: false)
     }
+    
+    static func setUserIntValue(setting:String,value:Int){
+        let key = getSettingKey(setting)
+        NSUserDefaults.standardUserDefaults().setInteger(value, forKey: key)
+    }
+    
+    static func getUserIntValue(setting:String) -> Int{
+        let key = getSettingKey(setting)
+        return NSUserDefaults.standardUserDefaults().integerForKey(key)
+    }
+    
+    static func setUserValue(setting:String,value:AnyObject){
+        let key = getSettingKey(setting)
+        NSUserDefaults.standardUserDefaults().setObject(value, forKey: key)
+    }
+    
+    static func getUserValue(setting:String) -> AnyObject?{
+        let key = getSettingKey(setting)
+        return NSUserDefaults.standardUserDefaults().objectForKey(key)
+    }
 }

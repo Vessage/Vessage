@@ -113,7 +113,7 @@ class SelectVessageUserViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return activeUsers.count
+            return showActiveUsers ? activeUsers.count : 0
         }
         return userInfos.count
     }

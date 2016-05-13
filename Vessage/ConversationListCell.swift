@@ -83,12 +83,14 @@ class ConversationListCell:ConversationListCellBase{
                     badgeLabel.hidden = true
                 }else{
                     badgeLabel.text = "\(badgeValue)"
+                    badgeLabel.hidden = false
+                    badgeLabel.animationMaxToMin()
                 }
             }
         }
     }
 
-    deinit{
+    func removeObservers(){
         ServiceContainer.getUserService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
@@ -135,6 +137,12 @@ class ConversationListCell:ConversationListCellBase{
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onNewVessageReceived, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onVessageRead, object: nil)
         ServiceContainer.getConversationService().addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
+        ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
+        
+    }
+    
+    func onServicesWillLogout(a:NSNotification) {
+        removeObservers()
     }
     
     func onConversationUpdated(a:NSNotification){

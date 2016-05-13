@@ -132,6 +132,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
                     badgeLabel.hidden = true
                 }else{
                     badgeLabel.text = "\(badgeValue)"
+                    badgeLabel.hidden = false
+                    badgeLabel.animationMaxToMin()
                 }
             }
         }
@@ -170,6 +172,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     }
     
     @IBAction func showRecordMessage(sender: AnyObject) {
+        isGoAhead = true
         RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
     }
     
@@ -232,17 +235,31 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        addObservers()
+    }
+    
+    private var isGoAhead = false
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if !isGoAhead {
+            removeObservers()
+        }
+    }
+    
+    private func addObservers(){
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
     }
     
-    deinit{
+    private func removeObservers(){
         userService.removeObserver(self)
         vessageService.removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        isGoAhead = false
         if chatterChanged{
             chatterChanged = false
             if !String.isNullOrWhiteSpace(self.chatter.userId) {

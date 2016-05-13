@@ -189,10 +189,17 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         UserSetting.setUserValue("UserNotedNames", value: userNotedNames)
     }
     
-    func getActiveUsers(){
+    func getActiveUsers(checkTime:Bool = false){
+        if checkTime{
+            let time = UserSetting.getUserIntValue("GET_ACTIVE_USERS_TIME")
+            if NSDate().totalHoursSince1970 - time < 6{
+                return
+            }
+        }
         let req = GetActiveUsersInfoRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
             if let activeUsers = result.returnObject{
+                UserSetting.setUserIntValue("GET_ACTIVE_USERS_TIME", value: NSDate().totalHoursSince1970)
                 activeUsers.saveBahamutObjectModels()
                 self.activeUsers = activeUsers
             }

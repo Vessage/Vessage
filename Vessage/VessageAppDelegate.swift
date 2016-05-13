@@ -191,6 +191,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         if ServiceContainer.isAllServiceReady{
             ServiceContainer.getVessageService().newVessageFromServer()
             ServiceContainer.getActivityService().getActivitiesBoardData()
+            ServiceContainer.getUserService().getActiveUsers(true)
             ServiceContainer.getUserService().registUserDeviceToken(VessageSetting.deviceToken,checkTime: true)
         }
     }

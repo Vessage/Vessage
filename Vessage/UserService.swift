@@ -200,7 +200,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
             if let activeUsers = result.returnObject{
                 UserSetting.setUserIntValue("GET_ACTIVE_USERS_TIME", value: NSDate().totalHoursSince1970)
-                activeUsers.saveBahamutObjectModels()
                 self.activeUsers = activeUsers
             }
         }
@@ -222,9 +221,19 @@ extension UserService{
         let req = RegistUserDeviceRequest()
         req.setDeviceType(RegistUserDeviceRequest.DEVICE_TYPE_IOS)
         req.setDeviceToken(deviceToken)
+        #if DEBUG
+            print("Registing Device Token:\(deviceToken)")
+        #endif
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
+                #if DEBUG
+                    print("Registed Device Token")
+                #endif
                 UserSetting.setUserIntValue("USER_REGIST_DEVICE_TOKEN_TIME", value: NSDate().totalDaysSince1970)
+            }else{
+                #if DEBUG
+                    print("Regist Device Token Failure")
+                #endif
             }
         }
     }

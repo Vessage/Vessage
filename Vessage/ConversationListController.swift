@@ -68,6 +68,9 @@ class ConversationListController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         initObservers()
         vessageService.newVessageFromServer()
+        #if DEBUG
+            self.navigationItem.title = "Vege Debug \(VessageConfig.appVersion)"
+        #endif
     }
     
     deinit{

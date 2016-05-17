@@ -145,24 +145,19 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        UMessage.didReceiveRemoteNotification(userInfo)
+        
         if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
             if ServiceContainer.isAllServiceReady{
-                if let apsDict = userInfo["aps"] as? [NSObject : AnyObject]{
-                    if let json = apsDict["alert"] as? String{
-                        if let data = json.dataUsingEncoding(NSUTF8StringEncoding){
-                            let jsonObj = try! NSJSONSerialization.JSONObjectWithData(data,options: NSJSONReadingOptions.MutableContainers)
-                            if let locKey = jsonObj.objectForKey("loc-key") as? String{
-                                if locKey == "NEW_VMSG_NOTIFICATION"{
-                                    ServiceContainer.getVessageService().newVessageFromServer()
-                                }else if locKey == "ACTIVITY_UPDATED_NOTIFICATION"{
-                                    ServiceContainer.getActivityService().getActivitiesBoardData()
-                                }
-                            }
-                        }
+                if let customCmd = userInfo["custom"] as? String{
+                    switch customCmd {
+                    case "NewVessageNotify":ServiceContainer.getVessageService().newVessageFromServer()
+                    case "ActivityUpdatedNotify":ServiceContainer.getActivityService().getActivitiesBoardData()
+                    default:NSLog("Unknow Custom Notification:%@", customCmd)
                     }
                 }
             }
+        }else{
+            UMessage.didReceiveRemoteNotification(userInfo)
         }
     }
     

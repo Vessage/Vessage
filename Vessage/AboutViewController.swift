@@ -22,6 +22,7 @@ class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "\(VessageConfig.appName) \(VessageConfig.appVersion)"
     }
     
     @IBAction func showInAppStore(sender: AnyObject)

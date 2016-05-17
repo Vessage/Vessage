@@ -79,31 +79,30 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     var notReadVessages = [Vessage](){
         didSet{
-            badgeValue = (notReadVessages.filter{$0.isRead == false}).count
             if notReadVessages.count > 0{
                 presentingVesseage = notReadVessages.first
             }else{
                 if let chatterId = self.chatter?.userId{
-                    presentingVesseage = vessageService.getCachedNewestVessage(chatterId)
+                    if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
+                        notReadVessages.append(newestVsg)
+                        presentingVesseage = newestVsg
+                    }
                 }
             }
             nextVessageButton?.hidden = notReadVessages.count <= 1
             vessageView?.hidden = presentingVesseage == nil
             noMessageTipsLabel?.hidden = presentingVesseage != nil
+            refreshBadge()
+            refreshTimeLabel()
         }
     }
     
     private var presentingVesseage:Vessage!{
         didSet{
-            
             if presentingVesseage != nil{
-                
                 if oldValue != nil && oldValue.vessageId == presentingVesseage.vessageId{
                     return
                 }
-                
-                vessageSendTimeLabel.hidden = false
-                vessageSendTimeLabel.text = presentingVesseage.sendTime.dateTimeOfAccurateString.toFriendlyString()
                 if oldValue != nil{
                     UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
                         self.vessagePlayer.filePath = nil
@@ -112,10 +111,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
                 }else{
                     vessagePlayer.filePath = presentingVesseage.fileId
                 }
-            }else{
-                vessageSendTimeLabel.hidden = true
             }
-            
         }
     }
     
@@ -152,6 +148,26 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     //MARK: actions
     
+    private func refreshTimeLabel(){
+        if presentingVesseage != nil{
+            vessageSendTimeLabel.hidden = false
+            let friendTimeString = presentingVesseage.sendTime.dateTimeOfAccurateString.toFriendlyString()
+            let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
+            vessageSendTimeLabel.text = "\(friendTimeString) \(readStatus)"
+        }else{
+            vessageSendTimeLabel.hidden = true
+        }
+        
+    }
+    
+    private func refreshBadge(){
+        if let chatterId = chatter?.userId{
+            self.badgeValue = vessageService.getChatterNotReadVessageCount(chatterId)
+        }else{
+            self.badgeValue = 0
+        }
+    }
+    
     private func updateAvatar(avatar:String?){
         if let btn = self.avatarButton{
             ServiceContainer.getService(FileService).setAvatar(btn, iconFileId: avatar)
@@ -162,12 +178,11 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         if notReadVessages.count <= 1{
             self.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
         }else{
-            notReadVessages.removeFirst()
-            vessageService.removeVessage(self.presentingVesseage)
-            if let filePath = fileService.getFilePath(self.presentingVesseage.fileId, type: .Video){
+            let vsg = notReadVessages.removeFirst()
+            vessageService.removeVessage(vsg)
+            if let filePath = fileService.getFilePath(vsg.fileId, type: .Video){
                 PersistentFileHelper.deleteFile(filePath)
             }
-            self.presentingVesseage = notReadVessages.first
         }
     }
     
@@ -331,7 +346,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         if self.presentingVesseage?.isRead == false {
             MobClick.event("ReadVessage")
             self.vessageService.readVessage(self.presentingVesseage)
-            self.badgeValue -= 1
+            refreshBadge()
+            
         }
     }
     

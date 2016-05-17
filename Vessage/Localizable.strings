@@ -222,6 +222,9 @@ ACTIVE_USERS = "广场";
 INVITE_FRIENDS_TO_CONVERSATION = "还没有联系人，邀请朋友一起玩吧";
 ACTIVE_USER = "活跃的用户";
 
+VSG_READED = "已读";
+VSG_UNREADED = "未读";
+
 //Little Paper
 NEW_FRIEND = "新朋友";
 SELECT_POST_MAN = "选择接收的人";

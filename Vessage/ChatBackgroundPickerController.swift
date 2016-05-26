@@ -12,7 +12,10 @@ import MBProgressHUD
 typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
 
 //MARK: ChatBackgroundPickerController
-class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate {
+class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    private var imagePickerController:UIImagePickerController = UIImagePickerController()
+    @IBOutlet weak var selectPicButtonTip: UILabel!
+    @IBOutlet weak var selectPicButton: UIButton!
     private var setImageSuccessHandler:ChatBackgroundPickerSetImageSuccessHandler!
     @IBOutlet weak var previewRectView: UIImageView!{
         didSet{
@@ -26,13 +29,14 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         }
     }
     private var camera:VessageCamera!
-    var previewing:Bool = true{
+    private var previewing:Bool = true{
         didSet{
             if previewing{
                 camera?.resumeCaptureSession()
             }else{
                 camera?.pauseCaptureSession()
             }
+            updateSelectPicButton()
             updateMiddleButton()
             updateRightButton()
         }
@@ -59,6 +63,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
             let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.longPressRightButton(_:)))
             rightButton.addGestureRecognizer(longPress)
             let tap = UITapGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.rightButtonClicked(_:)))
+            
             tap.requireGestureRecognizerToFail(longPress)
             rightButton.addGestureRecognizer(tap)
         }
@@ -66,7 +71,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     private var takedImage:UIImage!{
         didSet{
-            self.previewRectView.image = takedImage
+            demoFaceView.image = takedImage
         }
     }
     
@@ -78,10 +83,13 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         camera.isRecordVideo = false
         camera.enableFaceMark = true
         camera.initCamera(self,previewView: self.previewRectView)
+        self.view.bringSubviewToFront(demoFaceView)
         self.view.bringSubviewToFront(middleButton)
         self.view.bringSubviewToFront(closeRecordViewButton)
         self.view.bringSubviewToFront(rightButton)
         self.view.bringSubviewToFront(rightTipsLabel)
+        self.view.bringSubviewToFront(selectPicButton)
+        self.view.bringSubviewToFront(selectPicButtonTip)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -96,11 +104,46 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     //MARK:notifications
     
+    //MARK: UIImagePickerControllerDelegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
+        imagePickerController.dismissViewControllerAnimated(true)
+        {
+            if let imgData = UIImageJPEGRepresentation(image, 1.0){
+                if let img = CIImage(data: imgData){
+                    let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
+                    let faces = faceDetector.featuresInImage(img)
+                    if faces.count > 0{
+                        self.previewing = false
+                        self.takedImage = image
+                        self.demoFaceView.hidden = false
+                        return
+                    }
+                }
+            }
+            self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
+            
+        
+        }
+    }
+    
     //MARK: actions
+    @IBAction func selectPicButtonClick(sender: AnyObject) {
+        selectPictureFromAlbum()
+    }
+    
+    private func selectPictureFromAlbum()
+    {
+        imagePickerController.sourceType = .PhotoLibrary
+        imagePickerController.allowsEditing = false
+        imagePickerController.delegate = self
+        self.presentViewController(imagePickerController, animated: true, completion: nil)
+    }
     
     func rightButtonClicked(sender: AnyObject) {
         if previewing == false{
             previewing = true
+            demoFaceView.hidden = true
         }
     }
     
@@ -127,12 +170,22 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     func longPressRightButton(ges:UILongPressGestureRecognizer){
         if previewing{
             if ges.state == .Began{
-                demoFaceView.hidden = false
-                self.view.bringSubviewToFront(demoFaceView)
+                showDemoFace()
             }else if ges.state == .Ended{
                 demoFaceView.hidden = true
             }
         }
+    }
+    
+    private func showDemoFace(){
+        demoFaceView.image = UIImage(named: "face")
+        demoFaceView.hidden = false
+    }
+    
+    private func updateSelectPicButton(){
+        
+        selectPicButton?.hidden = !previewing
+        selectPicButtonTip?.hidden = selectPicButton.hidden
     }
     
     private func updateRightButton(){
@@ -158,11 +211,13 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     func vessageCameraReady() {
         middleButton.hidden = false
+        selectPicButton.hidden = false
     }
     
     func vessageCameraImage(image: UIImage) {
         self.takedImage = image
-        previewing = false
+        self.previewing = false
+        demoFaceView.hidden = false
     }
     
     //MARK: upload image
@@ -170,7 +225,8 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     private var taskHud:MBProgressHUD!
     private func sendTakedImage(){
         let fService = ServiceContainer.getService(FileService)
-        let imageData = UIImageJPEGRepresentation(self.takedImage, 0.7)
+        let img = takedImage.scaleToWidthOf(480)
+        let imageData = UIImageJPEGRepresentation(img, 0.7)
         let localPath = fService.createLocalStoreFileName(FileType.Image)
         taskHud = self.showActivityHud()
         if PersistentFileHelper.storeFile(imageData!, filePath: localPath)

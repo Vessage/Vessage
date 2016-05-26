@@ -32,7 +32,7 @@ class ConversationListController: UITableViewController {
     let conversationService = ServiceContainer.getConversationService()
     let vessageService = ServiceContainer.getVessageService()
     let userService = ServiceContainer.getUserService()
-    
+    private var refreshListTimer:NSTimer!
     //MARK: search property
     private var searchResult = [SearchResultModel](){
         didSet{
@@ -68,9 +68,21 @@ class ConversationListController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         initObservers()
         vessageService.newVessageFromServer()
+        
         #if DEBUG
             self.navigationItem.title = "Vege Debug \(VessageConfig.appVersion)"
         #endif
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(100, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshListTimer.invalidate()
+        refreshListTimer = nil
     }
     
     deinit{
@@ -96,6 +108,10 @@ class ConversationListController: UITableViewController {
     }
     
     //MARK: notifications
+    func onTimerRefreshList(_:AnyObject?) {
+        self.tableView.reloadData()
+    }
+    
     func onServicesWillLogout(a:NSNotification) {
         
         removeObservers()

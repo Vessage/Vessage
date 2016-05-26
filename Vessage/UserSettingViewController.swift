@@ -322,14 +322,14 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         }
     }
     
-    func newPictureWithCamera()
+    private func newPictureWithCamera()
     {
         imagePickerController.sourceType = .Camera
         imagePickerController.allowsEditing = true
         self.presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
-    func selectPictureFromAlbum()
+    private func selectPictureFromAlbum()
     {
         imagePickerController.sourceType = .PhotoLibrary
         imagePickerController.allowsEditing = true

@@ -41,7 +41,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     @objc static var ServiceName:String {return "User Service"}
     
     private var forceGetUserProfileOnce:Bool = false
-    private let notUpdateUserInMinutes:Int = 20
+    private let notUpdateUserInMinutes:Int = 18
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
     private(set) var activeUsers = [VessageUser]()

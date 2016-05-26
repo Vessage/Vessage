@@ -42,6 +42,7 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     @IBOutlet weak var noMessageTipsLabel: UILabel!{
         didSet{
             noMessageTipsLabel.hidden = true
+            noMessageTipsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.showRecordMessage(_:))))
         }
     }
     @IBOutlet weak var vessageSendTimeLabel: UILabel!{

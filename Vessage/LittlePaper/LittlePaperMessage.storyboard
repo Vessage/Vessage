@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -220,7 +220,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZi-im-bLp">
                                 <rect key="frame" x="212" y="693" width="91" height="30"/>
                                 <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="已打开">
+                                <state key="normal" title="已阅读">
                                     <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled">
@@ -260,7 +260,7 @@
                                     <constraint firstAttribute="height" constant="30" id="EIN-Ub-f7t"/>
                                     <constraint firstAttribute="height" constant="30" id="FQg-zt-A82"/>
                                 </constraints>
-                                <state key="normal" title="未处理">
+                                <state key="normal" title="新纸条">
                                     <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled">
@@ -284,7 +284,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QrS-pg-CSr">
                                 <rect key="frame" x="313" y="693" width="91" height="30"/>
                                 <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="我写的">
+                                <state key="normal" title="已发送">
                                     <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled">
@@ -379,7 +379,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000000000002" contentMode="scaleToFill" text="这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！" translatesAutoresizingMaskIntoConstraints="NO" id="9xe-4F-9HT">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000000000002" contentMode="scaleToFill" editable="NO" text="这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xe-4F-9HT">
                                 <rect key="frame" x="40" y="297" width="331" height="180"/>
                                 <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -574,7 +574,7 @@
                                     <action selector="onClickCancelButton" destination="UcS-H1-XzW" eventType="touchUpInside" id="NE1-Jk-ILJ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="纸条只能被一个人打开，中间传递人不知道写纸条和打开纸条的人。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R04-dQ-4hn">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="纸条只能被一个人打开，只有写纸条和打开纸条的人可以看到对方~" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R04-dQ-4hn">
                                 <rect key="frame" x="10" y="685" width="160" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="j8o-Oo-JRJ"/>
@@ -583,7 +583,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="收字条的人(如: 高一7班 王晓丽)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fy8-3V-KTb">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="纸条传给谁？(如:高一7班 王晓丽)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fy8-3V-KTb">
                                 <rect key="frame" x="40" y="83" width="334" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>

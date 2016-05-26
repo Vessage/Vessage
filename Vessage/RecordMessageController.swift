@@ -97,7 +97,6 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
         camera = VessageCamera()
         camera.delegate = self
         camera.initCamera(self,previewView: self.previewRectView)
-        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordMessageController.recordingFlashing(_:)), userInfo: nil, repeats: true)
         self.view.bringSubviewToFront(recordingProgress)
         self.view.bringSubviewToFront(recordingFlashView)
         self.view.bringSubviewToFront(recordButton)
@@ -108,7 +107,14 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordMessageController.recordingFlashing(_:)), userInfo: nil, repeats: true)
         updateChatImage(self.chatter?.mainChatImage)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.recordingTimer.invalidate()
+        self.recordingTimer = nil
     }
     
     override func viewDidAppear(animated: Bool) {

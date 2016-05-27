@@ -33,4 +33,8 @@ public class RemoveUserDeviceRequest : BahamutRFRequestBase {
         self.method = .DELETE
         self.api = "/VessageUsers/UserDevice"
     }
+    
+    public func setDeviceToken(deviceToken:String){
+        self.paramenters["deviceToken"] = deviceToken
+    }
 }

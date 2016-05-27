@@ -379,7 +379,7 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000000000002" contentMode="scaleToFill" editable="NO" text="这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！这里有十个字，很好！" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xe-4F-9HT">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.40000000000000002" contentMode="center" editable="NO" text="你好" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xe-4F-9HT">
                                 <rect key="frame" x="40" y="297" width="331" height="180"/>
                                 <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>

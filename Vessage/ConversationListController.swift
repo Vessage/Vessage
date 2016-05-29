@@ -76,17 +76,7 @@ class ConversationListController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(100, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshListTimer.invalidate()
-        refreshListTimer = nil
-    }
-    
-    deinit{
-        removeObservers()
+        
     }
     
     private func initObservers(){
@@ -95,13 +85,13 @@ class ConversationListController: UITableViewController {
         vessageService.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationListController.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
-        //MARK: Chicago
-        //ChicagoClient.sharedInstance.addBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", selector: "onNewVessageNotify:", object: nil)
+        
+        refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(100, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
     }
     
     private func removeObservers(){
-        //MARK: Chicago
-        //ChicagoClient.sharedInstance.removeBahamutAppNotificationObserver(self, notificationType: "NewVessageNotify", object: nil)
+        refreshListTimer.invalidate()
+        refreshListTimer = nil
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)

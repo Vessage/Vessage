@@ -163,7 +163,8 @@ CHANGE_PSW = "修改密码";
 CONFIRM_PSW = "修改新密码为";
 OLD_NEW_PSW_SAME = "新旧密码相同";
 
-//vessage
+//Vege
+VESSAGE_MOTTO = "";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "账号:%@";
@@ -176,7 +177,10 @@ CHOOSE_PHONE_NO = "选择手机号";
 PEOPLE_NO_MOBILE = "没有手机号";
 
 ASK_REMOVE_CONVERSATION_TITLE = "确定移除对话？";
-NO_SUCH_CONVERSATION = "";
+NO_SUCH_CONVERSATION = "没有找到该对话";
+
+NEED_SET_CHAT_BCG_TITLE = "设置聊天背景";
+NEED_SET_CHAT_BCG_MSG = "聊天背景是让朋友在给你发消息时\n可以看到你的样子~~";
 
 UNKNOW_USER = "未知用户";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";

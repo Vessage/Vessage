@@ -1,9 +1,9 @@
 PODS:
-  - Alamofire (3.2.1)
+  - Alamofire (3.4.0)
   - AlamofireJsonToObjects (1.3.0):
     - Alamofire
     - EVReflection
-  - AliyunOSSiOS (2.1.4)
+  - AliyunOSSiOS (2.2.0.1)
   - CocoaAsyncSocket (7.4.3):
     - CocoaAsyncSocket/All (= 7.4.3)
   - CocoaAsyncSocket/All (7.4.3):
@@ -11,44 +11,37 @@ PODS:
     - CocoaAsyncSocket/RunLoop
   - CocoaAsyncSocket/GCD (7.4.3)
   - CocoaAsyncSocket/RunLoop (7.4.3)
-  - EVReflection (2.20.0)
+  - EVReflection (2.20.2)
   - MBProgressHUD (0.9.2)
   - MJRefresh (3.1.0)
-  - ReachabilitySwift (2.3.3)
-  - Vivid (0.5)
+  - MNReachabilitySwift (0.0.2)
+  - Vivid (0.8)
   - YUCIHighPassSkinSmoothing (1.4):
     - Vivid
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
-  - AlamofireJsonToObjects
-  - AliyunOSSiOS (~> 2.1.1)
+  - Alamofire (~> 3.4)
+  - AlamofireJsonToObjects (~> 1.3.0)
+  - AliyunOSSiOS (~> 2.2.0)
   - CocoaAsyncSocket
-  - EVReflection
-  - MBProgressHUD (~> 0.9.1)
+  - EVReflection (~> 2.20.0)
+  - MBProgressHUD (~> 0.9.2)
   - MJRefresh
-  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
+  - MNReachabilitySwift (~> 0.0.2)
   - YUCIHighPassSkinSmoothing
 
-EXTERNAL SOURCES:
-  ReachabilitySwift:
-    :git: https://github.com/ashleymills/Reachability.swift
-
-CHECKOUT OPTIONS:
-  ReachabilitySwift:
-    :commit: fa90df50c04f5743fbdf643cbe8d10562d75673d
-    :git: https://github.com/ashleymills/Reachability.swift
-
 SPEC CHECKSUMS:
-  Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
+  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   AlamofireJsonToObjects: 2041f79276a2964c1d141d3c934604b5c0f6f786
-  AliyunOSSiOS: eb132e38f27161603f82975d55ac01054a6b37be
+  AliyunOSSiOS: c6cdb91d82c31b70f8174ed12001d3107f245136
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
-  EVReflection: dc3bab6a9d734306cf9cfdbafcf3617649d5350c
+  EVReflection: 0b4e36daac550bcf8c949792362fb282c084d012
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
-  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
-  Vivid: cb41984e2004b020b2b3157e2e36c19e365062f1
+  MNReachabilitySwift: 256075d862ca54f2f18ba2fac3f70d3ea8c1b1f2
+  Vivid: 65d28aba89fc750fceda8172c8b233f27d0ac18b
   YUCIHighPassSkinSmoothing: 8418fd1bf605ec22b647c57745b863b352f72097
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 35a890e7120dd120dfef7b458e9241442ea2f797
+
+COCOAPODS: 1.0.0

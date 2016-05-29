@@ -140,8 +140,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         if ServiceContainer.isAllServiceReady{
             ServiceContainer.getUserService().registUserDeviceToken(VessageSetting.deviceToken)
         }
-        //MARK: Chicago
-        //ChicagoClient.sharedInstance.registDeviceToken(VessageSetting.deviceToken)
+        
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
@@ -177,8 +176,6 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         PersistentManager.sharedInstance.saveAll()
         
-        //MARK: Chicago
-        //ChicagoClient.sharedInstance.inBackground()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -193,11 +190,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        if ServiceContainer.isAllServiceReady{
-            
-            ////MARK: Chicago
-            //ChicagoClient.sharedInstance.reConnect()
-        }
+        
     }
 
     func applicationWillTerminate(application: UIApplication) {

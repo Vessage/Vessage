@@ -7,12 +7,12 @@
 //
 
 import UIKit
-import ReachabilitySwift
+import MNReachabilitySwift
 
 //MARK: ConversationViewController
 class ConversationViewController: UIViewController,PlayerDelegate {
     
-    var reachability:Reachability?
+    var reachability:MNReachability?
     let conversationService = ServiceContainer.getConversationService()
     let userService = ServiceContainer.getUserService()
     let fileService = ServiceContainer.getService(FileService)
@@ -188,12 +188,32 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     }
     
     @IBAction func showRecordMessage(sender: AnyObject) {
+        if needSetChatBackgroundAndShow() {
+            return
+        }
         isGoAhead = true
         RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
     }
     
     @IBAction func noteConversation(sender: AnyObject) {
         showNoteConversationAlert()
+    }
+    
+    private func needSetChatBackgroundAndShow() -> Bool{
+        if userService.isUserChatBackgroundIsSeted{
+            return false
+        }else{
+            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                self.isGoAhead = true
+                ChatBackgroundPickerController.showPickerController(self) { (sender) -> Void in
+                    sender.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        
+                    })
+                }
+            })
+            self.showAlert("NEED_SET_CHAT_BCG_TITLE".localizedString(), msg: "NEED_SET_CHAT_BCG_MSG".localizedString(), actions: [ok])
+            return true
+        }
     }
     
     private func showNoteConversationAlert(){

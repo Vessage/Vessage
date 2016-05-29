@@ -11,16 +11,13 @@ import UIKit
 //MARK: EntryNavigationController
 class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate {
 
-    var launchScr:UIView!
+    var launchScr:LaunchScreen!
     
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
         setWaitingScreen()
         
-        //MARK: Chicago
-//        ChicagoClient.sharedInstance.addObserver(self, selector: "onAppTokenInvalid:", name: AppTokenInvalided, object: nil)
-//        ChicagoClient.sharedInstance.addObserver(self, selector: "onOtherDeviceLogin:", name: OtherDeviceLoginChicagoServer, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -31,15 +28,15 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     func deInitController(){
         ServiceContainer.instance.removeObserver(self)
         
-        //MARK: Chicago
-        //ChicagoClient.sharedInstance.removeObserver(self)
     }
 
     private func setWaitingScreen() {
         self.view.backgroundColor = UIColor.whiteColor()
         launchScr = LaunchScreen.getInstanceFromStroyboard()
-        launchScr.frame = self.view.bounds
-        self.view.addSubview(launchScr)
+        launchScr.view.frame = self.view.bounds
+        launchScr.mottoLabel.text = "VESSAGE_MOTTO".localizedString()
+        launchScr.mottoLabel.hidden = false
+        self.view.addSubview(launchScr.view)
     }
     
     func allServicesReady(_:AnyObject)
@@ -60,7 +57,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         let isUserMobileValidated = userService.isUserMobileValidated
         if isUserMobileValidated
         {
-            if userService.isUserChatBackgroundIsSeted{
+            if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
                 showMainView()
             }else{
                 SetupChatBcgImageController.showSetupViewController(self)
@@ -131,7 +128,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         MainTabBarController.showMainController(self)
         if self.launchScr != nil
         {
-            self.launchScr.removeFromSuperview()
+            self.launchScr.view.removeFromSuperview()
         }
         
     }

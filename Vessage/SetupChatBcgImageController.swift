@@ -21,6 +21,11 @@ class SetupChatBcgImageController: UIViewController {
         }
     }
     
+    @IBAction func forceNext(sender: AnyObject) {
+        UserSetting.enableSetting(USER_LATER_SET_CHAT_BCG_KEY)
+        EntryNavigationController.start()
+    }
+    
     @IBAction func logout(sender: AnyObject) {
         ServiceContainer.instance.userLogout()
         EntryNavigationController.start()

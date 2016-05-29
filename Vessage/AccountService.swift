@@ -38,12 +38,6 @@ class AccountService: ServiceProtocol
         BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
         BahamutRFKit.sharedInstance.startClients()
-        
-        //MARK: Chicago
-//        ChicagoClient.sharedInstance.start()
-//        ChicagoClient.sharedInstance.connect(VessageSetting.chicagoServerHost, port: VessageSetting.chicagoServerHostPort)
-//        ChicagoClient.sharedInstance.startHeartBeat()
-//        ChicagoClient.sharedInstance.useValidationInfo(userId, appkey: BahamutRFKit.appkey, apptoken: UserSetting.token)
 
         self.setServiceReady()
     }
@@ -52,8 +46,7 @@ class AccountService: ServiceProtocol
         MobClick.profileSignOff()
         
         self.setServiceNotReady()
-        //MARK: Chicago
-        //ChicagoClient.sharedInstance.logout()
+        
         
         UserSetting.token = nil
         UserSetting.isUserLogined = false

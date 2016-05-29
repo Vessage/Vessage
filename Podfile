@@ -1,20 +1,23 @@
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'Alamofire', '~> 3.0'
+target "Vessage" do
+pod 'Alamofire', '~> 3.4'
 
-pod 'EVReflection'
+pod 'EVReflection', '~> 2.20.0'
 
 pod 'MJRefresh'
 
-pod 'MBProgressHUD', '~> 0.9.1'
+pod 'MBProgressHUD', '~> 0.9.2'
 
 pod 'CocoaAsyncSocket'
 
-pod 'AlamofireJsonToObjects'
+pod 'AlamofireJsonToObjects', '~> 1.3.0'
 
-pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
+pod 'MNReachabilitySwift', '~> 0.0.2'
 
-pod 'AliyunOSSiOS', '~> 2.1.1'
+pod 'AliyunOSSiOS', '~> 2.2.0'
 
 pod 'YUCIHighPassSkinSmoothing'
+
+end

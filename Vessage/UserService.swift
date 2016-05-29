@@ -35,6 +35,8 @@ extension ServiceContainer{
 
 let UserProfileUpdatedUserValue = "UserProfileUpdatedUserIdValue"
 
+let USER_LATER_SET_CHAT_BCG_KEY = "SET_CHAT_BCG_LATER"
+
 //MARK:UserService
 class UserService:NSNotificationCenter, ServiceProtocol {
     static let userProfileUpdated = "userProfileUpdated"
@@ -273,6 +275,9 @@ extension UserService{
                 if nickName.containsString(keyword){
                     return true
                 }
+            }
+            if let noteName = userNotedNames[user.userId]{
+                return noteName.containsString(keyword)
             }
             return false
         }

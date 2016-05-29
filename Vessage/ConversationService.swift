@@ -59,16 +59,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     static func isConversationWithUser(c:Conversation,user:VessageUser) -> Bool{
-        if !String.isNullOrWhiteSpace(c.chatterId) && user.userId == c.chatterId{
-            return true
-        }else if let mobileHash = user.mobile{
-            if let cMobile = c.chatterMobile?.md5{
-                if mobileHash == cMobile{
-                    return true
-                }
-            }
-        }
-        return false
+        let cu = VessageUser()
+        cu.mobile = c.chatterMobile
+        cu.userId = c.chatterId
+        return VessageUser.isTheSameUser(cu, userb: user)
     }
     
     static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
@@ -246,6 +240,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
                     return true
                 }
             }
+            
             if let mobile = c.chatterMobile{
                 if mobile.hasBegin(keyword){
                     return true

@@ -8,12 +8,18 @@
 
 import UIKit
 
-class LaunchScreen: UIView {
+class LaunchScreen {
+    private(set) var view:UIView!
+    var mottoLabel:UILabel{
+        return view.viewWithTag(1) as! UILabel
+    }
     
-    static func getInstanceFromStroyboard() -> UIView
+    static func getInstanceFromStroyboard() -> LaunchScreen
     {
         let controller = UIViewController.instanceFromStoryBoard("LaunchScreen", identifier: "LaunchScreenViewController")
-        return controller.view
+        let scr = LaunchScreen()
+        scr.view = controller.view
+        return scr
     }
     
 }

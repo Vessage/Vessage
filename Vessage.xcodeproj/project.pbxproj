@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09EEC9AD3D90A19D21086801 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17E4048CD0C3442FF6C01025 /* Pods.framework */; };
+		2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */; };
 		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
 		E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ConversationViewController.swift */; };
 		E708AB421C86CAA50071104E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AB401C86CAA50071104E /* Main.storyboard */; };
@@ -156,7 +156,9 @@
 
 /* Begin PBXFileReference section */
 		17E4048CD0C3442FF6C01025 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.debug.xcconfig"; sourceTree = "<group>"; };
+		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
 		E708AB3E1C86CAA50071104E /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -305,7 +307,6 @@
 		E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SMSSDKUI.bundle; path = Vessage/Libs/SMSSDK/SMSSDKUI.bundle; sourceTree = SOURCE_ROOT; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
-		F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,18 +327,18 @@
 				E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */,
 				E7F22C5B1C9C202200CD38D1 /* SMS_SDK.framework in Frameworks */,
 				E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */,
-				09EEC9AD3D90A19D21086801 /* Pods.framework in Frameworks */,
+				2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A0B3CB3182ECA748929509B3 /* Pods */ = {
+		414B1B2CE9AE6E05B1B6B1C4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */,
-				6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */,
+				A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */,
+				C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -355,6 +356,7 @@
 				E75A70401C8C8FB30029F0BD /* AddressBook.framework */,
 				E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */,
 				17E4048CD0C3442FF6C01025 /* Pods.framework */,
+				1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -364,8 +366,8 @@
 			children = (
 				E708AB3B1C86CAA50071104E /* Vessage */,
 				E708AB3A1C86CAA50071104E /* Products */,
-				A0B3CB3182ECA748929509B3 /* Pods */,
 				B024D79892B85EA4D71592BB /* Frameworks */,
+				414B1B2CE9AE6E05B1B6B1C4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -879,12 +881,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E708AB4B1C86CAA50071104E /* Build configuration list for PBXNativeTarget "Vessage" */;
 			buildPhases = (
-				97C168D3B5D981646B149AE5 /* Check Pods Manifest.lock */,
+				87C970FD287E69F3A77AC219 /* 📦 Check Pods Manifest.lock */,
 				E708AB351C86CAA50071104E /* Sources */,
 				E708AB361C86CAA50071104E /* Frameworks */,
 				E708AB371C86CAA50071104E /* Resources */,
-				41AA22C7203B9A106AB80289 /* Embed Pods Frameworks */,
-				8DC5F1CC1C6B8BE64DD200A8 /* Copy Pods Resources */,
+				4ACA8FA21A4FE508A5B17B6C /* 📦 Embed Pods Frameworks */,
+				AA13BE9654FEB40A64745D81 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -980,49 +982,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		41AA22C7203B9A106AB80289 /* Embed Pods Frameworks */ = {
+		4ACA8FA21A4FE508A5B17B6C /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Vessage/Pods-Vessage-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8DC5F1CC1C6B8BE64DD200A8 /* Copy Pods Resources */ = {
+		87C970FD287E69F3A77AC219 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		97C168D3B5D981646B149AE5 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AA13BE9654FEB40A64745D81 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Vessage/Pods-Vessage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1258,7 +1260,7 @@
 		};
 		E708AB4C1C86CAA50071104E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F436B22457C1B907005C7E0A /* Pods.debug.xcconfig */;
+			baseConfigurationReference = A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
@@ -1275,7 +1277,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage",
-					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)/Vessage/Libs/UMessageSdk",
 					"$(PROJECT_DIR)/Vessage/Libs/UMAnalytics",
 				);
@@ -1313,7 +1314,7 @@
 		};
 		E708AB4D1C86CAA50071104E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C512DEEB674FF03740FF435 /* Pods.release.xcconfig */;
+			baseConfigurationReference = C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
@@ -1330,7 +1331,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage",
-					"$(SDKROOT)/usr/lib/system",
 					"$(PROJECT_DIR)/Vessage/Libs/UMessageSdk",
 					"$(PROJECT_DIR)/Vessage/Libs/UMAnalytics",
 				);

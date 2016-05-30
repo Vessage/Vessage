@@ -34,6 +34,10 @@ class LittlePaperMainController: UIViewController {
         paperBoxButton.badgeValue = cnt > 0 ? "\(cnt)" : ""
     }
     
+    @IBAction func tellFriends(sender: AnyObject) {
+        ShareHelper.showTellVegeToFriendsAlert(self)
+    }
+    
     @IBAction func onClickNewPaperButton(sender: AnyObject) {
         WritePaperMessageViewController.showWritePaperMessageViewController(self)
     }

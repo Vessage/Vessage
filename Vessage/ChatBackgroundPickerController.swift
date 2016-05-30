@@ -12,7 +12,7 @@ import MBProgressHUD
 typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
 
 //MARK: ChatBackgroundPickerController
-class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate,UIImagePickerControllerDelegate{
     private var imagePickerController:UIImagePickerController = UIImagePickerController()
     @IBOutlet weak var selectPicButtonTip: UILabel!
     @IBOutlet weak var selectPicButton: UIButton!

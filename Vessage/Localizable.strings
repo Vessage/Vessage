@@ -164,6 +164,7 @@ CONFIRM_PSW = "修改新密码为";
 OLD_NEW_PSW_SAME = "新旧密码相同";
 
 //Vege
+APP_NAME = "Vege";
 VESSAGE_MOTTO = "";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
@@ -228,6 +229,12 @@ ACTIVE_USER = "活跃的用户";
 
 VSG_READED = "已读";
 VSG_UNREADED = "未读";
+
+TELL_FRIENDS = "告诉好友";
+WECHAT_SESSION = "微信好友";
+SMS = "短信";
+WECHAT_TIMELINE = "微信朋友圈";
+TELL_FRIEND_MESSAGE = "我在Vege，你也来玩吧~ \n";
 
 //Little Paper
 NEW_FRIEND = "新朋友";

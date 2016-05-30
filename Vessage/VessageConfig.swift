@@ -116,7 +116,7 @@ class VessageSetting{
 }
 
 class VessageConfig{
-    static var appName:String { return bahamutConfig.appName }
+    static var appName:String { return "APP_NAME".localizedString() }
     static var appKey:String { return bahamutConfig.appkey }
     static var bahamutConfig:BahamutConfigObject!
     static var appVersion:String{

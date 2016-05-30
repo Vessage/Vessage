@@ -371,6 +371,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Vege" id="Pbk-1i-UuZ">
                         <barButtonItem key="backBarButtonItem" title="对话" id="SYV-9s-CQ9"/>
+                        <barButtonItem key="leftBarButtonItem" title="告诉好友" id="Cp7-nQ-LAi">
+                            <connections>
+                                <action selector="tellFriends:" destination="GQB-c1-diR" id="xmg-rq-faT"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settings" id="MDS-hM-X8B">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

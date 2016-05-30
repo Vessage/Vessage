@@ -81,26 +81,45 @@
                                     <action selector="onClickCloseButton" destination="fTJ-B6-5Sx" eventType="touchUpInside" id="Adz-k5-4w2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2M-Kj-KSe">
+                                <rect key="frame" x="20" y="696" width="99" height="30"/>
+                                <state key="normal" title="和好友一起玩~">
+                                    <color key="titleColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tellFriends:" destination="fTJ-B6-5Sx" eventType="touchUpInside" id="HMO-IF-s3S"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="width" secondItem="6cr-x6-sfg" secondAttribute="width" id="9Ei-PA-Jwj"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="height" secondItem="W4t-c3-Pqs" secondAttribute="height" id="Cb4-Qz-IjC"/>
+                            <constraint firstItem="y2M-Kj-KSe" firstAttribute="centerX" secondItem="llo-Jk-6HO" secondAttribute="centerX" id="Hru-vk-g3T"/>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="height" secondItem="6cr-x6-sfg" secondAttribute="height" id="JLs-Nn-2st"/>
                             <constraint firstItem="W4t-c3-Pqs" firstAttribute="top" secondItem="Pba-Eh-1hQ" secondAttribute="bottom" constant="32" id="MRV-Fc-W4W"/>
                             <constraint firstItem="Pba-Eh-1hQ" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="OtE-Pk-uDq"/>
                             <constraint firstItem="W4t-c3-Pqs" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="Plk-pd-FOe"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="Qlv-TM-ais"/>
                             <constraint firstItem="6pa-5d-JdB" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="R8R-pZ-45s"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="y2M-Kj-KSe" secondAttribute="leading" id="Rp4-3M-dEq"/>
                             <constraint firstItem="QJl-tw-pDe" firstAttribute="top" secondItem="Rrl-2a-3nk" secondAttribute="bottom" constant="10" id="UgA-eg-LSV"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="top" secondItem="6pa-5d-JdB" secondAttribute="bottom" constant="8" symbolic="YES" id="ZfG-Uh-mda"/>
                             <constraint firstItem="6pa-5d-JdB" firstAttribute="centerY" secondItem="6cr-x6-sfg" secondAttribute="centerY" id="csf-gt-G0M"/>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="centerY" secondItem="6cr-x6-sfg" secondAttribute="centerY" id="mcD-1w-Dg0"/>
+                            <constraint firstItem="QJl-tw-pDe" firstAttribute="top" secondItem="y2M-Kj-KSe" secondAttribute="bottom" constant="10" id="n7Q-Fl-ZQW"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="width" secondItem="W4t-c3-Pqs" secondAttribute="width" id="nsp-pv-Ycw"/>
                             <constraint firstItem="6pa-5d-JdB" firstAttribute="top" secondItem="W4t-c3-Pqs" secondAttribute="bottom" constant="8" symbolic="YES" id="nvq-9i-Zkh"/>
+                            <constraint firstItem="y2M-Kj-KSe" firstAttribute="top" secondItem="ONO-53-h3e" secondAttribute="bottom" constant="20" id="rES-oQ-ZSR"/>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="sR1-To-7wv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Rrl-2a-3nk" secondAttribute="trailing" constant="3" id="vCZ-N1-aeZ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Hru-vk-g3T"/>
+                                <exclude reference="rES-oQ-ZSR"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>

@@ -131,6 +131,12 @@
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
 		E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */; };
+		E7F216631CFBD35E00447DA9 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */; };
+		E7F216641CFBD35E00447DA9 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7F2165F1CFBD35E00447DA9 /* README.txt */; };
+		E7F216671CFBD3D400447DA9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F216661CFBD3D400447DA9 /* SystemConfiguration.framework */; };
+		E7F216691CFBD3FE00447DA9 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F216681CFBD3FE00447DA9 /* libc++.tbd */; };
+		E7F2166B1CFBD40C00447DA9 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F2166A1CFBD40C00447DA9 /* libsqlite3.0.tbd */; };
+		E7F2166D1CFBD7E300447DA9 /* ShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2166C1CFBD7E300447DA9 /* ShareHelper.swift */; };
 		E7F22C301C9BE5A500CD38D1 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C2F1C9BE5A500CD38D1 /* libz.tbd */; };
 		E7F22C321C9BE5B400CD38D1 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C311C9BE5B400CD38D1 /* libicucore.tbd */; };
 		E7F22C341C9BE5C100CD38D1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */; };
@@ -295,6 +301,15 @@
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
+		E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		E7F2165F1CFBD35E00447DA9 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E7F216601CFBD35E00447DA9 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		E7F216611CFBD35E00447DA9 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		E7F216621CFBD35E00447DA9 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		E7F216661CFBD3D400447DA9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E7F216681CFBD3FE00447DA9 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		E7F2166A1CFBD40C00447DA9 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		E7F2166C1CFBD7E300447DA9 /* ShareHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareHelper.swift; sourceTree = "<group>"; };
 		E7F22C2F1C9BE5A500CD38D1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		E7F22C311C9BE5B400CD38D1 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -314,6 +329,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7F2166B1CFBD40C00447DA9 /* libsqlite3.0.tbd in Frameworks */,
+				E7F216691CFBD3FE00447DA9 /* libc++.tbd in Frameworks */,
+				E7F216671CFBD3D400447DA9 /* SystemConfiguration.framework in Frameworks */,
 				E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */,
 				E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */,
 				E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */,
@@ -328,6 +346,7 @@
 				E7F22C5B1C9C202200CD38D1 /* SMS_SDK.framework in Frameworks */,
 				E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */,
 				2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */,
+				E7F216631CFBD35E00447DA9 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +365,9 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E7F2166A1CFBD40C00447DA9 /* libsqlite3.0.tbd */,
+				E7F216681CFBD3FE00447DA9 /* libc++.tbd */,
+				E7F216661CFBD3D400447DA9 /* SystemConfiguration.framework */,
 				E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */,
 				E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */,
 				E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */,
@@ -670,6 +692,7 @@
 				E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */,
 				E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */,
 				E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */,
+				E7F2166C1CFBD7E300447DA9 /* ShareHelper.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -844,9 +867,22 @@
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutTask;
 			sourceTree = "<group>";
 		};
+		E7F2165D1CFBD35E00447DA9 /* OpenSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */,
+				E7F2165F1CFBD35E00447DA9 /* README.txt */,
+				E7F216601CFBD35E00447DA9 /* WechatAuthSDK.h */,
+				E7F216611CFBD35E00447DA9 /* WXApi.h */,
+				E7F216621CFBD35E00447DA9 /* WXApiObject.h */,
+			);
+			path = OpenSDK;
+			sourceTree = "<group>";
+		};
 		E7F22C271C9BE57800CD38D1 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				E7F2165D1CFBD35E00447DA9 /* OpenSDK */,
 				E718867E1CA000880028B016 /* UMAnalytics */,
 				E718867A1C9FFD840028B016 /* UMessageSdk */,
 				E7F22C4A1C9BF12700CD38D1 /* SMS_SDK */,
@@ -967,6 +1003,7 @@
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
+				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
@@ -1065,6 +1102,7 @@
 				E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */,
 				E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */,
 				E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */,
+				E7F2166D1CFBD7E300447DA9 /* ShareHelper.swift in Sources */,
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
 				E72F66011CE0DB180094BA10 /* PaperMessageDetailViewController.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
@@ -1279,6 +1317,7 @@
 					"$(PROJECT_DIR)/Vessage",
 					"$(PROJECT_DIR)/Vessage/Libs/UMessageSdk",
 					"$(PROJECT_DIR)/Vessage/Libs/UMAnalytics",
+					"$(PROJECT_DIR)/Vessage/Libs/OpenSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1333,6 +1372,7 @@
 					"$(PROJECT_DIR)/Vessage",
 					"$(PROJECT_DIR)/Vessage/Libs/UMessageSdk",
 					"$(PROJECT_DIR)/Vessage/Libs/UMAnalytics",
+					"$(PROJECT_DIR)/Vessage/Libs/OpenSDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class VessageAppDelegate: UIResponder, UIApplicationDelegate {
+class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
 
     var window: UIWindow?
     
@@ -22,6 +22,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         configureSmsSDK()
         configureUMessage(launchOptions)
         configureUmeng()
+        configureWX()
         initService()
         return true
     }
@@ -88,6 +89,19 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    //MARK: Weixin
+    private func configureWX() {
+        WXApi.registerApp(VessageConfig.bahamutConfig.wechatAppkey)
+    }
+    
+    func onReq(req: BaseReq!) {
+        
+    }
+    
+    func onResp(resp: BaseResp!) {
+        
+    }
+    
     //MARK: Umeng
     private func configureUmeng()
     {
@@ -128,6 +142,16 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
             UMessage.registerRemoteNotificationAndUserNotificationSettings(userSettings)
             
         }
+    }
+    
+    //MARK: App Delegate
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return WXApi.handleOpenURL(url, delegate: self)
+    }
+    
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        return WXApi.handleOpenURL(url, delegate: self)
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {

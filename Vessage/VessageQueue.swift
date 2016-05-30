@@ -186,7 +186,8 @@ class VessageQueue:NSObject{
                     }else{
                         url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getUserService().myProfile.accountId)"
                     }
-                    RecordMessageController.instance.showMessageView(taskInfo.receiverMobile, body: String(format: "NOTIFY_SMS_FORMAT".localizedString(),url))
+                    let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),url)
+                    ShareHelper.showTellTextMsgToFriendsAlert(RecordMessageController.instance, content: contentText, smsReceiver: taskInfo.receiverMobile)
                 })
                 let cancel = UIAlertAction(title: "NO".localizedString(), style: .Cancel, handler: { (ac) -> Void in
                     
@@ -194,39 +195,6 @@ class VessageQueue:NSObject{
                 
                 RecordMessageController.instance.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send,cancel])
             }
-        }
-    }
-}
-
-extension RecordMessageController:MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate{
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        controller.dismissViewControllerAnimated(true) { 
-            switch result{
-            case MessageComposeResultCancelled:
-                self.playCrossMark("CANCEL".localizedString())
-                MobClick.event("CancelSendNotifySMS")
-            case MessageComposeResultFailed:
-                self.playCrossMark("FAIL".localizedString())
-            case MessageComposeResultSent:
-                self.playCheckMark("SUCCESS".localizedString())
-                MobClick.event("UserSendSMSToFriend")
-            default:break;
-            }
-        }
-    }
-    
-    private func showMessageView(phone:String,body:String){
-        if MFMessageComposeViewController.canSendText(){
-            let controller = MFMessageComposeViewController()
-            controller.recipients = [phone]
-            controller.body = body
-            controller.delegate = self
-            controller.messageComposeDelegate = self
-            RecordMessageController.instance.presentViewController(controller, animated: true, completion: { () -> Void in
-                MobClick.event("OpenSendNotifySMS")
-            })
-        }else{
-            RecordMessageController.instance.showAlert("REQUIRE_SMS_FUNCTION_TITLE".localizedString(), msg: "REQUIRE_SMS_FUNCTION_MSG".localizedString())
         }
     }
 }

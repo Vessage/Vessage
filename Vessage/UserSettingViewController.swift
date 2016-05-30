@@ -79,7 +79,7 @@ struct MyDetailCellModel {
 }
 
 //MARK:UserSettingViewController
-class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProgressTaskDelegate
+class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,ProgressTaskDelegate
 {
     static let aboutAppReuseId = "aboutApp"
     static let clearCacheCellReuseId = "clearCache"

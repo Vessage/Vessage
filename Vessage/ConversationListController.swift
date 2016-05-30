@@ -150,6 +150,10 @@ class ConversationListController: UITableViewController {
         UserSettingViewController.showUserSettingViewController(self.navigationController!)
     }
     
+    @IBAction func tellFriends(sender: AnyObject) {
+        ShareHelper.showTellVegeToFriendsAlert(self)
+    }
+    
     private func removeConversation(conversation:Conversation){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
             self.conversationService.removeConversation(conversation.conversationId)

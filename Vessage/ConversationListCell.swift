@@ -112,6 +112,7 @@ class ConversationListCell:ConversationListCellBase{
                 self.avatar = user.avatar
             }else{
                 self.rootController.userService.fetchUserProfile(chatterId)
+                self.avatar = nil
             }
         }
     }

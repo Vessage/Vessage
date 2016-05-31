@@ -106,10 +106,10 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     private func configureUmeng()
     {
         #if RELEASE
+            UMAnalyticsConfig.sharedInstance().appKey = VessageConfig.bahamutConfig.umengAppkey
             MobClick.setAppVersion(VessageConfig.appVersion)
             MobClick.setEncryptEnabled(true)
             MobClick.setLogEnabled(false)
-            MobClick.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, reportPolicy: BATCH, channelId: nil)
         #endif
     }
     
@@ -117,7 +117,11 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     
     private func configureUMessage(launchOptions: [NSObject: AnyObject]?)
     {
-        UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: launchOptions!)
+        if let options = launchOptions{
+            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: options)
+        }else{
+            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: [NSObject: AnyObject]())
+        }
         UMessage.registerForRemoteNotifications()
         UMessage.setAutoAlert(false)
     }

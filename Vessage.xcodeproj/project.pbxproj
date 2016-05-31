@@ -83,8 +83,6 @@
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
-		E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */; };
-		E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E718867F1CA000880028B016 /* libMobClickLibrary.a */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
 		E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */; };
@@ -102,6 +100,8 @@
 		E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */; };
 		E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */; };
 		E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */; };
+		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
+		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
 		E7BFC3931CDB6CCF00CDB392 /* ActivityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */; };
@@ -124,6 +124,7 @@
 		E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */; };
 		E7E237D71C998AEB008FF893 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D41C998AEB008FF893 /* Player.swift */; };
 		E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D51C998AEB008FF893 /* KDCircularProgress.swift */; };
+		E7E8044F1CFDDF1B00E1E3FF /* libUMessage_Sdk_1.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E8044E1CFDDF1B00E1E3FF /* libUMessage_Sdk_1.3.0.a */; };
 		E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */; };
 		E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A301C87EEFF002F96FB /* UserRF.swift */; };
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
@@ -161,7 +162,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		17E4048CD0C3442FF6C01025 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.debug.xcconfig"; sourceTree = "<group>"; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
@@ -250,11 +250,7 @@
 		E71886731C9FBBCA0028B016 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
-		E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.2.6.a; sourceTree = "<group>"; };
 		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
-		E718867F1CA000880028B016 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		E71886801CA000880028B016 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		E71886811CA000880028B016 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
 		E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMessageListController.swift; sourceTree = "<group>"; };
@@ -272,6 +268,8 @@
 		E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageExtension.swift; sourceTree = "<group>"; };
 		E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
+		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
+		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListController.swift; sourceTree = "<group>"; };
@@ -294,6 +292,7 @@
 		E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutFilmView.swift; sourceTree = "<group>"; };
 		E7E237D41C998AEB008FF893 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		E7E237D51C998AEB008FF893 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
+		E7E8044E1CFDDF1B00E1E3FF /* libUMessage_Sdk_1.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.3.0.a; sourceTree = "<group>"; };
 		E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtil.swift; sourceTree = "<group>"; };
 		E7EB9A301C87EEFF002F96FB /* UserRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRF.swift; sourceTree = "<group>"; };
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
@@ -333,12 +332,11 @@
 				E7F216691CFBD3FE00447DA9 /* libc++.tbd in Frameworks */,
 				E7F216671CFBD3D400447DA9 /* SystemConfiguration.framework in Frameworks */,
 				E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */,
-				E718867D1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a in Frameworks */,
 				E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */,
-				E71886821CA000880028B016 /* libMobClickLibrary.a in Frameworks */,
 				E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */,
 				E7F22C381C9BE5DC00CD38D1 /* libstdc++.tbd in Frameworks */,
 				E7F22C361C9BE5D000CD38D1 /* JavaScriptCore.framework in Frameworks */,
+				E7E8044F1CFDDF1B00E1E3FF /* libUMessage_Sdk_1.3.0.a in Frameworks */,
 				E7F22C341C9BE5C100CD38D1 /* MessageUI.framework in Frameworks */,
 				E7F22C321C9BE5B400CD38D1 /* libicucore.tbd in Frameworks */,
 				E7F22C301C9BE5A500CD38D1 /* libz.tbd in Frameworks */,
@@ -377,7 +375,6 @@
 				E7F22C2F1C9BE5A500CD38D1 /* libz.tbd */,
 				E75A70401C8C8FB30029F0BD /* AddressBook.framework */,
 				E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */,
-				17E4048CD0C3442FF6C01025 /* Pods.framework */,
 				1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */,
 			);
 			name = Frameworks;
@@ -739,20 +736,10 @@
 		E718867A1C9FFD840028B016 /* UMessageSdk */ = {
 			isa = PBXGroup;
 			children = (
-				E718867B1C9FFD840028B016 /* libUMessage_Sdk_1.2.6.a */,
+				E7E8044E1CFDDF1B00E1E3FF /* libUMessage_Sdk_1.3.0.a */,
 				E718867C1C9FFD840028B016 /* UMessage.h */,
 			);
 			path = UMessageSdk;
-			sourceTree = "<group>";
-		};
-		E718867E1CA000880028B016 /* UMAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				E718867F1CA000880028B016 /* libMobClickLibrary.a */,
-				E71886801CA000880028B016 /* MobClick.h */,
-				E71886811CA000880028B016 /* MobClickSocialAnalytics.h */,
-			);
-			path = UMAnalytics;
 			sourceTree = "<group>";
 		};
 		E73CF7CB1CE4E661005EF7BB /* ActivityService */ = {
@@ -767,9 +754,9 @@
 		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				E7EDE4901CFD1F970001983F /* ConversationView */,
 				E7C387F31C982FC10096AF85 /* RecordMessage */,
 				E7C387EF1C982F510096AF85 /* ConversationList */,
-				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
@@ -867,6 +854,16 @@
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutTask;
 			sourceTree = "<group>";
 		};
+		E7EDE4901CFD1F970001983F /* ConversationView */ = {
+			isa = PBXGroup;
+			children = (
+				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
+				E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */,
+				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
+			);
+			name = ConversationView;
+			sourceTree = "<group>";
+		};
 		E7F2165D1CFBD35E00447DA9 /* OpenSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -883,7 +880,6 @@
 			isa = PBXGroup;
 			children = (
 				E7F2165D1CFBD35E00447DA9 /* OpenSDK */,
-				E718867E1CA000880028B016 /* UMAnalytics */,
 				E718867A1C9FFD840028B016 /* UMessageSdk */,
 				E7F22C4A1C9BF12700CD38D1 /* SMS_SDK */,
 			);
@@ -1083,6 +1079,7 @@
 				E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
+				E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */,
 				E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */,
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
 				E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */,
@@ -1177,6 +1174,7 @@
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
 				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
 				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
+				E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */,
 				E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

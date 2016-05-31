@@ -18,6 +18,8 @@ pod 'MNReachabilitySwift', '~> 0.0.2'
 
 pod 'AliyunOSSiOS', '~> 2.2.0'
 
+pod 'UMengAnalytics-NO-IDFA'
+
 pod 'YUCIHighPassSkinSmoothing'
 
 end

@@ -117,31 +117,9 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     
     private func configureUMessage(launchOptions: [NSObject: AnyObject]?)
     {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
-            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: launchOptions)
-            UMessage.setAutoAlert(false)
-            //register remoteNotification types
-            let action1 = UIMutableUserNotificationAction()
-            action1.identifier = "action1_identifier"
-            action1.title="Accept";
-            action1.activationMode = UIUserNotificationActivationMode.Foreground //当点击的时候启动程序
-            
-            let action2 = UIMutableUserNotificationAction()  //第二按钮
-            action2.identifier = "action2_identifier"
-            action2.title="Reject"
-            action2.activationMode = UIUserNotificationActivationMode.Background //当点击的时候不启动程序，在后台处理
-            action2.authenticationRequired = true //需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
-            action2.destructive = true;
-            
-            let categorys = UIMutableUserNotificationCategory()
-            categorys.identifier = "category1" //这组动作的唯一标示
-            categorys.setActions([action1,action2], forContext: .Default)
-            
-            let userSettings = UIUserNotificationSettings(forTypes: [.Sound,.Badge,.Alert], categories: [categorys])
-            UMessage.registerRemoteNotificationAndUserNotificationSettings(userSettings)
-            
-        }
+        UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: launchOptions!)
+        UMessage.registerForRemoteNotifications()
+        UMessage.setAutoAlert(false)
     }
     
     //MARK: App Delegate
@@ -155,7 +133,6 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        UMessage.registerDeviceToken(deviceToken)
         VessageSetting.deviceToken = deviceToken.description
             .stringByReplacingOccurrencesOfString("<", withString: "")
             .stringByReplacingOccurrencesOfString(">", withString: "")

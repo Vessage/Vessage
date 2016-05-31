@@ -253,7 +253,7 @@ extension UserService{
 
 //MARK: Search User
 extension UserService{
-    func searchUser(keyword:String,callback:([VessageUser])->Void){
+    func searchUser(keyword:String,callback:(keyword:String,[VessageUser])->Void){
         if keyword == UserSetting.lastLoginAccountId{
             return
         }
@@ -282,21 +282,21 @@ extension UserService{
             return false
         }
         if users.count > 0{
-            callback(users)
+            callback(keyword: keyword,users)
         }else if keyword.isMobileNumber(){
             getUserProfileByMobile(keyword, updatedCallback: { (user) -> Void in
                 if let u = user{
-                    callback([u])
+                    callback(keyword: keyword,[u])
                 }else{
-                    callback([])
+                    callback(keyword: keyword,[])
                 }
             })
         }else if keyword.isBahamutAccount(){
             getUserProfileByAccountId(keyword, updatedCallback: { (user) -> Void in
                 if let u = user{
-                    callback([u])
+                    callback(keyword: keyword,[u])
                 }else{
-                    callback([])
+                    callback(keyword: keyword,[])
                 }
             })
         }

@@ -27,7 +27,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     var delegate:VessageCameraDelegate?
     var isRecordVideo:Bool = true
-    private var cameraInited = false
+    private(set) var cameraInited = false
     private var rootViewController:UIViewController!
     private var view:UIView!
     private var captureSession: AVCaptureSession!
@@ -89,7 +89,9 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     }
     
     private func initFilter(){
+        #if RELEASE
         filter = CIFilter(name: "YUCIHighPassSkinSmoothing",withInputParameters: ["inputAmount":0.7])
+        #endif
     }
     
     //MARK: notification

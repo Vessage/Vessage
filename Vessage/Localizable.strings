@@ -187,12 +187,15 @@ UNKNOW_USER = "未知用户";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
 NOTE_CONVERSATION_A_NAME = "修改当前对话的备注";
 CONVERSATION_NAME = "备注";
+NOTE = "备注";
 NEW_NOTE_NAME_CANT_NULL = "备注名不能为空";
 SAVE_NOTE_NAME_SUC = "修改成功";
 SAVE_NOTE_NAME_ERROR = "修改出错";
 CONTINUE = "继续";
 CLICK_NEXT_MESSAGE_TIPS_TITLE = "跳过未读的消息？";
 CLICK_NEXT_MESSAGE_TIPS = "跳过后该消息将会被删除且不能恢复，确定要跳过？";
+
+CAMERA_NOT_INITED = "相机没有初始化";
 
 CHANGE_CHAT_BCG = "聊天背景";
 BIND_MOBILE = "手机";

@@ -18,9 +18,8 @@
 #import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
 #import "SMSSDKUI.h"
 
+#import "UMMobClick/MobClick.h"
 #import "UMessage.h"
-
-#import "MobClick.h"
 
 #import "WechatAuthSDK.h"
 #import "WXApi.h"

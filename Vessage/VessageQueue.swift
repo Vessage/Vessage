@@ -56,6 +56,11 @@ class VessageQueue:NSObject{
         return VessageQueue()
     }()
     
+    var controller:UIViewController!{
+        return UIApplication.currentShowingViewController
+    }
+    
+    
     //primary version do not use queue
 //    func pushNewVideoTo(conversationId:String,fileUrl:NSURL){
 //        //TODO: delete test
@@ -80,7 +85,7 @@ class VessageQueue:NSObject{
     }
     
     func onVessageSendFail(a:NSNotification){
-        RecordMessageController.instance.playCrossMark("VESSAGE_SEND_FAIL".localizedString())
+        controller.playCrossMark("VESSAGE_SEND_FAIL".localizedString())
     }
     
     func onVessageSended(a:NSNotification){
@@ -91,7 +96,7 @@ class VessageQueue:NSObject{
                 }
             }
         }
-        RecordMessageController.instance.playCheckMark("VESSAGE_SENDED".localizedString())
+        controller.playCheckMark("VESSAGE_SENDED".localizedString())
     }
     
     func pushNewVessageTo(receiverId:String?,receiverMobile:String?,videoUrl:NSURL){
@@ -106,7 +111,7 @@ class VessageQueue:NSObject{
     
     private func sendVessageFile(vessageId:String, taskInfoKey:String){
         
-        let sendingHud = RecordMessageController.instance.showActivityHud()
+        let sendingHud = controller.showActivityHud()
         if let taskInfo = taskInfoDict[taskInfoKey]{
             ServiceContainer.getService(FileService).sendFileToAliOSS(taskInfo.filePath, type: .Video) { (taskId, fileKey) -> Void in
                 if fileKey != nil{
@@ -120,7 +125,7 @@ class VessageQueue:NSObject{
                     task.vessageId = vessageId
                     ServiceContainer.getVessageService().observeOnVessageFileUploadTask(task)
                     sendingHud.hideAsync(false)
-                    RecordMessageController.instance.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString(),async: false){
+                    self.controller.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString()){
                         self.sendSMSToFriend(taskInfo)
                     }
                     
@@ -139,9 +144,9 @@ class VessageQueue:NSObject{
         }
         let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
             ServiceContainer.getVessageService().cancelSendVessage(vessageId)
-            RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
+            self.controller.playCrossMark("CANCEL".localizedString())
         }
-        RecordMessageController.instance.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+        controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
     private func sendVessage(taskInfoKey:String){
@@ -170,9 +175,9 @@ class VessageQueue:NSObject{
             self.sendVessage(taskInfoKey)
         }
         let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
-            RecordMessageController.instance.playCrossMark("CANCEL".localizedString())
+            self.controller.playCrossMark("CANCEL".localizedString())
         }
-        RecordMessageController.instance.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+        controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
     //MARK: send sms to people
@@ -187,13 +192,13 @@ class VessageQueue:NSObject{
                         url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getUserService().myProfile.accountId)"
                     }
                     let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),url)
-                    ShareHelper.showTellTextMsgToFriendsAlert(RecordMessageController.instance, content: contentText, smsReceiver: taskInfo.receiverMobile)
+                    ShareHelper.showTellTextMsgToFriendsAlert(self.controller, content: contentText, smsReceiver: taskInfo.receiverMobile)
                 })
                 let cancel = UIAlertAction(title: "NO".localizedString(), style: .Cancel, handler: { (ac) -> Void in
                     
                 })
-                
-                RecordMessageController.instance.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send,cancel])
+                let vc = controller
+                vc.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send,cancel])
             }
         }
     }

@@ -9,109 +9,79 @@
 import UIKit
 import MNReachabilitySwift
 
+class ConversationViewControllerProxy: NSObject {
+    private(set) var rootController:ConversationViewController!
+    
+    var vessageView:UIView!{
+        return rootController.vessageView
+    }
+    var fileService:FileService!{
+        return rootController.fileService
+    }
+    var chatter:VessageUser!{
+        return rootController.chatter
+    }
+    var vessageService:VessageService!{
+        return rootController.vessageService
+    }
+    var rightButton:UIButton!{
+        return rootController.rightButton
+    }
+    var noMessageTipsLabel:UILabel!{
+        return rootController.noMessageTipsLabel
+    }
+    var badgeLabel:UILabel!{
+        return rootController.badgeLabel
+    }
+    var vessageSendTimeLabel:UILabel{
+        return rootController.vessageSendTimeLabel
+    }
+    
+    var recordButton: UIButton!{
+        return rootController.middleButton
+    }
+    
+    var cancelRecordButton: UIButton!{
+        return rootController.rightButton
+    }
+    
+    var smileFaceImageView: UIImageView!{
+        return rootController.smileFaceImageView
+    }
+    var noSmileFaceTipsLabel: UILabel!{
+        return rootController.noSmileFaceTipsLabel
+    }
+    var recordingFlashView: UIView!{
+        return rootController.recordingFlashView
+    }
+    var recordingProgress:KDCircularProgress!{
+        return rootController.recordingProgress
+    }
+    var previewRectView: UIView!{
+        return rootController.previewRectView
+    }
+    func onVessageReceived(vessages:Vessage) {}
+    func onChatterUpdated(chatter:VessageUser) {}
+    func initManager(controller:ConversationViewController) {
+        self.rootController = controller
+    }
+    func onReleaseManager() {
+        
+    }
+    func onSwitchToManager() {
+        
+    }
+}
+
 //MARK: ConversationViewController
-class ConversationViewController: UIViewController,PlayerDelegate {
-    
-    var reachability:MNReachability?
-    let conversationService = ServiceContainer.getConversationService()
-    let userService = ServiceContainer.getUserService()
-    let fileService = ServiceContainer.getService(FileService)
-    let vessageService = ServiceContainer.getVessageService()
-    @IBOutlet weak var badgeLabel: UILabel!{
-        didSet{
-            badgeLabel.hidden = true
-            badgeLabel.clipsToBounds = true
-            badgeLabel.layer.cornerRadius = 10
-        }
-    }
-    @IBOutlet weak var bottomBar: UIVisualEffectView!{
-        didSet{
-            bottomBar.hidden = true
-        }
-    }
-    @IBOutlet weak var avatarButton: UIButton!{
-        didSet{
-            avatarButton.imageView?.layer.cornerRadius = avatarButton.frame.height / 2
-        }
-    }
-    @IBOutlet weak var nextVessageButton: UIButton!{
-        didSet{
-            nextVessageButton.hidden = true
-        }
-    }
-    @IBOutlet weak var noMessageTipsLabel: UILabel!{
-        didSet{
-            noMessageTipsLabel.hidden = true
-            noMessageTipsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.showRecordMessage(_:))))
-        }
-    }
-    @IBOutlet weak var vessageSendTimeLabel: UILabel!{
-        didSet{
-            vessageSendTimeLabel.hidden = true
-        }
-    }
-    
-    private var vessagePlayer:BahamutFilmView!
-    @IBOutlet weak var vessageView: UIView!{
-        didSet{
-            vessagePlayer = BahamutFilmView(frame: vessageView.bounds)
-            vessagePlayer.fileFetcher = fileService.getFileFetcherOfFileId(.Video)
-            vessagePlayer.autoPlay = false
-            vessagePlayer.isPlaybackLoops = false
-            vessagePlayer.isMute = false
-            vessagePlayer.showTimeLine = false
-            vessagePlayer.delegate = self
-            vessageView.addSubview(vessagePlayer)
-            vessageView.sendSubviewToBack(vessagePlayer)
-            vessageView.hidden = (presentingVesseage == nil)
-        }
-    }
-    
+class ConversationViewController: UIViewController {
     var conversationId:String!
     var chatterChanged = true
-    private var chatter:VessageUser!{
+    private(set) var chatter:VessageUser!{
         didSet{
-            let oldAvatar = oldValue?.avatar
-            if oldAvatar != chatter?.avatar{
-                self.updateAvatar(chatter?.avatar)
-            }
-        }
-    }
-    
-    var notReadVessages = [Vessage](){
-        didSet{
-            if notReadVessages.count > 0{
-                presentingVesseage = notReadVessages.first
-            }else{
-                if let chatterId = self.chatter?.userId{
-                    if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
-                        notReadVessages.append(newestVsg)
-                        presentingVesseage = newestVsg
-                    }
-                }
-            }
-            nextVessageButton?.hidden = notReadVessages.count <= 1
-            vessageView?.hidden = presentingVesseage == nil
-            noMessageTipsLabel?.hidden = presentingVesseage != nil
-            refreshBadge()
-            refreshTimeLabel()
-        }
-    }
-    
-    private var presentingVesseage:Vessage!{
-        didSet{
-            if presentingVesseage != nil{
-                if oldValue != nil && oldValue.vessageId == presentingVesseage.vessageId{
-                    return
-                }
-                if oldValue != nil{
-                    UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
-                        self.vessagePlayer.filePath = nil
-                        self.vessagePlayer.filePath = self.presentingVesseage.fileId
-                    })
-                }else{
-                    vessagePlayer.filePath = presentingVesseage.fileId
-                }
+            if let user = chatter{
+                recordVessageManager?.onChatterUpdated(user)
+                recordVessageManager?.onChatterUpdated(user)
             }
         }
     }
@@ -119,20 +89,6 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     private var controllerTitle:String!{
         didSet{
             self.navigationItem.title = controllerTitle
-        }
-    }
-    
-    private var badgeValue:Int = 0 {
-        didSet{
-            if badgeLabel != nil{
-                if badgeValue == 0{
-                    badgeLabel.hidden = true
-                }else{
-                    badgeLabel.text = "\(badgeValue)"
-                    badgeLabel.hidden = false
-                    badgeLabel.animationMaxToMin()
-                }
-            }
         }
     }
     
@@ -147,56 +103,116 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         }
     }
     
-    //MARK: actions
+    var playVessageManager:PlayVessageManager!
+    var recordVessageManager:RecordVessageManager!
     
-    private func refreshTimeLabel(){
-        if presentingVesseage != nil{
-            vessageSendTimeLabel.hidden = false
-            let friendTimeString = presentingVesseage.sendTime.dateTimeOfAccurateString.toFriendlyString()
-            let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
-            vessageSendTimeLabel.text = "\(friendTimeString) \(readStatus)"
-        }else{
+    var reachability:MNReachability?
+    let conversationService = ServiceContainer.getConversationService()
+    let userService = ServiceContainer.getUserService()
+    let fileService = ServiceContainer.getService(FileService)
+    let vessageService = ServiceContainer.getVessageService()
+    
+    var isRecording:Bool = false
+    var isReadingVessages:Bool{
+        return !isRecording
+    }
+    
+    @IBOutlet weak var recordViewContainer: UIView!
+    @IBOutlet weak var vessageViewContainer: UIView!
+    
+    @IBOutlet weak var middleButton: UIButton!
+    
+    @IBOutlet weak var bottomBar: UIVisualEffectView!{
+        didSet{
+            bottomBar.hidden = true
+        }
+    }
+    @IBOutlet weak var rightButton: UIButton!{
+        didSet{
+            rightButton.hidden = true
+        }
+    }
+    
+    //MARK: Read Vessage Views
+    @IBOutlet weak var badgeLabel: UILabel!{
+        didSet{
+            badgeLabel.hidden = true
+            badgeLabel.clipsToBounds = true
+            badgeLabel.layer.cornerRadius = 10
+        }
+    }
+    
+    @IBOutlet weak var noMessageTipsLabel: UILabel!{
+        didSet{
+            noMessageTipsLabel.hidden = true
+        }
+    }
+    @IBOutlet weak var vessageSendTimeLabel: UILabel!{
+        didSet{
             vessageSendTimeLabel.hidden = true
         }
+    }
+    @IBOutlet weak var vessageView: UIView!
+    //MARK: Record Views
+    @IBOutlet weak var previewRectView: UIView!{
+        didSet{
+            previewRectView.backgroundColor = UIColor.clearColor()
+        }
+    }
+    @IBOutlet weak var recordingProgress: KDCircularProgress!{
+        didSet{
+            recordingProgress.hidden = true
+        }
+    }
+    
+    @IBOutlet weak var smileFaceImageView: UIImageView!
+    @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
+    @IBOutlet weak var recordingFlashView: UIView!{
+        didSet{
+            recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
+            recordingFlashView.hidden = true
+        }
+    }
+
+    //MARK: Actions
+    
+    func startRecording() {
+        isRecording = true
+        vessageViewContainer.hidden = true
+        recordViewContainer.hidden = false
+        recordViewContainer.alpha = 0.3
+        UIView.beginAnimations("RecordViewContainer", context: nil)
+        UIView.setAnimationDuration(0.3)
+        recordViewContainer.alpha = 1
+        UIView.commitAnimations()
         
+        
+        navigationController?.navigationBarHidden = true
+        recordVessageManager.onSwitchToManager()
+        recordVessageManager.startRecord()
     }
     
-    private func refreshBadge(){
-        if let chatterId = chatter?.userId{
-            self.badgeValue = vessageService.getChatterNotReadVessageCount(chatterId)
-        }else{
-            self.badgeValue = 0
-        }
+    func setReadingVessage() {
+        isRecording = false
+        recordViewContainer.hidden = true
+        vessageViewContainer.hidden = false
+        navigationController?.navigationBarHidden = false
+        playVessageManager.onSwitchToManager()
     }
-    
-    private func updateAvatar(avatar:String?){
-        if let btn = self.avatarButton{
-            ServiceContainer.getService(FileService).setAvatar(btn, iconFileId: avatar)
-        }
-    }
-    
-    func loadNextVessage(){
-        if notReadVessages.count <= 1{
-            self.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
-        }else{
-            let vsg = notReadVessages.removeFirst()
-            vessageService.removeVessage(vsg)
-            if let filePath = fileService.getFilePath(vsg.fileId, type: .Video){
-                PersistentFileHelper.deleteFile(filePath)
+        
+    @IBAction func onClickMiddleButton(sender: AnyObject) {
+        if isReadingVessages {
+            if needSetChatBackgroundAndShow() {
+                return
             }
+            startRecording()
+        }else{
+            setReadingVessage()
+            recordVessageManager.sendVessage()
         }
-    }
-    
-    @IBAction func showRecordMessage(sender: AnyObject) {
-        if needSetChatBackgroundAndShow() {
-            return
-        }
-        isGoAhead = true
-        RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
-    }
-    
-    @IBAction func noteConversation(sender: AnyObject) {
-        showNoteConversationAlert()
+
+        //isGoAhead = true
+        //RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
     }
     
     private func needSetChatBackgroundAndShow() -> Bool{
@@ -250,28 +266,37 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     
     @IBAction func showUserProfile(sender: AnyObject) {
         if String.isNullOrWhiteSpace(chatter.accountId) {
-            showAlert("CHATTER_INFO".localizedString(), msg: "MOBILE_USER".localizedString())
+            showAlert(controllerTitle, msg: "MOBILE_USER".localizedString())
         }else{
-            showAlert("CHATTER_INFO".localizedString(), msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId))
+            let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
+                self.showNoteConversationAlert()
+            })
+            showAlert(controllerTitle, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
         }
     }
     
-    @IBAction func showNextMessage(sender: AnyObject) {
-        if self.presentingVesseage.isRead{
-            loadNextVessage()
+    @IBAction func onClickRightButton(sender: AnyObject) {
+        if isReadingVessages {
+            playVessageManager.showNextVessage()
         }else{
-            let continueAction = UIAlertAction(title: "CONTINUE".localizedString(), style: .Default, handler: { (action) -> Void in
-                MobClick.event("JumpVessage")
-                self.loadNextVessage()
-            })
-            self.showAlert("CLICK_NEXT_MESSAGE_TIPS_TITLE".localizedString(), msg: "CLICK_NEXT_MESSAGE_TIPS".localizedString(), actions: [ALERT_ACTION_I_SEE,continueAction])
+            recordVessageManager.cancelRecord()
+            setReadingVessage()
         }
     }
     
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        playVessageManager = PlayVessageManager()
+        playVessageManager.initManager(self)
+        recordVessageManager = RecordVessageManager()
+        recordVessageManager.initManager(self)
+        if let chatter = self.chatter{
+            recordVessageManager.onChatterUpdated(chatter)
+            recordVessageManager.onChatterUpdated(chatter)
+        }
         addObservers()
+        setReadingVessage()
     }
     
     private var isGoAhead = false
@@ -280,6 +305,8 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         super.viewWillDisappear(animated)
         if !isGoAhead {
             removeObservers()
+            recordVessageManager.onReleaseManager()
+            playVessageManager.onReleaseManager()
         }
     }
     
@@ -298,24 +325,13 @@ class ConversationViewController: UIViewController,PlayerDelegate {
         isGoAhead = false
         if chatterChanged{
             chatterChanged = false
-            if !String.isNullOrWhiteSpace(self.chatter.userId) {
-                var vessages = vessageService.getNotReadVessages(self.chatter.userId)
-                vessages.sortInPlace({ (a, b) -> Bool in
-                    a.sendTime.dateTimeOfAccurateString.isBefore(b.sendTime.dateTimeOfAccurateString)
-                })
-                notReadVessages = vessages
-                updateAvatar(self.chatter?.avatar)
-            }else{
-                nextVessageButton?.hidden = notReadVessages.count <= 1
-                vessageView?.hidden = presentingVesseage == nil
-                noMessageTipsLabel?.hidden = presentingVesseage != nil
-            }
         }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         showBottomBar()
+        recordVessageManager.camera.openCamera()
     }
     
     private func showBottomBar(){
@@ -341,40 +357,14 @@ class ConversationViewController: UIViewController,PlayerDelegate {
     func onNewVessageReveiced(a:NSNotification){
         if let msg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
             if msg.sender == self.chatter?.userId ?? ""{
-                self.notReadVessages.append(msg)
+                playVessageManager.onVessageReceived(msg)
+                recordVessageManager.onVessageReceived(msg)
             }else{
                 self.otherConversationNewVessageReceivedCount += 1
             }
         }
     }
 
-    //MARK: Player Delegate
-    
-    func playerBufferingStateDidChange(player: Player) {
-        
-    }
-    
-    func playerPlaybackDidEnd(player: Player) {
-        self.vessagePlayer.filePath = nil
-        self.vessagePlayer.filePath = self.presentingVesseage.fileId
-    }
-    
-    func playerPlaybackStateDidChange(player: Player) {
-        
-    }
-    
-    func playerPlaybackWillStartFromBeginning(player: Player) {
-        if self.presentingVesseage?.isRead == false {
-            MobClick.event("ReadVessage")
-            self.vessageService.readVessage(self.presentingVesseage)
-            refreshBadge()
-            
-        }
-    }
-    
-    func playerReady(player: Player) {
-        
-    }
     
     //MARK: showConversationViewController
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation)

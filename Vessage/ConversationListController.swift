@@ -70,7 +70,7 @@ class ConversationListController: UITableViewController {
         vessageService.newVessageFromServer()
         
         #if DEBUG
-            self.navigationItem.title = "Vege Debug \(VessageConfig.appVersion)"
+            self.navigationItem.title = "\(VessageConfig.appVersion) build"
         #endif
     }
     
@@ -304,10 +304,11 @@ class ConversationListController: UITableViewController {
     }
 }
 
+
+//MARK: ConversationListController extension UISearchBarDelegate
 extension ConversationListController:UISearchBarDelegate
 {
     //MARK: search bar delegate
-    
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchResult.removeAll()
         let users = userService.activeUsers.getRandomSubArray(3)
@@ -339,19 +340,25 @@ extension ConversationListController:UISearchBarDelegate
                 return model
             })
             searchResult.appendContentsOf(res)
-            userService.searchUser(searchText, callback: { (resultUsers) -> Void in
-                if let currentText = searchBar.text{
-                    if currentText != searchText{
+            let existsUsers = conversations.map({ (c) -> VessageUser in
+                let u = VessageUser()
+                u.userId = c.chatterId
+                u.mobile = c.chatterMobile
+                return u
+            })
+            
+            userService.searchUser(searchText, callback: { (keyword, resultUsers) in
+                if !String.isNullOrEmpty(searchBar.text) && keyword != searchBar.text{
+                    #if DEBUG
                         print("ignore search result")
-                        return
-                    }
+                    #endif
+                    return
                 }
+                
                 let results = resultUsers.filter({ (resultUser) -> Bool in
-                    return conversations.count == 0 || !conversations.contains({ (c) -> Bool in
-                        if let chatterId = c.chatterId{
-                            return chatterId == resultUser.userId
-                        }
-                        return false
+                    
+                    return !existsUsers.contains({ (eu) -> Bool in
+                        return VessageUser.isTheSameUser(resultUser, userb: eu)
                     })
                 }).map({ (resultUser) -> SearchResultModel in
                     let model = SearchResultModel()
@@ -359,13 +366,16 @@ extension ConversationListController:UISearchBarDelegate
                     model.keyword = searchText
                     return model
                 })
-                self.searchResult.appendContentsOf(results)
-                if self.searchResult.count == 0 && searchText.isMobileNumber(){
-                    let model = SearchResultModel()
-                    model.keyword = searchText
-                    model.mobile = searchText
-                    self.searchResult.append(model)
-                }
+                
+                dispatch_async(dispatch_get_main_queue(), { 
+                    self.searchResult.appendContentsOf(results)
+                    if self.searchResult.count == 0 && searchText.isMobileNumber(){
+                        let model = SearchResultModel()
+                        model.keyword = searchText
+                        model.mobile = searchText
+                        self.searchResult.append(model)
+                    }
+                })
             })
         }
     }

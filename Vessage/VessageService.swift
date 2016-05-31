@@ -140,7 +140,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
             PersistentManager.sharedInstance.removeModel(task)
             var userInfo = [String:AnyObject]()
             userInfo.updateValue(task, forKey: SendedVessageTaskValue)
-            self.postNotificationName(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
+            self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
         }
     }
     
@@ -158,9 +158,9 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
                     MobClick.event("TotalPostVessages")
                     PersistentManager.sharedInstance.removeModel(task)
                     PersistentManager.sharedInstance.removeModel(m)
-                    self.postNotificationName(VessageService.onNewVessageSended, object: self, userInfo:userInfo)
+                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSended, object: self, userInfo:userInfo)
                 }else{
-                    self.postNotificationName(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
+                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
                 }
             })
         }
@@ -222,10 +222,10 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         SystemSoundHelper.vibrate()
                         vsgs.forEach({ (vsg) -> () in
-                            self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
+                            self.postNotificationNameWithMainAsync(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         })
                         
-                        self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValue:vsgs])
+                        self.postNotificationNameWithMainAsync(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValue:vsgs])
                     })
                     
                     self.notifyVessageGot()

@@ -47,7 +47,7 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
                         }
                     }
                 }
-                self.postNotificationName(ActivityService.onEnabledActivitiesBadgeUpdated, object: self, userInfo: [UpdatedActivitiesBadgeValue:totalBadge])
+                self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivitiesBadgeUpdated, object: self, userInfo: [UpdatedActivitiesBadgeValue:totalBadge])
             }
         }
     }
@@ -58,17 +58,17 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
     
     func clearActivityMiniBadge(id:String) {
         UserSetting.disableSetting("ActivityMiniBadge\(id)")
-        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:false])
+        self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:false])
     }
     
     func setActivityMiniBadgeShow(id:String){
         UserSetting.enableSetting("ActivityMiniBadge\(id)")
-        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:true])
+        self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:true])
     }
     
     func setActivityBadge(id:String,badgeValue:Int) {
         UserSetting.setUserIntValue("ActivityBadge:\(id)",value: badgeValue)
-        self.postNotificationName(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityBadgeValue:badgeValue])
+        self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityBadgeValue:badgeValue])
     }
     
     func clearActivityBadge(id:String) {

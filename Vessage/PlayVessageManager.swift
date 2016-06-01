@@ -25,6 +25,8 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
     override func onSwitchToManager() {
         rightButton.setImage(UIImage(named: "playNext"), forState: .Normal)
         rightButton.setImage(UIImage(named: "playNext"), forState: .Highlighted)
+        recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
+        recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
     }
     
     override func initManager(controller: ConversationViewController) {

@@ -125,6 +125,12 @@ class ValidateMobileVSMSRequest: BahamutRFRequestBase{
             self.paramenters["zone"] = zoneCode
         }
     }
+    
+    var smsAppkey:String!{
+        didSet{
+            self.paramenters["smsAppkey"] = smsAppkey
+        }
+    }
 }
 
 class ChangeAvatarRequest: BahamutRFRequestBase {

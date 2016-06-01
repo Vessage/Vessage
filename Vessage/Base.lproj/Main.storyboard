@@ -104,7 +104,7 @@
                                                 <constraint firstAttribute="width" constant="67" id="gg2-5k-QJi"/>
                                                 <constraint firstAttribute="height" constant="67" id="wJR-o5-gy5"/>
                                             </constraints>
-                                            <state key="normal" image="movie"/>
+                                            <state key="normal" image="chat"/>
                                             <connections>
                                                 <action selector="onClickMiddleButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1ZB-r7-QYu"/>
                                             </connections>
@@ -529,11 +529,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chat" width="256" height="256"/>
         <image name="conversation" width="24" height="24"/>
         <image name="defaultAvatar" width="128" height="128"/>
         <image name="defaultFace" width="300" height="300"/>
         <image name="favorite" width="24" height="24"/>
-        <image name="movie" width="256" height="256"/>
         <image name="next" width="72" height="72"/>
         <image name="playNext" width="128" height="128"/>
         <image name="settings" width="21" height="21"/>

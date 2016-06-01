@@ -354,9 +354,10 @@ extension UserService{
         
     }
     
-    func validateMobile(mobile:String!,zone:String!, code:String!,callback:(suc:Bool)->Void){
+    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,callback:(suc:Bool)->Void){
         
         let req = ValidateMobileVSMSRequest()
+        req.smsAppkey = smsAppkey
         req.mobile = mobile
         req.zoneCode = zone
         req.code = code

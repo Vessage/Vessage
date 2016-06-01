@@ -251,7 +251,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
             if responseState == SMSUIResponseStateSelfVerify{
                 let hud = self.showActivityHud()
-                ServiceContainer.getUserService().validateMobile(phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
+                ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
                     hud.hideAsync(false)
                     if suc{   
                         self.tableView.reloadData()

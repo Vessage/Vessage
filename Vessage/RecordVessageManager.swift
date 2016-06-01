@@ -62,8 +62,8 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
             recordButton.setImage(UIImage(named: "checkRound"), forState: .Normal)
             recordButton.setImage(UIImage(named: "checkRound"), forState: .Highlighted)
         }else{
-            recordButton.setImage(UIImage(named: "movie"), forState: .Normal)
-            recordButton.setImage(UIImage(named: "movie"), forState: .Highlighted)
+            recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
+            recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
         }
     }
     

@@ -76,7 +76,7 @@ class ConversationListController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationItem.backBarButtonItem?.title = VessageConfig.appName
     }
     
     private func initObservers(){

@@ -755,7 +755,6 @@
 			isa = PBXGroup;
 			children = (
 				E7EDE4901CFD1F970001983F /* ConversationView */,
-				E7C387F31C982FC10096AF85 /* RecordMessage */,
 				E7C387EF1C982F510096AF85 /* ConversationList */,
 			);
 			name = Conversation;
@@ -806,16 +805,6 @@
 			name = ConversationList;
 			sourceTree = "<group>";
 		};
-		E7C387F31C982FC10096AF85 /* RecordMessage */ = {
-			isa = PBXGroup;
-			children = (
-				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
-				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
-				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
-			);
-			name = RecordMessage;
-			sourceTree = "<group>";
-		};
 		E7DBF2E91C9E94BA00850A45 /* UserGuide */ = {
 			isa = PBXGroup;
 			children = (
@@ -857,9 +846,12 @@
 		E7EDE4901CFD1F970001983F /* ConversationView */ = {
 			isa = PBXGroup;
 			children = (
+				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
+				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */,
 				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
+				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
 			);
 			name = ConversationView;
 			sourceTree = "<group>";

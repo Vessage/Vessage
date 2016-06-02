@@ -10,8 +10,11 @@ import Foundation
 class ShareHelper{
     
     private static func sendTellFriendWX(type:UInt32){
+        sendTellFriendWX(type, textMsg: "TELL_FRIEND_MESSAGE".localizedString())
+    }
+    
+    private static func sendTellFriendWX(type:UInt32,textMsg:String?){
         let url = "http://a.app.qq.com/o/simple.jsp?pkgname=cn.bahamut.vessage"
-        let textMsg = "TELL_FRIEND_MESSAGE".localizedString()
         let msg = WXMediaMessage()
         msg.title = VessageConfig.appName
         msg.description = textMsg
@@ -57,22 +60,9 @@ class ShareHelper{
     static func showTellTextMsgToFriendsAlert(vc:UIViewController,content:String,smsReceiver:String? = nil){
         let alert = UIAlertController(title: "TELL_FRIENDS".localizedString(), message: nil, preferredStyle: .ActionSheet)
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
-            let msg = WXMediaMessage()
-            msg.title = VessageConfig.appName
-            msg.description = content
-            msg.setThumbImage(UIImage(named: "shareIcon"))
-            
-            let wxobj = WXTextObject()
-            wxobj.contentText = content
-            
-            msg.mediaObject = wxobj
-            
-            let req = SendMessageToWXReq()
-            req.bText = false
-            req.message = msg
-            req.scene = Int32(WXSceneSession.rawValue)
-            
-            WXApi.sendReq(req)
+            let textMsg = "NOTIFY_SMS_FORMAT".localizedString()
+            let msg = String(format: textMsg, "")
+            sendTellFriendWX(WXSceneSession.rawValue, textMsg: msg)
         }
         alert.addAction(wxAction)
         

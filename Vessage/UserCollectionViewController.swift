@@ -12,7 +12,11 @@ class UserCollectionViewCell: UICollectionViewCell {
     var user:VessageUser!{
         didSet{
             nickLabel.text = user.nickName
-            ServiceContainer.getService(FileService).setAvatar(avatarImage, iconFileId: user.avatar)
+            if String.isNullOrEmpty(user.avatar) {
+                imgView.image = UIImage(named: "defaultAvatar")!
+            }else{
+                ServiceContainer.getService(FileService).setAvatar(avatarImage, iconFileId: user.avatar)
+            }
         }
     }
     

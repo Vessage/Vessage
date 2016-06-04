@@ -61,7 +61,11 @@ class ConversationListCell:ConversationListCellBase{
     private var avatar:String!{
         didSet{
             if let imgView = self.avatarView{
-                ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
+                if String.isNullOrEmpty(self.avatar) {
+                    imgView.image = UIImage(named: "defaultAvatar")!
+                }else{
+                    ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
+                }
             }
         }
     }

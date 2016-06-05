@@ -25,7 +25,7 @@ class SelectVessageUserListCell: UITableViewCell {
         didSet{
             nickLabel.text = user.nickName
             if String.isNullOrEmpty(user.avatar) {
-                imgView.image = UIImage(named: "defaultAvatar")!
+                avatarImage.image = UIImage(named: "defaultAvatar")!
             }else{
                 ServiceContainer.getService(FileService).setAvatar(avatarImage, iconFileId: user.avatar)
             }

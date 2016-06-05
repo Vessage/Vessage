@@ -260,3 +260,5 @@ PAPER_OPENED = "消息已经被打开，不能再次打开";
 NO_SUCH_PAPER_ID = "没找到该纸条";
 USER_POSTED_THIS_PAPER = "纸条由该用户传递过来，不能传回去";
 SELF_IS_RECEIVER = "不能传递纸条给自己";
+
+//HelpTogether

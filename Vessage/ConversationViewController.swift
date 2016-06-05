@@ -94,11 +94,12 @@ class ConversationViewController: UIViewController {
     
     var otherConversationNewVessageReceivedCount:Int = 0{
         didSet{
-            if otherConversationNewVessageReceivedCount <= 0{
-                return
-            }
             if let item = self.navigationController?.navigationBar.backItem?.backBarButtonItem{
-                item.title = "( \(otherConversationNewVessageReceivedCount) )"
+                if otherConversationNewVessageReceivedCount <= 0{
+                    item.title = VessageConfig.appName
+                }else{
+                    item.title = "\(VessageConfig.appName)( \(otherConversationNewVessageReceivedCount) )"
+                }
             }
         }
     }

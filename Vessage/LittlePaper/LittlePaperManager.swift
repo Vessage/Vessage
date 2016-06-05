@@ -10,12 +10,13 @@ import Foundation
 class LittlePaperManager {
     static private(set) var instance:LittlePaperManager!
     static func initManager(){
-        instance = LittlePaperManager()
+        if instance == nil {
+            instance = LittlePaperManager()
+        }
         instance.loadCachedData()
     }
     
     static func releaseManager(){
-        instance = nil
     }
     
     static let TYPE_MY_SENDED = 3

@@ -89,6 +89,13 @@
 		E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */; };
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
 		E72F66011CE0DB180094BA10 /* PaperMessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */; };
+		E733CEE21D032B12002D6834 /* HelpTogetherMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E733CEE11D032B12002D6834 /* HelpTogetherMainController.swift */; };
+		E733CEE81D0490D7002D6834 /* PostNewHelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E733CEE71D0490D7002D6834 /* PostNewHelpController.swift */; };
+		E733CEEA1D0490F7002D6834 /* HelpTogether.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E733CEE91D0490F7002D6834 /* HelpTogether.storyboard */; };
+		E733CEEC1D049100002D6834 /* HelpTogetherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E733CEEB1D049100002D6834 /* HelpTogetherManager.swift */; };
+		E733CEEE1D049114002D6834 /* HelpTogetherRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E733CEED1D049114002D6834 /* HelpTogetherRF.swift */; };
+		E733CEF01D049141002D6834 /* HelpDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E733CEEF1D049141002D6834 /* HelpDetailController.swift */; };
+		E733CEF21D0491A4002D6834 /* HelpSquareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E733CEF11D0491A4002D6834 /* HelpSquareController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
@@ -257,6 +264,13 @@
 		E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVessageUserViewController.swift; sourceTree = "<group>"; };
 		E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCollectionViewController.swift; sourceTree = "<group>"; };
 		E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperMessageDetailViewController.swift; sourceTree = "<group>"; };
+		E733CEE11D032B12002D6834 /* HelpTogetherMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpTogetherMainController.swift; path = HelpTogether/HelpTogetherMainController.swift; sourceTree = "<group>"; };
+		E733CEE71D0490D7002D6834 /* PostNewHelpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostNewHelpController.swift; path = HelpTogether/PostNewHelpController.swift; sourceTree = "<group>"; };
+		E733CEE91D0490F7002D6834 /* HelpTogether.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = HelpTogether.storyboard; path = HelpTogether/HelpTogether.storyboard; sourceTree = "<group>"; };
+		E733CEEB1D049100002D6834 /* HelpTogetherManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpTogetherManager.swift; path = HelpTogether/HelpTogetherManager.swift; sourceTree = "<group>"; };
+		E733CEED1D049114002D6834 /* HelpTogetherRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpTogetherRF.swift; path = HelpTogether/HelpTogetherRF.swift; sourceTree = "<group>"; };
+		E733CEEF1D049141002D6834 /* HelpDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpDetailController.swift; path = HelpTogether/HelpDetailController.swift; sourceTree = "<group>"; };
+		E733CEF11D0491A4002D6834 /* HelpSquareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpSquareController.swift; path = HelpTogether/HelpSquareController.swift; sourceTree = "<group>"; };
 		E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesRF.swift; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
@@ -651,6 +665,7 @@
 		E708ACA11C8752090071104E /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				E733CEE91D0490F7002D6834 /* HelpTogether.storyboard */,
 				E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */,
 				E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */,
 				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
@@ -742,6 +757,19 @@
 			path = UMessageSdk;
 			sourceTree = "<group>";
 		};
+		E733CEE01D032877002D6834 /* HelpTogether */ = {
+			isa = PBXGroup;
+			children = (
+				E733CEE11D032B12002D6834 /* HelpTogetherMainController.swift */,
+				E733CEEB1D049100002D6834 /* HelpTogetherManager.swift */,
+				E733CEED1D049114002D6834 /* HelpTogetherRF.swift */,
+				E733CEE71D0490D7002D6834 /* PostNewHelpController.swift */,
+				E733CEEF1D049141002D6834 /* HelpDetailController.swift */,
+				E733CEF11D0491A4002D6834 /* HelpSquareController.swift */,
+			);
+			name = HelpTogether;
+			sourceTree = "<group>";
+		};
 		E73CF7CB1CE4E661005EF7BB /* ActivityService */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,6 +804,7 @@
 		E7BFC3911CDB1C2C00CDB392 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E733CEE01D032877002D6834 /* HelpTogether */,
 				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
 				E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */,
 			);
@@ -997,6 +1026,7 @@
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
+				E733CEEA1D0490F7002D6834 /* HelpTogether.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
@@ -1079,6 +1109,7 @@
 				E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */,
 				E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
+				E733CEE21D032B12002D6834 /* HelpTogetherMainController.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
 				E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */,
 				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
@@ -1118,16 +1149,20 @@
 				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */,
+				E733CEEC1D049100002D6834 /* HelpTogetherManager.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
+				E733CEE81D0490D7002D6834 /* PostNewHelpController.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
+				E733CEF01D049141002D6834 /* HelpDetailController.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
 				E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */,
+				E733CEF21D0491A4002D6834 /* HelpSquareController.swift in Sources */,
 				E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
@@ -1143,6 +1178,7 @@
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
 				E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
+				E733CEEE1D049114002D6834 /* HelpTogetherRF.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,

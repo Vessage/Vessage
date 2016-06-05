@@ -11,7 +11,7 @@ class ActivityListCell: UITableViewCell {
     private var rootController:ActivityListController!
     var activityInfo:ActivityInfo!{
         didSet{
-            badgeValue = 99
+            badgeValue = 0
             nameLabel.text = activityInfo.cellTitle
             iconImageView.image = UIImage(named: activityInfo.cellIconName)
             refreshCellBadge()

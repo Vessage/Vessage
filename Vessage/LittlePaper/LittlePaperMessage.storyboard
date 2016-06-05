@@ -10,7 +10,7 @@
         <!--Little Paper Main Controller-->
         <scene sceneID="e9S-ke-DEF">
             <objects>
-                <viewController storyboardIdentifier="LittlePaperMainController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fTJ-B6-5Sx" customClass="LittlePaperMainController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LittlePaperMainController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fTJ-B6-5Sx" customClass="LittlePaperMainController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UD8-3d-1LO"/>
                         <viewControllerLayoutGuide type="bottom" id="QJl-tw-pDe"/>
@@ -134,7 +134,7 @@
         <!--纸条盒子-->
         <scene sceneID="mOG-L9-2PC">
             <objects>
-                <viewController storyboardIdentifier="LittlePaperMessageListController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oeu-Cm-RyE" customClass="LittlePaperMessageListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LittlePaperMessageListController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oeu-Cm-RyE" customClass="LittlePaperMessageListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tPm-r4-CBj"/>
                         <viewControllerLayoutGuide type="bottom" id="ihH-Tt-NmV"/>
@@ -373,7 +373,7 @@
         <!--纸条-->
         <scene sceneID="4Hq-nd-jv8">
             <objects>
-                <viewController storyboardIdentifier="PaperMessageDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8AW-b1-mGD" customClass="PaperMessageDetailViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PaperMessageDetailViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8AW-b1-mGD" customClass="PaperMessageDetailViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eJU-wh-Dk5"/>
                         <viewControllerLayoutGuide type="bottom" id="rHp-BH-iQO"/>

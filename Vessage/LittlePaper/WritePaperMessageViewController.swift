@@ -37,11 +37,11 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
         LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: selectedUsers.first!.userId) { (suc) in
             hud.hideAsync(true)
             if suc{
-                self.playCheckMark("SUCCESS".localizedString(),async:false){
+                self.playCheckMark("SUCCESS".littlePaperString,async:false){
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             }else{
-                self.playCrossMark("FAIL".localizedString())
+                self.playCrossMark("FAIL".littlePaperString)
             }
         }
     }
@@ -49,24 +49,24 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
     @IBAction func onClickPostButton(sender: AnyObject) {
         hideKeyBoard()
         if String.isNullOrWhiteSpace(receiverInfoTextField.text) {
-            self.playToast("PAPER_RECEIVER_IS_NULL".localizedString()){
+            self.playToast("PAPER_RECEIVER_IS_NULL".littlePaperString){
                 self.receiverInfoTextField.becomeFirstResponder()
             }
             return
         }
         if String.isNullOrWhiteSpace(messageTextView.text) {
-            self.playToast("PAPER_MESSAGE_IS_NULL".localizedString()){
+            self.playToast("PAPER_MESSAGE_IS_NULL".littlePaperString){
                 self.messageTextView.becomeFirstResponder()
             }
             return
         }
         if String.isNullOrWhiteSpace(receiverInfoTextField.text) {
-            self.playToast("PAPER_RECEIVER_IS_NULL".localizedString())
+            self.playToast("PAPER_RECEIVER_IS_NULL".littlePaperString)
             return
         }
         
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
-        controller.title = "SELECT_POST_MAN".localizedString()
+        controller.title = "SELECT_POST_MAN".littlePaperString
         controller.delegate = self
         controller.showActiveUsers = true
         controller.allowsMultipleSelection = false

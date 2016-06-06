@@ -1,0 +1,13 @@
+/* 
+  HelpTogether.strings
+  Vessage
+
+  Created by AlexChow on 16/6/6.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+SQUARE_MSG_FORMAT = "（有%@个请求消息）";
+X_SEND_A_HELP_REQ_TO_U = "%@ 给你发了一个请求";
+X_NEED_HELP = "%@ 的请求";
+HELP_REQ_TITLE_FORMAT = "【%@】%@";
+RECEIVED_HELPS = "收到的请求";
+SENDED_HELPS = "发出的请求";

@@ -156,6 +156,8 @@
 		E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */; };
 		E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */; };
 		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
+		E7FC8A801D05105C00A05001 /* HelpTogether.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A7F1D05105C00A05001 /* HelpTogether.strings */; };
+		E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A811D0510A100A05001 /* LittlePaper.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,7 +291,7 @@
 		E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListController.swift; sourceTree = "<group>"; };
 		E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMainController.swift; sourceTree = "<group>"; };
 		E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperManager.swift; sourceTree = "<group>"; };
-		E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LittlePaperMessage.storyboard; path = LittlePaper/LittlePaperMessage.storyboard; sourceTree = "<group>"; };
+		E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LittlePaperMessage.storyboard; sourceTree = "<group>"; };
 		E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperRF.swift; sourceTree = "<group>"; };
 		E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
 		E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityConfig.swift; sourceTree = "<group>"; };
@@ -335,6 +337,8 @@
 		E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SMSSDKUI.bundle; path = Vessage/Libs/SMSSDK/SMSSDKUI.bundle; sourceTree = SOURCE_ROOT; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
+		E7FC8A7F1D05105C00A05001 /* HelpTogether.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = HelpTogether.strings; path = HelpTogether/HelpTogether.strings; sourceTree = "<group>"; };
+		E7FC8A811D0510A100A05001 /* LittlePaper.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LittlePaper.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -665,8 +669,6 @@
 		E708ACA11C8752090071104E /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E733CEE91D0490F7002D6834 /* HelpTogether.storyboard */,
-				E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */,
 				E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */,
 				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
 				E708AB401C86CAA50071104E /* Main.storyboard */,
@@ -760,12 +762,14 @@
 		E733CEE01D032877002D6834 /* HelpTogether */ = {
 			isa = PBXGroup;
 			children = (
+				E733CEE91D0490F7002D6834 /* HelpTogether.storyboard */,
 				E733CEE11D032B12002D6834 /* HelpTogetherMainController.swift */,
 				E733CEEB1D049100002D6834 /* HelpTogetherManager.swift */,
 				E733CEED1D049114002D6834 /* HelpTogetherRF.swift */,
 				E733CEE71D0490D7002D6834 /* PostNewHelpController.swift */,
 				E733CEEF1D049141002D6834 /* HelpDetailController.swift */,
 				E733CEF11D0491A4002D6834 /* HelpSquareController.swift */,
+				E7FC8A7F1D05105C00A05001 /* HelpTogether.strings */,
 			);
 			name = HelpTogether;
 			sourceTree = "<group>";
@@ -814,12 +818,14 @@
 		E7C04AF21CDF3AFE00093E6C /* LittlePaper */ = {
 			isa = PBXGroup;
 			children = (
+				E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */,
 				E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */,
 				E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */,
 				E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */,
 				E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */,
 				E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */,
 				E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */,
+				E7FC8A811D0510A100A05001 /* LittlePaper.strings */,
 			);
 			path = LittlePaper;
 			sourceTree = "<group>";
@@ -1018,9 +1024,11 @@
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
+				E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */,
 				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
+				E7FC8A801D05105C00A05001 /* HelpTogether.strings in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,

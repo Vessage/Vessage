@@ -15,8 +15,10 @@ class Help: BahamutObject {
     
     var helpId:String!
     var title:String!
+    var category:String!
     var content:String!
     var requestor:String!
+    var requestorNick:String!
 }
 
 class GetMyHelpRequest: BahamutRFRequestBase {
@@ -37,11 +39,37 @@ class GetHelpSquareRequest: BahamutRFRequestBase {
     }
 }
 
-class PostNewHelpRequest: BahamutRFRequestBase {
+class PostHelpRequest: BahamutRFRequestBase {
+    var toSquare:Bool = false{
+        didSet{
+            self.paramenters["toSquare"] = "\(toSquare)"
+        }
+    }
+    
+    var toReceiver:String!{
+        didSet{
+            self.paramenters["receiver"] = toReceiver
+        }
+    }
+    
+    var myNick:String!{
+        didSet{
+            self.paramenters["myNick"] = myNick
+        }
+    }
+}
+
+class PostNewHelpRequest: PostHelpRequest {
     override init() {
         super.init()
         self.api = "/HelpTogether"
         self.method = .POST
+    }
+    
+    var category:String!{
+        didSet{
+            self.paramenters["category"] = category
+        }
     }
     
     var title:String!{
@@ -56,42 +84,19 @@ class PostNewHelpRequest: BahamutRFRequestBase {
         }
     }
     
-    var toSquare:Bool = false{
-        didSet{
-            self.paramenters["toSquare"] = "\(toSquare)"
-        }
-    }
-    
-    var toReceiver:String!{
-        didSet{
-            self.paramenters["receiver"] = toReceiver
-        }
-    }
-    
 }
 
-class PostHelpToNextRquest: BahamutRFRequestBase {
+class PostHelpToNextRquest: PostHelpRequest {
     override init() {
         super.init()
         self.api = "/HelpTogether"
         self.method = .PUT
     }
     
+    
     var helpId:String!{
         didSet{
             self.paramenters["helpId"] = helpId
-        }
-    }
-    
-    var toSquare:Bool = false{
-        didSet{
-            self.paramenters["toSquare"] = "\(toSquare)"
-        }
-    }
-    
-    var toReceiver:String!{
-        didSet{
-            self.paramenters["receiver"] = toReceiver
         }
     }
 }

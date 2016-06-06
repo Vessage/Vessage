@@ -68,7 +68,7 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
         label.numberOfLines = 0
         label.textColor = UIColor.darkGrayColor()
         label.backgroundColor = UIColor.clearColor()
-        label.text = "NO_PAPER_MESSAGE".localizedString()
+        label.text = "NO_PAPER_MESSAGE".littlePaperString
         label.userInteractionEnabled = true
         return label
     }()
@@ -139,11 +139,11 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     //MARK: actions
     
     func onClickTrash(sender: AnyObject) {
-        let alertYes = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+        let alertYes = UIAlertAction(title: "YES".littlePaperString, style: .Default, handler: { (ac) in
             LittlePaperManager.instance.clearPaperMessageList(self.paperListType)
             self.paperListType = self.paperListType + 0
         })
-        self.showAlert("CORFIRM_CLEAR_ALL_PAPER_MESSAGES".localizedString(), msg: "CLEAR_ALL_PAPER_MESSAGES_TIPS".localizedString(), actions: [ALERT_ACTION_CANCEL,alertYes])
+        self.showAlert("CORFIRM_CLEAR_ALL_PAPER_MESSAGES".littlePaperString, msg: "CLEAR_ALL_PAPER_MESSAGES_TIPS".littlePaperString, actions: [ALERT_ACTION_CANCEL,alertYes])
     }
     
     func onClickEmptyTableViewFooter(_:UITapGestureRecognizer) {
@@ -221,13 +221,13 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let actionTitle = "REMOVE".localizedString()
+        let actionTitle = "REMOVE".littlePaperString
         let action = UITableViewRowAction(style: .Default, title: actionTitle, handler: { (ac, indexPath) -> Void in
-            let alertYes = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+            let alertYes = UIAlertAction(title: "YES".littlePaperString, style: .Default, handler: { (ac) in
                 LittlePaperManager.instance.removePaperMessage(self.paperListType, index: indexPath.row)
                 self.paperListType = self.paperListType + 0
             })
-            self.showAlert("CORFIRM_CLEAR_PAPER_MESSAGE".localizedString(), msg: "CLEAR_ALL_PAPER_MESSAGES_TIPS".localizedString(), actions: [ALERT_ACTION_CANCEL,alertYes])
+            self.showAlert("CORFIRM_CLEAR_PAPER_MESSAGE".littlePaperString, msg: "CLEAR_ALL_PAPER_MESSAGES_TIPS".littlePaperString, actions: [ALERT_ACTION_CANCEL,alertYes])
         })
         return [action]
     }

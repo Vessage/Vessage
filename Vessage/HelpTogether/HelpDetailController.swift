@@ -9,5 +9,17 @@
 import UIKit
 
 class HelpDetailController: UIViewController {
-
+    
+    var help:Help!{
+        didSet{
+            
+        }
+    }
+    
+    
+    static func showHelpDetail(nvc:UINavigationController,help:Help) {
+        let controller = instanceFromStoryBoard("HelpTogether", identifier: "HelpDetailController") as! HelpDetailController
+        controller.help = help
+        nvc.pushViewController(controller, animated: true)
+    }
 }

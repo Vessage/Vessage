@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension String{
+    var littlePaperString:String{
+        return LocalizedString(self, tableName: "LittlePaper", bundle: NSBundle.mainBundle())
+    }
+}
+
 class LittlePaperMainController: UIViewController {
 
     @IBOutlet weak var newPaperButton: UIButton!

@@ -1,0 +1,32 @@
+/* 
+  LittlePaper.strings
+  Vessage
+
+  Created by AlexChow on 16/6/6.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+//Little Paper
+SUCCESS = "成功";
+UNKNOW_ERROR = "发生未知错误";
+REMOVE = "移除";
+FAIL = "失败";
+YES = "是";
+SELECT_POST_MAN = "选择接收的人";
+NO_PAPER_MESSAGE = "空空的盒子\n给别人传一条小纸条吧！~";
+PAPER_RECEIVER_IS_NULL = "谁接收纸条呢？";
+PAPER_MESSAGE_IS_NULL = "纸条上是不是少写内容了呢~ ~";
+PAPER_POSTED = "纸条已经传递出去";
+PAPER_POSTED_TO_RECEIVER = "纸条已经传递到接收人";
+PAPER_POSTING = "你的纸条正在传递中";
+PAPER_OPEN_BY = "%@ 打开了你的纸条";
+PAPER_SEND_BY = "%@ 发出的纸条";
+CORFIRM_CLEAR_PAPER_MESSAGE = "删除纸条？";
+CORFIRM_CLEAR_ALL_PAPER_MESSAGES = "清空当前盒子？";
+CLEAR_ALL_PAPER_MESSAGES_TIPS = "纸条删除后不能看到该纸条传递中的状态更新了哦！";
+CONTINUE_OPEN_PAPER = "继续打开";
+OPEN_PAPER_CONFIRM_TITLE = "你确定这纸条是给你的吗？";
+OPEN_PAPER_CONFIRM_MSG = "纸条被打开后不能继续传递下去。如果纸条不是给你的，请传递给可以转达该纸条的人，谢谢~";
+PAPER_OPENED = "消息已经被打开，不能再次打开>_<";
+NO_SUCH_PAPER_ID = "没找到该纸条呢>_<";
+USER_POSTED_THIS_PAPER = "纸条由该用户传递过来，不能传回去~";
+SELF_IS_RECEIVER = "不能传递纸条给自己~";

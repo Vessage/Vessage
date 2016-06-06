@@ -30,12 +30,15 @@ class UserCollectionViewCell: UICollectionViewCell {
     
 }
 
-class UserCollectionViewController: UICollectionViewController {
+class UserCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     var users = [VessageUser]()
+    private var myProfile:VessageUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        myProfile = ServiceContainer.getService(UserService).myProfile
+        collectionView?.delegate = self
         collectionView?.reloadData()
         collectionView?.allowsSelection = true
         collectionView?.allowsMultipleSelection = false
@@ -81,8 +84,16 @@ class UserCollectionViewController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let user = users[indexPath.row]
+        if myProfile.userId == user.userId {
+            self.playToast("ME".localizedString())
+            return
+        }
         let conversation = ServiceContainer.getConversationService().openConversationByUserId(user.userId,noteName: user.nickName ?? user.accountId ?? "")
         ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSizeMake(82, 92)
     }
     
     static func showUserCollectionViewController(nvc:UINavigationController,users:[VessageUser]) -> UserCollectionViewController{

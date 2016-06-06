@@ -20,38 +20,36 @@ extension FileService
 {
     func setAvatar(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage = UIImage(named: "defaultAvatar")!,callback:((suc:Bool)->Void)! = nil)
     {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            imageView.image = defaultImage
-            if String.isNullOrWhiteSpace(fileId) == false
+        imageView.image = defaultImage
+        if String.isNullOrWhiteSpace(fileId) == false
+        {
+            if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
             {
-                if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
-                {
-                    imageView.image = uiimage
-                    if let handler = callback{
-                        handler(suc:true)
-                    }
-                }else
-                {
-                    self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
-                        if filePath != nil
-                        {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                imageView.image = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
-                                if let handler = callback{
-                                    handler(suc:true)
-                                }
-                            })
-                        }else{
-                            if let handler = callback{
-                                handler(suc:false)
-                            }
-                        }
-                    })
-                }
-            }else{
+                imageView.image = uiimage
                 if let handler = callback{
-                    handler(suc:false)
+                    handler(suc:true)
                 }
+            }else
+            {
+                self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
+                    if filePath != nil
+                    {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            imageView.image = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
+                            if let handler = callback{
+                                handler(suc:true)
+                            }
+                        })
+                    }else{
+                        if let handler = callback{
+                            handler(suc:false)
+                        }
+                    }
+                })
+            }
+        }else{
+            if let handler = callback{
+                handler(suc:false)
             }
         }
     }

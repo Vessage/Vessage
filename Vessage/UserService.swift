@@ -182,15 +182,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func getUserNotedName(userId:String) -> String {
-        return userNotedNames[userId] ?? getCachedUserProfile(userId)?.nickName ?? "UNLOADED_USER".localizedString()
-    }
-    
-    func setUserNoteName(userId:String,noteName:String){
-        userNotedNames[userId] = noteName
-        UserSetting.setUserValue("UserNotedNames", value: userNotedNames)
-    }
-    
     func getActiveUsers(checkTime:Bool = false){
         if checkTime{
             let time = UserSetting.getUserIntValue("GET_ACTIVE_USERS_TIME")
@@ -205,6 +196,22 @@ class UserService:NSNotificationCenter, ServiceProtocol {
                 self.activeUsers = activeUsers
             }
         }
+    }
+}
+
+//MARK: User Note Name
+extension UserService{
+    func getUserNotedNameIfExists(userId:String) -> String? {
+        return userNotedNames[userId] ?? getCachedUserProfile(userId)?.nickName
+    }
+    
+    func getUserNotedName(userId:String) -> String {
+        return getUserNotedNameIfExists(userId) ?? "UNLOADED_USER".localizedString()
+    }
+    
+    func setUserNoteName(userId:String,noteName:String){
+        userNotedNames[userId] = noteName
+        UserSetting.setUserValue("UserNotedNames", value: userNotedNames)
     }
 }
 

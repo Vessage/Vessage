@@ -173,23 +173,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
-        
-        if let conversation = (conversations.filter{!String.isNullOrWhiteSpace($0.chatterMobile) && $0.chatterMobile == mobile}).first{
-            return conversation
-        }else{
-            let conversation = Conversation()
-            conversation.conversationId = IdUtil.generateUniqueId()
-            conversation.noteName = String.isNullOrWhiteSpace(noteName) ? mobile : noteName
-            conversation.chatterMobile = mobile
-            conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
-            conversation.saveModel()
-            conversations.append(conversation)
-            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
-            return conversation
-        }
-    }
-    
     func openConversationByUserId(userId:String,noteName:String?) -> Conversation {
         
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
@@ -210,17 +193,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.saveModel()
         conversations.append(conversation)
         return conversation
-    }
-    
-    func updateConversationChatterIdWithMobile(chatterId:String,mobile:String){
-        self.conversations.forEach { (con) -> () in
-            if String.isNullOrWhiteSpace(con.chatterId) && con.chatterMobile == mobile{
-                con.chatterId = chatterId
-                con.saveModel()
-                self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:con])
-            }
-        }
-        PersistentManager.sharedInstance.saveAll()
     }
     
     func removeConversation(conversationId:String) -> Bool{
@@ -259,5 +231,38 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             return true
         }
         return false
+    }
+}
+
+extension ConversationService{
+    
+    @available(*,deprecated)
+    func updateConversationChatterIdWithMobile(chatterId:String,mobile:String){
+        self.conversations.forEach { (con) -> () in
+            if String.isNullOrWhiteSpace(con.chatterId) && con.chatterMobile == mobile{
+                con.chatterId = chatterId
+                con.saveModel()
+                self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:con])
+            }
+        }
+        PersistentManager.sharedInstance.saveAll()
+    }
+    
+    @available(*,deprecated)
+    func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
+        
+        if let conversation = (conversations.filter{!String.isNullOrWhiteSpace($0.chatterMobile) && $0.chatterMobile == mobile}).first{
+            return conversation
+        }else{
+            let conversation = Conversation()
+            conversation.conversationId = IdUtil.generateUniqueId()
+            conversation.noteName = String.isNullOrWhiteSpace(noteName) ? mobile : noteName
+            conversation.chatterMobile = mobile
+            conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+            conversation.saveModel()
+            conversations.append(conversation)
+            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+            return conversation
+        }
     }
 }

@@ -175,6 +175,19 @@ class ChangeNickRequest: BahamutRFRequestBase {
     }
 }
 
+class RegistMobileUserRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .POST
+        self.api = "/VessageUsers/NewMobileUser"
+    }
+    
+    var mobile:String!{
+        didSet{
+            self.paramenters["mobile"] = mobile
+        }
+    }
+}
 
 class RegistNewVessageUserRequest: BahamutRFRequestBase{
     override init() {

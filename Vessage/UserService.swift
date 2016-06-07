@@ -109,8 +109,36 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return user
     }
     
+    func registNewUserByMobile(mobile:String,noteName:String,updatedCallback:(user:VessageUser?)->Void) {
+        let req = RegistMobileUserRequest()
+        req.mobile = mobile
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
+            if result.isFailure{
+                updatedCallback(user: nil)
+            }else if let user = result.returnObject{
+                #if DEBUG
+                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
+                #endif
+                user.nickName = noteName
+                user.lastUpdatedTime = NSDate()
+                user.saveModel()
+                self.setUserNoteName(user.userId, noteName: noteName)
+                PersistentManager.sharedInstance.saveAll()
+                updatedCallback(user: user)
+                self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
+            }else{
+                updatedCallback(user: nil)
+            }
+        }
+    }
+    
+    func getCachedUserByMobile(mobile:String) -> VessageUser? {
+        let mobileHash = mobile.md5
+        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.mobile) && (mobile == $0.mobile || mobileHash == $0.mobile)}.first
+    }
+    
     func getUserProfileByMobile(mobile:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
-        let result:VessageUser? = PersistentManager.sharedInstance.getAllModelFromCache(VessageUser).filter{ !String.isNullOrWhiteSpace($0.mobile) && mobile == $0.mobile}.first
+        let result:VessageUser? = getCachedUserByMobile(mobile)
         let req = GetUserInfoByMobileRequest()
         req.mobile = mobile
         getUserProfileByReq(result?.lastUpdatedTime, req: req){ user in
@@ -154,6 +182,13 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return user
     }
     
+    func fetchLatestUserProfile(cachedUser:VessageUser){
+        let req = GetUserInfoRequest()
+        req.userId = cachedUser.userId
+        getUserProfileByReq(cachedUser.lastUpdatedTime, req: req){ user in
+        }
+    }
+    
     private func getUserProfileByReq(lastUpdatedTime:NSDate?,req:BahamutRFRequestBase,updatedCallback:(user:VessageUser?)->Void){
         if forceGetUserProfileOnce == false{
             if let lt = lastUpdatedTime{
@@ -166,8 +201,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
             if result.isFailure{
                 updatedCallback(user: nil)
-            }
-            if let user = result.returnObject{
+            }else if let user = result.returnObject{
                 #if DEBUG
                     print("AccountId=\(user.accountId),UserId=\(user.userId)")
                 #endif
@@ -346,6 +380,10 @@ extension UserService{
 }
 
 //MARK: User Mobile
+class ValidateMobileResult:MsgResult{
+    var newUserId:String!
+}
+
 extension UserService{
     func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
         
@@ -368,10 +406,23 @@ extension UserService{
         req.mobile = mobile
         req.zoneCode = zone
         req.code = code
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ValidateMobileResult>) -> Void in
             if result.isSuccess{
+                
+                if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
+                    PersistentManager.sharedInstance.removeModel(self.myProfile)
+                    UserSetting.userId = newUserId
+                    BahamutRFKit.sharedInstance.resetUser(newUserId, token: UserSetting.token)
+                    BahamutRFKit.sharedInstance.closeClients()
+                    BahamutRFKit.sharedInstance.reuseApiServer(newUserId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
+                    BahamutRFKit.sharedInstance.reuseFileApiServer(newUserId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
+                    BahamutRFKit.sharedInstance.startClients()
+                    
+                    self.myProfile.userId = newUserId
+                }
                 self.myProfile.mobile = mobile
                 self.myProfile.saveModel()
+                PersistentManager.sharedInstance.saveModelChanges()
                 NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: nil, userInfo: nil)
                 callback(suc: true)
             }else{

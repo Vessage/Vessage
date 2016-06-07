@@ -298,6 +298,7 @@ class ConversationViewController: UIViewController {
         }
         addObservers()
         setReadingVessage()
+        ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
     }
     
     private var isGoAhead = false
@@ -370,20 +371,28 @@ class ConversationViewController: UIViewController {
     //MARK: showConversationViewController
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation)
     {
+        if String.isNullOrEmpty(conversation.chatterId) {
+            nvc.playToast("NO_SUCH_USER".localizedString())
+        }else if let user = ServiceContainer.getUserService().getCachedUserProfile(conversation.chatterId){
+            showConversationView(nvc,conversation: conversation,user: user)
+        }else{
+            let hud = nvc.showActivityHud()
+            ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
+                hud.hide(true)
+                if let updatedUser = u{
+                    showConversationView(nvc,conversation: conversation,user: updatedUser)
+                }else{
+                    nvc.playToast("NO_SUCH_USER".localizedString())
+                }
+            })
+        }
+        
+    }
+    
+    static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser){
         let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversationId = conversation.conversationId
-        if String.isNullOrEmpty(conversation.chatterId) == false{
-            controller.chatter = ServiceContainer.getUserService().getUserProfile(conversation.chatterId){ user in }
-        }else if String.isNullOrEmpty(conversation.chatterMobile) == false{
-            controller.chatter = ServiceContainer.getUserService().getUserProfileByMobile(conversation.chatterMobile){ user in }
-        }
-        if controller.chatter == nil{
-            let chatter = VessageUser()
-            
-            chatter.nickName = conversation.noteName
-            chatter.mobile = conversation.chatterMobile
-            controller.chatter = chatter
-        }
+        controller.chatter = user
         controller.chatterChanged = true
         controller.otherConversationNewVessageReceivedCount = 0
         controller.controllerTitle = conversation.noteName

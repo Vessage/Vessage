@@ -126,7 +126,22 @@ class VessageQueue:NSObject{
                     ServiceContainer.getVessageService().observeOnVessageFileUploadTask(task)
                     sendingHud.hideAsync(false)
                     self.controller.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString()){
-                        self.sendSMSToFriend(taskInfo)
+                        if String.isNullOrWhiteSpace(taskInfo.receiverId){
+                            
+                            if !UserSetting.isSettingEnable("InviteSMS:\(taskInfo.receiverMobile)"){
+                                let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+                                    var url = ""
+                                    if let senderNick = ServiceContainer.getUserService().myProfile.nickName{
+                                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick.base64String()
+                                    }else{
+                                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getUserService().myProfile.accountId)"
+                                    }
+                                    let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),url)
+                                    ShareHelper.showTellTextMsgToFriendsAlert(self.controller, content: contentText, smsReceiver: taskInfo.receiverMobile)
+                                })
+                                self.controller.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send])
+                            }
+                        }
                     }
                     
                 }else{
@@ -178,28 +193,5 @@ class VessageQueue:NSObject{
             self.controller.playCrossMark("CANCEL".localizedString())
         }
         controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
-    }
-    
-    //MARK: send sms to people
-    private func sendSMSToFriend(taskInfo:SendVessageTaskInfo){
-        if String.isNullOrWhiteSpace(taskInfo.receiverId){
-            if !UserSetting.isSettingEnable("InviteSMS:\(taskInfo.receiverMobile)"){
-                let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-                    var url = ""
-                    if let senderNick = ServiceContainer.getUserService().myProfile.nickName{
-                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick.base64String()
-                    }else{
-                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getUserService().myProfile.accountId)"
-                    }
-                    let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),url)
-                    ShareHelper.showTellTextMsgToFriendsAlert(self.controller, content: contentText, smsReceiver: taskInfo.receiverMobile)
-                })
-                let cancel = UIAlertAction(title: "NO".localizedString(), style: .Cancel, handler: { (ac) -> Void in
-                    
-                })
-                let vc = controller
-                vc.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send,cancel])
-            }
-        }
     }
 }

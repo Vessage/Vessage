@@ -8,11 +8,6 @@
 
 import Foundation
 class ShareHelper{
-    
-    private static func sendTellFriendWX(type:UInt32){
-        sendTellFriendWX(type, textMsg: "TELL_FRIEND_MESSAGE".localizedString())
-    }
-    
     private static func sendTellFriendWX(type:UInt32,textMsg:String?){
         let url = "http://a.app.qq.com/o/simple.jsp?pkgname=cn.bahamut.vessage"
         let msg = WXMediaMessage()
@@ -33,23 +28,22 @@ class ShareHelper{
         WXApi.sendReq(req)
     }
     
-    static func showTellVegeToFriendsAlert(vc:UIViewController){
+    static func showTellVegeToFriendsAlert(vc:UIViewController,message:String){
         
         let alert = UIAlertController(title: "TELL_FRIENDS".localizedString(), message: nil, preferredStyle: .ActionSheet)
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
-            sendTellFriendWX(WXSceneSession.rawValue)
+            sendTellFriendWX(WXSceneSession.rawValue,textMsg: message)
         }
         alert.addAction(wxAction)
         
         let wxTimeLineAction = UIAlertAction(title: "WECHAT_TIMELINE".localizedString(), style: .Default) { (ac) in
-            sendTellFriendWX(WXSceneTimeline.rawValue)
+            sendTellFriendWX(WXSceneTimeline.rawValue,textMsg: message)
         }
         alert.addAction(wxTimeLineAction)
         
         let smsAction = UIAlertAction(title: "SMS".localizedString(), style: .Default) { (ac) in
             let url = "http://t.cn/RqW8tuW"
-            let textMsg = "TELL_FRIEND_MESSAGE".localizedString()
-            vc.showSendSMSTextView([], body: "\(textMsg) \(url)")
+            vc.showSendSMSTextView([], body: "\(message) \(url)")
         }
         
         alert.addAction(smsAction)
@@ -60,17 +54,17 @@ class ShareHelper{
     static func showTellTextMsgToFriendsAlert(vc:UIViewController,content:String,smsReceiver:String? = nil){
         let alert = UIAlertController(title: "TELL_FRIENDS".localizedString(), message: nil, preferredStyle: .ActionSheet)
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
-            let textMsg = "NOTIFY_SMS_FORMAT".localizedString()
-            let msg = String(format: textMsg, "")
-            sendTellFriendWX(WXSceneSession.rawValue, textMsg: msg)
+            sendTellFriendWX(WXSceneSession.rawValue, textMsg: content)
         }
         alert.addAction(wxAction)
         
         let smsAction = UIAlertAction(title: "SMS".localizedString(), style: .Default) { (ac) in
+            let url = "http://t.cn/RqW8tuW"
+            let body = "\(content)\n\(url)"
             if let receiver = smsReceiver{
-                vc.showSendSMSTextView([receiver], body: content)
+                vc.showSendSMSTextView([receiver], body: body)
             }else{
-                vc.showSendSMSTextView([], body: content)
+                vc.showSendSMSTextView([], body: body)
             }
             
         }

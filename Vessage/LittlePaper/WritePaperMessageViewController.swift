@@ -34,11 +34,19 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
         let message = messageTextView.text!
         let receiverInfo = receiverInfoTextField.text!
         let hud = self.showActivityHudWithMessage(nil, message: nil)
-        LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: selectedUsers.first!.userId) { (suc) in
+        let receiver = selectedUsers.first!
+        LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: receiver.userId) { (suc) in
             hud.hideAsync(true)
             if suc{
                 self.playCheckMark("SUCCESS".littlePaperString,async:false){
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismissViewControllerAnimated(true, completion: {
+                        if String.isNullOrEmpty(receiver.accountId){
+                            let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+                                ShareHelper.showTellTextMsgToFriendsAlert(UIApplication.currentShowingViewController, content: "TELL_SENDED_U_A_LITTLE_PAPER".littlePaperString)
+                            })
+                            UIApplication.currentShowingViewController.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: receiver.nickName, actions: [send])
+                        }
+                    })
                 }
             }else{
                 self.playCrossMark("FAIL".littlePaperString)

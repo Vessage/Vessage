@@ -151,7 +151,7 @@ class ConversationListController: UITableViewController {
     }
     
     @IBAction func tellFriends(sender: AnyObject) {
-        ShareHelper.showTellVegeToFriendsAlert(self)
+        ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString())
     }
     
     private func removeConversation(conversation:Conversation){
@@ -160,6 +160,24 @@ class ConversationListController: UITableViewController {
         }
         let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
         self.showAlert("ASK_REMOVE_CONVERSATION_TITLE".localizedString(), msg: conversation.noteName, actions: [okAction,cancel])
+    }
+    
+    func openConversationWithMobile(mobile:String,noteName:String?) {
+        if let user = self.userService.getCachedUserByMobile(mobile){
+            let conversation = self.conversationService.openConversationByUserId(user.userId, noteName: noteName)
+            ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+        }else{
+            let hud = self.showActivityHud()
+            self.userService.registNewUserByMobile(mobile, noteName: noteName ?? mobile, updatedCallback: { (user) in
+                hud.hide(true)
+                if let u = user{
+                    let conversation = self.conversationService.openConversationByUserId(u.userId, noteName: noteName)
+                    ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+                }else{
+                    self.showAlert("OPEN_MOBILE_CONVERSATION_FAIL".localizedString(), msg: mobile)
+                }
+            })
+        }
     }
     
     //MARK: handle click list cell
@@ -174,8 +192,7 @@ class ConversationListController: UITableViewController {
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
             }else if let mobile = result.mobile{
                 MobClick.event("OpenSearchResultMobileConversation")
-                let conversation = conversationService.openConversationByMobile(mobile,noteName: result.mobile ?? result.keyword)
-                ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+                openConversationWithMobile(mobile, noteName: result.mobile ?? result.keyword)
             }
         }
     }

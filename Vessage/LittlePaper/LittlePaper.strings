@@ -30,3 +30,7 @@ PAPER_OPENED = "消息已经被打开，不能再次打开>_<";
 NO_SUCH_PAPER_ID = "没找到该纸条呢>_<";
 USER_POSTED_THIS_PAPER = "纸条由该用户传递过来，不能传回去~";
 SELF_IS_RECEIVER = "不能传递纸条给自己~";
+
+TELL_FRIENDS_LITTLE_PAPER = "我在玩Vege小纸条，你也来吧~~";
+TELL_SENDED_U_A_LITTLE_PAPER = "我给你发送了一条Vege小纸条，赶快查看吧~~";
+

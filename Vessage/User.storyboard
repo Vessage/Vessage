@@ -308,6 +308,35 @@
                                     <outlet property="nickLabel" destination="yNk-VR-eEj" id="o8y-Zs-y8F"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SelectVessageUserContactCell" id="7Wf-pz-2ik" customClass="SelectVessageUserContactCell" customModule="Vessage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Wf-pz-2ik" id="Mim-CH-bhn">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择手机联系人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUU-eJ-d9N">
+                                            <rect key="frame" x="8" y="11" width="119" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="xRm-cV-oPT">
+                                            <rect key="frame" x="374" y="6" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="2u4-fg-jFs"/>
+                                                <constraint firstAttribute="height" constant="32" id="cGD-0m-jId"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="xRm-cV-oPT" secondAttribute="trailing" id="6I1-fF-zci"/>
+                                        <constraint firstItem="QUU-eJ-d9N" firstAttribute="centerY" secondItem="Mim-CH-bhn" secondAttribute="centerY" id="6Mh-Ln-ihb"/>
+                                        <constraint firstItem="QUU-eJ-d9N" firstAttribute="leading" secondItem="Mim-CH-bhn" secondAttribute="leadingMargin" id="Ndy-lt-jeI"/>
+                                        <constraint firstItem="xRm-cV-oPT" firstAttribute="centerY" secondItem="Mim-CH-bhn" secondAttribute="centerY" id="gzt-xg-Xod"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="iYP-oK-379" id="t4g-yV-X1W"/>

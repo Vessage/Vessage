@@ -95,6 +95,17 @@ class VessageQueue:NSObject{
                     NSLog("Delete Sended Vessage Failed Error:%@", path)
                 }
             }
+            if let userId = task.receiverId{
+                if let receiver = ServiceContainer.getUserService().getCachedUserProfile(userId){
+                    if String.isNullOrEmpty(receiver.accountId) {
+                        let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+                            let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
+                            ShareHelper.showTellTextMsgToFriendsAlert(self.controller, content: contentText)
+                        })
+                        self.controller.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: receiver.nickName, actions: [send])
+                    }
+                }
+            }
         }
         controller.playCheckMark("VESSAGE_SENDED".localizedString())
     }
@@ -125,25 +136,7 @@ class VessageQueue:NSObject{
                     task.vessageId = vessageId
                     ServiceContainer.getVessageService().observeOnVessageFileUploadTask(task)
                     sendingHud.hideAsync(false)
-                    self.controller.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString()){
-                        if String.isNullOrWhiteSpace(taskInfo.receiverId){
-                            
-                            if !UserSetting.isSettingEnable("InviteSMS:\(taskInfo.receiverMobile)"){
-                                let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-                                    var url = ""
-                                    if let senderNick = ServiceContainer.getUserService().myProfile.nickName{
-                                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + senderNick.base64String()
-                                    }else{
-                                        url = VessageConfig.bahamutConfig.bahamutAppOuterExecutorUrlPrefix + "\(ServiceContainer.getUserService().myProfile.accountId)"
-                                    }
-                                    let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),url)
-                                    ShareHelper.showTellTextMsgToFriendsAlert(self.controller, content: contentText, smsReceiver: taskInfo.receiverMobile)
-                                })
-                                self.controller.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: taskInfo.receiverMobile, actions: [send])
-                            }
-                        }
-                    }
-                    
+                    self.controller.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString())
                 }else{
                     sendingHud.hideAsync(false)
                     self.retrySendFile(vessageId,taskInfoKey: taskInfoKey)

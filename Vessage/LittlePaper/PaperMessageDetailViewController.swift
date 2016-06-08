@@ -165,7 +165,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
             chatter = paperMessage.receiver
         }
         if let user = ServiceContainer.getUserService().getCachedUserProfile(chatter){
-            let conversation = ServiceContainer.getConversationService().openConversationByUserId(paperMessage.sender,noteName: user.nickName)
+            let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
             ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
         }else{
             ServiceContainer.getUserService().getUserProfile(chatter, updatedCallback: { (u) in

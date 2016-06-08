@@ -272,7 +272,7 @@ class ConversationViewController: UIViewController {
             let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
                 self.showNoteConversationAlert()
             })
-            showAlert(controllerTitle, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
+            showAlert(chatter.nickName ?? controllerTitle, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
         }
     }
     

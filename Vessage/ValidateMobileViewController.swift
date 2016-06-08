@@ -15,15 +15,7 @@ class ValidateMobileViewController: UIViewController {
         #if RELEASE
             SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
                 if responseState == SMSUIResponseStateSelfVerify{
-                    let hud = self.showActivityHud()
-                    
-                    ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc) -> Void in
-                        hud.hideAsync(false)
-                        if suc{
-                            SetupChatBcgImageController.showSetupViewController(self)
-                            MobClick.event("FinishValidateMobile")
-                        }
-                    })
+                    self.validateMobile(phoneNo, zone: zone, code: code)
                 }
             }
         #else
@@ -40,13 +32,7 @@ class ValidateMobileViewController: UIViewController {
                 {
                     self.playToast("手机号不能为空")
                 }else{
-                    let hud = self.showActivityHud()
-                    ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: "86", code: "test", callback: { (suc) -> Void in
-                        hud.hideAsync(false)
-                        if suc{
-                            SetupChatBcgImageController.showSetupViewController(self)
-                        }
-                    })
+                    self.validateMobile(phoneNo, zone: "86", code: "1234")
                 }
             })
             let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
@@ -54,6 +40,20 @@ class ValidateMobileViewController: UIViewController {
             alertController.addAction(yes)
             self.showAlert(alertController)
         #endif
+    }
+    
+    private func validateMobile(phoneNo:String,zone:String,code:String){
+        let hud = self.showActivityHud()
+        ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc,newUserId) -> Void in
+            hud.hideAsync(false)
+            if let newId = newUserId{
+                ServiceContainer.getAccountService().reBindUserId(newId)
+                EntryNavigationController.start()
+            }else if suc{
+                SetupChatBcgImageController.showSetupViewController(self)
+                MobClick.event("FinishValidateMobile")
+            }
+        })
     }
     
     @IBAction func logout(sender: AnyObject) {

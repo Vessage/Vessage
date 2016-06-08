@@ -27,7 +27,9 @@ extension ServiceContainer{
 class AccountService: ServiceProtocol
 {
     @objc static var ServiceName:String{return "Account Service"}
-    
+    @objc func appStartInit(appName: String) {
+        self.setServiceReady()
+    }
     @objc func userLoginInit(userId:String)
     {
         #if DEBUG
@@ -38,16 +40,11 @@ class AccountService: ServiceProtocol
         BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
         BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
         BahamutRFKit.sharedInstance.startClients()
-
         self.setServiceReady()
     }
     
     @objc func userLogout(userId: String) {
         MobClick.profileSignOff()
-        
-        self.setServiceNotReady()
-        
-        
         UserSetting.token = nil
         UserSetting.isUserLogined = false
         VessageSetting.fileApiServer = nil
@@ -62,8 +59,18 @@ class AccountService: ServiceProtocol
         BahamutRFKit.sharedInstance.closeClients()
     }
     
-    private func setLogined(validateResult:ValidateResult)
-    {
+    func reBindUserId(newUserId:String) {
+        let cachedValidateResult = ValidateResult()
+        cachedValidateResult.APIServer = VessageSetting.apiServerUrl
+        cachedValidateResult.AppToken = UserSetting.token
+        cachedValidateResult.FileAPIServer = VessageSetting.fileApiServer
+        cachedValidateResult.ChicagoServer = "\(VessageSetting.chicagoServerHost):\(VessageSetting.chicagoServerHostPort)"
+        cachedValidateResult.UserId = newUserId
+        ServiceContainer.instance.userLogout()
+        reuseValidateResult(cachedValidateResult)
+    }
+    
+    private func reuseValidateResult(validateResult:ValidateResult) {
         UserSetting.token = validateResult.AppToken
         UserSetting.isUserLogined = true
         VessageSetting.apiServerUrl = validateResult.APIServer
@@ -72,6 +79,11 @@ class AccountService: ServiceProtocol
         VessageSetting.chicagoServerHost = chicagoStrs[0]
         VessageSetting.chicagoServerHostPort = UInt16(chicagoStrs[1])!
         UserSetting.userId = validateResult.UserId
+    }
+    
+    private func setLogined(validateResult:ValidateResult)
+    {
+        reuseValidateResult(validateResult)
         ServiceContainer.instance.userLogin(validateResult.UserId)
     }
     

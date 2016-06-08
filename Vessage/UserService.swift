@@ -399,7 +399,7 @@ extension UserService{
         
     }
     
-    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,callback:(suc:Bool)->Void){
+    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,callback:(suc:Bool,newUserId:String?)->Void){
         
         let req = ValidateMobileVSMSRequest()
         req.smsAppkey = smsAppkey
@@ -408,27 +408,27 @@ extension UserService{
         req.code = code
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ValidateMobileResult>) -> Void in
             if result.isSuccess{
-                
-                if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
-                    PersistentManager.sharedInstance.removeModel(self.myProfile)
-                    UserSetting.userId = newUserId
-                    BahamutRFKit.sharedInstance.resetUser(newUserId, token: UserSetting.token)
-                    BahamutRFKit.sharedInstance.closeClients()
-                    BahamutRFKit.sharedInstance.reuseApiServer(newUserId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
-                    BahamutRFKit.sharedInstance.reuseFileApiServer(newUserId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
-                    BahamutRFKit.sharedInstance.startClients()
-                    
-                    self.myProfile.userId = newUserId
-                }
-                self.myProfile.mobile = mobile
-                self.myProfile.saveModel()
-                PersistentManager.sharedInstance.saveModelChanges()
                 NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: nil, userInfo: nil)
-                callback(suc: true)
+                if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
+                    #if DEBUG
+                        print("---------------------------------------------")
+                        print("Bind Account:\(self.myProfile.accountId)")
+                        print("Origin UserId:\(self.myProfile.userId)")
+                        print("Replace UserId:\(newUserId)")
+                        print("---------------------------------------------")
+                    #endif
+                    
+                    callback(suc: true, newUserId: newUserId)
+                }else{
+                    self.myProfile.mobile = mobile
+                    self.myProfile.saveModel()
+                    PersistentManager.sharedInstance.saveAll()
+                    callback(suc: true, newUserId: nil)
+                }
             }else{
                 let error = NSError(domain: "", code: result.statusCode ?? 999, userInfo: nil)
                 NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: error, userInfo: nil)
-                callback(suc: false)
+                callback(suc: false,newUserId: nil)
             }
         }
     }

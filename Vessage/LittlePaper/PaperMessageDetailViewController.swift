@@ -183,6 +183,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         LittlePaperManager.instance.postPaperToNextUser(paperMessage.paperId,userId: selectedUsers.first!.userId,isAnonymous: false) { (suc,errorMsg) in
             hud.hideAsync(true)
             if suc{
+                MobClick.event("LittlePaper_PostNext")
                 self.playCheckMark("SUCCESS".littlePaperString)
                 self.refreshPaper()
             }else{
@@ -205,6 +206,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
             LittlePaperManager.instance.openPaperMessage(self.paperMessage.paperId) { (openedMsg,errorMsg) in
                 hud.hideAsync(true)
                 if let m = openedMsg{
+                    MobClick.event("LittlePaper_OpenPaper")
                     self.paperMessage = m
                     self.refreshPaper()
                 }else{

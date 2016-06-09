@@ -35,7 +35,7 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
                     phoneNos.append(phone)
                     let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .Default, handler: { (action) -> Void in
                         if let i = actions.indexOf(action){
-                            MobClick.event("SelectContactMobile")
+                            MobClick.event("Vege_SelectContactMobile")
                             onSelectedMobile(mobile: phoneNos[i],personTitle: title)
                             
                         }
@@ -49,7 +49,7 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
                 let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
                 actions.forEach{alertController.addAction($0)}
                 let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { (ac) -> Void in
-                    MobClick.event("CancelSelectContactMobile")
+                    MobClick.event("Vege_CancelSelectContactMobile")
                 })
                 alertController.addAction(cancel)
                 vc.showAlert(alertController)

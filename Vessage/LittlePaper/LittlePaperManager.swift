@@ -17,6 +17,7 @@ class LittlePaperManager {
     }
     
     static func releaseManager(){
+        instance.paperMessagesList = nil
     }
     
     static let TYPE_MY_SENDED = 3
@@ -24,7 +25,7 @@ class LittlePaperManager {
     static let TYPE_MY_POSTED = 1
     static let TYPE_MY_NOT_DEAL = 0
     
-    private(set) var paperMessagesList = [[LittlePaperMessage]](count: 4, repeatedValue: [LittlePaperMessage]())
+    private(set) var paperMessagesList:[[LittlePaperMessage]]!
     
     private(set) var mySendedMessages:[LittlePaperMessage]{
         get{
@@ -82,6 +83,7 @@ class LittlePaperManager {
     private var myUserId:String!
     
     private func loadCachedData(){
+        paperMessagesList = [[LittlePaperMessage]](count: 4, repeatedValue: [LittlePaperMessage]())
         myUserId = ServiceContainer.getUserService().myProfile.userId
         var msgs = PersistentManager.sharedInstance.getAllModel(LittlePaperMessage)
         mySendedMessages.appendContentsOf(msgs.removeElement{$0.isMySended(self.myUserId)})

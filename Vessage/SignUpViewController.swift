@@ -61,7 +61,7 @@ class SignUpViewController: UIViewController {
             BahamutRFKit.sharedInstance.registBahamutAccount(VessageSetting.registAccountApi, username: userNameTextField.text!, passwordOrigin: passwordTextField.text!, phone_number: nil, email: nil) { (isSuc, errorMsg, registResult) -> Void in
                 if isSuc
                 {
-                    MobClick.event("RegistedNewUser")
+                    MobClick.event("Vege_RegistedNewUser")
                     self.dismissViewControllerAnimated(false, completion: { () -> Void in
                         let userInfo = [RegistAccountIDValue:registResult.accountId,RegistAccountPasswordValue:self.passwordTextField.text!]
                         NSNotificationCenter.defaultCenter().postNotificationName(RegistAccountCompleted, object: self, userInfo: userInfo)
@@ -80,9 +80,11 @@ class SignUpViewController: UIViewController {
                 return true
             }else{
                 passwordTextField.shakeAnimationForView()
+                self.playToast("PASSWORD_TIPS".localizedString())
             }
         }else{
             userNameTextField.shakeAnimationForView()
+            self.playToast("USER_NAME_TIPS".localizedString())
         }
         SystemSoundHelper.vibrate()
         return false

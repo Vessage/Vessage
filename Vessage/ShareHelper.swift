@@ -82,12 +82,12 @@ extension UIViewController:MFMessageComposeViewControllerDelegate,UINavigationCo
             switch result{
             case MessageComposeResultCancelled:
                 self.playCrossMark("CANCEL".localizedString())
-                MobClick.event("CancelSendNotifySMS")
+                MobClick.event("Vege_CancelSendNotifySMS")
             case MessageComposeResultFailed:
                 self.playCrossMark("FAIL".localizedString())
             case MessageComposeResultSent:
                 self.playCheckMark("SUCCESS".localizedString())
-                MobClick.event("UserSendSMSToFriend")
+                MobClick.event("Vege_UserSendSMSToFriend")
             default:break;
             }
         }
@@ -101,7 +101,7 @@ extension UIViewController:MFMessageComposeViewControllerDelegate,UINavigationCo
             controller.delegate = self
             controller.messageComposeDelegate = self
             self.presentViewController(controller, animated: true, completion: { () -> Void in
-                MobClick.event("OpenSendNotifySMS")
+                MobClick.event("Vege_OpenSendNotifySMS")
             })
         }else{
             self.showAlert("REQUIRE_SMS_FUNCTION_TITLE".localizedString(), msg: "REQUIRE_SMS_FUNCTION_MSG".localizedString())

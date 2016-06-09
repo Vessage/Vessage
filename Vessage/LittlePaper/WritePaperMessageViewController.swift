@@ -38,6 +38,7 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
         LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: receiver.userId) { (suc) in
             hud.hideAsync(true)
             if suc{
+                MobClick.event("LittlePaper_PostNew")
                 self.playCheckMark("SUCCESS".littlePaperString,async:false){
                     self.dismissViewControllerAnimated(true, completion: {
                         if String.isNullOrEmpty(receiver.accountId){

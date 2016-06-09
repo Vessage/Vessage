@@ -133,7 +133,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         controller.peoplePickerDelegate = self
         let hud = self.showActivityHud()
         self.presentViewController(controller, animated: true) { () -> Void in
-            MobClick.event("OpenContactView")
+            MobClick.event("Vege_OpenContactView")
             hud.hideAsync(true)
         }
     }

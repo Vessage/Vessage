@@ -131,7 +131,7 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
             loadNextVessage()
         }else{
             let continueAction = UIAlertAction(title: "CONTINUE".localizedString(), style: .Default, handler: { (action) -> Void in
-                MobClick.event("JumpVessage")
+                MobClick.event("Vege_JumpVessage")
                 self.loadNextVessage()
             })
             rootController.showAlert("CLICK_NEXT_MESSAGE_TIPS_TITLE".localizedString(), msg: "CLICK_NEXT_MESSAGE_TIPS".localizedString(), actions: [ALERT_ACTION_I_SEE,continueAction])
@@ -167,7 +167,7 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
     
     func playerPlaybackWillStartFromBeginning(player: Player) {
         if self.presentingVesseage?.isRead == false {
-            MobClick.event("ReadVessage")
+            MobClick.event("Vege_ReadVessage")
             self.vessageService.readVessage(self.presentingVesseage)
             refreshBadge()
             

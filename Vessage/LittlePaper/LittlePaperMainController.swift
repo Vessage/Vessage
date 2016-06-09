@@ -22,6 +22,7 @@ class LittlePaperMainController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         LittlePaperManager.initManager()
+        MobClick.event("LittlePaper_Launch")
     }
     
     override func viewWillAppear(animated: Bool) {

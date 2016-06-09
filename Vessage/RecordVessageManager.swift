@@ -83,7 +83,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     func startRecord()
     {
         if camera.cameraInited{
-            MobClick.event("RecordVessage")
+            MobClick.event("Vege_RecordVessage")
             camera.startRecord()
         }else{
             self.rootController.playToast("CAMERA_NOT_INITED".localizedString())
@@ -106,11 +106,11 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     
     private func confirmSend(url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            MobClick.event("ConfirmSendVessage")
+            MobClick.event("Vege_ConfirmSendVessage")
             VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
         }
         let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
-            MobClick.event("CancelSendVessage")
+            MobClick.event("Vege_CancelSendVessage")
         }
         let size = PersistentFileHelper.fileSizeOf(url.path!)
         print("\(size/1024)kb")

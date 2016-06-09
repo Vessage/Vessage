@@ -107,6 +107,8 @@ OPERATE_ERROR = "操作失败，请检查网络";
 REGISTING = "注册中";
 REGIST_SUC_TITLE = "注册成功";
 REGIST_SUC_MSG = "请记住您的账号:\n%@";
+USER_NAME_TIPS = "用户名需要2到18位数字或中英文字符！";
+PASSWORD_TIPS = "密码为6到18个字符！";
 
 
 //UserSettingViewController

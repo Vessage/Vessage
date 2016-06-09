@@ -14,7 +14,7 @@ class SetupChatBcgImageController: UIViewController {
     
     @IBAction func openCamera(sender: AnyObject) {
         ChatBackgroundPickerController.showPickerController(self){ sender in
-            MobClick.event("FinishSetupChatBcg")
+            MobClick.event("Vege_FinishSetupChatBcg")
             sender.dismissViewControllerAnimated(false, completion: { () -> Void in
                 EntryNavigationController.start()
             })

@@ -51,7 +51,7 @@ class ValidateMobileViewController: UIViewController {
                 EntryNavigationController.start()
             }else if suc{
                 SetupChatBcgImageController.showSetupViewController(self)
-                MobClick.event("FinishValidateMobile")
+                MobClick.event("Vege_FinishValidateMobile")
             }
         })
     }

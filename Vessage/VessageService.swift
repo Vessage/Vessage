@@ -155,7 +155,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
                 userInfo.updateValue(task, forKey: SendedVessageTaskValue)
                 userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
                 if result.isSuccess{
-                    MobClick.event("TotalPostVessages")
+                    MobClick.event("Vege_TotalPostVessages")
                     PersistentManager.sharedInstance.removeModel(task)
                     PersistentManager.sharedInstance.removeModel(m)
                     self.postNotificationNameWithMainAsync(VessageService.onNewVessageSended, object: self, userInfo:userInfo)

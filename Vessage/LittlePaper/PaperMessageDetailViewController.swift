@@ -164,17 +164,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         if paperMessage.isMySended(myProfile.userId) && paperMessage.isOpened{
             chatter = paperMessage.receiver
         }
-        if let user = ServiceContainer.getUserService().getCachedUserProfile(chatter){
-            let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
-            ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
-        }else{
-            ServiceContainer.getUserService().getUserProfile(chatter, updatedCallback: { (u) in
-                if let user = u{
-                    let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
-                    ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
-                }
-            })
-        }
+        ConversationViewController.showConversationViewController(self.navigationController!, chatter: chatter)
     }
     
     //MARK: SelectVessageUserViewControllerDelegate
@@ -203,16 +193,15 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     @IBAction func onClickOpenPaper(sender: AnyObject) {
         let oKAction = UIAlertAction(title: "CONTINUE_OPEN_PAPER".littlePaperString, style: .Default) { (ac) in
             let hud = self.showActivityHudWithMessage(nil, message: nil)
-            LittlePaperManager.instance.openPaperMessage(self.paperMessage.paperId) { (openedMsg,errorMsg) in
+            LittlePaperManager.instance.askReadPaper(self.paperMessage.paperId, callback: { (sended, errorMsg) in
                 hud.hideAsync(true)
-                if let m = openedMsg{
+                if sended{
                     MobClick.event("LittlePaper_OpenPaper")
-                    self.paperMessage = m
-                    self.refreshPaper()
+                    self.showAlert("ASK_REQ_SENDED_TITLE".littlePaperString, msg: "ASK_REQ_SENDED_MSG".littlePaperString)
                 }else{
                     self.playCrossMark((errorMsg ?? "UNKNOW_ERROR").littlePaperString)
                 }
-            }
+            })
         }
         self.showAlert("OPEN_PAPER_CONFIRM_TITLE".littlePaperString, msg: "OPEN_PAPER_CONFIRM_MSG".littlePaperString, actions: [ALERT_ACTION_CANCEL,oKAction])
     }

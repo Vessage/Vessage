@@ -98,7 +98,7 @@ class AccountService: ServiceProtocol
             }else if error == nil{
                 self.setLogined(validateResult)
                 callback(loginSuccess: true, message: "")
-                MobClick.profileSignInWithPUID(validateResult.UserId)
+                MobClick.profileSignInWithPUID(UserSetting.lastLoginAccountId)
             }else{
                 callback(loginSuccess: false, message: "VALIDATE_ACCTOKEN_FAILED".localizedString())
             }

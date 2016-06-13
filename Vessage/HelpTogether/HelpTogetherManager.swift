@@ -88,11 +88,7 @@ class HelpTogetherManager:NSNotificationCenter{
     func getSquareHelpItems() {
         let req = GetHelpSquareRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Help]>) in
-            if let helps = result.returnObject{
-                
-            }else{
-                
-            }
+            
         }
     }
     

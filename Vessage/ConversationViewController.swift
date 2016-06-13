@@ -369,6 +369,24 @@ class ConversationViewController: UIViewController {
 
     
     //MARK: showConversationViewController
+    static func showConversationViewController(nvc:UINavigationController,chatter: String) {
+        if let user = ServiceContainer.getUserService().getCachedUserProfile(chatter){
+            let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
+            ConversationViewController.showConversationViewController(nvc, conversation: conversation)
+        }else{
+            let hud = nvc.showActivityHud()
+            ServiceContainer.getUserService().getUserProfile(chatter, updatedCallback: { (u) in
+                hud.hide(true)
+                if let user = u{
+                    let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
+                    ConversationViewController.showConversationViewController(nvc, conversation: conversation)
+                }else{
+                    nvc.playToast("NO_SUCH_USER".localizedString())
+                }
+            })
+        }
+    }
+    
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation)
     {
         if String.isNullOrEmpty(conversation.chatterId) {

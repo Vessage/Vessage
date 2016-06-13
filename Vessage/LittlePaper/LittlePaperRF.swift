@@ -21,6 +21,7 @@ class LittlePaperMessage: BahamutObject {
     var postmen:[String]!
     var updatedTime:String!
     var isOpened = false
+    var openNeedAccept = false
     
     var isUpdated = false
     
@@ -48,6 +49,29 @@ class LittlePaperMessage: BahamutObject {
     }
 }
 
+class LittlePaperReadResponse: BahamutObject {
+    static let TYPE_ASK_SENDER = 1
+    static let TYPE_RETURN_ASKER = 2
+    static let CODE_ACCEPT_READ = 1
+    static let CODE_REJECT_READ = 2
+    
+    override func getObjectUniqueIdName() -> String {
+        return "paperId"
+    }
+    
+    var paperId:String!
+    var asker:String!
+    var askerNick:String!
+    var paperReceiver:String!
+    
+    var type:Int = 0
+    var code:Int = 0
+    
+    //Local Properties
+    var isRead = false
+    
+}
+
 class NewPaperMessageRequest: BahamutRFRequestBase {
     override init() {
         super.init()
@@ -65,6 +89,10 @@ class NewPaperMessageRequest: BahamutRFRequestBase {
     
     func setNextReceiver(receiver:String){
         self.paramenters["nextReceiver"] = receiver
+    }
+    
+    func setOpenNeedAccept(openNeedAccept:Bool){
+        self.paramenters["openNeedAccept"] = "\(openNeedAccept)"
     }
 }
 
@@ -103,12 +131,12 @@ class GetPaperMessagesStatusRequest: BahamutRFRequestBase {
         self.method = .GET
     }
     
-    func setPaperId(paperIds:String){
-        self.paramenters["paperIds"] = paperIds
+    func setPaperId(paperIds:[String]){
+        self.paramenters["paperIds"] = paperIds.joinWithSeparator(",")
     }
 }
 
-class OpenPaperMessageRequest: BahamutRFRequestBase {
+class OpenAcceptlessPaperRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/LittlePaperMessages/OpenPaperId"
@@ -116,7 +144,68 @@ class OpenPaperMessageRequest: BahamutRFRequestBase {
     }
     
     func setPaperId(paperId:String){
-        self.api = "/LittlePaperMessages/OpenPaperId/\(paperId)"
+        self.paramenters["paperId"] = paperId
+    }
+}
+
+class AcceptReadPaperRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/LittlePaperMessages/AcceptReadPaper"
+        self.method = .POST
     }
     
+    func setReader(reader:String) {
+        self.paramenters["reader"] = reader
+    }
+    
+    func setPaperId(paperId:String){
+        self.paramenters["paperId"] = paperId
+    }
+    
+}
+
+class RejectReadPaperRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/LittlePaperMessages/RejectReadPaper"
+        self.method = .POST
+    }
+    
+    func setReader(reader:String) {
+        self.paramenters["reader"] = reader
+    }
+    
+    func setPaperId(paperId:String){
+        self.paramenters["paperId"] = paperId
+    }
+    
+}
+
+class ClearGotResponsesRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/LittlePaperMessages/ClearGotResponses"
+        self.method = .DELETE
+    }
+}
+
+class GetReadPaperResponsesRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/LittlePaperMessages/ReadPaperResponses"
+        self.method = .GET
+    }
+}
+
+class AskSenderReadPaperRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/LittlePaperMessages/AskReadPaper"
+        self.method = .POST
+    }
+    
+    func setPaperId(paperId:String){
+        self.paramenters["paperId"] = paperId
+    }
 }

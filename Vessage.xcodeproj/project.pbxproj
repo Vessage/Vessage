@@ -119,6 +119,7 @@
 		E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */; };
 		E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
+		E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -296,6 +297,7 @@
 		E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
 		E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityConfig.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
+		E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperResponseViewController.swift; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -826,6 +828,7 @@
 				E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */,
 				E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */,
 				E7FC8A811D0510A100A05001 /* LittlePaper.strings */,
+				E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */,
 			);
 			path = LittlePaper;
 			sourceTree = "<group>";
@@ -1147,6 +1150,7 @@
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
+				E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,

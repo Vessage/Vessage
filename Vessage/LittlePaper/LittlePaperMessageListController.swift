@@ -13,7 +13,7 @@ class LittlePaperMessageListCell: UITableViewCell {
     var paperMessage:LittlePaperMessage!{
         didSet{
             finishMarkImage.hidden = !paperMessage.isOpened
-            messageTitleLabel.text = paperMessage.receiverInfo
+            messageTitleLabel.text = String(format: "PAPER_SEND_TO_X".littlePaperString, paperMessage.receiverInfo)
             updatedMarkView.hidden = !paperMessage.isUpdated
         }
     }
@@ -210,7 +210,7 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let msg = paperMessages?[indexPath.row]{
-            LittlePaperManager.instance.clearPaperMessageUpdated(paperListType, index: indexPath.row)
+            LittlePaperManager.instance.clearPaperMessageUpdated(msg)
             let controller = PaperMessageDetailViewController.showPaperMessageDetailViewController(self.navigationController!)
             controller.paperMessage = msg
         }

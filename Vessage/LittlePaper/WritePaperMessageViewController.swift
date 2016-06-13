@@ -35,7 +35,7 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
         let receiverInfo = receiverInfoTextField.text!
         let hud = self.showActivityHudWithMessage(nil, message: nil)
         let receiver = selectedUsers.first!
-        LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: receiver.userId) { (suc) in
+        LittlePaperManager.instance.newPaperMessage(message, receiverInfo: receiverInfo, nextReceiver: receiver.userId,openNeedAccept: true) { (suc) in
             hud.hideAsync(true)
             if suc{
                 MobClick.event("LittlePaper_PostNew")

@@ -59,7 +59,6 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
     }
     vc.playToast("PEOPLE_NO_MOBILE".localizedString())
 }
-
 extension String
 {
     func localizedString() -> String{

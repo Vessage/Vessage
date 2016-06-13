@@ -18,15 +18,36 @@ class LittlePaperMainController: UIViewController {
 
     @IBOutlet weak var newPaperButton: UIButton!
     @IBOutlet weak var paperBoxButton: UIButton!
-    
+    @IBOutlet weak var returnBoxButton: UIButton!
+    private var firstAppear = true
     override func viewDidLoad() {
         super.viewDidLoad()
         LittlePaperManager.initManager()
+        
         MobClick.event("LittlePaper_Launch")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if firstAppear {
+            firstAppear = false
+            fetchServerData()
+            ServiceContainer.getActivityService().addObserver(self, selector: #selector(LittlePaperMainController.onActivityUpdated(_:)), name: ActivityService.onEnabledActivityBadgeUpdated, object: nil)
+        }else{
+            self.refreshPaperBoxBadge()
+            self.refreshReturnBox()
+        }
+    }
+    
+    func onActivityUpdated(a:NSNotification) {
+        if let id = a.userInfo?[UpdatedActivityIdValue] as? String{
+            if id == LittlePaperManager.ACTIVITY_ID{
+                fetchServerData()
+            }
+        }
+    }
+    
+    private func fetchServerData(){
         LittlePaperManager.instance.getPaperMessages { (suc) in
             self.refreshPaperBoxBadge()
         }
@@ -34,6 +55,15 @@ class LittlePaperMainController: UIViewController {
         LittlePaperManager.instance.refreshPaperMessage { (updated) in
             self.refreshPaperBoxBadge()
         }
+        
+        LittlePaperManager.instance.getReadPaperResponses(){
+            self.refreshReturnBox()
+        }
+    }
+    
+    private func refreshReturnBox(){
+        let cnt = LittlePaperManager.instance.notReadResponseCount
+        returnBoxButton.badgeValue = cnt > 0 ? "\(cnt)" : ""
     }
     
     private func refreshPaperBoxBadge(){
@@ -53,7 +83,12 @@ class LittlePaperMainController: UIViewController {
         LittlePaperMessageListController.showLittlePaperMessageListController(self)
     }
 
+    @IBAction func onClickReturnBox() {
+        LittlePaperResponseViewController.showLittlePaperResponseViewController(self)
+    }
+    
     @IBAction func onClickCloseButton() {
+        ServiceContainer.getActivityService().removeObserver(self)
         LittlePaperManager.releaseManager()
         self.dismissViewControllerAnimated(true, completion: nil)
     }

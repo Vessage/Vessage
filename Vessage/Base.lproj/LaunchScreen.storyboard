@@ -25,20 +25,29 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Motto" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUe-6p-7Xd">
-                                <rect key="frame" x="20" y="695" width="374" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUe-6p-7Xd">
+                                <rect key="frame" x="20" y="332" width="374" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="978-RC-NEL"/>
+                                    <constraint firstAttribute="height" constant="23" id="Ega-MH-5Jp"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="978-RC-NEL"/>
+                                    </mask>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248860591748" green="0.86567961907490298" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="zM0-Sh-cBZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="32k-PR-2UX"/>
+                            <constraint firstItem="pUe-6p-7Xd" firstAttribute="top" secondItem="zM0-Sh-cBZ" secondAttribute="bottom" constant="8" symbolic="YES" id="3bT-iB-N5X"/>
                             <constraint firstItem="zM0-Sh-cBZ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="3:4" id="ROj-Ul-HCM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pUe-6p-7Xd" secondAttribute="trailing" id="bY7-s8-F2m"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pUe-6p-7Xd" secondAttribute="bottom" constant="20" id="o6p-qI-VIy"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="pUe-6p-7Xd" secondAttribute="leading" id="z9g-fP-acb"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="pUe-6p-7Xd" secondAttribute="leading" id="dhN-0M-E6F"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pUe-6p-7Xd" secondAttribute="trailing" id="wSL-ik-auQ"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>

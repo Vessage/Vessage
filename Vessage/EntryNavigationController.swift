@@ -33,10 +33,10 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     private func setWaitingScreen() {
         self.view.backgroundColor = UIColor.whiteColor()
         launchScr = LaunchScreen.getInstanceFromStroyboard()
-        launchScr.view.frame = self.view.bounds
+        self.view.addSubview(launchScr.view)
+        launchScr.mottoLabel.updateConstraints()
         launchScr.mottoLabel.text = "VESSAGE_MOTTO".localizedString()
         launchScr.mottoLabel.hidden = false
-        self.view.addSubview(launchScr.view)
     }
     
     func allServicesReady(_:AnyObject)
@@ -106,7 +106,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         }
     }
     
-    let screenWaitTimeInterval = 0.3
+    let screenWaitTimeInterval = 1.2
     private func showSignView()
     {
         NSTimer.scheduledTimerWithTimeInterval(screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowSignView(_:)), userInfo: nil, repeats: false)

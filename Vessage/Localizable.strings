@@ -167,7 +167,7 @@ OLD_NEW_PSW_SAME = "新旧密码相同";
 
 //Vege
 APP_NAME = "Vege";
-VESSAGE_MOTTO = "";
+VESSAGE_MOTTO = "与好友面对面聊天";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "账号:%@";
@@ -187,7 +187,7 @@ NO_SUCH_CONVERSATION = "没有找到该对话";
 NO_SUCH_USER = "找不到该用户>_<!";
 
 NEED_SET_CHAT_BCG_TITLE = "设置聊天背景";
-NEED_SET_CHAT_BCG_MSG = "聊天背景是让朋友在给你发消息时\n可以看到你的样子~~";
+NEED_SET_CHAT_BCG_MSG = "聊天背景是让朋友和你对讲时\n可以看到你的样子~~";
 
 UNKNOW_USER = "未知用户";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
@@ -203,7 +203,7 @@ CLICK_NEXT_MESSAGE_TIPS = "跳过后该消息将会被删除且不能恢复，�
 
 CAMERA_NOT_INITED = "相机没有初始化";
 
-CHANGE_CHAT_BCG = "聊天背景";
+CHANGE_CHAT_BCG = "对讲背景";
 BIND_MOBILE = "手机";
 NOT_SET = "未设置";
 
@@ -221,7 +221,7 @@ REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
 REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";
 
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用Vege，先发送一条消息通知Ta吧？";
-NOTIFY_SMS_FORMAT = "我发送了一条视频短信给你，赶快下载Vege查看吧！\n%@";
+NOTIFY_SMS_FORMAT = "我发送了一条视频对讲信息给你，赶快下载Vege查看吧！\n%@";
 
 CONTACTS = "通讯录";
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
@@ -229,6 +229,7 @@ REQUEST_ACCESS_CONTACT = "需要获取手机联系人打开新的对话";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到Vege应用选项并开启通讯录权限，然后重启Vege";
 OPEN_A_CONTACT_CONVERSATION = "开始新对话！";
+NEW_CONVERSATION = "开始对讲";
 
 NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
 UNLOADED_USER = "Vege用户";
@@ -243,4 +244,6 @@ TELL_FRIENDS = "告诉好友";
 WECHAT_SESSION = "微信好友";
 SMS = "短信";
 WECHAT_TIMELINE = "微信朋友圈";
-TELL_FRIEND_MESSAGE = "我在Vege，你也来玩吧~ \n";
+TELL_FRIEND_MESSAGE = "我在使用Vege视频对讲机，一起来视频对讲吧~ \n";
+WELCOME_ALERT_MSG = "这是一个视频对讲机\n对讲时使用自拍的姿势和朋友对聊";
+WELCOME_ALERT_TITLE = "欢迎使用Vege";

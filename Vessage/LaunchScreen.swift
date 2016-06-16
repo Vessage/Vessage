@@ -18,6 +18,7 @@ class LaunchScreen {
     {
         let controller = UIViewController.instanceFromStoryBoard("LaunchScreen", identifier: "LaunchScreenViewController")
         let scr = LaunchScreen()
+        controller.view.removeFromSuperview()
         scr.view = controller.view
         return scr
     }

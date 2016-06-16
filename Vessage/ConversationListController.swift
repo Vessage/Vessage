@@ -79,6 +79,24 @@ class ConversationListController: UITableViewController {
         self.navigationItem.backBarButtonItem?.title = VessageConfig.appName
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        tryShowWelcomeAlert()
+    }
+    
+    private func tryShowWelcomeAlert() {
+        let key = "WELLCOME_ALERT_SHOWN"
+        if !UserSetting.isSettingEnable(key) {
+            UserSetting.enableSetting(key)
+            let startConversationAc = UIAlertAction(title: "NEW_CONVERSATION".localizedString(), style: .Default, handler: { (ac) in
+                if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? ConversationListContactCell{
+                    cell.onCellClicked()
+                }
+            })
+            self.showAlert("WELCOME_ALERT_TITLE".localizedString(), msg: "WELCOME_ALERT_MSG".localizedString(),actions: [startConversationAc,ALERT_ACTION_I_SEE])
+        }
+    }
+    
     private func initObservers(){
         conversationService.addObserver(self, selector: #selector(ConversationListController.onConversationListUpdated(_:)), name: ConversationService.conversationListUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationListController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)

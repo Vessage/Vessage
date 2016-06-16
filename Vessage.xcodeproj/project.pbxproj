@@ -120,6 +120,7 @@
 		E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
 		E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */; };
+		E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -298,6 +299,7 @@
 		E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityConfig.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperResponseViewController.swift; sourceTree = "<group>"; };
+		E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutObjectSortable.swift; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			children = (
 				E708AB611C86CE1D0071104E /* Base64 */,
 				E708AB5C1C86CE1D0071104E /* ArrayUtil.swift */,
+				E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */,
 				E708AB5D1C86CE1D0071104E /* BahamutCommon.h */,
 				E708AB5E1C86CE1D0071104E /* BahamutObject.swift */,
 				E708AB641C86CE1D0071104E /* CommonValueCast.swift */,
@@ -1195,6 +1198,7 @@
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
+				E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */,
 				E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */,
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,

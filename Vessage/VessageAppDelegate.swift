@@ -110,6 +110,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
             MobClick.setAppVersion(VessageConfig.appVersion)
             MobClick.setEncryptEnabled(true)
             MobClick.setLogEnabled(false)
+            MobClick.startWithConfigure(UMAnalyticsConfig.sharedInstance())
         #endif
     }
     

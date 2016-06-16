@@ -453,8 +453,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="zYu-Cr-TFE"/>
                                                     <exclude reference="xhL-Ww-HJb"/>
+                                                    <exclude reference="zYu-Cr-TFE"/>
                                                     <exclude reference="YN3-20-iuO"/>
                                                 </mask>
                                             </variation>

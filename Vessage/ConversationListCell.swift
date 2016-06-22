@@ -31,6 +31,7 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var avatarView: UIImageView!{
         didSet{
+            avatarView.clipsToBounds = true
             avatarView.layer.cornerRadius = 6
         }
     }

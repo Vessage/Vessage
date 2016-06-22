@@ -74,8 +74,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2M-Kj-KSe">
-                                <rect key="frame" x="20" y="696" width="99" height="30"/>
-                                <state key="normal" title="和好友一起玩~">
+                                <rect key="frame" x="20" y="696" width="122" height="30"/>
+                                <state key="normal" title="曾与你传纸条的Ta">
                                     <color key="titleColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>

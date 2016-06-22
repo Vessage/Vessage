@@ -7,6 +7,7 @@
 */
 //Little Paper
 TELL_FRIENDS_LITTLE_PAPER = "我在玩Vege小纸条，你也来吧~~";
+TELL_FRIENDS_LITTLE_PAPER_ALERT_MSG = "邀请与你一起传小纸条的那个Ta";
 TELL_SENDED_U_A_LITTLE_PAPER = "我给你发送了一条Vege小纸条，赶快查看吧~~";
 SUCCESS = "成功";
 UNKNOW_ERROR = "发生未知错误";
@@ -29,12 +30,12 @@ CLEAR_ALL_PAPER_MESSAGES_TIPS = "纸条被吃掉后不能看到该纸条传递�
 CONTINUE_OPEN_PAPER = "继续";
 OPEN_PAPER_CONFIRM_TITLE = "需要发送人允许才能打开";
 OPEN_PAPER_CONFIRM_MSG = "纸条打开后不能继续传递下去。如果纸条不是给你的，请继续传递下去~";
-PAPER_OPENED = "消息已经被打开，不能再次打开>_<";
+PAPER_OPENED = "纸条已经被打开，不能再次打开>_<";
 NO_SUCH_PAPER_ID = "没找到该纸条呢>_<";
 USER_POSTED_THIS_PAPER = "纸条由该用户传递过来，不能传回去~";
 SELF_IS_RECEIVER = "不能传递纸条给自己~";
 PAPER_SEND_TO_X = "纸条传给:%@";
-X_ASK_OPEN_PAPER = "%@ 请求打开纸条";
+X_ASK_OPEN_PAPER = "%@ 想打开纸条";
 SENDER_ACCEPT_U_OPEN_PAPER = "你可以打开纸条啦！";
 SENDER_REJECT_U_OPEN_PAPER = "发送人请你帮忙传递下去~";
 
@@ -45,5 +46,5 @@ NO_PAPER_CAN_OPEN_TITLE = "没找到纸条";
 NO_PAPER_CAN_OPEN_MSG = "纸条是被你偷吃了吗？>_<";
 
 AGREE_USER_OPEN_U_PAPER = "同意Ta打开你的纸条吗？";
-ACCEPT_READ = "同意打开纸条";
-REJECT_READ = "不能打开";
+ACCEPT_READ = "同意Ta打开";
+REJECT_READ = "不让打开";

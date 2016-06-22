@@ -169,7 +169,7 @@ class ConversationListController: UITableViewController {
     }
     
     @IBAction func tellFriends(sender: AnyObject) {
-        ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString())
+        ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
     }
     
     private func removeConversation(conversation:Conversation){

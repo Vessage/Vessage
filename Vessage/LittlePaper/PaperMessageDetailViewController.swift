@@ -153,6 +153,9 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
                 users?.append(receiver)
             }
         }
+        if users?.count < 3 {
+            users = []
+        }
         UserCollectionViewController.showUserCollectionViewController(self.navigationController!,users: users ?? [])
         for user in unloadedUsers {
             userService.fetchUserProfile(user.userId)
@@ -186,7 +189,8 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
         controller.title = "SELECT_POST_MAN".littlePaperString
         controller.delegate = self
-        controller.showActiveUsers = true
+        //controller.showActiveUsers = true
+        controller.showNearUsers = true
         controller.allowsMultipleSelection = false
     }
     

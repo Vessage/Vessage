@@ -26,6 +26,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     func deInitController(){
+        ServiceContainer.getLocationService().removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         
     }
@@ -64,6 +65,19 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             }
         }else{
             ValidateMobileViewController.showValidateMobileViewController(self)
+        }
+        
+        let locationService = ServiceContainer.getLocationService()
+        if let hereLocation = locationService.hereLocationString{
+            userService.getNearUsers(hereLocation)
+        }
+        locationService.addObserver(self, selector: #selector(EntryNavigationController.onHereLocationUpdated(_:)), name: LocationService.hereUpdated, object: nil)
+    }
+    
+    func onHereLocationUpdated(_:NSNotification) {
+        let locationService = ServiceContainer.getLocationService()
+        if let hereLocation = locationService.hereLocationString{
+            ServiceContainer.getUserService().getNearUsers(hereLocation,checkTime:true)
         }
     }
     

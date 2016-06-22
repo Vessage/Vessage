@@ -167,7 +167,7 @@ OLD_NEW_PSW_SAME = "新旧密码相同";
 
 //Vege
 APP_NAME = "Vege";
-VESSAGE_MOTTO = "与好友面对面聊天";
+VESSAGE_MOTTO = "视频对讲机";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "账号:%@";
@@ -186,8 +186,8 @@ NO_SUCH_CONVERSATION = "没有找到该对话";
 
 NO_SUCH_USER = "找不到该用户>_<!";
 
-NEED_SET_CHAT_BCG_TITLE = "设置聊天背景";
-NEED_SET_CHAT_BCG_MSG = "聊天背景是让朋友和你对讲时\n可以看到你的样子~~";
+NEED_SET_CHAT_BCG_TITLE = "设置对讲背景";
+NEED_SET_CHAT_BCG_MSG = "在视频对讲时展示给你的朋友";
 
 UNKNOW_USER = "未知用户";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
@@ -207,13 +207,14 @@ CHANGE_CHAT_BCG = "对讲背景";
 BIND_MOBILE = "手机";
 NOT_SET = "未设置";
 
-CANCEL_RECORD = "取消录制";
-CONFIRM_SEND_VESSAGE_TITLE = "发送视频消息？";
+CANCEL_RECORD = "取消对讲";
+CONFIRM_SEND_VESSAGE_TITLE = "发送视频对讲消息？";
 VESSAGE_RECEIVER = "收件人:%@";
-SAVE_VIDEO_FAILED = "保存视频出错";
+SAVE_VIDEO_FAILED = "保存对讲消息出错";
 
-VESSAGE_PUSH_IN_QUEUE = "添加到发送队列";
+VESSAGE_PUSH_IN_QUEUE = "正在传送对讲消息";
 RETRY_SEND_VESSAGE_TITLE = "发送出错，重试？";
+VESSAGE_SENDING = "正在传送";
 VESSAGE_SENDED = "已发送";
 VESSAGE_SEND_FAIL = "发送出错";
 
@@ -223,7 +224,7 @@ REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开Vege的短信权限";
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没使用Vege，先发送一条消息通知Ta吧？";
 NOTIFY_SMS_FORMAT = "我发送了一条视频对讲信息给你，赶快下载Vege查看吧！\n%@";
 
-CONTACTS = "通讯录";
+CONTACTS = "手机通讯录";
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
 REQUEST_ACCESS_CONTACT = "需要获取手机联系人打开新的对话";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
@@ -235,7 +236,9 @@ NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
 UNLOADED_USER = "Vege用户";
 ACTIVE_USERS = "广场";
 INVITE_FRIENDS_TO_CONVERSATION = "还没有联系人，邀请朋友一起玩吧";
-ACTIVE_USER = "活跃的用户";
+ACTIVE_USER = "活跃的人";
+NEAR_USER = "附近的人";
+CONVERSATION_USERS = "对讲中的好友";
 
 VSG_READED = "已读";
 VSG_UNREADED = "未读";
@@ -245,5 +248,5 @@ WECHAT_SESSION = "微信好友";
 SMS = "短信";
 WECHAT_TIMELINE = "微信朋友圈";
 TELL_FRIEND_MESSAGE = "我在使用Vege视频对讲机，一起来视频对讲吧~ \n";
-WELCOME_ALERT_MSG = "这是一个视频对讲机\n对讲时使用自拍的姿势和朋友对聊";
-WELCOME_ALERT_TITLE = "欢迎使用Vege";
+WELCOME_ALERT_MSG = "打开好友手机，和Ta一起视频对讲吧~";
+WELCOME_ALERT_TITLE = "Vege视频对讲机";

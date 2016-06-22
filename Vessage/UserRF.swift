@@ -49,6 +49,21 @@ class GetUserInfoRequest: BahamutRFRequestBase {
     }
 }
 
+class GetNearUsersInfoRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .GET
+        self.api = "/VessageUsers/Near"
+    }
+    
+    var location:String!{
+        didSet{
+            self.paramenters["location"] = location
+        }
+    }
+    
+}
+
 class GetActiveUsersInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()

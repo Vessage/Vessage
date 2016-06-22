@@ -23,6 +23,8 @@ let VessageServiceNotificationValue = "VessageServiceNotificationValue"
 let VessageServiceNotificationValues = "VessageServiceNotificationValue"
 let SendedVessageResultModelValue = "SendedVessageResultModelValue"
 let SendedVessageTaskValue = "SendedVessageTaskValue"
+let SendingVessagePersentValue = "SendingVessagePersentValue"
+
 
 //MARK: ServiceContainer DI
 extension ServiceContainer{
@@ -37,6 +39,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     static let onNewVessagesReceived = "onNewVessagesReceived"
     static let onNewVessageSended = "onNewVessageSended"
     static let onNewVessageSendFail = "onNewVessageSendFail"
+    static let onNewVessageSending = "onNewVessageSending"
     static let onVessageRead = "onVessageRead"
     //private static let notReadVessageCountStoreKey = "NewVsgCntKey"
     @objc static var ServiceName:String {return "Vessage Service"}
@@ -122,14 +125,25 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         return PersistentManager.sharedInstance.getModel(SendVessageResultModel.self, idValue: vessageId)
     }
     
+    private var fileUploadTaskDict = [String:VessageFileUploadTask]()
+    
     func observeOnVessageFileUploadTask(task:VessageFileUploadTask){
         task.saveModel()
+        fileUploadTaskDict[task.taskId] = task
         ProgressTaskWatcher.sharedInstance.addTaskObserver(task.taskId, delegate: self)
     }
     
     //MARK: ProgressTask Delegate
+    func taskProgress(taskIdentifier: String, persent: Float) {
+        if let t = fileUploadTaskDict[taskIdentifier]{
+            self.postNotificationNameWithMainAsync(VessageService.onNewVessageSending, object: self, userInfo: [SendingVessagePersentValue:persent,SendedVessageTaskValue:t])
+        }
+    }
+    
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
-        if let task = PersistentManager.sharedInstance.getModel(VessageFileUploadTask.self, idValue: taskIdentifier){
+        if let task = fileUploadTaskDict[taskIdentifier] {
+            self.finishSendVessage(task)
+        }else if let task = PersistentManager.sharedInstance.getModel(VessageFileUploadTask.self, idValue: taskIdentifier){
             self.finishSendVessage(task)
         }
     }
@@ -137,6 +151,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     func taskFailed(taskIdentifier: String, result: AnyObject!) {
         if let task = PersistentManager.sharedInstance.getModel(VessageFileUploadTask.self, idValue: taskIdentifier){
             self.cancelSendVessage(task.vessageId)
+            self.fileUploadTaskDict.removeValueForKey(taskIdentifier)
             PersistentManager.sharedInstance.removeModel(task)
             var userInfo = [String:AnyObject]()
             userInfo.updateValue(task, forKey: SendedVessageTaskValue)
@@ -156,6 +171,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
                 userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
                 if result.isSuccess{
                     MobClick.event("Vege_TotalPostVessages")
+                    self.fileUploadTaskDict.removeValueForKey(task.taskId)
                     PersistentManager.sharedInstance.removeModel(task)
                     PersistentManager.sharedInstance.removeModel(m)
                     self.postNotificationNameWithMainAsync(VessageService.onNewVessageSended, object: self, userInfo:userInfo)

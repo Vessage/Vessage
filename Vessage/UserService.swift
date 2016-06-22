@@ -47,6 +47,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
     private(set) var activeUsers = [VessageUser]()
+    private(set) var nearUsers = [VessageUser]()
     
     var isUserMobileValidated:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mobile)
@@ -54,10 +55,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     
     var isUserChatBackgroundIsSeted:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mainChatImage)
-    }
-    
-    @objc func appStartInit(appName: String) {
-        
     }
     
     @objc func userLoginInit(userId: String) {
@@ -215,22 +212,57 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }
         }
     }
+}
+
+//MARK: Fetch Special Users
+extension UserService{
     
     func getActiveUsers(checkTime:Bool = false){
+        let key = "GET_ACTIVE_USERS_TIME"
         if checkTime{
-            let time = UserSetting.getUserIntValue("GET_ACTIVE_USERS_TIME")
+            let time = UserSetting.getUserIntValue(key)
             if NSDate().totalHoursSince1970 - time < 6{
                 return
             }
         }
         let req = GetActiveUsersInfoRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
-            if let activeUsers = result.returnObject{
-                UserSetting.setUserIntValue("GET_ACTIVE_USERS_TIME", value: NSDate().totalHoursSince1970)
-                self.activeUsers = activeUsers
+            if result.isSuccess{
+                if let activeUsers = result.returnObject{
+                    UserSetting.setUserIntValue(key, value: NSDate().totalHoursSince1970)
+                    self.activeUsers = activeUsers
+                }
+            }else{
+                self.activeUsers.removeAll()
             }
         }
     }
+    
+    func getNearUsers(location:String,checkTime:Bool = false,callback:((nearUsers:[VessageUser])->Void)! = nil){
+        let key = "GET_NEAR_USERS_TIME"
+        if checkTime{
+            let time = UserSetting.getUserIntValue(key)
+            if NSDate().totalHoursSince1970 - time < 2{
+                return
+            }
+        }
+        let req = GetNearUsersInfoRequest()
+        req.location = location
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
+            if result.isSuccess{
+                if let nearUsers = result.returnObject{
+                    UserSetting.setUserIntValue(key, value: NSDate().totalHoursSince1970)
+                    self.nearUsers = nearUsers
+                    if let handler = callback{
+                        handler(nearUsers: nearUsers)
+                    }
+                }
+            }else{
+                self.nearUsers.removeAll()
+            }
+        }
+    }
+    
 }
 
 //MARK: User Note Name

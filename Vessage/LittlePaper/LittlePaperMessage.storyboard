@@ -612,21 +612,15 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtO-1G-Co3">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtO-1G-Co3">
                                 <rect key="frame" x="40" y="278" width="334" height="180"/>
                                 <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="331" id="gKt-vn-mE4"/>
                                     <constraint firstAttribute="height" constant="180" id="hzr-4r-ROu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="gKt-vn-mE4"/>
-                                    </mask>
-                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -644,7 +638,6 @@
                             <constraint firstItem="xdk-Yl-VjC" firstAttribute="width" secondItem="9UU-Cq-F6w" secondAttribute="width" id="OE0-re-aht"/>
                             <constraint firstItem="xdk-Yl-VjC" firstAttribute="bottom" secondItem="9UU-Cq-F6w" secondAttribute="bottom" id="Oal-nJ-Hgf"/>
                             <constraint firstItem="Qju-fw-dZ7" firstAttribute="top" secondItem="eJU-wh-Dk5" secondAttribute="bottom" constant="-64" id="PG6-y2-fam"/>
-                            <constraint firstItem="rtO-1G-Co3" firstAttribute="centerX" secondItem="cVa-DW-4bb" secondAttribute="centerX" id="TUP-T5-NMH"/>
                             <constraint firstItem="9UU-Cq-F6w" firstAttribute="leading" secondItem="cVa-DW-4bb" secondAttribute="leadingMargin" id="WRy-pp-lPq"/>
                             <constraint firstItem="rtO-1G-Co3" firstAttribute="centerY" secondItem="cVa-DW-4bb" secondAttribute="centerY" id="YBw-BL-GZx"/>
                             <constraint firstItem="DlQ-Hg-5bX" firstAttribute="centerY" secondItem="ChM-fb-COU" secondAttribute="centerY" id="bg4-rs-vLI"/>
@@ -656,14 +649,9 @@
                             <constraint firstItem="9cq-b4-4vD" firstAttribute="centerX" secondItem="Gd4-9K-PK0" secondAttribute="centerX" id="wM6-Ni-lmF"/>
                             <constraint firstItem="rtO-1G-Co3" firstAttribute="top" secondItem="Gd4-9K-PK0" secondAttribute="bottom" constant="10" id="yhS-Dh-j2F"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="TUP-T5-NMH"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="纸条" id="gmR-Re-q72">
-                        <barButtonItem key="rightBarButtonItem" title="参与的人" id="ozc-Hr-IGg">
+                        <barButtonItem key="rightBarButtonItem" title="参与的好友" id="ozc-Hr-IGg">
                             <connections>
                                 <action selector="onClickAllPeople:" destination="8AW-b1-mGD" id="g9p-qP-hpR"/>
                             </connections>
@@ -744,12 +732,14 @@
                                     <action selector="onClickCancelButton" destination="UcS-H1-XzW" eventType="touchUpInside" id="NE1-Jk-ILJ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="纸条只能被一个人打开，打开纸条需要经过你的同意，纸条打开后不能再传递下去。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R04-dQ-4hn">
-                                <rect key="frame" x="10" y="685" width="160" height="43"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R04-dQ-4hn">
+                                <rect key="frame" x="10" y="694" width="200" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="160" id="j8o-Oo-JRJ"/>
+                                    <constraint firstAttribute="width" constant="200" id="j8o-Oo-JRJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <string key="text">打开纸条需要你的同意。
+纸条打开后不能继续传递了。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -758,15 +748,23 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小纸条内容" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOV-wk-Z8e">
+                                <rect key="frame" x="60" y="197" width="294" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="EOV-wk-Z8e" firstAttribute="centerY" secondItem="K2S-sD-LfH" secondAttribute="centerY" id="1eu-zx-VzJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wGj-gl-GEN" secondAttribute="trailing" constant="3" id="2eh-pI-uG0"/>
                             <constraint firstItem="fy8-3V-KTb" firstAttribute="trailing" secondItem="66R-0O-a2G" secondAttribute="trailingMargin" constant="-20" id="3hX-wd-4Ki"/>
                             <constraint firstItem="EDQ-oR-UfI" firstAttribute="top" secondItem="K2S-sD-LfH" secondAttribute="bottom" constant="20" id="5Pi-yy-gLE"/>
                             <constraint firstItem="cR1-O2-Yhv" firstAttribute="centerY" secondItem="66R-0O-a2G" secondAttribute="centerY" id="5iK-SL-9na"/>
                             <constraint firstAttribute="trailingMargin" secondItem="K2S-sD-LfH" secondAttribute="trailing" constant="20" id="6ow-ru-oqO"/>
                             <constraint firstItem="KLd-yL-2Ll" firstAttribute="top" secondItem="R04-dQ-4hn" secondAttribute="bottom" constant="8" symbolic="YES" id="GMN-Nb-NxY"/>
+                            <constraint firstItem="EOV-wk-Z8e" firstAttribute="leading" secondItem="K2S-sD-LfH" secondAttribute="leading" constant="20" id="LSa-Vn-pLa"/>
                             <constraint firstItem="cR1-O2-Yhv" firstAttribute="width" secondItem="66R-0O-a2G" secondAttribute="width" id="VGH-Ij-NXp"/>
                             <constraint firstItem="EDQ-oR-UfI" firstAttribute="trailing" secondItem="K2S-sD-LfH" secondAttribute="trailing" id="bSq-hB-odX"/>
                             <constraint firstItem="GmD-P1-atc" firstAttribute="centerY" secondItem="66R-0O-a2G" secondAttribute="centerY" multiplier="1/6" id="cyB-rY-weu"/>
@@ -779,12 +777,14 @@
                             <constraint firstItem="cR1-O2-Yhv" firstAttribute="height" secondItem="66R-0O-a2G" secondAttribute="height" id="mh9-9T-uXU"/>
                             <constraint firstItem="K2S-sD-LfH" firstAttribute="leading" secondItem="66R-0O-a2G" secondAttribute="leadingMargin" constant="20" id="nyS-RL-gKZ"/>
                             <constraint firstItem="K2S-sD-LfH" firstAttribute="top" secondItem="fy8-3V-KTb" secondAttribute="bottom" constant="8" symbolic="YES" id="peg-Bn-rU3"/>
+                            <constraint firstItem="EOV-wk-Z8e" firstAttribute="trailing" secondItem="K2S-sD-LfH" secondAttribute="trailing" constant="-20" id="s7r-wx-wUa"/>
                         </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="messageTextView" destination="K2S-sD-LfH" id="ptf-O8-7Uj"/>
+                        <outlet property="msgContentTipsLabel" destination="EOV-wk-Z8e" id="nDs-0x-2XU"/>
                         <outlet property="receiverInfoTextField" destination="fy8-3V-KTb" id="Khe-NZ-Psb"/>
                     </connections>
                 </viewController>

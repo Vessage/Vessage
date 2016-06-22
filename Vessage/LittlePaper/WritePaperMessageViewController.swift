@@ -6,13 +6,14 @@
 //  Copyright © 2016年 Bahamut. All rights reserved.
 //
 
-class WritePaperMessageViewController: UIViewController,SelectVessageUserViewControllerDelegate{
+class WritePaperMessageViewController: UIViewController,SelectVessageUserViewControllerDelegate,UITextViewDelegate{
 
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var receiverInfoTextField: UITextField!
-    
+    @IBOutlet weak var msgContentTipsLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        messageTextView.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -27,6 +28,15 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
+    }
+    
+    //MARK: UITextViewDelegate
+    func textViewDidBeginEditing(textView: UITextView) {
+        msgContentTipsLabel.hidden = true
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        msgContentTipsLabel.hidden = !String.isNullOrEmpty(textView.text)
     }
     
     //MARK: SelectVessageUserViewControllerDelegate
@@ -77,7 +87,8 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
         controller.title = "SELECT_POST_MAN".littlePaperString
         controller.delegate = self
-        controller.showActiveUsers = true
+        //controller.showActiveUsers = true
+        controller.showNearUsers = true
         controller.allowsMultipleSelection = false
     }
     

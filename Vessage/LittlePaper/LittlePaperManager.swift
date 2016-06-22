@@ -29,36 +29,36 @@ class LittlePaperManager {
     
     private(set) var paperMessagesList:[[LittlePaperMessage]]!
     
-    private(set) var mySendedMessages:[LittlePaperMessage]{
+    private(set) var mySendedMessages:[LittlePaperMessage]!{
         get{
-            return paperMessagesList[LittlePaperManager.TYPE_MY_SENDED]
+            return paperMessagesList?[LittlePaperManager.TYPE_MY_SENDED]
         }
         set{
             paperMessagesList[LittlePaperManager.TYPE_MY_SENDED] = newValue
         }
     }
-    private(set) var myOpenedMessages:[LittlePaperMessage]{
+    private(set) var myOpenedMessages:[LittlePaperMessage]!{
         get{
-            return paperMessagesList[LittlePaperManager.TYPE_MY_OPENED]
+            return paperMessagesList?[LittlePaperManager.TYPE_MY_OPENED]
         }
         set{
-            paperMessagesList[LittlePaperManager.TYPE_MY_OPENED] = newValue
+            paperMessagesList?[LittlePaperManager.TYPE_MY_OPENED] = newValue
         }
     }
-    private(set) var myPostededMessages:[LittlePaperMessage]{
+    private(set) var myPostededMessages:[LittlePaperMessage]!{
         get{
-            return paperMessagesList[LittlePaperManager.TYPE_MY_POSTED]
+            return paperMessagesList?[LittlePaperManager.TYPE_MY_POSTED]
         }
         set{
-            paperMessagesList[LittlePaperManager.TYPE_MY_POSTED] = newValue
+            paperMessagesList?[LittlePaperManager.TYPE_MY_POSTED] = newValue
         }
     }
-    private(set) var myNotDealMessages:[LittlePaperMessage]{
+    private(set) var myNotDealMessages:[LittlePaperMessage]!{
         get{
-            return paperMessagesList[LittlePaperManager.TYPE_MY_NOT_DEAL]
+            return paperMessagesList?[LittlePaperManager.TYPE_MY_NOT_DEAL]
         }
         set{
-            paperMessagesList[LittlePaperManager.TYPE_MY_NOT_DEAL] = newValue
+            paperMessagesList?[LittlePaperManager.TYPE_MY_NOT_DEAL] = newValue
         }
     }
     

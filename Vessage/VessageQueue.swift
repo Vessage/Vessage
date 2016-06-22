@@ -78,6 +78,7 @@ class VessageQueue:NSObject{
     func initObservers(){
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
+        
     }
     
     func removeObservers(){
@@ -85,7 +86,7 @@ class VessageQueue:NSObject{
     }
     
     func onVessageSendFail(a:NSNotification){
-        controller.playCrossMark("VESSAGE_SEND_FAIL".localizedString())
+        
     }
     
     func onVessageSended(a:NSNotification){
@@ -95,19 +96,7 @@ class VessageQueue:NSObject{
                     NSLog("Delete Sended Vessage Failed Error:%@", path)
                 }
             }
-            if let userId = task.receiverId{
-                if let receiver = ServiceContainer.getUserService().getCachedUserProfile(userId){
-                    if String.isNullOrEmpty(receiver.accountId) {
-                        let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-                            let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
-                            ShareHelper.showTellTextMsgToFriendsAlert(self.controller, content: contentText)
-                        })
-                        self.controller.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: receiver.nickName, actions: [send])
-                    }
-                }
-            }
         }
-        controller.playCheckMark("VESSAGE_SENDED".localizedString())
     }
     
     func pushNewVessageTo(receiverId:String?,receiverMobile:String?,videoUrl:NSURL){
@@ -121,13 +110,10 @@ class VessageQueue:NSObject{
     }
     
     private func sendVessageFile(vessageId:String, taskInfoKey:String){
-        
-        let sendingHud = controller.showActivityHud()
         if let taskInfo = taskInfoDict[taskInfoKey]{
             ServiceContainer.getService(FileService).sendFileToAliOSS(taskInfo.filePath, type: .Video) { (taskId, fileKey) -> Void in
                 if fileKey != nil{
                     self.taskInfoDict.removeValueForKey(taskInfoKey)
-                    
                     let task = VessageFileUploadTask()
                     task.taskId = taskId
                     task.receiverId = taskInfo.receiverId
@@ -135,16 +121,12 @@ class VessageQueue:NSObject{
                     task.fileId = fileKey.fileId
                     task.vessageId = vessageId
                     ServiceContainer.getVessageService().observeOnVessageFileUploadTask(task)
-                    sendingHud.hideAsync(false)
-                    self.controller.playToast("VESSAGE_PUSH_IN_QUEUE".localizedString())
                 }else{
-                    sendingHud.hideAsync(false)
                     self.retrySendFile(vessageId,taskInfoKey: taskInfoKey)
                 }
             }
         }
     }
-    
     
     private func retrySendFile(vessageId:String,taskInfoKey:String){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in

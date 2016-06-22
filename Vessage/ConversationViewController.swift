@@ -86,12 +86,11 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private var controllerTitle:String!{
+    var controllerTitle:String!{
         didSet{
             self.navigationItem.title = controllerTitle
         }
     }
-    
     var otherConversationNewVessageReceivedCount:Int = 0{
         didSet{
             if let item = self.navigationController?.navigationBar.backItem?.backBarButtonItem{
@@ -118,6 +117,7 @@ class ConversationViewController: UIViewController {
         return !isRecording
     }
     
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
     
@@ -211,9 +211,6 @@ class ConversationViewController: UIViewController {
             setReadingVessage()
             recordVessageManager.sendVessage()
         }
-
-        //isGoAhead = true
-        //RecordMessageController.showRecordMessageController(self,chatter: self.chatter)
     }
     
     private func needSetChatBackgroundAndShow() -> Bool{
@@ -239,7 +236,7 @@ class ConversationViewController: UIViewController {
         alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
             textfield.placeholder = "CONVERSATION_NAME".localizedString()
             textfield.borderStyle = .None
-            textfield.text = self.controllerTitle
+            textfield.text = ServiceContainer.getUserService().getUserNotedName(self.chatter.userId)
         })
         
         let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
@@ -266,13 +263,14 @@ class ConversationViewController: UIViewController {
     }
     
     @IBAction func showUserProfile(sender: AnyObject) {
+        let noteName = ServiceContainer.getUserService().getUserNotedName(self.chatter.userId)
         if String.isNullOrWhiteSpace(chatter.accountId) {
-            showAlert(controllerTitle, msg: "MOBILE_USER".localizedString())
+            showAlert(noteName, msg: "MOBILE_USER".localizedString())
         }else{
             let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
                 self.showNoteConversationAlert()
             })
-            showAlert(chatter.nickName ?? controllerTitle, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
+            showAlert(chatter.nickName ?? noteName, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
         }
     }
     
@@ -413,7 +411,7 @@ class ConversationViewController: UIViewController {
         controller.chatter = user
         controller.chatterChanged = true
         controller.otherConversationNewVessageReceivedCount = 0
-        controller.controllerTitle = conversation.noteName
+        controller.controllerTitle = ServiceContainer.getUserService().getUserNotedName(user.userId)
         nvc.pushViewController(controller, animated: true)
     }
 

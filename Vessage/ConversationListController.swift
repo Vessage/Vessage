@@ -346,15 +346,17 @@ extension ConversationListController:UISearchBarDelegate
     //MARK: search bar delegate
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchResult.removeAll()
-        let users = userService.activeUsers.getRandomSubArray(3)
-        let hotUserRes = users.map({ (resultUser) -> SearchResultModel in
-            let model = SearchResultModel()
-            model.user = resultUser
-            model.activeUser = true
-            model.keyword = resultUser.accountId
-            return model
-        })
-        searchResult.appendContentsOf(hotUserRes)
+        #if DEBUG
+            let users = userService.activeUsers.getRandomSubArray(3)
+            let hotUserRes = users.map({ (resultUser) -> SearchResultModel in
+                let model = SearchResultModel()
+                model.user = resultUser
+                model.activeUser = true
+                model.keyword = resultUser.accountId
+                return model
+            })
+            searchResult.appendContentsOf(hotUserRes)
+        #endif
         isSearching = true
     }
     

@@ -12,6 +12,7 @@ import MBProgressHUD
 class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegate {
     private(set) var camera:VessageCamera!
     private var recordingTimer:NSTimer!
+    private var userClickSend = false
     private var recording = false{
         didSet{
             if cancelRecordButton != nil{
@@ -35,6 +36,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
                 updateRecordingProgress()
             }
             if recordingTime == maxRecordTime{
+                userClickSend = false
                 rootController.setReadingVessage()
                 sendVessage()
             }
@@ -74,15 +76,63 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(RecordVessageManager.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(RecordVessageManager.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
+        ServiceContainer.getVessageService().addObserver(self, selector: #selector(RecordVessageManager.onVessageSending(_:)), name: VessageService.onNewVessageSending, object: nil)
+        
         camera = VessageCamera()
         camera.delegate = self
         camera.initCamera(rootController,previewView: self.previewRectView)
         self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
     }
     
+    func onVessageSending(a:NSNotification){
+        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
+            if task.receiverId == self.rootController.chatter.userId {
+                if let persent = a.userInfo?[SendingVessagePersentValue] as? Float{
+                    self.rootController.progressView.progress = persent
+                }
+            }
+        }
+    }
+    
+    func onVessageSendFail(a:NSNotification){
+        self.rootController.progressView.hidden = true
+        self.rootController.controllerTitle = "VESSAGE_SEND_FAIL".localizedString()
+    }
+    
+    func onVessageSended(a:NSNotification){
+        self.rootController.controllerTitle = "VESSAGE_SENDED".localizedString()
+        NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(RecordVessageManager.resetTitle(_:)), userInfo: nil, repeats: false)
+        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
+            if let userId = task.receiverId{
+                if userId == rootController.chatter.userId {
+                    if String.isNullOrEmpty(chatter?.accountId) {
+                        self.showSendTellFriendAlert()
+                    }
+                }
+            }
+        }
+    }
+    
+    func resetTitle(_:AnyObject?) {
+        self.rootController.progressView.hidden = true
+        self.rootController.controllerTitle = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
+    }
+    
+    private func showSendTellFriendAlert(){
+        let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+            let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
+            ShareHelper.showTellTextMsgToFriendsAlert(self.rootController, content: contentText)
+        })
+        let name = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
+        self.rootController.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: name, actions: [send])
+    }
+    
     func startRecord()
     {
         if camera.cameraInited{
+            userClickSend = true
             MobClick.event("Vege_RecordVessage")
             camera.startRecord()
         }else{
@@ -97,24 +147,38 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
         }
     }
     
-    var prepareHud:MBProgressHUD!
     private func prepareSendRecord()
     {
-        prepareHud = self.rootController.showActivityHud()
+        recordButton.userInteractionEnabled = false
         camera.saveRecordedVideo()
     }
     
     private func confirmSend(url:NSURL){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            MobClick.event("Vege_ConfirmSendVessage")
-            VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
+        #if DEBUG
+            let size = PersistentFileHelper.fileSizeOf(url.path!)
+            print("\(size/1024)kb")
+        #endif
+        if userClickSend {
+            pushNewVessageToQueue(url)
+        }else{
+            let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+                self.pushNewVessageToQueue(url)
+            }
+            let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
+                MobClick.event("Vege_CancelSendVessage")
+            }
+            self.rootController.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
         }
-        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
-            MobClick.event("Vege_CancelSendVessage")
+    }
+    
+    private func pushNewVessageToQueue(url:NSURL){
+        MobClick.event("Vege_ConfirmSendVessage")
+        dispatch_async(dispatch_get_main_queue()) {
+            self.rootController.progressView.progress = 0.2
+            self.rootController.progressView.hidden = false
+            self.rootController.controllerTitle = "VESSAGE_SENDING".localizedString()
         }
-        let size = PersistentFileHelper.fileSizeOf(url.path!)
-        print("\(size/1024)kb")
-        self.rootController.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+        VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
     }
     
     //MARK: VessageCamera Delegate
@@ -136,7 +200,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     }
     
     func vessageCameraVideoSaved(videoSavedUrl video: NSURL) {
-        self.prepareHud.hideAsync(true)
+        recordButton.userInteractionEnabled = true
         let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
         if PersistentFileHelper.moveFile(video.path!, destinationPath: newFilePath)
         {
@@ -148,7 +212,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     }
     
     func vessageCameraSaveVideoError(saveVideoError msg: String?) {
-        self.prepareHud.hideAsync(true)
+        recordButton.userInteractionEnabled = true
         self.rootController.playToast("SAVE_VIDEO_FAILED".localizedString())
     }
     
@@ -156,9 +220,12 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
         self.updateChatImage(chatter.mainChatImage)
     }
     
+    private var defaultFace:UIImage!
     private func updateChatImage(mainChatImage:String?){
+        if defaultFace == nil {
+            defaultFace = UIImage(named: "defaultFace")!
+        }
         if let imgView = self.smileFaceImageView{
-            let defaultFace = UIImage(named: "defaultFace")!
             if let imgId = mainChatImage{
                 imgView.contentMode = .Center
                 noSmileFaceTipsLabel.hidden = false
@@ -181,6 +248,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     }
     
     override func onReleaseManager() {
+        ServiceContainer.getVessageService().removeObserver(self)
         camera.cancelRecord()
         camera.closeCamera()
     }

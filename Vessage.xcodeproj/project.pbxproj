@@ -97,6 +97,7 @@
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
 		E76DF58E1D1A6A4F006BF1A0 /* ViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */; };
+		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
 		E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */; };
 		E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */; };
 		E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */; };
@@ -272,6 +273,7 @@
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
 		E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponents.swift; sourceTree = "<group>"; };
+		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
 		E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
 		E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -831,6 +833,7 @@
 			children = (
 				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
 				E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */,
+				E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */,
 			);
 			name = UserGuide;
 			sourceTree = "<group>";
@@ -1138,6 +1141,7 @@
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
+				E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,

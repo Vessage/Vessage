@@ -132,7 +132,7 @@ class SignInViewController: UIViewController {
     {
         let accountService = ServiceContainer.getAccountService()
         self.showIndicator()
-        accountService.validateAccessToken(loginedResult.AppServiceUrl, accountId: loginedResult.AccountID, accessToken: loginedResult.AccessToken, callback: { (loginSuccess, message) -> Void in
+        accountService.validateAccessToken(loginedResult.appServiceUrl, accountId: loginedResult.accountID, accessToken: loginedResult.accessToken, callback: { (loginSuccess, message) -> Void in
             if loginSuccess{
                 self.showIndicator()
             }else{
@@ -148,14 +148,14 @@ class SignInViewController: UIViewController {
     private func registNewUser(loginedResult:LoginResult, registValidateResult:ValidateResult)
     {
         let registModel = RegistNewUserModel()
-        registModel.accessToken = loginedResult.AccessToken
-        registModel.registUserServer = registValidateResult.RegistAPIServer
-        registModel.accountId = loginedResult.AccountID
+        registModel.accessToken = loginedResult.accessToken
+        registModel.registUserServer = registValidateResult.registAPIServer
+        registModel.accountId = loginedResult.accountID
         registModel.region = VessageSetting.contry.lowercaseString
         
         let newUser = VessageUser()
         newUser.motto = "Vessage Is Video Message"
-        newUser.nickName = loginedResult.AccountName ?? loginedResult.AccountID
+        newUser.nickName = loginedResult.accountName ?? loginedResult.accountID
         
         self.showIndicator()
         ServiceContainer.getAccountService().registNewUser(registModel, newUser: newUser){ isSuc,msg,validateResult in

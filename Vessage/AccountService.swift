@@ -61,30 +61,30 @@ class AccountService: ServiceProtocol
     
     func reBindUserId(newUserId:String) {
         let cachedValidateResult = ValidateResult()
-        cachedValidateResult.APIServer = VessageSetting.apiServerUrl
-        cachedValidateResult.AppToken = UserSetting.token
-        cachedValidateResult.FileAPIServer = VessageSetting.fileApiServer
-        cachedValidateResult.ChicagoServer = "\(VessageSetting.chicagoServerHost):\(VessageSetting.chicagoServerHostPort)"
-        cachedValidateResult.UserId = newUserId
+        cachedValidateResult.apiServer = VessageSetting.apiServerUrl
+        cachedValidateResult.appToken = UserSetting.token
+        cachedValidateResult.fileAPIServer = VessageSetting.fileApiServer
+        cachedValidateResult.chicagoServer = "\(VessageSetting.chicagoServerHost):\(VessageSetting.chicagoServerHostPort)"
+        cachedValidateResult.userId = newUserId
         ServiceContainer.instance.userLogout()
         reuseValidateResult(cachedValidateResult)
     }
     
     private func reuseValidateResult(validateResult:ValidateResult) {
-        UserSetting.token = validateResult.AppToken
+        UserSetting.token = validateResult.appToken
         UserSetting.isUserLogined = true
-        VessageSetting.apiServerUrl = validateResult.APIServer
-        VessageSetting.fileApiServer = validateResult.FileAPIServer
-        let chicagoStrs = validateResult.ChicagoServer.split(":")
+        VessageSetting.apiServerUrl = validateResult.apiServer
+        VessageSetting.fileApiServer = validateResult.fileAPIServer
+        let chicagoStrs = validateResult.chicagoServer.split(":")
         VessageSetting.chicagoServerHost = chicagoStrs[0]
         VessageSetting.chicagoServerHostPort = UInt16(chicagoStrs[1])!
-        UserSetting.userId = validateResult.UserId
+        UserSetting.userId = validateResult.userId
     }
     
     private func setLogined(validateResult:ValidateResult)
     {
         reuseValidateResult(validateResult)
-        ServiceContainer.instance.userLogin(validateResult.UserId)
+        ServiceContainer.instance.userLogin(validateResult.userId)
     }
     
     func validateAccessToken(apiTokenServer:String, accountId:String, accessToken: String,callback:(loginSuccess:Bool,message:String)->Void,registCallback:((registValidateResult:ValidateResult!)->Void)! = nil)

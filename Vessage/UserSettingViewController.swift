@@ -97,7 +97,8 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     override func viewDidLoad() {
         super.viewDidLoad()
         myInfo = ServiceContainer.getUserService().myProfile
-        self.navigationItem.title = UserSetting.lastLoginAccountId
+        
+        self.navigationItem.title = String(format: "USER_ACCOUNT_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
         initPropertySet()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension

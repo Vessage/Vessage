@@ -34,8 +34,9 @@ extension ServiceContainer{
 }
 
 let UserProfileUpdatedUserValue = "UserProfileUpdatedUserIdValue"
-
 let USER_LATER_SET_CHAT_BCG_KEY = "SET_CHAT_BCG_LATER"
+
+
 
 //MARK:UserService
 class UserService:NSNotificationCenter, ServiceProtocol {

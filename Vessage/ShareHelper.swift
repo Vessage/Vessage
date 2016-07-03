@@ -28,9 +28,9 @@ class ShareHelper{
         WXApi.sendReq(req)
     }
     
-    static func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil){
+    static func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString()){
         
-        let alert = UIAlertController(title: "TELL_FRIENDS".localizedString(), message: alertMsg, preferredStyle: .ActionSheet)
+        let alert = UIAlertController(title: title, message: alertMsg, preferredStyle: .ActionSheet)
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
             sendTellFriendWX(WXSceneSession.rawValue,textMsg: message)
         }

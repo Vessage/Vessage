@@ -23,15 +23,8 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         configureUMessage(launchOptions)
         configureUmeng()
         configureWX()
-        initService()
         return true
     }
-    
-    private func initService()
-    {
-        ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
-    }
-    
     private func configureSmsSDK()
     {
         SMSSDK.registerApp(VessageConfig.bahamutConfig.smsSDKAppkey, withSecret: VessageConfig.bahamutConfig.smsSDKSecretKey)

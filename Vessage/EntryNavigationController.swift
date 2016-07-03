@@ -16,8 +16,8 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
         setWaitingScreen()
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -59,7 +59,11 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         if isUserMobileValidated
         {
             if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
-                showMainView()
+                if !UserSetting.isSettingEnable(INVITED_FRIEND_GUIDE_KEY) {
+                    InviteFriendsViewController.showInviteFriendsViewController(self)
+                }else{
+                    showMainView()
+                }
             }else{
                 SetupChatBcgImageController.showSetupViewController(self)
             }

@@ -229,13 +229,13 @@ REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
 REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到Vege应用选项并开启通讯录权限，然后重启Vege";
-OPEN_A_CONTACT_CONVERSATION = "点这里与喜欢的人视频对讲~";
+OPEN_A_CONTACT_CONVERSATION = "开始与Ta视频对讲~";
 NEW_CONVERSATION = "开始对讲";
 
 NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
 UNLOADED_USER = "佚名";
 ACTIVE_USERS = "广场";
-INVITE_FRIENDS_TO_CONVERSATION = "邀请更多可以一起玩的人来视频对讲吧~";
+INVITE_FRIENDS_TO_CONVERSATION = "邀请更多小伙伴来玩视频对讲吧~";
 ACTIVE_USER = "活跃的人";
 NEAR_USER = "附近的人";
 CONVERSATION_USERS = "对讲中的好友";
@@ -244,7 +244,9 @@ VSG_READED = "已读";
 VSG_UNREADED = "未读";
 
 TELL_FRIENDS = "告诉Ta";
-TELL_FRIENDS_ALERT_MSG = "邀请愿意和你视频聊天的那个Ta";
+TELL_FRIENDS_ALERT_MSG = "邀请Ta和你一起视频对讲";
+TELL_FRIENDS_IV = "邀请好朋友";
+TELL_FRIENDS_ALERT_MSG_IV = "邀请你的好朋友来视频对讲";
 WECHAT_SESSION = "微信好友";
 SMS = "短信";
 WECHAT_TIMELINE = "微信朋友圈";

@@ -73,7 +73,6 @@
 		E708AC961C872DBC0071104E /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC951C872DBC0071104E /* AccountService.swift */; };
 		E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC971C872DFC0071104E /* VessageConfig.swift */; };
 		E708AC9A1C872F030071104E /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC991C872F030071104E /* UserSetting.swift */; };
-		E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E708AC9B1C873A000071104E /* BahamutConfig.json */; };
 		E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC9D1C87503F0071104E /* EntryNavigationController.swift */; };
 		E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AC9F1C8752010071104E /* AccountSign.storyboard */; };
 		E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACA51C87528D0071104E /* SignUpViewController.swift */; };
@@ -139,7 +138,7 @@
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
 		E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */; };
-		E7F1BB331D33387C00D1C899 /* BahamutConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1BB321D33387C00D1C899 /* BahamutConfig.swift */; };
+		E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */; };
 		E7F216631CFBD35E00447DA9 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */; };
 		E7F216641CFBD35E00447DA9 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7F2165F1CFBD35E00447DA9 /* README.txt */; };
 		E7F216671CFBD3D400447DA9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F216661CFBD3D400447DA9 /* SystemConfiguration.framework */; };
@@ -249,7 +248,6 @@
 		E708AC951C872DBC0071104E /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		E708AC971C872DFC0071104E /* VessageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageConfig.swift; sourceTree = "<group>"; };
 		E708AC991C872F030071104E /* UserSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
-		E708AC9B1C873A000071104E /* BahamutConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BahamutConfig.json; sourceTree = "<group>"; };
 		E708AC9D1C87503F0071104E /* EntryNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryNavigationController.swift; sourceTree = "<group>"; };
 		E708AC9F1C8752010071104E /* AccountSign.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AccountSign.storyboard; sourceTree = "<group>"; };
 		E708ACA51C87528D0071104E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -316,7 +314,7 @@
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
-		E7F1BB321D33387C00D1C899 /* BahamutConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutConfig.swift; sourceTree = "<group>"; };
+		E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutConfigJson.swift; sourceTree = "<group>"; };
 		E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		E7F2165F1CFBD35E00447DA9 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		E7F216601CFBD35E00447DA9 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -434,9 +432,8 @@
 				E7F22C571C9BF19800CD38D1 /* country.plist */,
 				E708AB481C86CAA50071104E /* Info.plist */,
 				E708AB4F1C86CB570071104E /* Bridge-Header.h */,
-				E708AC9B1C873A000071104E /* BahamutConfig.json */,
 				E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */,
-				E7F1BB321D33387C00D1C899 /* BahamutConfig.swift */,
+				E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */,
 			);
 			name = SupportFiles;
 			sourceTree = "<group>";
@@ -1025,7 +1022,6 @@
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
-				E708AC9C1C873A000071104E /* BahamutConfig.json in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
@@ -1156,7 +1152,7 @@
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
-				E7F1BB331D33387C00D1C899 /* BahamutConfig.swift in Sources */,
+				E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,

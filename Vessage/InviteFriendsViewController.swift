@@ -12,10 +12,15 @@ let INVITED_FRIEND_GUIDE_KEY = "INVITED_FRIEND_GUIDE_KEY"
 
 class InviteFriendsViewController: UIViewController {
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        inviteButtonClick(self)
+    }
+    
     @IBAction func nextButtonClick(sender: AnyObject) {
         UserSetting.enableSetting(INVITED_FRIEND_GUIDE_KEY)
         MobClick.event("Vege_FinishInviteFriends")
-        self.dismissViewControllerAnimated(false, completion: { () -> Void in
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
             EntryNavigationController.start()
         })
     }
@@ -27,7 +32,7 @@ class InviteFriendsViewController: UIViewController {
     static func showInviteFriendsViewController(vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("UserGuide", identifier: "InviteFriendsViewController") as! InviteFriendsViewController
-        vc.presentViewController(controller, animated: false) { () -> Void in
+        vc.presentViewController(controller, animated: true) { () -> Void in
             
         }
     }

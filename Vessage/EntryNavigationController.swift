@@ -16,7 +16,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        ServiceContainer.instance.initContainer(VessageConfig.appName, services: ServicesConfig)
+        ServiceContainer.instance.initContainer("Vege", services: ServicesConfig)
         setWaitingScreen()
     }
     
@@ -44,9 +44,11 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     {
         ServiceContainer.instance.removeObserver(self)
         VessageQueue.sharedInstance.initObservers()
-        if let _ = self.presentedViewController
+        if let cc = self.presentedViewController
         {
-            EntryNavigationController.start()
+            cc.dismissViewControllerAnimated(false, completion: {
+                EntryNavigationController.start()
+            })
         }else
         {
             allServiceReadyGo()
@@ -161,6 +163,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if let mnc = UIApplication.sharedApplication().delegate?.window!?.rootViewController as? EntryNavigationController{
                 mnc.deInitController()
+                mnc.dismissViewControllerAnimated(true, completion: nil)
             }
             UIApplication.sharedApplication().delegate?.window!?.rootViewController = instanceFromStoryBoard("Main", identifier: "EntryNavigationController")
         })

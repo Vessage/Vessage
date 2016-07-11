@@ -142,7 +142,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func updateConversationListWithVessagesReturnNewConversations(vsgs:[Vessage]) -> [Conversation] {
         var newConversations = [Conversation]()
-        vsgs.forIndexEach { (i, element) in
+        vsgs.forEach { (element) in
             if let _ = self.updateConversationWithVessage(element){
                 
             }else{

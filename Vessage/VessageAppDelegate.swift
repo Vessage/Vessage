@@ -25,6 +25,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         configureWX()
         return true
     }
+    
     private func configureSmsSDK()
     {
         SMSSDK.registerApp(VessageConfig.bahamutConfig.smsSDKAppkey, withSecret: VessageConfig.bahamutConfig.smsSDKSecretKey)
@@ -38,7 +39,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     
     private func configureAliOSSManager()
     {
-        AliOSSManager.sharedInstance.initManager(VessageConfig.bahamutConfig.AliOssAccessKey, aliOssSecretKey: VessageConfig.bahamutConfig.AliOssSecretKey)
+        AliOSSManager.sharedInstance.initManager(VessageConfig.bahamutConfig.aliOssAccessKey, aliOssSecretKey: VessageConfig.bahamutConfig.aliOssSecretKey)
     }
     
     private func configContryAndLang()
@@ -61,25 +62,8 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     
     private func configureVessageConfig()
     {
-        loadBahamutConfig("BahamutConfig")
-    }
-    
-    private func loadBahamutConfig(configName:String)
-    {
-        if let bahamutConfigPath = NSBundle.mainBundle().pathForResource(configName, ofType: "json")
-        {
-            if let json = PersistentFileHelper.readTextFile(bahamutConfigPath)
-            {
-                let config = BahamutConfigObject(json: json)
-                VessageConfig.bahamutConfig = config
-            }else
-            {
-                fatalError("Load Config File Error!")
-            }
-        }else
-        {
-            fatalError("No Config File!")
-        }
+        let config = BahamutConfigObject(dictionary: BahamutConfigJson)
+        VessageConfig.bahamutConfig = config
     }
     
     //MARK: Weixin

@@ -44,7 +44,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     @objc static var ServiceName:String {return "User Service"}
     
     private var forceGetUserProfileOnce:Bool = false
-    private let notUpdateUserInMinutes:Int = 18
+    private let notUpdateUserInMinutes:Double = 18
+    private let getActiveUserIntervalHours = 6.0
+    private let getNearUserIntervalHours = 2.0
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
     private(set) var activeUsers = [VessageUser]()
@@ -190,7 +192,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private func getUserProfileByReq(lastUpdatedTime:NSDate?,req:BahamutRFRequestBase,updatedCallback:(user:VessageUser?)->Void){
         if forceGetUserProfileOnce == false{
             if let lt = lastUpdatedTime{
-                if NSDate().totalMinutesSince1970 - lt.totalMinutesSince1970 < notUpdateUserInMinutes{
+                if NSDate().totalMinutesSince1970.doubleValue - lt.totalMinutesSince1970.doubleValue < notUpdateUserInMinutes{
                     return
                 }
             }
@@ -221,16 +223,17 @@ extension UserService{
     func getActiveUsers(checkTime:Bool = false){
         let key = "GET_ACTIVE_USERS_TIME"
         if checkTime{
-            let time = UserSetting.getUserIntValue(key)
-            if NSDate().totalHoursSince1970 - time < 6{
-                return
+            if let time = UserSetting.getUserNumberValue(key){
+                if NSDate().totalHoursSince1970.doubleValue - time.doubleValue < getActiveUserIntervalHours{
+                    return
+                }
             }
         }
         let req = GetActiveUsersInfoRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
             if result.isSuccess{
                 if let activeUsers = result.returnObject{
-                    UserSetting.setUserIntValue(key, value: NSDate().totalHoursSince1970)
+                    UserSetting.setUserNumberValue(key, value: NSDate().totalHoursSince1970)
                     self.activeUsers = activeUsers
                 }
             }else{
@@ -242,9 +245,10 @@ extension UserService{
     func getNearUsers(location:String,checkTime:Bool = false,callback:((nearUsers:[VessageUser])->Void)! = nil){
         let key = "GET_NEAR_USERS_TIME"
         if checkTime{
-            let time = UserSetting.getUserIntValue(key)
-            if NSDate().totalHoursSince1970 - time < 2{
-                return
+            if let time = UserSetting.getUserNumberValue(key){
+                if NSDate().totalHoursSince1970.doubleValue - time.doubleValue < getNearUserIntervalHours{
+                    return
+                }
             }
         }
         let req = GetNearUsersInfoRequest()
@@ -252,7 +256,7 @@ extension UserService{
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
             if result.isSuccess{
                 if let nearUsers = result.returnObject{
-                    UserSetting.setUserIntValue(key, value: NSDate().totalHoursSince1970)
+                    UserSetting.setUserNumberValue(key, value: NSDate().totalHoursSince1970)
                     self.nearUsers = nearUsers
                     if let handler = callback{
                         handler(nearUsers: nearUsers)
@@ -285,14 +289,18 @@ extension UserService{
 //MARK: User Device Token
 extension UserService{
     func registUserDeviceToken(deviceToken:String!, checkTime:Bool = false){
+        let key = "USER_REGIST_DEVICE_TOKEN_TIME"
+        
         if String.isNullOrEmpty(deviceToken){
             return
         }
         if checkTime {
-            let time = UserSetting.getUserIntValue("USER_REGIST_DEVICE_TOKEN_TIME")
-            if time >= NSDate().totalDaysSince1970{
-                return
+            if let time = UserSetting.getUserNumberValue(key){
+                if time.doubleValue >= NSDate().totalDaysSince1970.doubleValue{
+                    return
+                }
             }
+            
         }
         let req = RegistUserDeviceRequest()
         req.setDeviceType(RegistUserDeviceRequest.DEVICE_TYPE_IOS)
@@ -305,7 +313,7 @@ extension UserService{
                 #if DEBUG
                     print("Registed Device Token")
                 #endif
-                UserSetting.setUserIntValue("USER_REGIST_DEVICE_TOKEN_TIME", value: NSDate().totalDaysSince1970)
+                UserSetting.setUserNumberValue(key, value: NSDate().totalDaysSince1970)
             }else{
                 #if DEBUG
                     print("Regist Device Token Failure")

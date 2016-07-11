@@ -16,14 +16,14 @@ class SetupChatBcgImageController: UIViewController {
         ChatBackgroundPickerController.showPickerController(self){ sender in
             MobClick.event("Vege_FinishSetupChatBcg")
             sender.dismissViewControllerAnimated(false, completion: { () -> Void in
-                EntryNavigationController.start()
+                InviteFriendsViewController.showInviteFriendsViewController(self)
             })
         }
     }
     
     @IBAction func forceNext(sender: AnyObject) {
         UserSetting.enableSetting(USER_LATER_SET_CHAT_BCG_KEY)
-        EntryNavigationController.start()
+        InviteFriendsViewController.showInviteFriendsViewController(self)
     }
     
     @IBAction func logout(sender: AnyObject) {

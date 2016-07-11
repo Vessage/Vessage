@@ -97,6 +97,14 @@ class UserSetting
         return NSUserDefaults.standardUserDefaults().integerForKey(key)
     }
     
+    static func getUserNumberValue(setting:String) -> NSNumber?{
+        return getUserValue(setting) as? NSNumber
+    }
+    
+    static func setUserNumberValue(setting:String,value:NSNumber){
+        setUserValue(setting, value: value)
+    }
+    
     static func setUserValue(setting:String,value:AnyObject){
         let key = getSettingKey(setting)
         NSUserDefaults.standardUserDefaults().setObject(value, forKey: key)

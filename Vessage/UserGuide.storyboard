@@ -9,7 +9,7 @@
         <!--Invite Friends View Controller-->
         <scene sceneID="5Dl-Cn-54d">
             <objects>
-                <viewController storyboardIdentifier="InviteFriendsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X2l-13-kK1" customClass="InviteFriendsViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InviteFriendsViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X2l-13-kK1" customClass="InviteFriendsViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uWc-3S-XKC"/>
                         <viewControllerLayoutGuide type="bottom" id="O3O-xm-2kI"/>
@@ -41,8 +41,8 @@
                                     <action selector="validateMobile:" destination="Iwc-kq-ANA" eventType="touchUpInside" id="h8i-We-fPf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有更多的好朋友用视频对讲会更好玩" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWI-OY-b5P">
-                                <rect key="frame" x="79" y="403" width="256" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请至少邀请一个人和你视频对讲才好玩哦~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWI-OY-b5P">
+                                <rect key="frame" x="58" y="403" width="298" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -74,12 +74,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3P-hi-3LL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-140" y="1239"/>
+            <point key="canvasLocation" x="-49" y="1239"/>
         </scene>
         <!--Validate Mobile View Controller-->
         <scene sceneID="lDz-0Z-Spb">
             <objects>
-                <viewController storyboardIdentifier="ValidateMobileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Iwc-kq-ANA" customClass="ValidateMobileViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ValidateMobileViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Iwc-kq-ANA" customClass="ValidateMobileViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EIm-Yc-9jM"/>
                         <viewControllerLayoutGuide type="bottom" id="U9R-iD-xcE"/>
@@ -100,9 +100,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2mn-IZ-4Fd">
-                                <rect key="frame" x="127" y="355" width="161" height="40"/>
+                                <rect key="frame" x="138" y="355" width="138" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="请绑定你的手机">
+                                <state key="normal" title="绑定你的手机">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -148,7 +148,7 @@
         <!--Setup Chat Bcg Image Controller-->
         <scene sceneID="4RN-Dh-Za2">
             <objects>
-                <viewController storyboardIdentifier="SetupChatBcgImageController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dE9-hh-AEN" customClass="SetupChatBcgImageController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupChatBcgImageController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dE9-hh-AEN" customClass="SetupChatBcgImageController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tm3-qf-att"/>
                         <viewControllerLayoutGuide type="bottom" id="eHb-rn-Vfo"/>

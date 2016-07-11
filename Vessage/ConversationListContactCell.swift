@@ -9,12 +9,33 @@
 import Foundation
 import AddressBook
 import AddressBookUI
+let SHOW_OPEN_MOBILE_CONVERSATION_KEY = "SHOW_OPEN_MOBILE_CONVERSATION_KEY"
+
 //MARK: ConversationListContactCell
 class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigationControllerDelegate{
     static let reuseId = "ConversationListContactCell"
     
     @IBOutlet weak var titleLabel: UILabel!
     override func onCellClicked() {
+        if !tryShowTips() {
+            showContact()
+        }
+    }
+    
+    private func tryShowTips()->Bool{
+        if UserSetting.isSettingEnable(SHOW_OPEN_MOBILE_CONVERSATION_KEY) {
+            return false
+        }else{
+            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                self.showContact()
+            })
+            self.rootController.showAlert("OPEN_MOBILE_CON_FST_TIPS_TITLE".localizedString(), msg: "OPEN_MOBILE_CON_FST_TIPS_MSG".localizedString(), actions: [ok])
+            //UserSetting.enableSetting(SHOW_OPEN_MOBILE_CONVERSATION_KEY)
+            return true
+        }
+    }
+    
+    private func showContact(){
         let authStatus = ABAddressBookGetAuthorizationStatus();
         if authStatus == .NotDetermined {
             

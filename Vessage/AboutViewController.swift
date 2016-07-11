@@ -27,7 +27,7 @@ class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
     
     @IBAction func showInAppStore(sender: AnyObject)
     {
-        let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.AppStoreId)"
+        let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.appStoreId)"
         UIApplication.sharedApplication().openURL(NSURL(string: url)!)
     }
 

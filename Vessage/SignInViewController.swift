@@ -34,6 +34,7 @@ class SignInViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        ServiceContainer.instance.addObserver(self, selector: #selector(SignInViewController.onInitServices(_:)), name: ServiceContainer.OnAllServicesReady, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(SignInViewController.onInitServiceFailed(_:)), name: ServiceContainer.OnServiceInitFailed, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SignInViewController.onRegistAccountCompleted(_:)), name: RegistAccountCompleted, object: nil)
         self.loginInfoTextField.text = UserSetting.lastLoginAccountId
@@ -71,6 +72,10 @@ class SignInViewController: UIViewController {
                 
             }
         }
+    }
+    
+    func onInitServices(a:NSNotification){
+        self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     func onInitServiceFailed(a:NSNotification){

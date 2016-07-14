@@ -9,7 +9,7 @@
         <!--Invite Friends View Controller-->
         <scene sceneID="5Dl-Cn-54d">
             <objects>
-                <viewController storyboardIdentifier="InviteFriendsViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X2l-13-kK1" customClass="InviteFriendsViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InviteFriendsViewController" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="X2l-13-kK1" customClass="InviteFriendsViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uWc-3S-XKC"/>
                         <viewControllerLayoutGuide type="bottom" id="O3O-xm-2kI"/>
@@ -41,8 +41,8 @@
                                     <action selector="validateMobile:" destination="Iwc-kq-ANA" eventType="touchUpInside" id="h8i-We-fPf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请至少邀请一个人和你视频对讲才好玩哦~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWI-OY-b5P">
-                                <rect key="frame" x="58" y="403" width="298" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请至少邀请一个朋友和你视频对讲才好玩哦~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWI-OY-b5P">
+                                <rect key="frame" x="50" y="403" width="314" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -70,6 +70,7 @@
                             <constraint firstItem="EWI-OY-b5P" firstAttribute="centerX" secondItem="5v3-wX-2Ai" secondAttribute="centerX" id="usP-aS-fVD"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3P-hi-3LL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -148,7 +149,7 @@
         <!--Setup Chat Bcg Image Controller-->
         <scene sceneID="4RN-Dh-Za2">
             <objects>
-                <viewController storyboardIdentifier="SetupChatBcgImageController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dE9-hh-AEN" customClass="SetupChatBcgImageController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupChatBcgImageController" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dE9-hh-AEN" customClass="SetupChatBcgImageController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tm3-qf-att"/>
                         <viewControllerLayoutGuide type="bottom" id="eHb-rn-Vfo"/>
@@ -178,31 +179,14 @@
                                     <action selector="openCamera:" destination="dE9-hh-AEN" eventType="touchUpInside" id="Nv7-NP-cFM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="背景会在视频对讲时展示给你的朋友~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBe-8E-r79">
-                                <rect key="frame" x="99" y="403" width="216" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="让你的朋友在对讲时可以看到你~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBe-8E-r79">
+                                <rect key="frame" x="90" y="403" width="234" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-I1-BwL">
-                                <rect key="frame" x="129" y="686" width="60" height="30"/>
-                                <state key="normal" title="切换账号">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="logout:" destination="dE9-hh-AEN" eventType="touchUpInside" id="4OQ-gR-a0t"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRs-iz-3NK">
-                                <rect key="frame" x="197" y="706" width="20" height="10"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="10" id="5fs-5o-dI0"/>
-                                    <constraint firstAttribute="width" constant="20" id="POI-yI-3xl"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKW-Kl-EIJ">
-                                <rect key="frame" x="225" y="686" width="60" height="30"/>
+                                <rect key="frame" x="177" y="686" width="60" height="30"/>
                                 <state key="normal" title="以后设置">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -214,30 +198,21 @@
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3tw-1V-o1h" firstAttribute="top" secondItem="5Vi-fb-MxV" secondAttribute="bottom" constant="8" symbolic="YES" id="16m-07-Bgr"/>
+                            <constraint firstItem="bKW-Kl-EIJ" firstAttribute="centerX" secondItem="xYF-Kj-i4J" secondAttribute="centerX" id="Ai8-4U-bso"/>
                             <constraint firstItem="eHb-rn-Vfo" firstAttribute="top" secondItem="bKW-Kl-EIJ" secondAttribute="bottom" constant="20" id="JBW-yN-eEe"/>
-                            <constraint firstItem="qdG-I1-BwL" firstAttribute="centerX" secondItem="xBe-8E-r79" secondAttribute="centerX" id="MFL-YG-V2l"/>
-                            <constraint firstItem="hRs-iz-3NK" firstAttribute="centerX" secondItem="xYF-Kj-i4J" secondAttribute="centerX" id="PVr-1b-rka"/>
                             <constraint firstItem="xBe-8E-r79" firstAttribute="centerX" secondItem="3tw-1V-o1h" secondAttribute="centerX" id="YFg-j5-A49"/>
-                            <constraint firstItem="bKW-Kl-EIJ" firstAttribute="leading" secondItem="hRs-iz-3NK" secondAttribute="trailing" constant="8" symbolic="YES" id="ahs-TH-Uq4"/>
-                            <constraint firstItem="hRs-iz-3NK" firstAttribute="leading" secondItem="qdG-I1-BwL" secondAttribute="trailing" constant="8" symbolic="YES" id="cPc-9L-Z5f"/>
                             <constraint firstItem="5Vi-fb-MxV" firstAttribute="centerY" secondItem="xYF-Kj-i4J" secondAttribute="centerY" multiplier="6/7" id="nar-VK-LLk"/>
-                            <constraint firstItem="eHb-rn-Vfo" firstAttribute="top" secondItem="qdG-I1-BwL" secondAttribute="bottom" constant="20" id="ndr-JD-qMq"/>
                             <constraint firstItem="xBe-8E-r79" firstAttribute="top" secondItem="3tw-1V-o1h" secondAttribute="bottom" constant="8" symbolic="YES" id="qR7-Kj-5eu"/>
                             <constraint firstItem="5Vi-fb-MxV" firstAttribute="centerX" secondItem="xYF-Kj-i4J" secondAttribute="centerX" id="qhq-ng-ZFh"/>
                             <constraint firstItem="3tw-1V-o1h" firstAttribute="centerX" secondItem="5Vi-fb-MxV" secondAttribute="centerX" id="tfv-Jp-mji"/>
-                            <constraint firstItem="eHb-rn-Vfo" firstAttribute="top" secondItem="hRs-iz-3NK" secondAttribute="bottom" constant="20" id="yEa-4g-xYm"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="MFL-YG-V2l"/>
-                            </mask>
-                        </variation>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gFP-gK-Hge" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="908" y="1239"/>
+            <point key="canvasLocation" x="-504" y="1239"/>
         </scene>
     </scenes>
     <resources>

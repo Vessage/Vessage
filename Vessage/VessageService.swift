@@ -95,9 +95,10 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         }
     }
     
-    func sendVessageToUser(receiverId:String?, sendNick:String?,sendMobile:String?, callback:(vessageId:String?)->Void){
+    func sendVessageToUser(receiverId:String?, isGroup:Bool, sendNick:String?,sendMobile:String?, callback:(vessageId:String?)->Void){
         let req = SendNewVessageToUserRequest()
         req.receiverId = receiverId
+        req.isGroup = isGroup
         sendVessage(req, sendNick: sendNick,sendMobile: sendMobile) { (vessageId) -> Void in
             callback(vessageId: vessageId)
         }

@@ -149,7 +149,7 @@
                         </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Vege" id="Pqk-wb-cOY">
+                    <navigationItem key="navigationItem" title="VG对讲机" id="Pqk-wb-cOY">
                         <barButtonItem key="backBarButtonItem" title="Back" id="5cc-bd-ztp"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>

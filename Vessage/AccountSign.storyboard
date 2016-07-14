@@ -10,7 +10,7 @@
         <!--Sign In View Controller-->
         <scene sceneID="i33-6n-XXf">
             <objects>
-                <viewController storyboardIdentifier="SignInViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5v0-ja-IQg" customClass="SignInViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5v0-ja-IQg" customClass="SignInViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iQ0-xf-jch"/>
                         <viewControllerLayoutGuide type="bottom" id="ZuG-E6-zLl"/>
@@ -102,7 +102,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="eZp-1j-sSV">
             <objects>
-                <viewController storyboardIdentifier="SignUpViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ifR-cW-1ax" customClass="SignUpViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ifR-cW-1ax" customClass="SignUpViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1gJ-ZN-bGP"/>
                         <viewControllerLayoutGuide type="bottom" id="jKF-L7-24f"/>

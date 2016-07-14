@@ -18,6 +18,8 @@ class Vessage: BahamutObject {
     var isRead = false
     var sendTime:String!
     var extraInfo:String!
+    var isGroup = false
+    
     
     func getSendTime()->NSDate!{
         return sendTime.dateTimeOfAccurateString
@@ -106,6 +108,13 @@ class SendNewVessageToUserRequest: SendNewVessageRequestBase {
             }
         }
     }
+    
+    var isGroup = false{
+        didSet{
+            self.paramenters["isGroup"] = "\(isGroup)"
+        }
+    }
+    
 
 }
 

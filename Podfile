@@ -10,13 +10,9 @@ pod 'MJRefresh'
 
 pod 'MBProgressHUD', '~> 0.9.2'
 
-pod 'CocoaAsyncSocket'
-
 pod 'AlamofireJsonToObjects', '~> 1.3.0'
 
-pod 'MNReachabilitySwift', '~> 0.0.2'
-
-pod 'AliyunOSSiOS', '~> 2.2.0'
+pod 'AliyunOSSiOS', '~> 2.5.0'
 
 pod 'UMengAnalytics'
 

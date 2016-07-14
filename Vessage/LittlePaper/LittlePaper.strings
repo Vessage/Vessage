@@ -6,9 +6,9 @@
   Copyright © 2016年 Bahamut. All rights reserved.
 */
 //Little Paper
-TELL_FRIENDS_LITTLE_PAPER = "我在玩Vege小纸条，你也来吧~~";
+TELL_FRIENDS_LITTLE_PAPER = "我在玩VG小纸条，你也来吧~~";
 TELL_FRIENDS_LITTLE_PAPER_ALERT_MSG = "邀请与你一起传小纸条的那个Ta";
-TELL_SENDED_U_A_LITTLE_PAPER = "我给你发送了一条Vege小纸条，赶快查看吧~~";
+TELL_SENDED_U_A_LITTLE_PAPER = "我给你发送了一条VG小纸条，赶快查看吧~~";
 SUCCESS = "成功";
 UNKNOW_ERROR = "发生未知错误";
 REFRESH_PAPER_ERROR = "获取纸条内容出错...";

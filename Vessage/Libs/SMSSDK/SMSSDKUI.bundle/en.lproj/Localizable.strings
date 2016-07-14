@@ -11,7 +11,7 @@
 "addressbookfriends"="AddressBook friends";
 "getUserinfo" = "Get User Info";
 "submitUserInfo" = "Submit User Info";
-"register"="Validate Mobile No.";
+"register"="Register";
 "RegisterByVoiceCall" = "Register By Voice Call";
 "back"="Back";
 "labelnotice"="Confirm your country code and enter your mobile number";
@@ -86,7 +86,15 @@
 "-1009description" = "The Internet connection appears to be offline";
 
 "252description" = "Sending messages more than limit";
-
+"253description" = "No permission to do this";
+"254description" = "No permission to get verificationcode";
+"255description" = "No permission to send domestic verificationcode";
+"256description" = "No permission to send verificationcode from Hong Kong, Macao and Taiwan";
+"257description" = "No permission verification code sent abroad";
+"258description" = "Action is too frequent";
+"259description" = "Unknown error";
+"260description" = "Unknown error";
+"261description" = "Data is error of the unknown reason";
 "400description" = "Invalid request";
 "406description" = "Invalid appkey";
 "408description" = "Invalid parameter";
@@ -110,4 +118,5 @@
 "477description" = "The current phone number send messages over the limit";
 "478description" = "The current phone number in the current application sends messages over the limit";
 "479description" = "Please use the MOBFoundation.framework with idfa";
+"480description" = "SDK not submit aeskey in the interface of the access token";
 "500description" = "Server Error";

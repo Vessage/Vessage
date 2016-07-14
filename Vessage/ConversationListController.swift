@@ -81,7 +81,23 @@ class ConversationListController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        tryShowWelcomeAlert()
+        if !tryShowUserGuide() {
+            tryShowWelcomeAlert()
+        }
+    }
+    
+    private func tryShowUserGuide() -> Bool{
+        if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
+            if !UserSetting.isSettingEnable(INVITED_FRIEND_GUIDE_KEY) {
+                InviteFriendsViewController.presentInviteFriendsViewController(self)
+                return true
+            }else{
+                return false
+            }
+        }else{
+            SetupChatBcgImageController.showSetupViewController(self)
+            return true
+        }
     }
     
     private func tryShowWelcomeAlert() {

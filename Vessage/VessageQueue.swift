@@ -46,6 +46,8 @@ class SendVessageTaskInfo:BahamutObject{
     
     var receiverId:String!
     var receiverMobile:String!
+    var isGroup = false
+    
 }
 
 class VessageQueue:NSObject{
@@ -99,11 +101,12 @@ class VessageQueue:NSObject{
         }
     }
     
-    func pushNewVessageTo(receiverId:String?,receiverMobile:String?,videoUrl:NSURL){
+    func pushNewVessageTo(receiverId:String?,isGroup:Bool,receiverMobile:String?,videoUrl:NSURL){
         let userInfoModel = SendVessageTaskInfo()
         userInfoModel.receiverId = receiverId
         userInfoModel.receiverMobile = receiverMobile
         userInfoModel.filePath = videoUrl.path!
+        userInfoModel.isGroup = isGroup
         let taskInfoKey = IdUtil.generateUniqueId()
         taskInfoDict[taskInfoKey] = userInfoModel
         sendVessage(taskInfoKey)
@@ -152,7 +155,7 @@ class VessageQueue:NSObject{
         let sendMobile = userService.myProfile.mobile
         if let taskInfo = taskInfoDict[taskInfoKey]{
             if let receiverId = taskInfo.receiverId{
-                ServiceContainer.getVessageService().sendVessageToUser(receiverId, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
+                ServiceContainer.getVessageService().sendVessageToUser(receiverId, isGroup: taskInfo.isGroup,sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
             }else if let receiverMobile = taskInfo.receiverMobile{
                 ServiceContainer.getVessageService().sendVessageToMobile(receiverMobile, sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
             }else{

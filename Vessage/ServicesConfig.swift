@@ -15,5 +15,6 @@ let ServicesConfig:ServiceListDict =
     (VessageService.ServiceName,VessageService()),
     (ConversationService.ServiceName,ConversationService()),
     (ActivityService.ServiceName,ActivityService()),
-    (LocationService.ServiceName,LocationService())
+    (LocationService.ServiceName,LocationService()),
+    (ChatGroupService.ServiceName,ChatGroupService())
 ]

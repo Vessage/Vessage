@@ -30,7 +30,7 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
                 self.showContact()
             })
             self.rootController.showAlert("OPEN_MOBILE_CON_FST_TIPS_TITLE".localizedString(), msg: "OPEN_MOBILE_CON_FST_TIPS_MSG".localizedString(), actions: [ok])
-            //UserSetting.enableSetting(SHOW_OPEN_MOBILE_CONVERSATION_KEY)
+            UserSetting.enableSetting(SHOW_OPEN_MOBILE_CONVERSATION_KEY)
             return true
         }
     }

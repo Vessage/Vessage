@@ -42,33 +42,17 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     
     func allServicesReady(_:AnyObject)
     {
-        ServiceContainer.instance.removeObserver(self)
-        VessageQueue.sharedInstance.initObservers()
-        if let cc = self.presentedViewController
-        {
-            cc.dismissViewControllerAnimated(false, completion: {
-                EntryNavigationController.start()
-            })
-        }else
-        {
-            allServiceReadyGo()
-        }
+        allServiceReadyGo()
     }
     
     private func allServiceReadyGo(){
+        ServiceContainer.instance.removeObserver(self)
         let userService = ServiceContainer.getUserService()
         let isUserMobileValidated = userService.isUserMobileValidated
         if isUserMobileValidated
         {
-            if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
-                if !UserSetting.isSettingEnable(INVITED_FRIEND_GUIDE_KEY) {
-                    InviteFriendsViewController.showInviteFriendsViewController(self)
-                }else{
-                    showMainView()
-                }
-            }else{
-                SetupChatBcgImageController.showSetupViewController(self)
-            }
+            VessageQueue.sharedInstance.initObservers()
+            showMainView()
         }else{
             ValidateMobileViewController.showValidateMobileViewController(self)
         }
@@ -114,7 +98,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         {
             if ServiceContainer.isAllServiceReady
             {
-                ServiceContainer.instance.removeObserver(self)
                 allServiceReadyGo()
             }else
             {
@@ -163,7 +146,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if let mnc = UIApplication.sharedApplication().delegate?.window!?.rootViewController as? EntryNavigationController{
                 mnc.deInitController()
-                mnc.dismissViewControllerAnimated(true, completion: nil)
+                mnc.dismissViewControllerAnimated(false, completion: nil)
             }
             UIApplication.sharedApplication().delegate?.window!?.rootViewController = instanceFromStoryBoard("Main", identifier: "EntryNavigationController")
         })

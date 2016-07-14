@@ -15,27 +15,22 @@ class SetupChatBcgImageController: UIViewController {
     @IBAction func openCamera(sender: AnyObject) {
         ChatBackgroundPickerController.showPickerController(self){ sender in
             MobClick.event("Vege_FinishSetupChatBcg")
-            sender.dismissViewControllerAnimated(false, completion: { () -> Void in
-                InviteFriendsViewController.showInviteFriendsViewController(self)
-            })
+            InviteFriendsViewController.showInviteFriendsViewController(self.navigationController!)
         }
     }
     
     @IBAction func forceNext(sender: AnyObject) {
         UserSetting.enableSetting(USER_LATER_SET_CHAT_BCG_KEY)
-        InviteFriendsViewController.showInviteFriendsViewController(self)
-    }
-    
-    @IBAction func logout(sender: AnyObject) {
-        ServiceContainer.instance.userLogout()
-        EntryNavigationController.start()
+        InviteFriendsViewController.showInviteFriendsViewController(self.navigationController!)
     }
     
     static func showSetupViewController(vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("UserGuide", identifier: "SetupChatBcgImageController") as! SetupChatBcgImageController
-        vc.presentViewController(controller, animated: false) { () -> Void in
-
+        let nvc = UINavigationController(rootViewController: controller)
+        nvc.navigationBarHidden = true
+        vc.presentViewController(nvc, animated: true) { () -> Void in
+            
         }
     }
 }

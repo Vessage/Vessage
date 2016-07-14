@@ -178,7 +178,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
             self.rootController.progressView.hidden = false
             self.rootController.controllerTitle = "VESSAGE_SENDING".localizedString()
         }
-        VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, receiverMobile: self.chatter.mobile, videoUrl: url)
+        VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId,isGroup: isGroupChat, receiverMobile: self.chatter.mobile, videoUrl: url)
     }
     
     //MARK: VessageCamera Delegate

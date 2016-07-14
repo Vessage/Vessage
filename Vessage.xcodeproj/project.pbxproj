@@ -79,6 +79,8 @@
 		E708ACA81C8752980071104E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACA71C8752980071104E /* SignInViewController.swift */; };
 		E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ACAA1C87536D0071104E /* LaunchScreen.swift */; };
 		E708ACAD1C8754E20071104E /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708ACAC1C8754E20071104E /* User.storyboard */; };
+		E70CD4DE1D371665003779B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DD1D371665003779B5 /* Security.framework */; };
+		E70CD4E01D371682003779B5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DF1D371682003779B5 /* CoreTelephony.framework */; };
 		E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70EE83A1D17A33B0078B171 /* LocationService.swift */; };
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
@@ -94,8 +96,11 @@
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
+		E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */; };
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
 		E76DF58E1D1A6A4F006BF1A0 /* ViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */; };
+		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
+		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
 		E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */; };
 		E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */; };
@@ -254,6 +259,8 @@
 		E708ACA71C8752980071104E /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		E708ACAA1C87536D0071104E /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		E708ACAC1C8754E20071104E /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
+		E70CD4DD1D371665003779B5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E70CD4DF1D371682003779B5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		E70EE83A1D17A33B0078B171 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		E71886731C9FBBCA0028B016 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
@@ -270,8 +277,11 @@
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerProxy.swift; sourceTree = "<group>"; };
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
 		E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponents.swift; sourceTree = "<group>"; };
+		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
+		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
 		E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
 		E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -344,6 +354,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E70CD4E01D371682003779B5 /* CoreTelephony.framework in Frameworks */,
+				E70CD4DE1D371665003779B5 /* Security.framework in Frameworks */,
 				E7F2166B1CFBD40C00447DA9 /* libsqlite3.0.tbd in Frameworks */,
 				E7F216691CFBD3FE00447DA9 /* libc++.tbd in Frameworks */,
 				E7F216671CFBD3D400447DA9 /* SystemConfiguration.framework in Frameworks */,
@@ -379,6 +391,8 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E70CD4DF1D371682003779B5 /* CoreTelephony.framework */,
+				E70CD4DD1D371665003779B5 /* Security.framework */,
 				E7F2166A1CFBD40C00447DA9 /* libsqlite3.0.tbd */,
 				E7F216681CFBD3FE00447DA9 /* libc++.tbd */,
 				E7F216661CFBD3D400447DA9 /* SystemConfiguration.framework */,
@@ -567,6 +581,7 @@
 				E75A70351C8C09360029F0BD /* VessageRF.swift */,
 				E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */,
 				E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */,
+				E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */,
 			);
 			name = RestfulAPI;
 			sourceTree = "<group>";
@@ -619,6 +634,7 @@
 				E708AC951C872DBC0071104E /* AccountService.swift */,
 				E70EE83A1D17A33B0078B171 /* LocationService.swift */,
 				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
+				E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */,
 			);
 			name = CoreService;
 			sourceTree = "<group>";
@@ -872,6 +888,7 @@
 			children = (
 				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
 				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
+				E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */,
 				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
@@ -929,12 +946,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E708AB4B1C86CAA50071104E /* Build configuration list for PBXNativeTarget "Vessage" */;
 			buildPhases = (
-				87C970FD287E69F3A77AC219 /* 📦 Check Pods Manifest.lock */,
+				87C970FD287E69F3A77AC219 /* [CP] Check Pods Manifest.lock */,
 				E708AB351C86CAA50071104E /* Sources */,
 				E708AB361C86CAA50071104E /* Frameworks */,
 				E708AB371C86CAA50071104E /* Resources */,
-				4ACA8FA21A4FE508A5B17B6C /* 📦 Embed Pods Frameworks */,
-				AA13BE9654FEB40A64745D81 /* 📦 Copy Pods Resources */,
+				4ACA8FA21A4FE508A5B17B6C /* [CP] Embed Pods Frameworks */,
+				AA13BE9654FEB40A64745D81 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1033,14 +1050,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4ACA8FA21A4FE508A5B17B6C /* 📦 Embed Pods Frameworks */ = {
+		4ACA8FA21A4FE508A5B17B6C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1048,14 +1065,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Vessage/Pods-Vessage-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		87C970FD287E69F3A77AC219 /* 📦 Check Pods Manifest.lock */ = {
+		87C970FD287E69F3A77AC219 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1063,14 +1080,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		AA13BE9654FEB40A64745D81 /* 📦 Copy Pods Resources */ = {
+		AA13BE9654FEB40A64745D81 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1165,6 +1182,7 @@
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
 				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
+				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,
 				E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */,
 				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
 				E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */,
@@ -1190,6 +1208,7 @@
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
+				E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */,
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
 				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,
 				E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */,
@@ -1198,6 +1217,7 @@
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
 				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
 				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
+				E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */,
 				E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */,
 				E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */,
 			);
@@ -1350,8 +1370,6 @@
 					"-framework",
 					"\"AliyunOSSiOS\"",
 					"-framework",
-					"\"CocoaAsyncSocket\"",
-					"-framework",
 					"\"EVReflection\"",
 					"-framework",
 					"\"MBProgressHUD\"",
@@ -1404,8 +1422,6 @@
 					"\"AlamofireJsonToObjects\"",
 					"-framework",
 					"\"AliyunOSSiOS\"",
-					"-framework",
-					"\"CocoaAsyncSocket\"",
 					"-framework",
 					"\"EVReflection\"",
 					"-framework",

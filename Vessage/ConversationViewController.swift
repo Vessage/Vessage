@@ -7,81 +7,25 @@
 //
 
 import UIKit
-import MNReachabilitySwift
-
-class ConversationViewControllerProxy: NSObject {
-    private(set) var rootController:ConversationViewController!
-    
-    var vessageView:UIView!{
-        return rootController.vessageView
-    }
-    var fileService:FileService!{
-        return rootController.fileService
-    }
-    var chatter:VessageUser!{
-        return rootController.chatter
-    }
-    var vessageService:VessageService!{
-        return rootController.vessageService
-    }
-    var rightButton:UIButton!{
-        return rootController.rightButton
-    }
-    var noMessageTipsLabel:UILabel!{
-        return rootController.noMessageTipsLabel
-    }
-    var badgeLabel:UILabel!{
-        return rootController.badgeLabel
-    }
-    var vessageSendTimeLabel:UILabel{
-        return rootController.vessageSendTimeLabel
-    }
-    
-    var recordButton: UIButton!{
-        return rootController.middleButton
-    }
-    
-    var cancelRecordButton: UIButton!{
-        return rootController.rightButton
-    }
-    
-    var smileFaceImageView: UIImageView!{
-        return rootController.smileFaceImageView
-    }
-    var noSmileFaceTipsLabel: UILabel!{
-        return rootController.noSmileFaceTipsLabel
-    }
-    var recordingFlashView: UIView!{
-        return rootController.recordingFlashView
-    }
-    var recordingProgress:KDCircularProgress!{
-        return rootController.recordingProgress
-    }
-    var previewRectView: UIView!{
-        return rootController.previewRectView
-    }
-    func onVessageReceived(vessages:Vessage) {}
-    func onChatterUpdated(chatter:VessageUser) {}
-    func initManager(controller:ConversationViewController) {
-        self.rootController = controller
-    }
-    func onReleaseManager() {
-        
-    }
-    func onSwitchToManager() {
-        
-    }
-}
-
 //MARK: ConversationViewController
 class ConversationViewController: UIViewController {
-    var conversationId:String!
-    var chatterChanged = true
+    private(set) var conversationId:String!
+    private(set) var isGroupChat = false
+    
     private(set) var chatter:VessageUser!{
         didSet{
             if let user = chatter{
                 recordVessageManager?.onChatterUpdated(user)
-                recordVessageManager?.onChatterUpdated(user)
+                playVessageManager?.onChatterUpdated(user)
+            }
+        }
+    }
+    
+    private(set) var chatGroup:ChatGroup!{
+        didSet{
+            if let cg = chatGroup {
+                recordVessageManager?.onChatGroupUpdated(cg)
+                playVessageManager?.onChatGroupUpdated(cg)
             }
         }
     }
@@ -91,7 +35,8 @@ class ConversationViewController: UIViewController {
             self.navigationItem.title = controllerTitle
         }
     }
-    var otherConversationNewVessageReceivedCount:Int = 0{
+    
+    private(set) var otherConversationNewVessageReceivedCount:Int = 0{
         didSet{
             if let item = self.navigationController?.navigationBar.backItem?.backBarButtonItem{
                 if otherConversationNewVessageReceivedCount <= 0{
@@ -103,16 +48,15 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    var playVessageManager:PlayVessageManager!
-    var recordVessageManager:RecordVessageManager!
+    private(set) var playVessageManager:PlayVessageManager!
+    private(set) var recordVessageManager:RecordVessageManager!
     
-    var reachability:MNReachability?
     let conversationService = ServiceContainer.getConversationService()
     let userService = ServiceContainer.getUserService()
     let fileService = ServiceContainer.getService(FileService)
     let vessageService = ServiceContainer.getVessageService()
     
-    var isRecording:Bool = false
+    private(set) var isRecording:Bool = false
     var isReadingVessages:Bool{
         return !isRecording
     }
@@ -323,9 +267,6 @@ class ConversationViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         isGoAhead = false
-        if chatterChanged{
-            chatterChanged = false
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -409,7 +350,6 @@ class ConversationViewController: UIViewController {
         let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversationId = conversation.conversationId
         controller.chatter = user
-        controller.chatterChanged = true
         controller.otherConversationNewVessageReceivedCount = 0
         controller.controllerTitle = ServiceContainer.getUserService().getUserNotedName(user.userId)
         nvc.pushViewController(controller, animated: true)

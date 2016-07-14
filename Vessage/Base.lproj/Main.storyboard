@@ -343,7 +343,7 @@
             </objects>
             <point key="canvasLocation" x="1640" y="1089"/>
         </scene>
-        <!--Vege-->
+        <!--VG对讲机-->
         <scene sceneID="NRH-Hx-J3J">
             <objects>
                 <tableViewController storyboardIdentifier="ConversationListController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GQB-c1-diR" customClass="ConversationListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
@@ -452,7 +452,7 @@
                             <outlet property="delegate" destination="GQB-c1-diR" id="KHw-9S-40G"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Vege" id="Pbk-1i-UuZ">
+                    <navigationItem key="navigationItem" title="VG对讲机" id="Pbk-1i-UuZ">
                         <barButtonItem key="backBarButtonItem" title="对话" id="SYV-9s-CQ9"/>
                         <barButtonItem key="leftBarButtonItem" title="告诉 Ta" id="Cp7-nQ-LAi">
                             <connections>

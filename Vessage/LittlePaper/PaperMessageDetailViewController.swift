@@ -171,6 +171,15 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
     }
     
     //MARK: SelectVessageUserViewControllerDelegate
+    func canSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {
+        if selectedUsers.count == 0{
+            sender.playToast("PLEASE_A_USER_TO_SEND_PAPER".littlePaperString)
+            return false
+        }else{
+            return true
+        }
+    }
+    
     func onFinishSelect(sender:SelectVessageUserViewController,selectedUsers: [VessageUser]) {
         let hud = self.showActivityHudWithMessage(nil, message: nil)
         LittlePaperManager.instance.postPaperToNextUser(paperMessage.paperId,userId: selectedUsers.first!.userId,isAnonymous: false) { (suc,errorMsg) in

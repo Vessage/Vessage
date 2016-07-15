@@ -7,16 +7,23 @@
 //
 
 import UIKit
+
 //MARK: ConversationViewController
 class ConversationViewController: UIViewController {
-    private(set) var conversationId:String!
-    private(set) var isGroupChat = false
+    
+    //MARK: Properties
+    var isGroupChat:Bool{
+        return chatGroup != nil
+    }
+    
+    private(set) var conversation:Conversation!
     
     private(set) var chatter:VessageUser!{
         didSet{
             if let user = chatter{
                 recordVessageManager?.onChatterUpdated(user)
                 playVessageManager?.onChatterUpdated(user)
+                chatGroup = nil
             }
         }
     }
@@ -26,6 +33,7 @@ class ConversationViewController: UIViewController {
             if let cg = chatGroup {
                 recordVessageManager?.onChatGroupUpdated(cg)
                 playVessageManager?.onChatGroupUpdated(cg)
+                chatter = nil
             }
         }
     }
@@ -36,13 +44,13 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private(set) var otherConversationNewVessageReceivedCount:Int = 0{
+    private(set) var outerNewsVessageCount:Int = 0{
         didSet{
             if let item = self.navigationController?.navigationBar.backItem?.backBarButtonItem{
-                if otherConversationNewVessageReceivedCount <= 0{
+                if outerNewsVessageCount <= 0{
                     item.title = VessageConfig.appName
                 }else{
-                    item.title = "\(VessageConfig.appName)( \(otherConversationNewVessageReceivedCount) )"
+                    item.title = "\(VessageConfig.appName)( \(outerNewsVessageCount) )"
                 }
             }
         }
@@ -55,11 +63,14 @@ class ConversationViewController: UIViewController {
     let userService = ServiceContainer.getUserService()
     let fileService = ServiceContainer.getService(FileService)
     let vessageService = ServiceContainer.getVessageService()
+    let chatGroupService = ServiceContainer.getChatGroupService()
     
     private(set) var isRecording:Bool = false
     var isReadingVessages:Bool{
         return !isRecording
     }
+    
+    private var isGoAhead = false
     
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var recordViewContainer: UIView!
@@ -72,6 +83,7 @@ class ConversationViewController: UIViewController {
             bottomBar.hidden = true
         }
     }
+    
     @IBOutlet weak var rightButton: UIButton!{
         didSet{
             rightButton.hidden = true
@@ -98,6 +110,7 @@ class ConversationViewController: UIViewController {
         }
     }
     @IBOutlet weak var vessageView: UIView!
+    
     //MARK: Record Views
     @IBOutlet weak var previewRectView: UIView!{
         didSet{
@@ -119,9 +132,97 @@ class ConversationViewController: UIViewController {
         }
     }
 
-    //MARK: Actions
+}
+
+//MARK: Life Circle
+extension ConversationViewController{
     
-    func startRecording() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        playVessageManager = PlayVessageManager()
+        playVessageManager.initManager(self)
+        recordVessageManager = RecordVessageManager()
+        recordVessageManager.initManager(self)
+        if let chatter = self.chatter{
+            recordVessageManager.onChatterUpdated(chatter)
+            recordVessageManager.onChatterUpdated(chatter)
+        }
+        addObservers()
+        setReadingVessage()
+        ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if !isGoAhead {
+            removeObservers()
+            recordVessageManager.onReleaseManager()
+            playVessageManager.onReleaseManager()
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        isGoAhead = false
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        showBottomBar()
+        recordVessageManager.camera.openCamera()
+    }
+    
+}
+
+//MARK: Actions
+extension ConversationViewController{
+    
+    @IBAction func onClickMiddleButton(sender: AnyObject) {
+        if isReadingVessages {
+            if needSetChatBackgroundAndShow() {
+                return
+            }
+            startRecording()
+        }else{
+            setReadingVessage()
+            recordVessageManager.sendVessage()
+        }
+    }
+    
+    @IBAction func showUserProfile(sender: AnyObject) {
+        if isGroupChat {
+            showChatGroupProfile()
+        }else{
+            showChatterProfile()
+        }
+    }
+    
+    @IBAction func onClickRightButton(sender: AnyObject) {
+        if isReadingVessages {
+            playVessageManager.showNextVessage()
+        }else{
+            recordVessageManager.cancelRecord()
+            setReadingVessage()
+        }
+    }
+    
+    private func showChatGroupProfile(){
+        //TODO:showChatGroupProfile
+    }
+    
+    private func showChatterProfile(){
+        let noteName = ServiceContainer.getUserService().getUserNotedName(self.chatter.userId)
+        if String.isNullOrWhiteSpace(chatter.accountId) {
+            showAlert(noteName, msg: "MOBILE_USER".localizedString())
+        }else{
+            let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
+                self.showNoteConversationAlert()
+            })
+            showAlert(chatter.nickName ?? noteName, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
+        }
+    }
+    
+    private func startRecording() {
         isRecording = true
         vessageViewContainer.hidden = true
         recordViewContainer.hidden = false
@@ -130,8 +231,6 @@ class ConversationViewController: UIViewController {
         UIView.setAnimationDuration(0.3)
         recordViewContainer.alpha = 1
         UIView.commitAnimations()
-        
-        
         navigationController?.navigationBarHidden = true
         recordVessageManager.onSwitchToManager()
         recordVessageManager.startRecord()
@@ -144,18 +243,70 @@ class ConversationViewController: UIViewController {
         navigationController?.navigationBarHidden = false
         playVessageManager.onSwitchToManager()
     }
-        
-    @IBAction func onClickMiddleButton(sender: AnyObject) {
-        if isReadingVessages {
-            if needSetChatBackgroundAndShow() {
-                return
+    
+    private func showBottomBar(){
+        if(bottomBar.hidden){
+            bottomBar.frame.origin.y = view.frame.height
+            UIView.animateWithDuration(0.08) {
+                self.bottomBar.hidden = false
+                self.bottomBar.frame.origin.y = self.view.frame.height - self.bottomBar.frame.height
             }
-            startRecording()
-        }else{
-            setReadingVessage()
-            recordVessageManager.sendVessage()
         }
     }
+}
+
+//MARK: Observer & Notifications
+extension ConversationViewController{
+    
+    private func addObservers(){
+        userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
+        vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
+        chatGroupService.addObserver(self, selector: #selector(ConversationViewControllerProxy.onChatGroupUpdated(_:)), name: ChatGroupService.OnQuitChatGroup, object: nil)
+    }
+    
+    private func removeObservers(){
+        userService.removeObserver(self)
+        vessageService.removeObserver(self)
+        chatGroupService.removeObserver(self)
+    }
+    
+    func onChatGroupUpdated(a:NSNotification){
+        if let group = a.userInfo?[kChatGroupValue] as? ChatGroup{
+            if isGroupChat && group.groupId == self.chatGroup.groupId {
+                self.chatGroup = group
+            }
+        }
+    }
+    
+    func onUserProfileUpdated(a:NSNotification){
+        if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
+            if VessageUser.isTheSameUser(chatter, userb: self.chatter){
+                self.chatter = chatter
+            }
+        }
+    }
+    
+    func onNewVessageReveiced(a:NSNotification){
+        if let msg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
+            var forConversation = false
+            if isGroupChat {
+                forConversation = msg.sender == self.chatGroup?.groupId ?? ""
+            }else{
+                forConversation = msg.sender == self.chatter?.userId ?? ""
+            }
+            
+            if forConversation{
+                playVessageManager.onVessageReceived(msg)
+                recordVessageManager.onVessageReceived(msg)
+            }else{
+                self.outerNewsVessageCount += 1
+            }
+        }
+    }
+}
+
+//MARK: Set Chat Backgroud
+extension ConversationViewController{
     
     private func needSetChatBackgroundAndShow() -> Bool{
         if userService.isUserChatBackgroundIsSeted{
@@ -189,7 +340,7 @@ class ConversationViewController: UIViewController {
             {
                 self.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
             }else{
-                if self.conversationService.noteConversation(self.conversationId, noteName: newNoteName){
+                if self.conversationService.noteConversation(self.conversation.conversationId, noteName: newNoteName){
                     self.controllerTitle = newNoteName
                     if String.isNullOrWhiteSpace(self.chatter?.userId) == false{
                         ServiceContainer.getUserService().setUserNoteName(self.chatter.userId, noteName: newNoteName)
@@ -206,108 +357,11 @@ class ConversationViewController: UIViewController {
         self.showAlert(alertController)
     }
     
-    @IBAction func showUserProfile(sender: AnyObject) {
-        let noteName = ServiceContainer.getUserService().getUserNotedName(self.chatter.userId)
-        if String.isNullOrWhiteSpace(chatter.accountId) {
-            showAlert(noteName, msg: "MOBILE_USER".localizedString())
-        }else{
-            let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
-                self.showNoteConversationAlert()
-            })
-            showAlert(chatter.nickName ?? noteName, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
-        }
-    }
-    
-    @IBAction func onClickRightButton(sender: AnyObject) {
-        if isReadingVessages {
-            playVessageManager.showNextVessage()
-        }else{
-            recordVessageManager.cancelRecord()
-            setReadingVessage()
-        }
-    }
-    
-    //MARK: life circle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        playVessageManager = PlayVessageManager()
-        playVessageManager.initManager(self)
-        recordVessageManager = RecordVessageManager()
-        recordVessageManager.initManager(self)
-        if let chatter = self.chatter{
-            recordVessageManager.onChatterUpdated(chatter)
-            recordVessageManager.onChatterUpdated(chatter)
-        }
-        addObservers()
-        setReadingVessage()
-        ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
-    }
-    
-    private var isGoAhead = false
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        if !isGoAhead {
-            removeObservers()
-            recordVessageManager.onReleaseManager()
-            playVessageManager.onReleaseManager()
-        }
-    }
-    
-    private func addObservers(){
-        userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
-        vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
-    }
-    
-    private func removeObservers(){
-        userService.removeObserver(self)
-        vessageService.removeObserver(self)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        isGoAhead = false
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        showBottomBar()
-        recordVessageManager.camera.openCamera()
-    }
-    
-    private func showBottomBar(){
-        if(bottomBar.hidden){
-            bottomBar.frame.origin.y = view.frame.height
-            UIView.animateWithDuration(0.08) {
-                self.bottomBar.hidden = false
-                self.bottomBar.frame.origin.y = self.view.frame.height - self.bottomBar.frame.height
-            }
-        }
-    }
-    
-    //MARK: notifications
-    
-    func onUserProfileUpdated(a:NSNotification){
-        if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if VessageUser.isTheSameUser(chatter, userb: self.chatter){
-                self.chatter = chatter
-            }
-        }
-    }
-    
-    func onNewVessageReveiced(a:NSNotification){
-        if let msg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
-            if msg.sender == self.chatter?.userId ?? ""{
-                playVessageManager.onVessageReceived(msg)
-                recordVessageManager.onVessageReceived(msg)
-            }else{
-                self.otherConversationNewVessageReceivedCount += 1
-            }
-        }
-    }
+}
 
+//MARK: Show ConversationViewController Extension
+extension ConversationViewController{
     
-    //MARK: showConversationViewController
     static func showConversationViewController(nvc:UINavigationController,chatter: String) {
         if let user = ServiceContainer.getUserService().getCachedUserProfile(chatter){
             let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
@@ -330,27 +384,52 @@ class ConversationViewController: UIViewController {
     {
         if String.isNullOrEmpty(conversation.chatterId) {
             nvc.playToast("NO_SUCH_USER".localizedString())
-        }else if let user = ServiceContainer.getUserService().getCachedUserProfile(conversation.chatterId){
-            showConversationView(nvc,conversation: conversation,user: user)
         }else{
-            let hud = nvc.showActivityHud()
-            ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
-                hud.hide(true)
-                if let updatedUser = u{
-                    showConversationView(nvc,conversation: conversation,user: updatedUser)
+            if conversation.isGroup {
+                if let group = ServiceContainer.getChatGroupService().getChatGroup(conversation.chatterId){
+                    showConversationView(nvc, conversation: conversation, group: group)
                 }else{
-                    nvc.playToast("NO_SUCH_USER".localizedString())
+                    ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
+                        if let g = group{
+                            self.showConversationView(nvc, conversation: conversation, group: g)
+                        }else{
+                            nvc.playToast("NO_SUCH_USER".localizedString())
+                        }
+                    }
                 }
-            })
+            }else{
+                if let user = ServiceContainer.getUserService().getCachedUserProfile(conversation.chatterId){
+                    showConversationView(nvc,conversation: conversation,user: user)
+                }else{
+                    let hud = nvc.showActivityHud()
+                    ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
+                        hud.hide(true)
+                        if let updatedUser = u{
+                            showConversationView(nvc,conversation: conversation,user: updatedUser)
+                        }else{
+                            nvc.playToast("NO_SUCH_USER".localizedString())
+                        }
+                    })
+                }
+            }
         }
         
     }
     
-    static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser){
+    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup){
         let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
-        controller.conversationId = conversation.conversationId
+        controller.conversation = conversation
+        controller.chatGroup = group
+        controller.outerNewsVessageCount = 0
+        controller.controllerTitle = group.groupName
+        nvc.pushViewController(controller, animated: true)
+    }
+    
+    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser){
+        let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
+        controller.conversation = conversation
         controller.chatter = user
-        controller.otherConversationNewVessageReceivedCount = 0
+        controller.outerNewsVessageCount = 0
         controller.controllerTitle = ServiceContainer.getUserService().getUserNotedName(user.userId)
         nvc.pushViewController(controller, animated: true)
     }

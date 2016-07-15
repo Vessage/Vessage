@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+//MARK:ConversationViewControllerProxy
 class ConversationViewControllerProxy: NSObject {
     private(set) var rootController:ConversationViewController!
     
@@ -25,6 +27,12 @@ class ConversationViewControllerProxy: NSObject {
     var fileService:FileService!{
         return rootController.fileService
     }
+    
+    var conversation:Conversation!{
+        return rootController.conversation
+    }
+    
+    
     var chatter:VessageUser!{
         return rootController.chatter
     }

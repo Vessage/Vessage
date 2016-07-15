@@ -35,27 +35,39 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         self.setServiceNotReady()
     }
     
-    func fetchChatGroup(groupId:String) {
+    func getChatGroup(groupId:String) -> ChatGroup? {
+        return PersistentManager.sharedInstance.getModel(ChatGroup.self, idValue: groupId)
+    }
+    
+    func fetchChatGroup(groupId:String,callback:((ChatGroup?)->Void)? = nil) {
         let req = GetGroupChatRequest()
         req.groupId = groupId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ChatGroup>) in
             if result.isSuccess{
+                var group:ChatGroup? = nil
                 if let g = result.returnObject{
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:g])
+                    group = g
+                }
+                if let handler = callback{
+                    handler(group)
                 }
             }
         }
     }
     
-    func createChatGroup(userIds:[String]) {
+    func createChatGroup(groupName:String,userIds:[String],callback:((ChatGroup?)->Void)) {
         let req = CreateGroupChatRequest()
+        req.groupName = groupName
         req.groupUsers = userIds
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ChatGroup>) in
             if result.isSuccess{
                 if let g = result.returnObject{
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:g])
+                    callback(g)
                 }
             }
+            callback(nil)
         }
     }
     

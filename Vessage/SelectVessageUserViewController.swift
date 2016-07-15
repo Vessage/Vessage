@@ -11,6 +11,7 @@ import AddressBookUI
 
 protocol SelectVessageUserViewControllerDelegate {
     func onFinishSelect(sender:SelectVessageUserViewController, selectedUsers:[VessageUser])
+    func canSelect(sender:SelectVessageUserViewController, selectedUsers:[VessageUser]) -> Bool
 }
 
 class SelectVessageUserContactCell: UITableViewCell {
@@ -51,7 +52,7 @@ class SelectVessageUserListCell: UITableViewCell {
         didSet{
             nickLabel.text = ServiceContainer.getUserService().getUserNotedName(user.userId)
             if String.isNullOrEmpty(user.avatar) {
-                avatarImage.image = UIImage(named: "defaultAvatar")!
+                avatarImage.image = getDefaultAvatar(user.accountId ?? "0")
             }else{
                 ServiceContainer.getService(FileService).setAvatar(avatarImage, iconFileId: user.avatar)
             }
@@ -144,7 +145,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         activeUsers = userService.activeUsers
         nearUsers = userService.nearUsers
         
-        userInfos = conversations.map { (c) -> VessageUser in
+        userInfos = conversations.filter{!$0.isGroup}.map { (c) -> VessageUser in
             if let res = userService.getCachedUserProfile(c.chatterId){
                 return res
             }else{
@@ -178,20 +179,24 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     }
 
     @IBAction func finishSelect(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
-        if let handler = delegate?.onFinishSelect{
+        if let dg = delegate{
+            var selectedUsers = [VessageUser]()
             if let rows = tableView.indexPathsForSelectedRows{
-                handler(self, selectedUsers: rows.map{
+                selectedUsers = rows.map{
                     if $0.section == SECTION_ACTIVE_USER{
                         return activeUsers[$0.row]
                     }
-                        return userInfos[$0.row]
-                    }
-                )
-            }else{
-                handler(self, selectedUsers: [])
+                    return userInfos[$0.row]
+                }
             }
+            if dg.canSelect(self, selectedUsers: selectedUsers) {
+                self.navigationController?.popViewControllerAnimated(true)
+                dg.onFinishSelect(self, selectedUsers: selectedUsers)
+            }
+        }else{
+            self.navigationController?.popViewControllerAnimated(true)
         }
+        
     }
     
     private func showContactView(){

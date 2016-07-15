@@ -15,6 +15,7 @@ class Conversation:BahamutObject
         return "conversationId"
     }
     var conversationId:String!
+    var isGroup = false
     var chatterId:String!
     var chatterMobile:String!
     var noteName:String!
@@ -65,6 +66,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return VessageUser.isTheSameUser(cu, userb: user)
     }
     
+    static func isConversationWithChatGroup(c:Conversation,group:ChatGroup) -> Bool{
+        return c.isGroup && c.chatterId == group.groupId
+    }
+    
     static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
         if let chatterId = c.chatterId{
             if vsg.sender == chatterId{
@@ -72,13 +77,15 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
                 return true
             }
         }
-        if let ei = vsg.getExtraInfoObject(){
-            if ei.mobileHash != nil && ei.mobileHash == c.chatterMobile?.md5{
-                if String.isNullOrWhiteSpace(c.chatterId){
-                    c.chatterId = vsg.sender
-                    c.saveModel()
+        if !c.isGroup {
+            if let ei = vsg.getExtraInfoObject(){
+                if ei.mobileHash != nil && ei.mobileHash == c.chatterMobile?.md5{
+                    if String.isNullOrWhiteSpace(c.chatterId){
+                        c.chatterId = vsg.sender
+                        c.saveModel()
+                    }
+                    return true
                 }
-                return true
             }
         }
         return false
@@ -87,18 +94,20 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     private func updateConversationWithVessage(vsg:Vessage) -> Int?{
         if let index = (conversations.indexOf { ConversationService.isConversationVessage($0, vsg: vsg)}){
             let conversation = conversations[index]
-            if let ei = vsg.getExtraInfoObject(){
-                if conversation.chatterId == nil{
-                    conversation.chatterId = vsg.sender
+            if !conversation.isGroup {
+                if let ei = vsg.getExtraInfoObject(){
+                    if conversation.chatterId == nil{
+                        conversation.chatterId = vsg.sender
+                    }
+                    if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(vsg.sendTime.dateTimeOfAccurateString){
+                        conversation.lastMessageTime = vsg.sendTime
+                    }
+                    if conversation.noteName?.md5 == ei.mobileHash || conversation.noteName == ei.accountId{
+                        conversation.noteName = ei.nickName ?? conversation.noteName
+                    }
+                    conversation.saveModel()
+                    self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
                 }
-                if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(vsg.sendTime.dateTimeOfAccurateString){
-                    conversation.lastMessageTime = vsg.sendTime
-                }
-                if conversation.noteName?.md5 == ei.mobileHash || conversation.noteName == ei.accountId{
-                    conversation.noteName = ei.nickName ?? conversation.noteName
-                }
-                conversation.saveModel()
-                self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
             }
             return index
         }else{
@@ -157,7 +166,23 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     private func createConverationWithVessage(vsg:Vessage) -> Conversation{
         let ei = vsg.getExtraInfoObject()
-        return self.addNewConversationWithUserId(vsg.sender, noteName: ei?.nickName ?? ei?.accountId ?? "UNKNOW_USER".localizedString())
+        if vsg.isGroup {
+            return self.addNewConversationWithGroupVessage(vsg)
+        }else{
+            return self.addNewConversationWithUserId(vsg.sender, noteName: ei?.nickName ?? ei?.accountId ?? "UNKNOW_USER".localizedString())
+        }
+    }
+    
+    private func addNewConversationWithGroupVessage(vsg:Vessage) -> Conversation{
+        let conversation = Conversation()
+        conversation.chatterId = vsg.sender
+        conversation.isGroup = true
+        conversation.conversationId = IdUtil.generateUniqueId()
+        conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+        conversation.noteName = "GROUP_CHAT".localizedString()
+        conversation.saveModel()
+        conversations.append(conversation)
+        return conversation
     }
     
     private func refreshConversations(){
@@ -171,6 +196,18 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversations.sortInPlace { (a, b) -> Bool in
             a.lastMessageTime.dateTimeOfAccurateString.isAfter(b.lastMessageTime.dateTimeOfAccurateString)
         }
+    }
+    
+    func openConversationByGroup(group:ChatGroup) -> Conversation {
+        let conversation = Conversation()
+        conversation.chatterId = group.groupId
+        conversation.isGroup = true
+        conversation.conversationId = IdUtil.generateUniqueId()
+        conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+        conversation.noteName = group.groupName
+        conversation.saveModel()
+        conversations.append(conversation)
+        return conversation
     }
     
     func openConversationByUserId(userId:String,noteName:String?) -> Conversation {

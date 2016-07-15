@@ -37,6 +37,12 @@ class CreateGroupChatRequest: BahamutRFRequestBase {
         self.method = .POST
     }
     
+    var groupName:String!{
+        didSet{
+            self.paramenters["groupName"] = groupName
+        }
+    }
+    
     var groupUsers:[String]!{
         didSet{
             self.paramenters["groupUsers"] = groupUsers.joinWithSeparator(",")

@@ -40,6 +40,15 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
     }
     
     //MARK: SelectVessageUserViewControllerDelegate
+    func canSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {
+        if selectedUsers.count == 0{
+            sender.playToast("PLEASE_A_USER_TO_SEND_PAPER".littlePaperString)
+            return false
+        }else{
+            return true
+        }
+    }
+    
     func onFinishSelect(sender:SelectVessageUserViewController,selectedUsers: [VessageUser]) {
         let message = messageTextView.text!
         let receiverInfo = receiverInfoTextField.text!

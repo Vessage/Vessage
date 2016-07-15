@@ -9,6 +9,7 @@
 import Foundation
 import MBProgressHUD
 
+//MARK: RecordVessageManager
 class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegate {
     private(set) var camera:VessageCamera!
     private var recordingTimer:NSTimer!
@@ -88,7 +89,7 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     
     func onVessageSending(a:NSNotification){
         if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
-            if task.receiverId == self.rootController.chatter.userId {
+            if task.receiverId == self.conversation?.chatterId {
                 if let persent = a.userInfo?[SendingVessagePersentValue] as? Float{
                     self.rootController.progressView.progress = persent
                 }
@@ -106,8 +107,8 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
         NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(RecordVessageManager.resetTitle(_:)), userInfo: nil, repeats: false)
         if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
             if let userId = task.receiverId{
-                if userId == rootController.chatter.userId {
-                    if String.isNullOrEmpty(chatter?.accountId) {
+                if userId == conversation?.chatterId {
+                    if !self.isGroupChat && String.isNullOrEmpty(chatter?.accountId) {
                         self.showSendTellFriendAlert()
                     }
                 }
@@ -117,7 +118,12 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     
     func resetTitle(_:AnyObject?) {
         self.rootController.progressView.hidden = true
-        self.rootController.controllerTitle = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
+        
+        if isGroupChat {
+            self.rootController.controllerTitle = chatGroup.groupName
+        }else{
+            self.rootController.controllerTitle = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
+        }
     }
     
     private func showSendTellFriendAlert(){
@@ -178,7 +184,8 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
             self.rootController.progressView.hidden = false
             self.rootController.controllerTitle = "VESSAGE_SENDING".localizedString()
         }
-        VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId,isGroup: isGroupChat, receiverMobile: self.chatter.mobile, videoUrl: url)
+        let chatterId = isGroupChat ? self.chatGroup.groupId : self.chatter.userId
+        VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, videoUrl: url)
     }
     
     //MARK: VessageCamera Delegate
@@ -218,6 +225,10 @@ class RecordVessageManager: ConversationViewControllerProxy,VessageCameraDelegat
     
     override func onChatterUpdated(chatter: VessageUser) {
         self.updateChatImage(chatter.mainChatImage)
+    }
+    
+    override func onChatGroupUpdated(chatGroup: ChatGroup) {
+        //TODO: Set Chat Group Images
     }
     
     private var defaultFace:UIImage!

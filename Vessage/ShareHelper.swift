@@ -11,7 +11,7 @@ class ShareHelper{
     private static func sendTellFriendWX(type:UInt32,textMsg:String?){
         let url = "http://a.app.qq.com/o/simple.jsp?pkgname=cn.bahamut.vessage"
         let msg = WXMediaMessage()
-        msg.title = VessageConfig.appName
+        msg.title = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
         msg.description = textMsg
         msg.setThumbImage(UIImage(named: "shareIcon"))
         
@@ -43,7 +43,8 @@ class ShareHelper{
         
         let smsAction = UIAlertAction(title: "SMS".localizedString(), style: .Default) { (ac) in
             let url = "http://t.cn/RqW8tuW"
-            vc.showSendSMSTextView([], body: "\(message) \(url)")
+            let accountInfo = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
+            vc.showSendSMSTextView([], body: "\(message)\n\(url)\n\(accountInfo)")
         }
         
         alert.addAction(smsAction)

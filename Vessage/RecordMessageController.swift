@@ -221,7 +221,7 @@ class RecordMessageController: UIViewController,VessageCameraDelegate {
     private func confirmSend(url:NSURL){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
             MobClick.event("Vege_ConfirmSendVessage")
-            VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, isGroup: false, receiverMobile: self.chatter.mobile, videoUrl: url)
+            VessageQueue.sharedInstance.pushNewVessageTo(self.chatter.userId, isGroup: false,videoUrl: url)
         }
         let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
             MobClick.event("Vege_CancelSendVessage")

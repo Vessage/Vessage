@@ -32,6 +32,7 @@ class ConversationListController: UITableViewController {
     let conversationService = ServiceContainer.getConversationService()
     let vessageService = ServiceContainer.getVessageService()
     let userService = ServiceContainer.getUserService()
+    let groupService = ServiceContainer.getChatGroupService()
     private var refreshListTimer:NSTimer!
     //MARK: search property
     private var searchResult = [SearchResultModel](){
@@ -53,6 +54,7 @@ class ConversationListController: UITableViewController {
                     searchBar.endEditing(false)
                 }
             }
+            self.navigationController?.navigationBarHidden = isSearching
         }
     }
     @IBOutlet weak var searchBar: UISearchBar!{
@@ -83,33 +85,6 @@ class ConversationListController: UITableViewController {
         super.viewDidAppear(animated)
         if !tryShowUserGuide() {
             tryShowWelcomeAlert()
-        }
-    }
-    
-    private func tryShowUserGuide() -> Bool{
-        if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
-            if !UserSetting.isSettingEnable(INVITED_FRIEND_GUIDE_KEY) {
-                InviteFriendsViewController.presentInviteFriendsViewController(self)
-                return true
-            }else{
-                return false
-            }
-        }else{
-            SetupChatBcgImageController.showSetupViewController(self)
-            return true
-        }
-    }
-    
-    private func tryShowWelcomeAlert() {
-        let key = "WELLCOME_ALERT_SHOWN"
-        if !UserSetting.isSettingEnable(key) {
-            UserSetting.enableSetting(key)
-            let startConversationAc = UIAlertAction(title: "NEW_CONVERSATION".localizedString(), style: .Default, handler: { (ac) in
-                if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? ConversationListContactCell{
-                    cell.onCellClicked()
-                }
-            })
-            self.showAlert("WELCOME_ALERT_TITLE".localizedString(), msg: "WELCOME_ALERT_MSG".localizedString(),actions: [startConversationAc,ALERT_ACTION_I_SEE])
         }
     }
     
@@ -254,7 +229,7 @@ class ConversationListController: UITableViewController {
             return searchResult.count
         }else{
             if section == 0{
-                return 1
+                return 2
             }else{
                 return conversationService.conversations.count
             }
@@ -272,14 +247,21 @@ class ConversationListController: UITableViewController {
     
     private func normalTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
         if indexPath.section == 0{
-            let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
-            if conversationService.conversations.count > 0{
-                cell.titleLabel.text = "CONTACTS".localizedString()
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
+                if conversationService.conversations.count > 0{
+                    cell.titleLabel.text = "CONTACTS".localizedString()
+                }else{
+                    cell.titleLabel.text = "OPEN_A_CONTACT_CONVERSATION".localizedString()
+                }
+                cell.rootController = self
+                return cell
             }else{
-                cell.titleLabel.text = "OPEN_A_CONTACT_CONVERSATION".localizedString()
+                let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListGroupChatCell.reuseId, forIndexPath: indexPath) as! ConversationListGroupChatCell
+                cell.rootController = self
+                return cell
             }
-            cell.rootController = self
-            return cell
+            
         }else{
             let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
             let conversation = conversationService.conversations[indexPath.row]
@@ -308,7 +290,7 @@ class ConversationListController: UITableViewController {
         if isSearching{
             return 56
         }else if indexPath.section == 0{
-            return UITableViewAutomaticDimension
+            return 60
         }else{
             return 56
         }
@@ -435,5 +417,35 @@ extension ConversationListController:UISearchBarDelegate
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         isSearching = false
+    }
+}
+
+//MARK: Welcome
+extension ConversationListController{
+    private func tryShowUserGuide() -> Bool{
+        if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
+            if !UserSetting.isSettingEnable(INVITED_FRIEND_GUIDE_KEY) {
+                InviteFriendsViewController.presentInviteFriendsViewController(self)
+                return true
+            }else{
+                return false
+            }
+        }else{
+            SetupChatBcgImageController.showSetupViewController(self)
+            return true
+        }
+    }
+    
+    private func tryShowWelcomeAlert() {
+        let key = "WELLCOME_ALERT_SHOWN"
+        if !UserSetting.isSettingEnable(key) {
+            UserSetting.enableSetting(key)
+            let startConversationAc = UIAlertAction(title: "NEW_CONVERSATION".localizedString(), style: .Default, handler: { (ac) in
+                if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? ConversationListContactCell{
+                    cell.onCellClicked()
+                }
+            })
+            self.showAlert("WELCOME_ALERT_TITLE".localizedString(), msg: "WELCOME_ALERT_MSG".localizedString(),actions: [startConversationAc,ALERT_ACTION_I_SEE])
+        }
     }
 }

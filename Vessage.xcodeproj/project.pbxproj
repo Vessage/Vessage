@@ -36,7 +36,6 @@
 		E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E708AB8F1C86CF8A0071104E /* BahamutModel.xcdatamodeld */; };
 		E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB911C86CF8A0071104E /* ModelEntity.swift */; };
 		E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB921C86CF8A0071104E /* ModelExtension.swift */; };
-		E708ABA71C86CFF20071104E /* RecordMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABA61C86CFF20071104E /* RecordMessageController.swift */; };
 		E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABD91C86D37D0071104E /* BahamutRFKit.swift */; };
 		E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABDB1C86D37D0071104E /* BahamutRFClient.swift */; };
 		E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABDC1C86D37D0071104E /* BahamutRFRequestBase.swift */; };
@@ -85,6 +84,8 @@
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
+		E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E71DF7791D390DEE00311855 /* LittlePaperAssets.xcassets */; };
+		E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
 		E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */; };
@@ -122,6 +123,7 @@
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
 		E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */; };
 		E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */; };
+		E7CAD9751D392B3A00765E38 /* Avartar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CAD9741D392B3A00765E38 /* Avartar.xcassets */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -215,7 +217,6 @@
 		E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutModel.xcdatamodel; sourceTree = "<group>"; };
 		E708AB911C86CF8A0071104E /* ModelEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEntity.swift; sourceTree = "<group>"; };
 		E708AB921C86CF8A0071104E /* ModelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelExtension.swift; sourceTree = "<group>"; };
-		E708ABA61C86CFF20071104E /* RecordMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordMessageController.swift; sourceTree = "<group>"; };
 		E708ABD81C86D37D0071104E /* BahamutRFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BahamutRFKit.h; sourceTree = "<group>"; };
 		E708ABD91C86D37D0071104E /* BahamutRFKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutRFKit.swift; sourceTree = "<group>"; };
 		E708ABDB1C86D37D0071104E /* BahamutRFClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutRFClient.swift; sourceTree = "<group>"; };
@@ -266,6 +267,8 @@
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
 		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		E71DF7791D390DEE00311855 /* LittlePaperAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LittlePaperAssets.xcassets; sourceTree = "<group>"; };
+		E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatCellTableViewCell.swift; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
 		E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMessageListController.swift; sourceTree = "<group>"; };
@@ -303,6 +306,7 @@
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperResponseViewController.swift; sourceTree = "<group>"; };
 		E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutObjectSortable.swift; sourceTree = "<group>"; };
+		E7CAD9741D392B3A00765E38 /* Avartar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Avartar.xcassets; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -618,6 +622,7 @@
 		E708AC0C1C86DEC40071104E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E7CAD9741D392B3A00765E38 /* Avartar.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
 				E708ACA11C8752090071104E /* UI */,
 			);
@@ -821,6 +826,7 @@
 		E7C04AF21CDF3AFE00093E6C /* LittlePaper */ = {
 			isa = PBXGroup;
 			children = (
+				E71DF7791D390DEE00311855 /* LittlePaperAssets.xcassets */,
 				E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */,
 				E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */,
 				E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */,
@@ -840,6 +846,7 @@
 				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
 				E7C387F01C982F640096AF85 /* ConversationListCell.swift */,
 				E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */,
+				E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */,
 			);
 			name = ConversationList;
 			sourceTree = "<group>";
@@ -892,7 +899,6 @@
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */,
 				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
-				E708ABA61C86CFF20071104E /* RecordMessageController.swift */,
 			);
 			name = ConversationView;
 			sourceTree = "<group>";
@@ -969,7 +975,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Bahamut;
 				TargetAttributes = {
 					E708AB381C86CAA50071104E = {
@@ -1037,7 +1043,9 @@
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
+				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
+				E7CAD9751D392B3A00765E38 /* Avartar.xcassets in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
@@ -1104,7 +1112,6 @@
 			files = (
 				E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */,
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
-				E708ABA71C86CFF20071104E /* RecordMessageController.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
 				E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */,
 				E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */,
@@ -1155,6 +1162,7 @@
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
+				E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
 				E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */,
@@ -1342,7 +1350,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1395,7 +1402,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

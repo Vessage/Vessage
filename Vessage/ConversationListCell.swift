@@ -59,11 +59,12 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
+    private var defaultAvatarId = "0"
     private var avatar:String!{
         didSet{
             if let imgView = self.avatarView{
                 if String.isNullOrEmpty(self.avatar) {
-                    imgView.image = UIImage(named: "defaultAvatar")!
+                    imgView.image = getDefaultAvatar(defaultAvatarId)
                 }else{
                     ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
                 }
@@ -96,6 +97,7 @@ class ConversationListCell:ConversationListCellBase{
     }
 
     func removeObservers(){
+        ServiceContainer.getChatGroupService().removeObserver(self)
         ServiceContainer.getUserService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
@@ -113,19 +115,34 @@ class ConversationListCell:ConversationListCellBase{
         self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
         if let chatterId = conversation.chatterId{
             self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(chatterId)
-            if let user = rootController.userService.getCachedUserProfile(chatterId){
-                self.avatar = user.avatar
+            if conversation.isGroup {
+                if let group = self.rootController.groupService.getChatGroup(chatterId) {
+                    updateWithChatGroup(group)
+                }else{
+                    self.rootController.groupService.fetchChatGroup(chatterId)
+                    self.avatarView.image = UIImage(named: "group_chat")
+                }
             }else{
-                self.rootController.userService.fetchUserProfile(chatterId)
-                self.avatar = nil
+                if let user = rootController.userService.getCachedUserProfile(chatterId){
+                    updateWithUser(user)
+                }else{
+                    self.rootController.userService.fetchUserProfile(chatterId)
+                    self.avatar = nil
+                }
             }
+            
         }
+    }
+    
+    private func updateWithChatGroup(group:ChatGroup){
+        self.headLine = group.groupName
+        self.avatarView.image = UIImage(named: "group_chat")
     }
     
     private func updateWithUser(user:VessageUser){
         self.headLine = user.nickName ?? user.accountId
         self.subLine = user.accountId
-        self.avatar = user.avatar
+        self.updateAvatarWithUser(user)
         self.badgeValue = 0
     }
     
@@ -137,11 +154,19 @@ class ConversationListCell:ConversationListCellBase{
         self.badgeValue = 0
     }
     
+    private func updateAvatarWithUser(user:VessageUser){
+        if let aId = user.accountId {
+            self.defaultAvatarId = aId
+        }
+        self.avatar = user.avatar
+    }
+    
     //MARK: notifications
     private func addObservers(){
         ServiceContainer.getUserService().addObserver(self, selector: #selector(ConversationListCell.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onNewVessageReceived, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onVessageRead, object: nil)
+        ServiceContainer.getChatGroupService().addObserver(self, selector: #selector(ConversationListCell.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
         ServiceContainer.getConversationService().addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListCell.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         
@@ -161,11 +186,21 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
+    func onChatGroupUpdated(a:NSNotification){
+        if let conversation = self.originModel as? Conversation{
+            if let g = a.userInfo?[kChatGroupValue] as? ChatGroup{
+                if ConversationService.isConversationWithChatGroup(conversation, group: g) {
+                    self.updateWithChatGroup(g)
+                }
+            }
+        }
+    }
+    
     func onUserProfileUpdated(a:NSNotification){
         if let conversation = self.originModel as? Conversation{
             if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
                 if ConversationService.isConversationWithUser(conversation, user: user){
-                    self.avatar = user.avatar
+                    updateAvatarWithUser(user)
                 }
             }
         }

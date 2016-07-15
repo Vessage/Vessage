@@ -52,7 +52,7 @@
                                             <constraint firstAttribute="height" constant="320" id="p1s-sY-Cye"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击中间按钮录制新消息！" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WcH-SK-qwL">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击下面聊天按钮马上开始对讲" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WcH-SK-qwL">
                                         <rect key="frame" x="88" y="358" width="238" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="238" id="luv-UO-GUb"/>
@@ -351,46 +351,117 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="手机、账号或昵称" id="eVN-fp-SWQ">
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="VG号、手机或昵称" id="eVN-fp-SWQ">
                             <rect key="frame" x="0.0" y="64" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits" spellCheckingType="no"/>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListContactCell" id="BFQ-pW-Avf" customClass="ConversationListContactCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="414" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListContactCell" rowHeight="64" id="BFQ-pW-Avf" customClass="ConversationListContactCell" customModule="Vessage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="414" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFQ-pW-Avf" id="QCi-aS-PcC">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通讯录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHF-ve-t4x">
-                                            <rect key="frame" x="8" y="11" width="51" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="l5d-k1-rfq">
-                                            <rect key="frame" x="374" y="6" width="32" height="32"/>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="l5d-k1-rfq">
+                                            <rect key="frame" x="374" y="16" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="0mi-rN-n0F"/>
                                                 <constraint firstAttribute="width" constant="32" id="eX2-x8-zrI"/>
                                             </constraints>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-1L-o8S">
+                                            <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="48" id="3uz-DE-okS"/>
+                                                <constraint firstAttribute="height" constant="48" id="m8C-Qe-MWI"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="6"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通讯录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHF-ve-t4x">
+                                            <rect key="frame" x="64" y="21" width="51" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="aHF-ve-t4x" firstAttribute="leading" secondItem="QCi-aS-PcC" secondAttribute="leadingMargin" id="5oI-72-vZQ"/>
+                                        <constraint firstItem="IBS-1L-o8S" firstAttribute="leading" secondItem="QCi-aS-PcC" secondAttribute="leadingMargin" id="Tce-iN-ma8"/>
+                                        <constraint firstItem="IBS-1L-o8S" firstAttribute="centerY" secondItem="QCi-aS-PcC" secondAttribute="centerY" id="YfK-vR-mBQ"/>
                                         <constraint firstItem="l5d-k1-rfq" firstAttribute="centerY" secondItem="QCi-aS-PcC" secondAttribute="centerY" id="eEk-TJ-e7P"/>
+                                        <constraint firstItem="aHF-ve-t4x" firstAttribute="leading" secondItem="IBS-1L-o8S" secondAttribute="trailing" constant="8" id="m2L-i9-OlA"/>
                                         <constraint firstItem="aHF-ve-t4x" firstAttribute="centerY" secondItem="QCi-aS-PcC" secondAttribute="centerY" id="nW2-S4-MAI"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="l5d-k1-rfq" secondAttribute="trailing" id="wA5-3b-BqV"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="5oI-72-vZQ"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="titleLabel" destination="aHF-ve-t4x" id="yxG-3p-pgV"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListGroupChatCell" rowHeight="67" id="eqc-1n-Tx6" customClass="ConversationListGroupChatCell" customModule="Vessage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="200" width="414" height="67"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqc-1n-Tx6" id="Dzp-rL-num">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开始多人对讲" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fE3-aP-UTo">
+                                            <rect key="frame" x="64" y="23" width="102" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="pep-dO-8sA">
+                                            <rect key="frame" x="374" y="17" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="XxD-1M-6o1"/>
+                                                <constraint firstAttribute="width" constant="32" id="nrQ-oJ-aC6"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_chat" translatesAutoresizingMaskIntoConstraints="NO" id="dSY-LO-hOV">
+                                            <rect key="frame" x="8" y="9" width="48" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="48" id="i96-A4-QX5"/>
+                                                <constraint firstAttribute="height" constant="48" id="za1-30-0p7"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="6"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="dSY-LO-hOV" firstAttribute="centerY" secondItem="Dzp-rL-num" secondAttribute="centerY" id="6p6-gd-lir"/>
+                                        <constraint firstItem="dSY-LO-hOV" firstAttribute="leading" secondItem="Dzp-rL-num" secondAttribute="leadingMargin" id="8P6-Bb-lPV"/>
+                                        <constraint firstItem="fE3-aP-UTo" firstAttribute="leading" secondItem="Dzp-rL-num" secondAttribute="leadingMargin" id="DHA-Ab-AU1"/>
+                                        <constraint firstItem="fE3-aP-UTo" firstAttribute="leading" secondItem="dSY-LO-hOV" secondAttribute="trailing" constant="8" id="OVv-t7-1n4"/>
+                                        <constraint firstItem="fE3-aP-UTo" firstAttribute="centerY" secondItem="Dzp-rL-num" secondAttribute="centerY" id="Twq-7L-Dxb"/>
+                                        <constraint firstItem="pep-dO-8sA" firstAttribute="centerY" secondItem="Dzp-rL-num" secondAttribute="centerY" id="Wbw-55-ace"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="pep-dO-8sA" secondAttribute="trailing" id="x7o-nq-e7x"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="DHA-Ab-AU1"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListCell" rowHeight="56" id="Szw-pL-qT1" customClass="ConversationListCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="180" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="267" width="414" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Szw-pL-qT1" id="eWr-qG-EjH">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
@@ -531,10 +602,12 @@
     </scenes>
     <resources>
         <image name="chat" width="256" height="256"/>
+        <image name="contacts" width="120" height="120"/>
         <image name="conversation" width="24" height="24"/>
         <image name="defaultAvatar" width="128" height="128"/>
         <image name="defaultFace" width="200" height="200"/>
         <image name="favorite" width="24" height="24"/>
+        <image name="group_chat" width="120" height="120"/>
         <image name="next" width="72" height="72"/>
         <image name="playNext" width="128" height="128"/>
         <image name="settings" width="21" height="21"/>

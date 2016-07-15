@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+//MARK: PlayVessageManager
 class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
     private var vessagePlayer:BahamutFilmView!
     private func initVessageViews() {
@@ -40,7 +42,7 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
             if notReadVessages.count > 0{
                 presentingVesseage = notReadVessages.first
             }else{
-                if let chatterId = self.chatter?.userId{
+                if let chatterId = self.conversation?.chatterId{
                     if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
                         notReadVessages.append(newestVsg)
                         presentingVesseage = newestVsg
@@ -87,13 +89,21 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
         }
     }
     
+    override func onChatGroupUpdated(chatGroup: ChatGroup) {
+        self.rootController.controllerTitle = chatGroup.groupName
+    }
+    
+    override func onChatterUpdated(chatter: VessageUser) {
+        super.onChatterUpdated(chatter)
+    }
+    
     override func onVessageReceived(vessage: Vessage) {
         self.notReadVessages.append(vessage)
     }
     
     private func loadNotReadVessages() {
-        if !String.isNullOrWhiteSpace(self.chatter.userId) {
-            var vessages = vessageService.getNotReadVessages(self.chatter.userId)
+        if !String.isNullOrWhiteSpace(self.conversation.chatterId) {
+            var vessages = vessageService.getNotReadVessages(self.conversation.chatterId)
             vessages.sortInPlace({ (a, b) -> Bool in
                 a.sendTime.dateTimeOfAccurateString.isBefore(b.sendTime.dateTimeOfAccurateString)
             })
@@ -119,7 +129,7 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
     }
     
     private func refreshBadge(){
-        if let chatterId = chatter?.userId{
+        if let chatterId = conversation.chatterId{
             self.badgeValue = vessageService.getChatterNotReadVessageCount(chatterId)
         }else{
             self.badgeValue = 0

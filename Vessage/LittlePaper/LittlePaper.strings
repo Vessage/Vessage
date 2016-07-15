@@ -48,3 +48,4 @@ NO_PAPER_CAN_OPEN_MSG = "纸条是被你偷吃了吗？>_<";
 AGREE_USER_OPEN_U_PAPER = "同意Ta打开你的纸条吗？";
 ACCEPT_READ = "同意Ta打开";
 REJECT_READ = "不让打开";
+PLEASE_A_USER_TO_SEND_PAPER = "纸条传给谁呢？";

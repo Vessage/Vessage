@@ -68,6 +68,10 @@ extension String
 
 //MARK: Set avatar Util
 
+func getDefaultFace() -> UIImage {
+    return UIImage(named: "default_face")!
+}
+
 func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId) -> UIImage {
     if let id = Int(accountId){
         let index = id % 7

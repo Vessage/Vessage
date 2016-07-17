@@ -12,7 +12,11 @@ import UIKit
 class ValidateMobileViewController: UIViewController {
     
     @IBAction func validateMobile(sender: AnyObject) {
-        showSendSMSController()
+        #if DEBUG
+            showTestAlert()
+        #else
+            showSendSMSController()
+        #endif
     }
     
     private func showSendSMSController(){

@@ -171,6 +171,12 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         getUserProfileByReq(nil, req: req){ user in}
     }
     
+    func getUserProfile(userId:String) -> VessageUser? {
+        return getUserProfile(userId) { (user) in
+            
+        }
+    }
+    
     func getUserProfile(userId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         
         let user = getCachedUserProfile(userId)
@@ -287,6 +293,7 @@ extension UserService{
 }
 
 //MARK: User Device Token
+let registDeviceTokenIntervalDays = 2.0
 extension UserService{
     func registUserDeviceToken(deviceToken:String!, checkTime:Bool = false){
         let key = "USER_REGIST_DEVICE_TOKEN_TIME"
@@ -296,7 +303,7 @@ extension UserService{
         }
         if checkTime {
             if let time = UserSetting.getUserNumberValue(key){
-                if time.doubleValue >= NSDate().totalDaysSince1970.doubleValue{
+                if NSDate().totalDaysSince1970.doubleValue - time.doubleValue < registDeviceTokenIntervalDays{
                     return
                 }
             }

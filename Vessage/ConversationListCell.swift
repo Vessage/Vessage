@@ -111,8 +111,6 @@ class ConversationListCell:ConversationListCellBase{
     
     //MARK: update actions
     private func updateWithConversation(conversation:Conversation){
-        self.headLine = conversation.noteName
-        self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
         if let chatterId = conversation.chatterId{
             self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(chatterId)
             if conversation.isGroup {
@@ -121,6 +119,7 @@ class ConversationListCell:ConversationListCellBase{
                 }else{
                     self.rootController.groupService.fetchChatGroup(chatterId)
                     self.avatarView.image = UIImage(named: "group_chat")
+                    self.headLine = "NEW_GROUP_CHAT".localizedString()
                 }
             }else{
                 if let user = rootController.userService.getCachedUserProfile(chatterId){
@@ -128,10 +127,12 @@ class ConversationListCell:ConversationListCellBase{
                 }else{
                     self.rootController.userService.fetchUserProfile(chatterId)
                     self.avatar = nil
+                    self.headLine = "UNKNOW_USER".localizedString()
                 }
             }
             
         }
+        self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
     }
     
     private func updateWithChatGroup(group:ChatGroup){
@@ -140,7 +141,7 @@ class ConversationListCell:ConversationListCellBase{
     }
     
     private func updateWithUser(user:VessageUser){
-        self.headLine = user.nickName ?? user.accountId
+        self.headLine = self.rootController.userService.getUserNotedName(user.userId)
         self.subLine = user.accountId
         self.updateAvatarWithUser(user)
         self.badgeValue = 0

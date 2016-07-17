@@ -258,7 +258,23 @@ OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "给未注册的手机发对讲消息，好友用该手机号注册后同样可以收到你的消息~";
 GROUP_CHAT = "一起对讲吧";
 WX_SHARE_TITLE_FORMAT = "记得加我VG号:%@";
+
+//MARK:Group
+NEW_GROUP_CHAT = "群聊";
 SELECT_GROUP_CHAT_PEOPLE = "选择好友群聊";
 GROUP_CHAT_PEOPLE_NUM_LIMIT = "最多6个人群聊";
 CREATE_GROUP_FAILED = "创建群组出现错误，请稍后再试";
-GROUP_CHAT_WITH_X_X_PEOPLE = "群组:%@等";
+GROUP_CHAT_WITH_X_X_PEOPLE = "%@等%@人的群聊";
+GROUP_NAME_CANT_NULL = "群名不能为空";
+GROUP_CHAT_NAME = "群组名";
+EDIT_GROUP_CHAT_NAME = "修改群组名";
+GROUP_NAME_EDITED = "群组名已修改";
+GROUP_NAME_EDIT_ERROR = "修改群组名出错";
+USER_ALREADY_IN_GROUP = "该好友已经在群组里了";
+ADD_USER_TO_GROUP_SUCCESS = "好友已加入群聊";
+ADD_USER_TO_GROUP_ERROR = "拉好友入群出错";
+NOT_IN_CHAT_GROUP = "已退出群聊...";
+EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组？";
+YOU_EXITED_GROUP_CHAT = "你已退出群组";
+EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
+GROUP_CHAT_AT_LEASE_2_PEOPLE = "至少选择两个好友哦~";

@@ -123,7 +123,7 @@
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
 		E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */; };
 		E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */; };
-		E7CAD9751D392B3A00765E38 /* Avartar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CAD9741D392B3A00765E38 /* Avartar.xcassets */; };
+		E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -163,6 +163,10 @@
 		E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */; };
 		E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */; };
 		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
+		E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F532E11D3A0DEC008078DE /* Conversation.storyboard */; };
+		E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */; };
+		E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */; };
+		E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E91D3A1F26008078DE /* GroupNameCell.swift */; };
 		E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A811D0510A100A05001 /* LittlePaper.strings */; };
 /* End PBXBuildFile section */
 
@@ -306,7 +310,7 @@
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperResponseViewController.swift; sourceTree = "<group>"; };
 		E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutObjectSortable.swift; sourceTree = "<group>"; };
-		E7CAD9741D392B3A00765E38 /* Avartar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Avartar.xcassets; sourceTree = "<group>"; };
+		E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AvartarAndFace.xcassets; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -350,6 +354,10 @@
 		E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SMSSDKUI.bundle; path = Vessage/Libs/SMSSDK/SMSSDKUI.bundle; sourceTree = SOURCE_ROOT; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
+		E7F532E11D3A0DEC008078DE /* Conversation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
+		E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupProfileViewController.swift; sourceTree = "<group>"; };
+		E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUsersCell.swift; sourceTree = "<group>"; };
+		E7F532E91D3A1F26008078DE /* GroupNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
 		E7FC8A811D0510A100A05001 /* LittlePaper.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LittlePaper.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -622,7 +630,7 @@
 		E708AC0C1C86DEC40071104E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E7CAD9741D392B3A00765E38 /* Avartar.xcassets */,
+				E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
 				E708ACA11C8752090071104E /* UI */,
 			);
@@ -700,6 +708,7 @@
 				E71886731C9FBBCA0028B016 /* Camera.storyboard */,
 				E7E937791D16DAB0001484F4 /* SelectVessageExpandableHeader.xib */,
 				E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */,
+				E7F532E11D3A0DEC008078DE /* Conversation.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -893,6 +902,7 @@
 		E7EDE4901CFD1F970001983F /* ConversationView */ = {
 			isa = PBXGroup;
 			children = (
+				E7F532E61D3A1ED5008078DE /* GroupChatProfile */,
 				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
 				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 				E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */,
@@ -943,6 +953,16 @@
 				E7F22C561C9BF13600CD38D1 /* libSMSSDUI.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E7F532E61D3A1ED5008078DE /* GroupChatProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */,
+				E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */,
+				E7F532E91D3A1F26008078DE /* GroupNameCell.swift */,
+			);
+			name = GroupChatProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1032,6 +1052,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
@@ -1045,7 +1066,7 @@
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
-				E7CAD9751D392B3A00765E38 /* Avartar.xcassets in Resources */,
+				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
@@ -1172,6 +1193,7 @@
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
+				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
 				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
@@ -1199,6 +1221,7 @@
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
 				E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
+				E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
@@ -1224,6 +1247,7 @@
 				E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */,
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
 				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
+				E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */,
 				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
 				E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */,
 				E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */,

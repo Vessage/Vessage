@@ -9,6 +9,11 @@
 import Foundation
 
 class ChatGroup: BahamutObject {
+    
+    override func getObjectUniqueIdName() -> String {
+        return "groupId"
+    }
+    
     var groupId:String!
     var hosters:[String]!
     var chatters:[String]!
@@ -46,6 +51,27 @@ class CreateGroupChatRequest: BahamutRFRequestBase {
     var groupUsers:[String]!{
         didSet{
             self.paramenters["groupUsers"] = groupUsers.joinWithSeparator(",")
+        }
+    }
+    
+}
+
+class AddUserJoinGroupChatRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/GroupChats/AddUserJoinGroupChat"
+        self.method = .POST
+    }
+    
+    var groupId:String!{
+        didSet{
+            self.paramenters["groupId"] = groupId
+        }
+    }
+    
+    var userId:String!{
+        didSet{
+            self.paramenters["userId"] = userId
         }
     }
     

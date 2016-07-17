@@ -60,9 +60,10 @@ class ConversationViewControllerProxy: NSObject {
         return rootController.rightButton
     }
     
-    var smileFaceImageView: UIImageView!{
-        return rootController.smileFaceImageView
+    var groupFaceImageViewContainer:UIView{
+        return rootController.groupFaceContainer
     }
+    
     var noSmileFaceTipsLabel: UILabel!{
         return rootController.noSmileFaceTipsLabel
     }
@@ -75,6 +76,11 @@ class ConversationViewControllerProxy: NSObject {
     var previewRectView: UIView!{
         return rootController.previewRectView
     }
+    
+    var recordingBackgroundImage:UIImageView!{
+        return rootController.recordingBackgroundImage
+    }
+    
     func onVessageReceived(vessages:Vessage) {}
     func onChatterUpdated(chatter:VessageUser) {}
     func onChatGroupUpdated(chatGroup:ChatGroup) {}

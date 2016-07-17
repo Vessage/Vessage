@@ -199,6 +199,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     func openConversationByGroup(group:ChatGroup) -> Conversation {
+        if let conversation = (conversations.filter{group.groupId == $0.chatterId ?? ""}).first{
+            return conversation
+        }
         let conversation = Conversation()
         conversation.chatterId = group.groupId
         conversation.isGroup = true
@@ -207,6 +210,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.noteName = group.groupName
         conversation.saveModel()
         conversations.append(conversation)
+        self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
         return conversation
     }
     

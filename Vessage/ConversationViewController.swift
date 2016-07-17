@@ -31,12 +31,17 @@ class ConversationViewController: UIViewController {
     private(set) var chatGroup:ChatGroup!{
         didSet{
             if let cg = chatGroup {
+                outChatGroup = !chatGroup.chatters.contains(userService.myProfile.userId)
                 recordVessageManager?.onChatGroupUpdated(cg)
                 playVessageManager?.onChatGroupUpdated(cg)
                 chatter = nil
+            }else{
+                outChatGroup = false
             }
         }
     }
+    
+    private(set) var outChatGroup = true
     
     var controllerTitle:String!{
         didSet{
@@ -123,14 +128,16 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var smileFaceImageView: UIImageView!
-    @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
     @IBOutlet weak var recordingFlashView: UIView!{
         didSet{
             recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
             recordingFlashView.hidden = true
         }
     }
+    
+    @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
+    @IBOutlet weak var groupFaceContainer: UIView!
+    @IBOutlet weak var recordingBackgroundImage: UIImageView!
 
 }
 
@@ -143,13 +150,24 @@ extension ConversationViewController{
         playVessageManager.initManager(self)
         recordVessageManager = RecordVessageManager()
         recordVessageManager.initManager(self)
+        addObservers()
         if let chatter = self.chatter{
             recordVessageManager.onChatterUpdated(chatter)
-            recordVessageManager.onChatterUpdated(chatter)
+            playVessageManager.onChatterUpdated(chatter)
+            ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
+        }else if let group = self.chatGroup{
+            recordVessageManager.onChatGroupUpdated(group)
+            playVessageManager.onChatGroupUpdated(group)
+            ServiceContainer.getChatGroupService().fetchChatGroup(group.groupId){ updatedGroup in
+                if let ug = updatedGroup{
+                    ug.chatters.forEach({ (userId) in
+                        ServiceContainer.getUserService().getUserProfile(userId)
+                    })
+                }
+            }
         }
-        addObservers()
         setReadingVessage()
-        ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -178,6 +196,11 @@ extension ConversationViewController{
 extension ConversationViewController{
     
     @IBAction func onClickMiddleButton(sender: AnyObject) {
+        if outChatGroup {
+            self.playToast("NOT_IN_CHAT_GROUP".localizedString())
+            return
+        }
+        
         if isReadingVessages {
             if needSetChatBackgroundAndShow() {
                 return
@@ -190,6 +213,11 @@ extension ConversationViewController{
     }
     
     @IBAction func showUserProfile(sender: AnyObject) {
+        if outChatGroup {
+            self.playToast("NOT_IN_CHAT_GROUP".localizedString())
+            return
+        }
+        isGoAhead = true
         if isGroupChat {
             showChatGroupProfile()
         }else{
@@ -207,18 +235,14 @@ extension ConversationViewController{
     }
     
     private func showChatGroupProfile(){
-        //TODO:showChatGroupProfile
+        ChatGroupProfileViewController.showProfileViewController(self.navigationController!, chatGroup: self.chatGroup)
     }
     
     private func showChatterProfile(){
-        let noteName = ServiceContainer.getUserService().getUserNotedName(self.chatter.userId)
-        if String.isNullOrWhiteSpace(chatter.accountId) {
-            showAlert(noteName, msg: "MOBILE_USER".localizedString())
+        if let c = self.chatter{
+            userService.showUserProfile(self, user: c)
         }else{
-            let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
-                self.showNoteConversationAlert()
-            })
-            showAlert(chatter.nickName ?? noteName, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),chatter.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
+            self.playToast("USER_DATA_NOT_READY_RETRY".localizedString())
         }
     }
     
@@ -255,13 +279,55 @@ extension ConversationViewController{
     }
 }
 
+//MARK: Show Chatter Profile
+extension UserService{
+    func showUserProfile(vc:UIViewController,user:VessageUser) {
+        let noteName = self.getUserNotedName(user.userId)
+        if String.isNullOrWhiteSpace(user.accountId) {
+            vc.showAlert(noteName, msg: "MOBILE_USER".localizedString())
+        }else{
+            let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
+                self.showNoteConversationAlert(vc,user: user)
+            })
+            vc.showAlert(user.nickName ?? noteName, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),user.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
+        }
+    }
+    
+    private func showNoteConversationAlert(vc:UIViewController,user:VessageUser){
+        let title = "NOTE_CONVERSATION_A_NAME".localizedString()
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
+        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
+            textfield.placeholder = "CONVERSATION_NAME".localizedString()
+            textfield.borderStyle = .None
+            textfield.text = ServiceContainer.getUserService().getUserNotedName(user.userId)
+        })
+        
+        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
+            let newNoteName = alertController.textFields?[0].text ?? ""
+            if String.isNullOrEmpty(newNoteName)
+            {
+                vc.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
+            }else{
+                if String.isNullOrWhiteSpace(user.userId) == false{
+                    ServiceContainer.getUserService().setUserNoteName(user.userId, noteName: newNoteName)
+                }
+                vc.playCheckMark("SAVE_NOTE_NAME_SUC".localizedString())
+            }
+        })
+        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
+        alertController.addAction(no)
+        alertController.addAction(yes)
+        vc.showAlert(alertController)
+    }
+}
+
 //MARK: Observer & Notifications
 extension ConversationViewController{
     
     private func addObservers(){
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
-        chatGroupService.addObserver(self, selector: #selector(ConversationViewControllerProxy.onChatGroupUpdated(_:)), name: ChatGroupService.OnQuitChatGroup, object: nil)
+        chatGroupService.addObserver(self, selector: #selector(ConversationViewControllerProxy.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
     }
     
     private func removeObservers(){
@@ -325,37 +391,10 @@ extension ConversationViewController{
         }
     }
     
-    private func showNoteConversationAlert(){
-        let title = "NOTE_CONVERSATION_A_NAME".localizedString()
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
-            textfield.placeholder = "CONVERSATION_NAME".localizedString()
-            textfield.borderStyle = .None
-            textfield.text = ServiceContainer.getUserService().getUserNotedName(self.chatter.userId)
-        })
-        
-        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
-            let newNoteName = alertController.textFields?[0].text ?? ""
-            if String.isNullOrEmpty(newNoteName)
-            {
-                self.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
-            }else{
-                if self.conversationService.noteConversation(self.conversation.conversationId, noteName: newNoteName){
-                    self.controllerTitle = newNoteName
-                    if String.isNullOrWhiteSpace(self.chatter?.userId) == false{
-                        ServiceContainer.getUserService().setUserNoteName(self.chatter.userId, noteName: newNoteName)
-                    }
-                    self.playCheckMark("SAVE_NOTE_NAME_SUC".localizedString())
-                }else{
-                    self.playCrossMark("SAVE_NOTE_NAME_ERROR".localizedString())
-                }
-            }
-        })
-        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
-        alertController.addAction(no)
-        alertController.addAction(yes)
-        self.showAlert(alertController)
-    }
+}
+
+//MARK: Note Chatter Name
+extension ConversationViewController{
     
 }
 
@@ -417,7 +456,7 @@ extension ConversationViewController{
     }
     
     private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup){
-        let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
+        let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatGroup = group
         controller.outerNewsVessageCount = 0
@@ -426,7 +465,7 @@ extension ConversationViewController{
     }
     
     private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser){
-        let controller = instanceFromStoryBoard("Main", identifier: "ConversationViewController") as! ConversationViewController
+        let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatter = user
         controller.outerNewsVessageCount = 0

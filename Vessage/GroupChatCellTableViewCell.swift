@@ -25,16 +25,19 @@ class ConversationListGroupChatCell: ConversationListCellBase,SelectVessageUserV
         if selectedUsers.count > maxGroupChatUserCount {
             sender.playToast("GROUP_CHAT_PEOPLE_NUM_LIMIT".localizedString())
             return false
-        }else if selectedUsers.count > 0{
+        }else if selectedUsers.count > 1{
             return true
         }else{
+            sender.playToast("GROUP_CHAT_AT_LEASE_2_PEOPLE".localizedString())
             return false
         }
     }
     
     func onFinishSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
-        let groupName = String(format: "GROUP_CHAT_WITH_X_X_PEOPLE".localizedString(), selectedUsers.first!.nickName,selectedUsers.count)
+        let groupName = String(format: "GROUP_CHAT_WITH_X_X_PEOPLE".localizedString(), selectedUsers.first!.nickName,"\(selectedUsers.count)")
+        let hud = self.rootController.showActivityHud()
         ServiceContainer.getChatGroupService().createChatGroup(groupName,userIds: selectedUsers.map{$0.userId}){ chatGroup in
+            hud.hide(true)
             if let cg = chatGroup{
                 let conversation = ServiceContainer.getConversationService().openConversationByGroup(cg)
                 ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: conversation)

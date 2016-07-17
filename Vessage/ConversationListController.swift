@@ -54,7 +54,8 @@ class ConversationListController: UITableViewController {
                     searchBar.endEditing(false)
                 }
             }
-            self.navigationController?.navigationBarHidden = isSearching
+            self.navigationItem.leftBarButtonItem?.enabled = !isSearching
+            self.navigationItem.rightBarButtonItem?.enabled = !isSearching
         }
     }
     @IBOutlet weak var searchBar: UISearchBar!{
@@ -144,13 +145,7 @@ class ConversationListController: UITableViewController {
     
     func onNewVessagesReceived(a:NSNotification){
         if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
-            
-            let newConversations = conversationService.updateConversationListWithVessagesReturnNewConversations(vsgs)
-            newConversations.forEach({ (c) in
-                if let chatter = c.chatterId{
-                    userService.fetchUserProfile(chatter)
-                }
-            })
+            conversationService.updateConversationListWithVessagesReturnNewConversations(vsgs)
         }
     }
     

@@ -46,6 +46,8 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
             if result.isSuccess{
                 var group:ChatGroup? = nil
                 if let g = result.returnObject{
+                    g.saveModel()
+                    PersistentManager.sharedInstance.saveAll()
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:g])
                     group = g
                 }
@@ -63,11 +65,32 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ChatGroup>) in
             if result.isSuccess{
                 if let g = result.returnObject{
+                    g.saveModel()
+                    PersistentManager.sharedInstance.saveAll()
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:g])
                     callback(g)
+                    return
                 }
             }
             callback(nil)
+        }
+    }
+    
+    func addUserJoinChatGroup(groupId:String,userId:String,callback:(Bool)->Void) {
+        let req = AddUserJoinGroupChatRequest()
+        req.groupId = groupId
+        req.userId = userId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ChatGroup>) in
+            if result.isSuccess{
+                if let g = self.getChatGroup(groupId){
+                    if !g.chatters.contains(userId){
+                        g.chatters.append(userId)
+                        g.saveModel()
+                        self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:g])
+                    }
+                }
+            }
+            callback(result.isSuccess)
         }
     }
     
@@ -78,21 +101,27 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ChatGroup>) in
             if result.isSuccess{
                 if let g = result.returnObject{
+                    g.saveModel()
+                    PersistentManager.sharedInstance.saveAll()
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:g])
                 }
             }
         }
     }
     
-    func quitChatGroup(groupId:String) {
+    func quitChatGroup(groupId:String,callback:(Bool)->Void) {
         let req = QuitGroupChatRequest()
         req.groupId = groupId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
                 if let group = PersistentManager.sharedInstance.getModel(ChatGroup.self, idValue: groupId){
+                    group.chatters.removeAll()
+                    group.saveModel()
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnQuitChatGroup, object: self, userInfo: [kChatGroupValue:group])
+                    self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:group])
                 }
             }
+            callback(result.isSuccess)
         }
     }
     
@@ -103,12 +132,16 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         req.userId = userId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
-                
+                if let group = PersistentManager.sharedInstance.getModel(ChatGroup.self, idValue: groupId){
+                    group.chatters.removeElement{$0 == userId}
+                    group.saveModel()
+                    self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:group])
+                }
             }
         }
     }
     
-    func editChatGroupName(groupId:String,inviteCode:String,newName:String) {
+    func editChatGroupName(groupId:String,inviteCode:String,newName:String,callback:(Bool)->Void) {
         let req = EditGroupNameRequest()
         req.groupId = groupId
         req.inviteCode = inviteCode
@@ -121,6 +154,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
                     self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:group])
                 }
             }
+            callback(result.isSuccess)
         }
     }
 }

@@ -77,8 +77,8 @@ class ConversationViewControllerProxy: NSObject {
         return rootController.previewRectView
     }
     
-    var recordingBackgroundImage:UIImageView!{
-        return rootController.recordingBackgroundImage
+    var backgroundImage:UIImageView!{
+        return rootController.backgroundImage
     }
     
     func onVessageReceived(vessages:Vessage) {}

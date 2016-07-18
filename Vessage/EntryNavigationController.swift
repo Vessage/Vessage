@@ -12,20 +12,26 @@ import UIKit
 class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate {
 
     var launchScr:LaunchScreen!
+    let screenWaitTimeInterval = 1.0
+    private static var instance:EntryNavigationController!
+    
     
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        EntryNavigationController.instance = self
+        UIApplication.sharedApplication().delegate?.window!?.rootViewController = self
         ServiceContainer.instance.initContainer("Vege", services: ServicesConfig)
         setWaitingScreen()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.view.addSubview(launchScr.view)
         go()
     }
     
-    func deInitController(){
+    func removeObservers(){
         ServiceContainer.getLocationService().removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         
@@ -33,7 +39,9 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
 
     private func setWaitingScreen() {
         self.view.backgroundColor = UIColor.whiteColor()
-        launchScr = LaunchScreen.getInstanceFromStroyboard()
+        if launchScr == nil {
+            launchScr = LaunchScreen.getInstanceFromStroyboard()
+        }
         self.view.addSubview(launchScr.view)
         launchScr.mottoLabel.updateConstraints()
         launchScr.mottoLabel.text = "VESSAGE_MOTTO".localizedString()
@@ -93,7 +101,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     
     private func go()
     {
-        ServiceContainer.instance.addObserver(self, selector: #selector(EntryNavigationController.allServicesReady(_:)), name: ServiceContainer.OnAllServicesReady, object: nil)
         if UserSetting.isUserLogined
         {
             if ServiceContainer.isAllServiceReady
@@ -101,6 +108,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
                 allServiceReadyGo()
             }else
             {
+                ServiceContainer.instance.addObserver(self, selector: #selector(EntryNavigationController.allServicesReady(_:)), name: ServiceContainer.OnAllServicesReady, object: nil)
                 ServiceContainer.instance.userLogin(UserSetting.userId)
             }
         }else
@@ -109,7 +117,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         }
     }
     
-    let screenWaitTimeInterval = 1.2
     private func showSignView()
     {
         NSTimer.scheduledTimerWithTimeInterval(screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowSignView(_:)), userInfo: nil, repeats: false)
@@ -128,6 +135,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     func waitTimeShowMainView(_:AnyObject?)
     {
         BahamutCmdManager.sharedInstance.registHandler(self)
+        removeObservers()
         MainTabBarController.showMainController(self)
         if self.launchScr != nil
         {
@@ -144,11 +152,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     static func start()
     {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            if let mnc = UIApplication.sharedApplication().delegate?.window!?.rootViewController as? EntryNavigationController{
-                mnc.deInitController()
-                mnc.dismissViewControllerAnimated(false, completion: nil)
-            }
-            UIApplication.sharedApplication().delegate?.window!?.rootViewController = instanceFromStoryBoard("Main", identifier: "EntryNavigationController")
+            UIApplication.sharedApplication().delegate?.window!?.rootViewController = EntryNavigationController.instance//instanceFromStoryBoard("Main", identifier: "EntryNavigationController")
         })
     }
 }

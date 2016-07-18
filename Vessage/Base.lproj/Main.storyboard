@@ -9,7 +9,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="0A3-06-e0L">
             <objects>
-                <tabBarController storyboardIdentifier="MainTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fbs-wf-wGU" customClass="MainTabBarController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabBarController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fbs-wf-wGU" customClass="MainTabBarController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="6dJ-AJ-pxp">
@@ -113,6 +113,7 @@
                     <navigationItem key="navigationItem" title="奇趣" id="158-Av-uUs">
                         <barButtonItem key="backBarButtonItem" title="返回" id="edg-S4-Lic"/>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I3J-om-2HA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -312,6 +313,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="searchBar" destination="eVN-fp-SWQ" id="pAg-LR-Iph"/>
@@ -324,7 +326,7 @@
         <!--Entry Navigation Controller-->
         <scene sceneID="TUa-vT-9qI">
             <objects>
-                <navigationController storyboardIdentifier="EntryNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b01-Lg-UG8" customClass="EntryNavigationController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EntryNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b01-Lg-UG8" customClass="EntryNavigationController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XFm-bm-RRF">
@@ -340,7 +342,7 @@
         <!--对话-->
         <scene sceneID="KlX-7X-0Wt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VHg-WR-b7D" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="VHg-WR-b7D" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="对话" image="conversation" id="ECy-8W-ZIh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ppm-J0-g6a">
@@ -359,7 +361,7 @@
         <!--奇趣-->
         <scene sceneID="iOe-Dl-sy6">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7Bt-5Z-dgV" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="7Bt-5Z-dgV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="奇趣" image="favorite" id="f0R-9w-moy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LDN-qe-ldb">

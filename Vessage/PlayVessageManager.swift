@@ -94,7 +94,7 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
     }
     
     override func onChatterUpdated(chatter: VessageUser) {
-        super.onChatterUpdated(chatter)
+        self.rootController.controllerTitle = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
     }
     
     override func onVessageReceived(vessage: Vessage) {

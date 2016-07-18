@@ -53,6 +53,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
 extension RecordVessageManager{
     
     override func onSwitchToManager() {
+        groupAvatarManager.renderImageViews()
         rightButton.setImage(UIImage(named: "close"), forState: .Normal)
         rightButton.setImage(UIImage(named: "close"), forState: .Highlighted)
     }
@@ -70,7 +71,7 @@ extension RecordVessageManager{
         
         groupAvatarManager = GroupChatAvatarManager()
         groupAvatarManager.initManager(self.groupFaceImageViewContainer)
-        self.recordingBackgroundImage.image = UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")
+        
     }
     
     override func onReleaseManager() {
@@ -122,6 +123,21 @@ class GroupChatAvatarManager:NSObject {
             $0.removeFromSuperview()
             $0.layer.cornerRadius = 0
         }
+        
+        renderImageViews()
+        
+        for i in 0..<count {
+            if i < self.avatarImageGroup.count {
+                let imgView = avatarImageGroup[i]
+                
+                self.container.addSubview(imgView)
+                imgView.image = nil
+            }
+        }
+    }
+    
+    private func renderImageViews(){
+        let count = self.userFaceIds.count
         var width = self.container.frame.width / 2
         var height = self.container.frame.height / 2
         var diam:CGFloat = 0
@@ -135,35 +151,33 @@ class GroupChatAvatarManager:NSObject {
                 height = min(width,self.container.frame.height)
             }
             diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(0, 0, diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(self.container.frame.width - diam, self.container.frame.height - diam, diam, diam)
+            avatarImageGroup[0].frame = CGRectMake(0, 0 , diam, diam)
+            avatarImageGroup[1].frame = CGRectMake(self.container.frame.width - diam, self.container.frame.height - diam , diam, diam)
         }else if count == 3{
             diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(width - diam, height - diam, diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(width, height - diam, diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(width - diam / 2, height, diam, diam)
+            
+            avatarImageGroup[0].frame = CGRectMake(width - diam, height - diam , diam, diam)
+            avatarImageGroup[1].frame = CGRectMake(width, height - diam , diam, diam)
+            avatarImageGroup[2].frame = CGRectMake(width - diam / 2, height , diam, diam)
         }else if count == 4{
             let diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(width - diam, height - diam, diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(width, height - diam, diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(width - diam, height, diam, diam)
-            avatarImageGroup[3].frame = CGRectMake(width, height, diam, diam)
+            avatarImageGroup[0].frame = CGRectMake(width - diam, height - diam , diam, diam)
+            avatarImageGroup[1].frame = CGRectMake(width, height - diam , diam, diam)
+            avatarImageGroup[2].frame = CGRectMake(width - diam, height , diam, diam)
+            avatarImageGroup[3].frame = CGRectMake(width, height , diam, diam)
         }else if count == 5{
             let diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(0, 0, diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(self.container.frame.width - diam, 0, diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(0, self.container.frame.height - diam, diam, diam)
-            avatarImageGroup[3].frame = CGRectMake(self.container.frame.width - diam, self.container.frame.height - diam, diam, diam)
-            avatarImageGroup[4].frame = CGRectMake(width - diam / 2, height - diam / 2, diam, diam)
+            avatarImageGroup[0].frame = CGRectMake(0, 0 , diam, diam)
+            avatarImageGroup[1].frame = CGRectMake(self.container.frame.width - diam , 0, diam, diam)
+            avatarImageGroup[2].frame = CGRectMake(0, self.container.frame.height - diam , diam, diam)
+            avatarImageGroup[3].frame = CGRectMake(self.container.frame.width - diam , self.container.frame.height - diam, diam, diam)
+            avatarImageGroup[4].frame = CGRectMake(width - diam / 2, height - diam / 2 , diam, diam)
         }
         
         for i in 0..<count {
-            if i < self.avatarImageGroup.count {
-                self.container.addSubview(avatarImageGroup[i])
-                avatarImageGroup[i].layer.cornerRadius = diam / 2
-                avatarImageGroup[i].image = nil
-                avatarImageGroup[i].contentMode = .ScaleAspectFit
-            }
+            let imgView = avatarImageGroup[i]
+            imgView.layer.cornerRadius = imgView.frame.width / 2
+            imgView.clipsToBounds = true
         }
     }
     
@@ -177,7 +191,12 @@ class GroupChatAvatarManager:NSObject {
         let df = getDefaultFace()
         var i = 0
         self.userFaceIds.values.forEach { (fileId) in
-            ServiceContainer.getFileService().setAvatar(self.avatarImageGroup[i], iconFileId: fileId, defaultImage: df, callback: nil)
+            let imgView = avatarImageGroup[i]
+            ServiceContainer.getFileService().setAvatar(imgView, iconFileId: fileId, defaultImage: df){ suc in
+                imgView.contentMode = suc ? .ScaleAspectFill : .ScaleAspectFit
+                imgView.layer.cornerRadius = imgView.frame.width / 2
+                imgView.clipsToBounds = true
+            }
             i += 1
         }
     }

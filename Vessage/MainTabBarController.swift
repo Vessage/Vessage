@@ -54,6 +54,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
         ServiceContainer.getActivityService().removeObserver(self)
+        self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     func onActivitiesBadgeUpdated(a:NSNotification){
@@ -85,7 +86,9 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     static func showMainController(viewController:UIViewController){
         let controller = instanceFromStoryBoard("Main", identifier: "MainTabBarController") as! MainTabBarController
         viewController.presentViewController(controller, animated: false) { () -> Void in
-
+            #if DEBUG
+                print("MainTabBarView Shown")
+            #endif
         }
     }
 }

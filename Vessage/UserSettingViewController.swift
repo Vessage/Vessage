@@ -164,6 +164,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     private func logout()
     {
+        self.navigationController?.popToRootViewControllerAnimated(true)
         ServiceContainer.instance.userLogout()
         EntryNavigationController.start()
     }

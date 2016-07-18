@@ -137,7 +137,7 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
     @IBOutlet weak var groupFaceContainer: UIView!
-    @IBOutlet weak var recordingBackgroundImage: UIImageView!
+    @IBOutlet weak var backgroundImage: UIImageView!
 
 }
 
@@ -146,6 +146,7 @@ extension ConversationViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.backgroundImage.image = UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")
         playVessageManager = PlayVessageManager()
         playVessageManager.initManager(self)
         recordVessageManager = RecordVessageManager()
@@ -167,7 +168,7 @@ extension ConversationViewController{
             }
         }
         setReadingVessage()
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -190,6 +191,9 @@ extension ConversationViewController{
         recordVessageManager.camera.openCamera()
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
 }
 
 //MARK: Actions
@@ -212,7 +216,7 @@ extension ConversationViewController{
         }
     }
     
-    @IBAction func showUserProfile(sender: AnyObject) {
+    func clickRightBarItem(sender: AnyObject) {
         if outChatGroup {
             self.playToast("NOT_IN_CHAT_GROUP".localizedString())
             return
@@ -460,7 +464,6 @@ extension ConversationViewController{
         controller.conversation = conversation
         controller.chatGroup = group
         controller.outerNewsVessageCount = 0
-        controller.controllerTitle = group.groupName
         nvc.pushViewController(controller, animated: true)
     }
     
@@ -469,7 +472,6 @@ extension ConversationViewController{
         controller.conversation = conversation
         controller.chatter = user
         controller.outerNewsVessageCount = 0
-        controller.controllerTitle = ServiceContainer.getUserService().getUserNotedName(user.userId)
         nvc.pushViewController(controller, animated: true)
     }
 

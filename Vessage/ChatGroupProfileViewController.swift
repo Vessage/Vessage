@@ -23,8 +23,8 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
 
     private(set) var chatGroup:ChatGroup!{
         didSet{
-            if !chatGroup.hosters.contains(userService.myProfile.userId) {
-                self.navigationItem.rightBarButtonItem = nil
+            if chatGroup.hosters.contains(userService.myProfile.userId) {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ChatGroupProfileViewController.addUserToGroup(_:)))
             }
         }
     }
@@ -38,6 +38,7 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
             tableView.estimatedRowHeight = tableView.rowHeight
             tableView.rowHeight = UITableViewAutomaticDimension
             tableView.tableFooterView = UIView()
+            tableView.tableFooterView?.backgroundColor = UIColor.clearColor()
         }
     }
     
@@ -88,7 +89,7 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
         }
     }
     
-    @IBAction func addUserToGroup(sender: AnyObject) {
+    func addUserToGroup(sender: AnyObject) {
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
         controller.delegate = self
         controller.allowsMultipleSelection = false

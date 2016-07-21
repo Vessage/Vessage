@@ -13,10 +13,6 @@ class ChatGroupProfileCellBase: UITableViewCell {
     var chatGroup:ChatGroup!{
         return rootController.chatGroup
     }
-    
-    static func getReuseId()->String{
-        return "ChatGroupProfileCellBase"
-    }
 }
 
 class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewControllerDelegate {

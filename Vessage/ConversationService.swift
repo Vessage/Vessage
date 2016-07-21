@@ -18,7 +18,7 @@ class Conversation:BahamutObject
     var isGroup = false
     var chatterId:String!
     var chatterMobile:String!
-    var noteName:String!
+    //var noteName:String!
     var lastMessageTime:String!
 }
 
@@ -95,19 +95,14 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         if let index = (conversations.indexOf { ConversationService.isConversationVessage($0, vsg: vsg)}){
             let conversation = conversations[index]
             if !conversation.isGroup {
-                if let ei = vsg.getExtraInfoObject(){
-                    if conversation.chatterId == nil{
-                        conversation.chatterId = vsg.sender
-                    }
-                    if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(vsg.sendTime.dateTimeOfAccurateString){
-                        conversation.lastMessageTime = vsg.sendTime
-                    }
-                    if conversation.noteName?.md5 == ei.mobileHash || conversation.noteName == ei.accountId{
-                        conversation.noteName = ei.nickName ?? conversation.noteName
-                    }
-                    conversation.saveModel()
-                    self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
+                if conversation.chatterId == nil{
+                    conversation.chatterId = vsg.sender
                 }
+                if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(vsg.sendTime.dateTimeOfAccurateString){
+                    conversation.lastMessageTime = vsg.sendTime
+                }
+                conversation.saveModel()
+                self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
             }
             return index
         }else{
@@ -165,11 +160,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     private func createConverationWithVessage(vsg:Vessage) -> Conversation{
-        let ei = vsg.getExtraInfoObject()
         if vsg.isGroup {
             return self.addNewConversationWithGroupVessage(vsg)
         }else{
-            return self.addNewConversationWithUserId(vsg.sender, noteName: ei?.nickName ?? ei?.accountId ?? "UNKNOW_USER".localizedString())
+            return self.addNewConversationWithUserId(vsg.sender)
         }
     }
     
@@ -179,7 +173,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.isGroup = true
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
-        conversation.noteName = "GROUP_CHAT".localizedString()
         conversation.saveModel()
         conversations.append(conversation)
         return conversation
@@ -207,29 +200,27 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.isGroup = true
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
-        conversation.noteName = group.groupName
         conversation.saveModel()
         conversations.append(conversation)
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
         return conversation
     }
     
-    func openConversationByUserId(userId:String,noteName:String?) -> Conversation {
+    func openConversationByUserId(userId:String) -> Conversation {
         
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
             return conversation
         }else{
-            let conversation = addNewConversationWithUserId(userId, noteName: noteName)
+            let conversation = addNewConversationWithUserId(userId)
             self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
     }
     
-    private func addNewConversationWithUserId(userId:String,noteName:String?) -> Conversation {
+    private func addNewConversationWithUserId(userId:String) -> Conversation {
         let conversation = Conversation()
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.chatterId = userId
-        conversation.noteName = noteName
         conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
         conversation.saveModel()
         conversations.append(conversation)
@@ -248,11 +239,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func searchConversation(keyword:String)->[Conversation]{
         let result = conversations.filter{ c in
-            if let noteName = c.noteName{
-                if noteName.containsString(keyword){
-                    return true
-                }
-            }
             
             if let mobile = c.chatterMobile{
                 if mobile.hasBegin(keyword){
@@ -262,16 +248,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             return false
         }
         return result
-    }
-    
-    func noteConversation(conversationId:String,noteName:String) -> Bool{
-        if let conversation = (self.conversations.filter{$0.conversationId == conversationId}).first{
-            conversation.noteName = noteName
-            conversation.saveModel()
-            self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
-            return true
-        }
-        return false
     }
 }
 
@@ -290,14 +266,13 @@ extension ConversationService{
     }
     
     @available(*,deprecated)
-    func openConversationByMobile(mobile:String, noteName:String?) -> Conversation {
+    func openConversationByMobile(mobile:String) -> Conversation {
         
         if let conversation = (conversations.filter{!String.isNullOrWhiteSpace($0.chatterMobile) && $0.chatterMobile == mobile}).first{
             return conversation
         }else{
             let conversation = Conversation()
             conversation.conversationId = IdUtil.generateUniqueId()
-            conversation.noteName = String.isNullOrWhiteSpace(noteName) ? mobile : noteName
             conversation.chatterMobile = mobile
             conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
             conversation.saveModel()

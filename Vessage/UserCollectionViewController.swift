@@ -88,8 +88,7 @@ class UserCollectionViewController: UICollectionViewController,UICollectionViewD
             self.playToast("ME".localizedString())
             return
         }
-        let conversation = ServiceContainer.getConversationService().openConversationByUserId(user.userId,noteName: user.nickName ?? user.accountId ?? "")
-        ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+        ConversationViewController.showConversationViewController(self.navigationController!, userId: user.userId)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

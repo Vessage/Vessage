@@ -152,7 +152,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     static func start()
     {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            UIApplication.sharedApplication().delegate?.window!?.rootViewController = EntryNavigationController.instance//instanceFromStoryBoard("Main", identifier: "EntryNavigationController")
+            UIApplication.sharedApplication().delegate?.window!?.rootViewController = EntryNavigationController.instance
         })
     }
 }

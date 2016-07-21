@@ -167,7 +167,7 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         if paperMessage.isMySended(myProfile.userId) && paperMessage.isOpened{
             chatter = paperMessage.receiver
         }
-        ConversationViewController.showConversationViewController(self.navigationController!, chatter: chatter)
+        ConversationViewController.showConversationViewController(self.navigationController!, userId: chatter)
     }
     
     //MARK: SelectVessageUserViewControllerDelegate

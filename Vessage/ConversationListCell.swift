@@ -112,22 +112,25 @@ class ConversationListCell:ConversationListCellBase{
     //MARK: update actions
     private func updateWithConversation(conversation:Conversation){
         if let chatterId = conversation.chatterId{
-            self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(chatterId)
+            
             if conversation.isGroup {
                 if let group = self.rootController.groupService.getChatGroup(chatterId) {
                     updateWithChatGroup(group)
                 }else{
+                    let group = ChatGroup()
+                    group.groupName = "NEW_GROUP_CHAT".localizedString()
+                    group.groupId = chatterId
+                    updateWithChatGroup(group)
                     self.rootController.groupService.fetchChatGroup(chatterId)
-                    self.avatarView.image = UIImage(named: "group_chat")
-                    self.headLine = "NEW_GROUP_CHAT".localizedString()
                 }
             }else{
                 if let user = rootController.userService.getCachedUserProfile(chatterId){
                     updateWithUser(user)
                 }else{
+                    let user = VessageUser()
+                    user.userId = chatterId
+                    updateWithUser(user)
                     self.rootController.userService.fetchUserProfile(chatterId)
-                    self.avatar = nil
-                    self.headLine = "UNKNOW_USER".localizedString()
                 }
             }
             
@@ -138,13 +141,14 @@ class ConversationListCell:ConversationListCellBase{
     private func updateWithChatGroup(group:ChatGroup){
         self.headLine = group.groupName
         self.avatarView.image = UIImage(named: "group_chat")
+        self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(group.groupId)
     }
     
     private func updateWithUser(user:VessageUser){
         self.headLine = self.rootController.userService.getUserNotedName(user.userId)
         self.subLine = user.accountId
         self.updateAvatarWithUser(user)
-        self.badgeValue = 0
+        self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(user.userId)
     }
     
     private func updateWithMobile(mobile:String){
@@ -201,6 +205,7 @@ class ConversationListCell:ConversationListCellBase{
         if let conversation = self.originModel as? Conversation{
             if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
                 if ConversationService.isConversationWithUser(conversation, user: user){
+                    self.headLine = self.rootController.userService.getUserNotedName(user.userId)
                     updateAvatarWithUser(user)
                 }
             }

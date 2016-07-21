@@ -405,22 +405,9 @@ extension ConversationViewController{
 //MARK: Show ConversationViewController Extension
 extension ConversationViewController{
     
-    static func showConversationViewController(nvc:UINavigationController,chatter: String) {
-        if let user = ServiceContainer.getUserService().getCachedUserProfile(chatter){
-            let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
-            ConversationViewController.showConversationViewController(nvc, conversation: conversation)
-        }else{
-            let hud = nvc.showActivityHud()
-            ServiceContainer.getUserService().getUserProfile(chatter, updatedCallback: { (u) in
-                hud.hide(true)
-                if let user = u{
-                    let conversation = ServiceContainer.getConversationService().openConversationByUserId(chatter,noteName: user.nickName)
-                    ConversationViewController.showConversationViewController(nvc, conversation: conversation)
-                }else{
-                    nvc.playToast("NO_SUCH_USER".localizedString())
-                }
-            })
-        }
+    static func showConversationViewController(nvc:UINavigationController,userId: String) {
+        let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
+        ConversationViewController.showConversationViewController(nvc, conversation: conversation)
     }
     
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation)
@@ -432,11 +419,13 @@ extension ConversationViewController{
                 if let group = ServiceContainer.getChatGroupService().getChatGroup(conversation.chatterId){
                     showConversationView(nvc, conversation: conversation, group: group)
                 }else{
+                    let hud = nvc.showActivityHud()
                     ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
+                        hud.hide(true)
                         if let g = group{
                             self.showConversationView(nvc, conversation: conversation, group: g)
                         }else{
-                            nvc.playToast("NO_SUCH_USER".localizedString())
+                            nvc.playToast("NO_SUCH_GROUP".localizedString())
                         }
                     }
                 }

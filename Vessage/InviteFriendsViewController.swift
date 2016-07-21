@@ -12,11 +12,6 @@ let INVITED_FRIEND_GUIDE_KEY = "INVITED_FRIEND_GUIDE_KEY"
 
 class InviteFriendsViewController: UIViewController {
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        inviteButtonClick(self)
-    }
-    
     @IBAction func nextButtonClick(sender: AnyObject) {
         UserSetting.enableSetting(INVITED_FRIEND_GUIDE_KEY)
         MobClick.event("Vege_FinishInviteFriends")

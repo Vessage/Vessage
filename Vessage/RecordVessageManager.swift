@@ -173,12 +173,6 @@ class GroupChatAvatarManager:NSObject {
             avatarImageGroup[3].frame = CGRectMake(self.container.frame.width - diam , self.container.frame.height - diam, diam, diam)
             avatarImageGroup[4].frame = CGRectMake(width - diam / 2, height - diam / 2 , diam, diam)
         }
-        
-        for i in 0..<count {
-            let imgView = avatarImageGroup[i]
-            imgView.layer.cornerRadius = imgView.frame.width / 2
-            imgView.clipsToBounds = true
-        }
     }
     
     func setFaces(userFaceIds:[String:String?]) {
@@ -192,11 +186,10 @@ class GroupChatAvatarManager:NSObject {
         var i = 0
         self.userFaceIds.values.forEach { (fileId) in
             let imgView = avatarImageGroup[i]
-            ServiceContainer.getFileService().setAvatar(imgView, iconFileId: fileId, defaultImage: df){ suc in
-                imgView.contentMode = suc ? .ScaleAspectFill : .ScaleAspectFit
-                imgView.layer.cornerRadius = imgView.frame.width / 2
-                imgView.clipsToBounds = true
-            }
+            imgView.contentMode = String.isNullOrEmpty(fileId) ? .ScaleAspectFit : .ScaleAspectFill
+            imgView.layer.cornerRadius = self.userFaceIds.count > 1 ? imgView.frame.width / 2 : 0
+            imgView.clipsToBounds = self.userFaceIds.count > 1
+            ServiceContainer.getFileService().setAvatar(imgView, iconFileId: fileId, defaultImage: df)
             i += 1
         }
     }

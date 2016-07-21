@@ -145,6 +145,15 @@ class ConversationListController: UITableViewController {
     
     func onNewVessagesReceived(a:NSNotification){
         if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
+            vsgs.forEach({ (vsg) in
+                if !vsg.isGroup{
+                    if String.isNullOrEmpty(self.userService.getUserNotedNameIfExists(vsg.sender)){
+                        if let nick = vsg.getExtraInfoObject()?.nickName{
+                            self.userService.setUserNoteName(vsg.sender, noteName: nick)
+                        }
+                    }
+                }
+            })
             conversationService.updateConversationListWithVessagesReturnNewConversations(vsgs)
         }
     }
@@ -158,25 +167,23 @@ class ConversationListController: UITableViewController {
         ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
     }
     
-    private func removeConversation(conversation:Conversation){
+    private func removeConversation(conversationId:String,message:String?){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            self.conversationService.removeConversation(conversation.conversationId)
+            self.conversationService.removeConversation(conversationId)
         }
         let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
-        self.showAlert("ASK_REMOVE_CONVERSATION_TITLE".localizedString(), msg: conversation.noteName, actions: [okAction,cancel])
+        self.showAlert("ASK_REMOVE_CONVERSATION_TITLE".localizedString(), msg: message, actions: [okAction,cancel])
     }
     
     func openConversationWithMobile(mobile:String,noteName:String?) {
         if let user = self.userService.getCachedUserByMobile(mobile){
-            let conversation = self.conversationService.openConversationByUserId(user.userId, noteName: noteName)
-            ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+            ConversationViewController.showConversationViewController(self.navigationController!, userId: user.userId)
         }else{
             let hud = self.showActivityHud()
             self.userService.registNewUserByMobile(mobile, noteName: noteName ?? mobile, updatedCallback: { (user) in
                 hud.hide(true)
                 if let u = user{
-                    let conversation = self.conversationService.openConversationByUserId(u.userId, noteName: noteName)
-                    ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+                    ConversationViewController.showConversationViewController(self.navigationController!, userId: u.userId)
                 }else{
                     self.showAlert("OPEN_MOBILE_CONVERSATION_FAIL".localizedString(), msg: mobile)
                 }
@@ -192,8 +199,7 @@ class ConversationListController: UITableViewController {
             if let c = result.conversation{
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
             }else if let u = result.user{
-                let conversation = conversationService.openConversationByUserId(u.userId,noteName: u.nickName ?? u.accountId ?? result.keyword)
-                ConversationViewController.showConversationViewController(self.navigationController!, conversation: conversation)
+                ConversationViewController.showConversationViewController(self.navigationController!, userId : u.userId)
             }else if let mobile = result.mobile{
                 MobClick.event("Vege_OpenSearchResultMobileConversation")
                 openConversationWithMobile(mobile, noteName: result.mobile ?? result.keyword)
@@ -312,7 +318,7 @@ class ConversationListController: UITableViewController {
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ConversationListCell{
                 if let conversation = cell.originModel as? Conversation{
                     let action = UITableViewRowAction(style: .Default, title: actionTitle, handler: { (ac, indexPath) -> Void in
-                        self.removeConversation(conversation)
+                        self.removeConversation(conversation.conversationId,message: cell.headLineLabel.text)
                     })
                     return [action]
                 }

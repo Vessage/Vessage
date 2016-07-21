@@ -124,7 +124,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
     private func showAskSenderAlert(info:LittlePaperReadResponse,indexPath:NSIndexPath) {
         let alertController = UIAlertController(title: "AGREE_USER_OPEN_U_PAPER".littlePaperString, message: "", preferredStyle: .ActionSheet)
         let asker = UIAlertAction(title: info.askerNick, style: .Default, handler: { (ac) in
-            ConversationViewController.showConversationViewController(self.navigationController!, chatter: info.asker)
+            ConversationViewController.showConversationViewController(self.navigationController!, userId: info.asker)
         })
         let accept = UIAlertAction(title: "ACCEPT_READ".littlePaperString, style: .Default, handler: { (ac) in
             let hud = self.showActivityHud()

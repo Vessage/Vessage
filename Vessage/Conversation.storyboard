@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recording_bcg_0" translatesAutoresizingMaskIntoConstraints="NO" id="1wm-WO-uDe">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1wm-WO-uDe">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1h-Iv-vhL">
@@ -412,6 +412,5 @@
         <image name="defaultAvatar" width="128" height="128"/>
         <image name="next" width="72" height="72"/>
         <image name="playNext" width="128" height="128"/>
-        <image name="recording_bcg_0" width="800" height="800"/>
     </resources>
 </document>

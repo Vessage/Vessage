@@ -24,7 +24,6 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
     static let OnChatGroupUpdated = "OnChatGroupUpdated"
     static let OnQuitChatGroup = "OnQuitChatGroup"
     @objc func appStartInit(appName: String) {
-        self.setServiceReady()
     }
     @objc func userLoginInit(userId:String)
     {
@@ -125,22 +124,6 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         }
     }
     
-    //Unavailable
-    private func kickUserFromChatGroup(groupId:String,userId:String) {
-        let req = KickUserOutRequest()
-        req.groupId = groupId
-        req.userId = userId
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
-            if result.isSuccess{
-                if let group = PersistentManager.sharedInstance.getModel(ChatGroup.self, idValue: groupId){
-                    group.chatters.removeElement{$0 == userId}
-                    group.saveModel()
-                    self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:group])
-                }
-            }
-        }
-    }
-    
     func editChatGroupName(groupId:String,inviteCode:String,newName:String,callback:(Bool)->Void) {
         let req = EditGroupNameRequest()
         req.groupId = groupId
@@ -155,6 +138,23 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
                 }
             }
             callback(result.isSuccess)
+        }
+    }
+    
+    
+    //Unavailable
+    private func kickUserFromChatGroup(groupId:String,userId:String) {
+        let req = KickUserOutRequest()
+        req.groupId = groupId
+        req.userId = userId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
+            if result.isSuccess{
+                if let group = PersistentManager.sharedInstance.getModel(ChatGroup.self, idValue: groupId){
+                    group.chatters.removeElement{$0 == userId}
+                    group.saveModel()
+                    self.postNotificationNameWithMainAsync(ChatGroupService.OnChatGroupUpdated, object: self, userInfo: [kChatGroupValue:group])
+                }
+            }
         }
     }
 }

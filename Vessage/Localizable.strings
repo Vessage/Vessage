@@ -258,6 +258,7 @@ OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "给未注册的手机发对讲消息，好友用该手机号注册后同样可以收到你的消息~";
 GROUP_CHAT = "一起对讲吧";
 WX_SHARE_TITLE_FORMAT = "记得加我VG号:%@";
+UNKNOW_VESSAGE_TYPE = "未知的消息类型";
 
 //MARK:Group
 NEW_GROUP_CHAT = "群聊";

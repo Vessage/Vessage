@@ -22,12 +22,30 @@ class VessageUser: BahamutObject {
     var mobile:String!
     
     var lastUpdatedTime:NSDate!
-    
+}
+
+extension VessageUser{
     static func getUnLoadedUser(userId:String) -> VessageUser{
         let user = VessageUser()
         user.userId = userId
         user.nickName = "UNLOADED_USER".localizedString()
         return user
+    }
+    
+    static func isTheSameUser(usera:VessageUser?,userb:VessageUser?) ->Bool{
+        if let a = usera{
+            if let b = userb{
+                if !String.isNullOrWhiteSpace(a.userId) && !String.isNullOrWhiteSpace(b.userId) && a.userId == b.userId{
+                    return true
+                }
+                if !String.isNullOrWhiteSpace(a.mobile) && !String.isNullOrWhiteSpace(b.mobile){
+                    if a.mobile == b.mobile || a.mobile.md5 == b.mobile || a.mobile == b.mobile.md5{
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
 }
 

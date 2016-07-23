@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="b01-Lg-UG8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="b01-Lg-UG8">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -302,7 +302,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="VG对讲机" id="Pbk-1i-UuZ">
                         <barButtonItem key="backBarButtonItem" title="对话" id="SYV-9s-CQ9"/>
-                        <barButtonItem key="leftBarButtonItem" title="告诉 Ta" id="Cp7-nQ-LAi">
+                        <barButtonItem key="leftBarButtonItem" image="share" id="Cp7-nQ-LAi">
                             <connections>
                                 <action selector="tellFriends:" destination="GQB-c1-diR" id="xmg-rq-faT"/>
                             </connections>
@@ -386,5 +386,6 @@
         <image name="group_chat" width="120" height="120"/>
         <image name="next" width="72" height="72"/>
         <image name="settings" width="21" height="21"/>
+        <image name="share" width="21" height="21"/>
     </resources>
 </document>

@@ -47,6 +47,8 @@ class SendVessageTaskInfo:BahamutObject{
     var receiverId:String!
     //var receiverMobile:String!
     var isGroup = false
+    var typeId = 0
+    
     
 }
 
@@ -77,18 +79,33 @@ class VessageQueue:NSObject{
 //        
 //    }
     
-    func initObservers(){
+    func initQueue(userId:String){
+        refreshExtraInfoString()
+        initObservers()
+    }
+    
+    private func releaseQueue() {
+        removeObservers()
+    }
+    
+    private func initObservers(){
+        ServiceContainer.instance.addObserver(self, selector: #selector(VessageQueue.onUserLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
         
     }
     
-    func removeObservers(){
+    private func removeObservers(){
+        ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
     }
     
     func onVessageSendFail(a:NSNotification){
         
+    }
+    
+    func onUserLogout(a:NSNotification){
+        releaseQueue()
     }
     
     func onVessageSended(a:NSNotification){
@@ -101,11 +118,13 @@ class VessageQueue:NSObject{
         }
     }
     
-    func pushNewVessageTo(receiverId:String?,isGroup:Bool,videoUrl:NSURL){
+    func pushNewVessageTo(receiverId:String?,isGroup:Bool,typeId:Int,fileUrl:NSURL? = nil,fileId:String? = nil){
         let userInfoModel = SendVessageTaskInfo()
         userInfoModel.receiverId = receiverId
-        userInfoModel.filePath = videoUrl.path!
+        userInfoModel.filePath = fileUrl?.path!
+        userInfoModel.fileId = fileId
         userInfoModel.isGroup = isGroup
+        userInfoModel.typeId = typeId
         let taskInfoKey = IdUtil.generateUniqueId()
         taskInfoDict[taskInfoKey] = userInfoModel
         sendVessage(taskInfoKey)
@@ -140,21 +159,46 @@ class VessageQueue:NSObject{
         controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
     }
     
+    private var extraInfoString:String!
+    
+    private func refreshExtraInfoString(){
+        let userService = ServiceContainer.getUserService()
+        let sendNick = userService.myProfile.nickName
+        let sendMobile = userService.myProfile.mobile
+        let extraInfo = VessageExtraInfoModel()
+        extraInfo.nickName = sendNick
+        extraInfo.accountId = UserSetting.lastLoginAccountId
+        if String.isNullOrWhiteSpace(sendMobile) == false{
+            extraInfo.mobileHash = sendMobile!.md5
+        }
+        extraInfoString = extraInfo.toJsonString()
+    }
+    
     private func sendVessage(taskInfoKey:String){
+        let taskInfo:SendVessageTaskInfo! = taskInfoDict[taskInfoKey]
+        if taskInfo == nil {
+            return
+        }
+        
         func sendedCallback(vessageId:String?){
             if let vid = vessageId{
-                self.sendVessageFile(vid, taskInfoKey: taskInfoKey)
+                if let fileId = taskInfo?.fileId{
+                    ServiceContainer.getVessageService().finishSendVessage(taskInfo!.receiverId,vessageId: vid, fileId: fileId)
+                }else{
+                    self.sendVessageFile(vid, taskInfoKey: taskInfoKey)
+                }
             }else{
                 self.retrySendVessage(taskInfoKey)
             }
         }
-        let userService = ServiceContainer.getUserService()
-        let sendNick = userService.myProfile.nickName
-        let sendMobile = userService.myProfile.mobile
-        if let taskInfo = taskInfoDict[taskInfoKey]{
-            if let receiverId = taskInfo.receiverId{
-                ServiceContainer.getVessageService().sendVessageToUser(receiverId, isGroup: taskInfo.isGroup,sendNick: sendNick,sendMobile: sendMobile, callback: sendedCallback)
-            }
+        
+        if let receiverId = taskInfo.receiverId{
+            let vsg = Vessage()
+            vsg.extraInfo = extraInfoString
+            vsg.isGroup = taskInfo.isGroup
+            vsg.typeId = taskInfo.typeId
+            vsg.fileId = taskInfo.fileId
+            ServiceContainer.getVessageService().sendVessageToUser(receiverId, vessage: vsg, callback: sendedCallback)
         }
     }
     

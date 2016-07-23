@@ -71,10 +71,12 @@ class ConversationListController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         initObservers()
         vessageService.newVessageFromServer()
-        
+        let titleView = NavigationBarTitle.instanceFromXib()
+        self.navigationItem.titleView = titleView
         #if DEBUG
-            self.navigationItem.title = "\(VessageConfig.appVersion) build"
+            titleView.title = "\(VessageConfig.appVersion) build"
         #endif
+        
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -59,7 +59,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         let isUserMobileValidated = userService.isUserMobileValidated
         if isUserMobileValidated
         {
-            VessageQueue.sharedInstance.initObservers()
+            VessageQueue.sharedInstance.initQueue(userService.myProfile.userId)
             showMainView()
         }else{
             ValidateMobileViewController.showValidateMobileViewController(self)

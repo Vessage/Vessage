@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,20 +11,15 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2H5-o5-FwJ">
-                    <rect key="frame" x="245" y="10" width="111" height="22"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <label opaque="NO" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VG" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2H5-o5-FwJ">
+                    <rect key="frame" x="285" y="5" width="31" height="33"/>
+                    <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="23"/>
+                    <color key="textColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="wCd-gA-grj">
-                    <rect key="frame" x="217" y="11" width="20" height="20"/>
-                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="wCd-gA-grj" firstAttribute="centerY" secondItem="2H5-o5-FwJ" secondAttribute="centerY" id="3FE-OG-iVz"/>
-                <constraint firstItem="2H5-o5-FwJ" firstAttribute="leading" secondItem="wCd-gA-grj" secondAttribute="trailing" constant="8" id="hIq-BC-aUj"/>
                 <constraint firstItem="2H5-o5-FwJ" firstAttribute="centerX" secondItem="lRz-1g-In4" secondAttribute="centerX" id="i5U-9f-NF3"/>
                 <constraint firstItem="2H5-o5-FwJ" firstAttribute="centerY" secondItem="lRz-1g-In4" secondAttribute="centerY" id="z5F-o6-Rfc"/>
             </constraints>
@@ -32,10 +27,27 @@
             <nil key="simulatedTopBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="indicatorView" destination="wCd-gA-grj" id="tcS-v3-DL5"/>
                 <outlet property="titleLabel" destination="2H5-o5-FwJ" id="GUs-0f-lBg"/>
             </connections>
             <point key="canvasLocation" x="484" y="78"/>
+        </view>
+        <view contentMode="scaleToFill" id="zc7-es-kJd">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VG" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgG-RQ-pju">
+                    <rect key="frame" x="285" y="283" width="31" height="33"/>
+                    <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="23"/>
+                    <color key="textColor" red="0.63117873960000004" green="0.89802662470000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="PgG-RQ-pju" firstAttribute="centerX" secondItem="zc7-es-kJd" secondAttribute="centerX" id="8Of-4q-Fe3"/>
+                <constraint firstItem="PgG-RQ-pju" firstAttribute="centerY" secondItem="zc7-es-kJd" secondAttribute="centerY" id="OjJ-q2-Xxg"/>
+            </constraints>
+            <point key="canvasLocation" x="484" y="470"/>
         </view>
     </objects>
 </document>

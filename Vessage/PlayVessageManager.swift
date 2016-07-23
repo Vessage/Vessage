@@ -9,19 +9,12 @@
 import Foundation
 
 //MARK: PlayVessageManager
-class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
-    private var vessagePlayer:BahamutFilmView!
-    private func initVessageViews() {
-        vessagePlayer = BahamutFilmView(frame: vessageView.bounds)
-        vessagePlayer.fileFetcher = fileService.getFileFetcherOfFileId(.Video)
-        vessagePlayer.autoPlay = false
-        vessagePlayer.isPlaybackLoops = false
-        vessagePlayer.isMute = false
-        vessagePlayer.showTimeLine = false
-        vessagePlayer.delegate = self
-        vessageView.addSubview(vessagePlayer)
-        vessageView.sendSubviewToBack(vessagePlayer)
-        vessageView.hidden = (presentingVesseage == nil)
+class PlayVessageManager: ConversationViewControllerProxy {
+    private var vessageHandlers = [Int:VessageHandler]()
+    
+    private func initVessageHandlers() {
+        vessageHandlers[Vessage.typeVideo] = VideoVessageHandler(manager: self,container: self.vessageView)
+        vessageHandlers[Vessage.typeFaceText] = FaceTextVessageHandler(manager: self, container: self.vessageView)
     }
     
     override func onSwitchToManager() {
@@ -31,9 +24,16 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
         recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
     }
     
+    override func onReleaseManager() {
+        vessageHandlers.forEach { (key,handler) in
+            handler.releaseHandler()
+        }
+        vessageHandlers.removeAll()
+    }
+    
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
-        initVessageViews()
+        initVessageHandlers()
         loadNotReadVessages()
     }
     
@@ -62,14 +62,12 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
             if presentingVesseage != nil{
                 if oldValue != nil && oldValue.vessageId == presentingVesseage.vessageId{
                     return
-                }
-                if oldValue != nil{
-                    UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
-                        self.vessagePlayer.filePath = nil
-                        self.vessagePlayer.filePath = self.presentingVesseage.fileId
-                    })
                 }else{
-                    vessagePlayer.filePath = presentingVesseage.fileId
+                    if let handler = self.vessageHandlers[presentingVesseage.typeId]{
+                        handler.onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
+                    }else{
+                        rootController.playToast("UNKNOW_VESSAGE_TYPE".localizedString())
+                    }
                 }
             }
         }
@@ -128,7 +126,7 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
         
     }
     
-    private func refreshBadge(){
+    func refreshBadge(){
         if let chatterId = conversation.chatterId{
             self.badgeValue = vessageService.getChatterNotReadVessageCount(chatterId)
         }else{
@@ -159,34 +157,5 @@ class PlayVessageManager: ConversationViewControllerProxy,PlayerDelegate {
             }
         }
     }
-
-    //MARK: Player Delegate
-    
-    func playerBufferingStateDidChange(player: Player) {
-        
-    }
-    
-    func playerPlaybackDidEnd(player: Player) {
-        self.vessagePlayer.filePath = nil
-        self.vessagePlayer.filePath = self.presentingVesseage.fileId
-    }
-    
-    func playerPlaybackStateDidChange(player: Player) {
-        
-    }
-    
-    func playerPlaybackWillStartFromBeginning(player: Player) {
-        if self.presentingVesseage?.isRead == false {
-            MobClick.event("Vege_ReadVessage")
-            self.vessageService.readVessage(self.presentingVesseage)
-            refreshBadge()
-            
-        }
-    }
-    
-    func playerReady(player: Player) {
-        
-    }
-
     
 }

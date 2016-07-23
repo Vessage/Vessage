@@ -9,6 +9,9 @@
 import Foundation
 
 class Vessage: BahamutObject {
+    static let typeVideo = 0
+    static let typeFaceText = 1
+    
     override func getObjectUniqueIdName() -> String {
         return "vessageId"
     }
@@ -19,7 +22,7 @@ class Vessage: BahamutObject {
     var sendTime:String!
     var extraInfo:String!
     var isGroup = false
-    
+    var typeId = 0
     
     func getSendTime()->NSDate!{
         return sendTime.dateTimeOfAccurateString
@@ -77,6 +80,22 @@ class SendNewVessageRequestBase:BahamutRFRequestBase{
             self.paramenters["extraInfo"] = extraInfo
         }
     }
+    
+    var fileId:String!{
+        didSet{
+            if !String.isNullOrEmpty(fileId) {
+                self.paramenters["fileId"] = fileId
+            }
+        }
+    }
+    
+    var typeId:Int = 0{
+        didSet{
+            self.paramenters["typeId"] = "\(typeId)"
+        }
+    }
+    
+    
 }
 
 class SendNewVessageToMobileRequest: SendNewVessageRequestBase {

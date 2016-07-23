@@ -8,24 +8,6 @@
 
 import Foundation
 
-extension VessageUser{
-    static func isTheSameUser(usera:VessageUser?,userb:VessageUser?) ->Bool{
-        if let a = usera{
-            if let b = userb{
-                if !String.isNullOrWhiteSpace(a.userId) && !String.isNullOrWhiteSpace(b.userId) && a.userId == b.userId{
-                    return true
-                }
-                if !String.isNullOrWhiteSpace(a.mobile) && !String.isNullOrWhiteSpace(b.mobile){
-                    if a.mobile == b.mobile || a.mobile.md5 == b.mobile || a.mobile == b.mobile.md5{
-                        return true
-                    }
-                }
-            }
-        }
-        return false
-    }
-}
-
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getUserService() -> UserService{

@@ -87,31 +87,27 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         PersistentManager.sharedInstance.refreshCache(Vessage)
     }
     
-    func sendVessageToMobile(receiverMobile:String,sendNick:String?,sendMobile:String?,callback:(vessageId:String?)->Void){
+    private func sendVessageToMobile(receiverMobile:String,vessage:Vessage,callback:(vessageId:String?)->Void){
         let req = SendNewVessageToMobileRequest()
         req.receiverMobile = receiverMobile
-        sendVessage(req, sendNick: sendNick,sendMobile: sendMobile) { (vessageId) -> Void in
+        sendVessage(req, vessage: vessage) { (vessageId) -> Void in
             callback(vessageId: vessageId)
         }
     }
     
-    func sendVessageToUser(receiverId:String?, isGroup:Bool, sendNick:String?,sendMobile:String?, callback:(vessageId:String?)->Void){
+    func sendVessageToUser(receiverId:String?, vessage:Vessage, callback:(vessageId:String?)->Void){
         let req = SendNewVessageToUserRequest()
         req.receiverId = receiverId
-        req.isGroup = isGroup
-        sendVessage(req, sendNick: sendNick,sendMobile: sendMobile) { (vessageId) -> Void in
+        req.isGroup = vessage.isGroup
+        sendVessage(req, vessage: vessage) { (vessageId) -> Void in
             callback(vessageId: vessageId)
         }
     }
     
-    private func sendVessage(req:SendNewVessageRequestBase,sendNick:String?,sendMobile:String?,callback:(vessageId:String?)->Void){
-        let extraInfo = VessageExtraInfoModel()
-        extraInfo.nickName = sendNick
-        extraInfo.accountId = UserSetting.lastLoginAccountId
-        if String.isNullOrWhiteSpace(sendMobile) == false{
-            extraInfo.mobileHash = sendMobile!.md5
-        }
-        req.extraInfo = extraInfo.toJsonString()
+    private func sendVessage(req:SendNewVessageRequestBase,vessage:Vessage,callback:(vessageId:String?)->Void){
+        req.extraInfo = vessage.extraInfo
+        req.fileId = vessage.fileId
+        req.typeId = vessage.typeId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
             if let vrm = result.returnObject{
                 vrm.saveModel()
@@ -158,6 +154,16 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
             userInfo.updateValue(task, forKey: SendedVessageTaskValue)
             self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
         }
+    }
+    
+    func finishSendVessage(receiverId:String,vessageId:String,fileId:String) {
+        let task = VessageFileUploadTask()
+        task.taskId = fileId
+        task.vessageId = vessageId
+        task.fileId = fileId
+        task.receiverId = receiverId
+        self.postNotificationNameWithMainAsync(VessageService.onNewVessageSending, object: self, userInfo: [SendingVessagePersentValue:100.0,SendedVessageTaskValue:task])
+        finishSendVessage(task)
     }
     
     private func finishSendVessage(task:VessageFileUploadTask){

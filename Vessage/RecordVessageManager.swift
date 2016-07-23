@@ -53,9 +53,10 @@ class RecordVessageManager: ConversationViewControllerProxy {
 extension RecordVessageManager{
     
     override func onSwitchToManager() {
-        groupAvatarManager.renderImageViews()
         rightButton.setImage(UIImage(named: "close"), forState: .Normal)
         rightButton.setImage(UIImage(named: "close"), forState: .Highlighted)
+        groupAvatarManager.renderImageViews()
+        groupAvatarManager.refreshFaces()
     }
     
     override func initManager(controller: ConversationViewController) {
@@ -123,17 +124,14 @@ class GroupChatAvatarManager:NSObject {
             $0.removeFromSuperview()
             $0.layer.cornerRadius = 0
         }
-        
-        renderImageViews()
-        
         for i in 0..<count {
             if i < self.avatarImageGroup.count {
                 let imgView = avatarImageGroup[i]
-                
                 self.container.addSubview(imgView)
                 imgView.image = nil
             }
         }
+        renderImageViews()
     }
     
     private func renderImageViews(){
@@ -142,7 +140,7 @@ class GroupChatAvatarManager:NSObject {
         var height = self.container.frame.height / 2
         var diam:CGFloat = 0
         if count == 1 {
-            avatarImageGroup.first!.frame = self.container.bounds
+            avatarImageGroup[0].frame = self.container.bounds
         }else if count == 2{
             
             if width < height {
@@ -176,7 +174,7 @@ class GroupChatAvatarManager:NSObject {
     }
     
     func setFaces(userFaceIds:[String:String?]) {
-        prepareImageView(userFaceIds.keys.count)
+        prepareImageView(userFaceIds.count)
         self.userFaceIds = userFaceIds
         refreshFaces()
     }
@@ -259,7 +257,12 @@ extension RecordVessageManager{
             self.rootController.controllerTitle = "VESSAGE_SENDING".localizedString()
         }
         let chatterId = isGroupChat ? self.chatGroup.groupId : self.chatter.userId
-        VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, videoUrl: url)
+        #if DEBUG
+            PersistentFileHelper.deleteFile(url.path!)
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, isGroup: isGroupChat, typeId: Vessage.typeVideo,fileId:"5790435e99cc251974a42f61")
+        #else
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat,typeId: Vessage.typeVideo, fileUrl: url)
+        #endif
     }
     
     func onVessageSending(a:NSNotification){

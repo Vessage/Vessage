@@ -23,6 +23,8 @@ class Vessage: BahamutObject {
     var extraInfo:String!
     var isGroup = false
     var typeId = 0
+    var body:String!
+    
     
     func getSendTime()->NSDate!{
         return sendTime.dateTimeOfAccurateString
@@ -95,7 +97,13 @@ class SendNewVessageRequestBase:BahamutRFRequestBase{
         }
     }
     
-    
+    var body:String!{
+        didSet{
+            if !String.isNullOrEmpty(body) {
+                self.paramenters["body"] = body
+            }
+        }
+    }
 }
 
 class SendNewVessageToMobileRequest: SendNewVessageRequestBase {

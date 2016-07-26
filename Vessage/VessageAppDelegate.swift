@@ -57,7 +57,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     private func configureBahamutRFKit()
     {
         BahamutRFKit.appkey = VessageConfig.appKey
-        BahamutRFKit.setAppVersion(VessageConfig.appVersion)
+        BahamutRFKit.setRFKitAppVersion(VessageConfig.appVersion)
     }
     
     private func configureVessageConfig()

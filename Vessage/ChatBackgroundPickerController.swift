@@ -9,14 +9,21 @@
 import Foundation
 import MBProgressHUD
 
-typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
+//typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
+protocol ChatBackgroundPickerControllerDelegate {
+    func chatBackgroundPickerSetedImage(sender:ChatBackgroundPickerController)->Void
+    func chatBackgroundPickerSetImageCancel(sender:ChatBackgroundPickerController)->Void
+}
 
 //MARK: ChatBackgroundPickerController
 class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate,UIImagePickerControllerDelegate{
+    static let chatImageWidth:CGFloat = 480
+    static let chatImageQuality:CGFloat = 0.6
     private var imagePickerController:UIImagePickerController = UIImagePickerController()
     @IBOutlet weak var selectPicButtonTip: UILabel!
     @IBOutlet weak var selectPicButton: UIButton!
-    private var setImageSuccessHandler:ChatBackgroundPickerSetImageSuccessHandler!
+    private var delegate:ChatBackgroundPickerControllerDelegate!
+    private var chatImageType:String? = nil
     @IBOutlet weak var previewRectView: UIImageView!{
         didSet{
             previewRectView.backgroundColor = UIColor.clearColor()
@@ -151,6 +158,9 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         camera.cancelRecord()
         camera.closeCamera()
         self.dismissViewControllerAnimated(false) { () -> Void in
+            if let handler = self.delegate?.chatBackgroundPickerSetImageCancel{
+                handler(self)
+            }
         }
     }
     
@@ -225,8 +235,8 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     private var taskHud:MBProgressHUD!
     private func sendTakedImage(){
         let fService = ServiceContainer.getService(FileService)
-        let img = takedImage.scaleToWidthOf(480)
-        let imageData = UIImageJPEGRepresentation(img, 0.7)
+        let img = takedImage.scaleToWidthOf(ChatBackgroundPickerController.chatImageWidth)
+        let imageData = UIImageJPEGRepresentation(img, ChatBackgroundPickerController.chatImageQuality)
         let localPath = fService.createLocalStoreFileName(FileType.Image)
         taskHud = self.showActivityHud()
         if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
@@ -251,12 +261,12 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         if let fileKey = taskFileMap.removeValueForKey(taskIdentifier)
         {
             let uService = ServiceContainer.getUserService()
-            uService.setChatBackground(fileKey.fileId, callback: { (isSuc) -> Void in
+            uService.setChatBackground(fileKey.fileId, imageType:self.chatImageType,callback: { (isSuc) -> Void in
                 self.taskHud.hideAsync(false)
                 if isSuc{
                     let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-                        if let handler = self.setImageSuccessHandler{
-                            handler(sender: self)
+                        if let handler = self.delegate?.chatBackgroundPickerSetedImage{
+                            handler(self)
                         }
                     })
                     self.showAlert("SET_CHAT_BCG_SUCCESS".localizedString(), msg: nil , actions: [okAction])
@@ -275,10 +285,11 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     //MARK: showPickerController
     
-    static func showPickerController(vc:UIViewController,setImageSuccessHandler:ChatBackgroundPickerSetImageSuccessHandler)
+    static func showPickerController(vc:UIViewController,delegate:ChatBackgroundPickerControllerDelegate,imageType:String? = nil)
     {
         let instance = instanceFromStoryBoard("Camera", identifier: "ChatBackgroundPickerController") as! ChatBackgroundPickerController
-        instance.setImageSuccessHandler = setImageSuccessHandler
+        instance.delegate = delegate
+        instance.chatImageType = imageType
         vc.presentViewController(instance, animated: true) { () -> Void in
             
         }

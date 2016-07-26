@@ -386,6 +386,6 @@
         <image name="group_chat" width="120" height="120"/>
         <image name="next" width="72" height="72"/>
         <image name="settings" width="21" height="21"/>
-        <image name="share" width="21" height="21"/>
+        <image name="share" width="18" height="21"/>
     </resources>
 </document>

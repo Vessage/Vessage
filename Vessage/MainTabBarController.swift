@@ -17,7 +17,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
                 UserSetting.setUserIntValue("ConversationListBadge", value: value)
                 
             }
-            self.viewControllers?[0].tabBarItem?.badgeValue = conversationBadge != nil && conversationBadge > 0 ? "\(conversationBadge!)" : nil
+            self.viewControllers?[0].tabBarItem?.badgeValue = intToBadgeString(conversationBadge)
         }
     }
     
@@ -27,7 +27,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
                 UserSetting.setUserIntValue("ActivityListBadge", value: value)
                 
             }
-            self.viewControllers?[1].tabBarItem?.badgeValue = activityBadge != nil && activityBadge > 0 ? "\(activityBadge!)" : nil
+            self.viewControllers?[1].tabBarItem?.badgeValue = intToBadgeString(activityBadge)
         }
     }
     

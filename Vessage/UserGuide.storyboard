@@ -165,7 +165,7 @@
                                     <constraint firstAttribute="height" constant="64" id="42q-HV-G1p"/>
                                     <constraint firstAttribute="width" constant="64" id="wFi-6h-ua4"/>
                                 </constraints>
-                                <state key="normal" image="profile"/>
+                                <state key="normal" image="default_face"/>
                                 <connections>
                                     <action selector="openCamera:" destination="dE9-hh-AEN" eventType="touchUpInside" id="l4v-J1-1gQ"/>
                                 </connections>
@@ -173,7 +173,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tw-1V-o1h">
                                 <rect key="frame" x="115" y="355" width="184" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <state key="normal" title="设置你的聊天背景">
+                                <state key="normal" title="设置你的聊天表情">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -217,8 +217,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="default_face" width="400" height="387"/>
         <image name="people" width="128" height="128"/>
         <image name="phone" width="128" height="128"/>
-        <image name="profile" width="128" height="128"/>
     </resources>
 </document>

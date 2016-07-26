@@ -118,22 +118,22 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
         receivedButton.badgeOriginX = -6
         receivedButton.badgeOriginY = -6
         cnt = LittlePaperManager.instance.myNotDealMessages.count
-        receivedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        receivedButton.badgeValue = intToBadgeString(cnt)
         
         postedButton.badgeOriginX = -6
         postedButton.badgeOriginY = -6
         cnt = LittlePaperManager.instance.myPostededMessageUpdatedCount
-        postedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        postedButton.badgeValue = intToBadgeString(cnt)
         
         sendedButton.badgeOriginX = -6
         sendedButton.badgeOriginY = -6
         cnt = LittlePaperManager.instance.mySendedMessageUpdatedCount
-        sendedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        sendedButton.badgeValue = intToBadgeString(cnt)
         
         openedButton.badgeOriginX = -6
         openedButton.badgeOriginY = -6
         cnt = LittlePaperManager.instance.myOpenedMessageUpdatedCount
-        openedButton.badgeValue = cnt > 0 ? "\(cnt)": ""
+        openedButton.badgeValue = intToBadgeString(cnt)
     }
     
     //MARK: actions

@@ -84,15 +84,7 @@ class ConversationListCell:ConversationListCellBase{
 
     private var badgeValue:Int = 0 {
         didSet{
-            if badgeLabel != nil{
-                if badgeValue == 0{
-                    badgeLabel.hidden = true
-                }else{
-                    badgeLabel.text = "\(badgeValue)"
-                    badgeLabel.hidden = false
-                    badgeLabel.animationMaxToMin()
-                }
-            }
+            setBadgeLabelValue(badgeLabel,value: badgeValue)
         }
     }
 

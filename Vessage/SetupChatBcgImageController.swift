@@ -10,18 +10,26 @@ import Foundation
 import UIKit
 
 //MARK: SetupChatBcgImageController
-class SetupChatBcgImageController: UIViewController {
+class SetupChatBcgImageController: UIViewController,ChatBackgroundPickerControllerDelegate {
     
     @IBAction func openCamera(sender: AnyObject) {
-        ChatBackgroundPickerController.showPickerController(self){ sender in
-            MobClick.event("Vege_FinishSetupChatBcg")
-            InviteFriendsViewController.showInviteFriendsViewController(self.navigationController!)
-        }
+        ChatBackgroundPickerController.showPickerController(self,delegate: self)
     }
     
     @IBAction func forceNext(sender: AnyObject) {
         UserSetting.enableSetting(USER_LATER_SET_CHAT_BCG_KEY)
         InviteFriendsViewController.showInviteFriendsViewController(self.navigationController!)
+    }
+    
+    func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
+        
+    }
+    
+    func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
+        sender.dismissViewControllerAnimated(true) {             
+            MobClick.event("Vege_FinishSetupChatBcg")
+            InviteFriendsViewController.showInviteFriendsViewController(self.navigationController!)
+        }
     }
     
     static func showSetupViewController(vc:UIViewController)

@@ -156,3 +156,26 @@ extension String{
         return false
     }
 }
+
+func intToBadgeString(value:Int!) -> String?{
+    if value == nil {
+        return nil
+    }
+    if value <= 0 {
+        return nil
+    }
+    if value > 99 {
+        return "99+"
+    }
+    return "\(value)"
+}
+
+func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!){
+    badgeLabel?.hidden = intToBadgeString(value) == nil
+    badgeLabel?.text = intToBadgeString(value)
+    badgeLabel?.animationMaxToMin()
+}
+
+func isInSimulator() -> Bool{
+    return TARGET_IPHONE_SIMULATOR == Int32("1")
+}

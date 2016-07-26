@@ -287,11 +287,15 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     }
     
     private func updateDoneButton(){
+        var count = 0
         if let rows = tableView.indexPathsForSelectedRows {
             self.navigationItem.rightBarButtonItem?.enabled = rows.count > 0
+            count = rows.count
         }else{
             self.navigationItem.rightBarButtonItem?.enabled = false
         }
+        
+        self.navigationItem.rightBarButtonItem?.title = "CONFIRM".localizedString() + (count > 0 ? "(\(count))" : "")
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

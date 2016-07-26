@@ -81,6 +81,11 @@ class ConversationViewControllerProxy: NSObject {
         return rootController.backgroundImage
     }
     
+    var imageChatButton:UIButton!{
+        return rootController.imageChatButton
+    }
+    
+    
     func onVessageReceived(vessages:Vessage) {}
     func onChatterUpdated(chatter:VessageUser) {}
     func onChatGroupUpdated(chatGroup:ChatGroup) {}

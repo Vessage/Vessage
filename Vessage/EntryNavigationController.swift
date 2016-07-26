@@ -32,6 +32,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
     
     func removeObservers(){
+        BahamutRFKit.sharedInstance.removeObserver(self)
         ServiceContainer.getLocationService().removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         
@@ -43,6 +44,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             launchScr = LaunchScreen.getInstanceFromStroyboard()
         }
         self.view.addSubview(launchScr.view)
+        ColorSets.themeColor = launchScr.view.backgroundColor!
         launchScr.mottoLabel.updateConstraints()
         launchScr.mottoLabel.text = "VESSAGE_MOTTO".localizedString()
         launchScr.mottoLabel.hidden = false
@@ -70,6 +72,23 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             userService.getNearUsers(hereLocation)
         }
         locationService.addObserver(self, selector: #selector(EntryNavigationController.onHereLocationUpdated(_:)), name: LocationService.hereUpdated, object: nil)
+        BahamutRFKit.sharedInstance.addObserver(self, selector: #selector(EntryNavigationController.onTokenInvalidated(_:)), name: BahamutRFKit.onTokenInvalidated, object: nil)
+    }
+    
+    func onTokenInvalidated(_:AnyObject)
+    {
+        logoutWithAlert("TOKEN_TIMEOUT_PLEASE_RELOGIN".localizedString())
+    }
+    
+    private func logoutWithAlert(msg:String){
+        
+        let alert = UIAlertController(title: nil, message: msg , preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .Default, handler: { (action) -> Void in
+            self.popToRootViewControllerAnimated(false)
+            ServiceContainer.instance.userLogout()
+            EntryNavigationController.start()
+        }))
+        self.showAlert(alert)
     }
     
     func onHereLocationUpdated(_:NSNotification) {
@@ -81,12 +100,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     
     func onOtherDeviceLogin(_:AnyObject)
     {
-        let alert = UIAlertController(title: nil, message: "OTHER_DEVICE_HAD_LOGIN".localizedString() , preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .Default, handler: { (action) -> Void in
-            ServiceContainer.instance.userLogout()
-            EntryNavigationController.start()
-        }))
-        self.showAlert(alert)
+        logoutWithAlert("OTHER_DEVICE_HAD_LOGIN".localizedString())
     }
     
     func onAppTokenInvalid(_:AnyObject)

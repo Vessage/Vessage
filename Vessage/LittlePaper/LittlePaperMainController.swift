@@ -63,12 +63,12 @@ class LittlePaperMainController: UIViewController {
     
     private func refreshReturnBox(){
         let cnt = LittlePaperManager.instance.notReadResponseCount
-        returnBoxButton.badgeValue = cnt > 0 ? "\(cnt)" : ""
+        returnBoxButton.badgeValue = intToBadgeString(cnt)
     }
     
     private func refreshPaperBoxBadge(){
         let cnt = LittlePaperManager.instance.totalBadgeCount
-        paperBoxButton.badgeValue = cnt > 0 ? "\(cnt)" : ""
+        paperBoxButton.badgeValue = intToBadgeString(cnt)
     }
     
     @IBAction func tellFriends(sender: AnyObject) {

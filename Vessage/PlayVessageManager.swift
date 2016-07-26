@@ -18,6 +18,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     override func onSwitchToManager() {
+        imageChatButton.hidden = rootController.bottomBar.hidden
         rightButton.setImage(UIImage(named: "playNext"), forState: .Normal)
         rightButton.setImage(UIImage(named: "playNext"), forState: .Highlighted)
         recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
@@ -75,15 +76,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
 
     private var badgeValue:Int = 0 {
         didSet{
-            if badgeLabel != nil{
-                if badgeValue == 0{
-                    badgeLabel.hidden = true
-                }else{
-                    badgeLabel.text = "\(badgeValue)"
-                    badgeLabel.hidden = false
-                    badgeLabel.animationMaxToMin()
-                }
-            }
+            setBadgeLabelValue(badgeLabel,value: badgeValue)
         }
     }
     
@@ -117,7 +110,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     private func refreshTimeLabel(){
         if presentingVesseage != nil{
             vessageSendTimeLabel.hidden = false
-            let friendTimeString = presentingVesseage.sendTime.dateTimeOfAccurateString.toFriendlyString()
+            let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
             let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
             vessageSendTimeLabel.text = "\(friendTimeString) \(readStatus)"
         }else{

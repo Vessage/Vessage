@@ -67,6 +67,8 @@ class ConversationListController: UITableViewController {
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        let dict = [NSForegroundColorAttributeName:UIColor.themeColor]
+        self.navigationController?.navigationBar.titleTextAttributes = dict
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         initObservers()
@@ -86,9 +88,11 @@ class ConversationListController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        tryShowUserGuide()
+        /*
         if !tryShowUserGuide() {
             tryShowWelcomeAlert()
-        }
+        }*/
     }
     
     private func initObservers(){

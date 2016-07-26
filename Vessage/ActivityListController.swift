@@ -43,15 +43,7 @@ class ActivityListCell: UITableViewCell {
     
     var badgeValue:Int = 0 {
         didSet{
-            if badgeLabel != nil{
-                if badgeValue == 0{
-                    badgeLabel.hidden = true
-                }else{
-                    badgeLabel.text = "\(badgeValue)"
-                    badgeLabel.hidden = false
-                    badgeLabel.animationMaxToMin()
-                }
-            }
+            setBadgeLabelValue(badgeLabel,value: badgeValue)
         }
     }
     
@@ -76,6 +68,9 @@ class ActivityListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let dict = [NSForegroundColorAttributeName:UIColor.themeColor]
+        self.navigationController?.navigationBar.titleTextAttributes = dict
+        self.navigationItem.title = "EXTRA_SERVICE_DISPLAY_NAME".localizedString()
         self.activityService = ServiceContainer.getActivityService()
         self.tableView.tableFooterView = UIView()
         self.tableView.scrollEnabled = false

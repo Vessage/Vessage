@@ -108,6 +108,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         req.extraInfo = vessage.extraInfo
         req.fileId = vessage.fileId
         req.typeId = vessage.typeId
+        req.body = vessage.body
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
             if let vrm = result.returnObject{
                 vrm.saveModel()
@@ -279,6 +280,17 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     }
     
     func getNotReadVessages(chatterId:String) -> [Vessage]{
+        //TODO: delete test
+        if "true".hasBegin("t") {
+            let vsg = Vessage()
+            vsg.fileId = "578b6f5e99cc252a84c94dc1"
+            vsg.isGroup = false
+            vsg.sender = chatterId
+            vsg.isRead = false
+            vsg.typeId = Vessage.typeFaceText
+            vsg.body = "haha！Alex is a genius！小周真实好样的啊~,haha！Alex is a genius！小周真实好样的啊~,"
+            return [vsg]
+        }
         return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
     }
 }

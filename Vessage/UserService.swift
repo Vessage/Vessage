@@ -16,13 +16,14 @@ extension ServiceContainer{
 }
 
 let UserProfileUpdatedUserValue = "UserProfileUpdatedUserIdValue"
+let UserChatImagesUpdatedValue = "UserChatImagesUpdatedValue"
 let USER_LATER_SET_CHAT_BCG_KEY = "SET_CHAT_BCG_LATER"
-
-
 
 //MARK:UserService
 class UserService:NSNotificationCenter, ServiceProtocol {
     static let userProfileUpdated = "userProfileUpdated"
+    static let userChatImagesUpdated = "userChatImagesUpdated"
+    static let myChatImagesUpdated = "myChatImagesUpdated"
     @objc static var ServiceName:String {return "User Service"}
     
     private var forceGetUserProfileOnce:Bool = false
@@ -31,6 +32,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private let getNearUserIntervalHours = 2.0
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
+    private(set) var myChatImages:[ChatImage]!
     private(set) var activeUsers = [VessageUser]()
     private(set) var nearUsers = [VessageUser]()
     
@@ -61,9 +63,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             if user != nil{
                 if self.myProfile == nil{
                     self.myProfile = user
-                    self.registUserDeviceToken(VessageSetting.deviceToken)
-                    self.getActiveUsers()
-                    self.setServiceReady()
+                    self.prepareServiceAndSetReady()
                 }else{
                     self.myProfile = user
                 }
@@ -72,13 +72,18 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }
         })
         if myProfile != nil{
-            self.registUserDeviceToken(VessageSetting.deviceToken)
-            self.getActiveUsers()
-            self.setServiceReady()
+            self.prepareServiceAndSetReady()
         }
         if let notedNames = UserSetting.getUserValue("UserNotedNames") as? [String:String]{
             self.userNotedNames = notedNames
         }
+    }
+    
+    private func prepareServiceAndSetReady(){
+        self.registUserDeviceToken(VessageSetting.deviceToken)
+        self.getActiveUsers()
+        self.fetchUserChatImages(self.myProfile.userId)
+        self.setServiceReady()
     }
     
     private func initMyProfile(updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
@@ -127,8 +132,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             updatedCallback(user: user)
         }
         return result
-        
-        
     }
     
     func getUserProfileByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
@@ -388,9 +391,77 @@ extension UserService{
         }
     }
     
-    func setChatBackground(imageId:String,callback:(Bool)->Void){
-        let req = ChangeMainChatImageRequest()
+    
+    func setMyAvatar(avatar:String,callback:(Bool)->Void){
+        let req = ChangeAvatarRequest()
+        req.avatar = avatar
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            callback(result.isSuccess)
+        }
+    }
+}
+
+//MARK: User Chat Images
+extension UserService{
+    
+    func fetchUserChatImages(userId:String) {
+        let req = GetUserChatImageRequest()
+        req.userId = userId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<UserChatImages>) in
+            if result.isSuccess{
+                if let r = result.returnObject{
+                    r.saveModel()
+                    if r.userId == self.myProfile.userId{
+                        self.myChatImages = r.chatImages
+                        self.postNotificationNameWithMainAsync(UserService.myChatImagesUpdated, object: self, userInfo: [UserChatImagesUpdatedValue:r])
+                    }
+                    self.postNotificationNameWithMainAsync(UserService.userChatImagesUpdated, object: self, userInfo: [UserChatImagesUpdatedValue:r])
+                }
+            }
+        }
+    }
+    
+    func setChatBackground(imageId:String,imageType:String?,callback:(Bool)->Void){
+        if String.isNullOrEmpty(imageType) {
+            setMainChatBackground(imageId, callback: callback)
+        }else{
+            setTypedChatBackground(imageId, imageType: imageType!, callback: callback)
+        }
+    }
+    
+    private func setTypedChatBackground(imageId:String,imageType:String,callback:(Bool)->Void){
+        let req = UpdateChatImageRequest()
         req.image = imageId
+        req.imageType = imageType
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                if let userChatImages = PersistentManager.sharedInstance.getModel(UserChatImages.self, idValue: self.myProfile!.userId){
+                    if let chatImages = userChatImages.chatImages{
+                        var exists = false
+                        chatImages.forIndexEach({ (i, element) in
+                            if element.imageType == imageType{
+                                chatImages[i].imageId = imageId
+                                exists = true
+                            }
+                        })
+                        if !exists{
+                            userChatImages.chatImages.append(ChatImage(dictionary: ["imageId":imageId,"imageType": imageType]))
+                        }
+                    }else{
+                        userChatImages.chatImages = [ChatImage(dictionary: ["imageId":imageId,"imageType": imageType])]
+                    }
+                    userChatImages.saveModel()
+                    self.myChatImages = userChatImages.chatImages
+                    self.postNotificationNameWithMainAsync(UserService.myChatImagesUpdated, object: self, userInfo: [UserChatImagesUpdatedValue:userChatImages])
+                    self.postNotificationNameWithMainAsync(UserService.userChatImagesUpdated, object: self, userInfo: [UserChatImagesUpdatedValue:userChatImages])
+                }
+            }
+            callback(result.isSuccess)
+        }
+    }
+    
+    private func setMainChatBackground(imageId:String,callback:(Bool)->Void){
+        let req = ChangeMainChatImageRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
             if result.isSuccess{
                 self.myProfile.mainChatImage = imageId
@@ -400,13 +471,6 @@ extension UserService{
         }
     }
     
-    func setMyAvatar(avatar:String,callback:(Bool)->Void){
-        let req = ChangeAvatarRequest()
-        req.avatar = avatar
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
-            callback(result.isSuccess)
-        }
-    }
 }
 
 //MARK: User Mobile

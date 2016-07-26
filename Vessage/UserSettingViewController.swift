@@ -79,10 +79,15 @@ struct MyDetailCellModel {
 }
 
 //MARK:UserSettingViewController
-class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,ProgressTaskDelegate
+class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,ProgressTaskDelegate,ChatBackgroundPickerControllerDelegate
 {
     static let aboutAppReuseId = "aboutApp"
     static let clearCacheCellReuseId = "clearCache"
+    static let exitAccountCellReuseId = "ExitAccountCell"
+    
+    static let avatarWidth:CGFloat = 128
+    static let avatarQuality:CGFloat = 0.8
+    
     struct InfoIds
     {
         static let nickName = "nickname"
@@ -97,14 +102,12 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     override func viewDidLoad() {
         super.viewDidLoad()
         myInfo = ServiceContainer.getUserService().myProfile
-        
         self.navigationItem.title = String(format: "USER_ACCOUNT_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
+        
         initPropertySet()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        let uiview = UIView()
         tableView.backgroundColor = UIColor.footerColor
-        tableView.tableFooterView = uiview
     }
     
     private var myInfo:VessageUser!
@@ -144,7 +147,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         
     }
     
-    @IBAction func logout(sender: AnyObject)
+    func logout(sender: AnyObject)
     {
         let alert = UIAlertController(title: "LOGOUT_CONFIRM_TITLE".localizedString(),
             message: "USER_DATA_WILL_SAVED".localizedString(), preferredStyle: .Alert)
@@ -197,8 +200,8 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        //user infos + about + clear tmp file
-        return 3
+        //user infos + about + clear tmp file + exit account
+        return 4
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -229,22 +232,30 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
             let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.clearCacheCellReuseId,forIndexPath: indexPath)
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.clearTempDir(_:))))
             return cell
-        }else
+        }else if indexPath.section == 2
         {
             let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.aboutAppReuseId,forIndexPath: indexPath)
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.aboutApp(_:))))
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.exitAccountCellReuseId,forIndexPath: indexPath)
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.logout(_:))))
             return cell
         }
     }
     
     //MARK: change chat background
+    func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
+        sender.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
+        
+    }
+    
     func changeChatBcg(_:UITapGestureRecognizer)
     {
-        ChatBackgroundPickerController.showPickerController(self) { (sender) -> Void in
-            sender.dismissViewControllerAnimated(true, completion: { () -> Void in
-                
-            })
-        }
+        ChatBackgroundPickerController.showPickerController(self,delegate: self)
     }
     
     //MARK: bind mobile
@@ -376,9 +387,10 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     {
         imagePickerController.dismissViewControllerAnimated(true)
         {
-            self.avatarImageView.image = image
+            let avatarImage = image.scaleToWidthOf(UserSettingViewController.avatarWidth, quality: UserSettingViewController.avatarQuality)
+            self.avatarImageView.image = avatarImage
             let fService = ServiceContainer.getService(FileService)
-            let imageData = UIImageJPEGRepresentation(image, 0.7)
+            let imageData = UIImageJPEGRepresentation(avatarImage,1)
             let localPath = fService.createLocalStoreFileName(FileType.Image)
             if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
             {

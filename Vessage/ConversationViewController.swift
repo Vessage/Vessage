@@ -12,6 +12,8 @@ import UIKit
 class ConversationViewController: UIViewController {
     
     //MARK: Properties
+    private var needSetChatImageIfNotExists = true
+    
     var isGroupChat:Bool{
         return chatGroup != nil
     }
@@ -77,6 +79,11 @@ class ConversationViewController: UIViewController {
     
     private var isGoAhead = false
     
+    @IBOutlet weak var imageChatButton: UIButton!{
+        didSet{
+            imageChatButton.hidden = true
+        }
+    }
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
@@ -278,6 +285,7 @@ extension ConversationViewController{
             UIView.animateWithDuration(0.08) {
                 self.bottomBar.hidden = false
                 self.bottomBar.frame.origin.y = self.view.frame.height - self.bottomBar.frame.height
+                self.imageChatButton.hidden = false
             }
         }
     }
@@ -376,19 +384,32 @@ extension ConversationViewController{
 }
 
 //MARK: Set Chat Backgroud
-extension ConversationViewController{
+extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
+    
+    func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
+        sender.dismissViewControllerAnimated(true){
+            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                self.startRecording()
+            })
+            self.showAlert("CHAT_BCG_SETED_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
+        }
+    }
+    
+    func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
+        let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+            self.startRecording()
+        })
+        self.showAlert("CHAT_BCG_NOT_SET_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
+    }
     
     private func needSetChatBackgroundAndShow() -> Bool{
-        if userService.isUserChatBackgroundIsSeted{
+        if !needSetChatImageIfNotExists || userService.isUserChatBackgroundIsSeted{
             return false
         }else{
+            needSetChatImageIfNotExists = false
             let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
                 self.isGoAhead = true
-                ChatBackgroundPickerController.showPickerController(self) { (sender) -> Void in
-                    sender.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        
-                    })
-                }
+                ChatBackgroundPickerController.showPickerController(self,delegate: self)
             })
             self.showAlert("NEED_SET_CHAT_BCG_TITLE".localizedString(), msg: "NEED_SET_CHAT_BCG_MSG".localizedString(), actions: [ok])
             return true

@@ -8,6 +8,25 @@
 
 import Foundation
 
+class ChatImage: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "imageId"
+    }
+    
+    var imageId:String!
+    var imageType:String!
+}
+
+class UserChatImages: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "userId"
+    }
+    
+    var userId:String!
+    var chatImages:[ChatImage]!
+    
+}
+
 class VessageUser: BahamutObject {
     override func getObjectUniqueIdName() -> String {
         return "userId"
@@ -186,6 +205,41 @@ class ChangeMainChatImageRequest: BahamutRFRequestBase {
         self.method = .PUT
         self.api = "/VessageUsers/MainChatImage"
     }
+    
+    var image:String!{
+        didSet{
+            self.paramenters["image"] = image
+        }
+    }
+}
+
+class GetUserChatImageRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .GET
+        self.api = "/VessageUsers/ChatImages"
+    }
+    
+    var userId:String!{
+        didSet{
+            self.paramenters["userId"] = userId
+        }
+    }
+}
+
+class UpdateChatImageRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/VessageUsers/ChatImages"
+    }
+    
+    var imageType:String!{
+        didSet{
+            self.paramenters["imageType"] = image
+        }
+    }
+    
     
     var image:String!{
         didSet{

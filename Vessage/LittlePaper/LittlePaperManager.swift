@@ -9,14 +9,17 @@
 import Foundation
 class LittlePaperManager {
     static private(set) var instance:LittlePaperManager!
+    static private(set) var inited = false
     static func initManager(){
         if instance == nil {
             instance = LittlePaperManager()
         }
         instance.loadCachedData()
+        inited = true
     }
     
     static func releaseManager(){
+        inited = false
         PersistentManager.sharedInstance.saveAll()
         instance.paperMessagesList = nil
     }
@@ -111,6 +114,7 @@ class LittlePaperManager {
     func getReadPaperResponses(callback:()->Void) {
         let req = GetReadPaperResponsesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[LittlePaperReadResponse]>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if let objs = result.returnObject{
                 objs.saveBahamutObjectModels()
                 self.loadAskPapers()
@@ -123,6 +127,7 @@ class LittlePaperManager {
     func clearGotResponses() {
         let req = ClearGotResponsesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
         }
     }
     
@@ -130,6 +135,7 @@ class LittlePaperManager {
         let req = AskSenderReadPaperRequest()
         req.setPaperId(paperId)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req){ (result:SLResult<MsgResult>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if result.isSuccess{
                 callback(sended: true, errorMsg: nil)
             }else{
@@ -147,6 +153,7 @@ class LittlePaperManager {
         let req = OpenAcceptlessPaperRequest()
         req.setPaperId(paperId)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<LittlePaperMessage>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if result.isSuccess{
                 let paper = result.returnObject
                 paper.saveModel()
@@ -168,6 +175,7 @@ class LittlePaperManager {
         req.setPaperId(paperId)
         req.setReader(reader)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if result.isSuccess{
                 let reqs = self.readPaperResponses.removeElement{$0.paperId == paperId}
                 PersistentManager.sharedInstance.removeModels(reqs)
@@ -183,6 +191,7 @@ class LittlePaperManager {
         req.setPaperId(paperId)
         req.setReader(reader)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if result.isSuccess{
                 let reqs = self.readPaperResponses.removeElement{$0.paperId == paperId}
                 PersistentManager.sharedInstance.removeModels(reqs)
@@ -199,6 +208,7 @@ class LittlePaperManager {
         req.setNextReceiver(userId)
         req.setPaperId(paperId)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             var msg = "SUCCESS"
             if result.statusCode == 400{
                 msg = "NO_SUCH_PAPER_ID"
@@ -228,6 +238,7 @@ class LittlePaperManager {
         let req = GetPaperMessagesStatusRequest()
         req.setPaperId(ids)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[LittlePaperMessage]>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             var updated = 0
             if let resultMsgs = result.returnObject{
                 for m in resultMsgs{
@@ -313,6 +324,7 @@ class LittlePaperManager {
     func getPaperMessages(callback:(suc:Bool)->Void){
         let req = GetReceivedPaperMessagesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[LittlePaperMessage]>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if let msgs = result.returnObject{
                 msgs.saveBahamutObjectModels()
                 self.myNotDealMessages = msgs
@@ -329,6 +341,7 @@ class LittlePaperManager {
         req.setReceiverInfo(receiverInfo)
         
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<LittlePaperMessage>) in
+            if !LittlePaperManager.inited {print("LittlePaperManager Released");return}
             if let msg = result.returnObject{
                 msg.saveModel()
                 self.mySendedMessages.insert(msg, atIndex: 0)

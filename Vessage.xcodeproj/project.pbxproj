@@ -103,6 +103,7 @@
 		E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */; };
 		E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */; };
 		E7933B2F1D42FF64000FCE84 /* VessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */; };
+		E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79C24D91D445057006754F1 /* FaceTextImageView.swift */; };
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
@@ -114,6 +115,8 @@
 		E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
 		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
+		E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */; };
+		E7BB96341D461D7400ECBD11 /* FaceTextChatBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
 		E7BFC3931CDB6CCF00CDB392 /* ActivityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */; };
@@ -293,6 +296,7 @@
 		E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageHandler.swift; sourceTree = "<group>"; };
+		E79C24D91D445057006754F1 /* FaceTextImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextImageView.swift; sourceTree = "<group>"; };
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +308,8 @@
 		E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
 		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
+		E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageChatInputView.xib; sourceTree = "<group>"; };
+		E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceTextChatBubble.xib; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListController.swift; sourceTree = "<group>"; };
@@ -715,6 +721,8 @@
 				E7E937791D16DAB0001484F4 /* SelectVessageExpandableHeader.xib */,
 				E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */,
 				E7F532E11D3A0DEC008078DE /* Conversation.storyboard */,
+				E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */,
+				E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -746,6 +754,7 @@
 				E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */,
 				E7F2166C1CFBD7E300447DA9 /* ShareHelper.swift */,
 				E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */,
+				E79C24D91D445057006754F1 /* FaceTextImageView.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -1078,6 +1087,8 @@
 				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
+				E7BB96341D461D7400ECBD11 /* FaceTextChatBubble.xib in Resources */,
+				E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */,
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
@@ -1252,6 +1263,7 @@
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
+				E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */,
 				E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */,
 				E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */,

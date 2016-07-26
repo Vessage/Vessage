@@ -206,7 +206,7 @@ class VessageQueue:NSObject{
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
             self.sendVessage(taskInfoKey)
         }
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .Cancel) { (action) -> Void in
+        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
             self.controller.playCrossMark("CANCEL".localizedString())
         }
         controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])

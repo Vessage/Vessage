@@ -53,6 +53,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
 extension RecordVessageManager{
     
     override func onSwitchToManager() {
+        imageChatButton.hidden = true
         rightButton.setImage(UIImage(named: "close"), forState: .Normal)
         rightButton.setImage(UIImage(named: "close"), forState: .Highlighted)
         groupAvatarManager.renderImageViews()
@@ -228,7 +229,18 @@ extension RecordVessageManager{
     private func prepareSendRecord()
     {
         recordButton.userInteractionEnabled = false
-        camera.saveRecordedVideo()
+        #if DEBUG
+            if isInSimulator(){
+                recording = false
+                let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
+                PersistentFileHelper.storeFile(NSData(), filePath: newFilePath)
+                vessageCameraVideoSaved(videoSavedUrl: NSURL(fileURLWithPath: newFilePath))
+            }else{
+                camera.saveRecordedVideo()
+            }
+        #else
+            camera.saveRecordedVideo()
+        #endif
     }
     
     private func confirmSend(url:NSURL){
@@ -318,6 +330,24 @@ extension RecordVessageManager{
 extension RecordVessageManager:VessageCameraDelegate{
     func startRecord()
     {
+        #if DEBUG
+        if isInSimulator() {
+            startSimulatorRecord()
+        }else{
+            startRealCameraRecord()
+        }
+        #else
+            startRealCameraRecord()
+        #endif
+    }
+    
+    private func startSimulatorRecord(){
+        userClickSend = true
+        recordingTime = 0
+        recording = true
+    }
+    
+    private func startRealCameraRecord(){
         if camera.cameraInited{
             userClickSend = true
             MobClick.event("Vege_RecordVessage")
@@ -328,7 +358,16 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     func cancelRecord() {
-        camera.cancelRecord()
+        #if DEBUG
+            if isInSimulator() {
+                recording = false
+            }else{
+                camera.cancelRecord()
+            }
+        #else
+            camera.cancelRecord()
+        #endif
+        
     }
     
     //MARK: VessageCamera Delegate

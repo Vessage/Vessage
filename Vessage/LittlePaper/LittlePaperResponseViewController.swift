@@ -30,6 +30,12 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
         self.tableView.dataSource = self
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     @IBAction func onClickClose(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }

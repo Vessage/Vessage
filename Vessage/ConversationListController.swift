@@ -19,10 +19,17 @@ class SearchResultModel{
 
 //MARK: ConversationListCellBase
 class ConversationListCellBase:UITableViewCell{
-    var rootController:ConversationListController!
+    weak var rootController:ConversationListController!
     
     func onCellClicked(){
         
+    }
+    
+    deinit{
+        rootController = nil
+        #if DEBUG
+            print("Deinited:ConversationListCellBase")
+        #endif
     }
 }
 
@@ -34,6 +41,7 @@ class ConversationListController: UITableViewController {
     let userService = ServiceContainer.getUserService()
     let groupService = ServiceContainer.getChatGroupService()
     private var refreshListTimer:NSTimer!
+    
     //MARK: search property
     private var searchResult = [SearchResultModel](){
         didSet{
@@ -95,6 +103,12 @@ class ConversationListController: UITableViewController {
         }*/
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private func initObservers(){
         conversationService.addObserver(self, selector: #selector(ConversationListController.onConversationListUpdated(_:)), name: ConversationService.conversationListUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationListController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
@@ -105,12 +119,12 @@ class ConversationListController: UITableViewController {
         refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(100, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
     }
     
-    private func removeObservers(){
-        refreshListTimer.invalidate()
-        refreshListTimer = nil
+    private func releaseController(){
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
+        refreshListTimer.invalidate()
+        refreshListTimer = nil
     }
     
     //MARK: notifications
@@ -119,8 +133,7 @@ class ConversationListController: UITableViewController {
     }
     
     func onServicesWillLogout(a:NSNotification) {
-        
-        removeObservers()
+        releaseController()
     }
     
     func onVessageSendFail(a:NSNotification){
@@ -232,6 +245,7 @@ class ConversationListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if isSearching{
             return searchResult.count
         }else{
@@ -332,18 +346,7 @@ class ConversationListController: UITableViewController {
         }
         return nil
     }
-    
-    //MARK: showConversationListController
-    static func showConversationListController(viewController:UIViewController)
-    {
-        let controller = instanceFromStoryBoard("Main", identifier: "ConversationListController") as! ConversationListController
-        let nvc = UINavigationController(rootViewController: controller)
-        viewController.presentViewController(nvc, animated: false) { () -> Void in
-            
-        }
-    }
 }
-
 
 //MARK: ConversationListController extension UISearchBarDelegate
 extension ConversationListController:UISearchBarDelegate

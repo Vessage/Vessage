@@ -77,12 +77,14 @@ extension RecordVessageManager{
     }
     
     override func onReleaseManager() {
+        self.recordingTimer.invalidate()
         ServiceContainer.getVessageService().removeObserver(self)
         camera.cancelRecord()
         camera.closeCamera()
         camera = nil
         groupAvatarManager?.releaseManager()
         groupAvatarManager = nil
+        super.onReleaseManager()
     }
 }
 
@@ -90,7 +92,7 @@ extension RecordVessageManager{
 
 class GroupChatAvatarManager:NSObject {
     private var avatarImageGroup = [UIImageView(),UIImageView(),UIImageView(),UIImageView(),UIImageView()]
-    private var container:UIView!
+    weak private var container:UIView!
     var userFaceIds = [String:String?]()
     func initManager(faceViewsContainer:UIView) {
         ServiceContainer.getUserService().addObserver(self, selector: #selector(GroupChatAvatarManager.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
@@ -98,6 +100,7 @@ class GroupChatAvatarManager:NSObject {
     }
     
     func releaseManager() {
+        
         ServiceContainer.getUserService().removeObserver(self)
         avatarImageGroup.removeAll()
         container = nil

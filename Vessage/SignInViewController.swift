@@ -32,6 +32,12 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         ServiceContainer.instance.addObserver(self, selector: #selector(SignInViewController.onInitServices(_:)), name: ServiceContainer.OnAllServicesReady, object: nil)

@@ -12,7 +12,13 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let dict = [NSForegroundColorAttributeName:UIColor.themeColor]
+        self.navigationController?.navigationBar.titleTextAttributes = dict
         
+    }
+    
+    @IBAction func done(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     // MARK: - Table view data source
@@ -38,4 +44,9 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
         return tableView.frame.height
     }
 
+    static func showChatImageMgrVeiwController(vc:UIViewController){
+        let controller = instanceFromStoryBoard("User", identifier: "ChatImageMgrViewController") as! ChatImageMgrViewController
+        let nvc = UINavigationController(rootViewController: controller)
+        vc.presentViewController(nvc, animated: true, completion: nil)
+    }
 }

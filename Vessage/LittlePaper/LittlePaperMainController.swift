@@ -39,6 +39,12 @@ class LittlePaperMainController: UIViewController {
         }
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     func onActivityUpdated(a:NSNotification) {
         if let id = a.userInfo?[UpdatedActivityIdValue] as? String{
             if id == LittlePaperManager.ACTIVITY_ID{

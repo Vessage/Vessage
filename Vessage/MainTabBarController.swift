@@ -50,6 +50,14 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.getActivityService().getActivitiesBoardData()
     }
     
+    deinit{
+        self.viewControllers = nil
+        
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     func onServicesWillLogout(a:NSNotification) {
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)

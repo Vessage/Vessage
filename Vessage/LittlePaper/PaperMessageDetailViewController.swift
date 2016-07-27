@@ -48,6 +48,12 @@ class PaperMessageDetailViewController: UIViewController,SelectVessageUserViewCo
         refreshPaper()
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     //MARK: Refresh Paper Bottom Buttons
     private func refreshPaper(){
         paperReceiverInfoLabel.text = paperMessage.receiverInfo

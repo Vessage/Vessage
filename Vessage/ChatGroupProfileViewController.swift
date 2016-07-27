@@ -9,7 +9,7 @@
 import UIKit
 
 class ChatGroupProfileCellBase: UITableViewCell {
-    var rootController:ChatGroupProfileViewController!
+    weak var rootController:ChatGroupProfileViewController!
     var chatGroup:ChatGroup!{
         return rootController.chatGroup
     }

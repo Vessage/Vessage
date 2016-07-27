@@ -10,7 +10,7 @@ import Foundation
 
 //MARK:ConversationViewControllerProxy
 class ConversationViewControllerProxy: NSObject {
-    private(set) var rootController:ConversationViewController!
+    private(set) weak var rootController:ConversationViewController!
     
     var isGroupChat:Bool{
         return rootController.isGroupChat
@@ -98,9 +98,9 @@ class ConversationViewControllerProxy: NSObject {
         self.rootController = controller
     }
     func onReleaseManager() {
-        
+        self.rootController = nil
     }
     func onSwitchToManager() {
-        
+        self.rootController = nil
     }
 }

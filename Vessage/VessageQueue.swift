@@ -60,7 +60,7 @@ class VessageQueue:NSObject{
         return VessageQueue()
     }()
     
-    var controller:UIViewController!{
+    weak var controller:UIViewController!{
         return UIApplication.currentShowingViewController
     }
     

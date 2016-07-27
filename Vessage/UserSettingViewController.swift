@@ -120,6 +120,12 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         }
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private var myInfo:VessageUser!
     
     private func initPropertySet()
@@ -265,7 +271,8 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     func changeChatBcg(_:UITapGestureRecognizer)
     {
-        ChatBackgroundPickerController.showPickerController(self,delegate: self)
+        //ChatBackgroundPickerController.showPickerController(self,delegate: self)
+        ChatImageMgrViewController.showChatImageMgrVeiwController(self)
     }
     
     //MARK: bind mobile

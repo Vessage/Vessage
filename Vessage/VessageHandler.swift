@@ -15,7 +15,7 @@ protocol VessageHandler{
 }
 
 class VessageHandlerBase: NSObject,VessageHandler {
-    private(set) var container:UIView!
+    weak private(set) var container:UIView!
     private(set) var playVessageManager:PlayVessageManager!
     private(set) var presentingVesseage:Vessage!
     

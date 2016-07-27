@@ -30,6 +30,12 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
         self.navigationController?.navigationBarHidden = false
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     //MARK: UITextViewDelegate
     func textViewDidBeginEditing(textView: UITextView) {
         msgContentTipsLabel.hidden = true

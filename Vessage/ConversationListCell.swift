@@ -13,9 +13,9 @@ typealias ConversationListCellHandler = (cell:ConversationListCell)->Void
 class ConversationListCell:ConversationListCellBase{
     static let reuseId = "ConversationListCell"
     
-    override var rootController:ConversationListController!{
+    weak override var rootController:ConversationListController!{
         didSet{
-            if oldValue == nil{
+            if oldValue == nil && rootController != nil{
                 self.addObservers()
             }
         }
@@ -86,13 +86,6 @@ class ConversationListCell:ConversationListCellBase{
         didSet{
             setBadgeLabelValue(badgeLabel,value: badgeValue)
         }
-    }
-
-    func removeObservers(){
-        ServiceContainer.getChatGroupService().removeObserver(self)
-        ServiceContainer.getUserService().removeObserver(self)
-        ServiceContainer.getVessageService().removeObserver(self)
-        ServiceContainer.getConversationService().removeObserver(self)
     }
     
     override func onCellClicked() {
@@ -167,6 +160,15 @@ class ConversationListCell:ConversationListCellBase{
         ServiceContainer.getConversationService().addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListCell.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         
+    }
+    
+    func removeObservers(){
+        self.conversationListCellHandler = nil
+        ServiceContainer.instance.removeObserver(self)
+        ServiceContainer.getChatGroupService().removeObserver(self)
+        ServiceContainer.getUserService().removeObserver(self)
+        ServiceContainer.getVessageService().removeObserver(self)
+        ServiceContainer.getConversationService().removeObserver(self)
     }
     
     func onServicesWillLogout(a:NSNotification) {

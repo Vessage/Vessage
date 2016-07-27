@@ -8,7 +8,7 @@
 
 class ActivityListCell: UITableViewCell {
     static let reuseId = "ActivityListCell"
-    private var rootController:ActivityListController!
+    private weak var rootController:ActivityListController!
     var activityInfo:ActivityInfo!{
         didSet{
             badgeValue = 0
@@ -78,6 +78,12 @@ class ActivityListController: UITableViewController {
         self.tableView.allowsMultipleSelection = false
         self.activityService.addObserver(self, selector: #selector(ActivityListController.onActivityBadgeUpdated(_:)), name: ActivityService.onEnabledActivityBadgeUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ActivityListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
+    }
+    
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
     }
     
     func onServicesWillLogout(a:NSNotification) {

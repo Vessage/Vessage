@@ -39,6 +39,12 @@ class SignUpViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private func showIndicator(){
         self.refreshingIndicator.startAnimating()
         self.refreshingIndicator.hidden = false

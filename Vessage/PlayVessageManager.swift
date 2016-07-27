@@ -30,6 +30,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
             handler.releaseHandler()
         }
         vessageHandlers.removeAll()
+        super.onReleaseManager()
     }
     
     override func initManager(controller: ConversationViewController) {

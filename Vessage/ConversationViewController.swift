@@ -77,8 +77,6 @@ class ConversationViewController: UIViewController {
         return !isRecording
     }
     
-    private var isGoAhead = false
-    
     @IBOutlet weak var imageChatButton: UIButton!{
         didSet{
             imageChatButton.hidden = true
@@ -150,7 +148,17 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
     @IBOutlet weak var groupFaceContainer: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
+    
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
 
+}
+
+func getRandomConversationBackground() -> UIImage {
+    return UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")!
 }
 
 //MARK: Life Circle
@@ -158,7 +166,7 @@ extension ConversationViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.backgroundImage.image = UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")
+        self.backgroundImage.image = getRandomConversationBackground()
         playVessageManager = PlayVessageManager()
         playVessageManager.initManager(self)
         recordVessageManager = RecordVessageManager()
@@ -183,24 +191,25 @@ extension ConversationViewController{
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        if !isGoAhead {
-            removeObservers()
-            recordVessageManager.onReleaseManager()
-            playVessageManager.onReleaseManager()
-        }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        isGoAhead = false
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         showBottomBar()
         recordVessageManager.camera.openCamera()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if !(self.navigationController?.viewControllers.contains(self) ?? false) {
+            releaseController()
+        }
+    }
+    
+    private func releaseController(){
+        self.removeObservers()
+        self.recordVessageManager.onReleaseManager()
+        self.playVessageManager.onReleaseManager()
+        self.playVessageManager = nil
+        self.recordVessageManager = nil
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -233,7 +242,6 @@ extension ConversationViewController{
             self.playToast("NOT_IN_CHAT_GROUP".localizedString())
             return
         }
-        isGoAhead = true
         if isGroupChat {
             showChatGroupProfile()
         }else{
@@ -413,18 +421,12 @@ extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
         }else{
             needSetChatImageIfNotExists = false
             let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-                self.isGoAhead = true
                 ChatBackgroundPickerController.showPickerController(self,delegate: self)
             })
             self.showAlert("NEED_SET_CHAT_BCG_TITLE".localizedString(), msg: "NEED_SET_CHAT_BCG_MSG".localizedString(), actions: [ok])
             return true
         }
     }
-    
-}
-
-//MARK: Note Chatter Name
-extension ConversationViewController{
     
 }
 

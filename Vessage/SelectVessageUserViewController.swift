@@ -177,6 +177,12 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
             }
         }
     }
+    
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
 
     @IBAction func finishSelect(sender: AnyObject) {
         if let dg = delegate{

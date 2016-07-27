@@ -113,6 +113,12 @@ class LittlePaperMessageListController: UIViewController,UITableViewDelegate,UIT
         emptyTableViewFooter.hidden = false
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private func setButtonBadges(){
         var cnt = 0
         receivedButton.badgeOriginX = -6

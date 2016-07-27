@@ -185,7 +185,7 @@ class ConversationListController: UITableViewController {
         if let user = self.userService.getCachedUserByMobile(mobile){
             ConversationViewController.showConversationViewController(self.navigationController!, userId: user.userId)
         }else{
-            let hud = self.showActivityHud()
+            let hud = self.showAnimationHud()
             self.userService.registNewUserByMobile(mobile, noteName: noteName ?? mobile, updatedCallback: { (user) in
                 hud.hide(true)
                 if let u = user{
@@ -372,6 +372,15 @@ extension ConversationListController:UISearchBarDelegate
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        let testModeStrs = searchText.split(">")
+        if testModeStrs.count == 2 {
+            if DeveloperMainPanelController.isShowDeveloperPanel(self, id: testModeStrs[0], psw: testModeStrs[1]){
+                isSearching = false
+                return
+            }
+        }
+        
         searchResult.removeAll()
         if String.isNullOrWhiteSpace(searchText) == false{
             let conversations = conversationService.searchConversation(searchText)

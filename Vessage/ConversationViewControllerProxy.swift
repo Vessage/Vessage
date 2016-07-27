@@ -48,8 +48,13 @@ class ConversationViewControllerProxy: NSObject {
     var badgeLabel:UILabel!{
         return rootController.badgeLabel
     }
-    var vessageSendTimeLabel:UILabel{
-        return rootController.vessageSendTimeLabel
+    
+    var conversationLeftTopLabel:UILabel!{
+        return rootController.conversationLeftTopLabel
+    }
+    
+    var conversationRightBottomLabel:UILabel!{
+        return rootController.conversationRightBottomLabel
     }
     
     var recordButton: UIButton!{

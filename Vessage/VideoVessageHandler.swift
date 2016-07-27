@@ -42,6 +42,14 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
             initVessageViews()
             vessagePlayer.filePath = presentingVesseage.fileId
         }
+        refreshConversationLabel(newVessage)
+    }
+    
+    private func refreshConversationLabel(presentingVesseage:Vessage){
+        let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
+        let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
+        playVessageManager.rightBottomLabelText = "\(friendTimeString) \(readStatus)"
+        playVessageManager.leftTopLabelText = nil
     }
     
     //private var vessagePlayer:BahamutFilmView!

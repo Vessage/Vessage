@@ -73,7 +73,7 @@ class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigat
     private func showContactView(){
         let controller = ABPeoplePickerNavigationController()
         controller.peoplePickerDelegate = self
-        let hud = self.rootController.showActivityHud()
+        let hud = self.rootController.showAnimationHud()
         self.rootController.presentViewController(controller, animated: true) { () -> Void in
             MobClick.event("Vege_OpenContactView")
             hud.hideAsync(true)

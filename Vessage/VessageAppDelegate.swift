@@ -101,7 +101,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
             UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: [NSObject: AnyObject]())
         }
         UMessage.registerForRemoteNotifications()
-        UMessage.setAutoAlert(false)
+        UMessage.setAutoAlert(true)
     }
     
     //MARK: App Delegate
@@ -129,18 +129,20 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
         if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
-            if ServiceContainer.isAllServiceReady{
-                if let customCmd = userInfo["custom"] as? String{
+            if let customCmd = userInfo["custom"] as? String{
+                if ServiceContainer.isAllServiceReady{
                     switch customCmd {
                     case "NewVessageNotify":ServiceContainer.getVessageService().newVessageFromServer()
                     case "ActivityUpdatedNotify":ServiceContainer.getActivityService().getActivitiesBoardData()
                     default:NSLog("Unknow Custom Notification:%@", customCmd)
                     }
+                }else{
+                    NSLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
                 }
+                return
             }
-        }else{
-            UMessage.didReceiveRemoteNotification(userInfo)
         }
+        UMessage.didReceiveRemoteNotification(userInfo)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

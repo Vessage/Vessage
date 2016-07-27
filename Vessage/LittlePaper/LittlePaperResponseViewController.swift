@@ -97,7 +97,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
             if paper.isOpened {
                 self.showPaperMessageDetailViewController(paper)
             }else if info.code == LittlePaperReadResponse.CODE_ACCEPT_READ{
-                let hud = self.showActivityHud()
+                let hud = self.showAnimationHud()
                 LittlePaperManager.instance.refreshOpenedPaper(paper, callback: { (updated) in
                     hud.hide(true)
                     if updated != nil{
@@ -127,7 +127,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
             ConversationViewController.showConversationViewController(self.navigationController!, userId: info.asker)
         })
         let accept = UIAlertAction(title: "ACCEPT_READ".littlePaperString, style: .Default, handler: { (ac) in
-            let hud = self.showActivityHud()
+            let hud = self.showAnimationHud()
             LittlePaperManager.instance.acceptReadPaperForReader(info.paperId, reader: info.asker, callback: { (isOk, errorMsg) in
                 hud.hide(true)
                 if isOk{
@@ -139,7 +139,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
         })
         
         let reject = UIAlertAction(title: "REJECT_READ".littlePaperString, style: .Default, handler: { (ac) in
-            let hud = self.showActivityHud()
+            let hud = self.showAnimationHud()
             LittlePaperManager.instance.rejectReadPaperForReader(info.paperId, reader: info.asker, callback: { (isOk, errorMsg) in
                 hud.hide(true)
                 if isOk{

@@ -22,6 +22,14 @@ class FaceTextVessageHandler: VessageHandlerBase {
         container.addSubview(self.faceTextView)
         container.sendSubviewToBack(self.faceTextView)
         self.faceTextView.setTextImage(newVessage.fileId, message: newVessage.body)
+        refreshConversationLabel(newVessage)
+    }
+    
+    private func refreshConversationLabel(presentingVesseage:Vessage){
+        let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
+        let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
+        playVessageManager.leftTopLabelText = "\(friendTimeString) \(readStatus)"
+        playVessageManager.rightBottomLabelText = nil
     }
     
     override func releaseHandler() {

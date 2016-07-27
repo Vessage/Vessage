@@ -238,7 +238,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         let img = takedImage.scaleToWidthOf(ChatBackgroundPickerController.chatImageWidth)
         let imageData = UIImageJPEGRepresentation(img, ChatBackgroundPickerController.chatImageQuality)
         let localPath = fService.createLocalStoreFileName(FileType.Image)
-        taskHud = self.showActivityHud()
+        taskHud = self.showAnimationHud()
         if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
         {
             fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in

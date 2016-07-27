@@ -7,26 +7,17 @@
 //
 
 import Foundation
-import LTMorphingLabel
 
 class FaceTextChatBubble: UIView {
-    /*
-    static let effects:[LTMorphingEffect] = [LTMorphingEffect.Evaporate,LTMorphingEffect.Pixelate,LTMorphingEffect.Scale]
-    static func randomEffect()->LTMorphingEffect{
-        return effects[random() % effects.count]
-    }*/
+
     var messageContent:String!{
         didSet{
-            //messageContentTextView.morphingEffect = FaceTextChatBubble.randomEffect()
+            
             messageContentTextView?.text = messageContent
         }
     }
     
-    @IBOutlet weak var messageContentTextView: UILabel!{
-        didSet{
-            //messageContentTextView.morphingEffect = .Pixelate
-        }
-    }
+    @IBOutlet weak var messageContentTextView: UILabel!
     
     static func instanceFromXib() -> FaceTextChatBubble{
         let view = NSBundle.mainBundle().loadNibNamed("FaceTextChatBubble", owner: nil, options: nil)[0] as! FaceTextChatBubble
@@ -66,7 +57,7 @@ class FaceTextImageView: UIView {
         self.render()
         self.chatBubble.messageContent = message
         self.chatBubble.hidden = true
-        ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: "", defaultImage: UIImage(named: "test3")!) { (suc) in
+        ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: fileId, defaultImage: getDefaultFace()) { (suc) in
             self.adjustChatBubble()
         }
     }
@@ -94,7 +85,7 @@ class FaceTextImageView: UIView {
                 var rect = faceRect
                 rect = CGRectMake(previewBox.size.width - faceRect.origin.x - faceRect.size.width, previewBox.size.height - faceRect.size.height - faceRect.origin.y, faceRect.size.width, faceRect.size.height);
                 let x = rect.origin.x + rect.size.width / 2 - self.imageView.frame.width / 2
-                let y = rect.origin.y + rect.size.height
+                let y = rect.origin.y + rect.size.height - 10
                 self.setChatBubblePosition(CGPointMake(x, y))
                 return
             }

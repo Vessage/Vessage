@@ -202,7 +202,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     private func showContactView(){
         let controller = ABPeoplePickerNavigationController()
         controller.peoplePickerDelegate = self
-        let hud = self.showActivityHud()
+        let hud = self.showAnimationHud()
         self.presentViewController(controller, animated: true) { () -> Void in
             MobClick.event("Vege_OpenContactView")
             hud.hideAsync(true)
@@ -224,7 +224,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
                 let userService = ServiceContainer.getUserService()
                 let user = userService.getCachedUserByMobile(mobile)
                 if user == nil{
-                    let hud = self.showActivityHud()
+                    let hud = self.showAnimationHud()
                     userService.registNewUserByMobile(mobile, noteName: title, updatedCallback: { (mUser) in
                         hud.hide(true)
                         if mUser != nil{

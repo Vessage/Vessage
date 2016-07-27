@@ -11,6 +11,22 @@ import UIKit
 class DeveloperMainPanelController: UIViewController
 {
     
+    @IBOutlet weak var deviceTokenLabel: UILabel!{
+        didSet{
+            deviceTokenLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(DeveloperMainPanelController.onTapDeviceTokenLabel(_:))))
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        deviceTokenLabel.text = "DeviceToken:\(VessageSetting.deviceToken)"
+    }
+    
+    func onTapDeviceTokenLabel(sender:AnyObject) {
+        UIPasteboard.generalPasteboard().setValue(VessageSetting.deviceToken, forPasteboardType: "public.utf8-plain-text")
+        self.playToast("Device Token Copied")
+    }
+    
     @IBAction func clearAllData(sender: AnyObject)
     {
         PersistentManager.sharedInstance.clearCache()

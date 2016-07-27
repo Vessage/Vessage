@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 extension UserService
 {
@@ -99,15 +100,24 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         static let useTink = "useTink"
     }
     
+    private var startHud:MBProgressHUD!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        myInfo = ServiceContainer.getUserService().myProfile
-        self.navigationItem.title = String(format: "USER_ACCOUNT_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
-        
-        initPropertySet()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.backgroundColor = UIColor.footerColor
+        myInfo = ServiceContainer.getUserService().myProfile
+        self.navigationItem.title = String(format: "USER_ACCOUNT_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
+        initPropertySet()
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if let hud = self.startHud {
+            hud.hide(true)
+            self.startHud = nil
+        }
     }
     
     private var myInfo:VessageUser!
@@ -293,7 +303,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     }
     
     private func validateMobile(phoneNo:String,zone:String,code:String){
-        let hud = self.showActivityHud()
+        let hud = self.showAnimationHud()
         ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc,newUserId) -> Void in
             hud.hideAsync(false)
             if let newId = newUserId{
@@ -487,6 +497,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     static func showUserSettingViewController(navController:UINavigationController){
         let c = instanceFromStoryBoard()
+        c.startHud = navController.showAnimationHud()
         navController.pushViewController(c, animated: true)
     }
     

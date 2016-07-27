@@ -51,7 +51,7 @@ class ValidateMobileViewController: UIViewController {
     }
     
     private func validateMobile(phoneNo:String,zone:String,code:String){
-        let hud = self.showActivityHud()
+        let hud = self.showAnimationHud()
         ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc,newUserId) -> Void in
             hud.hideAsync(false)
             if let newId = newUserId{

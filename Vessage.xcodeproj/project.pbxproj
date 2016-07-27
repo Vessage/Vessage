@@ -169,6 +169,7 @@
 		E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */; };
 		E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */; };
 		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
+		E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */; };
 		E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F532E11D3A0DEC008078DE /* Conversation.storyboard */; };
 		E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */; };
 		E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */; };
@@ -366,6 +367,7 @@
 		E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SMSSDKUI.bundle; path = Vessage/Libs/SMSSDK/SMSSDKUI.bundle; sourceTree = SOURCE_ROOT; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
+		E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageMgrViewController.swift; sourceTree = "<group>"; };
 		E7F532E11D3A0DEC008078DE /* Conversation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
 		E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupProfileViewController.swift; sourceTree = "<group>"; };
 		E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUsersCell.swift; sourceTree = "<group>"; };
@@ -794,6 +796,7 @@
 				E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */,
 				E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */,
 				E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */,
+				E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1207,6 +1210,7 @@
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
+				E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */,
 				E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
@@ -1444,7 +1448,7 @@
 					"\"YUCIHighPassSkinSmoothing\"",
 					"-Objc",
 				);
-				OTHER_SWIFT_FLAGS = "\"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1496,7 +1500,7 @@
 					"\"YUCIHighPassSkinSmoothing\"",
 					"-Objc",
 				);
-				OTHER_SWIFT_FLAGS = "\"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "db74fdea-dde8-41f8-b5d1-bee65c2fb4ed";

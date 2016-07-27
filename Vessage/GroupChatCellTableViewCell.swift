@@ -35,7 +35,7 @@ class ConversationListGroupChatCell: ConversationListCellBase,SelectVessageUserV
     
     func onFinishSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
         let groupName = String(format: "GROUP_CHAT_WITH_X_X_PEOPLE".localizedString(), selectedUsers.first!.nickName,"\(selectedUsers.count + 1)")
-        let hud = self.rootController.showActivityHud()
+        let hud = self.rootController.showAnimationHud()
         ServiceContainer.getChatGroupService().createChatGroup(groupName,userIds: selectedUsers.map{$0.userId}){ chatGroup in
             hud.hide(true)
             if let cg = chatGroup{

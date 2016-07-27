@@ -281,7 +281,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     
     func getNotReadVessages(chatterId:String) -> [Vessage]{
         //TODO: delete test
-        if "true".hasBegin("t") {
+        if rand() % 2 == 0 {
             let vsg = Vessage()
             vsg.fileId = "578b6f5e99cc252a84c94dc1"
             vsg.isGroup = false

@@ -79,8 +79,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         previewLayer.bounds = view.bounds
         self.view.layer.insertSublayer(previewLayer, atIndex: 0)
         if TARGET_IPHONE_SIMULATOR == Int32("1") {
-            self.rootViewController.playToast("不支持模拟器");
-            //UIAlertView(title: "提示", message: "不支持模拟器", delegate: nil, cancelButtonTitle: "确定").show()
+            self.rootViewController.playToast("Simulator No Camera");
             return
         } else {
             setupCaptureSession()

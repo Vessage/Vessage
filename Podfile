@@ -18,6 +18,4 @@ pod 'UMengAnalytics'
 
 pod 'YUCIHighPassSkinSmoothing'
 
-pod 'LTMorphingLabel'
-
 end

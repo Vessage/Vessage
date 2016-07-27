@@ -54,12 +54,13 @@ class PlayVessageManager: ConversationViewControllerProxy {
             vessageView?.hidden = presentingVesseage == nil
             noMessageTipsLabel?.hidden = presentingVesseage != nil
             refreshBadge()
-            refreshTimeLabel()
         }
     }
     
     private var presentingVesseage:Vessage!{
         didSet{
+            conversationLeftTopLabel.text = nil
+            conversationRightBottomLabel.text = nil
             if presentingVesseage != nil{
                 if oldValue != nil && oldValue.vessageId == presentingVesseage.vessageId{
                     return
@@ -71,6 +72,18 @@ class PlayVessageManager: ConversationViewControllerProxy {
                     }
                 }
             }
+        }
+    }
+    
+    var leftTopLabelText:String? {
+        didSet{
+            conversationLeftTopLabel?.text = leftTopLabelText
+        }
+    }
+    
+    var rightBottomLabelText:String? {
+        didSet{
+            conversationRightBottomLabel?.text = rightBottomLabelText
         }
     }
 
@@ -107,17 +120,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     //MARK: actions
-    private func refreshTimeLabel(){
-        if presentingVesseage != nil{
-            vessageSendTimeLabel.hidden = false
-            let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
-            let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
-            vessageSendTimeLabel.text = "\(friendTimeString) \(readStatus)"
-        }else{
-            vessageSendTimeLabel.hidden = true
-        }
-        
-    }
     
     func refreshBadge(){
         if let chatterId = conversation.chatterId{

@@ -142,7 +142,7 @@ extension ChatGroupProfileViewController{
             {
                 self.playToast("GROUP_NAME_CANT_NULL".localizedString())
             }else{
-                let hud = self.showActivityHud()
+                let hud = self.showAnimationHud()
                 ServiceContainer.getChatGroupService().editChatGroupName(self.chatGroup.groupId, inviteCode: self.chatGroup.inviteCode, newName: newNoteName){ suc in
                     hud.hide(true)
                     if suc{
@@ -163,7 +163,7 @@ extension ChatGroupProfileViewController{
 extension ChatGroupProfileViewController{
     func exitChatGroup() {
         let okAction = UIAlertAction(title: "YES".localizedString(), style: .Default) { (ac) in
-            let hud = self.showActivityHud()
+            let hud = self.showAnimationHud()
             ServiceContainer.getChatGroupService().quitChatGroup(self.chatGroup.groupId){ suc in
                 hud.hide(true)
                 if suc{

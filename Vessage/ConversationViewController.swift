@@ -116,9 +116,14 @@ class ConversationViewController: UIViewController {
             noMessageTipsLabel.hidden = true
         }
     }
-    @IBOutlet weak var vessageSendTimeLabel: UILabel!{
+    @IBOutlet weak var conversationLeftTopLabel: UILabel!{
         didSet{
-            vessageSendTimeLabel.hidden = true
+            conversationLeftTopLabel.text = nil
+        }
+    }
+    @IBOutlet weak var conversationRightBottomLabel: UILabel!{
+        didSet{
+            conversationRightBottomLabel.text = nil
         }
     }
     @IBOutlet weak var vessageView: UIView!
@@ -440,7 +445,7 @@ extension ConversationViewController{
                 if let group = ServiceContainer.getChatGroupService().getChatGroup(conversation.chatterId){
                     showConversationView(nvc, conversation: conversation, group: group)
                 }else{
-                    let hud = nvc.showActivityHud()
+                    let hud = nvc.showAnimationHud()
                     ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
                         hud.hide(true)
                         if let g = group{
@@ -454,7 +459,7 @@ extension ConversationViewController{
                 if let user = ServiceContainer.getUserService().getCachedUserProfile(conversation.chatterId){
                     showConversationView(nvc,conversation: conversation,user: user)
                 }else{
-                    let hud = nvc.showActivityHud()
+                    let hud = nvc.showAnimationHud()
                     ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
                         hud.hide(true)
                         if let updatedUser = u{

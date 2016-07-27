@@ -9,6 +9,7 @@
 import Foundation
 import AddressBook
 import AddressBookUI
+import MBProgressHUD
 
 func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mobile:String,personTitle:String)->Void) {
     let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
@@ -178,4 +179,21 @@ func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!){
 
 func isInSimulator() -> Bool{
     return TARGET_IPHONE_SIMULATOR == Int32("1")
+}
+
+let hudSpinImageArray = [UIImage(named:"spin_0")!,UIImage(named:"spin_1")!,UIImage(named:"spin_2")!]
+
+extension UIViewController{
+    func showAnimationHud(title:String! = "",message:String! = "",async:Bool = true,completionHandler: HudHiddenCompletedHandler! = nil) -> MBProgressHUD {
+        let imv = UIImageView(frame: CGRectMake(0, 0, 64, 46))
+        imv.animationImages = hudSpinImageArray
+        imv.animationRepeatCount = 0
+        imv.animationDuration = 0.6
+        imv.startAnimating()
+        let hud = self.showActivityHudWithMessage(title, message: message, async: async, completionHandler: completionHandler)
+        hud.mode = .CustomView
+        hud.customView = imv
+        hud.color = UIColor.clearColor()
+        return hud
+    }
 }

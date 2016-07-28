@@ -197,3 +197,9 @@ extension UIViewController{
         return hud
     }
 }
+
+extension UIView{
+    func removeAllSubviews() {
+        self.subviews.forEach{$0.removeFromSuperview()}
+    }
+}

@@ -59,14 +59,14 @@ class FaceTextVessageHandler: VessageHandlerBase {
     
     override func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
-        container.subviews.forEach{$0.removeFromSuperview()}
+        container.removeAllSubviews()
         container.addSubview(self.faceTextView)
         container.sendSubviewToBack(self.faceTextView)
         self.faceTextView.setTextImage(newVessage.fileId, message: newVessage.body)
-        refreshConversationLabel(newVessage)
+        refreshConversationLabel()
     }
     
-    private func refreshConversationLabel(presentingVesseage:Vessage){
+    private func refreshConversationLabel(){
         let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
         let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
         playVessageManager.leftTopLabelText = "\(friendTimeString) \(readStatus)"

@@ -10,9 +10,9 @@ import Foundation
 import MBProgressHUD
 
 //typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
-protocol ChatBackgroundPickerControllerDelegate {
-    func chatBackgroundPickerSetedImage(sender:ChatBackgroundPickerController)->Void
-    func chatBackgroundPickerSetImageCancel(sender:ChatBackgroundPickerController)->Void
+@objc protocol ChatBackgroundPickerControllerDelegate {
+    optional func chatBackgroundPickerSetedImage(sender:ChatBackgroundPickerController)->Void
+    optional func chatBackgroundPickerSetImageCancel(sender:ChatBackgroundPickerController)->Void
 }
 
 //MARK: ChatBackgroundPickerController
@@ -22,7 +22,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     private var imagePickerController:UIImagePickerController = UIImagePickerController()
     @IBOutlet weak var selectPicButtonTip: UILabel!
     @IBOutlet weak var selectPicButton: UIButton!
-    private var delegate:ChatBackgroundPickerControllerDelegate!
+    weak private var delegate:ChatBackgroundPickerControllerDelegate!
     private var chatImageType:String? = nil
     @IBOutlet weak var previewRectView: UIImageView!{
         didSet{

@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol UIEditTextPropertyViewControllerDelegate
+@objc protocol UIEditTextPropertyViewControllerDelegate
 {
     func editPropertySave(propertyIdentifier:String!,newValue:String!)
 }
@@ -39,7 +39,7 @@ class UIEditTextPropertyViewController: UIViewController
     @IBOutlet weak var propertyNameLabel: UILabel!
     
     var model:UIEditTextPropertySet!
-    var delegate:UIEditTextPropertyViewControllerDelegate!
+    weak var delegate:UIEditTextPropertyViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()

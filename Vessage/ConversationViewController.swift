@@ -149,6 +149,15 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var groupFaceContainer: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
     
+    
+    private var imageChatInputView:ImageChatInputView!
+    private var imageChatInputResponderTextFiled:UITextField!
+    private var chatImageBoardSourceView:UIView!
+    private var chatImageBoardController:ChatImageBoardController!
+    
+    var chatImageBoardShown = false
+    var selectedImageId = ""
+    
     deinit{
         #if DEBUG
             print("Deinited:\(self.description)")
@@ -167,6 +176,9 @@ extension ConversationViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backgroundImage.image = getRandomConversationBackground()
+        
+        initChatImageButton()
+        
         playVessageManager = PlayVessageManager()
         playVessageManager.initManager(self)
         recordVessageManager = RecordVessageManager()
@@ -197,11 +209,17 @@ extension ConversationViewController{
         recordVessageManager.camera.openCamera()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         if !(self.navigationController?.viewControllers.contains(self) ?? false) {
             releaseController()
         }
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     private func releaseController(){
@@ -258,6 +276,11 @@ extension ConversationViewController{
         }
     }
     
+    @IBAction func onClickImageChatButton(sender: AnyObject) {
+        self.imageChatInputResponderTextFiled.becomeFirstResponder()
+        self.imageChatInputView.inputTextField.becomeFirstResponder()
+    }
+    
     private func showChatGroupProfile(){
         ChatGroupProfileViewController.showProfileViewController(self.navigationController!, chatGroup: self.chatGroup)
     }
@@ -301,6 +324,82 @@ extension ConversationViewController{
                 self.imageChatButton.hidden = false
             }
         }
+    }
+}
+
+//MARK: Chat Image Button
+
+extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresentationControllerDelegate,ChatImageBoardControllerDelegate{
+    private func initChatImageButton() {
+        self.imageChatInputView = ImageChatInputView.instanceFromXib()
+        self.imageChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, 42)
+        self.imageChatInputView.delegate = self
+        imageChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
+        imageChatInputView.inputTextField.returnKeyType = .Send
+        self.view.addSubview(imageChatInputResponderTextFiled)
+        self.imageChatInputResponderTextFiled.inputAccessoryView = imageChatInputView
+    }
+    
+    func imageChatInputViewDidEndEditing(textField: UITextView) {
+
+    }
+    
+    func onKeyboardHidden(a:NSNotification) {
+        chatImageBoardShown = false
+        chatImageBoardSourceView?.removeFromSuperview()
+    }
+    
+    func imageChatInputViewDidClickSend(sender: AnyObject?, textField: UITextView) {
+        if chatImageBoardShown {
+            sendImageChatVessage()
+        }else{
+            showChatImageBoard()
+        }
+        chatImageBoardShown = !chatImageBoardShown
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
+    func chatImageBoardController(dissmissController sender: ChatImageBoardController) {
+        self.chatImageBoardShown = false
+    }
+    
+    func chatImageBoardController(sender: ChatImageBoardController, selectedItem: AnyObject) {
+        sendImageChatVessage()
+    }
+    
+    private func showChatImageBoard() {
+        let rect = self.view.convertRect(self.imageChatInputView.sendButton.frame, fromView: self.imageChatInputView)
+        if self.chatImageBoardSourceView == nil{
+            chatImageBoardSourceView = UIView()
+        }
+        
+        if self.chatImageBoardController == nil {
+            self.chatImageBoardController = ChatImageBoardController.instanceFromStoryBoard()
+            self.chatImageBoardController.modalPresentationStyle = .Popover
+            self.chatImageBoardController.preferredContentSize = CGSizeMake(306, 120)
+            self.chatImageBoardController.delegate = self
+        }
+        self.chatImageBoardSourceView.frame = CGRectMake(rect.origin.x + rect.width / 2, rect.origin.y, 0, 0)
+        self.view.addSubview(self.chatImageBoardSourceView)
+        
+        if let ppvc = self.chatImageBoardController.popoverPresentationController{
+            ppvc.sourceView = self.chatImageBoardSourceView
+            ppvc.sourceRect = self.chatImageBoardSourceView.bounds
+            ppvc.permittedArrowDirections = .Any
+            ppvc.delegate = self
+            self.presentViewController(self.chatImageBoardController, animated: true, completion: nil)
+        }
+    }
+    
+    private func sendImageChatVessage() {
+        self.imageChatInputView.inputTextField.text = nil
+        chatImageBoardSourceView?.removeFromSuperview()
+        self.chatImageBoardController?.dismissViewControllerAnimated(true, completion: nil)
+        self.imageChatInputView.refreshSendButtonColor()
+        self.playToast("Send Face Text Vessage")
     }
 }
 

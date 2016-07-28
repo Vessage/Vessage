@@ -25,13 +25,15 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
     override func releaseHandler() {
         super.releaseHandler()
         vessagePlayer.removeFromSuperview()
+        vessagePlayer.delegate = nil
+        vessagePlayer.releasePlayer()
     }
     
     override func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
         if let oldVsg = oldVessage{
             if oldVsg.typeId != newVessage.typeId {
-                container.subviews.forEach{$0.removeFromSuperview()}
+                container.removeAllSubviews()
                 initVessageViews()
             }
             UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
@@ -42,10 +44,10 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
             initVessageViews()
             vessagePlayer.filePath = presentingVesseage.fileId
         }
-        refreshConversationLabel(newVessage)
+        refreshConversationLabel()
     }
     
-    private func refreshConversationLabel(presentingVesseage:Vessage){
+    private func refreshConversationLabel(){
         let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
         let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
         playVessageManager.rightBottomLabelText = "\(friendTimeString) \(readStatus)"
@@ -67,6 +69,7 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
     func playerPlaybackDidEnd(player: Player) {
         self.vessagePlayer.filePath = nil
         self.vessagePlayer.filePath = self.presentingVesseage.fileId
+        refreshConversationLabel()
     }
     
     func playerPlaybackStateDidChange(player: Player) {

@@ -81,6 +81,9 @@
 		E70CD4DE1D371665003779B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DD1D371665003779B5 /* Security.framework */; };
 		E70CD4E01D371682003779B5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DF1D371682003779B5 /* CoreTelephony.framework */; };
 		E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70EE83A1D17A33B0078B171 /* LocationService.swift */; };
+		E718444B1D498CDC00D3EDEF /* ImageChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */; };
+		E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */; };
+		E718444F1D49BB7700D3EDEF /* UnknowVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444E1D49BB7700D3EDEF /* UnknowVessageHandler.swift */; };
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
@@ -99,7 +102,7 @@
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
 		E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */; };
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
-		E76DF58E1D1A6A4F006BF1A0 /* ViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */; };
+		E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */; };
 		E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */; };
 		E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */; };
 		E7933B2F1D42FF64000FCE84 /* VessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */; };
@@ -149,6 +152,8 @@
 		E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */; };
 		E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */; };
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
+		E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */; };
+		E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
 		E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */; };
 		E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */; };
@@ -186,6 +191,19 @@
 			remoteInfo = SMSSDUI;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E71844611D49E8A200D3EDEF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +292,9 @@
 		E70CD4DD1D371665003779B5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E70CD4DF1D371682003779B5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		E70EE83A1D17A33B0078B171 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageChatInputView.swift; sourceTree = "<group>"; };
+		E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVessageExpandableHeader.swift; sourceTree = "<group>"; };
+		E718444E1D49BB7700D3EDEF /* UnknowVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknowVessageHandler.swift; sourceTree = "<group>"; };
 		E71886731C9FBBCA0028B016 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
@@ -293,7 +314,7 @@
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerProxy.swift; sourceTree = "<group>"; };
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
-		E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewComponents.swift; sourceTree = "<group>"; };
+		E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarTitle.swift; sourceTree = "<group>"; };
 		E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageHandler.swift; sourceTree = "<group>"; };
@@ -343,6 +364,8 @@
 		E7EB9A3A1C87F783002F96FB /* BahamutCmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmd.swift; sourceTree = "<group>"; };
 		E7EB9A3B1C87F783002F96FB /* BahamutCmdManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCmdManager.swift; sourceTree = "<group>"; };
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
+		E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatImageBoardController.storyboard; sourceTree = "<group>"; };
+		E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageBoardController.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
 		E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutConfigJson.swift; sourceTree = "<group>"; };
@@ -725,6 +748,7 @@
 				E7F532E11D3A0DEC008078DE /* Conversation.storyboard */,
 				E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */,
 				E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */,
+				E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -732,6 +756,7 @@
 		E708ACA21C8752300071104E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E71844491D498CA800D3EDEF /* Views */,
 				E7BFC3911CDB1C2C00CDB392 /* Activities */,
 				E708ACA31C8752440071104E /* AppMain */,
 				E708ABF31C86D6F20071104E /* RestfulAPI */,
@@ -750,13 +775,10 @@
 				E708AC991C872F030071104E /* UserSetting.swift */,
 				E708AC971C872DFC0071104E /* VessageConfig.swift */,
 				E708AC9D1C87503F0071104E /* EntryNavigationController.swift */,
-				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
 				E7EB9A2E1C87EE9B002F96FB /* AppUtil.swift */,
 				E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */,
 				E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */,
 				E7F2166C1CFBD7E300447DA9 /* ShareHelper.swift */,
-				E76DF58D1D1A6A4F006BF1A0 /* ViewComponents.swift */,
-				E79C24D91D445057006754F1 /* FaceTextImageView.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -801,6 +823,19 @@
 			name = User;
 			sourceTree = "<group>";
 		};
+		E71844491D498CA800D3EDEF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
+				E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */,
+				E79C24D91D445057006754F1 /* FaceTextImageView.swift */,
+				E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */,
+				E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */,
+				E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		E718867A1C9FFD840028B016 /* UMessageSdk */ = {
 			isa = PBXGroup;
 			children = (
@@ -834,6 +869,7 @@
 				E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */,
 				E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */,
 				E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */,
+				E718444E1D49BB7700D3EDEF /* UnknowVessageHandler.swift */,
 			);
 			name = VessageHandlers;
 			sourceTree = "<group>";
@@ -1007,6 +1043,7 @@
 				E708AB371C86CAA50071104E /* Resources */,
 				4ACA8FA21A4FE508A5B17B6C /* [CP] Embed Pods Frameworks */,
 				AA13BE9654FEB40A64745D81 /* [CP] Copy Pods Resources */,
+				E71844611D49E8A200D3EDEF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -1023,7 +1060,7 @@
 		E708AB311C86CAA50071104E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Bahamut;
 				TargetAttributes = {
@@ -1088,6 +1125,7 @@
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */,
 				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
+				E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
 				E7BB96341D461D7400ECBD11 /* FaceTextChatBubble.xib in Resources */,
@@ -1181,6 +1219,7 @@
 				E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */,
 				E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
+				E718444F1D49BB7700D3EDEF /* UnknowVessageHandler.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
 				E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */,
 				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
@@ -1211,6 +1250,7 @@
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */,
+				E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */,
 				E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
@@ -1219,6 +1259,7 @@
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
 				E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */,
+				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,
@@ -1238,7 +1279,7 @@
 				E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
-				E76DF58E1D1A6A4F006BF1A0 /* ViewComponents.swift in Sources */,
+				E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
@@ -1274,6 +1315,7 @@
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
+				E718444B1D498CDC00D3EDEF /* ImageChatInputView.swift in Sources */,
 				E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */,
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
 				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,

@@ -202,6 +202,9 @@
                                     <constraint firstAttribute="height" constant="56" id="azJ-jj-U0v"/>
                                 </constraints>
                                 <state key="normal" title="图聊" image="image_chat_btn"/>
+                                <connections>
+                                    <action selector="onClickImageChatButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="1eV-8N-ZaV"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-Iz-prr">
                                 <rect key="frame" x="7" y="662" width="56" height="72"/>

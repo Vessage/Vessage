@@ -9,7 +9,7 @@
 import AddressBook
 import AddressBookUI
 
-protocol SelectVessageUserViewControllerDelegate {
+@objc protocol SelectVessageUserViewControllerDelegate {
     func onFinishSelect(sender:SelectVessageUserViewController, selectedUsers:[VessageUser])
     func canSelect(sender:SelectVessageUserViewController, selectedUsers:[VessageUser]) -> Bool
 }
@@ -18,24 +18,6 @@ class SelectVessageUserContactCell: UITableViewCell {
     static let reuseId = "SelectVessageUserContactCell"
 }
 
-class SelectVessageExpandableHeader: UIView {
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var icon: UIImageView!{
-        didSet{
-            icon?.hidden = expanded
-        }
-    }
-    var expanded = false{
-        didSet{
-            icon?.hidden = expanded
-        }
-    }
-    
-    static func instanceFromXib() -> SelectVessageExpandableHeader{
-        return NSBundle.mainBundle().loadNibNamed("SelectVessageExpandableHeader", owner: nil, options: nil)[0] as! SelectVessageExpandableHeader
-    }
-    
-}
 
 class SelectVessageUserListCell: UITableViewCell {
     static let reuseId = "SelectVessageUserListCell"
@@ -74,7 +56,7 @@ class SelectVessageUserListCell: UITableViewCell {
 }
 
 class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavigationControllerDelegate {
-    var delegate:SelectVessageUserViewControllerDelegate!
+    weak var delegate:SelectVessageUserViewControllerDelegate!
     let SECTION_CHOOSE_MOBILE = 0
     let SECTION_ACTIVE_USER = 1
     let SECTION_NEAR_USER = 2

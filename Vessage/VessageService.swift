@@ -283,7 +283,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         //TODO: delete test
         if rand() % 1 == 0 {
             let vsg = Vessage()
-            vsg.fileId = "578b6f5e99cc252a84c94dc1_"
+            vsg.fileId = "578b6f5e99cc252a84c94dc1"
             vsg.isGroup = false
             vsg.sender = chatterId
             vsg.isRead = false

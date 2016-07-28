@@ -12,9 +12,28 @@ import Foundation
 class PlayVessageManager: ConversationViewControllerProxy {
     private var vessageHandlers = [Int:VessageHandler]()
     
-    private func initVessageHandlers() {
-        vessageHandlers[Vessage.typeVideo] = VideoVessageHandler(manager: self,container: self.vessageView)
-        vessageHandlers[Vessage.typeFaceText] = FaceTextVessageHandler(manager: self, container: self.vessageView)
+    private func generateVessageHandler(typeId:Int) -> VessageHandler{
+        var handler:VessageHandler? = vessageHandlers[typeId]
+        if handler != nil {
+            return handler!
+        }
+        switch typeId {
+        case Vessage.typeVideo:
+            handler = VideoVessageHandler(manager: self,container: self.vessageView)
+        case Vessage.typeFaceText:
+            handler = FaceTextVessageHandler(manager: self, container: self.vessageView)
+        default:
+            if let h = vessageHandlers[-1]{
+                handler = h
+            }else{
+                handler = UnknowVessageHandler(manager: self, container: self.vessageView)
+                vessageHandlers[-1] = handler
+            }
+            NSLog("Unknow Vessage TypeId:\(typeId)")
+            return handler!
+        }
+        vessageHandlers[typeId] = handler!
+        return handler!
     }
     
     override func onSwitchToManager() {
@@ -35,7 +54,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
-        initVessageHandlers()
         loadNotReadVessages()
     }
     
@@ -66,11 +84,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 if oldValue != nil && oldValue.vessageId == presentingVesseage.vessageId{
                     return
                 }else{
-                    if let handler = self.vessageHandlers[presentingVesseage.typeId]{
-                        handler.onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
-                    }else{
-                        rootController.playToast("UNKNOW_VESSAGE_TYPE".localizedString())
-                    }
+                    self.generateVessageHandler(presentingVesseage.typeId).onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
                 }
             }
         }

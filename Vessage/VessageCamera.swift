@@ -25,7 +25,7 @@ import YUCIHighPassSkinSmoothing
 //MARK:VessageCamera
 class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCaptureMetadataOutputObjectsDelegate,AVCaptureAudioDataOutputSampleBufferDelegate {
     
-    var delegate:VessageCameraDelegate?
+    weak var delegate:VessageCameraDelegate?
     var isRecordVideo:Bool = true
     private(set) var cameraInited = false
     private var rootViewController:UIViewController!

@@ -12,6 +12,7 @@ import Foundation
     optional func imageChatInputViewDidClickSend(sender:AnyObject?,textField:UITextView);
     optional func imageChatInputViewDidClickChatImage(sender:AnyObject?);
     optional func imageChatInputViewDidEndEditing(textField: UITextView);
+    optional func imageChatInputViewChanged(textField: UITextView);
 }
 
 class ImageChatInputView: UIView,UITextViewDelegate {
@@ -43,6 +44,7 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     }
     
     func textViewDidChange(textView: UITextView) {
+        self.delegate?.imageChatInputViewChanged?(textView)
         refreshSendButtonColor()
     }
     

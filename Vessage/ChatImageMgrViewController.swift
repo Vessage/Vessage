@@ -9,16 +9,18 @@
 import UIKit
 import LTMorphingLabel
 
-class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+let defaultImageTypes = [
+    ["type":"正常","settedMsg":"Hi，约吗？","notSetMsg":"平时我都是这幅脸和人说话的😝"],
+    ["type":"逗逼","settedMsg":"你才是逗逼😊","notSetMsg":"聊天时逗逼一下可以舒缓心情"],
+    ["type":"卖萌","settedMsg":"感觉全世界萌萌哒~","notSetMsg":"和Ta聊天时可以卖个萌哦😉"],
+    ["type":"高兴","settedMsg":"今天不知道为什么，我很嗨心~~~","notSetMsg":"一个高兴表情，把快乐传递给朋友~"],
+    ["type":"伤心","settedMsg":"☹️","notSetMsg":"我很悲伤，但我不说..."],
+    ["type":"傲娇","settedMsg":"😏","notSetMsg":"哼😏"]
+]
 
-    let imageTypes = [
-        ["type":"正常","settedMsg":"Test","notSetMsg":"Test"],
-        ["type":"逗逼","settedMsg":"Test","notSetMsg":"Test"],
-        ["type":"卖萌","settedMsg":"Test","notSetMsg":"Test"],
-        ["type":"高兴","settedMsg":"Test","notSetMsg":"Test"],
-        ["type":"伤心","settedMsg":"Test","notSetMsg":"Test"],
-        ["type":"傲娇","settedMsg":"Test","notSetMsg":"Test"]
-    ]
+class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,ChatBackgroundPickerControllerDelegate {
+
+    
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageTypeLabel: LTMorphingLabel!{
@@ -27,17 +29,16 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
         }
     }
     @IBOutlet weak var pageControl: UIPageControl!
+    private var myChatImages = [String:ChatImage]()
     private var userService = ServiceContainer.getUserService()
     private var index = 0
     private var numOfImages:Int{
-        return imageTypes.count + 1
+        return defaultImageTypes.count + 1
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         let dict = [NSForegroundColorAttributeName:UIColor.themeColor]
         self.navigationController?.navigationBar.titleTextAttributes = dict
-        tableView.delegate = self
-        tableView.dataSource = self
         let leftSwipeGes = UISwipeGestureRecognizer(target: self, action: #selector(ChatImageMgrViewController.onSwipe(_:)))
         leftSwipeGes.direction = .Left
         let rightSwipeGes = UISwipeGestureRecognizer(target: self, action: #selector(ChatImageMgrViewController.onSwipe(_:)))
@@ -45,6 +46,18 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
         self.view.addGestureRecognizer(leftSwipeGes)
         self.view.addGestureRecognizer(rightSwipeGes)
         self.pageControl.numberOfPages = numOfImages
+        initMyChatImages()
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+
+    private func initMyChatImages(){
+        myChatImages.removeAll()
+        if let images = userService.myChatImages{
+            images.forEach({ (ci) in
+                myChatImages.updateValue(ci, forKey: ci.imageType)
+            })
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -105,15 +118,44 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }else{
             self.navigationItem.title = "颜文字聊天表情"
-            let dict = imageTypes[index - 1]
-            self.imageTypeLabel.text = dict["type"]
-            faceImageView.setTextImage("", message: dict["settedMsg"])
+            let dict = defaultImageTypes[index - 1]
+            if let type = dict["type"]{
+                if let ci = self.myChatImages[type] {
+                    self.imageTypeLabel.text = type
+                    faceImageView.setTextImage(ci.imageId, message: dict["settedMsg"])
+                }else{
+                    self.imageTypeLabel.text = "\(type)(未设置)"
+                    faceImageView.setTextImage("", message: dict["notSetMsg"])
+                }
+            }
+            
         }
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return tableView.frame.height
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        cell?.selected = false
+        if index == 0 {
+            ChatBackgroundPickerController.showPickerController(self, delegate: self)
+        }else{
+            ChatBackgroundPickerController.showPickerController(self, delegate: self,imageType: defaultImageTypes[index - 1]["type"])
+        }
+    }
+    
+    func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
+        initMyChatImages()
+        sender.dismissViewControllerAnimated(true) {
+            self.loadIndex(self.index, rowAnimation: .Automatic)
+        }
+    }
+    
+    func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
+        
     }
 
     static func showChatImageMgrVeiwController(vc:UIViewController,defaultIndex:Int = 0){

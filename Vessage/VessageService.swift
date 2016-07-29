@@ -41,6 +41,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     static let onNewVessageSendFail = "onNewVessageSendFail"
     static let onNewVessageSending = "onNewVessageSending"
     static let onVessageRead = "onVessageRead"
+    static let onVessageRemoved = "onVessageRemoved"
     //private static let notReadVessageCountStoreKey = "NewVsgCntKey"
     @objc static var ServiceName:String {return "Vessage Service"}
     
@@ -225,6 +226,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         let req = SetVessageRead()
         req.vessageId = vessage.vessageId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            self.postNotificationNameWithMainAsync(VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
         }
     }
     
@@ -281,17 +283,17 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     
     func getNotReadVessages(chatterId:String) -> [Vessage]{
         //TODO: delete test
-        let json = try! NSJSONSerialization.dataWithJSONObject(["textMessage":"haha！Alex is a genius！"], options: NSJSONWritingOptions(rawValue: 0))
-        if rand() % 1 == 0 {
-            let vsg = Vessage()
-            vsg.fileId = "578b6f5e99cc252a84c94dc1"
-            vsg.isGroup = false
-            vsg.sender = chatterId
-            vsg.isRead = false
-            vsg.typeId = Vessage.typeFaceText
-            vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
-            return [vsg]
-        }
+//        let json = try! NSJSONSerialization.dataWithJSONObject(["textMessage":"haha！Alex is a genius！"], options: NSJSONWritingOptions(rawValue: 0))
+//        if rand() % 1 == 0 {
+//            let vsg = Vessage()
+//            vsg.fileId = "578b6f5e99cc252a84c94dc1"
+//            vsg.isGroup = false
+//            vsg.sender = chatterId
+//            vsg.isRead = false
+//            vsg.typeId = Vessage.typeFaceText
+//            vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
+//            return [vsg]
+//        }
         return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
     }
 }

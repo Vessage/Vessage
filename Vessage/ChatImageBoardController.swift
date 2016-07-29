@@ -13,6 +13,11 @@ class ChatImageBoardCell: UICollectionViewCell {
     @IBOutlet weak var checkedImage: UIImageView!
     @IBOutlet weak var chatImageView: UIImageView!
     @IBOutlet weak var imageTypeLabel: UILabel!
+    override var selected: Bool{
+        didSet{
+            checkedImage.hidden = !selected
+        }
+    }
 }
 
 @objc protocol ChatImageBoardControllerDelegate {
@@ -25,8 +30,8 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
 
     @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate : ChatImageBoardControllerDelegate?
-    var chatImages = [ChatImage]()
-    
+    private var chatImages = [ChatImage]()
+    var fileService = ServiceContainer.getFileService()
     private(set) var selectedChatImage:ChatImage!
     
     override func viewDidLoad() {
@@ -35,13 +40,26 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         self.collectionView.dataSource = self
         self.collectionView.allowsSelection = true
         self.collectionView.allowsMultipleSelection = false
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        
-
-        // Do any additional setup after loading the view.
+        reloadChatImages()
+    }
+    
+    private func reloadChatImages(){
+        chatImages.removeAll()
+        if let myChatImages = ServiceContainer.getUserService().myChatImages{
+            var cimages = myChatImages.messArrayUp()
+            defaultImageTypes.forEach({ (dict) in
+                if let t = dict["type"]{
+                    if let index = (cimages.indexOf{$0.imageType == t}){
+                        self.chatImages.append(cimages.removeAtIndex(index))
+                    }
+                }
+            })
+            chatImages.appendContentsOf(cimages)
+        }
+        self.collectionView.reloadData()
+        if chatImages.count > 0 {
+            self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0,inSection: 0), animated: true, scrollPosition: .Left)
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -81,7 +99,10 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ChatImageBoardCell.reuseId, forIndexPath: indexPath) as! ChatImageBoardCell
     
         // Configure the cell
-        cell.imageTypeLabel.text = "\(indexPath.row)"
+        let chatImage = self.chatImages[indexPath.row]
+        cell.imageTypeLabel.text = chatImage.imageType
+        cell.checkedImage.hidden = !cell.selected
+        fileService.setAvatar(cell.chatImageView, iconFileId: chatImage.imageId,defaultImage: getDefaultFace())
         return cell
     }
 
@@ -94,7 +115,7 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(72, self.view.frame.height - 12)
+        return CGSizeMake(72, 100)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {

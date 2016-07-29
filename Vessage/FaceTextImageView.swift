@@ -97,7 +97,7 @@ class FaceTextImageView: UIView {
         self.imageView.frame = self.bounds
     }
     
-    func setTextImage(fileId:String,message:String!) {
+    func setTextImage(fileId:String!,message:String!) {
         self.imageLoaded = false
         self.render()
         self.chatBubble.messageContent = message
@@ -174,7 +174,7 @@ class FaceTextImageView: UIView {
     }
     
     private func setChatBubbleCenter(){
-        let center = CGPointMake((self.frame.width - self.chatBubble.frame.width) / 2, (self.frame.height + 20) / 2)
+        let center = CGPointMake((self.frame.width - self.chatBubble.frame.width) / 2, (self.frame.height + 80) / 2)
         self.setChatBubblePosition(center)
     }
     

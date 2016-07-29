@@ -236,7 +236,7 @@ class UpdateChatImageRequest: BahamutRFRequestBase {
     
     var imageType:String!{
         didSet{
-            self.paramenters["imageType"] = image
+            self.paramenters["imageType"] = imageType
         }
     }
     

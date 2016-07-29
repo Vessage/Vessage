@@ -20,10 +20,6 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         self.imageChatInputResponderTextFiled.inputAccessoryView = imageChatInputView
     }
     
-    func imageChatInputViewDidEndEditing(textField: UITextView) {
-        
-    }
-    
     func onKeyboardHidden(a:NSNotification) {
         chatImageBoardShown = false
         chatImageBoardSourceView?.removeFromSuperview()
@@ -32,6 +28,15 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     
     //MARK: ImageChatInputViewDelegate
     
+    func imageChatInputViewChanged(textField: UITextView) {
+        if String.isNullOrEmpty(textField.text) {
+            chatImageBoardController?.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    func imageChatInputViewDidEndEditing(textField: UITextView) {
+        
+    }
     func imageChatInputViewDidClickSend(sender: AnyObject?, textField: UITextView) {
         if chatImageBoardShown {
             chatImageBoardShown = false
@@ -93,7 +98,6 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         
         if let ppvc = self.chatImageBoardController.popoverPresentationController{
             if let myChatImages = userService.myChatImages{
-                self.chatImageBoardController.chatImages = myChatImages
                 let lineCount = CGFloat(myChatImages.count > 4 ? 4 : myChatImages.count)
                 self.chatImageBoardController.preferredContentSize = CGSizeMake(lineCount * (76) + 12, 112)
                 ppvc.sourceView = self.chatImageBoardSourceView

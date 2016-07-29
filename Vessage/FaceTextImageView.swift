@@ -112,7 +112,33 @@ class FaceTextImageView: UIView {
             self.loadingImageView.removeFromSuperview()
             self.imageView.hidden = false
             self.imageView.contentMode = (suc ? .ScaleAspectFill : .ScaleAspectFit)
-            self.adjustChatBubble()
+            self.chatBubble.hidden = String.isNullOrEmpty(message)
+            func retryFetchChatImage(suc:Bool,timesLeft:Int){
+                if suc{
+                    self.adjustChatBubble()
+                }else{
+                    self.setChatBubbleCenter()
+                }
+                
+                if !suc && timesLeft > 0{
+                    ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: fileId,defaultImage: getDefaultFace()){ setted in
+                        retryFetchChatImage(setted,timesLeft: timesLeft - 1)
+                    }
+                }
+                #if DEBUG
+                    if !suc {
+                        if timesLeft > 0 {
+                            print("Retry Fetching Chat Image,Retry Times Left:\(timesLeft - 1)")
+                        }else{
+                            print("Fetch Chat Image Failure")
+                        }
+                    }else{
+                        print("Chat Image Fetched")
+                    }
+                #endif
+            }
+            retryFetchChatImage(suc, timesLeft: 2)
+            
         }
     }
     
@@ -144,7 +170,12 @@ class FaceTextImageView: UIView {
                 return
             }
         }
-        setChatBubblePosition(self.center)
+        self.setChatBubbleCenter()
+    }
+    
+    private func setChatBubbleCenter(){
+        let center = CGPointMake((self.frame.width - self.chatBubble.frame.width) / 2, (self.frame.height + 20) / 2)
+        self.setChatBubblePosition(center)
     }
     
     func setChatBubblePosition(position:CGPoint) {

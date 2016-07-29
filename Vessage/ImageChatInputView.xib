@@ -15,8 +15,19 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pzB-U5-Ar3">
+                    <rect key="frame" x="6" y="5" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="32" id="QAd-WO-xYQ"/>
+                        <constraint firstAttribute="height" constant="32" id="wLP-oJ-v3m"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="default_face_head"/>
+                    <connections>
+                        <action selector="onClickChatImageButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="rSW-H8-uwM"/>
+                    </connections>
+                </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TIF-Cs-PHJ">
-                    <rect key="frame" x="8" y="2" width="516" height="38"/>
+                    <rect key="frame" x="44" y="2" width="490" height="38"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -34,10 +45,10 @@
                     </userDefinedRuntimeAttributes>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aj9-YQ-lO8">
-                    <rect key="frame" x="532" y="4" width="60" height="34"/>
+                    <rect key="frame" x="540" y="4" width="52" height="34"/>
                     <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <inset key="contentEdgeInsets" minX="12" minY="6" maxX="12" maxY="6"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="6" maxX="8" maxY="6"/>
                     <state key="normal" title="发送">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </state>
@@ -53,19 +64,27 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Aj9-YQ-lO8" firstAttribute="leading" secondItem="TIF-Cs-PHJ" secondAttribute="trailing" constant="8" id="4WZ-Mf-Txu"/>
+                <constraint firstItem="Aj9-YQ-lO8" firstAttribute="leading" secondItem="TIF-Cs-PHJ" secondAttribute="trailing" constant="6" id="4WZ-Mf-Txu"/>
+                <constraint firstItem="pzB-U5-Ar3" firstAttribute="leading" secondItem="qlD-ep-SS3" secondAttribute="leading" constant="6" id="5Fr-SC-MYZ"/>
                 <constraint firstItem="TIF-Cs-PHJ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8WM-Cv-mgr"/>
                 <constraint firstItem="Aj9-YQ-lO8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Dfn-La-g4K"/>
                 <constraint firstItem="TIF-Cs-PHJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="RhX-qc-J4w"/>
                 <constraint firstItem="qlD-ep-SS3" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="TaI-5w-R7l"/>
                 <constraint firstItem="qlD-ep-SS3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hae-2O-Y7Z"/>
+                <constraint firstItem="TIF-Cs-PHJ" firstAttribute="leading" secondItem="pzB-U5-Ar3" secondAttribute="trailing" constant="6" id="hwT-qI-Vrd"/>
                 <constraint firstItem="TIF-Cs-PHJ" firstAttribute="height" secondItem="Aj9-YQ-lO8" secondAttribute="height" constant="4" id="kC2-IC-sg5"/>
+                <constraint firstItem="pzB-U5-Ar3" firstAttribute="centerY" secondItem="qlD-ep-SS3" secondAttribute="centerY" id="rgE-jR-TLw"/>
                 <constraint firstItem="qlD-ep-SS3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="sqk-qK-7dH"/>
                 <constraint firstItem="qlD-ep-SS3" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="xdG-2E-RDx"/>
                 <constraint firstAttribute="trailing" secondItem="Aj9-YQ-lO8" secondAttribute="trailing" constant="8" id="zDl-m5-leY"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="RhX-qc-J4w"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="inputTextField" destination="TIF-Cs-PHJ" id="9lm-U5-00f"/>
                 <outlet property="sendButton" destination="Aj9-YQ-lO8" id="en7-hP-wqX"/>
@@ -73,4 +92,7 @@
             <point key="canvasLocation" x="239" y="263"/>
         </view>
     </objects>
+    <resources>
+        <image name="default_face_head" width="63" height="64"/>
+    </resources>
 </document>

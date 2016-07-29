@@ -281,6 +281,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
     
     func getNotReadVessages(chatterId:String) -> [Vessage]{
         //TODO: delete test
+        let json = try! NSJSONSerialization.dataWithJSONObject(["textMessage":"haha！Alex is a genius！"], options: NSJSONWritingOptions(rawValue: 0))
         if rand() % 1 == 0 {
             let vsg = Vessage()
             vsg.fileId = "578b6f5e99cc252a84c94dc1"
@@ -288,7 +289,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
             vsg.sender = chatterId
             vsg.isRead = false
             vsg.typeId = Vessage.typeFaceText
-            vsg.body = "haha！Alex is a genius！小周真实好样的啊~,haha！Alex is a genius！小周真实好样的啊~,"
+            vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
             return [vsg]
         }
         return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }

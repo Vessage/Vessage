@@ -271,12 +271,16 @@ extension RecordVessageManager{
             self.rootController.progressView.hidden = false
             self.rootController.controllerTitle = "VESSAGE_SENDING".localizedString()
         }
-        let chatterId = isGroupChat ? self.chatGroup.groupId : self.chatter.userId
+        let chatterId = self.conversation.chatterId
+        let vsg = Vessage()
+        vsg.isGroup = isGroupChat
+        vsg.typeId = Vessage.typeVideo
         #if DEBUG
             PersistentFileHelper.deleteFile(url.path!)
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, isGroup: isGroupChat, typeId: Vessage.typeVideo,fileId:"5790435e99cc251974a42f61")
+            vsg.fileId = "5790435e99cc251974a42f61"
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg)
         #else
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat,typeId: Vessage.typeVideo, fileUrl: url)
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg, uploadFileUrl: url)
         #endif
     }
     

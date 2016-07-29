@@ -25,9 +25,17 @@ class Vessage: BahamutObject {
     var typeId = 0
     var body:String!
     
-    
     func getSendTime()->NSDate!{
         return sendTime.dateTimeOfAccurateString
+    }
+    
+    func getBodyDict() -> [String:AnyObject] {
+        if let data = self.body?.toUTF8EncodingData(){
+            if let dict = try! NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject]{
+                return dict
+            }
+        }
+        return [String:AnyObject]()
     }
 }
 

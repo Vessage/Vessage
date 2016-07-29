@@ -207,7 +207,7 @@ CLICK_NEXT_MESSAGE_TIPS = "跳过的消息将会被删除且不能恢复，确�
 
 CAMERA_NOT_INITED = "相机没有初始化";
 
-CHANGE_CHAT_BCG = "对讲背景";
+CHANGE_CHAT_BCG = "聊天表情背景";
 BIND_MOBILE = "手机";
 NOT_SET = "未设置";
 
@@ -289,3 +289,7 @@ YOU_EXITED_GROUP_CHAT = "你已退出群组";
 EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
 GROUP_CHAT_AT_LEASE_2_PEOPLE = "至少选择两个好友哦~";
 NO_SUCH_GROUP = "群组不存在";
+
+//MARK: Face Text Chat
+U_MUST_SET_CHAT_IMAGES = "需要设置表情图才能给好友发表情消息哦!";
+NO_CHAT_IMAGES = "还没有个人聊天表情图";

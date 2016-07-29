@@ -273,28 +273,28 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="SFt-MN-Gut">
                                 <rect key="frame" x="188" y="699" width="39" height="37"/>
                             </pageControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="620" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QrC-aq-rUA">
-                                <rect key="frame" x="87" y="198" width="240" height="320"/>
+                            <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="419" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QrC-aq-rUA">
+                                <rect key="frame" x="40" y="122" width="334" height="445"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QrC-aq-rUA" secondAttribute="height" multiplier="3:4" id="7zr-8h-8KU"/>
-                                    <constraint firstAttribute="width" priority="250" constant="240" id="ZsT-yi-TSP"/>
-                                    <constraint firstAttribute="height" priority="250" constant="320" id="aOm-bv-zRS"/>
+                                    <constraint firstAttribute="width" priority="250" constant="320" id="ZsT-yi-TSP"/>
+                                    <constraint firstAttribute="height" priority="250" constant="480" id="aOm-bv-zRS"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatImageCell" rowHeight="320" id="lLL-ze-UID">
-                                        <rect key="frame" x="0.0" y="28" width="240" height="320"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatImageCell" rowHeight="419" id="lLL-ze-UID">
+                                        <rect key="frame" x="0.0" y="28" width="334" height="419"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLL-ze-UID" id="4au-5z-EIX">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="319"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="334" height="418"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="逗逼" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORU-x7-wgr" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="184" y="663" width="46" height="28"/>
+                                <rect key="frame" x="184" y="74" width="46" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -302,13 +302,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="QrC-aq-rUA" firstAttribute="centerY" secondItem="8V3-j7-VlC" secondAttribute="centerY" constant="-10" id="Gbs-mj-n4U"/>
-                            <constraint firstItem="SFt-MN-Gut" firstAttribute="top" secondItem="ORU-x7-wgr" secondAttribute="bottom" constant="8" id="H2o-xa-O7g"/>
+                            <constraint firstItem="ORU-x7-wgr" firstAttribute="top" secondItem="4CI-V0-NxH" secondAttribute="bottom" constant="10" id="9SX-js-A9B"/>
                             <constraint firstItem="SFt-MN-Gut" firstAttribute="centerX" secondItem="QrC-aq-rUA" secondAttribute="centerX" id="M6w-IB-NDz"/>
-                            <constraint firstItem="QrC-aq-rUA" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4CI-V0-NxH" secondAttribute="bottom" constant="80" id="P8z-J9-uNJ"/>
                             <constraint firstItem="QrC-aq-rUA" firstAttribute="centerX" secondItem="8V3-j7-VlC" secondAttribute="centerX" id="RVN-IZ-WB3"/>
                             <constraint firstItem="SFt-MN-Gut" firstAttribute="bottom" secondItem="Viv-GL-yLd" secondAttribute="top" id="dzn-jJ-ehx"/>
+                            <constraint firstItem="QrC-aq-rUA" firstAttribute="top" secondItem="ORU-x7-wgr" secondAttribute="bottom" constant="20" id="gdG-rb-w9p"/>
                             <constraint firstItem="ORU-x7-wgr" firstAttribute="centerX" secondItem="8V3-j7-VlC" secondAttribute="centerX" id="wsG-r7-3gC"/>
+                            <constraint firstItem="QrC-aq-rUA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8V3-j7-VlC" secondAttribute="leadingMargin" constant="20" id="ywO-sN-fd9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="你的聊天表情" id="QIT-B4-8ha">
@@ -320,6 +320,11 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="imageTypeLabel" destination="ORU-x7-wgr" id="VMi-Eu-7Fo"/>
+                        <outlet property="pageControl" destination="SFt-MN-Gut" id="Q4A-D5-w4k"/>
+                        <outlet property="tableView" destination="QrC-aq-rUA" id="7bx-hi-vCT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYQ-P9-WDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

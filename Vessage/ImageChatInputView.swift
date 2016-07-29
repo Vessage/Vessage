@@ -10,6 +10,7 @@ import Foundation
 
 @objc protocol ImageChatInputViewDelegate {
     optional func imageChatInputViewDidClickSend(sender:AnyObject?,textField:UITextView);
+    optional func imageChatInputViewDidClickChatImage(sender:AnyObject?);
     optional func imageChatInputViewDidEndEditing(textField: UITextView);
 }
 
@@ -33,6 +34,9 @@ class ImageChatInputView: UIView,UITextViewDelegate {
         }
     }
     
+    @IBAction func onClickChatImageButton(sender: AnyObject) {
+        self.delegate?.imageChatInputViewDidClickChatImage?(sender)
+    }
     //MARK:UITextFieldDelegate
     func textViewDidBeginEditing(textView: UITextView) {
         refreshSendButtonColor()

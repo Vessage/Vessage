@@ -110,6 +110,7 @@
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
+		E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */; };
 		E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */; };
 		E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */; };
 		E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */; };
@@ -322,6 +323,7 @@
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
+		E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageExtension.swift; sourceTree = "<group>"; };
 		E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
 		E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -966,14 +968,15 @@
 		E7EDE4901CFD1F970001983F /* ConversationView */ = {
 			isa = PBXGroup;
 			children = (
+				E7933B281D42F7CC000FCE84 /* VessageHandlers */,
 				E7F532E61D3A1ED5008078DE /* GroupChatProfile */,
 				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
 				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 				E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */,
-				E7933B281D42F7CC000FCE84 /* VessageHandlers */,
 				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
+				E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */,
 			);
 			name = ConversationView;
 			sourceTree = "<group>";
@@ -1226,6 +1229,7 @@
 				E708AB701C86CE1D0071104E /* CommonValueCast.swift in Sources */,
 				E708AB6C1C86CE1D0071104E /* ArrayUtil.swift in Sources */,
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
+				E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,

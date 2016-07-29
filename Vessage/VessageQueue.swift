@@ -14,7 +14,7 @@ class SendVessageFileStep:BahamutTaskStepWorker{
         let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
         ServiceContainer.getService(FileService).sendFileToAliOSS(model.filePath, type: .Video) { (taskId, fileKey) -> Void in
             if fileKey != nil{
-                model.fileId = fileKey.fileId
+                model.vessage.fileId = fileKey.fileId
                 step.finishedStep(nil)
             }else{
                 step.failStep(nil)
@@ -25,10 +25,8 @@ class SendVessageFileStep:BahamutTaskStepWorker{
 
 class PostVessageToServer:BahamutTaskStepWorker{
     func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
-        let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
-        let vessage = Vessage()
-        vessage.sender = ServiceContainer.getUserService().myProfile.userId
-        vessage.fileId = model.fileId
+        //let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
+        //let vessage = model.vessage
         //TODO: high version finish
 //        ServiceContainer.getVessageService().sendVessage(vessage){ sended in
 //            if sended{
@@ -42,12 +40,8 @@ class PostVessageToServer:BahamutTaskStepWorker{
 
 class SendVessageTaskInfo:BahamutObject{
     var filePath:String!
-    var fileId:String!
-    
     var receiverId:String!
-    //var receiverMobile:String!
-    var isGroup = false
-    var typeId = 0
+    var vessage:Vessage!
     
     
 }
@@ -118,13 +112,13 @@ class VessageQueue:NSObject{
         }
     }
     
-    func pushNewVessageTo(receiverId:String?,isGroup:Bool,typeId:Int,fileUrl:NSURL? = nil,fileId:String? = nil){
+    func pushNewVessageTo(receiverId:String?,vessage:Vessage!,uploadFileUrl:NSURL? = nil){
         let userInfoModel = SendVessageTaskInfo()
+        let vsg = Vessage()
+        vsg.extraInfo = extraInfoString
+        vsg.sender = ServiceContainer.getUserService().myProfile.userId
         userInfoModel.receiverId = receiverId
-        userInfoModel.filePath = fileUrl?.path!
-        userInfoModel.fileId = fileId
-        userInfoModel.isGroup = isGroup
-        userInfoModel.typeId = typeId
+        userInfoModel.filePath = uploadFileUrl?.path!
         let taskInfoKey = IdUtil.generateUniqueId()
         taskInfoDict[taskInfoKey] = userInfoModel
         sendVessage(taskInfoKey)
@@ -182,7 +176,7 @@ class VessageQueue:NSObject{
         
         func sendedCallback(vessageId:String?){
             if let vid = vessageId{
-                if let fileId = taskInfo?.fileId{
+                if let fileId = taskInfo?.vessage?.fileId{
                     ServiceContainer.getVessageService().finishSendVessage(taskInfo!.receiverId,vessageId: vid, fileId: fileId)
                 }else{
                     self.sendVessageFile(vid, taskInfoKey: taskInfoKey)
@@ -193,12 +187,7 @@ class VessageQueue:NSObject{
         }
         
         if let receiverId = taskInfo.receiverId{
-            let vsg = Vessage()
-            vsg.extraInfo = extraInfoString
-            vsg.isGroup = taskInfo.isGroup
-            vsg.typeId = taskInfo.typeId
-            vsg.fileId = taskInfo.fileId
-            ServiceContainer.getVessageService().sendVessageToUser(receiverId, vessage: vsg, callback: sendedCallback)
+            ServiceContainer.getVessageService().sendVessageToUser(receiverId, vessage: taskInfo.vessage, callback: sendedCallback)
         }
     }
     

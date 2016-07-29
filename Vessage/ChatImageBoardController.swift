@@ -16,14 +16,18 @@ class ChatImageBoardCell: UICollectionViewCell {
 }
 
 @objc protocol ChatImageBoardControllerDelegate {
-    optional func chatImageBoardController(sender:ChatImageBoardController,selectedItem:AnyObject)
+    optional func chatImageBoardController(sender:ChatImageBoardController,selectedIndexPath:NSIndexPath,selectedItem:ChatImage)
     optional func chatImageBoardController(dissmissController sender:ChatImageBoardController)
+    optional func chatImageBoardController(appearController sender:ChatImageBoardController)
 }
 
 class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate : ChatImageBoardControllerDelegate?
+    var chatImages = [ChatImage]()
+    
+    private(set) var selectedChatImage:ChatImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +48,11 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         super.viewDidDisappear(animated)
         self.delegate?.chatImageBoardController?(dissmissController: self)
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.delegate?.chatImageBoardController?(appearController: self)
+    }
 
     /*
     // MARK: - Navigation
@@ -59,13 +68,13 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
 
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return chatImages.count > 0 ? 1 : 0
     }
 
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 6
+        return chatImages.count
     }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -79,12 +88,13 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        self.delegate?.chatImageBoardController?(self, selectedItem: indexPath)
+        self.selectedChatImage = chatImages[indexPath.row]
+        self.delegate?.chatImageBoardController?(self, selectedIndexPath: indexPath,selectedItem: chatImages[indexPath.row])
         return false
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(72, 100)
+        return CGSizeMake(72, self.view.frame.height - 12)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {

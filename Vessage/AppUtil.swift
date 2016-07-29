@@ -203,3 +203,7 @@ extension UIView{
         self.subviews.forEach{$0.removeFromSuperview()}
     }
 }
+
+func getRandomConversationBackground() -> UIImage {
+    return UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")!
+}

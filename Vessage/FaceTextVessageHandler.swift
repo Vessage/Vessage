@@ -62,7 +62,8 @@ class FaceTextVessageHandler: VessageHandlerBase {
         container.removeAllSubviews()
         container.addSubview(self.faceTextView)
         container.sendSubviewToBack(self.faceTextView)
-        self.faceTextView.setTextImage(newVessage.fileId, message: newVessage.body)
+        let textMessage = newVessage.getBodyDict()["textMessage"] as? String
+        self.faceTextView.setTextImage(newVessage.fileId, message: textMessage)
         refreshConversationLabel()
     }
     

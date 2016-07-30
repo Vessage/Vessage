@@ -91,9 +91,10 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         }
     }
     
-    static func showMainController(viewController:UIViewController){
+    static func showMainController(viewController:UIViewController,completion:()->Void){
         let controller = instanceFromStoryBoard("Main", identifier: "MainTabBarController") as! MainTabBarController
         viewController.presentViewController(controller, animated: false) { () -> Void in
+            completion()
             #if DEBUG
                 print("MainTabBarView Shown")
             #endif

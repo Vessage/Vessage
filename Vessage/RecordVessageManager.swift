@@ -62,10 +62,6 @@ extension RecordVessageManager{
     
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
-        ServiceContainer.getVessageService().addObserver(self, selector: #selector(RecordVessageManager.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
-        ServiceContainer.getVessageService().addObserver(self, selector: #selector(RecordVessageManager.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
-        ServiceContainer.getVessageService().addObserver(self, selector: #selector(RecordVessageManager.onVessageSending(_:)), name: VessageService.onNewVessageSending, object: nil)
-        
         camera = VessageCamera()
         camera.delegate = self
         camera.initCamera(rootController,previewView: self.previewRectView)
@@ -278,58 +274,10 @@ extension RecordVessageManager{
         #if DEBUG
             PersistentFileHelper.deleteFile(url.path!)
             vsg.fileId = "5790435e99cc251974a42f61"
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg)
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
         #else
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg, uploadFileUrl: url)
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
         #endif
-    }
-    
-    func onVessageSending(a:NSNotification){
-        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
-            if task.receiverId == self.conversation?.chatterId {
-                if let persent = a.userInfo?[SendingVessagePersentValue] as? Float{
-                    self.rootController.progressView.progress = persent
-                }
-            }
-        }
-    }
-    
-    func onVessageSendFail(a:NSNotification){
-        self.rootController.progressView.hidden = true
-        self.rootController.controllerTitle = "VESSAGE_SEND_FAIL".localizedString()
-    }
-    
-    func onVessageSended(a:NSNotification){
-        self.rootController.controllerTitle = "VESSAGE_SENDED".localizedString()
-        NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(RecordVessageManager.resetTitle(_:)), userInfo: nil, repeats: false)
-        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
-            if let userId = task.receiverId{
-                if userId == conversation?.chatterId {
-                    if !self.isGroupChat && String.isNullOrEmpty(chatter?.accountId) {
-                        self.showSendTellFriendAlert()
-                    }
-                }
-            }
-        }
-    }
-    
-    func resetTitle(_:AnyObject?) {
-        self.rootController.progressView.hidden = true
-        
-        if isGroupChat {
-            self.rootController.controllerTitle = chatGroup.groupName
-        }else{
-            self.rootController.controllerTitle = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
-        }
-    }
-    
-    private func showSendTellFriendAlert(){
-        let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-            let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
-            ShareHelper.showTellTextMsgToFriendsAlert(self.rootController, content: contentText)
-        })
-        let name = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
-        self.rootController.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: name, actions: [send])
     }
 }
 

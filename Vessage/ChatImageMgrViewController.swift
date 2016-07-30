@@ -10,11 +10,11 @@ import UIKit
 import LTMorphingLabel
 
 let defaultImageTypes = [
-    ["type":"正常","settedMsg":"Hi，约吗？","notSetMsg":"平时我都是这幅脸和人说话的😝"],
+    ["type":"正常","settedMsg":"Hi，约吗？","notSetMsg":"平时我都是这表情和人说话的😝"],
     ["type":"逗逼","settedMsg":"你才是逗逼😊","notSetMsg":"聊天时逗逼一下可以舒缓心情"],
     ["type":"卖萌","settedMsg":"感觉全世界萌萌哒~","notSetMsg":"和Ta聊天时可以卖个萌哦😉"],
     ["type":"高兴","settedMsg":"今天不知道为什么，我很嗨心~~~","notSetMsg":"一个高兴表情，把快乐传递给朋友~"],
-    ["type":"伤心","settedMsg":"☹️","notSetMsg":"我很悲伤，但我不说..."],
+    ["type":"伤心","settedMsg":"☹️","notSetMsg":"我很伤心，但我不说..."],
     ["type":"傲娇","settedMsg":"😏","notSetMsg":"哼😏"]
 ]
 

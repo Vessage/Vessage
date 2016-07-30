@@ -171,7 +171,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //Vege
 APP_NAME = "VG";
-VESSAGE_MOTTO = "不一样的聊天体验";
+VESSAGE_MOTTO = "好萌的聊天体验";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";
@@ -216,6 +216,11 @@ CONFIRM_SEND_VESSAGE_TITLE = "发送视频对讲消息？";
 VESSAGE_RECEIVER = "收件人:%@";
 SAVE_VIDEO_FAILED = "处理数据出错>_<!";
 
+//MARK: Send Vessage
+POST_VESSAGE_ERROR = "发送消息失败";
+GET_FILE_KEY_ERROR = "获取消息文件头出错";
+UPLOAD_FILE_ERROR = "上传消息文件出错";
+POST_FINISH_SEND_VESSAGE_ERROR = "确认消息发送出错";
 VESSAGE_PUSH_IN_QUEUE = "正在发送消息";
 RETRY_SEND_VESSAGE_TITLE = "传送出错，重试？";
 VESSAGE_SENDING = "正在传送";

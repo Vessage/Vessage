@@ -97,7 +97,7 @@ class FaceTextImageView: UIView {
         self.imageView.frame = self.bounds
     }
     
-    func setTextImage(fileId:String!,message:String!) {
+    func setTextImage(fileId:String!,message:String!,onMessagePresented:(()->Void)? = nil) {
         self.imageLoaded = false
         self.render()
         self.chatBubble.messageContent = message
@@ -138,7 +138,7 @@ class FaceTextImageView: UIView {
                 #endif
             }
             retryFetchChatImage(suc, timesLeft: 2)
-            
+            onMessagePresented?()
         }
     }
     
@@ -179,10 +179,10 @@ class FaceTextImageView: UIView {
     }
     
     func setChatBubblePosition(position:CGPoint) {
-        let width = self.imageView.frame.width
+        let width = self.imageView.frame.width + 20
         let str = self.chatBubble.messageContent!
         let strRect = str.boundingRectWithSize(CGSizeMake(width, CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:self.chatBubble.messageContentTextView.font], context: nil)
-        self.chatBubble.frame = CGRectMake(position.x,position.y,width,strRect.height + strRect.height / 14 * 42)
+        self.chatBubble.frame = CGRectMake(position.x,position.y,width,strRect.height + strRect.height / 14 * 42 + 30)
         self.chatBubble.messageContentTextView.frame = self.chatBubble.bounds
         self.chatBubbleAnimateShow()
     }

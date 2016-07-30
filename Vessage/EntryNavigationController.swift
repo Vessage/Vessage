@@ -150,11 +150,10 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     {
         BahamutCmdManager.sharedInstance.registHandler(self)
         removeObservers()
-        MainTabBarController.showMainController(self)
-        if self.launchScr != nil
-        {
-            self.launchScr.view.removeFromSuperview()
+        MainTabBarController.showMainController(self){
+            self.launchScr?.view?.removeFromSuperview()
         }
+        
         
     }
 

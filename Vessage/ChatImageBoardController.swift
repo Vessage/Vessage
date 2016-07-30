@@ -21,7 +21,7 @@ class ChatImageBoardCell: UICollectionViewCell {
 }
 
 @objc protocol ChatImageBoardControllerDelegate {
-    optional func chatImageBoardController(sender:ChatImageBoardController,selectedIndexPath:NSIndexPath,selectedItem:ChatImage)
+    optional func chatImageBoardController(sender:ChatImageBoardController,selectedIndexPath:NSIndexPath,selectedItem:ChatImage,deselectItem:ChatImage?)
     optional func chatImageBoardController(dissmissController sender:ChatImageBoardController)
     optional func chatImageBoardController(appearController sender:ChatImageBoardController)
 }
@@ -57,7 +57,12 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
             chatImages.appendContentsOf(cimages)
         }
         self.collectionView.reloadData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if chatImages.count > 0 {
+            self.selectedChatImage = chatImages.first
             self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0,inSection: 0), animated: true, scrollPosition: .Left)
         }
     }
@@ -109,9 +114,13 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let deselectItem = self.selectedChatImage
         self.selectedChatImage = chatImages[indexPath.row]
-        self.delegate?.chatImageBoardController?(self, selectedIndexPath: indexPath,selectedItem: chatImages[indexPath.row])
-        return false
+        self.delegate?.chatImageBoardController?(self, selectedIndexPath: indexPath,selectedItem: chatImages[indexPath.row],deselectItem: deselectItem)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

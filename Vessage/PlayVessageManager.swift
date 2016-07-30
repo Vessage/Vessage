@@ -45,6 +45,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     override func onReleaseManager() {
+        ServiceContainer.getVessageService().removeObserver(self)
         vessageHandlers.forEach { (key,handler) in
             handler.releaseHandler()
         }
@@ -54,6 +55,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
+        vessageService.addObserver(self, selector: #selector(PlayVessageManager.onVessageReaded(_:)), name: VessageService.onVessageRead, object: nil)
         loadNotReadVessages()
     }
     
@@ -132,6 +134,11 @@ class PlayVessageManager: ConversationViewControllerProxy {
             vessageView?.hidden = presentingVesseage == nil
             noMessageTipsLabel?.hidden = presentingVesseage != nil
         }
+    }
+    
+    //MARK: Notifications
+    func onVessageReaded(a:NSNotification) {
+        self.refreshBadge()
     }
     
     //MARK: actions

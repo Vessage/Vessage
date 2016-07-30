@@ -10,7 +10,8 @@ import Foundation
 
 class FaceTextViewFullScreenController: UIViewController {
     private var fullScrFaceTextView:FaceTextImageView!
-    private var vessage:Vessage!
+    private var fileId:String!
+    private var message:String!
     override func viewDidLoad() {
         super.viewDidLoad()
         let bcgImageView = UIImageView(image: getRandomConversationBackground())
@@ -25,7 +26,7 @@ class FaceTextViewFullScreenController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        fullScrFaceTextView.setTextImage(vessage.fileId, message: vessage.body)
+        fullScrFaceTextView.setTextImage(fileId, message: message)
     }
     
     func onTapFullScreenController(ges:UITapGestureRecognizer) {
@@ -49,8 +50,9 @@ class FaceTextVessageHandler: VessageHandlerBase {
         if self.faceTextView.imageLoaded {
             let controller = FaceTextViewFullScreenController()
             controller.modalTransitionStyle = .CrossDissolve
-            controller.vessage = self.presentingVesseage
-            
+            let textMessage = self.presentingVesseage.getBodyDict()["textMessage"] as? String
+            controller.message = textMessage
+            controller.fileId = self.presentingVesseage.fileId
             self.playVessageManager.rootController.presentViewController(controller, animated: true){
                 
             }
@@ -63,7 +65,9 @@ class FaceTextVessageHandler: VessageHandlerBase {
         container.addSubview(self.faceTextView)
         container.sendSubviewToBack(self.faceTextView)
         let textMessage = newVessage.getBodyDict()["textMessage"] as? String
-        self.faceTextView.setTextImage(newVessage.fileId, message: textMessage)
+        self.faceTextView.setTextImage(newVessage.fileId, message: textMessage){
+            ServiceContainer.getVessageService().readVessage(newVessage)
+        }
         refreshConversationLabel()
     }
     

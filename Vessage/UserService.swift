@@ -82,6 +82,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private func prepareServiceAndSetReady(){
         self.registUserDeviceToken(VessageSetting.deviceToken)
         self.getActiveUsers()
+        self.myChatImages = PersistentManager.sharedInstance.getModel(UserChatImages.self, idValue: self.myProfile.userId)?.chatImages
         self.fetchUserChatImages(self.myProfile.userId)
         self.setServiceReady()
     }

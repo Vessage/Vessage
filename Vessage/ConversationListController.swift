@@ -83,15 +83,12 @@ class ConversationListController: UITableViewController {
         vessageService.newVessageFromServer()
         let titleView = NavigationBarTitle.instanceFromXib()
         self.navigationItem.titleView = titleView
-        #if DEBUG
-            titleView.title = "\(VessageConfig.appVersion) build"
-        #endif
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.backBarButtonItem?.title = VessageConfig.appName
+        PersistentManager.sharedInstance.saveAll()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -112,14 +109,16 @@ class ConversationListController: UITableViewController {
     private func initObservers(){
         conversationService.addObserver(self, selector: #selector(ConversationListController.onConversationListUpdated(_:)), name: ConversationService.conversationListUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationListController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
-        vessageService.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
-        vessageService.addObserver(self, selector: #selector(ConversationListController.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
+        
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         
         refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(100, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
+        
+        VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageQueue.onTaskFinished, object: nil)
     }
     
     private func releaseController(){
+        VessageQueue.sharedInstance.removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
@@ -136,21 +135,9 @@ class ConversationListController: UITableViewController {
         releaseController()
     }
     
-    func onVessageSendFail(a:NSNotification){
-        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
-            if let receiverId = task.receiverId{
-                conversationService.setConversationNewestModified(receiverId)
-            }
-        }
-    }
-    
-    func onVessageSended(a:NSNotification){
-        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
-            if let receiverId = task.receiverId{
-                conversationService.setConversationNewestModified(receiverId)
-            }else if let mobile = task.receiverMobile{
-                conversationService.setConversationNewestModifiedByMobile(mobile)
-            }
+    func onVessageSended(a:NSNotification) {
+        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+            conversationService.setConversationNewestModified(task.receiverId)
         }
     }
     

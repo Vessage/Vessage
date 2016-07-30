@@ -8,23 +8,20 @@
 
 import Foundation
 
-class VessageFileUploadTask: BahamutObject {
-    override func getObjectUniqueIdName() -> String {
-        return "taskId"
-    }
-    var taskId:String!
-    var fileId:String!
-    var vessageId:String!
-    var receiverId:String!
-    var receiverMobile:String!
-}
+//class VessageFileUploadTask: BahamutObject {
+//    override func getObjectUniqueIdName() -> String {
+//        return "taskId"
+//    }
+//    var taskId:String!
+//    var fileId:String!
+//    var vessageId:String!
+//    var receiverId:String!
+//    var receiverMobile:String!
+//}
 
 let VessageServiceNotificationValue = "VessageServiceNotificationValue"
 let VessageServiceNotificationValues = "VessageServiceNotificationValue"
 let SendedVessageResultModelValue = "SendedVessageResultModelValue"
-let SendedVessageTaskValue = "SendedVessageTaskValue"
-let SendingVessagePersentValue = "SendingVessagePersentValue"
-
 
 //MARK: ServiceContainer DI
 extension ServiceContainer{
@@ -34,12 +31,13 @@ extension ServiceContainer{
 }
 
 //MARK: VessageService
-class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate {
+class VessageService:NSNotificationCenter, ServiceProtocol {
     static let onNewVessageReceived = "onNewVessageReceived"
     static let onNewVessagesReceived = "onNewVessagesReceived"
-    static let onNewVessageSended = "onNewVessageSended"
-    static let onNewVessageSendFail = "onNewVessageSendFail"
-    static let onNewVessageSending = "onNewVessageSending"
+    
+    static let onNewVessagePostFinished = "onNewVessagePostFinished"
+    static let onNewVessagePostFinishError = "onNewVessagePostFinishError"
+    
     static let onVessageRead = "onVessageRead"
     static let onVessageRemoved = "onVessageRemoved"
     //private static let notReadVessageCountStoreKey = "NewVsgCntKey"
@@ -86,120 +84,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
         }
         PersistentManager.sharedInstance.saveAll()
         PersistentManager.sharedInstance.refreshCache(Vessage)
-    }
-    
-    private func sendVessageToMobile(receiverMobile:String,vessage:Vessage,callback:(vessageId:String?)->Void){
-        let req = SendNewVessageToMobileRequest()
-        req.receiverMobile = receiverMobile
-        sendVessage(req, vessage: vessage) { (vessageId) -> Void in
-            callback(vessageId: vessageId)
-        }
-    }
-    
-    func sendVessageToUser(receiverId:String?, vessage:Vessage, callback:(vessageId:String?)->Void){
-        let req = SendNewVessageToUserRequest()
-        req.receiverId = receiverId
-        req.isGroup = vessage.isGroup
-        sendVessage(req, vessage: vessage) { (vessageId) -> Void in
-            callback(vessageId: vessageId)
-        }
-    }
-    
-    private func sendVessage(req:SendNewVessageRequestBase,vessage:Vessage,callback:(vessageId:String?)->Void){
-        req.extraInfo = vessage.extraInfo
-        req.fileId = vessage.fileId
-        req.typeId = vessage.typeId
-        req.body = vessage.body
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
-            if let vrm = result.returnObject{
-                vrm.saveModel()
-                callback(vessageId: vrm.vessageId)
-            }else{
-                callback(vessageId: nil)
-            }
-        }
-    }
-    
-    private func getSendVessageResult(vessageId:String) -> SendVessageResultModel?{
-        return PersistentManager.sharedInstance.getModel(SendVessageResultModel.self, idValue: vessageId)
-    }
-    
-    private var fileUploadTaskDict = [String:VessageFileUploadTask]()
-    
-    func observeOnVessageFileUploadTask(task:VessageFileUploadTask){
-        task.saveModel()
-        fileUploadTaskDict[task.taskId] = task
-        ProgressTaskWatcher.sharedInstance.addTaskObserver(task.taskId, delegate: self)
-    }
-    
-    //MARK: ProgressTask Delegate
-    func taskProgress(taskIdentifier: String, persent: Float) {
-        if let t = fileUploadTaskDict[taskIdentifier]{
-            self.postNotificationNameWithMainAsync(VessageService.onNewVessageSending, object: self, userInfo: [SendingVessagePersentValue:persent,SendedVessageTaskValue:t])
-        }
-    }
-    
-    func taskCompleted(taskIdentifier: String, result: AnyObject!) {
-        if let task = fileUploadTaskDict[taskIdentifier] {
-            self.finishSendVessage(task)
-        }else if let task = PersistentManager.sharedInstance.getModel(VessageFileUploadTask.self, idValue: taskIdentifier){
-            self.finishSendVessage(task)
-        }
-    }
-    
-    func taskFailed(taskIdentifier: String, result: AnyObject!) {
-        if let task = PersistentManager.sharedInstance.getModel(VessageFileUploadTask.self, idValue: taskIdentifier){
-            self.cancelSendVessage(task.vessageId)
-            self.fileUploadTaskDict.removeValueForKey(taskIdentifier)
-            PersistentManager.sharedInstance.removeModel(task)
-            var userInfo = [String:AnyObject]()
-            userInfo.updateValue(task, forKey: SendedVessageTaskValue)
-            self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
-        }
-    }
-    
-    func finishSendVessage(receiverId:String,vessageId:String,fileId:String) {
-        let task = VessageFileUploadTask()
-        task.taskId = fileId
-        task.vessageId = vessageId
-        task.fileId = fileId
-        task.receiverId = receiverId
-        self.postNotificationNameWithMainAsync(VessageService.onNewVessageSending, object: self, userInfo: [SendingVessagePersentValue:100.0,SendedVessageTaskValue:task])
-        finishSendVessage(task)
-    }
-    
-    private func finishSendVessage(task:VessageFileUploadTask){
-        if let m = getSendVessageResult(task.vessageId){
-            let req = FinishSendVessageRequest()
-            req.vessageId = m.vessageId
-            req.vessageBoxId = m.vessageBoxId
-            req.fileId = task.fileId
-            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
-                var userInfo = [String:AnyObject]()
-                userInfo.updateValue(task, forKey: SendedVessageTaskValue)
-                userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
-                if result.isSuccess{
-                    MobClick.event("Vege_TotalPostVessages")
-                    self.fileUploadTaskDict.removeValueForKey(task.taskId)
-                    PersistentManager.sharedInstance.removeModel(task)
-                    PersistentManager.sharedInstance.removeModel(m)
-                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSended, object: self, userInfo:userInfo)
-                }else{
-                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
-                }
-            })
-        }
-    }
-    
-    func cancelSendVessage(vessageId:String){
-        if let m = getSendVessageResult(vessageId){
-            let req = CancelSendVessageRequest()
-            req.vessageId = m.vessageId
-            req.vessageBoxId = m.vessageBoxId
-            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
-                
-            })
-        }
     }
     
     func readVessage(vessage:Vessage,refresh:Bool = true){
@@ -295,5 +179,125 @@ class VessageService:NSNotificationCenter, ServiceProtocol,ProgressTaskDelegate 
 //            return [vsg]
 //        }
         return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
+    }
+}
+
+//MARK: Send Vessage
+extension VessageService{
+    private func sendVessageToMobile(receiverMobile:String,vessage:Vessage,callback:(vessageId:String?)->Void){
+        let req = SendNewVessageToMobileRequest()
+        req.receiverMobile = receiverMobile
+        sendVessage(req, vessage: vessage) { (vessageId) -> Void in
+            callback(vessageId: vessageId)
+        }
+    }
+    
+    func sendVessageToUser(receiverId:String?, vessage:Vessage, callback:(vessageId:String?)->Void){
+        let req = SendNewVessageToUserRequest()
+        req.receiverId = receiverId
+        req.isGroup = vessage.isGroup
+        sendVessage(req, vessage: vessage) { (vessageId) -> Void in
+            callback(vessageId: vessageId)
+        }
+    }
+    
+    private func sendVessage(req:SendNewVessageRequestBase,vessage:Vessage,callback:(vessageId:String?)->Void){
+        req.extraInfo = vessage.extraInfo
+        req.fileId = vessage.fileId
+        req.typeId = vessage.typeId
+        req.body = vessage.body
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
+            if let vrm = result.returnObject{
+                vrm.saveModel()
+                callback(vessageId: vrm.vessageId)
+            }else{
+                callback(vessageId: nil)
+            }
+        }
+    }
+    
+    private func getSendVessageResult(vessageId:String) -> SendVessageResultModel?{
+        return PersistentManager.sharedInstance.getModel(SendVessageResultModel.self, idValue: vessageId)
+    }
+    
+    func finishSendVessage(vessageId:String,postUploadedFileId:String?,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
+        if String.isNullOrEmpty(postUploadedFileId){
+            let m = getSendVessageResult(vessageId)
+            callback(finished: true, sendVessageResultModel: m)
+            var userInfo = [NSObject:AnyObject]()
+            if m != nil {
+                PersistentManager.sharedInstance.removeModel(m!)
+                userInfo.updateValue(m!, forKey: SendedVessageResultModelValue)
+            }
+            self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo: userInfo)
+            MobClick.event("Vege_TotalPostVessages")
+        }else{
+            if let m = getSendVessageResult(vessageId){
+                let req = FinishSendVessageRequest()
+                req.vessageId = m.vessageId
+                req.vessageBoxId = m.vessageBoxId
+                req.fileId = postUploadedFileId!
+                BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
+                    var userInfo = [String:AnyObject]()
+                    userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
+                    if result.isSuccess{
+                        MobClick.event("Vege_TotalPostVessages")
+                        PersistentManager.sharedInstance.removeModel(m)
+                        callback(finished: true, sendVessageResultModel: m)
+                        self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo:userInfo)
+                    }else{
+                        callback(finished: false, sendVessageResultModel: m)
+                        self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinishError, object: self, userInfo:userInfo)
+                    }
+                })
+            }
+            
+        }
+    }
+    
+//    func finishSendVessage(receiverId:String,vessageId:String,fileId:String) {
+//        let task = VessageFileUploadTask()
+//        task.taskId = fileId
+//        task.vessageId = vessageId
+//        task.fileId = fileId
+//        task.receiverId = receiverId
+//        
+//        MobClick.event("Vege_TotalPostVessages")
+//        if let m = getSendVessageResult(task.vessageId){
+//            PersistentManager.sharedInstance.removeModel(m)
+//        }
+//    }
+//    
+//    func finishSendVessage(task:VessageFileUploadTask){
+//        if let m = getSendVessageResult(task.vessageId){
+//            let req = FinishSendVessageRequest()
+//            req.vessageId = m.vessageId
+//            req.vessageBoxId = m.vessageBoxId
+//            req.fileId = task.fileId
+//            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
+//                var userInfo = [String:AnyObject]()
+//                userInfo.updateValue(task, forKey: SendedVessageTaskValue)
+//                userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
+//                if result.isSuccess{
+//                    MobClick.event("Vege_TotalPostVessages")
+//                    PersistentManager.sharedInstance.removeModel(task)
+//                    PersistentManager.sharedInstance.removeModel(m)
+//                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSended, object: self, userInfo:userInfo)
+//                }else{
+//                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
+//                }
+//            })
+//        }
+//    }
+    
+    func cancelSendVessage(vessageId:String){
+        if let m = getSendVessageResult(vessageId){
+            let req = CancelSendVessageRequest()
+            req.vessageId = m.vessageId
+            req.vessageBoxId = m.vessageBoxId
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
+                
+            })
+        }
     }
 }

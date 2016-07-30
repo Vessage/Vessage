@@ -66,8 +66,10 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         self.chatImageBoardShown = false
     }
     
-    func chatImageBoardController(sender: ChatImageBoardController, selectedIndexPath: NSIndexPath, selectedItem: ChatImage) {
-        sendImageChatVessage()
+    func chatImageBoardController(sender: ChatImageBoardController, selectedIndexPath: NSIndexPath, selectedItem: ChatImage, deselectItem: ChatImage?) {
+        if selectedItem.imageId == deselectItem?.imageId {
+            sendImageChatVessage()
+        }
     }
     
     //MARK: actions
@@ -99,7 +101,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         if let ppvc = self.chatImageBoardController.popoverPresentationController{
             if let myChatImages = userService.myChatImages{
                 let lineCount = CGFloat(myChatImages.count > 4 ? 4 : myChatImages.count)
-                self.chatImageBoardController.preferredContentSize = CGSizeMake(lineCount * (76) + 12, 112)
+                self.chatImageBoardController.preferredContentSize = CGSizeMake(lineCount * (72) + (lineCount - 1) * 3 + 12, 112)
                 ppvc.sourceView = self.chatImageBoardSourceView
                 ppvc.sourceRect = self.chatImageBoardSourceView.bounds
                 ppvc.permittedArrowDirections = .Any
@@ -136,7 +138,11 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
             
             self.imageChatInputView.inputTextField.text = nil
             self.chatImageBoardSourceView?.removeFromSuperview()
-            self.chatImageBoardController?.dismissViewControllerAnimated(true, completion: nil)
+            self.chatImageBoardController?.dismissViewControllerAnimated(true){
+                #if DEBUG
+                    print("颜文字:\(chatImage.imageType)")
+                #endif
+            }
             self.imageChatInputView.refreshSendButtonColor()
             let vsg = Vessage()
             vsg.isGroup = self.conversation.isGroup
@@ -145,8 +151,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
             let json = try! NSJSONSerialization.dataWithJSONObject(["textMessage":textMessage], options: NSJSONWritingOptions(rawValue: 0))
             vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
             vsg.fileId = chatImage.imageId
-            VessageQueue.sharedInstance.pushNewVessageTo(self.conversation.chatterId,vessage: vsg,uploadFileUrl: nil)
-            self.playToast("Send Face Text Vessage")
+            VessageQueue.sharedInstance.pushNewVessageTo(self.conversation.chatterId,vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
         }else{
             self.playToast("No Chat Image Selected")
         }

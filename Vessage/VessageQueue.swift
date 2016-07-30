@@ -7,49 +7,17 @@
 //
 
 import Foundation
-import MessageUI
 
-class SendVessageFileStep:BahamutTaskStepWorker{
-    func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
-        let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
-        ServiceContainer.getService(FileService).sendFileToAliOSS(model.filePath, type: .Video) { (taskId, fileKey) -> Void in
-            if fileKey != nil{
-                model.vessage.fileId = fileKey.fileId
-                step.finishedStep(nil)
-            }else{
-                step.failStep(nil)
-            }
-        }
-    }
-}
-
-class PostVessageToServer:BahamutTaskStepWorker{
-    func taskStepStart(task: BahamutTask, step: BahamutTaskStep, taskModel: BahamutTaskModel) {
-        //let model = SendVessageTaskInfo(json: taskModel.taskUserInfo)
-        //let vessage = model.vessage
-        //TODO: high version finish
-//        ServiceContainer.getVessageService().sendVessage(vessage){ sended in
-//            if sended{
-//                step.finishedStep(nil)
-//            }else{
-//                step.failStep(nil)
-//            }
-//        }
-    }
-}
-
-class SendVessageTaskInfo:BahamutObject{
-    var filePath:String!
-    var receiverId:String!
-    var vessage:Vessage!
+class VessageQueue:NSNotificationCenter{
+    static let onTaskStepError = "onTaskStepError"
+    static let onTaskProgress = "onTaskProgress"
+    static let onTaskFinished = "onTaskFinished"
+    static let onTaskCanceled = "onTaskCanceled"
     
+    private var extraInfoString:String!
+    //private var sendingQueueTasks = [String:SendVessageQueueTask]()
+    private var stepHandler = [String:SendVessageQueueStepHandler]()
     
-}
-
-class VessageQueue:NSObject{
-    let sendVessageQueueName = "SendVessage"
-    let sendVessageQueueWorkStep = ["SendAliOSSFile","PostVessage"]
-    private var taskInfoDict = [String:SendVessageTaskInfo]()
     static var sharedInstance:VessageQueue = {
         return VessageQueue()
     }()
@@ -58,40 +26,36 @@ class VessageQueue:NSObject{
         return UIApplication.currentShowingViewController
     }
     
-    
-    //primary version do not use queue
-//    func pushNewVideoTo(conversationId:String,fileUrl:NSURL){
-//        //TODO: delete test
-//        let testMark = "tn" + ""
-//        if testMark == "tn"{
-//            return
-//        }
-//        
-//        let userInfoModel = SendVessageTaskInfo()
-//        userInfoModel.filePath = fileUrl.path!
-//        BahamutTaskQueue.getQueue(sendVessageQueueName).pushTask(userInfoModel.toJsonString(), step: sendVessageQueueWorkStep)
-//        
-//    }
-    
     func initQueue(userId:String){
+        initHandlers()
         refreshExtraInfoString()
         initObservers()
     }
     
     private func releaseQueue() {
+        releaseHandlers()
         removeObservers()
+    }
+    
+    private func initHandlers(){
+        stepHandler.removeAll()
+        stepHandler.updateValue(PostVessageHandler(), forKey: PostVessageHandler.stepKey)
+        stepHandler.updateValue(SendAliOSSFileHandler(), forKey: SendAliOSSFileHandler.stepKey)
+        stepHandler.updateValue(FinishPostVessageHandler(), forKey: FinishPostVessageHandler.stepKey)
+        stepHandler.values.forEach{$0.initHandler(self)}
+    }
+    
+    private func releaseHandlers(){
+        stepHandler.values.forEach{$0.releaseHandler()}
+        stepHandler.removeAll()
     }
     
     private func initObservers(){
         ServiceContainer.instance.addObserver(self, selector: #selector(VessageQueue.onUserLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
-        ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSended(_:)), name: VessageService.onNewVessageSended, object: nil)
-        ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageQueue.onVessageSendFail(_:)), name: VessageService.onNewVessageSendFail, object: nil)
-        
     }
     
     private func removeObservers(){
         ServiceContainer.instance.removeObserver(self)
-        ServiceContainer.getVessageService().removeObserver(self)
     }
     
     func onVessageSendFail(a:NSNotification){
@@ -101,59 +65,6 @@ class VessageQueue:NSObject{
     func onUserLogout(a:NSNotification){
         releaseQueue()
     }
-    
-    func onVessageSended(a:NSNotification){
-        if let task = a.userInfo?[SendedVessageTaskValue] as? VessageFileUploadTask{
-            if let path = ServiceContainer.getService(FileService).getFilePath(task.fileId, type: .Video){
-                if !PersistentFileHelper.deleteFile(path){
-                    NSLog("Delete Sended Vessage Failed Error:%@", path)
-                }
-            }
-        }
-    }
-    
-    func pushNewVessageTo(receiverId:String?,vessage:Vessage!,uploadFileUrl:NSURL? = nil){
-        let userInfoModel = SendVessageTaskInfo()
-        let vsg = Vessage()
-        vsg.extraInfo = extraInfoString
-        vsg.sender = ServiceContainer.getUserService().myProfile.userId
-        userInfoModel.receiverId = receiverId
-        userInfoModel.filePath = uploadFileUrl?.path!
-        let taskInfoKey = IdUtil.generateUniqueId()
-        taskInfoDict[taskInfoKey] = userInfoModel
-        sendVessage(taskInfoKey)
-    }
-    
-    private func sendVessageFile(vessageId:String, taskInfoKey:String){
-        if let taskInfo = taskInfoDict[taskInfoKey]{
-            ServiceContainer.getService(FileService).sendFileToAliOSS(taskInfo.filePath, type: .Video) { (taskId, fileKey) -> Void in
-                if fileKey != nil{
-                    self.taskInfoDict.removeValueForKey(taskInfoKey)
-                    let task = VessageFileUploadTask()
-                    task.taskId = taskId
-                    task.receiverId = taskInfo.receiverId
-                    task.fileId = fileKey.fileId
-                    task.vessageId = vessageId
-                    ServiceContainer.getVessageService().observeOnVessageFileUploadTask(task)
-                }else{
-                    self.retrySendFile(vessageId,taskInfoKey: taskInfoKey)
-                }
-            }
-        }
-    }
-    
-    private func retrySendFile(vessageId:String,taskInfoKey:String){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            self.sendVessageFile(vessageId,taskInfoKey: taskInfoKey)
-        }
-        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
-            ServiceContainer.getVessageService().cancelSendVessage(vessageId)
-            self.controller.playCrossMark("CANCEL".localizedString())
-        }
-        controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
-    }
-    
-    private var extraInfoString:String!
     
     private func refreshExtraInfoString(){
         let userService = ServiceContainer.getUserService()
@@ -168,36 +79,92 @@ class VessageQueue:NSObject{
         extraInfoString = extraInfo.toJsonString()
     }
     
-    private func sendVessage(taskInfoKey:String){
-        let taskInfo:SendVessageTaskInfo! = taskInfoDict[taskInfoKey]
-        if taskInfo == nil {
-            return
-        }
-        
-        func sendedCallback(vessageId:String?){
-            if let vid = vessageId{
-                if let fileId = taskInfo?.vessage?.fileId{
-                    ServiceContainer.getVessageService().finishSendVessage(taskInfo!.receiverId,vessageId: vid, fileId: fileId)
-                }else{
-                    self.sendVessageFile(vid, taskInfoKey: taskInfoKey)
-                }
-            }else{
-                self.retrySendVessage(taskInfoKey)
-            }
-        }
-        
-        if let receiverId = taskInfo.receiverId{
-            ServiceContainer.getVessageService().sendVessageToUser(receiverId, vessage: taskInfo.vessage, callback: sendedCallback)
+    private func getSendVessageQueueTaskByTaskId(taskId:String) -> SendVessageQueueTask?{
+        return PersistentManager.sharedInstance.getModel(SendVessageQueueTask.self, idValue: taskId)
+    }
+    
+    func pushNewVessageTo(receiverId:String?,vessage:Vessage,taskSteps:[String],uploadFileUrl:NSURL? = nil){
+        let queueTask = SendVessageQueueTask()
+        let vsg = vessage
+        vsg.extraInfo = extraInfoString
+        vsg.sender = ServiceContainer.getUserService().myProfile.userId
+        queueTask.steps = taskSteps
+        queueTask.receiverId = receiverId
+        queueTask.filePath = uploadFileUrl?.path!
+        queueTask.taskId = IdUtil.generateUniqueId()
+        queueTask.vessage = vsg
+        queueTask.currentStep = -1
+        queueTask.saveModel()
+        nextStep(queueTask)
+    }
+    
+    func nextStep(task:SendVessageQueueTask) {
+        task.currentStep += 1
+        task.saveModel()
+        if task.isFinish() {
+            finishTask(task)
+        }else{
+            startTask(task)
         }
     }
     
-    private func retrySendVessage(taskInfoKey:String){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-            self.sendVessage(taskInfoKey)
+    private func finishTask(task:SendVessageQueueTask){
+        var userInfo = [NSObject:AnyObject]()
+        userInfo.updateValue(task, forKey: kSendVessageQueueTaskValue)
+        PersistentManager.sharedInstance.removeModel(task)
+        self.postNotificationNameWithMainAsync(VessageQueue.onTaskFinished, object: self, userInfo: userInfo)
+        self.notifyTaskStepProgress(task, stepIndex: task.currentStep, stepProgress: 0)
+        #if DEBUG
+            print("SendTaskId:\(task.taskId) -> Finished")
+        #endif
+    }
+    
+    func notifyTaskStepProgress(task:SendVessageQueueTask,stepIndex:Int,stepProgress:Float) {
+        
+        let totalSteps = Float(task.steps.count)
+        let stepProgressInTask = 1 / totalSteps * stepProgress
+        let finishedProgress = Float(stepIndex) / totalSteps + stepProgressInTask
+        
+        var userInfo = [NSObject:AnyObject]()
+        userInfo.updateValue(task, forKey: kSendVessageQueueTaskValue)
+        userInfo.updateValue(finishedProgress, forKey: kSendVessageQueueTaskProgressValue)
+        self.postNotificationNameWithMainAsync(VessageQueue.onTaskProgress, object: self, userInfo: userInfo)
+        #if DEBUG
+            print("SendTaskId:\(task.taskId) -> Progress:\(finishedProgress * 100)%")
+        #endif
+    }
+    
+    func doTaskStepError(task:SendVessageQueueTask,message:String?) {
+        var userInfo = [NSObject:AnyObject]()
+        userInfo.updateValue(task, forKey: kSendVessageQueueTaskValue)
+        if let msg = message{
+            userInfo.updateValue(msg, forKey: kSendVessageQueueTaskMessageValue)
         }
-        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
-            self.controller.playCrossMark("CANCEL".localizedString())
+        self.postNotificationNameWithMainAsync(VessageQueue.onTaskStepError, object: self, userInfo: userInfo)
+    }
+    
+    func cancelTask(task:SendVessageQueueTask,message:String?) {
+        var userInfo = [NSObject:AnyObject]()
+        userInfo.updateValue(task, forKey: kSendVessageQueueTaskValue)
+        if let msg = message{
+            userInfo.updateValue(msg, forKey: kSendVessageQueueTaskMessageValue)
         }
-        controller.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
+        PersistentManager.sharedInstance.removeModel(task)
+        self.postNotificationNameWithMainAsync(VessageQueue.onTaskCanceled, object: self, userInfo: userInfo)
+        #if DEBUG
+            print("SendTaskId:\(task.taskId) -> Canceled")
+        #endif
+    }
+    
+    func startTask(task:SendVessageQueueTask)  {
+        notifyTaskStepProgress(task, stepIndex: task.currentStep, stepProgress: 0)
+        if let step = task.getCurrentStep(){
+            if let handler = self.stepHandler[step]{
+                #if DEBUG
+                    print("SendTaskId:\(task.taskId) -> Do Work:\(step)")
+                #endif
+                handler.doTask(self, task: task)
+            }
+        }
     }
 }

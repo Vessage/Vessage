@@ -311,10 +311,14 @@ extension ConversationViewController{
     private func showBottomBar(){
         if(bottomBar.hidden){
             bottomBar.frame.origin.y = view.frame.height
+            self.imageChatButton.hidden = false
             UIView.animateWithDuration(0.08) {
                 self.bottomBar.hidden = false
                 self.bottomBar.frame.origin.y = self.view.frame.height - self.bottomBar.frame.height
-                self.imageChatButton.hidden = false
+                self.imageChatButton.alpha = 0.3
+                UIView.animateWithDuration(0.6){
+                    self.imageChatButton.alpha = 1
+                }
             }
         }
     }
@@ -368,13 +372,15 @@ extension ConversationViewController{
     private func addObservers(){
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
-        chatGroupService.addObserver(self, selector: #selector(ConversationViewControllerProxy.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
+        chatGroupService.addObserver(self, selector: #selector(ConversationViewController.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
+        addSendVessageObservers()
     }
     
     private func removeObservers(){
         userService.removeObserver(self)
         vessageService.removeObserver(self)
         chatGroupService.removeObserver(self)
+        removeSendVessageObservers()
     }
     
     func onChatGroupUpdated(a:NSNotification){
@@ -444,6 +450,88 @@ extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
         }
     }
     
+}
+
+//MARK: Send Vessage Status
+extension ConversationViewController{
+    
+    func addSendVessageObservers() {
+        VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onVessageSending(_:)), name: VessageQueue.onTaskProgress, object: nil)
+        VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onVessageSendError(_:)), name: VessageQueue.onTaskStepError, object: nil)
+        VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onVessageSended(_:)), name: VessageQueue.onTaskFinished, object: nil)
+    }
+    
+    func removeSendVessageObservers() {
+        VessageQueue.sharedInstance.removeObserver(self)
+    }
+    
+    func onVessageSending(a:NSNotification){
+        
+        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+            if task.receiverId == self.conversation?.chatterId {
+                if let persent = a.userInfo?[kSendVessageQueueTaskProgressValue] as? Float{
+                    self.progressView.hidden = false
+                    self.progressView.setProgress(persent, animated: true)
+                }
+            }
+        }
+    }
+    
+    func onVessageSendError(a:NSNotification){
+        
+        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+            if task.receiverId == self.conversation?.chatterId {
+                self.progressView.hidden = true
+                self.controllerTitle = "VESSAGE_SEND_FAIL".localizedString()
+                if let msg = a.userInfo?[kSendVessageQueueTaskMessageValue] as? String{
+                    retrySendTask(task, errorMessage: msg)
+                }
+            }
+        }
+    }
+    
+    private func retrySendTask(task:SendVessageQueueTask,errorMessage:String){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            VessageQueue.sharedInstance.startTask(task)
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
+            VessageQueue.sharedInstance.cancelTask(task, message: "USER_CANCELED")
+            self.playCrossMark("CANCEL".localizedString())
+        }
+        self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: errorMessage.localizedString(), actions: [okAction,cancelAction])
+    }
+    
+    func onVessageSended(a:NSNotification){
+        
+        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+            if task.receiverId == self.conversation?.chatterId {
+                self.controllerTitle = "VESSAGE_SENDED".localizedString()
+                NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)
+                if !self.isGroupChat && String.isNullOrEmpty(chatter?.accountId) {
+                    self.showSendTellFriendAlert()
+                }
+            }
+        }
+    }
+    
+    func resetTitle(_:AnyObject?) {
+        self.progressView.hidden = true
+        
+        if isGroupChat {
+            self.controllerTitle = chatGroup.groupName
+        }else{
+            self.controllerTitle = userService.getUserNotedName(conversation.chatterId)
+        }
+    }
+    
+    private func showSendTellFriendAlert(){
+        let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+            let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
+            ShareHelper.showTellTextMsgToFriendsAlert(self, content: contentText)
+        })
+        let name = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
+        self.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: name, actions: [send])
+    }
 }
 
 //MARK: Show ConversationViewController Extension

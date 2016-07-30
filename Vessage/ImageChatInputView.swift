@@ -63,10 +63,8 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             if let handler = delegate?.imageChatInputViewDidClickSend{
-                dispatch_async(dispatch_get_main_queue(), {
-                    handler(textView,textField: textView)
-                    self.refreshSendButtonColor()
-                })
+                handler(textView,textField: textView)
+                self.refreshSendButtonColor()
             }
             return false
         }

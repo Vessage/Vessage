@@ -199,17 +199,13 @@ extension ConversationViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         showBottomBar()
         recordVessageManager.camera.openCamera()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         if !(self.navigationController?.viewControllers.contains(self) ?? false) {
             releaseController()
         }

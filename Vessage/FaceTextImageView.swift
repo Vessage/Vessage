@@ -16,12 +16,12 @@ class FaceTextChatBubble: UIView {
             messageContentTextView?.text = messageContent
         }
     }
-    
+    /*
     private var beginPoint:CGPoint!
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
         self.beginPoint = touches.first?.locationInView(self)
+        super.touchesBegan(touches, withEvent: event)
         
         
     }
@@ -47,7 +47,7 @@ class FaceTextChatBubble: UIView {
         super.touchesCancelled(touches, withEvent: event)
         self.beginPoint = nil
     }
-    
+    */
     @IBOutlet weak var messageContentTextView: UILabel!{
         didSet{
             messageContentTextView.userInteractionEnabled = false
@@ -71,7 +71,18 @@ class FaceTextImageView: UIView {
             imageView.contentMode = .ScaleAspectFill
         }
     }
+    private(set) var chatBubbleMoveGesture:UIPanGestureRecognizer!
     private var chatBubble:FaceTextChatBubble!
+    var chatBubbleMovable = true{
+        didSet{
+            if chatBubbleMovable {
+                self.chatBubble?.addGestureRecognizer(self.chatBubbleMoveGesture)
+            }else{
+                self.chatBubble?.removeGestureRecognizer(self.chatBubbleMoveGesture)
+            }
+        }
+    }
+    
     private(set) var imageLoaded:Bool = false
     let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
     
@@ -79,6 +90,10 @@ class FaceTextImageView: UIView {
         self.container = container
         self.imageView = UIImageView()
         self.chatBubble = FaceTextChatBubble.instanceFromXib()
+        self.chatBubbleMoveGesture = UIPanGestureRecognizer(target: self, action: #selector(FaceTextImageView.onMoveChatBubble(_:)))
+        if chatBubbleMovable {
+            self.chatBubble.addGestureRecognizer(self.chatBubbleMoveGesture)
+        }
         let imv = UIImageView(frame: CGRectMake(0, 0, 64, 46))
         imv.animationImages = hudSpinImageArray
         imv.animationRepeatCount = 0
@@ -90,6 +105,26 @@ class FaceTextImageView: UIView {
         self.addSubview(self.chatBubble)
         
         self.chatBubble.hidden = true
+    }
+    
+    private var beginPoint:CGPoint!
+    func onMoveChatBubble(ges:UIPanGestureRecognizer) {
+        
+        switch ges.state {
+        case .Began:
+            beginPoint = ges.locationInView(self)
+        case .Cancelled,.Ended,.Failed,.Possible:
+            beginPoint = nil
+        case .Changed:
+            if let bp = beginPoint{
+                let pt = ges.locationInView(self)
+                var newFrame = ges.view!.frame
+                newFrame.origin.x += pt.x - bp.x
+                newFrame.origin.y += pt.y - bp.y
+                ges.view!.frame = newFrame
+                beginPoint = pt
+            }
+        }
     }
     
     private func render(){

@@ -10,12 +10,12 @@ import UIKit
 import LTMorphingLabel
 
 let defaultImageTypes = [
-    ["type":"正常","settedMsg":"Hi，约吗？","notSetMsg":"平时我都是这表情和人说话的😝"],
-    ["type":"逗逼","settedMsg":"你才是逗逼😊","notSetMsg":"聊天时逗逼一下可以舒缓心情"],
+    ["type":"正常","settedMsg":"蜀黍，我不约😝","notSetMsg":"嗨，约吗？"],
+    ["type":"逗逼","settedMsg":"你才是逗逼😊","notSetMsg":"听说聊天时逗逼的人最可爱~"],
     ["type":"卖萌","settedMsg":"感觉全世界萌萌哒~","notSetMsg":"和Ta聊天时可以卖个萌哦😉"],
     ["type":"高兴","settedMsg":"今天不知道为什么，我很嗨心~~~","notSetMsg":"一个高兴表情，把快乐传递给朋友~"],
-    ["type":"伤心","settedMsg":"☹️","notSetMsg":"我很伤心，但我不说..."],
-    ["type":"傲娇","settedMsg":"😏","notSetMsg":"哼😏"]
+    ["type":"伤心","settedMsg":"我心里苦，但我不说...","notSetMsg":"☹️"],
+    ["type":"傲娇","settedMsg":"哼😏","notSetMsg":"哼😏"]
 ]
 
 class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,ChatBackgroundPickerControllerDelegate {
@@ -112,7 +112,7 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
             self.navigationItem.title = "视频对讲背景"
             faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "设置视频对讲背景，让好友在对讲时可以看到你")
             if userService.isUserChatBackgroundIsSeted {
-                self.imageTypeLabel.text = ""
+                self.imageTypeLabel.text = " "
             }else{
                 self.imageTypeLabel.text = "未设置"
             }
@@ -130,6 +130,10 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
             }
             
         }
+        if let chatBubbleMoveGesture = faceImageView.chatBubbleMoveGesture{
+            self.view.gestureRecognizers?.forEach{$0.requireGestureRecognizerToFail(chatBubbleMoveGesture)}
+        }
+        
         return cell
     }
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
+class VideoVessageHandler:VessageHandlerBase,PlayerDelegate,HandleBahamutCmdDelegate {
     private var vessagePlayer:BahamutFilmView!
     
     override init(manager:PlayVessageManager,container:UIView) {
@@ -20,10 +20,12 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
         vessagePlayer.isMute = false
         vessagePlayer.showTimeLine = false
         vessagePlayer.delegate = self
+        BahamutCmdManager.sharedInstance.registHandler(self)
     }
     
     override func releaseHandler() {
         super.releaseHandler()
+        BahamutCmdManager.sharedInstance.removeHandler(self)
         vessagePlayer.removeFromSuperview()
         vessagePlayer.delegate = nil
         vessagePlayer.releasePlayer()
@@ -69,7 +71,10 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
     func playerPlaybackDidEnd(player: Player) {
         self.vessagePlayer.filePath = nil
         self.vessagePlayer.filePath = self.presentingVesseage.fileId
-        refreshConversationLabel()
+        self.refreshConversationLabel()
+        if let cmd = self.presentingVesseage.getBodyDict()["videoEndedEvent"] as? String{
+            BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(cmd)
+        }
     }
     
     func playerPlaybackStateDidChange(player: Player) {
@@ -81,11 +86,28 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate {
             MobClick.event("Vege_ReadVessage")
             ServiceContainer.getVessageService().readVessage(self.presentingVesseage)
             playVessageManager.refreshBadge()
-            
+        }
+        if let cmd = self.presentingVesseage.getBodyDict()["videoStartedEvent"] as? String{
+            BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(cmd)
         }
     }
     
     func playerReady(player: Player) {
         
+    }
+    
+    func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
+        switch method {
+        case "maxVideoPlayer":
+            if !self.vessagePlayer.isVideoFullScreen {
+                self.vessagePlayer.switchFullScreenOnOff()
+            }
+        case "minVideoPlayer":
+            if self.vessagePlayer.isVideoFullScreen {
+                self.vessagePlayer.switchFullScreenOnOff()
+            }
+        default:
+            break
+        }
     }
 }

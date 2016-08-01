@@ -463,6 +463,7 @@ extension UserService{
     
     private func setMainChatBackground(imageId:String,callback:(Bool)->Void){
         let req = ChangeMainChatImageRequest()
+        req.image = imageId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
             if result.isSuccess{
                 self.myProfile.mainChatImage = imageId

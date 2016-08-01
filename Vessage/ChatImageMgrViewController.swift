@@ -110,7 +110,7 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
         cell.contentView.addSubview(faceImageView)
         if index == 0 {
             self.navigationItem.title = "视频对讲背景"
-            faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "设置视频对讲背景，让好友在对讲时可以看到你")
+            faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "设置你的视频对讲背景，好友对讲时可以看到")
             if userService.isUserChatBackgroundIsSeted {
                 self.imageTypeLabel.text = " "
             }else{

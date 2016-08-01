@@ -127,4 +127,13 @@ class VessageConfig{
         }
         return "1.0"
     }
+    
+    static var buildVersion:Int{
+        if let infoDic = NSBundle.mainBundle().infoDictionary
+        {
+            let version = infoDic["CFBundleVersion"] as! String
+            return Int(version) ?? 1
+        }
+        return 1
+    }
 }

@@ -110,6 +110,8 @@
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
+		E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC6E1D4DCDE100306A69 /* AppService.swift */; };
+		E7ABAC721D4DD3A100306A69 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC711D4DD3A100306A69 /* UserProfileController.swift */; };
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
@@ -122,6 +124,8 @@
 		E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
 		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
+		E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */; };
+		E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E7B9F9F61D4F9CD800BF6699 /* demo_group_video_chat.mp4 */; };
 		E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */; };
 		E7BB96341D461D7400ECBD11 /* FaceTextChatBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
@@ -160,6 +164,7 @@
 		E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
 		E7ED38FF1C912F9E002126F4 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */; };
+		E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1B1B61D4DB40D00EBE078 /* AppRF.swift */; };
 		E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */; };
 		E7F216631CFBD35E00447DA9 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */; };
 		E7F216641CFBD35E00447DA9 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7F2165F1CFBD35E00447DA9 /* README.txt */; };
@@ -326,6 +331,8 @@
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
+		E7ABAC6E1D4DCDE100306A69 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
+		E7ABAC711D4DD3A100306A69 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageEventHandler.swift; sourceTree = "<group>"; };
 		E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueProtocal.swift; sourceTree = "<group>"; };
 		E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueHandlers.swift; sourceTree = "<group>"; };
@@ -338,6 +345,8 @@
 		E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
 		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
+		E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo_face_text.mp4; sourceTree = "<group>"; };
+		E7B9F9F61D4F9CD800BF6699 /* demo_group_video_chat.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo_group_video_chat.mp4; sourceTree = "<group>"; };
 		E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageChatInputView.xib; sourceTree = "<group>"; };
 		E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceTextChatBubble.xib; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
@@ -376,6 +385,7 @@
 		E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageBoardController.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E7ED38FE1C912F9E002126F4 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
+		E7F1B1B61D4DB40D00EBE078 /* AppRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRF.swift; sourceTree = "<group>"; };
 		E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutConfigJson.swift; sourceTree = "<group>"; };
 		E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		E7F2165F1CFBD35E00447DA9 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
@@ -639,6 +649,7 @@
 				E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */,
 				E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */,
 				E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */,
+				E7F1B1B61D4DB40D00EBE078 /* AppRF.swift */,
 			);
 			name = RestfulAPI;
 			sourceTree = "<group>";
@@ -675,6 +686,7 @@
 		E708AC0C1C86DEC40071104E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E72617681D4F199300A8B484 /* Videos */,
 				E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
 				E708ACA11C8752090071104E /* UI */,
@@ -693,6 +705,7 @@
 				E70EE83A1D17A33B0078B171 /* LocationService.swift */,
 				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
 				E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */,
+				E7ABAC6E1D4DCDE100306A69 /* AppService.swift */,
 			);
 			name = CoreService;
 			sourceTree = "<group>";
@@ -827,6 +840,7 @@
 				E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */,
 				E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */,
 				E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */,
+				E7ABAC711D4DD3A100306A69 /* UserProfileController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -851,6 +865,15 @@
 				E718867C1C9FFD840028B016 /* UMessage.h */,
 			);
 			path = UMessageSdk;
+			sourceTree = "<group>";
+		};
+		E72617681D4F199300A8B484 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */,
+				E7B9F9F61D4F9CD800BF6699 /* demo_group_video_chat.mp4 */,
+			);
+			path = Videos;
 			sourceTree = "<group>";
 		};
 		E73CF7CB1CE4E661005EF7BB /* ActivityService */ = {
@@ -1146,6 +1169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
@@ -1161,6 +1185,7 @@
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
+				E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */,
 				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
@@ -1295,11 +1320,13 @@
 				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */,
+				E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
 				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
+				E7ABAC721D4DD3A100306A69 /* UserProfileController.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */,
@@ -1328,6 +1355,7 @@
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */,
 				E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */,
+				E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,

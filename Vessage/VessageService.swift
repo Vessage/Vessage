@@ -8,17 +8,6 @@
 
 import Foundation
 
-//class VessageFileUploadTask: BahamutObject {
-//    override func getObjectUniqueIdName() -> String {
-//        return "taskId"
-//    }
-//    var taskId:String!
-//    var fileId:String!
-//    var vessageId:String!
-//    var receiverId:String!
-//    var receiverMobile:String!
-//}
-
 let VessageServiceNotificationValue = "VessageServiceNotificationValue"
 let VessageServiceNotificationValues = "VessageServiceNotificationValue"
 let SendedVessageResultModelValue = "SendedVessageResultModelValue"
@@ -130,7 +119,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                         }
                     })
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        SystemSoundHelper.vibrate()
                         vsgs.forEach({ (vsg) -> () in
                             self.postNotificationNameWithMainAsync(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         })
@@ -166,20 +154,10 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getNotReadVessages(chatterId:String) -> [Vessage]{
-        //TODO: delete test
-//        let json = try! NSJSONSerialization.dataWithJSONObject(["textMessage":"haha！Alex is a genius！"], options: NSJSONWritingOptions(rawValue: 0))
-//        if rand() % 1 == 0 {
-//            let vsg = Vessage()
-//            vsg.fileId = "578b6f5e99cc252a84c94dc1"
-//            vsg.isGroup = false
-//            vsg.sender = chatterId
-//            vsg.isRead = false
-//            vsg.typeId = Vessage.typeFaceText
-//            vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
-//            return [vsg]
-//        }
         return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
     }
+    
+    
 }
 
 //MARK: Send Vessage
@@ -254,41 +232,6 @@ extension VessageService{
             
         }
     }
-    
-//    func finishSendVessage(receiverId:String,vessageId:String,fileId:String) {
-//        let task = VessageFileUploadTask()
-//        task.taskId = fileId
-//        task.vessageId = vessageId
-//        task.fileId = fileId
-//        task.receiverId = receiverId
-//        
-//        MobClick.event("Vege_TotalPostVessages")
-//        if let m = getSendVessageResult(task.vessageId){
-//            PersistentManager.sharedInstance.removeModel(m)
-//        }
-//    }
-//    
-//    func finishSendVessage(task:VessageFileUploadTask){
-//        if let m = getSendVessageResult(task.vessageId){
-//            let req = FinishSendVessageRequest()
-//            req.vessageId = m.vessageId
-//            req.vessageBoxId = m.vessageBoxId
-//            req.fileId = task.fileId
-//            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
-//                var userInfo = [String:AnyObject]()
-//                userInfo.updateValue(task, forKey: SendedVessageTaskValue)
-//                userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
-//                if result.isSuccess{
-//                    MobClick.event("Vege_TotalPostVessages")
-//                    PersistentManager.sharedInstance.removeModel(task)
-//                    PersistentManager.sharedInstance.removeModel(m)
-//                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSended, object: self, userInfo:userInfo)
-//                }else{
-//                    self.postNotificationNameWithMainAsync(VessageService.onNewVessageSendFail, object: self, userInfo:userInfo)
-//                }
-//            })
-//        }
-//    }
     
     func cancelSendVessage(vessageId:String){
         if let m = getSendVessageResult(vessageId){

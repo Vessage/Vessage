@@ -153,8 +153,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         MainTabBarController.showMainController(self){
             self.launchScr?.view?.removeFromSuperview()
         }
-        
-        
     }
 
     //MARK: handle Bahamut Cmd

@@ -47,7 +47,13 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     func imageChatInputViewDidClickChatImage(sender: AnyObject?) {
-        showChatImagesMrgController()
+        if chatImageBoardShown {
+            chatImageBoardController?.dismissViewControllerAnimated(true, completion: {
+                self.showChatImagesMrgController(1)
+            })
+        }else{
+            self.showChatImagesMrgController(1)
+        }
     }
     
     //MARK: UIPopoverPresentationControllerDelegate
@@ -73,6 +79,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     //MARK: actions
+    
     func tryShowImageChatInputView(){
         if let myChatImages = userService.myChatImages{
             if myChatImages.count > 0{
@@ -82,10 +89,6 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
             }
         }
         showNoChatImagesAlert()
-    }
-    
-    private func showChatImagesMrgController(){
-        ChatImageMgrViewController.showChatImageMgrVeiwController(self,defaultIndex: 1)
     }
     
     private func showChatImageBoard() {
@@ -115,7 +118,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     
     private func showNoChatImagesAlert(){
         let ok = UIAlertAction(title: "OK".localizedString(), style: .Default) { (ac) in
-            self.showChatImagesMrgController()
+            self.showChatImagesMrgController(1)
         }
         self.showAlert("NO_CHAT_IMAGES".localizedString(), msg: "U_MUST_SET_CHAT_IMAGES".localizedString(), actions: [ok])
     }

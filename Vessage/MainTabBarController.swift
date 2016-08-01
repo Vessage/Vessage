@@ -48,6 +48,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.getActivityService().addObserver(self, selector: #selector(MainTabBarController.onActivitiesBadgeUpdated(_:)), name: ActivityService.onEnabledActivitiesBadgeUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(MainTabBarController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         ServiceContainer.getActivityService().getActivitiesBoardData()
+        ServiceContainer.getAppService().trySendFirstLaunchToServer()
     }
     
     deinit{

@@ -67,6 +67,9 @@ class FaceTextVessageHandler: VessageHandlerBase {
         let textMessage = newVessage.getBodyDict()["textMessage"] as? String
         self.faceTextView.setTextImage(newVessage.fileId, message: textMessage){
             ServiceContainer.getVessageService().readVessage(newVessage)
+            if let cmd = self.presentingVesseage.getBodyDict()["textMessageShownEvent"] as? String{
+                BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(cmd)
+            }
         }
         refreshConversationLabel()
     }

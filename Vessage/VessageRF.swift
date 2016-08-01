@@ -31,8 +31,12 @@ class Vessage: BahamutObject {
     
     func getBodyDict() -> [String:AnyObject] {
         if let data = self.body?.toUTF8EncodingData(){
-            if let dict = try! NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? [String : AnyObject]{
-                return dict
+            do{
+                if let dict = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String : AnyObject]{
+                    return dict
+                }
+            }catch{
+                
             }
         }
         return [String:AnyObject]()

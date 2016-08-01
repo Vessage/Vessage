@@ -40,7 +40,7 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         self.collectionView.dataSource = self
         self.collectionView.allowsSelection = true
         self.collectionView.allowsMultipleSelection = false
-        reloadChatImages()
+        
     }
     
     private func reloadChatImages(){
@@ -61,6 +61,7 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        reloadChatImages()
         if chatImages.count > 0 {
             self.selectedChatImage = chatImages.first
             self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0,inSection: 0), animated: true, scrollPosition: .Left)
@@ -77,6 +78,9 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         self.delegate?.chatImageBoardController?(appearController: self)
     }
 
+    func myChatImagesUpdated(a:NSNotification) {
+        self.reloadChatImages()
+    }
     /*
     // MARK: - Navigation
 
@@ -108,6 +112,9 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         cell.imageTypeLabel.text = chatImage.imageType
         cell.checkedImage.hidden = !cell.selected
         fileService.setAvatar(cell.chatImageView, iconFileId: chatImage.imageId,defaultImage: getDefaultFace())
+        #if DEBUG
+            print("ChatImage:\(chatImage.imageId)")
+        #endif
         return cell
     }
 

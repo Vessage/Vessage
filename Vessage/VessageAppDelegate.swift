@@ -14,6 +14,11 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        #if DEBUG
+            print("App:\(VessageConfig.appName)")
+            print("Version:\(VessageConfig.appVersion)")
+            print("Build:\(VessageConfig.buildVersion)")
+        #endif
         configureVessageConfig()
         configContryAndLang()
         configureBahamutRFKit()
@@ -35,6 +40,22 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     private func configureBahamutCmd()
     {
         BahamutCmd.signBahamutCmdSchema("vessage")
+        #if DEBUG
+            print("---------------------------------------------------------")
+            print("Supported Bahamut Cmd:\n")
+            print("showInviteFriendsAlert" + "\n" + BahamutCmd.generateBahamutCmdUrl("showInviteFriendsAlert") + "\n")
+            print("showSetupChatImagesController" + "\n" + BahamutCmd.generateBahamutCmdUrl("showSetupChatImagesController") + "\n")
+            print("showSetupChatBackgroundController" + "\n" + BahamutCmd.generateBahamutCmdUrl("showSetupChatBackgroundController") + "\n")
+            
+            print("playNextButtonAnimation" + "\n" + BahamutCmd.generateBahamutCmdUrl("playNextButtonAnimation") + "\n")
+            print("playFaceTextButtonAnimation" + "\n" + BahamutCmd.generateBahamutCmdUrl("playFaceTextButtonAnimation") + "\n")
+            print("playVideoChatButtonAnimation" + "\n" + BahamutCmd.generateBahamutCmdUrl("playVideoChatButtonAnimation") + "\n")
+            
+            print("maxVideoPlayer" + "\n" + BahamutCmd.generateBahamutCmdUrl("maxVideoPlayer") + "\n")
+            print("minVideoPlayer" + "\n" + BahamutCmd.generateBahamutCmdUrl("minVideoPlayer") + "\n")
+            
+            print("---------------------------------------------------------")
+        #endif
     }
     
     private func configureAliOSSManager()

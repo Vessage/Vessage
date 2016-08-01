@@ -197,6 +197,16 @@ extension ConversationViewController{
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        BahamutCmdManager.sharedInstance.registHandler(self)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        BahamutCmdManager.sharedInstance.removeHandler(self)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -320,48 +330,6 @@ extension ConversationViewController{
     }
 }
 
-//MARK: Show Chatter Profile
-extension UserService{
-    func showUserProfile(vc:UIViewController,user:VessageUser) {
-        let noteName = self.getUserNotedName(user.userId)
-        if String.isNullOrWhiteSpace(user.accountId) {
-            vc.showAlert(noteName, msg: "MOBILE_USER".localizedString())
-        }else{
-            let noteNameAction = UIAlertAction(title: "NOTE".localizedString(), style: .Default, handler: { (ac) in
-                self.showNoteConversationAlert(vc,user: user)
-            })
-            vc.showAlert(user.nickName ?? noteName, msg:String(format: "USER_ACCOUNT_FORMAT".localizedString(),user.accountId),actions: [noteNameAction,ALERT_ACTION_CANCEL])
-        }
-    }
-    
-    private func showNoteConversationAlert(vc:UIViewController,user:VessageUser){
-        let title = "NOTE_CONVERSATION_A_NAME".localizedString()
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
-            textfield.placeholder = "CONVERSATION_NAME".localizedString()
-            textfield.borderStyle = .None
-            textfield.text = ServiceContainer.getUserService().getUserNotedName(user.userId)
-        })
-        
-        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
-            let newNoteName = alertController.textFields?[0].text ?? ""
-            if String.isNullOrEmpty(newNoteName)
-            {
-                vc.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
-            }else{
-                if String.isNullOrWhiteSpace(user.userId) == false{
-                    ServiceContainer.getUserService().setUserNoteName(user.userId, noteName: newNoteName)
-                }
-                vc.playCheckMark("SAVE_NOTE_NAME_SUC".localizedString())
-            }
-        })
-        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
-        alertController.addAction(no)
-        alertController.addAction(yes)
-        vc.showAlert(alertController)
-    }
-}
-
 //MARK: Observer & Notifications
 extension ConversationViewController{
     
@@ -405,9 +373,11 @@ extension ConversationViewController{
             }
             
             if forConversation{
+                SystemSoundHelper.playSound(1003)
                 playVessageManager.onVessageReceived(msg)
                 recordVessageManager.onVessageReceived(msg)
             }else{
+                SystemSoundHelper.vibrate()
                 self.outerNewsVessageCount += 1
             }
         }
@@ -416,6 +386,10 @@ extension ConversationViewController{
 
 //MARK: Set Chat Backgroud
 extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
+    
+    func showChatImagesMrgController(index:Int){
+        ChatImageMgrViewController.showChatImageMgrVeiwController(self,defaultIndex: index)
+    }
     
     func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
         sender.dismissViewControllerAnimated(true){
@@ -594,3 +568,33 @@ extension ConversationViewController{
 
 }
 
+//MARK: animations
+extension ConversationViewController{
+    func playNextButtonAnimation(){
+        UIAnimationHelper.flashView(rightButton, duration: 0.3, autoStop: true, stopAfterMs: 6000)
+    }
+    
+    func playVideoChatButtonAnimation() {
+        UIAnimationHelper.flashView(middleButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
+    }
+    
+    func playFaceTextButtonAnimation() {
+        UIAnimationHelper.flashView(imageChatButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
+    }
+}
+
+extension ConversationViewController:HandleBahamutCmdDelegate{
+    func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
+        switch method {
+        case "showInviteFriendsAlert":
+            ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+        case "showSetupChatImagesController":showChatImagesMrgController(1)
+        case "showSetupChatBackgroundController":showChatImagesMrgController(0)
+        case "playNextButtonAnimation":playNextButtonAnimation()
+        case "playFaceTextButtonAnimation":playFaceTextButtonAnimation()
+        case "playVideoChatButtonAnimation":playVideoChatButtonAnimation()
+        default:
+            break
+        }
+    }
+}

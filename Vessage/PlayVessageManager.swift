@@ -80,14 +80,18 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     private var presentingVesseage:Vessage!{
         didSet{
-            conversationLeftTopLabel.text = nil
-            conversationRightBottomLabel.text = nil
-            if presentingVesseage != nil{
-                if oldValue != nil && oldValue.vessageId == presentingVesseage.vessageId{
-                    return
-                }else{
-                    self.generateVessageHandler(presentingVesseage.typeId).onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
-                }
+            if presentingVesseage == nil || oldValue?.vessageId == presentingVesseage.vessageId{
+                return
+            }else{
+                self.generateVessageHandler(presentingVesseage.typeId).onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
+            }
+            
+            if let startEventCmd = presentingVesseage?.getBodyDict()["startEventCmd"] as? String{
+                BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(startEventCmd)
+            }
+            
+            if let endEventCmd = oldValue?.getBodyDict()["endEventCmd"] as? String{
+                BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(endEventCmd)
             }
         }
     }
@@ -138,6 +142,9 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     //MARK: Notifications
     func onVessageReaded(a:NSNotification) {
+        if let cmd = self.presentingVesseage?.getBodyDict()["readedEventCmd"] as? String{
+            BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(cmd)
+        }
         self.refreshBadge()
     }
     

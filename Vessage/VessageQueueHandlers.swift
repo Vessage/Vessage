@@ -10,25 +10,20 @@
 import Foundation
 
 class SendVessageTaskSteps {
-    static let normalVessageSteps = [PostVessageHandler.stepKey]
+    static let normalVessageSteps = [PostVessageHandler.stepKey,FinishNormalVessageHandler.stepKey]
     
     static let fileVessageSteps = [
         PostVessageHandler.stepKey,
         SendAliOSSFileHandler.stepKey,
-        FinishPostVessageHandler.stepKey
+        FinishFileVessageHandler.stepKey
     ]
 }
 
 
 class PostVessageHandler :SendVessageQueueStepHandler {
     static let stepKey = "PostVessage"
-    func initHandler(queue:VessageQueue) {
-        
-    }
-    
-    func releaseHandler() {
-        
-    }
+    func initHandler(queue:VessageQueue) {}
+    func releaseHandler() {}
     
     func doTask(vessageQueue:VessageQueue,task: SendVessageQueueTask) {
         ServiceContainer.getVessageService().sendVessageToUser(task.receiverId, vessage: task.vessage){ vessageId in
@@ -47,9 +42,7 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     static let stepKey = "SendAliOSSFile"
     private var uploadDict = [String:SendVessageQueueTask]()
     
-    func initHandler(queue:VessageQueue) {
-        
-    }
+    func initHandler(queue:VessageQueue) {}
     
     func releaseHandler() {
         uploadDict.removeAll()
@@ -75,7 +68,7 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     }
     
     @objc func taskCompleted(taskIdentifier: String, result: AnyObject!) {
-        if let task = uploadDict[taskIdentifier]{
+        if let task = uploadDict.removeValueForKey(taskIdentifier){
             if let path = ServiceContainer.getFileService().getFilePath(task.vessage.fileId, type: .Video){
                 if !PersistentFileHelper.deleteFile(path){
                     NSLog("Delete Sended Vessage Failed Error:%@", path)
@@ -92,18 +85,29 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     }
 }
 
-class FinishPostVessageHandler: SendVessageQueueStepHandler {
-    static let stepKey = "FinishPostVessage"
-    func initHandler(queue:VessageQueue) {
-        
+class FinishNormalVessageHandler: SendVessageQueueStepHandler {
+    static let stepKey = "FinishNormalVessage"
+    func initHandler(queue: VessageQueue) {}
+    func releaseHandler() {}
+    func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
+        ServiceContainer.getVessageService().finishSendVessage(task.vessage.vessageId) { (finished, sendVessageResultModel) in
+            if finished{
+                vessageQueue.nextStep(task)
+            }else{
+                vessageQueue.doTaskStepError(task, message: "POST_FINISH_SEND_VESSAGE_ERROR")
+            }
+        }
     }
+}
+
+class FinishFileVessageHandler: SendVessageQueueStepHandler {
+    static let stepKey = "FinishFileVessage"
+    func initHandler(queue:VessageQueue) {}
     
-    func releaseHandler() {
-        
-    }
+    func releaseHandler() {}
     
     func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
-        ServiceContainer.getVessageService().finishSendVessage(task.vessage.vessageId, postUploadedFileId: task.vessage.fileId){ finished,resultModel in
+        ServiceContainer.getVessageService().finishSendVessage(task.vessage.vessageId, fileId: task.vessage.fileId){ finished,resultModel in
             if finished{
                 vessageQueue.nextStep(task)
             }else{

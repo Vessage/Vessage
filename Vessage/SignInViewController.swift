@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 
 //MARK: SignInViewController
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var refreshingIndicator: UIActivityIndicatorView!{
         didSet{
@@ -25,8 +25,17 @@ class SignInViewController: UIViewController {
             loginButton.tintColor = UIColor.whiteColor()
         }
     }
-    @IBOutlet weak var loginInfoTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var loginInfoTextField: UITextField!{
+        didSet{
+            loginInfoTextField.delegate = self
+        }
+    }
+    
+    @IBOutlet weak var passwordTextField: UITextField!{
+        didSet{
+            passwordTextField.delegate = self
+        }
+    }
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +98,18 @@ class SignInViewController: UIViewController {
         if let reason = a.userInfo?[InitServiceFailedReason] as? String{
             self.playToast(reason.localizedString())
         }
+    }
+    
+    //MARK: TextField Delegate
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if string == "\n" {
+            if textField == self.loginInfoTextField {
+                self.passwordTextField.becomeFirstResponder()
+            }else if textField == self.passwordTextField{
+                self.login(textField)
+            }
+        }
+        return true
     }
     
     //MARK: actions

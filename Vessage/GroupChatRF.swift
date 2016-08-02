@@ -28,6 +28,10 @@ class GetGroupChatRequest: BahamutRFRequestBase {
         self.method = .GET
     }
     
+    override func getMaxRequestCount() -> Int32 {
+        return 10
+    }
+    
     var groupId:String!{
         didSet{
             self.paramenters["groupId"] = groupId

@@ -159,7 +159,6 @@ class ConversationListCell:ConversationListCellBase{
         ServiceContainer.getChatGroupService().addObserver(self, selector: #selector(ConversationListCell.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
         ServiceContainer.getConversationService().addObserver(self, selector: #selector(ConversationListCell.onConversationUpdated(_:)), name: ConversationService.conversationUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListCell.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
-        
     }
     
     func removeObservers(){

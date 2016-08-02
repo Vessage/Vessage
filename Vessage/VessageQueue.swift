@@ -41,7 +41,8 @@ class VessageQueue:NSNotificationCenter{
         stepHandler.removeAll()
         stepHandler.updateValue(PostVessageHandler(), forKey: PostVessageHandler.stepKey)
         stepHandler.updateValue(SendAliOSSFileHandler(), forKey: SendAliOSSFileHandler.stepKey)
-        stepHandler.updateValue(FinishPostVessageHandler(), forKey: FinishPostVessageHandler.stepKey)
+        stepHandler.updateValue(FinishFileVessageHandler(), forKey: FinishFileVessageHandler.stepKey)
+        stepHandler.updateValue(FinishNormalVessageHandler(), forKey: FinishNormalVessageHandler.stepKey)
         stepHandler.values.forEach{$0.initHandler(self)}
     }
     

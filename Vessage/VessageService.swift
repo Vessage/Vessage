@@ -198,38 +198,37 @@ extension VessageService{
         return PersistentManager.sharedInstance.getModel(SendVessageResultModel.self, idValue: vessageId)
     }
     
-    func finishSendVessage(vessageId:String,postUploadedFileId:String?,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
-        if String.isNullOrEmpty(postUploadedFileId){
-            let m = getSendVessageResult(vessageId)
-            callback(finished: true, sendVessageResultModel: m)
-            var userInfo = [NSObject:AnyObject]()
-            if m != nil {
-                PersistentManager.sharedInstance.removeModel(m!)
-                userInfo.updateValue(m!, forKey: SendedVessageResultModelValue)
-            }
-            self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo: userInfo)
-            MobClick.event("Vege_TotalPostVessages")
-        }else{
-            if let m = getSendVessageResult(vessageId){
-                let req = FinishSendVessageRequest()
-                req.vessageId = m.vessageId
-                req.vessageBoxId = m.vessageBoxId
-                req.fileId = postUploadedFileId!
-                BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
-                    var userInfo = [String:AnyObject]()
-                    userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
-                    if result.isSuccess{
-                        MobClick.event("Vege_TotalPostVessages")
-                        PersistentManager.sharedInstance.removeModel(m)
-                        callback(finished: true, sendVessageResultModel: m)
-                        self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo:userInfo)
-                    }else{
-                        callback(finished: false, sendVessageResultModel: m)
-                        self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinishError, object: self, userInfo:userInfo)
-                    }
-                })
-            }
-            
+    func finishSendVessage(vessageId:String,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
+        let m = getSendVessageResult(vessageId)
+        callback(finished: true, sendVessageResultModel: m)
+        var userInfo = [NSObject:AnyObject]()
+        if m != nil {
+            PersistentManager.sharedInstance.removeModel(m!)
+            userInfo.updateValue(m!, forKey: SendedVessageResultModelValue)
+        }
+        self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo: userInfo)
+        MobClick.event("Vege_TotalPostVessages")
+    }
+    
+    func finishSendVessage(vessageId:String,fileId:String,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
+        if let m = getSendVessageResult(vessageId){
+            let req = FinishSendVessageRequest()
+            req.vessageId = m.vessageId
+            req.vessageBoxId = m.vessageBoxId
+            req.fileId = fileId
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
+                var userInfo = [String:AnyObject]()
+                userInfo.updateValue(m, forKey: SendedVessageResultModelValue)
+                if result.isSuccess{
+                    MobClick.event("Vege_TotalPostVessages")
+                    PersistentManager.sharedInstance.removeModel(m)
+                    callback(finished: true, sendVessageResultModel: m)
+                    self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo:userInfo)
+                }else{
+                    callback(finished: false, sendVessageResultModel: m)
+                    self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinishError, object: self, userInfo:userInfo)
+                }
+            })
         }
     }
     

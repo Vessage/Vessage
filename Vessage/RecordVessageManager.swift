@@ -96,7 +96,6 @@ class GroupChatAvatarManager:NSObject {
     }
     
     func releaseManager() {
-        
         ServiceContainer.getUserService().removeObserver(self)
         avatarImageGroup.removeAll()
         container = nil
@@ -113,7 +112,7 @@ class GroupChatAvatarManager:NSObject {
     func onUserProfileUpdated(a:NSNotification) {
         if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
             if userFaceIds.keys.contains(user.userId) {
-                userFaceIds[user.userId] = user.mainChatImage
+                userFaceIds.updateValue(user.mainChatImage, forKey: user.userId)
                 refreshFaces()
             }
         }
@@ -182,8 +181,9 @@ class GroupChatAvatarManager:NSObject {
     private func refreshFaces(){
         let df = getDefaultFace()
         var i = 0
-        self.userFaceIds.values.forEach { (fileId) in
+        self.userFaceIds.keys.forEach { (key) in
             let imgView = avatarImageGroup[i]
+            let fileId = userFaceIds[key]!
             imgView.contentMode = String.isNullOrEmpty(fileId) ? .ScaleAspectFit : .ScaleAspectFill
             imgView.layer.cornerRadius = self.userFaceIds.count > 1 ? imgView.frame.width / 2 : 0
             imgView.clipsToBounds = self.userFaceIds.count > 1

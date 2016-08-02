@@ -462,6 +462,7 @@ extension ConversationViewController{
     
     private func retrySendTask(task:SendVessageQueueTask,errorMessage:String){
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+            self.controllerTitle = "VESSAGE_SENDING".localizedString()
             VessageQueue.sharedInstance.startTask(task)
         }
         let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in

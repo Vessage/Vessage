@@ -39,7 +39,6 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate,HandleBahamutCmdDele
                 initVessageViews()
             }
             UIAnimationHelper.animationPageCurlView(vessagePlayer, duration: 0.3, completion: { () -> Void in
-                self.vessagePlayer.filePath = nil
                 self.vessagePlayer.filePath = self.presentingVesseage.fileId
             })
         }else{

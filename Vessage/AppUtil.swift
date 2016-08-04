@@ -10,6 +10,7 @@ import Foundation
 import AddressBook
 import AddressBookUI
 import MBProgressHUD
+import EVReflection
 
 func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mobile:String,personTitle:String)->Void) {
     let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
@@ -206,4 +207,11 @@ extension UIView{
 
 func getRandomConversationBackground() -> UIImage {
     return UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")!
+}
+
+extension EVObject{
+    func toMiniJsonString(performKeyCleanup:Bool = false) -> String {
+        let json = toJsonString(performKeyCleanup)
+        return json.split("\n").map{$0.trim()}.joinWithSeparator(" ")
+    }
 }

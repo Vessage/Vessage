@@ -77,7 +77,7 @@ class VessageQueue:NSNotificationCenter{
         if String.isNullOrWhiteSpace(sendMobile) == false{
             extraInfo.mobileHash = sendMobile!.md5
         }
-        extraInfoString = extraInfo.toJsonString()
+        extraInfoString = extraInfo.toMiniJsonString()
     }
     
     private func getSendVessageQueueTaskByTaskId(taskId:String) -> SendVessageQueueTask?{

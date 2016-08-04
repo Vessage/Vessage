@@ -47,6 +47,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLogout(userId: String) {
+        conversations.removeAll()
         setServiceNotReady()
     }
     

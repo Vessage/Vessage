@@ -52,6 +52,8 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         setServiceNotReady()
         removeUserDeviceTokenFromServer(VessageSetting.deviceToken)
         myProfile = nil
+        activeUsers.removeAll()
+        nearUsers.removeAll()
     }
     
     func setForeceGetUserProfileIgnoreTimeLimit(){

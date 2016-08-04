@@ -116,12 +116,12 @@ class ConversationListController: UITableViewController {
     }
     
     private func releaseController(){
+        refreshListTimer?.invalidate()
+        refreshListTimer = nil
         VessageQueue.sharedInstance.removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
-        refreshListTimer.invalidate()
-        refreshListTimer = nil
     }
     
     //MARK: notifications

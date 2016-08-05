@@ -267,6 +267,7 @@ OPEN_MOBILE_CON_FST_TIPS_MSG = "向未注册的手机号发出消息，好友用
 GROUP_CHAT = "一起聊天吧";
 WX_SHARE_TITLE_FORMAT = "记得加我VG号:%@";
 UNKNOW_VESSAGE_TYPE = "未知的消息类型";
+NO_VESSAGE_TIPS = "点聊天按钮马上开始对讲";
 
 EXTRA_SERVICE_DISPLAY_NAME = "奇趣";
 

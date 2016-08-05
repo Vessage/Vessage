@@ -42,9 +42,6 @@ class ConversationViewControllerProxy: NSObject {
     var rightButton:UIButton!{
         return rootController.rightButton
     }
-    var noMessageTipsLabel:UILabel!{
-        return rootController.noMessageTipsLabel
-    }
     var badgeLabel:UILabel!{
         return rootController.badgeLabel
     }

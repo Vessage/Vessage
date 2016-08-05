@@ -31,7 +31,7 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate,HandleBahamutCmdDele
         vessagePlayer.releasePlayer()
     }
     
-    override func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage) {
+    override func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage!) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
         if let oldVsg = oldVessage{
             if oldVsg.typeId != newVessage.typeId {

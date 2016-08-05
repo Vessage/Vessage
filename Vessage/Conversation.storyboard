@@ -49,15 +49,6 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1h-Iv-vhL">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点聊天按钮马上开始对讲" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pec-u1-iWn">
-                                        <rect key="frame" x="88" y="358" width="238" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="238" id="NQS-dg-h9A"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZm-9A-rKF">
                                         <rect key="frame" x="87" y="198" width="240" height="320"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,24 +91,10 @@
                                     <constraint firstItem="Efl-QC-gjZ" firstAttribute="top" secondItem="nZm-9A-rKF" secondAttribute="top" constant="-10" id="ObK-3F-cPX"/>
                                     <constraint firstItem="JH5-p9-HH6" firstAttribute="bottom" secondItem="nZm-9A-rKF" secondAttribute="bottom" id="SvJ-Mp-cYE"/>
                                     <constraint firstItem="nZm-9A-rKF" firstAttribute="centerX" secondItem="t1h-Iv-vhL" secondAttribute="centerX" id="W5m-K8-LZy"/>
-                                    <constraint firstItem="JH5-p9-HH6" firstAttribute="trailing" secondItem="nZm-9A-rKF" secondAttribute="trailing" constant="-10" id="ZXG-U3-owP"/>
-                                    <constraint firstItem="Pec-u1-iWn" firstAttribute="centerX" secondItem="t1h-Iv-vhL" secondAttribute="centerX" id="ffu-Hu-q92"/>
-                                    <constraint firstItem="Pec-u1-iWn" firstAttribute="centerY" secondItem="t1h-Iv-vhL" secondAttribute="centerY" id="ftg-l4-jJD"/>
-                                    <constraint firstItem="JH5-p9-HH6" firstAttribute="top" secondItem="nZm-9A-rKF" secondAttribute="top" id="kxX-CY-I3T"/>
-                                    <constraint firstItem="JH5-p9-HH6" firstAttribute="bottom" secondItem="nZm-9A-rKF" secondAttribute="bottom" constant="-1" id="mJr-fs-rab"/>
                                     <constraint firstItem="JH5-p9-HH6" firstAttribute="trailing" secondItem="nZm-9A-rKF" secondAttribute="trailing" constant="-1" id="pzM-HD-mUq"/>
                                     <constraint firstItem="xNx-lk-PEP" firstAttribute="leading" secondItem="nZm-9A-rKF" secondAttribute="leading" id="rgH-UH-nSg"/>
                                     <constraint firstItem="xNx-lk-PEP" firstAttribute="top" secondItem="nZm-9A-rKF" secondAttribute="top" id="vQS-Ka-G13"/>
-                                    <constraint firstItem="JH5-p9-HH6" firstAttribute="leading" secondItem="nZm-9A-rKF" secondAttribute="leading" constant="1" id="xC2-kc-WMJ"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ZXG-U3-owP"/>
-                                        <exclude reference="kxX-CY-I3T"/>
-                                        <exclude reference="mJr-fs-rab"/>
-                                        <exclude reference="xC2-kc-WMJ"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBx-c6-Kmj">
                                 <rect key="frame" x="0.0" y="656" width="414" height="80"/>
@@ -259,7 +236,6 @@
                         <outlet property="groupFaceContainer" destination="ZVm-Y7-rGc" id="gFz-2T-NLR"/>
                         <outlet property="imageChatButton" destination="J6g-yL-8Wr" id="9uD-UH-Ht6"/>
                         <outlet property="middleButton" destination="gJj-nO-NGN" id="yIX-vm-ZrY"/>
-                        <outlet property="noMessageTipsLabel" destination="Pec-u1-iWn" id="2uF-lV-0c8"/>
                         <outlet property="noSmileFaceTipsLabel" destination="khg-HQ-ttM" id="YZx-tJ-IFT"/>
                         <outlet property="previewRectView" destination="Jug-Iz-prr" id="kyn-0a-3Pl"/>
                         <outlet property="progressView" destination="m0w-W8-lr9" id="C9s-Xk-ADJ"/>

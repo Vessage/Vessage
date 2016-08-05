@@ -109,11 +109,6 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var noMessageTipsLabel: UILabel!{
-        didSet{
-            noMessageTipsLabel.hidden = true
-        }
-    }
     @IBOutlet weak var conversationLeftTopLabel: UILabel!{
         didSet{
             conversationLeftTopLabel.text = nil

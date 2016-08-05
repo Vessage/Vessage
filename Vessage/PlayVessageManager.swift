@@ -12,6 +12,16 @@ import Foundation
 class PlayVessageManager: ConversationViewControllerProxy {
     private var vessageHandlers = [Int:VessageHandler]()
     
+    private func generateNoVessageHandler() -> VessageHandler{
+        if let h = vessageHandlers[Vessage.typeNoVessage]{
+            return h
+        }else{
+            let handler = NoVessageHandler(manager: self, container: self.vessageView)
+            vessageHandlers.updateValue(handler, forKey: Vessage.typeNoVessage)
+            return handler
+        }
+    }
+    
     private func generateVessageHandler(typeId:Int) -> VessageHandler{
         var handler:VessageHandler? = vessageHandlers[typeId]
         if handler != nil {
@@ -23,16 +33,16 @@ class PlayVessageManager: ConversationViewControllerProxy {
         case Vessage.typeFaceText:
             handler = FaceTextVessageHandler(manager: self, container: self.vessageView)
         default:
-            if let h = vessageHandlers[-1]{
+            if let h = vessageHandlers[Vessage.typeUnknow]{
                 handler = h
             }else{
                 handler = UnknowVessageHandler(manager: self, container: self.vessageView)
-                vessageHandlers[-1] = handler
+                vessageHandlers.updateValue(handler!, forKey: Vessage.typeUnknow)
             }
             NSLog("Unknow Vessage TypeId:\(typeId)")
             return handler!
         }
-        vessageHandlers[typeId] = handler!
+        vessageHandlers.updateValue(handler!, forKey: typeId)
         return handler!
     }
     
@@ -61,28 +71,31 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     var notReadVessages = [Vessage](){
         didSet{
+            var vsg:Vessage? = nil
             if notReadVessages.count > 0{
-                presentingVesseage = notReadVessages.first
+                vsg = notReadVessages.first
             }else{
                 if let chatterId = self.conversation?.chatterId{
                     if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
                         notReadVessages.append(newestVsg)
-                        presentingVesseage = newestVsg
+                        vsg = newestVsg
                     }
                 }
             }
+            presentingVesseage = vsg
             rightButton?.hidden = notReadVessages.count <= 1
-            vessageView?.hidden = presentingVesseage == nil
-            noMessageTipsLabel?.hidden = presentingVesseage != nil
             refreshBadge()
         }
     }
     
     private var presentingVesseage:Vessage!{
         didSet{
-            if presentingVesseage == nil || oldValue?.vessageId == presentingVesseage.vessageId{
+            if presentingVesseage == nil{
+                self.generateNoVessageHandler().onPresentingVessageSeted(oldValue, newVessage: nil)
+            }else if oldValue?.vessageId == presentingVesseage.vessageId{
                 return
-            }else{
+            }
+            else{
                 self.generateVessageHandler(presentingVesseage.typeId).onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
             }
             
@@ -136,7 +149,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }else{
             rightButton?.hidden = notReadVessages.count <= 1
             vessageView?.hidden = presentingVesseage == nil
-            noMessageTipsLabel?.hidden = presentingVesseage != nil
         }
     }
     

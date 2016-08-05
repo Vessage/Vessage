@@ -9,6 +9,8 @@
 import Foundation
 
 class Vessage: BahamutObject {
+    static let typeNoVessage = -2
+    static let typeUnknow = -1
     static let typeVideo = 0
     static let typeFaceText = 1
     

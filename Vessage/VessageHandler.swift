@@ -10,7 +10,7 @@ import Foundation
 
 //MARK: VessageHandler
 protocol VessageHandler{
-    func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage)
+    func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage!)
     func releaseHandler()
 }
 
@@ -25,7 +25,8 @@ class VessageHandlerBase: NSObject,VessageHandler {
         self.container = container
     }
     
-    func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage) {
+    func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage!) {
+        self.container.backgroundColor = UIColor.lightGrayColor()
         self.presentingVesseage = newVessage
     }
     

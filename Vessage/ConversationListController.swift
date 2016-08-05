@@ -81,7 +81,6 @@ class ConversationListController: UITableViewController {
         self.tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         initObservers()
-        vessageService.newVessageFromServer()
         let titleView = NavigationBarTitle.instanceFromXib()
         self.navigationItem.titleView = titleView
     }
@@ -137,10 +136,6 @@ class ConversationListController: UITableViewController {
         if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
             conversationService.setConversationNewestModified(task.receiverId)
         }
-    }
-    
-    func onNewVessageNotify(a:NSNotification){
-        vessageService.newVessageFromServer()
     }
     
     func onConversationListUpdated(a:NSNotification){

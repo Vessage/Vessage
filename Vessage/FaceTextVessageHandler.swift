@@ -59,7 +59,7 @@ class FaceTextVessageHandler: VessageHandlerBase {
         }
     }
     
-    override func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage) {
+    override func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage!) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
         container.removeAllSubviews()
         container.addSubview(self.faceTextView)

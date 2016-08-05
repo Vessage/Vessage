@@ -69,7 +69,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         loadNotReadVessages()
     }
     
-    var notReadVessages = [Vessage](){
+    private var notReadVessages = [Vessage](){
         didSet{
             var vsg:Vessage? = nil
             if notReadVessages.count > 0{

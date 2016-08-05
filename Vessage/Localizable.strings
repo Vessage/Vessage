@@ -142,7 +142,7 @@ BAHAMUT_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
 ACTIVITY_UPDATED_NOTIFICATION = "活动状态有更新！";
-NEW_VMSG_NOTIFICATION = "你有新的视频短信!";
+NEW_VMSG_NOTIFICATION = "你有新的VG消息!";
 
 REGIST_FAILED = "注册失败";
 REGIST_SUC = "注册成功";

@@ -9,7 +9,7 @@
 import Foundation
 
 let VessageServiceNotificationValue = "VessageServiceNotificationValue"
-let VessageServiceNotificationValues = "VessageServiceNotificationValue"
+let VessageServiceNotificationValues = "VessageServiceNotificationValues"
 let SendedVessageResultModelValue = "SendedVessageResultModelValue"
 
 //MARK: ServiceContainer DI
@@ -117,16 +117,11 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                         }else{
                             self.notReadVessageCountMap[vsg.sender] = 1
                         }
+                        self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                     })
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        vsgs.forEach({ (vsg) -> () in
-                            self.postNotificationNameWithMainAsync(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
-                        })
-                        
-                        self.postNotificationNameWithMainAsync(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValue:vsgs])
-                    })
-                    
+                    self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:vsgs])
                     self.notifyVessageGot()
+                    SystemSoundHelper.playSound(1003)
                 }
             }
         }

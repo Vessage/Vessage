@@ -72,7 +72,7 @@ class ConversationListController: UITableViewController {
             searchBar.delegate = self
         }
     }
-    private var showing:Bool = false
+    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,12 +89,10 @@ class ConversationListController: UITableViewController {
         super.viewWillAppear(animated)
         self.navigationItem.backBarButtonItem?.title = VessageConfig.appName
         PersistentManager.sharedInstance.saveAll()
-        showing = true
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        showing = false
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
     }
     
     deinit{
@@ -143,9 +141,6 @@ class ConversationListController: UITableViewController {
     }
     
     func onNewVessagesReceived(a:NSNotification){
-        if showing {
-            SystemSoundHelper.vibrate()
-        }
         if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
             vsgs.forEach({ (vsg) in
                 if !vsg.isGroup{

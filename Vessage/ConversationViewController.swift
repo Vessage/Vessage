@@ -51,18 +51,6 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private(set) var outerNewsVessageCount:Int = 0{
-        didSet{
-            if let item = self.navigationController?.navigationBar.backItem?.backBarButtonItem{
-                if outerNewsVessageCount <= 0{
-                    item.title = VessageConfig.appName
-                }else{
-                    item.title = "\(VessageConfig.appName)( \(outerNewsVessageCount) )"
-                }
-            }
-        }
-    }
-    
     private(set) var playVessageManager:PlayVessageManager!
     private(set) var recordVessageManager:RecordVessageManager!
     
@@ -223,6 +211,9 @@ extension ConversationViewController{
         self.playVessageManager.onReleaseManager()
         self.playVessageManager = nil
         self.recordVessageManager = nil
+        self.conversation = nil
+        self.chatter = nil
+        self.chatGroup = nil
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -330,7 +321,7 @@ extension ConversationViewController{
     
     private func addObservers(){
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
-        vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessageReveiced(_:)), name: VessageService.onNewVessageReceived, object: nil)
+        vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessagesReveiced(_:)), name: VessageService.onNewVessagesReceived, object: nil)
         chatGroupService.addObserver(self, selector: #selector(ConversationViewController.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
         addSendVessageObservers()
     }
@@ -358,23 +349,14 @@ extension ConversationViewController{
         }
     }
     
-    func onNewVessageReveiced(a:NSNotification){
-        if let msg = a.userInfo?[VessageServiceNotificationValue] as? Vessage{
-            var forConversation = false
-            if isGroupChat {
-                forConversation = msg.sender == self.chatGroup?.groupId ?? ""
-            }else{
-                forConversation = msg.sender == self.chatter?.userId ?? ""
-            }
-            
-            if forConversation{
-                SystemSoundHelper.playSound(1003)
-                playVessageManager.onVessageReceived(msg)
-                recordVessageManager.onVessageReceived(msg)
-            }else{
-                SystemSoundHelper.vibrate()
-                self.outerNewsVessageCount += 1
-            }
+    func onNewVessagesReveiced(a:NSNotification){
+        if let msgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
+            msgs.forEach({ (msg) in
+                if msg.sender == self.conversation?.chatterId{
+                    self.playVessageManager.onVessageReceived(msg)
+                    self.recordVessageManager.onVessageReceived(msg)
+                }
+            })
         }
     }
 }
@@ -550,7 +532,6 @@ extension ConversationViewController{
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatGroup = group
-        controller.outerNewsVessageCount = 0
         nvc.pushViewController(controller, animated: true)
     }
     
@@ -558,7 +539,6 @@ extension ConversationViewController{
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatter = user
-        controller.outerNewsVessageCount = 0
         nvc.pushViewController(controller, animated: true)
     }
 

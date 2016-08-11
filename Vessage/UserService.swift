@@ -281,7 +281,7 @@ extension UserService{
 }
 
 //MARK: User Device Token
-let registDeviceTokenIntervalDays = 7.0
+let registDeviceTokenIntervalDays = 13.0
 extension UserService{
     func registUserDeviceToken(deviceToken:String!, checkTime:Bool = false){
         let key = "USER_REGIST_DEVICE_TOKEN_TIME"

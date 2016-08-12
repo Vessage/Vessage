@@ -28,7 +28,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
                 updateRecordingProgress()
             }
             if previewRectView != nil{
-                previewRectView.hidden = recording
+                previewRectView.hidden = !recording
             }
         }
     }
@@ -45,7 +45,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
             }
         }
     }
-    
+    private var videoPreviewBubble:VideoPreviewBubble!
     private var groupAvatarManager:GroupChatAvatarManager!
 }
 
@@ -64,7 +64,8 @@ extension RecordVessageManager{
         super.initManager(controller)
         camera = VessageCamera()
         camera.delegate = self
-        camera.initCamera(rootController,previewView: self.previewRectView)
+        self.previewRectView.hidden = true
+        camera.initCamera(rootController,previewView: self.previewRectView.videoPreviewView)
         self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
         
         groupAvatarManager = GroupChatAvatarManager()
@@ -306,6 +307,7 @@ extension RecordVessageManager:VessageCameraDelegate{
         if camera.cameraInited{
             userClickSend = true
             MobClick.event("Vege_RecordVessage")
+            camera.resumeCaptureSession()
             camera.startRecord()
         }else{
             self.rootController.playToast("CAMERA_NOT_INITED".localizedString())
@@ -333,14 +335,18 @@ extension RecordVessageManager:VessageCameraDelegate{
     
     func vessageCameraDidStopRecord() {
         recording = false
+        camera.pauseCaptureSession()
     }
     
     func vessageCameraReady() {
+        if !rootController.isRecording {
+            camera.pauseCaptureSession()
+        }
         recordButton.hidden = false
     }
     
     func vessageCameraSessionClosed() {
-        recordButton.hidden = true
+        //recordButton.hidden = true
     }
     
     func vessageCameraVideoSaved(videoSavedUrl video: NSURL) {

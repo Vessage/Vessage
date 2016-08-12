@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MJRefresh
 
 //MARK: SearchResultModel
 class SearchResultModel{
@@ -83,6 +84,7 @@ class ConversationListController: UITableViewController {
         initObservers()
         let titleView = NavigationBarTitle.instanceFromXib()
         self.navigationItem.titleView = titleView
+        initMJRefreshHeader()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -99,6 +101,34 @@ class ConversationListController: UITableViewController {
         #if DEBUG
             print("Deinited:\(self.description)")
         #endif
+    }
+    
+    private func initMJRefreshHeader() {
+        let mjHeader = MJRefreshGifHeader(refreshingBlock: refreshNewUsers)
+        mjHeader.lastUpdatedTimeLabel.hidden = true
+        mjHeader.stateLabel.hidden = true
+        mjHeader.setImages(hudSpinImageArray, forState: .Refreshing)
+        mjHeader.setImages(nil, forState: .Idle)
+        mjHeader.setImages(hudSpinImageArray, forState: .Pulling)
+        mjHeader.setImages(hudSpinImageArray, forState: .WillRefresh)
+        self.tableView.mj_header = mjHeader
+    }
+    
+    private var refreshedNewUserTime:NSDate!
+    private let refreshNewUserIntervalMinutes = 10.0
+    private func refreshNewUsers() {
+        if refreshedNewUserTime == nil || abs(refreshedNewUserTime.totalMinutesSinceNow.doubleValue) > refreshNewUserIntervalMinutes {
+            self.refreshedNewUserTime = NSDate()
+            let locationService = ServiceContainer.getLocationService()
+            if let hereLocation = locationService.hereLocationString{
+                ServiceContainer.getUserService().getNearUsers(hereLocation)
+            }
+            ServiceContainer.getUserService().getActiveUsers(){ users in
+                self.tableView.mj_header?.endRefreshing()
+            }
+        }else{
+            self.tableView.mj_header?.endRefreshing()
+        }
     }
     
     private func initObservers(){
@@ -272,11 +302,16 @@ class ConversationListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell:UITableViewCell!
         if isSearching{
-            return searchingTableView(tableView, indexPath: indexPath)
+            cell = searchingTableView(tableView, indexPath: indexPath)
         }else{
-            return normalTableView(tableView, indexPath: indexPath)
+            cell = normalTableView(tableView, indexPath: indexPath)
         }
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsetsZero
+        return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

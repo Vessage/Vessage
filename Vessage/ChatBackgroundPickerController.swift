@@ -24,7 +24,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     @IBOutlet weak var selectPicButton: UIButton!
     weak private var delegate:ChatBackgroundPickerControllerDelegate!
     private var chatImageType:String? = nil
-    @IBOutlet weak var previewRectView: UIImageView!{
+    private var previewRectView: UIView!{
         didSet{
             previewRectView.backgroundColor = UIColor.clearColor()
         }
@@ -78,7 +78,11 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     
     private var takedImage:UIImage!{
         didSet{
-            demoFaceView.image = takedImage
+            if let img = takedImage{
+                demoFaceView?.image = img
+            }else{
+                demoFaceView?.image = UIImage(named: "face")
+            }
         }
     }
     
@@ -89,14 +93,10 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         camera.delegate = self
         camera.isRecordVideo = false
         camera.enableFaceMark = true
+        previewRectView = UIView(frame: self.view.bounds)
+        self.view.addSubview(previewRectView)
+        self.view.sendSubviewToBack(previewRectView)
         camera.initCamera(self,previewView: self.previewRectView)
-        self.view.bringSubviewToFront(demoFaceView)
-        self.view.bringSubviewToFront(middleButton)
-        self.view.bringSubviewToFront(closeRecordViewButton)
-        self.view.bringSubviewToFront(rightButton)
-        self.view.bringSubviewToFront(rightTipsLabel)
-        self.view.bringSubviewToFront(selectPicButton)
-        self.view.bringSubviewToFront(selectPicButtonTip)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -227,7 +227,6 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     func vessageCameraImage(image: UIImage) {
         self.takedImage = image
         self.previewing = false
-        demoFaceView.hidden = false
     }
     
     //MARK: upload image

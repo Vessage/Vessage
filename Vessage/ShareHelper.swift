@@ -31,14 +31,18 @@ class ShareHelper{
     static func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString()){
         
         let alert = UIAlertController(title: title, message: alertMsg, preferredStyle: .ActionSheet)
+
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
             sendTellFriendWX(WXSceneSession.rawValue,textMsg: message)
         }
+        
+        wxAction.setValue(UIImage(named: "share_wechat")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxAction)
         
         let wxTimeLineAction = UIAlertAction(title: "WECHAT_TIMELINE".localizedString(), style: .Default) { (ac) in
             sendTellFriendWX(WXSceneTimeline.rawValue,textMsg: message)
         }
+        wxTimeLineAction.setValue(UIImage(named: "share_wechat_moment")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxTimeLineAction)
         
         let smsAction = UIAlertAction(title: "SMS".localizedString(), style: .Default) { (ac) in
@@ -46,9 +50,11 @@ class ShareHelper{
             let accountInfo = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
             vc.showSendSMSTextView([], body: "\(message)\n\(url)\n\(accountInfo)")
         }
-        
+        smsAction.setValue(UIImage(named: "share_sms")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(smsAction)
         alert.addAction(ALERT_ACTION_CANCEL)
+        
+        
         vc.showAlert(alert)
     }
     
@@ -57,6 +63,7 @@ class ShareHelper{
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
             sendTellFriendWX(WXSceneSession.rawValue, textMsg: content)
         }
+        wxAction.setValue(UIImage(named: "share_wechat")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxAction)
         
         let smsAction = UIAlertAction(title: "SMS".localizedString(), style: .Default) { (ac) in
@@ -69,7 +76,7 @@ class ShareHelper{
             }
             
         }
-        
+        smsAction.setValue(UIImage(named: "share_sms")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(smsAction)
         alert.addAction(ALERT_ACTION_CANCEL)
         vc.showAlert(alert)

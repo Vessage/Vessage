@@ -188,6 +188,8 @@
 		E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */; };
 		E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */; };
 		E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E91D3A1F26008078DE /* GroupNameCell.swift */; };
+		E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */; };
+		E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */; };
 		E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A811D0510A100A05001 /* LittlePaper.strings */; };
 /* End PBXBuildFile section */
 
@@ -413,6 +415,8 @@
 		E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupProfileViewController.swift; sourceTree = "<group>"; };
 		E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUsersCell.swift; sourceTree = "<group>"; };
 		E7F532E91D3A1F26008078DE /* GroupNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
+		E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoPreviewBubble.xib; sourceTree = "<group>"; };
+		E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPreviewBubble.swift; sourceTree = "<group>"; };
 		E7FC8A811D0510A100A05001 /* LittlePaper.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LittlePaper.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -770,6 +774,7 @@
 				E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */,
 				E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */,
 				E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */,
+				E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -854,6 +859,7 @@
 				E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */,
 				E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */,
 				E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */,
+				E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1193,6 +1199,7 @@
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
+				E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
@@ -1255,6 +1262,7 @@
 			files = (
 				E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */,
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
+				E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
 				E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */,
 				E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */,

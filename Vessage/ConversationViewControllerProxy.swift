@@ -75,7 +75,7 @@ class ConversationViewControllerProxy: NSObject {
     var recordingProgress:KDCircularProgress!{
         return rootController.recordingProgress
     }
-    var previewRectView: UIView!{
+    var previewRectView: VideoPreviewBubble!{
         return rootController.previewRectView
     }
     

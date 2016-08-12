@@ -22,6 +22,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JY5-mA-p4l">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyDetailTextPropertyCell" id="uAV-GP-ne7" customClass="MyDetailTextPropertyCell" customModule="Vessage" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="414" height="44"/>
@@ -183,7 +184,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="JY5-mA-p4l" firstAttribute="leading" secondItem="bk1-VD-5J8" secondAttribute="leading" id="10m-Go-uML"/>
                             <constraint firstItem="JY5-mA-p4l" firstAttribute="top" secondItem="bk1-VD-5J8" secondAttribute="top" id="27J-4J-X1Y"/>
@@ -241,6 +242,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="修改密码" id="GHl-op-N3i">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="yYq-fg-CR2">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="changePassword:" destination="4bm-2S-Fgg" id="f6O-bq-Gzl"/>
                             </connections>
@@ -258,7 +260,7 @@
             </objects>
             <point key="canvasLocation" x="1125" y="472"/>
         </scene>
-        <!--你的聊天表情-->
+        <!--常用聊天表情-->
         <scene sceneID="S6v-LE-fty">
             <objects>
                 <viewController storyboardIdentifier="ChatImageMgrViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f9U-Mh-hnK" customClass="ChatImageMgrViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
@@ -299,20 +301,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIC-63-DtJ">
+                                <rect key="frame" x="133" y="673" width="150" height="30"/>
+                                <state key="normal" title="点击图片设置聊天表情">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onClickNoChatImageTipsButton:" destination="f9U-Mh-hnK" eventType="touchUpInside" id="aas-CU-dVk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ORU-x7-wgr" firstAttribute="top" secondItem="4CI-V0-NxH" secondAttribute="bottom" constant="10" id="9SX-js-A9B"/>
                             <constraint firstItem="SFt-MN-Gut" firstAttribute="centerX" secondItem="QrC-aq-rUA" secondAttribute="centerX" id="M6w-IB-NDz"/>
                             <constraint firstItem="QrC-aq-rUA" firstAttribute="centerX" secondItem="8V3-j7-VlC" secondAttribute="centerX" id="RVN-IZ-WB3"/>
+                            <constraint firstItem="MIC-63-DtJ" firstAttribute="centerX" secondItem="SFt-MN-Gut" secondAttribute="centerX" id="T7Q-iD-xMb"/>
                             <constraint firstItem="SFt-MN-Gut" firstAttribute="bottom" secondItem="Viv-GL-yLd" secondAttribute="top" id="dzn-jJ-ehx"/>
+                            <constraint firstItem="SFt-MN-Gut" firstAttribute="top" secondItem="MIC-63-DtJ" secondAttribute="bottom" constant="-4" id="etH-n4-fR0"/>
                             <constraint firstItem="QrC-aq-rUA" firstAttribute="top" secondItem="ORU-x7-wgr" secondAttribute="bottom" constant="20" id="gdG-rb-w9p"/>
                             <constraint firstItem="ORU-x7-wgr" firstAttribute="centerX" secondItem="8V3-j7-VlC" secondAttribute="centerX" id="wsG-r7-3gC"/>
                             <constraint firstItem="QrC-aq-rUA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8V3-j7-VlC" secondAttribute="leadingMargin" constant="20" id="ywO-sN-fd9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="你的聊天表情" id="QIT-B4-8ha">
+                    <navigationItem key="navigationItem" title="常用聊天表情" id="QIT-B4-8ha">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="xRw-pv-Saw">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="done:" destination="f9U-Mh-hnK" id="Ipx-qQ-wbI"/>
                             </connections>
@@ -322,6 +336,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="imageTypeLabel" destination="ORU-x7-wgr" id="VMi-Eu-7Fo"/>
+                        <outlet property="noChatImageTipsButton" destination="MIC-63-DtJ" id="dYI-MG-EJX"/>
                         <outlet property="pageControl" destination="SFt-MN-Gut" id="Q4A-D5-w4k"/>
                         <outlet property="tableView" destination="QrC-aq-rUA" id="7bx-hi-vCT"/>
                     </connections>
@@ -432,6 +447,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="选择联系人" id="Fcl-iG-q0D">
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="确定" id="Q9K-hi-98U">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="finishSelect:" destination="iYP-oK-379" id="ZuN-r5-sNh"/>
                             </connections>

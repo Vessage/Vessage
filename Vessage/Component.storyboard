@@ -55,6 +55,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Property Title" id="Dm0-mm-emb">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="cgl-wU-IdO">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="save:" destination="tyS-aP-qD2" id="bf2-mq-3j6"/>
                             </connections>

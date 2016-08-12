@@ -252,13 +252,13 @@ CONVERSATION_USERS = "正在对话的好友";
 VSG_READED = "已读";
 VSG_UNREADED = "未读";
 
-TELL_FRIENDS = "告诉Ta";
-TELL_FRIENDS_ALERT_MSG = "邀请Ta和你聊天";
+TELL_FRIENDS = "扩大你的颜值圈";
+TELL_FRIENDS_ALERT_MSG = "邀请更多高颜值朋友玩VG";
 TELL_FRIENDS_IV = "邀请好朋友";
 TELL_FRIENDS_ALERT_MSG_IV = "邀请你的好朋友来VG聊天";
 WECHAT_SESSION = "微信好友";
 SMS = "短信";
-WECHAT_TIMELINE = "微信朋友圈";
+WECHAT_TIMELINE = "朋友圈";
 TELL_FRIEND_MESSAGE = "我在玩VG聊天，一起来玩吧~";
 WELCOME_ALERT_MSG = "和手机上的好友一起玩吧~";
 WELCOME_ALERT_TITLE = "VG聊天";

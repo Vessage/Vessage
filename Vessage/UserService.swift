@@ -214,7 +214,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
 //MARK: Fetch Special Users
 extension UserService{
     
-    func getActiveUsers(checkTime:Bool = false){
+    func getActiveUsers(checkTime:Bool = false,callback:(([VessageUser])->Void)? = nil){
         let key = "GET_ACTIVE_USERS_TIME"
         if checkTime{
             if let time = UserSetting.getUserNumberValue(key){
@@ -233,10 +233,11 @@ extension UserService{
             }else{
                 self.activeUsers.removeAll()
             }
+            callback?(self.activeUsers)
         }
     }
     
-    func getNearUsers(location:String,checkTime:Bool = false,callback:((nearUsers:[VessageUser])->Void)! = nil){
+    func getNearUsers(location:String,checkTime:Bool = false,callback:(([VessageUser])->Void)? = nil){
         let key = "GET_NEAR_USERS_TIME"
         if checkTime{
             if let time = UserSetting.getUserNumberValue(key){
@@ -252,13 +253,11 @@ extension UserService{
                 if let nearUsers = result.returnObject{
                     UserSetting.setUserNumberValue(key, value: NSDate().totalHoursSince1970)
                     self.nearUsers = nearUsers
-                    if let handler = callback{
-                        handler(nearUsers: nearUsers)
-                    }
                 }
             }else{
                 self.nearUsers.removeAll()
             }
+            callback?(self.nearUsers)
         }
     }
     

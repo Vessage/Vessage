@@ -72,9 +72,8 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     func initCamera(rootViewController:UIViewController,previewView:UIView){
         self.rootViewController = rootViewController
         self.view = previewView
-        self.rootViewController.view.addSubview(self.view)
-        self.rootViewController.view.bringSubviewToFront(self.view)
         previewLayer = CALayer()
+        previewLayer.contentsGravity = kCAGravityResizeAspectFill
         previewLayer.anchorPoint = CGPointZero
         previewLayer.bounds = view.bounds
         self.view.layer.insertSublayer(previewLayer, atIndex: 0)
@@ -147,7 +146,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         //MARK: 调整方向为自然方向
         let con = dataOutput.connectionWithMediaType(AVMediaTypeVideo)
         con.videoMirrored = true
-        con.videoOrientation = .Portrait
+        con.videoOrientation = .LandscapeRight
     }
     
     private func setupAudioSession(){
@@ -216,6 +215,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             return
         }
         faceLayer?.hidden = true
+        captureSession.stopRunning()
         let cgImage = context.createCGImage(ciImage, fromRect: ciImage.extent)
         let image = UIImage(CGImage: cgImage)
         if let saveHandler = self.delegate?.vessageCameraImage{
@@ -308,7 +308,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         
         let assetWriterVideoInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: outputSettings as? [String : AnyObject])
         assetWriterVideoInput.expectsMediaDataInRealTime = true
-        //assetWriterVideoInput.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+        assetWriterVideoInput.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
         
         let sourcePixelBufferAttributesDictionary = [
             String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_32BGRA),
@@ -414,6 +414,19 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
                 }
             }
         }
+        
+        let orientation = UIDevice.currentDevice().orientation
+        var t: CGAffineTransform!
+        if orientation == UIDeviceOrientation.Portrait {
+            t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
+        } else if orientation == UIDeviceOrientation.PortraitUpsideDown {
+            t = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+        } else if (orientation == UIDeviceOrientation.LandscapeRight) {
+            t = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        } else {
+            t = CGAffineTransformMakeRotation(0)
+        }
+        outputImage = outputImage.imageByApplyingTransform(t)
         
         let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent)
         self.ciImage = outputImage

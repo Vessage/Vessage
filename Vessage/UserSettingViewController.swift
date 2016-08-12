@@ -100,8 +100,6 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         static let useTink = "useTink"
     }
     
-    private var startHud:MBProgressHUD!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -109,15 +107,12 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         tableView.backgroundColor = UIColor.footerColor
         myInfo = ServiceContainer.getUserService().myProfile
         self.navigationItem.title = String(format: "USER_ACCOUNT_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
-        initPropertySet()
-        
     }
     
     override func viewDidAppear(animated: Bool) {
-        if let hud = self.startHud {
-            hud.hide(true)
-            self.startHud = nil
-        }
+        super.viewDidAppear(animated)
+        initPropertySet()
+        tableView.reloadData()
     }
     
     deinit{
@@ -130,6 +125,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     private func initPropertySet()
     {
+        textPropertyCells.removeAll()
         var propertySet = UIEditTextPropertySet()
         
         propertySet.propertyIdentifier = InfoIds.nickName
@@ -201,7 +197,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
             tableView.dataSource = self
             tableView.delegate = self
             let uiview = UIView()
-            uiview.backgroundColor = UIColor.clearColor()
+            uiview.backgroundColor = UIColor.footerColor
             tableView.tableFooterView = uiview
         }
     }
@@ -217,7 +213,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         //user infos + about + clear tmp file + exit account
-        return 4
+        return textPropertyCells.count > 0 ? 4 : 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -232,6 +228,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var resultCell:UITableViewCell!
         if indexPath.section == 0
         {
             if indexPath.row == 0
@@ -241,23 +238,23 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
             {
                 return getTextPropertyCell(indexPath.row - 1)
             }
-            let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailTextPropertyCell.reuseIdentifier, forIndexPath: indexPath)
-            return cell
+            resultCell = tableView.dequeueReusableCellWithIdentifier(MyDetailTextPropertyCell.reuseIdentifier, forIndexPath: indexPath)
         }else if indexPath.section == 1
         {
             let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.clearCacheCellReuseId,forIndexPath: indexPath)
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.clearTempDir(_:))))
-            return cell
+            resultCell = cell
         }else if indexPath.section == 2
         {
             let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.aboutAppReuseId,forIndexPath: indexPath)
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.aboutApp(_:))))
-            return cell
+            resultCell = cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.exitAccountCellReuseId,forIndexPath: indexPath)
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.logout(_:))))
-            return cell
+            resultCell = cell
         }
+        return resultCell
     }
     
     //MARK: change chat background
@@ -271,7 +268,6 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     
     func changeChatBcg(_:UITapGestureRecognizer)
     {
-        //ChatBackgroundPickerController.showPickerController(self,delegate: self)
         ChatImageMgrViewController.showChatImageMgrVeiwController(self)
     }
     
@@ -503,9 +499,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     }
     
     static func showUserSettingViewController(navController:UINavigationController){
-        let c = instanceFromStoryBoard()
-        c.startHud = navController.showAnimationHud()
-        navController.pushViewController(c, animated: true)
+        navController.pushViewController(instanceFromStoryBoard(), animated: true)
     }
     
     static func instanceFromStoryBoard()->UserSettingViewController{

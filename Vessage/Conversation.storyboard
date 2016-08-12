@@ -29,8 +29,8 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="656"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ta未设置对讲背景" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khg-HQ-ttM">
-                                        <rect key="frame" x="138" y="615" width="138" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ta未设置视频对讲表情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khg-HQ-ttM">
+                                        <rect key="frame" x="121" y="615" width="172" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -114,7 +114,7 @@
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vtn-Gc-h4f">
-                                            <rect key="frame" x="23" y="40" width="20" height="20"/>
+                                            <rect key="frame" x="15" y="39" width="20" height="20"/>
                                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -123,7 +123,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7j-PB-SAI" customClass="KDCircularProgress" customModule="Vessage" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="25" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="24" width="50" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="7zj-ad-hma"/>
@@ -157,6 +157,8 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Y7j-PB-SAI" secondAttribute="bottom" constant="6" id="6GM-Uf-Lm8"/>
+                                        <constraint firstItem="Y7j-PB-SAI" firstAttribute="leading" secondItem="nUs-0A-ELP" secondAttribute="leading" id="KYs-n3-dQF"/>
                                         <constraint firstItem="gJj-nO-NGN" firstAttribute="centerX" secondItem="nUs-0A-ELP" secondAttribute="centerX" id="SH2-Dx-lgU"/>
                                         <constraint firstItem="snt-ld-l0F" firstAttribute="trailing" secondItem="nUs-0A-ELP" secondAttribute="trailingMargin" id="Sh3-Q6-7rn"/>
                                         <constraint firstItem="Vtn-Gc-h4f" firstAttribute="leading" secondItem="nUs-0A-ELP" secondAttribute="leading" constant="23" id="VFE-8N-idC"/>
@@ -166,6 +168,12 @@
                                         <constraint firstItem="Vtn-Gc-h4f" firstAttribute="centerX" secondItem="Y7j-PB-SAI" secondAttribute="centerX" id="nVY-d5-U4M"/>
                                         <constraint firstAttribute="bottom" secondItem="snt-ld-l0F" secondAttribute="bottom" constant="10" id="zbW-fz-i0a"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="VFE-8N-idC"/>
+                                            <exclude reference="VQG-OZ-VmD"/>
+                                        </mask>
+                                    </variation>
                                 </view>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="TZW-q2-HJq"/>
@@ -183,12 +191,12 @@
                                     <action selector="onClickImageChatButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="1eV-8N-ZaV"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-Iz-prr">
-                                <rect key="frame" x="7" y="662" width="56" height="72"/>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-Iz-prr" customClass="VideoPreviewBubble" customModule="Vessage" customModuleProvider="target">
+                                <rect key="frame" x="6" y="578" width="70" height="70"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="6cZ-bx-PRI"/>
-                                    <constraint firstAttribute="height" constant="72" id="c4G-cY-XB6"/>
+                                    <constraint firstAttribute="width" constant="70" id="6cZ-bx-PRI"/>
+                                    <constraint firstAttribute="height" constant="70" id="c4G-cY-XB6"/>
                                 </constraints>
                             </view>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="m0w-W8-lr9">
@@ -209,13 +217,13 @@
                             <constraint firstAttribute="trailing" secondItem="cBx-c6-Kmj" secondAttribute="trailing" id="GGU-bF-Ce8"/>
                             <constraint firstItem="1wm-WO-uDe" firstAttribute="height" secondItem="VJP-zZ-5aI" secondAttribute="height" id="K6p-rd-fPa"/>
                             <constraint firstItem="m0w-W8-lr9" firstAttribute="width" secondItem="VJP-zZ-5aI" secondAttribute="width" id="QSh-yd-Xcj"/>
-                            <constraint firstItem="Jug-Iz-prr" firstAttribute="leading" secondItem="cBx-c6-Kmj" secondAttribute="leading" constant="7" id="SvH-D0-eat"/>
+                            <constraint firstItem="Jug-Iz-prr" firstAttribute="leading" secondItem="cBx-c6-Kmj" secondAttribute="leading" constant="6" id="SvH-D0-eat"/>
                             <constraint firstItem="t1h-Iv-vhL" firstAttribute="centerY" secondItem="VJP-zZ-5aI" secondAttribute="centerY" id="ams-ar-4Gb"/>
                             <constraint firstItem="cBx-c6-Kmj" firstAttribute="top" secondItem="J6g-yL-8Wr" secondAttribute="bottom" id="aul-Rr-Bcq"/>
-                            <constraint firstItem="Jug-Iz-prr" firstAttribute="bottom" secondItem="cBx-c6-Kmj" secondAttribute="bottom" constant="-2" id="hyw-Df-eTA"/>
                             <constraint firstItem="m0w-W8-lr9" firstAttribute="centerX" secondItem="VJP-zZ-5aI" secondAttribute="centerX" id="kbo-uW-O0V"/>
                             <constraint firstItem="kTW-83-PVY" firstAttribute="centerY" secondItem="VJP-zZ-5aI" secondAttribute="centerY" id="riN-Rb-1uZ"/>
                             <constraint firstItem="kTW-83-PVY" firstAttribute="height" secondItem="VJP-zZ-5aI" secondAttribute="height" id="sRx-rN-ROb"/>
+                            <constraint firstItem="cBx-c6-Kmj" firstAttribute="top" secondItem="Jug-Iz-prr" secondAttribute="bottom" constant="8" id="sl4-3M-1WN"/>
                             <constraint firstItem="m0w-W8-lr9" firstAttribute="top" secondItem="sto-CT-jOh" secondAttribute="bottom" id="vYs-pn-uhQ"/>
                             <constraint firstItem="1wm-WO-uDe" firstAttribute="centerX" secondItem="VJP-zZ-5aI" secondAttribute="centerX" id="xlC-gO-Xrm"/>
                         </constraints>

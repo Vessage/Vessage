@@ -20,8 +20,7 @@ let defaultImageTypes = [
 
 class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,ChatBackgroundPickerControllerDelegate {
 
-    
-
+    @IBOutlet weak var noChatImageTipsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageTypeLabel: LTMorphingLabel!{
         didSet{
@@ -109,23 +108,27 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
         faceImageView.initContainer(cell.contentView)
         cell.contentView.addSubview(faceImageView)
         if index == 0 {
-            self.navigationItem.title = "视频对讲背景"
-            faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "设置你的视频对讲背景，好友对讲时可以看到")
+            self.navigationItem.title = "视频对讲表情"
+            faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "设置对讲表情，好友发对讲消息时可见")
             if userService.isUserChatBackgroundIsSeted {
                 self.imageTypeLabel.text = " "
+                self.noChatImageTipsButton.hidden = true
             }else{
                 self.imageTypeLabel.text = "未设置"
+                self.noChatImageTipsButton.hidden = false
             }
         }else{
-            self.navigationItem.title = "颜文字聊天表情"
+            self.navigationItem.title = "常用颜文字聊天表情"
             let dict = defaultImageTypes[index - 1]
             if let type = dict["type"]{
                 if let ci = self.myChatImages[type] {
                     self.imageTypeLabel.text = type
                     faceImageView.setTextImage(ci.imageId, message: dict["settedMsg"])
+                    self.noChatImageTipsButton.hidden = true
                 }else{
                     self.imageTypeLabel.text = "\(type)(未设置)"
                     faceImageView.setTextImage("", message: dict["notSetMsg"])
+                    self.noChatImageTipsButton.hidden = false
                 }
             }
             
@@ -144,6 +147,14 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell?.selected = false
+        showTakeChatImageController()
+    }
+    
+    @IBAction func onClickNoChatImageTipsButton(sender: AnyObject) {
+        showTakeChatImageController()
+    }
+    
+    private func showTakeChatImageController(){
         if index == 0 {
             ChatBackgroundPickerController.showPickerController(self, delegate: self)
         }else{

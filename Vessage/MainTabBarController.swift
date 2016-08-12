@@ -47,6 +47,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(MainTabBarController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
         ServiceContainer.getActivityService().addObserver(self, selector: #selector(MainTabBarController.onActivitiesBadgeUpdated(_:)), name: ActivityService.onEnabledActivitiesBadgeUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(MainTabBarController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
+        tabBar.tintColor = UIColor.themeColor
     }
     
     deinit{

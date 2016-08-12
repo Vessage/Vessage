@@ -12,7 +12,7 @@
                 <tabBarController storyboardIdentifier="MainTabBarController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fbs-wf-wGU" customClass="MainTabBarController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="6dJ-AJ-pxp">
+                    <tabBar key="tabBar" contentMode="scaleToFill" itemPositioning="fill" id="6dJ-AJ-pxp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -303,11 +303,13 @@
                     <navigationItem key="navigationItem" title="VG" id="Pbk-1i-UuZ">
                         <barButtonItem key="backBarButtonItem" title="对话" id="SYV-9s-CQ9"/>
                         <barButtonItem key="leftBarButtonItem" image="share" id="Cp7-nQ-LAi">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="tellFriends:" destination="GQB-c1-diR" id="xmg-rq-faT"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settings" id="MDS-hM-X8B">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="showUserSetting:" destination="GQB-c1-diR" id="GKS-sL-3ud"/>
                             </connections>

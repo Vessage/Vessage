@@ -151,10 +151,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cOy-ww-Fwx">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="QOA-me-dGz">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
@@ -217,34 +213,22 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="OXS-YO-Oks" secondAttribute="bottom" constant="20" symbolic="YES" id="6W7-EQ-UGD"/>
                             <constraint firstItem="G86-R2-vTP" firstAttribute="bottom" secondItem="OXS-YO-Oks" secondAttribute="bottom" id="8GD-HG-8ym"/>
-                            <constraint firstItem="QOA-me-dGz" firstAttribute="bottom" secondItem="cOy-ww-Fwx" secondAttribute="bottom" id="D9s-vg-MqJ"/>
-                            <constraint firstItem="cOy-ww-Fwx" firstAttribute="top" secondItem="BjQ-TE-Hc8" secondAttribute="top" id="HJR-NM-93Z"/>
                             <constraint firstAttribute="leadingMargin" secondItem="G86-R2-vTP" secondAttribute="leading" id="L89-4k-YLL"/>
+                            <constraint firstItem="QOA-me-dGz" firstAttribute="height" secondItem="BjQ-TE-Hc8" secondAttribute="height" id="QBe-O1-Kod"/>
                             <constraint firstItem="Zde-Z4-kJ4" firstAttribute="trailing" secondItem="BjQ-TE-Hc8" secondAttribute="trailingMargin" id="RNB-jd-T2n"/>
-                            <constraint firstItem="cOy-ww-Fwx" firstAttribute="centerX" secondItem="BjQ-TE-Hc8" secondAttribute="centerX" id="Wsw-1L-iu1"/>
                             <constraint firstItem="Zde-Z4-kJ4" firstAttribute="bottom" secondItem="OXS-YO-Oks" secondAttribute="bottom" id="Xb7-Ij-UFT"/>
                             <constraint firstItem="OXS-YO-Oks" firstAttribute="centerX" secondItem="BjQ-TE-Hc8" secondAttribute="centerX" id="aJd-Ro-eA3"/>
                             <constraint firstItem="fiS-Ym-TYZ" firstAttribute="centerX" secondItem="Zde-Z4-kJ4" secondAttribute="centerX" id="dPe-QX-bcs"/>
                             <constraint firstItem="1cU-2p-a4q" firstAttribute="leading" secondItem="BjQ-TE-Hc8" secondAttribute="leadingMargin" constant="10" id="kIS-bd-02J"/>
                             <constraint firstItem="b8r-rD-AwH" firstAttribute="centerX" secondItem="G86-R2-vTP" secondAttribute="centerX" id="kXK-73-C0v"/>
-                            <constraint firstItem="cOy-ww-Fwx" firstAttribute="bottom" secondItem="pcf-rL-GxG" secondAttribute="top" id="n90-Fx-VhR"/>
+                            <constraint firstItem="QOA-me-dGz" firstAttribute="centerX" secondItem="BjQ-TE-Hc8" secondAttribute="centerX" id="kq9-fg-t6v"/>
                             <constraint firstItem="pcf-rL-GxG" firstAttribute="top" secondItem="G86-R2-vTP" secondAttribute="bottom" constant="20" id="nH9-HT-Trw"/>
+                            <constraint firstItem="QOA-me-dGz" firstAttribute="centerY" secondItem="BjQ-TE-Hc8" secondAttribute="centerY" id="oG6-CC-alV"/>
                             <constraint firstItem="1cU-2p-a4q" firstAttribute="top" secondItem="QhE-Bt-OpR" secondAttribute="bottom" constant="30" id="oGC-Z6-u9v"/>
-                            <constraint firstItem="1cU-2p-a4q" firstAttribute="bottom" secondItem="OXS-YO-Oks" secondAttribute="bottom" id="pZn-RS-ti8"/>
-                            <constraint firstItem="b8r-rD-AwH" firstAttribute="top" secondItem="G86-R2-vTP" secondAttribute="bottom" id="pdi-TZ-BcT"/>
-                            <constraint firstItem="QOA-me-dGz" firstAttribute="top" secondItem="cOy-ww-Fwx" secondAttribute="top" id="tVj-86-hWW"/>
-                            <constraint firstItem="cOy-ww-Fwx" firstAttribute="leading" secondItem="BjQ-TE-Hc8" secondAttribute="leading" id="vWe-Ic-ICo"/>
                             <constraint firstItem="fiS-Ym-TYZ" firstAttribute="top" secondItem="Zde-Z4-kJ4" secondAttribute="bottom" constant="-1" id="vs9-wd-rYd"/>
+                            <constraint firstItem="QOA-me-dGz" firstAttribute="width" secondItem="BjQ-TE-Hc8" secondAttribute="width" id="x5P-bO-j0c"/>
                             <constraint firstItem="b8r-rD-AwH" firstAttribute="top" secondItem="G86-R2-vTP" secondAttribute="bottom" id="xuM-Ab-VpE"/>
-                            <constraint firstItem="QOA-me-dGz" firstAttribute="trailing" secondItem="cOy-ww-Fwx" secondAttribute="trailing" id="yW0-eI-kLl"/>
-                            <constraint firstItem="QOA-me-dGz" firstAttribute="leading" secondItem="cOy-ww-Fwx" secondAttribute="leading" id="ygM-0L-kPP"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="pZn-RS-ti8"/>
-                                <exclude reference="pdi-TZ-BcT"/>
-                            </mask>
-                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -253,7 +237,6 @@
                         <outlet property="closeRecordViewButton" destination="1cU-2p-a4q" id="nWp-Hr-kZm"/>
                         <outlet property="demoFaceView" destination="QOA-me-dGz" id="eCs-h3-Cbw"/>
                         <outlet property="middleButton" destination="OXS-YO-Oks" id="f5v-BM-Beh"/>
-                        <outlet property="previewRectView" destination="cOy-ww-Fwx" id="A9P-cN-KO2"/>
                         <outlet property="rightButton" destination="Zde-Z4-kJ4" id="rXE-NN-dD0"/>
                         <outlet property="rightTipsLabel" destination="fiS-Ym-TYZ" id="ti5-p6-gbz"/>
                         <outlet property="selectPicButton" destination="G86-R2-vTP" id="0i5-aU-JlC"/>

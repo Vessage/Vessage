@@ -70,6 +70,7 @@ class ConversationViewController: UIViewController {
             imageChatButton.hidden = true
         }
     }
+    
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
@@ -110,11 +111,12 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var vessageView: UIView!
     
     //MARK: Record Views
-    @IBOutlet weak var previewRectView: UIView!{
+    @IBOutlet weak var previewRectView: VideoPreviewBubble!{
         didSet{
             previewRectView.backgroundColor = UIColor.clearColor()
         }
     }
+    
     @IBOutlet weak var recordingProgress: KDCircularProgress!{
         didSet{
             recordingProgress.hidden = true
@@ -178,6 +180,7 @@ extension ConversationViewController{
         }
         setReadingVessage()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -224,20 +227,23 @@ extension ConversationViewController{
 //MARK: Actions
 extension ConversationViewController{
     
-    @IBAction func onClickMiddleButton(sender: AnyObject) {
-        if outChatGroup {
-            self.playToast("NOT_IN_CHAT_GROUP".localizedString())
-            return
-        }
+    @IBAction func onClickMiddleButton(sender: UIView) {
         
-        if isReadingVessages {
-            if needSetChatBackgroundAndShow() {
+        sender.animationMaxToMin(0.1, maxScale: 1.2) { 
+            if self.outChatGroup {
+                self.playToast("NOT_IN_CHAT_GROUP".localizedString())
                 return
             }
-            startRecording()
-        }else{
-            setReadingVessage()
-            recordVessageManager.sendVessage()
+            
+            if self.isReadingVessages {
+                if self.needSetChatBackgroundAndShow() {
+                    return
+                }
+                self.startRecording()
+            }else{
+                self.setReadingVessage()
+                self.recordVessageManager.sendVessage()
+            }
         }
     }
     
@@ -253,12 +259,14 @@ extension ConversationViewController{
         }
     }
     
-    @IBAction func onClickRightButton(sender: AnyObject) {
-        if isReadingVessages {
-            playVessageManager.showNextVessage()
-        }else{
-            recordVessageManager.cancelRecord()
-            setReadingVessage()
+    @IBAction func onClickRightButton(sender: UIView) {
+        sender.animationMaxToMin(0.1, maxScale: 1.2) {
+            if self.isReadingVessages {
+                self.playVessageManager.showNextVessage()
+            }else{
+                self.recordVessageManager.cancelRecord()
+                self.setReadingVessage()
+            }
         }
     }
     

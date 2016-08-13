@@ -54,8 +54,8 @@ extension RecordVessageManager{
     
     override func onSwitchToManager() {
         imageChatButton.hidden = true
-        rightButton.setImage(UIImage(named: "close"), forState: .Normal)
-        rightButton.setImage(UIImage(named: "close"), forState: .Highlighted)
+        rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Normal)
+        rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Highlighted)
         groupAvatarManager.renderImageViews()
         groupAvatarManager.refreshFaces()
     }
@@ -136,21 +136,28 @@ class GroupChatAvatarManager:NSObject {
     
     private func renderImageViews(){
         let count = self.userFaceIds.count
-        var width = self.container.frame.width / 2
-        var height = self.container.frame.height / 2
-        var diam:CGFloat = 0
         if count == 1 {
             avatarImageGroup[0].frame = self.container.bounds
-        }else if count == 2{
+            return
+        }
+        
+        var containerFrame = self.container.frame
+        if count > 1 {
+            containerFrame = CGRectMake(containerFrame.origin.x, containerFrame.origin.y, containerFrame.width, containerFrame.height - 80)
+        }
+        var width = containerFrame.width / 2
+        var height = containerFrame.height / 2
+        var diam:CGFloat = 0
+        if count == 2{
             
             if width < height {
-                width = min(height,self.container.frame.width)
+                width = min(height,containerFrame.width)
             }else if height < width{
-                height = min(width,self.container.frame.height)
+                height = min(width,containerFrame.height)
             }
             diam = min(width, height)
             avatarImageGroup[0].frame = CGRectMake(0, 0 , diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(self.container.frame.width - diam, self.container.frame.height - diam , diam, diam)
+            avatarImageGroup[1].frame = CGRectMake(containerFrame.width - diam, containerFrame.height - diam , diam, diam)
         }else if count == 3{
             diam = min(width, height)
             
@@ -166,9 +173,9 @@ class GroupChatAvatarManager:NSObject {
         }else if count == 5{
             let diam = min(width, height)
             avatarImageGroup[0].frame = CGRectMake(0, 0 , diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(self.container.frame.width - diam , 0, diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(0, self.container.frame.height - diam , diam, diam)
-            avatarImageGroup[3].frame = CGRectMake(self.container.frame.width - diam , self.container.frame.height - diam, diam, diam)
+            avatarImageGroup[1].frame = CGRectMake(containerFrame.width - diam , 0, diam, diam)
+            avatarImageGroup[2].frame = CGRectMake(0, containerFrame.height - diam , diam, diam)
+            avatarImageGroup[3].frame = CGRectMake(containerFrame.width - diam , containerFrame.height - diam, diam, diam)
             avatarImageGroup[4].frame = CGRectMake(width - diam / 2, height - diam / 2 , diam, diam)
         }
     }
@@ -384,8 +391,8 @@ extension RecordVessageManager:VessageCameraDelegate{
     
     private func updateRecordButton(){
         if recording{
-            recordButton.setImage(UIImage(named: "checkRound"), forState: .Normal)
-            recordButton.setImage(UIImage(named: "checkRound"), forState: .Highlighted)
+            recordButton.setImage(UIImage(named: "record_video_check"), forState: .Normal)
+            recordButton.setImage(UIImage(named: "record_video_check"), forState: .Highlighted)
         }else{
             recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
             recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)

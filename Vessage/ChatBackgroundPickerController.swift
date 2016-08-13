@@ -20,8 +20,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     static let chatImageWidth:CGFloat = 480
     static let chatImageQuality:CGFloat = 0.6
     private var imagePickerController:UIImagePickerController = UIImagePickerController()
-    @IBOutlet weak var selectPicButtonTip: UILabel!
-    @IBOutlet weak var selectPicButton: UIButton!
+    
     weak private var delegate:ChatBackgroundPickerControllerDelegate!
     private var chatImageType:String? = nil
     private var previewRectView: UIView!{
@@ -43,7 +42,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
             }else{
                 camera?.pauseCaptureSession()
             }
-            updateSelectPicButton()
+            updateLeftButton()
             updateMiddleButton()
             updateRightButton()
         }
@@ -54,6 +53,16 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
             closeRecordViewButton.layer.cornerRadius = closeRecordViewButton.frame.size.height / 2
         }
     }
+    
+    @IBOutlet weak var leftButtonTip: UILabel!
+    @IBOutlet weak var leftButton: UIImageView!{
+        didSet{
+            leftButton.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.leftButtonClicked(_:)))
+            leftButton.addGestureRecognizer(tap)
+        }
+    }
+    
     @IBOutlet weak var middleButton: UIButton!{
         didSet{
             middleButton.hidden = true
@@ -64,8 +73,6 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     @IBOutlet weak var rightTipsLabel: UILabel!
     @IBOutlet weak var rightButton: UIImageView!{
         didSet{
-            rightButton.layer.cornerRadius = rightButton.frame.size.height / 2
-            rightButton.hidden = !previewing
             rightButton.userInteractionEnabled = true
             let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.longPressRightButton(_:)))
             rightButton.addGestureRecognizer(longPress)
@@ -135,32 +142,12 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     }
     
     //MARK: actions
-    @IBAction func selectPicButtonClick(sender: AnyObject) {
-        selectPictureFromAlbum()
-    }
-    
-    private func selectPictureFromAlbum()
-    {
-        imagePickerController.sourceType = .PhotoLibrary
-        imagePickerController.allowsEditing = false
-        imagePickerController.delegate = self
-        self.presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    func rightButtonClicked(sender: AnyObject) {
-        if previewing == false{
+    func leftButtonClicked(sender: AnyObject) {
+        if previewing {
+            selectPictureFromAlbum()
+        }else{
             previewing = true
             demoFaceView.hidden = true
-        }
-    }
-    
-    @IBAction func closeRecordView(sender: AnyObject) {
-        camera.cancelRecord()
-        camera.closeCamera()
-        self.dismissViewControllerAnimated(false) { () -> Void in
-            if let handler = self.delegate?.chatBackgroundPickerSetImageCancel{
-                handler(self)
-            }
         }
     }
     
@@ -175,6 +162,30 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         }else{
             self.sendTakedImage()
         }
+    }
+    
+    func rightButtonClicked(sender: AnyObject) {
+        if !previewing{
+            self.sendTakedImage()
+        }
+    }
+    
+    @IBAction func closeRecordView(sender: AnyObject) {
+        camera.cancelRecord()
+        camera.closeCamera()
+        self.dismissViewControllerAnimated(false) { () -> Void in
+            if let handler = self.delegate?.chatBackgroundPickerSetImageCancel{
+                handler(self)
+            }
+        }
+    }
+    
+    private func selectPictureFromAlbum()
+    {
+        imagePickerController.sourceType = .PhotoLibrary
+        imagePickerController.allowsEditing = false
+        imagePickerController.delegate = self
+        self.presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
     func longPressRightButton(ges:UILongPressGestureRecognizer){
@@ -192,36 +203,40 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         demoFaceView.hidden = false
     }
     
-    private func updateSelectPicButton(){
-        
-        selectPicButton?.hidden = !previewing
-        selectPicButtonTip?.hidden = selectPicButton.hidden
+    private func updateLeftButton(){
+        if previewing {
+            leftButton?.image = UIImage(named: "select_chat_image")
+        }else{
+            leftButton?.image = UIImage(named: "shot_refresh")
+        }
+        leftButtonTip?.hidden = !previewing
     }
     
     private func updateRightButton(){
-        rightTipsLabel.hidden = !previewing
         if previewing{
-            rightButton.image = UIImage(named: "profile")
+            rightButton?.image = UIImage(named: "chat_image_demo_btn")
         }else{
-            rightButton.image = UIImage(named: "refreshRound")
+            rightButton?.image = UIImage(named: "record_video_check")
         }
+        rightTipsLabel?.hidden = !previewing
     }
     
     private func updateMiddleButton(){
         if previewing{
-            middleButton?.setImage(UIImage(named: "camera"), forState: .Normal)
-            middleButton?.setImage(UIImage(named: "camera"), forState: .Highlighted)
+            middleButton?.setImage(UIImage(named: "camera_shot"), forState: .Normal)
+            middleButton?.setImage(UIImage(named: "camera_shot"), forState: .Highlighted)
         }else{
-            middleButton?.setImage(UIImage(named: "checkRound"), forState: .Normal)
-            middleButton?.setImage(UIImage(named: "checkRound"), forState: .Highlighted)
+            middleButton?.setImage(UIImage(named: "record_video_check"), forState: .Normal)
+            middleButton?.setImage(UIImage(named: "record_video_check"), forState: .Highlighted)
         }
+        middleButton?.hidden = !previewing
     }
     
     //MARK: VessageCamera Delegate
     
     func vessageCameraReady() {
         middleButton.hidden = false
-        selectPicButton.hidden = false
+        leftButton.hidden = false
     }
     
     func vessageCameraImage(image: UIImage) {

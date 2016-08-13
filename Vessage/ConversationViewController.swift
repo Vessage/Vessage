@@ -82,7 +82,11 @@ class ConversationViewController: UIViewController {
             bottomBar.hidden = true
         }
     }
-    
+    @IBOutlet weak var bottomBarContainer: UIView!{
+        didSet{
+            bottomBarContainer.hidden = true
+        }
+    }
     @IBOutlet weak var rightButton: UIButton!{
         didSet{
             rightButton.hidden = true
@@ -291,9 +295,11 @@ extension ConversationViewController{
         vessageViewContainer.hidden = true
         recordViewContainer.hidden = false
         recordViewContainer.alpha = 0.3
+        bottomBar.alpha = 1
         UIView.beginAnimations("RecordViewContainer", context: nil)
         UIView.setAnimationDuration(0.3)
         recordViewContainer.alpha = 1
+        bottomBar.alpha = 0
         UIView.commitAnimations()
         navigationController?.navigationBarHidden = true
         recordVessageManager.onSwitchToManager()
@@ -304,19 +310,31 @@ extension ConversationViewController{
         isRecording = false
         recordViewContainer.hidden = true
         vessageViewContainer.hidden = false
+        bottomBar.alpha = 0.8
         navigationController?.navigationBarHidden = false
         playVessageManager.onSwitchToManager()
     }
     
     private func showBottomBar(){
-        if(bottomBar.hidden){
-            bottomBar.frame.origin.y = view.frame.height
-            self.imageChatButton.hidden = false
-            UIView.animateWithDuration(0.08) {
-                self.bottomBar.hidden = false
-                self.bottomBar.frame.origin.y = self.view.frame.height - self.bottomBar.frame.height
+        if(bottomBarContainer.hidden){
+            
+            let layerOriginFrame = bottomBarContainer.layer.frame
+            bottomBarContainer.layer.frame = CGRectMake(layerOriginFrame.origin.x, layerOriginFrame.origin.y + layerOriginFrame.height, layerOriginFrame.width, layerOriginFrame.height)
+            bottomBarContainer.hidden = false
+            bottomBarContainer.alpha = 0.1
+            bottomBar.hidden = false
+            let barLayerOriginFrame = bottomBar.layer.frame
+            bottomBar.layer.frame = CGRectMake(barLayerOriginFrame.origin.x, barLayerOriginFrame.origin.y + barLayerOriginFrame.height, barLayerOriginFrame.width, barLayerOriginFrame.height)
+            UIView.animateWithDuration(0.1) {
+                self.bottomBar.layer.frame = barLayerOriginFrame
+                self.bottomBarContainer.alpha = 1
+                self.bottomBarContainer.layer.frame = layerOriginFrame
+                let imageChatButtomLayerFrame = self.imageChatButton.layer.frame
+                self.imageChatButton.layer.frame = CGRectMake(imageChatButtomLayerFrame.origin.x + imageChatButtomLayerFrame.width, imageChatButtomLayerFrame.origin.y + imageChatButtomLayerFrame.height, imageChatButtomLayerFrame.width, imageChatButtomLayerFrame.height)
                 self.imageChatButton.alpha = 0.3
+                self.imageChatButton.hidden = false
                 UIView.animateWithDuration(0.6){
+                    self.imageChatButton.layer.frame = imageChatButtomLayerFrame
                     self.imageChatButton.alpha = 1
                 }
             }

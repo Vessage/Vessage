@@ -73,7 +73,8 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
         if let g = a.userInfo?[kChatGroupValue] as? ChatGroup{
             if g.groupId == self.chatGroup.groupId {
                 self.chatGroup = g
-                self.tableView.reloadData()
+                self.collectionView?.reloadData()
+                self.tableView?.reloadData()
             }
         }
     }
@@ -111,7 +112,8 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
     }
     
     func onFinishSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
-        ServiceContainer.getChatGroupService().addUserJoinChatGroup(chatGroup.groupId, userId: selectedUsers.first!.userId){ suc in
+        let selectUserId = selectedUsers.first!.userId
+        ServiceContainer.getChatGroupService().addUserJoinChatGroup(chatGroup.groupId, userId: selectUserId){ suc in
             if suc{
                 self.playCheckMark("ADD_USER_TO_GROUP_SUCCESS".localizedString())
             }else{
@@ -200,6 +202,9 @@ extension ChatGroupProfileViewController:UITableViewDelegate,UITableViewDataSour
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("ExitGroupChatCell", forIndexPath: indexPath)
+            cell.preservesSuperviewLayoutMargins = false
+            cell.separatorInset = UIEdgeInsetsZero
+            cell.layoutMargins = UIEdgeInsetsZero
             return cell
         }
     }

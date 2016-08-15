@@ -12,6 +12,7 @@ let maxGroupChatUserCount = 6
 
 class ConversationListGroupChatCell: ConversationListCellBase,SelectVessageUserViewControllerDelegate {
     static let reuseId = "ConversationListGroupChatCell"
+    
     override func onCellClicked() {
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.rootController.navigationController!)
         controller.delegate = self

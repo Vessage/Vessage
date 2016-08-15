@@ -9,7 +9,7 @@
 import Foundation
 class ChatImageManageCell:ConversationListCellBase{
     static let reuseId = "ChatImageManageCell"
-    
+
     override func onCellClicked() {
         ChatImageMgrViewController.showChatImageMgrVeiwController(self.rootController)
     }

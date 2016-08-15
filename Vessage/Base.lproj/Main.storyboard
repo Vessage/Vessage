@@ -432,7 +432,7 @@
     </scenes>
     <resources>
         <image name="chat_image_mgr" width="128" height="128"/>
-        <image name="contacts" width="120" height="120"/>
+        <image name="contacts" width="128" height="128"/>
         <image name="conversation" width="24" height="24"/>
         <image name="defaultAvatar" width="128" height="128"/>
         <image name="favorite" width="24" height="24"/>

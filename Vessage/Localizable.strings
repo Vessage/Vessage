@@ -115,7 +115,7 @@ PASSWORD_TIPS = "密码为6到18个字符！";
 
 //UserSettingViewController
 USER_DATA_NOT_READY_RETRY = "用户数据没准备好，请稍后重试";
-NICK = "名字";
+NICK = "昵称";
 NICK_REGEX_TIPS = "昵称必须是1到23个字符";
 LEVEL = "等级";
 JOIN = "注册时间";
@@ -130,7 +130,7 @@ MODIFY_KEY_SUC = "修改%@成功!";
 
 CHANGE_AVATAR = "修改头像";
 TAKE_NEW_PHOTO = "拍照";
-SELECT_PHOTO = "选择一个照片";
+SELECT_PHOTO = "从相册中选择";
 SET_PROFILE_VIDEO_SUC = "设置个人视频成功";
 SET_PROFILE_VIDEO_FAILED = "设置个人视频失败";
 SET_AVATAR_SUC = "设置头像成功";
@@ -215,6 +215,9 @@ CANCEL_RECORD = "取消对讲";
 CONFIRM_SEND_VESSAGE_TITLE = "发送视频对讲消息？";
 VESSAGE_RECEIVER = "收件人:%@";
 SAVE_VIDEO_FAILED = "处理数据出错>_<!";
+
+EDIT_SEX_VALUE_ERROR = "操作失败>_<!";
+EDIT_SEX_VALUE_SUC = "更改成功！";
 
 //MARK: Send Vessage
 POST_VESSAGE_ERROR = "发送消息失败";

@@ -60,19 +60,6 @@ class MyDetailTextPropertyCell:UITableViewCell
     
 }
 
-class MyDetailAvatarCell:UITableViewCell
-{
-    static let reuseIdentifier = "MyDetailAvatarCell"
-    
-    @IBOutlet weak var avatarImageView: UIImageView!{
-        didSet{
-            avatarImageView.clipsToBounds = true
-            avatarImageView.layer.cornerRadius = 7
-        }
-    }
-}
-
-
 struct MyDetailCellModel {
     var propertySet:UIEditTextPropertySet!
     var editable:Bool = false
@@ -80,7 +67,7 @@ struct MyDetailCellModel {
 }
 
 //MARK:UserSettingViewController
-class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTextPropertyViewControllerDelegate,UITableViewDelegate,UIImagePickerControllerDelegate,ProgressTaskDelegate,ChatBackgroundPickerControllerDelegate
+class UserSettingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate //,ChatBackgroundPickerControllerDelegate
 {
     static let aboutAppReuseId = "aboutApp"
     static let clearCacheCellReuseId = "clearCache"
@@ -104,9 +91,8 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = UIColor.footerColor
-        myInfo = ServiceContainer.getUserService().myProfile
-        self.navigationItem.title = String(format: "USER_ACCOUNT_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
+        tableView.backgroundColor = UIColor.lightTextColor()
+        myProfile = ServiceContainer.getUserService().myProfile
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -121,23 +107,25 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         #endif
     }
     
-    private var myInfo:VessageUser!
+    private(set) var myProfile:VessageUser!
     
     private func initPropertySet()
     {
         textPropertyCells.removeAll()
         var propertySet = UIEditTextPropertySet()
         
+        /*
         propertySet.propertyIdentifier = InfoIds.nickName
         propertySet.propertyLabel = "NICK".localizedString()
-        propertySet.propertyValue = myInfo.nickName
+        propertySet.propertyValue = myProfile.nickName
         textPropertyCells.append(MyDetailCellModel(propertySet: propertySet, editable: true, selector: #selector(UserSettingViewController.tapTextProperty(_:))))
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "CHANGE_CHAT_BCG".localizedString()
         propertySet.propertyValue = ""
-        //textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changeChatBcg(_:))))
+        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changeChatBcg(_:))))
+        */
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
@@ -148,7 +136,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "BIND_MOBILE".localizedString()
-        if let mobile = myInfo.mobile{
+        if let mobile = myProfile.mobile{
             let length = mobile.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
             let subfix = mobile.substringFromIndex(length - 4)
             propertySet.propertyValue = "***\(subfix)"
@@ -187,7 +175,10 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     //MARK: table view delegate
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 21
+        if section == 0 {
+            return 0
+        }
+        return 20
     }
     
     @IBOutlet weak var tableView: UITableView!{
@@ -197,7 +188,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
             tableView.dataSource = self
             tableView.delegate = self
             let uiview = UIView()
-            uiview.backgroundColor = UIColor.footerColor
+            uiview.backgroundColor = UIColor.lightTextColor()
             tableView.tableFooterView = uiview
         }
     }
@@ -205,15 +196,14 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 0
         {
-            return 84
+            return 200
         }
         return UITableViewAutomaticDimension
-        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         //user infos + about + clear tmp file + exit account
-        return textPropertyCells.count > 0 ? 4 : 0
+        return textPropertyCells.count > 0 ? 2 : 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -222,7 +212,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
             return 1 + textPropertyCells.count
         }else
         {
-            return 1
+            return 3
         }
     }
     
@@ -233,30 +223,37 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         {
             if indexPath.row == 0
             {
-                return getAvatarCell()
+                resultCell = getAvatarCell()
             }else if indexPath.row > 0 && indexPath.row <= textPropertyCells.count
             {
-                return getTextPropertyCell(indexPath.row - 1)
+                resultCell = getTextPropertyCell(indexPath.row - 1)
+            }else{
+                resultCell = tableView.dequeueReusableCellWithIdentifier(MyDetailTextPropertyCell.reuseIdentifier, forIndexPath: indexPath)
             }
-            resultCell = tableView.dequeueReusableCellWithIdentifier(MyDetailTextPropertyCell.reuseIdentifier, forIndexPath: indexPath)
-        }else if indexPath.section == 1
+        }else
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.clearCacheCellReuseId,forIndexPath: indexPath)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.clearTempDir(_:))))
-            resultCell = cell
-        }else if indexPath.section == 2
-        {
-            let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.aboutAppReuseId,forIndexPath: indexPath)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.aboutApp(_:))))
-            resultCell = cell
-        }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.exitAccountCellReuseId,forIndexPath: indexPath)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.logout(_:))))
-            resultCell = cell
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.clearCacheCellReuseId,forIndexPath: indexPath)
+                cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.clearTempDir(_:))))
+                resultCell = cell
+            }else if indexPath.row == 1{
+                let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.aboutAppReuseId,forIndexPath: indexPath)
+                cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.aboutApp(_:))))
+                resultCell = cell
+            }else{
+                
+                let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.exitAccountCellReuseId,forIndexPath: indexPath)
+                cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.logout(_:))))
+                resultCell = cell
+            }
         }
+        resultCell.preservesSuperviewLayoutMargins = false
+        resultCell.separatorInset = UIEdgeInsetsZero
+        resultCell.layoutMargins = UIEdgeInsetsZero
         return resultCell
     }
     
+    /*
     //MARK: change chat background
     func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
         sender.dismissViewControllerAnimated(true, completion: nil)
@@ -270,6 +267,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     {
         ChatImageMgrViewController.showChatImageMgrVeiwController(self)
     }
+ */
     
     //MARK: bind mobile
     func bindMobile(_:UITapGestureRecognizer)
@@ -340,106 +338,15 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
     }
     
     //MARK: Avatar
-    var avatarImageView:UIImageView!
     func getAvatarCell() -> MyDetailAvatarCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailAvatarCell.reuseIdentifier) as! MyDetailAvatarCell
-        
-        let tapCell = UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.tapAvatarCell(_:)))
-        cell.addGestureRecognizer(tapCell)
-        ServiceContainer.getService(FileService).setAvatar(cell.avatarImageView, iconFileId: myInfo.avatar)
-        let tapIcon = UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.tapAvatar(_:)))
-        cell.avatarImageView?.addGestureRecognizer(tapIcon)
-        cell.avatarImageView.userInteractionEnabled = true
-        avatarImageView = cell.avatarImageView
+        ServiceContainer.getService(FileService).setAvatar(cell.avatarImageView, iconFileId: myProfile.avatar)
+        ServiceContainer.getUserService().setUserSexImageView(cell.sexImageView, sexValue: myProfile.sex)
+        cell.nickNameLabel.text = myProfile.nickName
+        cell.accountIdLabel.text = String(format: "USER_ACCOUNT_FORMAT".localizedString(), myProfile.accountId)
+        cell.rootController = self
         return cell
-    }
-    
-    func tapAvatar(_:UITapGestureRecognizer)
-    {
-    }
-    
-    func tapAvatarCell(aTap:UITapGestureRecognizer)
-    {
-        let alert = UIAlertController(title: "CHANGE_AVATAR".localizedString(), message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "TAKE_NEW_PHOTO".localizedString(), style: .Destructive) { _ in
-            self.newPictureWithCamera()
-            })
-        alert.addAction(UIAlertAction(title:"SELECT_PHOTO".localizedString(), style: .Destructive) { _ in
-            self.selectPictureFromAlbum()
-            })
-        alert.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel){ _ in})
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    private var imagePickerController:UIImagePickerController! = UIImagePickerController()
-    {
-        didSet{
-            imagePickerController.delegate = self
-        }
-    }
-    
-    private func newPictureWithCamera()
-    {
-        imagePickerController.sourceType = .Camera
-        imagePickerController.allowsEditing = true
-        self.presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    private func selectPictureFromAlbum()
-    {
-        imagePickerController.sourceType = .PhotoLibrary
-        imagePickerController.allowsEditing = true
-        imagePickerController.delegate = self
-        self.presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    //MARK: upload avatar
-    private var taskFileMap = [String:FileAccessInfo]()
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
-    {
-        imagePickerController.dismissViewControllerAnimated(true)
-        {
-            let avatarImage = image.scaleToWidthOf(UserSettingViewController.avatarWidth, quality: UserSettingViewController.avatarQuality)
-            self.avatarImageView.image = avatarImage
-            let fService = ServiceContainer.getService(FileService)
-            let imageData = UIImageJPEGRepresentation(avatarImage,1)
-            let localPath = fService.createLocalStoreFileName(FileType.Image)
-            if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
-            {
-                fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in
-                    ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
-                    if let fk = fileKey
-                    {
-                        self.taskFileMap[taskId] = fk
-                    }
-                })
-            }else
-            {
-                self.playToast("SET_AVATAR_FAILED".localizedString())
-            }
-        }
-    }
-    
-    func taskCompleted(taskIdentifier: String, result: AnyObject!) {
-        if let fileKey = taskFileMap.removeValueForKey(taskIdentifier)
-        {
-            let uService = ServiceContainer.getUserService()
-            uService.setMyAvatar(fileKey.fileId){ (isSuc) -> Void in
-                if isSuc
-                {
-                    self.myInfo.avatar = fileKey.accessKey
-                    self.myInfo.saveModel()
-                    self.avatarImageView.image = PersistentManager.sharedInstance.getImage(fileKey.accessKey)
-                    self.playCheckMark("SET_AVATAR_SUC".localizedString())
-                }
-            }
-        }
-    }
-    
-    func taskFailed(taskIdentifier: String, result: AnyObject!) {
-        taskFileMap.removeValueForKey(taskIdentifier)
-        self.playToast("SET_AVATAR_FAILED".localizedString())
     }
     
     func aboutApp(_:UITapGestureRecognizer)
@@ -464,6 +371,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         return cell
     }
     
+    /*
     func tapTextProperty(aTap:UITapGestureRecognizer)
     {
         let cell = aTap.view as! MyDetailTextPropertyCell
@@ -497,6 +405,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         default: break
         }
     }
+ */
     
     static func showUserSettingViewController(navController:UINavigationController){
         navController.pushViewController(instanceFromStoryBoard(), animated: true)

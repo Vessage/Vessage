@@ -26,12 +26,13 @@ class UserProfileViewController: UIViewController {
                 self.accountIdLabel.text = "MOBILE_USER".localizedString()
                 self.nameLabel.text = ServiceContainer.getUserService().getUserNotedName(profile.userId)
             }
-            let sexImg = profile.sex == 0 ? "sex_middle" : profile.sex > 0 ? "sex_male" : "sex_female"
-            self.sexImageView.image = UIImage(named: sexImg)
             sexImageView.hidden = false
             avatarImageView.hidden = false
+            ServiceContainer.getUserService().setUserSexImageView(self.sexImageView, sexValue: profile.sex)
         }
     }
+    
+    @IBOutlet weak var bcgMaskView: UIView!
     
     @IBOutlet weak var sexImageView: UIImageView!{
         didSet{
@@ -73,6 +74,17 @@ class UserProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserProfileViewController.onTapView(_:))))
         ServiceContainer.getUserService().addObserver(self, selector: #selector(UserProfileViewController.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
+        bcgMaskView.hidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.bcgMaskView.hidden = true
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.bcgMaskView.hidden = false
     }
     
     func onTapAlertContainer(a:UITapGestureRecognizer) {

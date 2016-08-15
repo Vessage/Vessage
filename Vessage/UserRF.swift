@@ -42,7 +42,7 @@ class VessageUser: BahamutObject {
     
     var lastUpdatedTime:NSDate!
     
-    var sex = -10
+    var sex = 0
     
 }
 
@@ -212,6 +212,22 @@ class ChangeMainChatImageRequest: BahamutRFRequestBase {
     var image:String!{
         didSet{
             self.paramenters["image"] = image
+        }
+    }
+}
+
+class ChangeUserSexValueRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/VessageUsers/SexValue"
+    }
+    
+    var value:Int!{
+        didSet{
+            if let v = value {
+                self.paramenters["value"] = "\(v)"
+            }
         }
     }
 }

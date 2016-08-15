@@ -123,6 +123,8 @@
 		E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */; };
 		E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */; };
 		E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */; };
+		E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */; };
+		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
 		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
 		E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */; };
@@ -347,6 +349,8 @@
 		E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageExtension.swift; sourceTree = "<group>"; };
 		E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
+		E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSexValueViewController.swift; sourceTree = "<group>"; };
+		E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailAvatarCell.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
 		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
 		E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo_face_text.mp4; sourceTree = "<group>"; };
@@ -848,6 +852,8 @@
 				E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */,
 				E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */,
 				E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */,
+				E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */,
+				E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1307,6 +1313,7 @@
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
+				E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */,
 				E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */,
 				E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */,
 				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
@@ -1352,6 +1359,7 @@
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
+				E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */,
 				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
 				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,

@@ -153,6 +153,7 @@ class ConversationListCell:ConversationListCellBase{
     
     //MARK: notifications
     private func addObservers(){
+        ServiceContainer.getUserService().addObserver(self, selector: #selector(ConversationListCell.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
         ServiceContainer.getUserService().addObserver(self, selector: #selector(ConversationListCell.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onNewVessageReceived, object: nil)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(ConversationListCell.onVessageReadAndReceived(_:)), name: VessageService.onVessageRead, object: nil)
@@ -189,6 +190,16 @@ class ConversationListCell:ConversationListCellBase{
             if let g = a.userInfo?[kChatGroupValue] as? ChatGroup{
                 if ConversationService.isConversationWithChatGroup(conversation, group: g) {
                     self.updateWithChatGroup(g)
+                }
+            }
+        }
+    }
+    
+    func onUserNoteNameUpdated(a:NSNotification) {
+        if let userId = a.userInfo?[UserProfileUpdatedUserIdValue] as? String{
+            if userId == (self.originModel as? Conversation)?.chatterId {
+                if let note = a.userInfo?[UserNoteNameUpdatedValue] as? String{
+                    self.headLine = note
                 }
             }
         }

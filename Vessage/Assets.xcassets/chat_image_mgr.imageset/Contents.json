@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "video_bubble.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "chat_image_mgr.png",
       "scale" : "2x"
     },
     {

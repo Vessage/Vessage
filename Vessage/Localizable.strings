@@ -141,7 +141,7 @@ UNKNOW_BAHAMUT_CMD = "非法命令";
 BAHAMUT_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
-ACTIVITY_UPDATED_NOTIFICATION = "活动状态有更新！";
+ACTIVITY_UPDATED_NOTIFICATION = "奇趣活动有更新！";
 NEW_VMSG_NOTIFICATION = "你有新的VG消息!";
 
 REGIST_FAILED = "注册失败";
@@ -171,7 +171,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //Vege
 APP_NAME = "VG";
-VESSAGE_MOTTO = "这个夏天很有趣~";
+VESSAGE_MOTTO = "聊天";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";
@@ -195,7 +195,7 @@ NEED_SET_CHAT_BCG_MSG = "背景会在视频对讲时展示给你的朋友";
 
 UNKNOW_USER = "佚名";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
-NOTE_CONVERSATION_A_NAME = "修改当前对话的备注";
+NOTE_CONVERSATION_A_NAME = "修改联系人备注";
 CONVERSATION_NAME = "备注";
 NOTE = "备注";
 NEW_NOTE_NAME_CANT_NULL = "备注名不能为空";

@@ -137,7 +137,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UIEditTe
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "CHANGE_CHAT_BCG".localizedString()
         propertySet.propertyValue = ""
-        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changeChatBcg(_:))))
+        //textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changeChatBcg(_:))))
         
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw

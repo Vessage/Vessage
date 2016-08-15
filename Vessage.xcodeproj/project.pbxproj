@@ -106,16 +106,17 @@
 		E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */; };
 		E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */; };
 		E7933B2F1D42FF64000FCE84 /* VessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */; };
+		E79917541D60D9CF002C42C2 /* ChatImageManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */; };
 		E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79C24D91D445057006754F1 /* FaceTextImageView.swift */; };
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
 		E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC6E1D4DCDE100306A69 /* AppService.swift */; };
-		E7ABAC721D4DD3A100306A69 /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC711D4DD3A100306A69 /* UserProfileController.swift */; };
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
 		E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */; };
+		E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
 		E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */; };
 		E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */; };
 		E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */; };
@@ -329,16 +330,17 @@
 		E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageHandler.swift; sourceTree = "<group>"; };
+		E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageManageCell.swift; sourceTree = "<group>"; };
 		E79C24D91D445057006754F1 /* FaceTextImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextImageView.swift; sourceTree = "<group>"; };
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
 		E7ABAC6E1D4DCDE100306A69 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
-		E7ABAC711D4DD3A100306A69 /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileController.swift; sourceTree = "<group>"; };
 		E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageEventHandler.swift; sourceTree = "<group>"; };
 		E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueProtocal.swift; sourceTree = "<group>"; };
 		E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueHandlers.swift; sourceTree = "<group>"; };
 		E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageExtension.swift; sourceTree = "<group>"; };
+		E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
 		E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -845,7 +847,7 @@
 				E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */,
 				E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */,
 				E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */,
-				E7ABAC711D4DD3A100306A69 /* UserProfileController.swift */,
+				E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -976,6 +978,7 @@
 				E7C387F01C982F640096AF85 /* ConversationListCell.swift */,
 				E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */,
 				E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */,
+				E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */,
 			);
 			name = ConversationList;
 			sourceTree = "<group>";
@@ -1268,6 +1271,7 @@
 				E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */,
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
 				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
+				E79917541D60D9CF002C42C2 /* ChatImageManageCell.swift in Sources */,
 				E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */,
 				E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
@@ -1334,7 +1338,6 @@
 				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
-				E7ABAC721D4DD3A100306A69 /* UserProfileController.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */,
@@ -1380,6 +1383,7 @@
 				E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */,
 				E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */,
+				E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,

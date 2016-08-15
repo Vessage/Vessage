@@ -244,13 +244,13 @@
     </scenes>
     <resources>
         <image name="camera_shot" width="256" height="256"/>
-        <image name="chat_image_demo_btn" width="256" height="256"/>
+        <image name="chat_image_demo_btn" width="85" height="85"/>
         <image name="close" width="256" height="256"/>
         <image name="default_face" width="400" height="387"/>
         <image name="face" width="450" height="600"/>
         <image name="movie" width="256" height="256"/>
         <image name="record_video_cross" width="256" height="256"/>
         <image name="refreshRound" width="256" height="256"/>
-        <image name="select_chat_image" width="256" height="256"/>
+        <image name="select_chat_image" width="85" height="85"/>
     </resources>
 </document>

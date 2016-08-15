@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "crossNoRound.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "sex_male.png",
       "scale" : "2x"
     },
     {

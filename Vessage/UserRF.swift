@@ -41,6 +41,9 @@ class VessageUser: BahamutObject {
     var mobile:String!
     
     var lastUpdatedTime:NSDate!
+    
+    var sex = -10
+    
 }
 
 extension VessageUser{

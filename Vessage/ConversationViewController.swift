@@ -18,6 +18,44 @@ class ConversationViewController: UIViewController {
         return chatGroup != nil
     }
     
+    private(set) var outterNewVessageCount:Int = 0{
+        didSet{
+            var title = "\(VessageConfig.appName)"
+            var edgeInsetAdjustment:CGFloat = 0
+            if outterNewVessageCount > 99 {
+                title = "\(title)(99+)"
+                edgeInsetAdjustment = -36
+            }else if outterNewVessageCount > 9{
+                edgeInsetAdjustment = -50
+                title = "\(title)(\(outterNewVessageCount))"
+            }else if outterNewVessageCount > 0 {
+                title = "\(title)(\(outterNewVessageCount))"
+                edgeInsetAdjustment = -59
+            }else{
+                edgeInsetAdjustment = -81
+            }
+            if let backBtn = self.navigationItem.leftBarButtonItem{
+                if let btn = backBtn.customView as? UIButton{
+                    btn.setTitle(title, forState: .Normal)
+                    btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
+                    btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
+                }
+            }else{
+                let btn = UIButton(type: .Custom)
+                btn.tintColor = UIColor.themeColor
+                btn.setImage(UIImage(named: "back_item")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+                btn.setTitle(title, forState: .Normal)
+                btn.addTarget(self, action: #selector(ConversationViewController.onBackItemClick(_:)), forControlEvents: .AllTouchEvents)
+                btn.setTitleColor(UIColor.themeColor, forState: .Normal)
+                btn.frame = CGRectMake(0, 0, 100, 80)
+                btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
+                btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
+                let backBtn = UIBarButtonItem(customView: btn)
+                self.navigationItem.leftBarButtonItem = backBtn
+            }
+        }
+    }
+    
     private(set) var conversation:Conversation!
     
     private(set) var chatter:VessageUser!{
@@ -185,6 +223,7 @@ extension ConversationViewController{
         setReadingVessage()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
+        outterNewVessageCount = 0
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -230,6 +269,10 @@ extension ConversationViewController{
 
 //MARK: Actions
 extension ConversationViewController{
+    
+    func onBackItemClick(sender:AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
     @IBAction func onClickMiddleButton(sender: UIView) {
         
@@ -317,7 +360,6 @@ extension ConversationViewController{
     
     private func showBottomBar(){
         if(bottomBarContainer.hidden){
-            
             let layerOriginFrame = bottomBarContainer.layer.frame
             bottomBarContainer.layer.frame = CGRectMake(layerOriginFrame.origin.x, layerOriginFrame.origin.y + layerOriginFrame.height, layerOriginFrame.width, layerOriginFrame.height)
             bottomBarContainer.hidden = false
@@ -346,6 +388,7 @@ extension ConversationViewController{
 extension ConversationViewController{
     
     private func addObservers(){
+        userService.addObserver(self, selector: #selector(ConversationViewController.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessagesReveiced(_:)), name: VessageService.onNewVessagesReceived, object: nil)
         chatGroupService.addObserver(self, selector: #selector(ConversationViewController.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
@@ -357,6 +400,16 @@ extension ConversationViewController{
         vessageService.removeObserver(self)
         chatGroupService.removeObserver(self)
         removeSendVessageObservers()
+    }
+    
+    func onUserNoteNameUpdated(a:NSNotification) {
+        if let userId = a.userInfo?[UserProfileUpdatedUserIdValue] as? String{
+            if userId == self.conversation.chatterId {
+                if let note = a.userInfo?[UserNoteNameUpdatedValue] as? String{
+                    self.controllerTitle = note
+                }
+            }
+        }
     }
     
     func onChatGroupUpdated(a:NSNotification){
@@ -376,14 +429,18 @@ extension ConversationViewController{
     }
     
     func onNewVessagesReveiced(a:NSNotification){
+        var otherConversationVessageCount = 0
         if let msgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
             msgs.forEach({ (msg) in
                 if msg.sender == self.conversation?.chatterId{
                     self.playVessageManager.onVessageReceived(msg)
                     self.recordVessageManager.onVessageReceived(msg)
+                }else{
+                    otherConversationVessageCount += 1
                 }
             })
         }
+        outterNewVessageCount += otherConversationVessageCount
     }
 }
 

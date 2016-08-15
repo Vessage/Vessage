@@ -15,13 +15,16 @@ extension ServiceContainer{
     }
 }
 
-let UserProfileUpdatedUserValue = "UserProfileUpdatedUserIdValue"
+let UserProfileUpdatedUserIdValue = "UserProfileUpdatedUserIdValue"
+let UserNoteNameUpdatedValue = "UserNoteNameUpdatedValue"
+let UserProfileUpdatedUserValue = "UserProfileUpdatedUserValue"
 let UserChatImagesUpdatedValue = "UserChatImagesUpdatedValue"
 let USER_LATER_SET_CHAT_BCG_KEY = "SET_CHAT_BCG_LATER"
 
 //MARK:UserService
 class UserService:NSNotificationCenter, ServiceProtocol {
     static let userProfileUpdated = "userProfileUpdated"
+    static let userNoteNameUpdated = "userNoteNameUpdated"
     static let userChatImagesUpdated = "userChatImagesUpdated"
     static let myChatImagesUpdated = "myChatImagesUpdated"
     @objc static var ServiceName:String {return "User Service"}
@@ -276,6 +279,7 @@ extension UserService{
     func setUserNoteName(userId:String,noteName:String){
         userNotedNames[userId] = noteName
         UserSetting.setUserValue("UserNotedNames", value: userNotedNames)
+        self.postNotificationName(UserService.userNoteNameUpdated, object: self, userInfo: [UserProfileUpdatedUserIdValue:userId,UserNoteNameUpdatedValue:noteName])
     }
 }
 

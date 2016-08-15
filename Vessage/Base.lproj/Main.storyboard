@@ -237,8 +237,58 @@
                                     </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatImageManageCell" rowHeight="67" id="McZ-Aw-ZfF" customClass="ChatImageManageCell" customModule="Vessage" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="267" width="414" height="67"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="McZ-Aw-ZfF" id="RjB-WW-LK2">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的聊天表情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-T2-sni">
+                                            <rect key="frame" x="64" y="23" width="102" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="xz3-wT-QtQ">
+                                            <rect key="frame" x="374" y="17" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="Hdi-47-MtV"/>
+                                                <constraint firstAttribute="width" constant="32" id="pjl-oP-cTg"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_image_mgr" translatesAutoresizingMaskIntoConstraints="NO" id="xwp-Ov-Axd">
+                                            <rect key="frame" x="8" y="9" width="48" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="48" id="9Pk-e8-qr5"/>
+                                                <constraint firstAttribute="height" constant="48" id="VNv-wp-aec"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="6"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="HBw-T2-sni" firstAttribute="leading" secondItem="xwp-Ov-Axd" secondAttribute="trailing" constant="8" id="Wow-Td-J3F"/>
+                                        <constraint firstItem="xz3-wT-QtQ" firstAttribute="centerY" secondItem="RjB-WW-LK2" secondAttribute="centerY" id="XEU-tK-grf"/>
+                                        <constraint firstItem="HBw-T2-sni" firstAttribute="centerY" secondItem="RjB-WW-LK2" secondAttribute="centerY" id="cFw-pE-M42"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="xz3-wT-QtQ" secondAttribute="trailing" id="e6O-e4-QMU"/>
+                                        <constraint firstItem="HBw-T2-sni" firstAttribute="leading" secondItem="RjB-WW-LK2" secondAttribute="leadingMargin" id="fgg-4d-vLJ"/>
+                                        <constraint firstItem="xwp-Ov-Axd" firstAttribute="leading" secondItem="RjB-WW-LK2" secondAttribute="leadingMargin" id="iIw-di-AJ5"/>
+                                        <constraint firstItem="xwp-Ov-Axd" firstAttribute="centerY" secondItem="RjB-WW-LK2" secondAttribute="centerY" id="wKs-Rk-LU6"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="fgg-4d-vLJ"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListCell" rowHeight="56" id="Szw-pL-qT1" customClass="ConversationListCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="267" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="334" width="414" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Szw-pL-qT1" id="eWr-qG-EjH">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="55"/>
@@ -381,6 +431,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chat_image_mgr" width="128" height="128"/>
         <image name="contacts" width="120" height="120"/>
         <image name="conversation" width="24" height="24"/>
         <image name="defaultAvatar" width="128" height="128"/>

@@ -248,7 +248,8 @@ class ConversationListController: UITableViewController {
         if self.isSearching{
             return 1
         }else{
-            return 2
+            //change bcg + new chat + conversations
+            return 3
         }
     }
     
@@ -257,9 +258,12 @@ class ConversationListController: UITableViewController {
         if isSearching{
             return searchResult.count
         }else{
-            if section == 0{
+            switch section {
+            case 0:
+                return 1
+            case 1:
                 return 2
-            }else{
+            default:
                 return conversationService.conversations.count
             }
         }
@@ -276,7 +280,11 @@ class ConversationListController: UITableViewController {
     
     private func normalTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
         if indexPath.section == 0{
-            if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(ChatImageManageCell.reuseId, forIndexPath: indexPath) as! ConversationListCellBase
+            cell.rootController = self
+            return cell
+        }else if indexPath.section == 1{
+            if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
                 if conversationService.conversations.count > 0{
                     cell.titleLabel.text = "CONTACTS".localizedString()
@@ -286,10 +294,11 @@ class ConversationListController: UITableViewController {
                 cell.rootController = self
                 return cell
             }else{
-                let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListGroupChatCell.reuseId, forIndexPath: indexPath) as! ConversationListGroupChatCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListGroupChatCell.reuseId, forIndexPath: indexPath) as! ConversationListCellBase
                 cell.rootController = self
                 return cell
             }
+            
             
         }else{
             let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
@@ -308,6 +317,7 @@ class ConversationListController: UITableViewController {
         }else{
             cell = normalTableView(tableView, indexPath: indexPath)
         }
+        cell.selected = false
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsetsZero
         cell.layoutMargins = UIEdgeInsetsZero
@@ -316,6 +326,7 @@ class ConversationListController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ConversationListCellBase{
+            cell.selected = false
             cell.onCellClicked()
         }
     }

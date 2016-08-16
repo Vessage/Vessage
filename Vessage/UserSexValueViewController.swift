@@ -9,21 +9,30 @@
 import Foundation
 
 typealias SaveSexValueHandler = (newValue:Int)->Void
+let maxSexValue:Float = 100
+let minSexValue:Float = -100
 
 //MARK:UserSexValueViewController
 class UserSexValueViewController: UIViewController {
     
     @IBOutlet weak var bcgMaskView: UIView!
+    private var originValue = 0
     private(set) var sexValue = 0{
         didSet{
             refresh()
         }
     }
+    @IBOutlet weak var saveButton: UIButton!
     
     var saveSexValueHandler:SaveSexValueHandler?
     
     
-    @IBOutlet weak var sexValueSlider: UISlider!
+    @IBOutlet weak var sexValueSlider: UISlider!{
+        didSet{
+            sexValueSlider.minimumValue = minSexValue
+            sexValueSlider.maximumValue = maxSexValue
+        }
+    }
     @IBOutlet weak var sexValueImageView: UIImageView!
     
     override func viewDidLoad() {
@@ -44,9 +53,16 @@ class UserSexValueViewController: UIViewController {
         self.bcgMaskView.hidden = true
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private func refresh(){
         sexValueSlider?.value = NSNumber(integer: sexValue).floatValue
         ServiceContainer.getUserService().setUserSexImageView(self.sexValueImageView, sexValue: sexValue)
+        saveButton?.enabled = originValue != sexValue
     }
     
     @IBAction func onSlideChanged(sender: AnyObject) {
@@ -66,6 +82,7 @@ class UserSexValueViewController: UIViewController {
     
     static func showUserProfileViewController(vc:UIViewController, sexValue:Int,handler:SaveSexValueHandler){
         let controller = instanceFromStoryBoard("User", identifier: "UserSexValueViewController") as! UserSexValueViewController
+        controller.originValue = sexValue
         controller.providesPresentationContextTransitionStyle = true
         controller.definesPresentationContext = true
         controller.modalPresentationStyle = .OverCurrentContext
@@ -78,15 +95,17 @@ class UserSexValueViewController: UIViewController {
 
 extension UserService{
     func setUserSexImageView(imageView:UIImageView?,sexValue:Int) {
+        let sexImgMinAlpha:CGFloat = 0.1
+        
         if sexValue == 0 {
             imageView?.image = UIImage(named: "sex_middle")
             imageView?.alpha = 1
         }else if sexValue > 0{
             imageView?.image = UIImage(named: "sex_male")
-            imageView?.alpha = 0.5 + CGFloat(sexValue) / 100
+            imageView?.alpha = sexImgMinAlpha + (1 - sexImgMinAlpha) * CGFloat(sexValue) / CGFloat(maxSexValue)
         }else if sexValue < 0{
             imageView?.image = UIImage(named: "sex_female")
-            imageView?.alpha = 0.5 + CGFloat(-1 * sexValue) / 100
+            imageView?.alpha = sexImgMinAlpha + (1 - sexImgMinAlpha) * CGFloat(sexValue) / CGFloat(minSexValue)
         }
     }
 }

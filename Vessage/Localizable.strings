@@ -31,7 +31,7 @@ RefreshHeaderPullingText = "松开立即刷新";
 RefreshHeaderRefreshingText = "加载中...";
 MJRefreshAutoFooterIdleText = "点击或上拉加载更多";
 MJRefreshAutoFooterRefreshingText = "正在加载...";
-RefreshAutoFooterNoMoreDataText = "全部加载完毕！";
+RefreshAutoFooterNoMoreDataText = "全部加载完毕!";
 
 //Common
 YES = "是";
@@ -91,7 +91,7 @@ MSG_IS_TOO_LONG = "超过限制的长度了";
 
 SENDING_FILM = "视频发送中";
 NO_FILM_SELECTED = "需要录制或者选择一个视频!";
-SEND_FILM_SUC = "上传视频成功！";
+SEND_FILM_SUC = "上传视频成功!";
 
 SENDING_FILE = "文件传送中";
 SEND_FILE_SUC = "传送文件成功";
@@ -109,8 +109,8 @@ OPERATE_ERROR = "操作失败，请检查网络";
 REGISTING = "注册中";
 REGIST_SUC_TITLE = "注册成功";
 REGIST_SUC_MSG = "请记住您的账号:\n%@";
-USER_NAME_TIPS = "用户名需要2到18位数字或中英文字符！";
-PASSWORD_TIPS = "密码为6到18个字符！";
+USER_NAME_TIPS = "用户名需要2到18位数字或中英文字符!";
+PASSWORD_TIPS = "密码为6到18个字符!";
 
 
 //UserSettingViewController
@@ -141,8 +141,8 @@ UNKNOW_BAHAMUT_CMD = "非法命令";
 BAHAMUT_CMD_TIMEOUT = "命令已经失效";
 
 //notification format
-ACTIVITY_UPDATED_NOTIFICATION = "奇趣活动有更新！";
-NEW_VMSG_NOTIFICATION = "你有新的VG消息!";
+ACTIVITY_UPDATED_NOTIFICATION = "奇趣活动有更新!";
+NEW_VMSG_NOTIFICATION = "你收到新的VG消息!";
 
 REGIST_FAILED = "注册失败";
 REGIST_SUC = "注册成功";
@@ -171,7 +171,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //Vege
 APP_NAME = "VG";
-VESSAGE_MOTTO = "聊天";
+VESSAGE_MOTTO = "只是一种新的聊天方式";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";
@@ -185,13 +185,13 @@ PEOPLE_NO_MOBILE = "没有手机号";
 
 OPEN_MOBILE_CONVERSATION_FAIL = "打开对话出错，请检查网络>_<";
 
-ASK_REMOVE_CONVERSATION_TITLE = "确定移除对话？";
+ASK_REMOVE_CONVERSATION_TITLE = "确定移除对话?";
 NO_SUCH_CONVERSATION = "没有找到该对话";
 
 NO_SUCH_USER = "找不到该用户>_<!";
 
-NEED_SET_CHAT_BCG_TITLE = "设置对讲背景";
-NEED_SET_CHAT_BCG_MSG = "背景会在视频对讲时展示给你的朋友";
+NEED_SET_CHAT_BCG_TITLE = "设置对讲表情";
+NEED_SET_CHAT_BCG_MSG = "表情会在视频对讲时展示给好友";
 
 UNKNOW_USER = "佚名";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
@@ -202,8 +202,8 @@ NEW_NOTE_NAME_CANT_NULL = "备注名不能为空";
 SAVE_NOTE_NAME_SUC = "修改成功";
 SAVE_NOTE_NAME_ERROR = "修改出错";
 CONTINUE = "继续";
-CLICK_NEXT_MESSAGE_TIPS_TITLE = "跳过未读的消息？";
-CLICK_NEXT_MESSAGE_TIPS = "跳过的消息将会被删除且不能恢复，确定要跳过？";
+CLICK_NEXT_MESSAGE_TIPS_TITLE = "跳过未读的消息?";
+CLICK_NEXT_MESSAGE_TIPS = "跳过的消息将会被删除且不能恢复，确定要跳过?";
 
 CAMERA_NOT_INITED = "相机没有初始化";
 
@@ -212,12 +212,12 @@ BIND_MOBILE = "手机";
 NOT_SET = "未设置";
 
 CANCEL_RECORD = "取消对讲";
-CONFIRM_SEND_VESSAGE_TITLE = "发送视频对讲消息？";
+CONFIRM_SEND_VESSAGE_TITLE = "发送视频对讲消息?";
 VESSAGE_RECEIVER = "收件人:%@";
 SAVE_VIDEO_FAILED = "处理数据出错>_<!";
 
 EDIT_SEX_VALUE_ERROR = "操作失败>_<!";
-EDIT_SEX_VALUE_SUC = "更改成功！";
+EDIT_SEX_VALUE_SUC = "更改成功!";
 
 //MARK: Send Vessage
 POST_VESSAGE_ERROR = "发送消息失败";
@@ -225,7 +225,7 @@ GET_FILE_KEY_ERROR = "获取消息文件头出错";
 UPLOAD_FILE_ERROR = "上传消息文件出错";
 POST_FINISH_SEND_VESSAGE_ERROR = "确认消息发送出错";
 VESSAGE_PUSH_IN_QUEUE = "正在发送消息";
-RETRY_SEND_VESSAGE_TITLE = "传送出错，重试？";
+RETRY_SEND_VESSAGE_TITLE = "传送出错，重试?";
 VESSAGE_SENDING = "正在传送";
 VESSAGE_SENDED = "已发送";
 VESSAGE_SEND_FAIL = "发送出错";
@@ -233,8 +233,8 @@ VESSAGE_SEND_FAIL = "发送出错";
 REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
 REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开VG的短信权限";
 
-SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta吧？";
-NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧！\n%@";
+SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta吧?";
+NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧!\n%@";
 
 CONTACTS = "与手机好友聊天";
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
@@ -255,8 +255,8 @@ CONVERSATION_USERS = "正在对话的好友";
 VSG_READED = "已读";
 VSG_UNREADED = "未读";
 
-TELL_FRIENDS = "扩大你的颜值圈";
-TELL_FRIENDS_ALERT_MSG = "邀请更多高颜值朋友玩VG";
+TELL_FRIENDS = "邀请Ta";
+TELL_FRIENDS_ALERT_MSG = "和你体验新的聊天方式";
 TELL_FRIENDS_IV = "邀请好朋友";
 TELL_FRIENDS_ALERT_MSG_IV = "邀请你的好朋友来VG聊天";
 WECHAT_SESSION = "微信好友";
@@ -268,15 +268,15 @@ WELCOME_ALERT_TITLE = "VG聊天";
 OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "向未注册的手机号发出消息，好友用手机注册后可以收到你的消息~";
 GROUP_CHAT = "一起聊天吧";
-WX_SHARE_TITLE_FORMAT = "记得加我VG号:%@";
+WX_SHARE_TITLE_FORMAT = "我的VG号:%@";
 UNKNOW_VESSAGE_TYPE = "未知的消息类型>_<\n请升级到最新版本查看这条消息!";
-NO_VESSAGE_TIPS = "点聊天按钮马上开始对讲";
+NO_VESSAGE_TIPS = "没有消息\n\n点击按钮开始与Ta聊天";
 
 EXTRA_SERVICE_DISPLAY_NAME = "奇趣";
 
-CHAT_BCG_SETED_TITLE = "聊天背景已设置";
+CHAT_BCG_SETED_TITLE = "对讲表情已设置";
 CHAT_BCG_SETED_MSG = "马上开始视频对讲";
-CHAT_BCG_NOT_SET_TITLE = "下次设置聊天背景";
+CHAT_BCG_NOT_SET_TITLE = "下次设置视频对讲表情";
 
 //MARK:Group
 NEW_GROUP_CHAT = "群聊";
@@ -293,12 +293,12 @@ USER_ALREADY_IN_GROUP = "该好友已经在群组里了";
 ADD_USER_TO_GROUP_SUCCESS = "好友已加入群聊";
 ADD_USER_TO_GROUP_ERROR = "拉好友入群出错";
 NOT_IN_CHAT_GROUP = "已退出群聊...";
-EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组？";
+EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组?";
 YOU_EXITED_GROUP_CHAT = "你已退出群组";
 EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
 GROUP_CHAT_AT_LEASE_2_PEOPLE = "至少选择两个好友哦~";
 NO_SUCH_GROUP = "群组不存在";
 
 //MARK: Face Text Chat
-U_MUST_SET_CHAT_IMAGES = "需要设置表情图才能给好友发表情消息哦!";
-NO_CHAT_IMAGES = "还没有个人聊天表情图";
+U_MUST_SET_CHAT_IMAGES = "需要设置颜文字表情才能给Ta发消息哦!";
+NO_CHAT_IMAGES = "还没有设置颜文字表情";

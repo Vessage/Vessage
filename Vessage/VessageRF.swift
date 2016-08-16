@@ -142,6 +142,10 @@ class SendNewVessageToUserRequest: SendNewVessageRequestBase {
         self.api = "/Vessages/ForUser"
     }
     
+    override func getMaxRequestCount() -> Int32 {
+        return SendNewVessageRequestBase.maxRequestNoLimitCount
+    }
+    
     var receiverId:String!{
         didSet{
             if String.isNullOrWhiteSpace(receiverId) == false{

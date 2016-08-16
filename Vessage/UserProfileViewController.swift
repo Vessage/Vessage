@@ -74,6 +74,7 @@ class UserProfileViewController: UIViewController {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserProfileViewController.onTapView(_:))))
         ServiceContainer.getUserService().addObserver(self, selector: #selector(UserProfileViewController.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
+        ServiceContainer.getUserService().addObserver(self, selector: #selector(UserProfileViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         bcgMaskView.hidden = true
     }
     
@@ -108,6 +109,20 @@ class UserProfileViewController: UIViewController {
         }
     }
     
+    func onUserProfileUpdated(a:NSNotification) {
+        if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
+            if user.userId == profile.userId {
+                self.profile = user
+            }
+        }
+    }
+    
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     static func showUserProfileViewController(vc:UIViewController, userProfile:VessageUser){
         let controller = instanceFromStoryBoard("User", identifier: "UserProfileViewController") as! UserProfileViewController
         controller.providesPresentationContextTransitionStyle = true
@@ -115,6 +130,7 @@ class UserProfileViewController: UIViewController {
         controller.modalPresentationStyle = .OverCurrentContext
         vc.presentViewController(controller, animated: true) { 
             controller.profile = userProfile
+            ServiceContainer.getUserService().fetchLatestUserProfile(userProfile)
         }
     }
 }

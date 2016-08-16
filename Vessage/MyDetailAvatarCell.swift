@@ -52,7 +52,9 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
             ServiceContainer.getUserService().setUserSexValue(newValue){ suc in
                 hud.hide(true)
                 if suc{
-                    self.rootController.playCheckMark("EDIT_SEX_VALUE_SUC".localizedString())
+                    self.rootController.playCheckMark("EDIT_SEX_VALUE_SUC".localizedString()){
+                        ServiceContainer.getUserService().setUserSexImageView(self.sexImageView, sexValue: newValue)
+                    }
                 }else{
                     self.rootController.playCrossMark("EDIT_SEX_VALUE_ERROR".localizedString())
                 }

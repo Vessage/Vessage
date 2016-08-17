@@ -153,7 +153,7 @@ class ConversationListController: UITableViewController {
     
     //MARK: notifications
     func onTimerRefreshList(_:AnyObject?) {
-        self.tableView.reloadData()
+        self.conversationService.clearTimeUpConversations()
     }
     
     func onServicesWillLogout(a:NSNotification) {
@@ -167,6 +167,11 @@ class ConversationListController: UITableViewController {
     }
     
     func onConversationListUpdated(a:NSNotification){
+        if conversationService.timeupedConversations.count > 0 {
+            let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
+            conversationService.removeTimeupedConversations()
+            self.playToast(msg)
+        }
         self.tableView.reloadData()
     }
     
@@ -332,13 +337,7 @@ class ConversationListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if isSearching{
-            return 56
-        }else if indexPath.section == 0{
-            return 60
-        }else{
-            return 56
-        }
+        return 60
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

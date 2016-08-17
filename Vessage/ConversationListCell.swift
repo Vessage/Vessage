@@ -21,6 +21,21 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
+    @IBOutlet weak var sendingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var timeupProgressView: UIProgressView!
+    
+    @IBOutlet weak var retrySendTaskButton: UIButton!{
+        didSet{
+            retrySendTaskButton.hidden = true
+        }
+    }
+    
+    @IBOutlet weak var cancelSendButton: UIButton!{
+        didSet{
+            cancelSendButton.hidden = true
+        }
+    }
+    
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
             badgeLabel.hidden = true
@@ -28,7 +43,6 @@ class ConversationListCell:ConversationListCellBase{
             badgeLabel.layer.cornerRadius = 10
         }
     }
-    
     @IBOutlet weak var avatarView: UIImageView!{
         didSet{
             avatarView.clipsToBounds = true
@@ -41,7 +55,7 @@ class ConversationListCell:ConversationListCellBase{
     var conversationListCellHandler:ConversationListCellHandler!
     var originModel:AnyObject?{
         didSet{
-            
+            timeupProgressView?.hidden = true
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
             }else if let searchResult = originModel as? SearchResultModel{
@@ -94,10 +108,19 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
+    //MARK: Send Task
+    @IBAction func retrySend(sender: AnyObject) {
+        
+    }
+    
+    @IBAction func cancelSend(sender: AnyObject) {
+        
+    }
+    
     //MARK: update actions
     private func updateWithConversation(conversation:Conversation){
+        
         if let chatterId = conversation.chatterId{
-            
             if conversation.isGroup {
                 if let group = self.rootController.groupService.getChatGroup(chatterId) {
                     updateWithChatGroup(group)
@@ -118,9 +141,17 @@ class ConversationListCell:ConversationListCellBase{
                     self.rootController.userService.fetchUserProfile(chatterId)
                 }
             }
-            
         }
-        self.subLine = conversation.lastMessageTime.dateTimeOfAccurateString.toFriendlyString()
+        if let date = conversation.lastMessageTime?.dateTimeOfAccurateString {
+            self.subLine = date.toFriendlyString()
+            self.timeupProgressView?.hidden = false
+            if let p = conversation.getConversationTimeUpProgressLeft(){
+                self.timeupProgressView?.progress = p
+            }
+        }else{
+            self.subLine = "UNKNOW_TIME".localizedString()
+            self.timeupProgressView?.hidden = true
+        }
     }
     
     private func updateWithChatGroup(group:ChatGroup){

@@ -18,10 +18,27 @@ class Conversation:BahamutObject
     var isGroup = false
     var chatterId:String!
     var chatterMobile:String!
-    //var noteName:String!
     var lastMessageTime:String!
 }
 
+extension Conversation{
+    
+    func getConversationTimeUpMinutesLeft() -> Double?{
+        if let date = lastMessageTime?.dateTimeOfAccurateString {
+            return ConversationMaxTimeUpMinutes - date.totalMinutesSinceNow.doubleValue * -1
+        }
+        return nil
+    }
+    
+    func getConversationTimeUpProgressLeft() -> Float? {
+        if let minLeft = getConversationTimeUpMinutesLeft() {
+            return Float(minLeft / ConversationMaxTimeUpMinutes)
+        }
+        return nil
+    }
+}
+
+let ConversationMaxTimeUpMinutes = 14.0 * 24 * 60
 let ConversationUpdatedValue = "ConversationUpdatedValue"
 
 //MARK: ServiceContainer DI
@@ -35,6 +52,7 @@ extension ServiceContainer{
 class ConversationService:NSNotificationCenter, ServiceProtocol {
     static let conversationListUpdated = "conversationListUpdated"
     static let conversationUpdated = "conversationUpdated"
+    
     @objc static var ServiceName:String {return "Conversation Service"}
     
     @objc func appStartInit(appName: String) {
@@ -52,6 +70,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     private(set) var conversations = [Conversation]()
+    private(set) var timeupedConversations = [Conversation]()
     
     func indexOfConversationOfUser(user:VessageUser) -> Int?{
         let updatedIndex = conversations.indexOf { (c) -> Bool in
@@ -181,9 +200,35 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     private func refreshConversations(){
         conversations.removeAll()
-        conversations.appendContentsOf(PersistentManager.sharedInstance.getAllModel(Conversation))
+        timeupedConversations.removeAll()
+        var cons = PersistentManager.sharedInstance.getAllModel(Conversation)
+        let timeUpCons = cons.removeElement { c -> Bool in
+            if let p = c.getConversationTimeUpMinutesLeft(){
+                return p < 1
+            }
+            return true
+        }
+        timeupedConversations.appendContentsOf(timeUpCons)
+        PersistentManager.sharedInstance.removeModels(timeUpCons)
+        conversations.appendContentsOf(cons)
         sortConversationList()
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+    }
+    
+    func clearTimeUpConversations() {
+        let timeUpCons = conversations.removeElement { c -> Bool in
+            if let p = c.getConversationTimeUpMinutesLeft(){
+                return p < 1
+            }
+            return true
+        }
+        timeupedConversations.appendContentsOf(timeUpCons)
+        PersistentManager.sharedInstance.removeModels(timeUpCons)
+        self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+    }
+    
+    func removeTimeupedConversations() {
+        timeupedConversations.removeAll()
     }
     
     private func sortConversationList(){

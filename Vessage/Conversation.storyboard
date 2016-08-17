@@ -240,7 +240,7 @@
                     <connections>
                         <outlet property="backgroundImage" destination="1wm-WO-uDe" id="llJ-9G-1nh"/>
                         <outlet property="badgeLabel" destination="Efl-QC-gjZ" id="bOW-Wr-CCa"/>
-                        <outlet property="bottomBar" destination="cBx-c6-Kmj" id="IXy-Hi-Fee"/>
+                        <outlet property="bottomBar" destination="cBx-c6-Kmj" id="nGO-EQ-a4B"/>
                         <outlet property="bottomBarContainer" destination="jtm-a8-MtZ" id="ogE-kt-3HC"/>
                         <outlet property="conversationLeftTopLabel" destination="xNx-lk-PEP" id="gag-ny-JeT"/>
                         <outlet property="conversationRightBottomLabel" destination="JH5-p9-HH6" id="vzw-5K-dPD"/>

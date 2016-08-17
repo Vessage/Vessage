@@ -16,38 +16,7 @@ class FaceTextChatBubble: UIView {
             messageContentTextView?.text = messageContent
         }
     }
-    /*
-    private var beginPoint:CGPoint!
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.beginPoint = touches.first?.locationInView(self)
-        super.touchesBegan(touches, withEvent: event)
-        
-        
-    }
-    
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesMoved(touches, withEvent: event)
-        if let bp = beginPoint {
-            if let pt = touches.first?.locationInView(self){
-                var newFrame = self.frame
-                newFrame.origin.x += pt.x - bp.x
-                newFrame.origin.y += pt.y - bp.y
-                self.frame = newFrame
-            }
-        }
-    }
-    
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        self.beginPoint = nil
-    }
-    
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
-        self.beginPoint = nil
-    }
-    */
     @IBOutlet weak var messageContentTextView: UILabel!{
         didSet{
             messageContentTextView.userInteractionEnabled = false
@@ -86,6 +55,16 @@ class FaceTextImageView: UIView {
     private(set) var imageLoaded:Bool = false
     let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
     
+    #if DEBUG
+    private var faceMask:UIView!
+    private func initFaceMask(){
+        faceMask = UIView()
+        faceMask.backgroundColor = UIColor.clearColor()
+        faceMask.layer.borderColor = UIColor.orangeColor().CGColor
+        faceMask.layer.borderWidth = 1
+    }
+    #endif
+    
     func initContainer(container:UIView) {
         self.container = container
         self.imageView = UIImageView()
@@ -103,6 +82,10 @@ class FaceTextImageView: UIView {
         self.subviews.forEach{$0.removeFromSuperview()}
         self.addSubview(self.imageView)
         self.addSubview(self.chatBubble)
+        
+        #if DEBUG
+            initFaceMask()
+        #endif
         
         self.chatBubble.hidden = true
     }
@@ -178,13 +161,20 @@ class FaceTextImageView: UIView {
     }
     
     func adjustChatBubble() {
+        
         if let cgi = self.imageView.image!.CGImage{
+            
             let img = CIImage(CGImage: cgi, options: nil)
             let faces = self.faceDetector.featuresInImage(img)
-            if let face = faces.first as? CIFaceFeature{
+            if let face = faces.last as? CIFaceFeature{
                 
                 let previewBox = self.imageView.bounds
                 let clap = self.imageView.image!
+                
+                #if DEBUG
+                    print("Preview ImageView Frame:\(previewBox)")
+                    print("Clap Size:\(clap.size)")
+                #endif
                 
                 var faceRect = face.bounds
                 // scale coordinates so they fit in the preview box, which may be scaled
@@ -196,12 +186,36 @@ class FaceTextImageView: UIView {
                 faceRect.origin.x *= scale;
                 faceRect.origin.y *= scale;
                 
-                //mirror
+                let imageCenter = CGSizeMake(clap.size.width * scale / 2, clap.size.height * scale / 2)
+                let preivewCenter = CGSizeMake(previewBox.width / 2, previewBox.height / 2)
+                
+                let delta = CGSizeMake(preivewCenter.width - imageCenter.width, preivewCenter.height - imageCenter.height)
+                
+                #if DEBUG
+                    print("imageCenter:\(imageCenter)")
+                    print("preivewCenter:\(preivewCenter)")
+                    print("delta:\(delta)")
+                #endif
+                
+                //adjust move center
                 var rect = faceRect
-                rect = CGRectMake(previewBox.size.width - faceRect.origin.x - faceRect.size.width, previewBox.size.height - faceRect.size.height - faceRect.origin.y, faceRect.size.width, faceRect.size.height);
-                let x = rect.origin.x + rect.size.width / 2 - self.imageView.frame.width / 2
-                let y = rect.origin.y + rect.size.height - 10
-                self.setChatBubblePosition(CGPointMake(x, y))
+                rect.origin.x += delta.width
+                rect.origin.y += delta.height
+                
+                //rotate 180'
+                rect = CGRectMake(rect.origin.x, previewBox.height - rect.origin.y - rect.height, rect.width, rect.height)
+                
+                #if DEBUG
+                    self.container.addSubview(faceMask)
+                    faceMask.frame = rect
+                #endif
+                
+                let x = rect.origin.x + rect.size.width * 0.5
+                let y = rect.origin.y + rect.size.height
+                
+                let mouthPos = CGPointMake(x, y)
+                
+                self.setChatBubblePosition(mouthPos)
                 return
             }
         }
@@ -209,15 +223,15 @@ class FaceTextImageView: UIView {
     }
     
     private func setChatBubbleCenter(){
-        let center = CGPointMake((self.frame.width - self.chatBubble.frame.width) / 2, (self.frame.height + 80) / 2)
+        let center = CGPointMake(self.imageView.frame.width / 2, self.imageView.frame.height * 0.6)
         self.setChatBubblePosition(center)
     }
     
     func setChatBubblePosition(position:CGPoint) {
-        let width = self.imageView.frame.width + 20
+        let width = self.imageView.frame.width + 10
         let str = self.chatBubble.messageContent!
         let strRect = str.boundingRectWithSize(CGSizeMake(width, CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:self.chatBubble.messageContentTextView.font], context: nil)
-        self.chatBubble.frame = CGRectMake(position.x,position.y,width,strRect.height + strRect.height / 14 * 42 + 30)
+        self.chatBubble.frame = CGRectMake(position.x - width / 2,position.y,width,strRect.height + strRect.height / 14 * 42 + 30)
         self.chatBubble.messageContentTextView.frame = self.chatBubble.bounds
         self.chatBubbleAnimateShow()
     }

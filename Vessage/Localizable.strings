@@ -219,6 +219,8 @@ SAVE_VIDEO_FAILED = "处理数据出错>_<!";
 EDIT_SEX_VALUE_ERROR = "操作失败>_<!";
 EDIT_SEX_VALUE_SUC = "更改成功!";
 
+X_TIMEUPED_CONVERSATION_REMOVED = "%@个对话湮没在时间的长河里";
+
 //MARK: Send Vessage
 POST_VESSAGE_ERROR = "发送消息失败";
 GET_FILE_KEY_ERROR = "获取消息文件头出错";

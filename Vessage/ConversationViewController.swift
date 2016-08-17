@@ -20,38 +20,14 @@ class ConversationViewController: UIViewController {
     
     private(set) var outterNewVessageCount:Int = 0{
         didSet{
-            var title = "\(VessageConfig.appName)"
-            var edgeInsetAdjustment:CGFloat = 0
-            if outterNewVessageCount > 99 {
-                title = "\(title)(99+)"
-                edgeInsetAdjustment = -36
-            }else if outterNewVessageCount > 9{
-                edgeInsetAdjustment = -50
-                title = "\(title)(\(outterNewVessageCount))"
-            }else if outterNewVessageCount > 0 {
-                title = "\(title)(\(outterNewVessageCount))"
-                edgeInsetAdjustment = -59
-            }else{
-                edgeInsetAdjustment = -81
-            }
-            if let backBtn = self.navigationItem.leftBarButtonItem{
-                if let btn = backBtn.customView as? UIButton{
-                    btn.setTitle(title, forState: .Normal)
-                    btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
-                    btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
+            if let backBtn = self.navigationController?.navigationBar.backItem?.backBarButtonItem {
+                var title = "\(VessageConfig.appName)"
+                if outterNewVessageCount > 99 {
+                    title = "\(title)(99+)"
+                }else if outterNewVessageCount > 0 {
+                    title = "\(title)(\(outterNewVessageCount))"
                 }
-            }else{
-                let btn = UIButton(type: .Custom)
-                btn.tintColor = UIColor.themeColor
-                btn.setImage(UIImage(named: "back_item")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-                btn.setTitle(title, forState: .Normal)
-                btn.addTarget(self, action: #selector(ConversationViewController.onBackItemClick(_:)), forControlEvents: .AllTouchEvents)
-                btn.setTitleColor(UIColor.themeColor, forState: .Normal)
-                btn.frame = CGRectMake(0, 0, 100, 80)
-                btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
-                btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: edgeInsetAdjustment, bottom: 0, right: 0)
-                let backBtn = UIBarButtonItem(customView: btn)
-                self.navigationItem.leftBarButtonItem = backBtn
+                backBtn.title = title
             }
         }
     }
@@ -115,7 +91,7 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet weak var middleButton: UIButton!
     
-    @IBOutlet weak var bottomBar: UIVisualEffectView!{
+    @IBOutlet weak var bottomBar: UIView!{
         didSet{
             bottomBar.hidden = true
         }

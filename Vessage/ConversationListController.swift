@@ -74,6 +74,35 @@ class ConversationListController: UITableViewController {
         }
     }
     
+    private var timeUpTipsView:UILabel!{
+        didSet{
+            timeUpTipsView.clipsToBounds = true
+            timeUpTipsView.layer.cornerRadius = 6
+            timeUpTipsView.textColor = UIColor.orangeColor()
+            timeUpTipsView.textAlignment = .Center
+            timeUpTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
+        }
+    }
+    
+    func tryShowConversationsTimeUpTips() {
+        if UIApplication.sharedApplication().applicationState == .Active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
+            if conversationService.timeupedConversations.count > 0 {
+                if timeUpTipsView == nil {
+                    timeUpTipsView = UILabel()
+                }
+                let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
+                conversationService.removeTimeupedConversations()
+                self.timeUpTipsView.text = msg
+                self.timeUpTipsView.sizeToFit()
+                self.timeUpTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
+                self.view.addSubview(self.timeUpTipsView)
+                UIAnimationHelper.flashView(self.timeUpTipsView, duration: 0.3, autoStop: true, stopAfterMs: 3800){
+                    self.timeUpTipsView.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +124,11 @@ class ConversationListController: UITableViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tryShowConversationsTimeUpTips()
     }
     
     deinit{
@@ -167,11 +201,7 @@ class ConversationListController: UITableViewController {
     }
     
     func onConversationListUpdated(a:NSNotification){
-        if conversationService.timeupedConversations.count > 0 {
-            let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
-            conversationService.removeTimeupedConversations()
-            self.playToast(msg)
-        }
+        self.tryShowConversationsTimeUpTips()
         self.tableView.reloadData()
     }
     

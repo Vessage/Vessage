@@ -204,7 +204,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         var cons = PersistentManager.sharedInstance.getAllModel(Conversation)
         let timeUpCons = cons.removeElement { c -> Bool in
             if let p = c.getConversationTimeUpMinutesLeft(){
-                return p < 1
+                return p < 3
             }
             return true
         }
@@ -218,7 +218,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     func clearTimeUpConversations() {
         let timeUpCons = conversations.removeElement { c -> Bool in
             if let p = c.getConversationTimeUpMinutesLeft(){
-                return p < 1
+                return p < 3
             }
             return true
         }

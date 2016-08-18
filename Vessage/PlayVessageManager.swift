@@ -52,6 +52,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         rightButton.setImage(UIImage(named: "playNext"), forState: .Highlighted)
         recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
         recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
+        rightButton.hidden = notReadVessages.count <= 1
     }
     
     override func onReleaseManager() {

@@ -250,7 +250,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="修改密码" id="GHl-op-N3i">
                         <barButtonItem key="rightBarButtonItem" image="check_blue" id="yYq-fg-CR2">
-                            <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                            <inset key="imageInsets" minX="8" minY="10" maxX="8" maxY="6"/>
                             <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="changePassword:" destination="4bm-2S-Fgg" id="f6O-bq-Gzl"/>

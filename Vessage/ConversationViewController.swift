@@ -621,13 +621,13 @@ extension ConversationViewController{
 extension ConversationViewController:HandleBahamutCmdDelegate{
     func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
         switch method {
-        case "showInviteFriendsAlert":
-            ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+        case "showInviteFriendsAlert":ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
         case "showSetupChatImagesController":showChatImagesMrgController(1)
         case "showSetupChatBackgroundController":showChatImagesMrgController(0)
         case "playNextButtonAnimation":playNextButtonAnimation()
         case "playFaceTextButtonAnimation":playFaceTextButtonAnimation()
         case "playVideoChatButtonAnimation":playVideoChatButtonAnimation()
+        case "showUserGuide":SetupChatImagesController.showSetupViewController(self)
         default:
             break
         }

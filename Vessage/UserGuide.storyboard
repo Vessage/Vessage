@@ -42,15 +42,16 @@
                                     <action selector="validateMobile:" destination="Iwc-kq-ANA" eventType="touchUpInside" id="h8i-We-fPf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请至少邀请一个朋友和你聊天才好玩哦~" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWI-OY-b5P">
-                                <rect key="frame" x="20" y="403" width="374" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="和朋友用新的方式聊天会有不同的体验哦~" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWI-OY-b5P">
+                                <rect key="frame" x="50" y="403" width="314" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gU2-zu-BOT">
-                                <rect key="frame" x="110" y="686" width="195" height="30"/>
-                                <state key="normal" title="邀请朋友后，点这里开始聊天">
+                                <rect key="frame" x="108" y="682" width="198" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="邀请朋友后，点这里继续">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -61,13 +62,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="EWI-OY-b5P" secondAttribute="trailing" id="UOB-Xp-SQ5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EWI-OY-b5P" secondAttribute="trailing" constant="30" id="UOB-Xp-SQ5"/>
                             <constraint firstItem="EWI-OY-b5P" firstAttribute="top" secondItem="5v3-wX-2Ai" secondAttribute="bottom" constant="8" symbolic="YES" id="Uk0-hS-Dke"/>
                             <constraint firstItem="5v3-wX-2Ai" firstAttribute="centerX" secondItem="ake-oB-NGI" secondAttribute="centerX" id="X1h-Nd-mHh"/>
                             <constraint firstItem="ake-oB-NGI" firstAttribute="centerY" secondItem="xY1-1J-Rd1" secondAttribute="centerY" multiplier="6/7" id="X94-T5-GJq"/>
                             <constraint firstItem="O3O-xm-2kI" firstAttribute="top" secondItem="gU2-zu-BOT" secondAttribute="bottom" constant="20" id="XVn-EC-V2q"/>
                             <constraint firstItem="ake-oB-NGI" firstAttribute="centerX" secondItem="xY1-1J-Rd1" secondAttribute="centerX" id="b0N-YW-H5T"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="EWI-OY-b5P" secondAttribute="leading" id="dPl-Ln-nUN"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="EWI-OY-b5P" secondAttribute="leading" constant="-30" id="dPl-Ln-nUN"/>
                             <constraint firstItem="5v3-wX-2Ai" firstAttribute="top" secondItem="ake-oB-NGI" secondAttribute="bottom" constant="8" symbolic="YES" id="kQ9-fT-MRN"/>
                             <constraint firstItem="gU2-zu-BOT" firstAttribute="centerX" secondItem="xY1-1J-Rd1" secondAttribute="centerX" id="uE3-oH-inQ"/>
                         </constraints>
@@ -147,10 +148,10 @@
             </objects>
             <point key="canvasLocation" x="426" y="1239"/>
         </scene>
-        <!--Setup Chat Bcg Image Controller-->
+        <!--Setup Chat Images Controller-->
         <scene sceneID="4RN-Dh-Za2">
             <objects>
-                <viewController storyboardIdentifier="SetupChatBcgImageController" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dE9-hh-AEN" customClass="SetupChatBcgImageController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupChatImagesController" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dE9-hh-AEN" customClass="SetupChatImagesController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tm3-qf-att"/>
                         <viewControllerLayoutGuide type="bottom" id="eHb-rn-Vfo"/>
@@ -186,9 +187,9 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKW-Kl-EIJ">
-                                <rect key="frame" x="177" y="686" width="60" height="30"/>
-                                <state key="normal" title="以后设置">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKW-Kl-EIJ">
+                                <rect key="frame" x="189" y="682" width="36" height="34"/>
+                                <state key="normal" title="继续">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

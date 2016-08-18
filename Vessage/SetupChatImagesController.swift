@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //MARK: SetupChatBcgImageController
-class SetupChatBcgImageController: UIViewController,ChatBackgroundPickerControllerDelegate {
+class SetupChatImagesController: UIViewController,ChatBackgroundPickerControllerDelegate {
     
     @IBAction func openCamera(sender: AnyObject) {
         ChatBackgroundPickerController.showPickerController(self,delegate: self)
@@ -34,7 +34,7 @@ class SetupChatBcgImageController: UIViewController,ChatBackgroundPickerControll
     
     static func showSetupViewController(vc:UIViewController)
     {
-        let controller = instanceFromStoryBoard("UserGuide", identifier: "SetupChatBcgImageController") as! SetupChatBcgImageController
+        let controller = instanceFromStoryBoard("UserGuide", identifier: "SetupChatImagesController") as! SetupChatImagesController
         let nvc = UINavigationController(rootViewController: controller)
         nvc.navigationBarHidden = true
         vc.presentViewController(nvc, animated: true) { () -> Void in

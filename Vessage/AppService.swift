@@ -36,6 +36,7 @@ class AppService: NSNotificationCenter,ServiceProtocol
         if buildVersion < VessageConfig.buildVersion {
             let req = AppFirstLaunchRequest()
             req.buildVersion = VessageConfig.buildVersion
+            req.oldBuildVersion = buildVersion
             req.platform = "ios"
             BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
                 if result.isSuccess{

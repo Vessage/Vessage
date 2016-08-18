@@ -58,10 +58,6 @@ class ConversationViewControllerProxy: NSObject {
         return rootController.middleButton
     }
     
-    var cancelRecordButton: UIButton!{
-        return rootController.rightButton
-    }
-    
     var groupFaceImageViewContainer:UIView{
         return rootController.groupFaceContainer
     }

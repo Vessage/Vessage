@@ -55,7 +55,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Property Title" id="Dm0-mm-emb">
                         <barButtonItem key="rightBarButtonItem" image="check_blue" id="cgl-wU-IdO">
-                            <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                            <inset key="imageInsets" minX="8" minY="10" maxX="8" maxY="6"/>
                             <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="save:" destination="tyS-aP-qD2" id="bf2-mq-3j6"/>

@@ -493,6 +493,7 @@ extension ConversationListController:UISearchBarDelegate
 }
 
 //MARK: Welcome
+/*
 extension ConversationListController{
     private func tryShowUserGuide() -> Bool{
         if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
@@ -503,7 +504,7 @@ extension ConversationListController{
                 return false
             }
         }else{
-            SetupChatBcgImageController.showSetupViewController(self)
+            SetupChatImagesController.showSetupViewController(self)
             return true
         }
     }
@@ -521,3 +522,4 @@ extension ConversationListController{
         }
     }
 }
+ */

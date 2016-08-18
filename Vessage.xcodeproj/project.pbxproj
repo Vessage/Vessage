@@ -150,7 +150,7 @@
 		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
 		E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */; };
 		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
-		E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */; };
+		E7DBF2EC1C9E94D600850A45 /* SetupChatImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DBF2EB1C9E94D600850A45 /* SetupChatImagesController.swift */; };
 		E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */; };
 		E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */; };
 		E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */; };
@@ -221,8 +221,11 @@
 
 /* Begin PBXFileReference section */
 		1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F7BE726A24BC27FDC3E8A87 /* Pods-Faceboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Faceboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-Faceboard/Pods-Faceboard.release.xcconfig"; sourceTree = "<group>"; };
 		A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.debug.xcconfig"; sourceTree = "<group>"; };
+		B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Faceboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
+		CC1E1CDDEB7ADF7CC49DE252 /* Pods-Faceboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Faceboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Faceboard/Pods-Faceboard.debug.xcconfig"; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
 		E708AB3E1C86CAA50071104E /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +326,9 @@
 		E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperMessageDetailViewController.swift; sourceTree = "<group>"; };
 		E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesRF.swift; sourceTree = "<group>"; };
+		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
+		E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YUCIHighPassSkinSmoothing.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/YUCIHighPassSkinSmoothing/YUCIHighPassSkinSmoothing.framework"; sourceTree = "<group>"; };
+		E73CFF891D655E39002A63C6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -376,7 +382,7 @@
 		E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEditTextPropertyViewController.swift; sourceTree = "<group>"; };
 		E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupChatBcgImageController.swift; sourceTree = "<group>"; };
+		E7DBF2EB1C9E94D600850A45 /* SetupChatImagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupChatImagesController.swift; sourceTree = "<group>"; };
 		E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBackgroundPickerController.swift; sourceTree = "<group>"; };
 		E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListContactCell.swift; sourceTree = "<group>"; };
 		E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutFilmView.swift; sourceTree = "<group>"; };
@@ -461,6 +467,8 @@
 			children = (
 				A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */,
 				C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */,
+				CC1E1CDDEB7ADF7CC49DE252 /* Pods-Faceboard.debug.xcconfig */,
+				8F7BE726A24BC27FDC3E8A87 /* Pods-Faceboard.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -468,6 +476,9 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E73CFF891D655E39002A63C6 /* CoreMedia.framework */,
+				E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */,
+				E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */,
 				E70CD4DF1D371682003779B5 /* CoreTelephony.framework */,
 				E70CD4DD1D371665003779B5 /* Security.framework */,
 				E7F2166A1CFBD40C00447DA9 /* libsqlite3.0.tbd */,
@@ -483,6 +494,7 @@
 				E75A70401C8C8FB30029F0BD /* AddressBook.framework */,
 				E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */,
 				1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */,
+				B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -993,7 +1005,7 @@
 			isa = PBXGroup;
 			children = (
 				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
-				E7DBF2EB1C9E94D600850A45 /* SetupChatBcgImageController.swift */,
+				E7DBF2EB1C9E94D600850A45 /* SetupChatImagesController.swift */,
 				E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */,
 			);
 			name = UserGuide;
@@ -1331,7 +1343,7 @@
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
-				E7DBF2EC1C9E94D600850A45 /* SetupChatBcgImageController.swift in Sources */,
+				E7DBF2EC1C9E94D600850A45 /* SetupChatImagesController.swift in Sources */,
 				E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */,
 				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,

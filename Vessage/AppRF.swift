@@ -21,6 +21,12 @@ class AppRequestBase: BahamutRFRequestBase {
             self.paramenters["buildVersion"] = "\(buildVersion)"
         }
     }
+    
+    var oldBuildVersion:Int!{
+        didSet{
+            self.paramenters["oldBuildVersion"] = "\(oldBuildVersion)"
+        }
+    }
 }
 
 class AppFirstLaunchRequest: AppRequestBase {

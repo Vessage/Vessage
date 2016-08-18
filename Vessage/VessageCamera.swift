@@ -8,7 +8,6 @@
 
 import Foundation
 import AVFoundation
-import AssetsLibrary
 import YUCIHighPassSkinSmoothing
 
 //MARK:VessageCamera Delegate

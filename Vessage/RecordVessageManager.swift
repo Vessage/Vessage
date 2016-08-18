@@ -18,18 +18,9 @@ class RecordVessageManager: ConversationViewControllerProxy {
     private var userClickSend = false
     private var recording = false{
         didSet{
-            if cancelRecordButton != nil{
-                cancelRecordButton.hidden = !recording
-            }
-            if recordButton != nil{
-                updateRecordButton()
-            }
-            if recordingProgress != nil{
-                updateRecordingProgress()
-            }
-            if previewRectView != nil{
-                previewRectView.hidden = !recording
-            }
+            updateRecordButton()
+            updateRecordingProgress()
+            previewRectView?.hidden = !recording
         }
     }
     private let maxRecordTime:CGFloat = 16
@@ -56,6 +47,7 @@ extension RecordVessageManager{
         imageChatButton.hidden = true
         rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Normal)
         rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Highlighted)
+        rightButton.hidden = false
         groupAvatarManager.renderImageViews()
         groupAvatarManager.refreshFaces()
     }
@@ -385,17 +377,17 @@ extension RecordVessageManager:VessageCameraDelegate{
     private func updateRecordingProgress(){
         let maxAngle:CGFloat = 360
         let angle = Int(recordingTime / maxRecordTime * maxAngle)
-        self.recordingProgress.angle = angle
-        self.recordingProgress.hidden = !recording
+        self.recordingProgress?.angle = angle
+        self.recordingProgress?.hidden = !recording
     }
     
     private func updateRecordButton(){
         if recording{
-            recordButton.setImage(UIImage(named: "record_video_check"), forState: .Normal)
-            recordButton.setImage(UIImage(named: "record_video_check"), forState: .Highlighted)
+            recordButton?.setImage(UIImage(named: "record_video_check"), forState: .Normal)
+            recordButton?.setImage(UIImage(named: "record_video_check"), forState: .Highlighted)
         }else{
-            recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
-            recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
+            recordButton?.setImage(UIImage(named: "chat"), forState: .Normal)
+            recordButton?.setImage(UIImage(named: "chat"), forState: .Highlighted)
         }
     }
 }

@@ -54,6 +54,8 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
             print("maxVideoPlayer" + "\n" + BahamutCmd.generateBahamutCmdUrl("maxVideoPlayer") + "\n")
             print("minVideoPlayer" + "\n" + BahamutCmd.generateBahamutCmdUrl("minVideoPlayer") + "\n")
             
+            print("showUserGuide" + "\n" + BahamutCmd.generateBahamutCmdUrl("showUserGuide") + "\n")
+            
             print("---------------------------------------------------------")
         #endif
     }

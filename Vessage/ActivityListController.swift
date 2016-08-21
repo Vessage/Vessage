@@ -13,7 +13,7 @@ class ActivityListCell: UITableViewCell {
         didSet{
             badgeValue = 0
             nameLabel.text = activityInfo.cellTitle
-            iconImageView.image = UIImage(named: activityInfo.cellIconName)
+            iconImageView.image = UIImage(named: activityInfo.cellIconName) ?? UIImage(named: "favorite")
             refreshCellBadge()
         }
     }

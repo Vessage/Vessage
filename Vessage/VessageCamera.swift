@@ -86,6 +86,12 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         cameraInited = true
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private func initFilter(){
         #if RELEASE
         filter = CIFilter(name: "YUCIHighPassSkinSmoothing",withInputParameters: ["inputAmount":0.7])
@@ -192,9 +198,13 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     func closeCamera(){
         if cameraInited == true{
-            captureSession.stopRunning()
+            cameraInited = false
+            self.rootViewController = nil
+            captureSession?.stopRunning()
+            captureSession = nil
             NSNotificationCenter.defaultCenter().removeObserver(self)
         }
+        
     }
     
     // MARK: - Video Records
@@ -224,11 +234,11 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     func resumeCaptureSession(){
         detectedFaces = false
-        captureSession.startRunning()
+        captureSession?.startRunning()
     }
     
     func pauseCaptureSession(){
-        captureSession.stopRunning()
+        captureSession?.stopRunning()
     }
     
     func saveRecordedVideo(){

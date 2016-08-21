@@ -52,11 +52,9 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
 
     private func initMyChatImages(){
         myChatImages.removeAll()
-        if let images = userService.myChatImages{
-            images.forEach({ (ci) in
-                myChatImages.updateValue(ci, forKey: ci.imageType)
-            })
-        }
+        userService.myChatImages.forEach({ (ci) in
+            myChatImages.updateValue(ci, forKey: ci.imageType)
+        })
     }
     
     override func viewWillAppear(animated: Bool) {

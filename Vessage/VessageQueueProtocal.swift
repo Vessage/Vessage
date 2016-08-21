@@ -8,34 +8,27 @@
 
 import Foundation
 
-protocol SendVessageQueueStepHandler {
-    func initHandler(queue:VessageQueue)
-    func releaseHandler()
-    func doTask(vessageQueue:VessageQueue,task:SendVessageQueueTask)
-}
-
-class SendVessageQueueTask:BahamutObject{
-    override func getObjectUniqueIdName() -> String {
-        return "taskId"
+class SendVessageQueueStepHandler : BahamutTaskQueueStepHandler{
+    
+    func initHandler(queue: BahamutTaskQueue) {
+        initHandler(queue as! VessageQueue)
     }
     
-    var taskId:String!
+    func doTask(queue: BahamutTaskQueue, task: BahamutQueueTask) {
+        doTask(queue as! VessageQueue, task: task as! SendVessageQueueTask)
+    }
+ 
+    func releaseHandler() {
+        
+    }
+    func initHandler(queue:VessageQueue){}
+    func doTask(vessageQueue:VessageQueue,task:SendVessageQueueTask){}
+ 
+}
+
+class SendVessageQueueTask:BahamutQueueTask{
+    
     var filePath:String!
     var receiverId:String!
     var vessage:Vessage!
-    
-    var steps:[String]!
-    var currentStep = 0
-    
-    func getCurrentStep() -> String? {
-        return steps?[currentStep]
-    }
-    
-    func isFinish() -> Bool {
-        return currentStep == steps.count
-    }
 }
-
-let kSendVessageQueueTaskValue = "TaskValue"
-let kSendVessageQueueTaskMessageValue = "TaskMessageValue"
-let kSendVessageQueueTaskProgressValue = "TaskMessageValue"

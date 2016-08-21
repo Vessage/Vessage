@@ -35,7 +35,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private let getNearUserIntervalHours = 2.0
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
-    private(set) var myChatImages:[ChatImage]!
+    private(set) var myChatImages = [ChatImage]()
     private(set) var activeUsers = [VessageUser]()
     private(set) var nearUsers = [VessageUser]()
     
@@ -87,7 +87,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private func prepareServiceAndSetReady(){
         self.registUserDeviceToken(VessageSetting.deviceToken)
         self.getActiveUsers()
-        self.myChatImages = PersistentManager.sharedInstance.getModel(UserChatImages.self, idValue: self.myProfile.userId)?.chatImages
+        if let images = PersistentManager.sharedInstance.getModel(UserChatImages.self, idValue: self.myProfile.userId)?.chatImages{
+            self.myChatImages = images
+        }
         self.fetchUserChatImages(self.myProfile.userId)
         self.setServiceReady()
     }

@@ -22,10 +22,7 @@ class SendVessageTaskSteps {
 
 class PostVessageHandler :SendVessageQueueStepHandler {
     static let stepKey = "PostVessage"
-    func initHandler(queue:VessageQueue) {}
-    func releaseHandler() {}
-    
-    func doTask(vessageQueue:VessageQueue,task: SendVessageQueueTask) {
+    override func doTask(vessageQueue:VessageQueue,task: SendVessageQueueTask) {
         ServiceContainer.getVessageService().sendVessageToUser(task.receiverId, vessage: task.vessage){ vessageId in
             if let vsgId = vessageId{
                 task.vessage.vessageId = vsgId
@@ -42,13 +39,11 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     static let stepKey = "SendAliOSSFile"
     private var uploadDict = [String:SendVessageQueueTask]()
     
-    func initHandler(queue:VessageQueue) {}
-    
-    func releaseHandler() {
+    override func releaseHandler() {
         uploadDict.removeAll()
     }
     
-    func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
+    override func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
         ServiceContainer.getService(FileService).sendFileToAliOSS(task.filePath, type: .Video) { (uploadTaskId, fileKey) -> Void in
             if fileKey != nil{
                 task.vessage.fileId = fileKey.fileId
@@ -87,9 +82,8 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
 
 class FinishNormalVessageHandler: SendVessageQueueStepHandler {
     static let stepKey = "FinishNormalVessage"
-    func initHandler(queue: VessageQueue) {}
-    func releaseHandler() {}
-    func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
+    
+    override func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
         ServiceContainer.getVessageService().finishSendVessage(task.vessage.vessageId) { (finished, sendVessageResultModel) in
             if finished{
                 vessageQueue.nextStep(task)
@@ -98,15 +92,13 @@ class FinishNormalVessageHandler: SendVessageQueueStepHandler {
             }
         }
     }
+ 
 }
 
 class FinishFileVessageHandler: SendVessageQueueStepHandler {
     static let stepKey = "FinishFileVessage"
-    func initHandler(queue:VessageQueue) {}
     
-    func releaseHandler() {}
-    
-    func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
+    override func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
         ServiceContainer.getVessageService().finishSendVessage(task.vessage.vessageId, fileId: task.vessage.fileId){ finished,resultModel in
             if finished{
                 vessageQueue.nextStep(task)

@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Setup Nice Face View Controller-->
         <scene sceneID="ddc-wN-So2">
             <objects>
-                <viewController id="Kv5-Nh-jCI" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupNiceFaceViewController" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kv5-Nh-jCI" customClass="SetupNiceFaceViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gYq-Sv-zXF"/>
                         <viewControllerLayoutGuide type="bottom" id="Mlc-P2-jtE"/>
@@ -18,10 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nVx-Np-0rA">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N05-SZ-Amu">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B9E-my-Gci">
                                 <rect key="frame" x="20" y="28" width="36" height="36"/>
                                 <constraints>
@@ -29,6 +28,9 @@
                                     <constraint firstAttribute="height" constant="36" id="JLR-pt-1fU"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="record_video_cross"/>
+                                <connections>
+                                    <action selector="onCloseClick:" destination="Kv5-Nh-jCI" eventType="touchUpInside" id="vv6-p5-qBD"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxc-Uo-759">
                                 <rect key="frame" x="20" y="667" width="42" height="42"/>
@@ -37,6 +39,9 @@
                                     <constraint firstAttribute="height" constant="42" id="xuK-ar-bCS"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="select_chat_image"/>
+                                <connections>
+                                    <action selector="onSelectPicClick:" destination="Kv5-Nh-jCI" eventType="touchUpInside" id="bHp-Jj-Uyd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bOu-QW-Fal">
                                 <rect key="frame" x="20" y="667" width="42" height="42"/>
@@ -45,6 +50,9 @@
                                     <constraint firstAttribute="height" constant="42" id="aNx-Ns-rKn"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="shot_refresh"/>
+                                <connections>
+                                    <action selector="onRetakePicClick:" destination="Kv5-Nh-jCI" eventType="touchUpInside" id="J90-l9-7Q5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-bA-iqv">
                                 <rect key="frame" x="179" y="660" width="56" height="56"/>
@@ -53,6 +61,9 @@
                                     <constraint firstAttribute="height" constant="56" id="eeo-xz-QrO"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="camera_shot"/>
+                                <connections>
+                                    <action selector="onShotClick:" destination="Kv5-Nh-jCI" eventType="touchUpInside" id="gs8-Zu-Kb2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="on6-Yu-3YR">
                                 <rect key="frame" x="352" y="667" width="42" height="42"/>
@@ -61,24 +72,27 @@
                                     <constraint firstAttribute="width" constant="42" id="NWu-cX-lKs"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="record_video_check"/>
+                                <connections>
+                                    <action selector="onAcceptPicClick:" destination="Kv5-Nh-jCI" eventType="touchUpInside" id="KZB-d9-tKp"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="B9E-my-Gci" firstAttribute="leading" secondItem="WDx-J2-H55" secondAttribute="leadingMargin" id="3Mt-Xx-i5Y"/>
+                            <constraint firstItem="N05-SZ-Amu" firstAttribute="centerY" secondItem="WDx-J2-H55" secondAttribute="centerY" id="6PV-LE-qEh"/>
                             <constraint firstItem="bOu-QW-Fal" firstAttribute="leading" secondItem="WDx-J2-H55" secondAttribute="leadingMargin" id="6xv-wY-CRu"/>
-                            <constraint firstItem="nVx-Np-0rA" firstAttribute="centerY" secondItem="WDx-J2-H55" secondAttribute="centerY" id="HFB-HX-g1e"/>
                             <constraint firstItem="bOu-QW-Fal" firstAttribute="centerY" secondItem="8bC-bA-iqv" secondAttribute="centerY" id="LTC-dw-yxp"/>
-                            <constraint firstItem="nVx-Np-0rA" firstAttribute="height" secondItem="WDx-J2-H55" secondAttribute="height" id="MtM-QF-A6O"/>
                             <constraint firstItem="on6-Yu-3YR" firstAttribute="centerY" secondItem="8bC-bA-iqv" secondAttribute="centerY" id="N8T-AW-ebB"/>
-                            <constraint firstItem="nVx-Np-0rA" firstAttribute="centerX" secondItem="WDx-J2-H55" secondAttribute="centerX" id="NCT-40-WS8"/>
                             <constraint firstItem="bOu-QW-Fal" firstAttribute="top" secondItem="Xxc-Uo-759" secondAttribute="bottom" constant="8" symbolic="YES" id="UQy-uW-vDU"/>
+                            <constraint firstItem="N05-SZ-Amu" firstAttribute="height" secondItem="WDx-J2-H55" secondAttribute="height" id="aXa-If-ysU"/>
                             <constraint firstItem="Xxc-Uo-759" firstAttribute="centerX" secondItem="bOu-QW-Fal" secondAttribute="centerX" id="dRF-7O-xUj"/>
-                            <constraint firstItem="nVx-Np-0rA" firstAttribute="width" secondItem="WDx-J2-H55" secondAttribute="width" id="gbe-aV-rRP"/>
+                            <constraint firstItem="N05-SZ-Amu" firstAttribute="centerX" secondItem="WDx-J2-H55" secondAttribute="centerX" id="hup-Jy-KnO"/>
                             <constraint firstItem="8bC-bA-iqv" firstAttribute="centerX" secondItem="WDx-J2-H55" secondAttribute="centerX" id="kY5-Jf-mgu"/>
                             <constraint firstItem="Mlc-P2-jtE" firstAttribute="top" secondItem="8bC-bA-iqv" secondAttribute="bottom" constant="20" id="lMr-9D-63x"/>
                             <constraint firstItem="B9E-my-Gci" firstAttribute="top" secondItem="gYq-Sv-zXF" secondAttribute="bottom" constant="8" symbolic="YES" id="lRy-t3-7Zb"/>
                             <constraint firstItem="Xxc-Uo-759" firstAttribute="centerY" secondItem="bOu-QW-Fal" secondAttribute="centerY" id="nms-qv-bMI"/>
+                            <constraint firstItem="N05-SZ-Amu" firstAttribute="width" secondItem="WDx-J2-H55" secondAttribute="width" id="w1F-zA-qEH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="on6-Yu-3YR" secondAttribute="trailing" id="yRC-JE-svh"/>
                         </constraints>
                         <variation key="default">
@@ -88,6 +102,14 @@
                         </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="acceptPicButton" destination="on6-Yu-3YR" id="kcE-9R-ChH"/>
+                        <outlet property="closeButton" destination="B9E-my-Gci" id="zEp-kt-qnk"/>
+                        <outlet property="previewView" destination="N05-SZ-Amu" id="RJY-lL-Wxn"/>
+                        <outlet property="retakePicButton" destination="bOu-QW-Fal" id="uhT-m5-UjZ"/>
+                        <outlet property="selectPicButton" destination="Xxc-Uo-759" id="rxq-fr-Lp4"/>
+                        <outlet property="shotButton" destination="8bC-bA-iqv" id="iSv-MY-b5a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TOv-PH-F2s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

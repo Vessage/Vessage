@@ -473,9 +473,9 @@ extension ConversationViewController{
     
     func onVessageSending(a:NSNotification){
         
-        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+        if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
-                if let persent = a.userInfo?[kSendVessageQueueTaskProgressValue] as? Float{
+                if let persent = a.userInfo?[kBahamutQueueTaskProgressValue] as? Float{
                     self.progressView.hidden = false
                     self.progressView.setProgress(persent, animated: true)
                 }
@@ -485,11 +485,11 @@ extension ConversationViewController{
     
     func onVessageSendError(a:NSNotification){
         
-        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+        if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
                 self.progressView.hidden = true
                 self.controllerTitle = "VESSAGE_SEND_FAIL".localizedString()
-                if let msg = a.userInfo?[kSendVessageQueueTaskMessageValue] as? String{
+                if let msg = a.userInfo?[kBahamutQueueTaskMessageValue] as? String{
                     retrySendTask(task, errorMessage: msg)
                 }
             }
@@ -510,7 +510,7 @@ extension ConversationViewController{
     
     func onVessageSended(a:NSNotification){
         
-        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+        if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
                 self.controllerTitle = "VESSAGE_SENDED".localizedString()
                 NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)

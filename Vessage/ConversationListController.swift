@@ -177,7 +177,7 @@ class ConversationListController: UITableViewController {
     }
     
     func onVessageSended(a:NSNotification) {
-        if let task = a.userInfo?[kSendVessageQueueTaskValue] as? SendVessageQueueTask{
+        if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             conversationService.setConversationNewestModified(task.receiverId)
         }
     }

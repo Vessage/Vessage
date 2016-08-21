@@ -114,19 +114,6 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         textPropertyCells.removeAll()
         var propertySet = UIEditTextPropertySet()
         
-        /*
-        propertySet.propertyIdentifier = InfoIds.nickName
-        propertySet.propertyLabel = "NICK".localizedString()
-        propertySet.propertyValue = myProfile.nickName
-        textPropertyCells.append(MyDetailCellModel(propertySet: propertySet, editable: true, selector: #selector(UserSettingViewController.tapTextProperty(_:))))
-        
-        propertySet = UIEditTextPropertySet()
-        propertySet.propertyIdentifier = InfoIds.changePsw
-        propertySet.propertyLabel = "CHANGE_CHAT_BCG".localizedString()
-        propertySet.propertyValue = ""
-        textPropertyCells.append(MyDetailCellModel(propertySet:propertySet,editable:true, selector: #selector(UserSettingViewController.changeChatBcg(_:))))
-        */
-        
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "CHANGE_PSW".localizedString()

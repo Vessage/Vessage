@@ -81,14 +81,12 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     //MARK: actions
     
     func tryShowImageChatInputView(){
-        if let myChatImages = userService.myChatImages{
-            if myChatImages.count > 0{
-                self.imageChatInputResponderTextFiled.becomeFirstResponder()
-                self.imageChatInputView.inputTextField.becomeFirstResponder()
-                return
-            }
+        if userService.myChatImages.count > 0{
+            self.imageChatInputResponderTextFiled.becomeFirstResponder()
+            self.imageChatInputView.inputTextField.becomeFirstResponder()
+        }else{
+            showNoChatImagesAlert()
         }
-        showNoChatImagesAlert()
     }
     
     private func showChatImageBoard() {
@@ -102,8 +100,8 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         self.view.addSubview(self.chatImageBoardSourceView)
         
         if let ppvc = self.chatImageBoardController.popoverPresentationController{
-            if let myChatImages = userService.myChatImages{
-                let lineCount = CGFloat(myChatImages.count > 4 ? 4 : myChatImages.count)
+            if userService.myChatImages.count > 0{
+                let lineCount = CGFloat(userService.myChatImages.count > 4 ? 4 : userService.myChatImages.count)
                 self.chatImageBoardController.preferredContentSize = CGSizeMake(lineCount * (72) + (lineCount - 1) * 3 + 12, 112)
                 ppvc.sourceView = self.chatImageBoardSourceView
                 ppvc.sourceRect = self.chatImageBoardSourceView.bounds

@@ -116,6 +116,12 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     //MARK:notifications
     
     //MARK: UIImagePickerControllerDelegate
@@ -173,6 +179,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
     @IBAction func closeRecordView(sender: AnyObject) {
         camera.cancelRecord()
         camera.closeCamera()
+        self.camera = nil
         self.dismissViewControllerAnimated(false) { () -> Void in
             if let handler = self.delegate?.chatBackgroundPickerSetImageCancel{
                 handler(self)

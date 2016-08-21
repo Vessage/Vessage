@@ -45,17 +45,15 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
     
     private func reloadChatImages(){
         chatImages.removeAll()
-        if let myChatImages = ServiceContainer.getUserService().myChatImages{
-            var cimages = myChatImages.messArrayUp()
-            defaultImageTypes.forEach({ (dict) in
-                if let t = dict["type"]{
-                    if let index = (cimages.indexOf{$0.imageType == t}){
-                        self.chatImages.append(cimages.removeAtIndex(index))
-                    }
+        var cimages = ServiceContainer.getUserService().myChatImages.messArrayUp()
+        defaultImageTypes.forEach({ (dict) in
+            if let t = dict["type"]{
+                if let index = (cimages.indexOf{$0.imageType == t}){
+                    self.chatImages.append(cimages.removeAtIndex(index))
                 }
-            })
-            chatImages.appendContentsOf(cimages)
-        }
+            }
+        })
+        chatImages.appendContentsOf(cimages)
         self.collectionView.reloadData()
     }
     

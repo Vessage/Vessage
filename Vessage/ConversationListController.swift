@@ -9,34 +9,13 @@
 import UIKit
 import MJRefresh
 
-//MARK: SearchResultModel
-class SearchResultModel{
-    var keyword:String!
-    var conversation:Conversation!
-    var user:VessageUser!
-    var activeUser:Bool = false
-    var mobile:String!
-}
-
-//MARK: ConversationListCellBase
-class ConversationListCellBase:UITableViewCell{
-    weak var rootController:ConversationListController!
-    
-    func onCellClicked(){
-        
-    }
-    
-    deinit{
-        rootController = nil
-        #if DEBUG
-            print("Deinited:ConversationListCellBase")
-        #endif
-    }
-}
-
 //MARK: ConversationListController
 class ConversationListController: UITableViewController {
 
+    static let chatImageMgrSection = 0
+    static let newConversationSection = 1
+    static let conversationSection = 2
+    
     let conversationService = ServiceContainer.getConversationService()
     let vessageService = ServiceContainer.getVessageService()
     let userService = ServiceContainer.getUserService()
@@ -44,14 +23,15 @@ class ConversationListController: UITableViewController {
     private var refreshListTimer:NSTimer!
     
     //MARK: search property
-    private var searchResult = [SearchResultModel](){
+    var searchResult = [SearchResultModel](){
         didSet{
             if isSearching{
                 tableView.reloadData()
             }
         }
     }
-    private var isSearching:Bool = false{
+    
+    var isSearching:Bool = false{
         didSet{
             if tableView != nil{
                 tableView.reloadData()
@@ -67,6 +47,7 @@ class ConversationListController: UITableViewController {
             self.navigationItem.rightBarButtonItem?.enabled = !isSearching
         }
     }
+    
     @IBOutlet weak var searchBar: UISearchBar!{
         didSet{
             searchBar.showsCancelButton = false
@@ -81,25 +62,6 @@ class ConversationListController: UITableViewController {
             timeUpTipsView.textColor = UIColor.orangeColor()
             timeUpTipsView.textAlignment = .Center
             timeUpTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
-        }
-    }
-    
-    func tryShowConversationsTimeUpTips() {
-        if UIApplication.sharedApplication().applicationState == .Active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
-            if conversationService.timeupedConversations.count > 0 {
-                if timeUpTipsView == nil {
-                    timeUpTipsView = UILabel()
-                }
-                let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
-                conversationService.removeTimeupedConversations()
-                self.timeUpTipsView.text = msg
-                self.timeUpTipsView.sizeToFit()
-                self.timeUpTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
-                self.view.addSubview(self.timeUpTipsView)
-                UIAnimationHelper.flashView(self.timeUpTipsView, duration: 0.3, autoStop: true, stopAfterMs: 3800){
-                    self.timeUpTipsView.removeFromSuperview()
-                }
-            }
         }
     }
     
@@ -186,6 +148,26 @@ class ConversationListController: UITableViewController {
     }
     
     //MARK: notifications
+    private func tryShowConversationsTimeUpTips() {
+        if UIApplication.sharedApplication().applicationState == .Active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
+            if conversationService.timeupedConversations.count > 0 {
+                if timeUpTipsView == nil {
+                    timeUpTipsView = UILabel()
+                }
+                let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
+                conversationService.removeTimeupedConversations()
+                self.timeUpTipsView.text = msg
+                self.timeUpTipsView.sizeToFit()
+                self.timeUpTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
+                self.view.addSubview(self.timeUpTipsView)
+                UIAnimationHelper.flashView(self.timeUpTipsView, duration: 0.3, autoStop: true, stopAfterMs: 3800){
+                    self.timeUpTipsView.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    
     func onTimerRefreshList(_:AnyObject?) {
         self.conversationService.clearTimeUpConversations()
     }
@@ -294,9 +276,9 @@ class ConversationListController: UITableViewController {
             return searchResult.count
         }else{
             switch section {
-            case 0:
+            case ConversationListController.chatImageMgrSection:
                 return 1
-            case 1:
+            case ConversationListController.newConversationSection:
                 return 2
             default:
                 return conversationService.conversations.count
@@ -314,11 +296,11 @@ class ConversationListController: UITableViewController {
     }
     
     private func normalTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
-        if indexPath.section == 0{
+        if indexPath.section == ConversationListController.chatImageMgrSection{
             let cell = tableView.dequeueReusableCellWithIdentifier(ChatImageManageCell.reuseId, forIndexPath: indexPath) as! ConversationListCellBase
             cell.rootController = self
             return cell
-        }else if indexPath.section == 1{
+        }else if indexPath.section == ConversationListController.newConversationSection{
             if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
                 if conversationService.conversations.count > 0{
@@ -333,8 +315,6 @@ class ConversationListController: UITableViewController {
                 cell.rootController = self
                 return cell
             }
-            
-            
         }else{
             let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
             let conversation = conversationService.conversations[indexPath.row]
@@ -371,7 +351,7 @@ class ConversationListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0{
+        if section == ConversationListController.chatImageMgrSection{
             return 0
         }else{
             return 23
@@ -379,147 +359,47 @@ class ConversationListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if isSearching == false && indexPath.section == 1{
+        if isSearching == false && indexPath.section == ConversationListController.conversationSection{
             return true
         }
         return false
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        if isSearching == false && indexPath.section == 1{
-            let actionTitle = "REMOVE".localizedString()
+        if isSearching == false && indexPath.section == ConversationListController.conversationSection{
+            
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ConversationListCell{
                 if let conversation = cell.originModel as? Conversation{
-                    let action = UITableViewRowAction(style: .Default, title: actionTitle, handler: { (ac, indexPath) -> Void in
+                    let acRemove = UITableViewRowAction(style: .Default, title: "REMOVE".localizedString(), handler: { (ac, indexPath) -> Void in
                         self.removeConversation(conversation.conversationId,message: cell.headLineLabel.text)
                     })
-                    return [action]
+                    
+                    var acPin:UITableViewRowAction? = nil
+                    if conversation.pinned {
+                        acPin = UITableViewRowAction(style: .Default, title: "UNPIN".localizedString(), handler: { (ac, indexPath) in
+                            if self.conversationService.unpinConversation(conversation){
+                                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+                            }
+                        })
+                    }else{
+                        acPin = UITableViewRowAction(style: .Default, title: "PIN".localizedString(), handler: { (ac, indexPath) in
+                            
+                            if self.conversationService.pinConversation(conversation){
+                                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+                            }else{
+                                self.playToast(String(format: "MAX_PIN_X_LIMITED".localizedString(), "\(ConversationService.conversationMaxPinNumber)"))
+                            }
+                        })
+                    }
+                    
+                    return [acRemove,acPin!]
                 }
             }
         }
         return nil
     }
-}
-
-//MARK: ConversationListController extension UISearchBarDelegate
-extension ConversationListController:UISearchBarDelegate
-{
-    //MARK: search bar delegate
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchResult.removeAll()
-        #if DEBUG
-            let users = userService.activeUsers.getRandomSubArray(3)
-            let hotUserRes = users.map({ (resultUser) -> SearchResultModel in
-                let model = SearchResultModel()
-                model.user = resultUser
-                model.activeUser = true
-                model.keyword = resultUser.accountId
-                return model
-            })
-            searchResult.appendContentsOf(hotUserRes)
-        #endif
-        isSearching = true
-    }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        if String.isNullOrWhiteSpace(searchBar.text){
-            isSearching = false
-        }
-    }
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        let testModeStrs = searchText.split(">")
-        if testModeStrs.count == 2 {
-            if DeveloperMainPanelController.isShowDeveloperPanel(self, id: testModeStrs[0], psw: testModeStrs[1]){
-                isSearching = false
-                return
-            }
-        }
-        
-        searchResult.removeAll()
-        if String.isNullOrWhiteSpace(searchText) == false{
-            let conversations = conversationService.searchConversation(searchText)
-            let res = conversations.map({ (c) -> SearchResultModel in
-                let model = SearchResultModel()
-                model.keyword = searchText
-                model.conversation = c
-                return model
-            })
-            searchResult.appendContentsOf(res)
-            let existsUsers = conversations.map({ (c) -> VessageUser in
-                let u = VessageUser()
-                u.userId = c.chatterId
-                u.mobile = c.chatterMobile
-                return u
-            })
-            
-            userService.searchUser(searchText, callback: { (keyword, resultUsers) in
-                if !String.isNullOrEmpty(searchBar.text) && keyword != searchBar.text{
-                    #if DEBUG
-                        print("ignore search result")
-                    #endif
-                    return
-                }
-                
-                let results = resultUsers.filter({ (resultUser) -> Bool in
-                    
-                    return !existsUsers.contains({ (eu) -> Bool in
-                        return VessageUser.isTheSameUser(resultUser, userb: eu)
-                    })
-                }).map({ (resultUser) -> SearchResultModel in
-                    let model = SearchResultModel()
-                    model.user = resultUser
-                    model.keyword = searchText
-                    return model
-                })
-                
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self.searchResult.appendContentsOf(results)
-                    if self.searchResult.count == 0 && searchText.isMobileNumber(){
-                        let model = SearchResultModel()
-                        model.keyword = searchText
-                        model.mobile = searchText
-                        self.searchResult.append(model)
-                    }
-                })
-            })
-        }
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        isSearching = false
     }
 }
-
-//MARK: Welcome
-/*
-extension ConversationListController{
-    private func tryShowUserGuide() -> Bool{
-        if userService.isUserChatBackgroundIsSeted || UserSetting.isSettingEnable(USER_LATER_SET_CHAT_BCG_KEY){
-            if !UserSetting.isSettingEnable(INVITED_FRIEND_GUIDE_KEY) {
-                InviteFriendsViewController.presentInviteFriendsViewController(self)
-                return true
-            }else{
-                return false
-            }
-        }else{
-            SetupChatImagesController.showSetupViewController(self)
-            return true
-        }
-    }
-    
-    private func tryShowWelcomeAlert() {
-        let key = "WELLCOME_ALERT_SHOWN"
-        if !UserSetting.isSettingEnable(key) {
-            UserSetting.enableSetting(key)
-            let startConversationAc = UIAlertAction(title: "NEW_CONVERSATION".localizedString(), style: .Default, handler: { (ac) in
-                if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? ConversationListContactCell{
-                    cell.onCellClicked()
-                }
-            })
-            self.showAlert("WELCOME_ALERT_TITLE".localizedString(), msg: "WELCOME_ALERT_MSG".localizedString(),actions: [startConversationAc,ALERT_ACTION_I_SEE])
-        }
-    }
-}
- */

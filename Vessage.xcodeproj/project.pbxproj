@@ -191,9 +191,13 @@
 		E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */; };
 		E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */; };
 		E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E91D3A1F26008078DE /* GroupNameCell.swift */; };
+		E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */; };
+		E7F6F0771D6943CA001CD190 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F6F0751D6943CA001CD190 /* Assets.xcassets */; };
+		E7F6F0781D6943CA001CD190 /* NiceFaceClubMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F6F0761D6943CA001CD190 /* NiceFaceClubMain.storyboard */; };
 		E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */; };
 		E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */; };
 		E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A811D0510A100A05001 /* LittlePaper.strings */; };
+		E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -427,9 +431,13 @@
 		E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupProfileViewController.swift; sourceTree = "<group>"; };
 		E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUsersCell.swift; sourceTree = "<group>"; };
 		E7F532E91D3A1F26008078DE /* GroupNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
+		E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzeImageSDK.swift; sourceTree = "<group>"; };
+		E7F6F0751D6943CA001CD190 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E7F6F0761D6943CA001CD190 /* NiceFaceClubMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NiceFaceClubMain.storyboard; sourceTree = "<group>"; };
 		E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoPreviewBubble.xib; sourceTree = "<group>"; };
 		E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPreviewBubble.swift; sourceTree = "<group>"; };
 		E7FC8A811D0510A100A05001 /* LittlePaper.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LittlePaper.strings; sourceTree = "<group>"; };
+		E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -666,6 +674,7 @@
 		E708ABF31C86D6F20071104E /* RestfulAPI */ = {
 			isa = PBXGroup;
 			children = (
+				E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */,
 				E7EB9A301C87EEFF002F96FB /* UserRF.swift */,
 				E75A70351C8C09360029F0BD /* VessageRF.swift */,
 				E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */,
@@ -966,6 +975,7 @@
 		E7BFC3911CDB1C2C00CDB392 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E7F6F0741D6943CA001CD190 /* NiceFaceClub */,
 				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
 				E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */,
 			);
@@ -992,6 +1002,7 @@
 		E7C387EF1C982F510096AF85 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
+				E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */,
 				E708AB591C86CD6D0071104E /* ConversationListController.swift */,
 				E7C387F01C982F640096AF85 /* ConversationListCell.swift */,
 				E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */,
@@ -1108,6 +1119,15 @@
 			name = GroupChatProfile;
 			sourceTree = "<group>";
 		};
+		E7F6F0741D6943CA001CD190 /* NiceFaceClub */ = {
+			isa = PBXGroup;
+			children = (
+				E7F6F0751D6943CA001CD190 /* Assets.xcassets */,
+				E7F6F0761D6943CA001CD190 /* NiceFaceClubMain.storyboard */,
+			);
+			path = NiceFaceClub;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1214,9 +1234,11 @@
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */,
 				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
+				E7F6F0771D6943CA001CD190 /* Assets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
+				E7F6F0781D6943CA001CD190 /* NiceFaceClubMain.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
@@ -1311,6 +1333,7 @@
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
 				E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
+				E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
 				E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */,
@@ -1382,6 +1405,7 @@
 				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
 				E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */,
+				E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */,
 				E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */,

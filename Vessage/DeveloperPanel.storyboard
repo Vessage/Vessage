@@ -52,20 +52,36 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GodMode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HyW-xm-Joc">
+                                <rect key="frame" x="20" y="309" width="76" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kCD-cT-iCc">
+                                <rect key="frame" x="119" y="304" width="51" height="31"/>
+                                <connections>
+                                    <action selector="godModeChanged:" destination="9G1-Kx-mIJ" eventType="valueChanged" id="WRJ-I8-nOT"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Rx2-nx-3Uf" firstAttribute="top" secondItem="ICz-sf-bhJ" secondAttribute="bottom" constant="42" id="1hJ-qD-4je"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YDI-E4-Pcn" secondAttribute="leading" id="3cY-Sb-wYX"/>
+                            <constraint firstItem="kCD-cT-iCc" firstAttribute="leading" secondItem="HyW-xm-Joc" secondAttribute="trailing" constant="23" id="AFp-Vf-V2R"/>
                             <constraint firstItem="rp2-o4-W9b" firstAttribute="top" secondItem="Rx2-nx-3Uf" secondAttribute="bottom" constant="8" id="H6v-zg-fwi"/>
                             <constraint firstItem="YDI-E4-Pcn" firstAttribute="top" secondItem="raS-PU-2g1" secondAttribute="bottom" constant="8" id="HBN-Wz-aiy"/>
                             <constraint firstAttribute="leadingMargin" secondItem="raS-PU-2g1" secondAttribute="leading" id="NGu-2g-BQk"/>
+                            <constraint firstItem="HyW-xm-Joc" firstAttribute="top" secondItem="rQP-WL-BfT" secondAttribute="bottom" constant="30" id="NlZ-yz-j6Y"/>
                             <constraint firstItem="raS-PU-2g1" firstAttribute="top" secondItem="rp2-o4-W9b" secondAttribute="bottom" constant="8" id="RJE-D4-luA"/>
                             <constraint firstItem="rQP-WL-BfT" firstAttribute="leading" secondItem="YDI-E4-Pcn" secondAttribute="leading" id="cNA-9w-djj"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Rx2-nx-3Uf" secondAttribute="leading" id="hAs-jS-aN3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="rp2-o4-W9b" secondAttribute="leading" id="p2f-T0-jUa"/>
                             <constraint firstItem="rQP-WL-BfT" firstAttribute="top" secondItem="YDI-E4-Pcn" secondAttribute="bottom" constant="8" symbolic="YES" id="t1f-KX-Mdh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rQP-WL-BfT" secondAttribute="trailing" id="tl9-tM-2G3"/>
+                            <constraint firstItem="HyW-xm-Joc" firstAttribute="leading" secondItem="rQP-WL-BfT" secondAttribute="leading" id="vKU-8l-Y0l"/>
+                            <constraint firstItem="kCD-cT-iCc" firstAttribute="centerY" secondItem="HyW-xm-Joc" secondAttribute="centerY" id="yY4-kf-uk4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Developer Panel" id="I6Y-f4-8vN">
@@ -79,6 +95,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="deviceTokenLabel" destination="rQP-WL-BfT" id="9w3-De-rDM"/>
+                        <outlet property="godModeSwitch" destination="kCD-cT-iCc" id="2pf-HX-Jh5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kot-2h-EIc" userLabel="First Responder" sceneMemberID="firstResponder"/>

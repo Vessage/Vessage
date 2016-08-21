@@ -171,7 +171,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //Vege
 APP_NAME = "VG";
-VESSAGE_MOTTO = "只是一种新的聊天方式";
+VESSAGE_MOTTO = "一种新的交流方式";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";
@@ -219,7 +219,10 @@ SAVE_VIDEO_FAILED = "处理数据出错>_<!";
 EDIT_SEX_VALUE_ERROR = "操作失败>_<!";
 EDIT_SEX_VALUE_SUC = "更改成功!";
 
-X_TIMEUPED_CONVERSATION_REMOVED = "%@个对话湮没在时间的长河里";
+X_TIMEUPED_CONVERSATION_REMOVED = "%@个对话不聊消失";
+MAX_PIN_X_LIMITED = "最多可以Pin %@个对话";
+PIN = "Pin";
+UNPIN = "取消Pin";
 
 //MARK: Send Vessage
 POST_VESSAGE_ERROR = "发送消息失败";
@@ -250,8 +253,8 @@ NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
 UNLOADED_USER = "佚名";
 ACTIVE_USERS = "广场";
 INVITE_FRIENDS_TO_CONVERSATION = "邀请更多小伙伴来玩VG聊天吧~";
-ACTIVE_USER = "活跃的人";
-NEAR_USER = "附近的人";
+ACTIVE_USER = "活跃的VGer";
+NEAR_USER = "附近的VGer";
 CONVERSATION_USERS = "正在对话的好友";
 
 VSG_READED = "已读";

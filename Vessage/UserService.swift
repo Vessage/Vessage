@@ -140,9 +140,21 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return result
     }
     
+    func getCachedUserByAccountId(accountId:String) -> VessageUser? {
+        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.accountId) && accountId == $0.accountId}.first
+    }
+    
+    func fetchUserByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void){
+        let req = GetUserInfoByAccountIdRequest()
+        req.accountId = accountId
+        getUserProfileByReq(nil, req: req){ user in
+            updatedCallback(user: user)
+        }
+    }
+    
     func getUserProfileByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         
-        let user = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.accountId) && accountId == $0.accountId}.first
+        let user = getCachedUserByAccountId(accountId)
         let req = GetUserInfoByAccountIdRequest()
         req.accountId = accountId
         getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
@@ -365,14 +377,6 @@ extension UserService{
             callback(keyword: keyword,users)
         }else if keyword.isMobileNumber(){
             getUserProfileByMobile(keyword, updatedCallback: { (user) -> Void in
-                if let u = user{
-                    callback(keyword: keyword,[u])
-                }else{
-                    callback(keyword: keyword,[])
-                }
-            })
-        }else if keyword.isBahamutAccount(){
-            getUserProfileByAccountId(keyword, updatedCallback: { (user) -> Void in
                 if let u = user{
                     callback(keyword: keyword,[u])
                 }else{

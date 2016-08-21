@@ -46,6 +46,7 @@ class BahamutConfigObject:EVObject
     var smsSDKAppkey:String!
     var smsSDKSecretKey:String!
     
+    var faceDetectSubscriptionKey:[String]!
 }
 
 class VessageSetting{

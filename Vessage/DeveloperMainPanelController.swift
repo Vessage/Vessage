@@ -11,6 +11,11 @@ import UIKit
 class DeveloperMainPanelController: UIViewController
 {
     
+    @IBOutlet weak var godModeSwitch: UISwitch!{
+        didSet{
+            godModeSwitch.on = UserSetting.godMode
+        }
+    }
     @IBOutlet weak var deviceTokenLabel: UILabel!{
         didSet{
             deviceTokenLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(DeveloperMainPanelController.onTapDeviceTokenLabel(_:))))
@@ -52,6 +57,10 @@ class DeveloperMainPanelController: UIViewController
         self.dismissViewControllerAnimated(false) { () -> Void in
             
         }
+    }
+    
+    @IBAction func godModeChanged(sender: AnyObject) {
+        UserSetting.godMode = godModeSwitch.on
     }
     
     @IBAction func useRemoteServer(sender: AnyObject)

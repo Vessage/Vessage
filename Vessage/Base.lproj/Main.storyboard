@@ -128,7 +128,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="VG号、手机或昵称" id="eVN-fp-SWQ">
+                        <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="好友的VG号、手机或昵称" id="eVN-fp-SWQ">
                             <rect key="frame" x="0.0" y="64" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits" spellCheckingType="no"/>
@@ -348,8 +348,17 @@
                                                 <action selector="cancelSend:" destination="Szw-pL-qT1" eventType="touchUpInside" id="iwE-LR-1UT"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoB-aT-LB8">
+                                            <rect key="frame" x="5" y="3" width="8" height="8"/>
+                                            <color key="backgroundColor" red="0.95517904639999995" green="0.012051097849999999" blue="0.14785571810000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="8" id="4GV-io-zb8"/>
+                                                <constraint firstAttribute="height" constant="8" id="n4a-dZ-HeY"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="RoB-aT-LB8" firstAttribute="leading" secondItem="03z-SN-R3E" secondAttribute="leading" constant="-3" id="3Qf-wV-Bs5"/>
                                         <constraint firstItem="xMF-UU-uRh" firstAttribute="leading" secondItem="03z-SN-R3E" secondAttribute="trailing" constant="8" symbolic="YES" id="3fz-bX-Ufo"/>
                                         <constraint firstItem="gk8-mB-tUE" firstAttribute="centerY" secondItem="xMF-UU-uRh" secondAttribute="centerY" id="4PF-Bq-Oue"/>
                                         <constraint firstItem="xU0-5K-qqp" firstAttribute="leading" secondItem="xMF-UU-uRh" secondAttribute="trailing" constant="8" symbolic="YES" id="8nV-jE-tcp"/>
@@ -362,6 +371,7 @@
                                         <constraint firstItem="xU0-5K-qqp" firstAttribute="centerY" secondItem="xMF-UU-uRh" secondAttribute="centerY" id="dLh-RB-Xfs"/>
                                         <constraint firstItem="tp3-nC-ehD" firstAttribute="leading" secondItem="gk8-mB-tUE" secondAttribute="trailing" constant="8" id="dq3-XH-Dmg"/>
                                         <constraint firstItem="xMF-UU-uRh" firstAttribute="top" secondItem="03z-SN-R3E" secondAttribute="top" id="dtN-Hx-Ebh"/>
+                                        <constraint firstItem="RoB-aT-LB8" firstAttribute="top" secondItem="03z-SN-R3E" secondAttribute="top" constant="-3" id="h5g-Bc-L1S"/>
                                         <constraint firstItem="03z-SN-R3E" firstAttribute="leading" secondItem="eWr-qG-EjH" secondAttribute="leadingMargin" id="pfk-DS-21G"/>
                                         <constraint firstItem="swc-Ov-KHA" firstAttribute="bottom" secondItem="03z-SN-R3E" secondAttribute="bottom" constant="3" id="sBM-ER-KcR"/>
                                     </constraints>
@@ -386,6 +396,7 @@
                                     <outlet property="badgeLabel" destination="fdM-g7-C0u" id="QEj-Fr-Nh2"/>
                                     <outlet property="cancelSendButton" destination="tp3-nC-ehD" id="FYF-zM-4FW"/>
                                     <outlet property="headLineLabel" destination="xMF-UU-uRh" id="Xdr-VV-I77"/>
+                                    <outlet property="pinMark" destination="RoB-aT-LB8" id="2YR-H3-QFG"/>
                                     <outlet property="retrySendTaskButton" destination="gk8-mB-tUE" id="GKk-n3-asj"/>
                                     <outlet property="sendingIndicator" destination="xU0-5K-qqp" id="ZHp-jB-Nfa"/>
                                     <outlet property="subLineLabel" destination="swc-Ov-KHA" id="xy0-Xp-VrK"/>

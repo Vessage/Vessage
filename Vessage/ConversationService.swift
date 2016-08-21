@@ -19,6 +19,9 @@ class Conversation:BahamutObject
     var chatterId:String!
     var chatterMobile:String!
     var lastMessageTime:String!
+    
+    var pinned = false
+    
 }
 
 extension Conversation{
@@ -50,6 +53,7 @@ extension ServiceContainer{
 
 //MARK:ConversationService
 class ConversationService:NSNotificationCenter, ServiceProtocol {
+    static let conversationMaxPinNumber = 6
     static let conversationListUpdated = "conversationListUpdated"
     static let conversationUpdated = "conversationUpdated"
     
@@ -217,6 +221,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func clearTimeUpConversations() {
         let timeUpCons = conversations.removeElement { c -> Bool in
+            if c.pinned{
+                return false
+            }
             if let p = c.getConversationTimeUpMinutesLeft(){
                 return p < 3
             }
@@ -297,6 +304,33 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
 }
 
+//MARK:Pin Conversation
+extension ConversationService{
+    func pinConversation(conversation:Conversation) -> Bool {
+        if conversation.pinned  {
+            return true
+        }
+        let pinnedCount = conversations.filter{$0.pinned}.count
+        if pinnedCount >= ConversationService.conversationMaxPinNumber {
+            return false
+        }
+        conversation.pinned = true
+        conversation.saveModel()
+        conversations.filter{$0.conversationId == conversation.conversationId}.first?.pinned = true
+        return true
+    }
+    
+    func unpinConversation(conversation:Conversation) -> Bool {
+        if !conversation.pinned {
+            return true
+        }
+        conversation.pinned = false
+        conversations.filter{$0.conversationId == conversation.conversationId}.first?.pinned = false
+        return true
+    }
+}
+
+/*
 extension ConversationService{
     
     @available(*,deprecated)
@@ -328,3 +362,4 @@ extension ConversationService{
         }
     }
 }
+ */

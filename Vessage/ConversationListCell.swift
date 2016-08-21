@@ -7,6 +7,21 @@
 //
 
 import Foundation
+//MARK: ConversationListCellBase
+class ConversationListCellBase:UITableViewCell{
+    weak var rootController:ConversationListController!
+    
+    func onCellClicked(){
+        
+    }
+    
+    deinit{
+        rootController = nil
+        #if DEBUG
+            print("Deinited:ConversationListCellBase")
+        #endif
+    }
+}
 
 //MARK: ConversationListCell
 typealias ConversationListCellHandler = (cell:ConversationListCell)->Void
@@ -36,6 +51,14 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     
+    @IBOutlet weak var pinMark: UIView!{
+        didSet{
+            //pinMark.hidden = true
+            pinMark.clipsToBounds = true
+            pinMark.layer.cornerRadius = pinMark.frame.height / 2
+        }
+    }
+    
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
             badgeLabel.hidden = true
@@ -55,6 +78,7 @@ class ConversationListCell:ConversationListCellBase{
     var conversationListCellHandler:ConversationListCellHandler!
     var originModel:AnyObject?{
         didSet{
+            pinMark?.hidden = true
             timeupProgressView?.hidden = true
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
@@ -152,6 +176,10 @@ class ConversationListCell:ConversationListCellBase{
             self.subLine = "UNKNOW_TIME".localizedString()
             self.timeupProgressView?.hidden = true
         }
+        if conversation.pinned {
+            self.timeupProgressView?.progress = 1
+        }
+        pinMark?.hidden = !conversation.pinned
     }
     
     private func updateWithChatGroup(group:ChatGroup){

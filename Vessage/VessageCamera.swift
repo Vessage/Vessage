@@ -75,6 +75,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         previewLayer.contentsGravity = kCAGravityResizeAspectFill
         previewLayer.anchorPoint = CGPointZero
         previewLayer.bounds = view.bounds
+        previewLayer.backgroundColor = UIColor.blackColor().CGColor
         self.view.layer.insertSublayer(previewLayer, atIndex: 0)
         if TARGET_IPHONE_SIMULATOR == Int32("1") {
             self.rootViewController.playToast("Simulator No Camera");

@@ -15,6 +15,7 @@ class BahamutConfigObject:EVObject
 {
     var appkey:String!
     var appName:String!
+    var godModeCode:String!
     
     var accountApiUrlPrefix:String!
     var accountRegistApiUrl:String!

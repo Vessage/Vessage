@@ -16,19 +16,17 @@ class VessageQueue: BahamutTaskQueue {
     private var extraInfoString:String!
     override func initQueue(userId: String) {
         super.initQueue(userId)
-        initObservers()
         refreshExtraInfoString()
         var stepHandlers = [String:BahamutTaskQueueStepHandler]()
         stepHandlers.updateValue(PostVessageHandler(), forKey: PostVessageHandler.stepKey)
         stepHandlers.updateValue(SendAliOSSFileHandler(), forKey: SendAliOSSFileHandler.stepKey)
         stepHandlers.updateValue(FinishFileVessageHandler(), forKey: FinishFileVessageHandler.stepKey)
         stepHandlers.updateValue(FinishNormalVessageHandler(), forKey: FinishNormalVessageHandler.stepKey)
-        initHandlers(stepHandlers)
+        useHandlers(stepHandlers)
     }
     
     override func releaseQueue() {
         super.releaseQueue()
-        removeObservers()
     }
     
     private func refreshExtraInfoString(){
@@ -42,18 +40,6 @@ class VessageQueue: BahamutTaskQueue {
             extraInfo.mobileHash = sendMobile!.md5
         }
         extraInfoString = extraInfo.toMiniJsonString()
-    }
-    
-    private func initObservers(){
-        ServiceContainer.instance.addObserver(self, selector: #selector(VessageQueue.onUserLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
-    }
-    
-    private func removeObservers(){
-        ServiceContainer.instance.removeObserver(self)
-    }
-    
-    func onUserLogout(a:NSNotification){
-        releaseQueue()
     }
     
     func pushNewVessageTo(receiverId:String?,vessage:Vessage,taskSteps:[String],uploadFileUrl:NSURL? = nil){

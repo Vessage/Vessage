@@ -9,14 +9,13 @@
 import Foundation
 import MBProgressHUD
 
-//typealias ChatBackgroundPickerSetImageSuccessHandler = (sender:ChatBackgroundPickerController)->Void
 @objc protocol ChatBackgroundPickerControllerDelegate {
     optional func chatBackgroundPickerSetedImage(sender:ChatBackgroundPickerController)->Void
     optional func chatBackgroundPickerSetImageCancel(sender:ChatBackgroundPickerController)->Void
 }
 
 //MARK: ChatBackgroundPickerController
-class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,ProgressTaskDelegate,UIImagePickerControllerDelegate{
+class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,UIImagePickerControllerDelegate{
     static let chatImageWidth:CGFloat = 480
     static let chatImageQuality:CGFloat = 0.6
     private var imagePickerController:UIImagePickerController = UIImagePickerController()
@@ -93,6 +92,8 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         }
     }
     
+    private var hud:MBProgressHUD!
+    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,31 +121,6 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         #if DEBUG
             print("Deinited:\(self.description)")
         #endif
-    }
-    
-    //MARK:notifications
-    
-    //MARK: UIImagePickerControllerDelegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
-    {
-        imagePickerController.dismissViewControllerAnimated(true)
-        {
-            if let imgData = UIImageJPEGRepresentation(image, 1.0){
-                if let img = CIImage(data: imgData){
-                    let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
-                    let faces = faceDetector.featuresInImage(img)
-                    if faces.count > 0{
-                        self.previewing = false
-                        self.takedImage = image
-                        self.demoFaceView.hidden = false
-                        return
-                    }
-                }
-            }
-            self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
-            
-        
-        }
     }
     
     //MARK: actions
@@ -239,8 +215,22 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         middleButton?.hidden = !previewing
     }
     
-    //MARK: VessageCamera Delegate
     
+    //MARK: showPickerController
+    
+    static func showPickerController(vc:UIViewController,delegate:ChatBackgroundPickerControllerDelegate,imageType:String? = nil)
+    {
+        let instance = instanceFromStoryBoard("Camera", identifier: "ChatBackgroundPickerController") as! ChatBackgroundPickerController
+        instance.delegate = delegate
+        instance.chatImageType = imageType
+        vc.presentViewController(instance, animated: true) { () -> Void in
+            
+        }
+    }
+}
+
+//MARK: VessageCamera Delegate
+extension ChatBackgroundPickerController{
     func vessageCameraReady() {
         middleButton.hidden = false
         leftButton.hidden = false
@@ -250,8 +240,87 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         self.takedImage = image
         self.previewing = false
     }
+}
+
+//MARK: UIImagePickerControllerDelegate
+extension ChatBackgroundPickerController{
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
+        imagePickerController.dismissViewControllerAnimated(true)
+        {
+            if let imgData = UIImageJPEGRepresentation(image, 1.0){
+                if let img = CIImage(data: imgData){
+                    let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
+                    let faces = faceDetector.featuresInImage(img)
+                    if faces.count > 0{
+                        self.previewing = false
+                        self.takedImage = image
+                        self.demoFaceView.hidden = false
+                        return
+                    }
+                }
+            }
+            self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
+            
+            
+        }
+    }
+}
+
+//MARK: upload image
+let setChatImageSteps = [SendChatImageHandler.key,SetChatImageHandler.key]
+extension ChatBackgroundPickerController{
+    static func saveChatImage(chatImage:UIImage) -> String?{
+        let img = chatImage.scaleToWidthOf(ChatBackgroundPickerController.chatImageWidth)
+        let imageData = UIImageJPEGRepresentation(img, ChatBackgroundPickerController.chatImageQuality)
+        let localPath = ServiceContainer.getFileService().createLocalStoreFileName(FileType.Image)
+        return PersistentFileHelper.storeFile(imageData!, filePath: localPath) ? localPath : nil
+    }
     
-    //MARK: upload image
+    private func sendTakedImage(){
+        hud = showAnimationHud()
+        if let filePath = ChatBackgroundPickerController.saveChatImage(takedImage){
+            let task = SetChatImagesTask()
+            task.filePath = filePath
+            task.imageType = self.chatImageType
+            task.steps = setChatImageSteps
+            BahamutTaskQueue.defaultInstance.addObserver(self, selector: #selector(ChatBackgroundPickerController.onTaskFinished(_:)), name: BahamutTaskQueue.onTaskFinished, object: nil)
+            BahamutTaskQueue.defaultInstance.addObserver(self, selector: #selector(ChatBackgroundPickerController.onTaskStepError(_:)), name: BahamutTaskQueue.onTaskStepError, object: nil)
+            BahamutTaskQueue.defaultInstance.addObserver(self, selector: #selector(ChatBackgroundPickerController.onTaskCanceled(_:)), name: BahamutTaskQueue.onTaskCanceled, object: nil)
+            BahamutTaskQueue.defaultInstance.pushTask(task)
+            
+        }else
+        {
+            hud.hide(true)
+            self.playToast("SET_CHAT_BCG_FAILED".localizedString())
+        }
+    }
+    
+    func onTaskFinished(a:NSNotification) {
+        hud?.hide(true)
+        BahamutTaskQueue.defaultInstance.removeObserver(self)
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+            if let handler = self.delegate?.chatBackgroundPickerSetedImage{
+                handler(self)
+            }
+        })
+        self.showAlert("SET_CHAT_BCG_SUCCESS".localizedString(), msg: nil , actions: [okAction])
+    }
+    
+    func onTaskStepError(a:NSNotification) {
+        hud?.hide(true)
+        BahamutTaskQueue.defaultInstance.removeObserver(self)
+        self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
+    }
+    
+    func onTaskCanceled(a:NSNotification) {
+        hud?.hide(true)
+        BahamutTaskQueue.defaultInstance.removeObserver(self)
+        self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
+    }
+    
+    /*
+ 
     private var taskFileMap = [String:FileAccessInfo]()
     private var taskHud:MBProgressHUD!
     private func sendTakedImage(){
@@ -303,16 +372,5 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,Pro
         taskFileMap.removeValueForKey(taskIdentifier)
         self.showAlert(nil, msg: "SET_CHAT_BCG_FAILED".localizedString())
     }
-    
-    //MARK: showPickerController
-    
-    static func showPickerController(vc:UIViewController,delegate:ChatBackgroundPickerControllerDelegate,imageType:String? = nil)
-    {
-        let instance = instanceFromStoryBoard("Camera", identifier: "ChatBackgroundPickerController") as! ChatBackgroundPickerController
-        instance.delegate = delegate
-        instance.chatImageType = imageType
-        vc.presentViewController(instance, animated: true) { () -> Void in
-            
-        }
-    }
+ */
 }

@@ -20,8 +20,14 @@ class SetupNiceFaceViewController: UIViewController {
         }
     }
     @IBOutlet weak var faceScoreLabel: UILabel!
-    @IBOutlet weak var faceScoreView: UIProgressView!
-    @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var faceScoreView: UIProgressView!{
+        didSet{
+            self.faceScoreView.superview?.clipsToBounds = true
+            self.faceScoreView.superview?.layer.cornerRadius = self.faceScoreView.superview!.frame.height / 2
+        }
+    }
+    
+    private var previewView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var retakePicButton: UIButton!
     @IBOutlet weak var selectPicButton: UIButton!
@@ -41,6 +47,7 @@ class SetupNiceFaceViewController: UIViewController {
                 imageData = nil
                 faceScore = nil
                 uploadedFileId = nil
+                niceFaceUploadResult = nil
             }
             refreshButtons()
         }
@@ -54,6 +61,7 @@ class SetupNiceFaceViewController: UIViewController {
         }
     }
     
+    private var niceFaceUploadResult:NiceFaceUploadResult!
     private var uploadedFileId:String? = nil
     
     private var faceScore:NiceFaceTestResult!{
@@ -78,7 +86,12 @@ class SetupNiceFaceViewController: UIViewController {
         refreshButtons()
         refreshFaceScoreView()
         shotButton.hidden = true
+        self.previewView = UIView(frame: self.view.bounds)
+        self.view.addSubview(previewView)
+        self.view.sendSubviewToBack(previewView)
         camera = VessageCamera()
+        camera.delegate = self
+        camera.isRecordVideo = false
         camera.initCamera(self, previewView: self.previewView)
     }
     
@@ -100,6 +113,7 @@ class SetupNiceFaceViewController: UIViewController {
 
 extension SetupNiceFaceViewController{
     @IBAction func onCloseClick(sender: AnyObject) {
+        
         self.dismissViewControllerAnimated(true){
             self.removeSetChatImageObservers()
             self.camera.closeCamera()
@@ -124,45 +138,80 @@ extension SetupNiceFaceViewController{
         if takedImage == nil {
             return
         }
-        tryUpdateChatImages()
+        if let imageId = uploadedFileId {
+            setNiceFace(imageId)
+        }else{
+            pushSetNiceFaceUploadTask()
+        }
     }
 }
 
-class UploadResult:EVObject{
+class NiceFaceUploadResult:EVObject{
     var Host:String!
     var Url:String!
 }
 
+
+
 extension SetupNiceFaceViewController{
     
-    func faceScoreTest() {
+    private func faceScoreTest() {
         self.view.userInteractionEnabled = false
         self.view.startScaningRepeatCount(20)
+        self.closeButton?.hidden = true
+        if niceFaceUploadResult == nil {
+            uploadFaceImage()
+        }else{
+            getFaceScoreTestResult()
+        }
+    }
+    
+    private func uploadFaceImage(){
+        self.retakePicButton?.hidden = true
         let uploadUrl = "http://kan.msxiaobing.com/Api/Image/UploadBase64"
-        
-        
-        Alamofire.upload(.POST, uploadUrl, data: imageData.base64String().toUTF8EncodingData()).responseString { (resp:Response<String, NSError>) in
+        Alamofire.upload(.POST, uploadUrl,headers: ["User-Agent":"Mozilla/5.0"], data: imageData.base64String().toUTF8EncodingData()).responseString { (resp:Response<String, NSError>) in
             if resp.result.isSuccess{
                 if let json = resp.result.value{
-                    let returnObject = UploadResult(json:json)
-                    NiceFaceClubManager.instance.faceScoreTest("\(returnObject.Host)\(returnObject.Url)", callback: { (result) in
-                        self.view.stopScaning()
-                        self.view.userInteractionEnabled = true
-                        if let r = result{
-                            self.faceScore = r
-                            self.showAlert(nil, msg: r.msg)
-                        }else{
-                            self.playCrossMark("NETWORK_ERROR".localizedString())
-                        }
-                    })
+                    let returnObject = NiceFaceUploadResult(json:json)
+                    self.niceFaceUploadResult = returnObject
+                    self.getFaceScoreTestResult()
                 }
             }else{
-                //self.view.stopScaning()
-                self.view.userInteractionEnabled = true
-                self.playCrossMark(""){
-                }
+                self.showRetryAlert()
             }
         }
+    }
+    
+    private func showRetryAlert(){
+        self.view.stopScaning()
+        self.view.userInteractionEnabled = true
+        let ok = UIAlertAction(title: "OK".localizedString(), style: .Default) { (ac) in
+            self.faceScoreTest()
+        }
+        
+        let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (ac) in
+            self.onRetakePicClick(ac)
+        }
+        
+        self.showAlert("NETWORK_ERROR".localizedString(), msg: "RETRY_TEST_FACE".niceFaceClubString, actions: [ok,cancel])
+    }
+    
+    private func getFaceScoreTestResult() {
+        self.retakePicButton?.hidden = true
+        self.closeButton?.hidden = true
+        let imgUrl = "\(niceFaceUploadResult.Host)\(niceFaceUploadResult.Url)"
+        let addtion:Float = 0.1
+        NiceFaceClubManager.instance.faceScoreTest(imgUrl,addtion: addtion, callback: { (result) in
+            if let r = result{
+                self.faceScore = r
+                self.view.stopScaning()
+                self.closeButton?.hidden = false
+                self.view.userInteractionEnabled = true
+                self.showAlert(nil, msg: r.msg)
+            }else{
+                self.showRetryAlert()
+            }
+        })
     }
     
     private func addSetChatImageObservers(){
@@ -176,22 +225,19 @@ extension SetupNiceFaceViewController{
         BahamutTaskQueue.defaultInstance.removeObserver(self)
     }
     
-    private func tryUpdateChatImages(){
+    private func pushSetNiceFaceUploadTask(){
         
         hud = showAnimationHud()
         if let filePath = ChatBackgroundPickerController.saveChatImage(takedImage!){
-            let flag = !ServiceContainer.getUserService().isUserChatBackgroundIsSeted || ServiceContainer.getUserService().myChatImages.count <= 0
-            if flag {
-                let task = SetChatImagesTask()
-                task.filePath = filePath
-                task.imageType = nil
-                task.steps = [SendChatImageHandler.key]
-                BahamutTaskQueue.defaultInstance.pushTask(task)
-            }
+            let task = SetChatImagesTask()
+            task.filePath = filePath
+            task.imageType = nil
+            task.steps = [SendChatImageHandler.key]
+            BahamutTaskQueue.defaultInstance.pushTask(task)
         }else
         {
             hud?.hide(true)
-            self.playToast("SET_CHAT_BCG_FAILED".localizedString())
+            self.playCrossMark("SAVE_IMAGE_ERROR".localizedString())
         }
     }
     
@@ -208,21 +254,32 @@ extension SetupNiceFaceViewController{
                 ServiceContainer.getUserService().setChatBackground(task.fileId, imageType: defaultImageTypes.first?["type"], callback: { (suc) in
                 })
             }
-            
-            NiceFaceClubManager.instance.setUserNiceFace(faceScore.resultId, imageId: task.fileId, callback: { (suc) in
-                
-            })
+            self.setNiceFace(task.fileId)
         }
+    }
+    
+    func setNiceFace(imageId:String) {
+        NiceFaceClubManager.instance.setUserNiceFace(faceScore, imageId: imageId, callback: { (suc) in
+            self.hud?.hide(true)
+            if suc{
+                let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                    self.onCloseClick(self)
+                })
+                self.showAlert("NICE_FACE_SETTED".niceFaceClubString, msg: "NICE_FACE_SETTED_MSG".niceFaceClubString, actions: [ok])
+            }else{
+                self.playCrossMark("SET_NICE_FACE_ERROR".niceFaceClubString)
+            }
+        })
     }
     
     func onTaskStepError(a:NSNotification) {
         hud?.hide(true)
-        self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
+        self.showAlert("UPLOAD_NICE_FACE_IMAGE_ERROR".localizedString(), msg: nil)
     }
     
     func onTaskCanceled(a:NSNotification) {
         hud?.hide(true)
-        self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
+        self.showAlert("UPLOAD_NICE_FACE_IMAGE_CANCELED".localizedString(), msg: nil)
     }
 }
 
@@ -230,9 +287,10 @@ extension SetupNiceFaceViewController{
     
     private func refreshFaceScoreView(){
         if let f = faceScore {
+            faceScoreView?.progressTintColor = f.highScore >= NiceFaceClubManager.minScore ? UIColor.orangeColor() : UIColor.redColor()
             faceScoreViewMask?.hidden = f.highScore <= 0
-            faceScoreLabel?.text = "\(faceScore.highScore)"
-            faceScoreView?.progress = faceScore.highScore / 10
+            faceScoreLabel?.text = "\(f.highScore)"
+            faceScoreView?.setProgress(f.highScore / 10, animated: true)
         }else{
             faceScoreView?.progress = 0
             faceScoreViewMask?.hidden = true
@@ -255,7 +313,7 @@ extension SetupNiceFaceViewController{
     }
     
     private func refreshAcceptPicButton() {
-        acceptPicButton?.hidden = faceScore?.highScore ?? 0 < NiceFaceClubManager.minScore
+        acceptPicButton?.hidden = (faceScore?.highScore ?? 0) < NiceFaceClubManager.minScore
     }
     
     private func refreshShotButton() {
@@ -290,7 +348,7 @@ extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
                     let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
                     let faces = faceDetector.featuresInImage(img)
                     self.hud?.hide(true)
-                    if faces.count >= 0{
+                    if faces.count > 0{
                         self.camera.pauseCaptureSession()
                         self.initImageView()
                         self.takedImageView.image = image

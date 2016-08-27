@@ -53,7 +53,6 @@
 		E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */; };
 		E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */; };
 		E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC001C86D7B70071104E /* UserGuide.swift */; };
-		E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AC0D1C86E24D0071104E /* UserGuide.storyboard */; };
 		E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC671C86EC160071104E /* AliOSSManager.swift */; };
 		E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC681C86EC160071104E /* FetchAliOSSExtension.swift */; };
 		E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC691C86EC160071104E /* UploadAliOSSExtension.swift */; };
@@ -91,7 +90,6 @@
 		E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
-		E72E257D1D6AE89300DA6E5C /* NiceFaceClubRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72E257C1D6AE89300DA6E5C /* NiceFaceClubRF.swift */; };
 		E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = E72E25811D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m */; };
 		E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */; };
 		E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */; };
@@ -112,7 +110,6 @@
 		E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79C24D91D445057006754F1 /* FaceTextImageView.swift */; };
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
-		E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */; };
 		E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC6E1D4DCDE100306A69 /* AppService.swift */; };
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
@@ -152,7 +149,6 @@
 		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
 		E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */; };
 		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
-		E7DBF2EC1C9E94D600850A45 /* SetupChatImagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DBF2EB1C9E94D600850A45 /* SetupChatImagesController.swift */; };
 		E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */; };
 		E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */; };
 		E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */; };
@@ -181,11 +177,9 @@
 		E7F22C341C9BE5C100CD38D1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */; };
 		E7F22C361C9BE5D000CD38D1 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */; };
 		E7F22C381C9BE5DC00CD38D1 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */; };
-		E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */; };
 		E7F22C581C9BF19800CD38D1 /* country.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C571C9BF19800CD38D1 /* country.plist */; };
 		E7F22C5B1C9C202200CD38D1 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C591C9C202200CD38D1 /* SMS_SDK.framework */; };
 		E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */; };
-		E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */; };
 		E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */; };
 		E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */; };
 		E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F532E11D3A0DEC008078DE /* Conversation.storyboard */; };
@@ -193,10 +187,6 @@
 		E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */; };
 		E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E91D3A1F26008078DE /* GroupNameCell.swift */; };
 		E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */; };
-		E7F6F0771D6943CA001CD190 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F6F0751D6943CA001CD190 /* Assets.xcassets */; };
-		E7F6F0781D6943CA001CD190 /* NiceFaceClub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F6F0761D6943CA001CD190 /* NiceFaceClub.storyboard */; };
-		E7F6F07A1D69528F001CD190 /* SetupNiceFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0791D69528F001CD190 /* SetupNiceFaceViewController.swift */; };
-		E7F6F07C1D69A6D0001CD190 /* NiceFaceClubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F07B1D69A6D0001CD190 /* NiceFaceClubManager.swift */; };
 		E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */; };
 		E7F6F0821D69AB84001CD190 /* BahamutTaskQueueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */; };
 		E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */; };
@@ -205,16 +195,6 @@
 		E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A811D0510A100A05001 /* LittlePaper.strings */; };
 		E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E7F22C551C9BF13600CD38D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7B2A62491C4F66BE00A160C8;
-			remoteInfo = SMSSDUI;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E71844611D49E8A200D3EDEF /* Embed App Extensions */ = {
@@ -291,7 +271,6 @@
 		E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
 		E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewFlowLayouts.swift; sourceTree = "<group>"; };
 		E708AC001C86D7B70071104E /* UserGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserGuide.swift; sourceTree = "<group>"; };
-		E708AC0D1C86E24D0071104E /* UserGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserGuide.storyboard; sourceTree = "<group>"; };
 		E708AC671C86EC160071104E /* AliOSSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliOSSManager.swift; sourceTree = "<group>"; };
 		E708AC681C86EC160071104E /* FetchAliOSSExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAliOSSExtension.swift; sourceTree = "<group>"; };
 		E708AC691C86EC160071104E /* UploadAliOSSExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadAliOSSExtension.swift; sourceTree = "<group>"; };
@@ -330,7 +309,6 @@
 		E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatCellTableViewCell.swift; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
-		E72E257C1D6AE89300DA6E5C /* NiceFaceClubRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubRF.swift; sourceTree = "<group>"; };
 		E72E25801D6B2FFD00DA6E5C /* UIView+AEScaningEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AEScaningEffect.h"; sourceTree = "<group>"; };
 		E72E25811D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AEScaningEffect.m"; sourceTree = "<group>"; };
 		E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMessageListController.swift; sourceTree = "<group>"; };
@@ -355,7 +333,6 @@
 		E79C24D91D445057006754F1 /* FaceTextImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextImageView.swift; sourceTree = "<group>"; };
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
-		E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
 		E7ABAC6E1D4DCDE100306A69 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
 		E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageEventHandler.swift; sourceTree = "<group>"; };
 		E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueProtocal.swift; sourceTree = "<group>"; };
@@ -395,7 +372,6 @@
 		E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEditTextPropertyViewController.swift; sourceTree = "<group>"; };
 		E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		E7DBF2EB1C9E94D600850A45 /* SetupChatImagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupChatImagesController.swift; sourceTree = "<group>"; };
 		E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBackgroundPickerController.swift; sourceTree = "<group>"; };
 		E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListContactCell.swift; sourceTree = "<group>"; };
 		E7E237D31C998AEB008FF893 /* BahamutFilmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutFilmView.swift; sourceTree = "<group>"; };
@@ -427,12 +403,9 @@
 		E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSMSSDUI.a; path = "SMSSDKUI/build/Debug-iphoneos/libSMSSDUI.a"; sourceTree = "<group>"; };
-		E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SMSSDUI.xcodeproj; path = Vessage/Libs/SMSSDK/SMSSDKUI/SMSSDUI.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E7F22C571C9BF19800CD38D1 /* country.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = country.plist; sourceTree = "<group>"; };
 		E7F22C591C9C202200CD38D1 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SMSSDKUI.bundle; path = Vessage/Libs/SMSSDK/SMSSDKUI.bundle; sourceTree = SOURCE_ROOT; };
 		E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageCamera.swift; sourceTree = "<group>"; };
 		E7F2F3131D47C06D00343853 /* ChatImageMgrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageMgrViewController.swift; sourceTree = "<group>"; };
 		E7F532E11D3A0DEC008078DE /* Conversation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Conversation.storyboard; sourceTree = "<group>"; };
@@ -440,10 +413,6 @@
 		E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUsersCell.swift; sourceTree = "<group>"; };
 		E7F532E91D3A1F26008078DE /* GroupNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
 		E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzeImageSDK.swift; sourceTree = "<group>"; };
-		E7F6F0751D6943CA001CD190 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E7F6F0761D6943CA001CD190 /* NiceFaceClub.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NiceFaceClub.storyboard; sourceTree = "<group>"; };
-		E7F6F0791D69528F001CD190 /* SetupNiceFaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNiceFaceViewController.swift; sourceTree = "<group>"; };
-		E7F6F07B1D69A6D0001CD190 /* NiceFaceClubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubManager.swift; sourceTree = "<group>"; };
 		E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
 		E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueueProtocol.swift; sourceTree = "<group>"; };
 		E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetChatImagesTask.swift; sourceTree = "<group>"; };
@@ -464,7 +433,6 @@
 				E7F216691CFBD3FE00447DA9 /* libc++.tbd in Frameworks */,
 				E7F216671CFBD3D400447DA9 /* SystemConfiguration.framework in Frameworks */,
 				E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */,
-				E7F22C3B1C9BED7800CD38D1 /* libSMSSDUI.a in Frameworks */,
 				E7F22C5C1C9C202300CD38D1 /* MOBFoundation.framework in Frameworks */,
 				E7F22C381C9BE5DC00CD38D1 /* libstdc++.tbd in Frameworks */,
 				E7F22C361C9BE5D000CD38D1 /* JavaScriptCore.framework in Frameworks */,
@@ -506,7 +474,6 @@
 				E7F216681CFBD3FE00447DA9 /* libc++.tbd */,
 				E7F216661CFBD3D400447DA9 /* SystemConfiguration.framework */,
 				E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */,
-				E7F22C3A1C9BED7800CD38D1 /* libSMSSDUI.a */,
 				E7F22C371C9BE5DC00CD38D1 /* libstdc++.tbd */,
 				E7F22C351C9BE5D000CD38D1 /* JavaScriptCore.framework */,
 				E7F22C331C9BE5C100CD38D1 /* MessageUI.framework */,
@@ -801,7 +768,6 @@
 			isa = PBXGroup;
 			children = (
 				E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */,
-				E708AC0D1C86E24D0071104E /* UserGuide.storyboard */,
 				E708AB401C86CAA50071104E /* Main.storyboard */,
 				E708AB451C86CAA50071104E /* LaunchScreen.storyboard */,
 				E708AC9F1C8752010071104E /* AccountSign.storyboard */,
@@ -853,7 +819,7 @@
 		E708ACA41C87525A0071104E /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				E7DBF2E91C9E94BA00850A45 /* UserGuide */,
+				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
 				E708ACA51C87528D0071104E /* SignUpViewController.swift */,
 				E708ACA71C8752980071104E /* SignInViewController.swift */,
 			);
@@ -948,8 +914,7 @@
 		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
-				E7F6F07D1D69AAE8001CD190 /* VessageTaskQueue */,
-				E7AD24851D4CACDF00F266D8 /* VessageQueue */,
+				E7AD24851D4CACDF00F266D8 /* SendVessageQueue */,
 				E7EDE4901CFD1F970001983F /* ConversationView */,
 				E7C387EF1C982F510096AF85 /* ConversationList */,
 			);
@@ -975,14 +940,14 @@
 			name = VessageEventHandler;
 			sourceTree = "<group>";
 		};
-		E7AD24851D4CACDF00F266D8 /* VessageQueue */ = {
+		E7AD24851D4CACDF00F266D8 /* SendVessageQueue */ = {
 			isa = PBXGroup;
 			children = (
 				E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */,
 				E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */,
 				E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */,
 			);
-			name = VessageQueue;
+			name = SendVessageQueue;
 			sourceTree = "<group>";
 		};
 		E7B1529B1CAE5B2300830AB3 /* Message */ = {
@@ -1001,7 +966,6 @@
 		E7BFC3911CDB1C2C00CDB392 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				E7F6F0741D6943CA001CD190 /* NiceFaceClub */,
 				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
 				E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */,
 			);
@@ -1036,16 +1000,6 @@
 				E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */,
 			);
 			name = ConversationList;
-			sourceTree = "<group>";
-		};
-		E7DBF2E91C9E94BA00850A45 /* UserGuide */ = {
-			isa = PBXGroup;
-			children = (
-				E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */,
-				E7DBF2EB1C9E94D600850A45 /* SetupChatImagesController.swift */,
-				E7A97D641D296D2900EA6C39 /* InviteFriendsViewController.swift */,
-			);
-			name = UserGuide;
 			sourceTree = "<group>";
 		};
 		E7E237D21C998AEB008FF893 /* BahamutFilmView */ = {
@@ -1117,21 +1071,11 @@
 		E7F22C4A1C9BF12700CD38D1 /* SMS_SDK */ = {
 			isa = PBXGroup;
 			children = (
-				E7F22C5D1C9C204100CD38D1 /* SMSSDKUI.bundle */,
 				E7F22C591C9C202200CD38D1 /* SMS_SDK.framework */,
 				E7F22C5A1C9C202200CD38D1 /* MOBFoundation.framework */,
-				E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */,
 			);
 			name = SMS_SDK;
 			path = SMSSDK/SMS_SDK;
-			sourceTree = "<group>";
-		};
-		E7F22C521C9BF13600CD38D1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E7F22C561C9BF13600CD38D1 /* libSMSSDUI.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E7F532E61D3A1ED5008078DE /* GroupChatProfile */ = {
@@ -1142,25 +1086,6 @@
 				E7F532E91D3A1F26008078DE /* GroupNameCell.swift */,
 			);
 			name = GroupChatProfile;
-			sourceTree = "<group>";
-		};
-		E7F6F0741D6943CA001CD190 /* NiceFaceClub */ = {
-			isa = PBXGroup;
-			children = (
-				E7F6F0751D6943CA001CD190 /* Assets.xcassets */,
-				E7F6F0761D6943CA001CD190 /* NiceFaceClub.storyboard */,
-				E7F6F0791D69528F001CD190 /* SetupNiceFaceViewController.swift */,
-				E7F6F07B1D69A6D0001CD190 /* NiceFaceClubManager.swift */,
-				E72E257C1D6AE89300DA6E5C /* NiceFaceClubRF.swift */,
-			);
-			path = NiceFaceClub;
-			sourceTree = "<group>";
-		};
-		E7F6F07D1D69AAE8001CD190 /* VessageTaskQueue */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = VessageTaskQueue;
 			sourceTree = "<group>";
 		};
 		E7F6F07E1D69AB72001CD190 /* Queue */ = {
@@ -1232,28 +1157,12 @@
 			mainGroup = E708AB301C86CAA50071104E;
 			productRefGroup = E708AB3A1C86CAA50071104E /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E7F22C521C9BF13600CD38D1 /* Products */;
-					ProjectRef = E7F22C511C9BF13600CD38D1 /* SMSSDUI.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				E708AB381C86CAA50071104E /* Vessage */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E7F22C561C9BF13600CD38D1 /* libSMSSDUI.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSMSSDUI.a;
-			remoteRef = E7F22C551C9BF13600CD38D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E708AB371C86CAA50071104E /* Resources */ = {
@@ -1262,7 +1171,6 @@
 			files = (
 				E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
-				E708AC0E1C86E24D0071104E /* UserGuide.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
@@ -1278,13 +1186,10 @@
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */,
 				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
-				E7F6F0771D6943CA001CD190 /* Assets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
-				E7F6F0781D6943CA001CD190 /* NiceFaceClub.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
-				E7F22C5E1C9C204100CD38D1 /* SMSSDKUI.bundle in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
@@ -1348,7 +1253,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */,
-				E7F6F07C1D69A6D0001CD190 /* NiceFaceClubManager.swift in Sources */,
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
 				E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
@@ -1406,15 +1310,12 @@
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */,
 				E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */,
-				E72E257D1D6AE89300DA6E5C /* NiceFaceClubRF.swift in Sources */,
 				E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
-				E7DBF2EC1C9E94D600850A45 /* SetupChatImagesController.swift in Sources */,
-				E7A97D651D296D2900EA6C39 /* InviteFriendsViewController.swift in Sources */,
 				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
@@ -1494,7 +1395,6 @@
 				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
 				E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */,
 				E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */,
-				E7F6F07A1D69528F001CD190 /* SetupNiceFaceViewController.swift in Sources */,
 				E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

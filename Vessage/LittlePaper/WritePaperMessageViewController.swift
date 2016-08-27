@@ -68,7 +68,7 @@ class WritePaperMessageViewController: UIViewController,SelectVessageUserViewCon
                     self.dismissViewControllerAnimated(true, completion: {
                         if String.isNullOrEmpty(receiver.accountId){
                             let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-                                ShareHelper.showTellTextMsgToFriendsAlert(UIApplication.currentShowingViewController, content: "TELL_SENDED_U_A_LITTLE_PAPER".littlePaperString)
+                                ShareHelper.instance.showTellTextMsgToFriendsAlert(UIApplication.currentShowingViewController, content: "TELL_SENDED_U_A_LITTLE_PAPER".littlePaperString)
                             })
                             UIApplication.currentShowingViewController.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: receiver.nickName, actions: [send])
                         }

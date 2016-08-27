@@ -7,8 +7,40 @@
 //
 
 import Foundation
-class ShareHelper{
-    private static func sendTellFriendWX(type:UInt32,textMsg:String?){
+let kShareHelperShareType = "kShareHelperShareType"
+
+enum ShareHelperShareType:Int {
+    case SMS = 0
+    case WX_SESSION = 1
+    case WX_TIME_LINE = 2
+}
+
+class ShareHelper:NSNotificationCenter{
+    static let onShareSuccess = "onShareSuccess"
+    static let onShareFail = "onShareFail"
+    static let onShareCancel = "onShareCancel"
+    
+    static private(set) var instance:ShareHelper = {
+        let helper = ShareHelper()
+        NSNotificationCenter.defaultCenter().addObserver(helper, selector: #selector(ShareHelper.onWXShareResponse(_:)), name: OnWXShareResponse, object: nil)
+        return helper
+    }()
+    
+    func onWXShareResponse(a:NSNotification) {
+        if let resp = a.userInfo?[kWXShareResponseValue] as? SendMessageToWXResp {
+            let type = ShareHelperShareType.WX_SESSION.rawValue
+            let userInfo = [kShareHelperShareType:type]
+            if resp.errCode == WXSuccess.rawValue{
+                self.postNotificationName(ShareHelper.onShareSuccess, object: self, userInfo: userInfo)
+            }else if resp.errCode == WXErrCodeUserCancel.rawValue{
+                self.postNotificationName(ShareHelper.onShareFail, object: self, userInfo: userInfo)
+            }else{
+                self.postNotificationName(ShareHelper.onShareFail, object: self, userInfo: userInfo)
+            }
+        }
+    }
+    
+    private func sendTellFriendWX(type:UInt32,textMsg:String?){
         let url = "http://a.app.qq.com/o/simple.jsp?pkgname=cn.bahamut.vessage"
         let msg = WXMediaMessage()
         msg.title = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
@@ -28,19 +60,19 @@ class ShareHelper{
         WXApi.sendReq(req)
     }
     
-    static func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString()){
+    func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString()){
         
         let alert = UIAlertController(title: title, message: alertMsg, preferredStyle: .ActionSheet)
 
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
-            sendTellFriendWX(WXSceneSession.rawValue,textMsg: message)
+            self.sendTellFriendWX(WXSceneSession.rawValue,textMsg: message)
         }
         
         wxAction.setValue(UIImage(named: "share_wechat")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxAction)
         
         let wxTimeLineAction = UIAlertAction(title: "WECHAT_TIMELINE".localizedString(), style: .Default) { (ac) in
-            sendTellFriendWX(WXSceneTimeline.rawValue,textMsg: message)
+            self.sendTellFriendWX(WXSceneTimeline.rawValue,textMsg: message)
         }
         wxTimeLineAction.setValue(UIImage(named: "share_wechat_moment")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxTimeLineAction)
@@ -58,10 +90,10 @@ class ShareHelper{
         vc.showAlert(alert)
     }
     
-    static func showTellTextMsgToFriendsAlert(vc:UIViewController,content:String,smsReceiver:String? = nil){
+    func showTellTextMsgToFriendsAlert(vc:UIViewController,content:String,smsReceiver:String? = nil){
         let alert = UIAlertController(title: "TELL_FRIENDS".localizedString(), message: nil, preferredStyle: .ActionSheet)
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
-            sendTellFriendWX(WXSceneSession.rawValue, textMsg: content)
+            self.sendTellFriendWX(WXSceneSession.rawValue, textMsg: content)
         }
         wxAction.setValue(UIImage(named: "share_wechat")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxAction)
@@ -90,11 +122,14 @@ extension UIViewController:MFMessageComposeViewControllerDelegate,UINavigationCo
             switch result{
             case MessageComposeResultCancelled:
                 self.playCrossMark("CANCEL".localizedString())
+                ShareHelper.instance.postNotificationName(ShareHelper.onShareCancel, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
                 MobClick.event("Vege_CancelSendNotifySMS")
             case MessageComposeResultFailed:
                 self.playCrossMark("FAIL".localizedString())
+                ShareHelper.instance.postNotificationName(ShareHelper.onShareFail, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
             case MessageComposeResultSent:
                 self.playCheckMark("SUCCESS".localizedString())
+                ShareHelper.instance.postNotificationName(ShareHelper.onShareSuccess, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
                 MobClick.event("Vege_UserSendSMSToFriend")
             default:break;
             }

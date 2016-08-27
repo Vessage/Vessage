@@ -129,6 +129,7 @@ class ActivityListController: UITableViewController {
         let activityInfo = activityService.getEnabledActivities()[indexPath.row]
         let controller = UIViewController.instanceFromStoryBoard(activityInfo.storyBoardName, identifier: activityInfo.controllerIdentifier)
         if(activityInfo.isPushController){
+            controller.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(controller, animated: true)
         }else{
             self.presentViewController(controller, animated: true, completion: nil)

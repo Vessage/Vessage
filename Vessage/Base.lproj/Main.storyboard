@@ -110,9 +110,7 @@
                             <outlet property="delegate" destination="wPu-tu-atQ" id="WDg-HQ-ve0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="奇趣" id="158-Av-uUs">
-                        <barButtonItem key="backBarButtonItem" title="返回" id="edg-S4-Lic"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="奇趣" id="158-Av-uUs"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </tableViewController>

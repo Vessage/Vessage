@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
+class VessageAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
@@ -89,18 +89,6 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         VessageConfig.bahamutConfig = config
     }
     
-    //MARK: Weixin
-    private func configureWX() {
-        WXApi.registerApp(VessageConfig.bahamutConfig.wechatAppkey)
-    }
-    
-    func onReq(req: BaseReq!) {
-        
-    }
-    
-    func onResp(resp: BaseResp!) {
-        
-    }
     
     //MARK: Umeng
     private func configureUmeng()
@@ -203,3 +191,66 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
 
 }
 
+//MARK: Weixin
+let OnWXShareResponse = "OnWXShareResponse"
+let kWXShareResponseValue = "kWXShareResponseValue"
+extension VessageAppDelegate:WXApiDelegate{
+    private func configureWX() {
+        WXApi.registerApp(VessageConfig.bahamutConfig.wechatAppkey)
+    }
+    
+    func onReq(req: BaseReq!) {
+        if req is GetMessageFromWXReq
+        {
+            // 微信请求App提供内容， 需要app提供内容后使用sendRsp返回
+            let strTitle = "微信请求App提供内容"
+            let strMsg = "微信请求App提供内容，App要调用sendResp:GetMessageFromWXResp返回给微信"
+            
+            #if DEBUG
+                print(strTitle)
+                print(strMsg)
+            #endif
+        }
+        else if let temp = req as? ShowMessageFromWXReq
+        {
+            
+            let msg = temp.message
+            
+            //显示微信传过来的内容
+            let obj = msg.mediaObject
+            
+            let strTitle = "微信请求App显示内容"
+            let strMsg = String(format: "标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n\n", msg.title, msg.description, obj.extInfo, msg.thumbData.length)
+            
+            #if DEBUG
+                print(strTitle)
+                print(strMsg)
+            #endif
+        }
+        else if let _ = req as? LaunchFromWXReq
+        {
+            //从微信启动App
+            let strTitle = "从微信启动"
+            let strMsg = "这是从微信启动的消息"
+            
+            #if DEBUG
+                print(strTitle)
+                print(strMsg)
+            #endif
+        }
+    }
+    
+    func onResp(resp: BaseResp!) {
+        if let res = resp as? SendMessageToWXResp{
+            let strTitle = "发送媒体消息结果"
+            let strMsg = String(format: "errcode:%d", res.errCode)
+            NSNotificationCenter.defaultCenter().postNotificationName(OnWXShareResponse, object: self, userInfo: [kWXShareResponseValue:res])
+            #if DEBUG
+                print(strTitle)
+                print(strMsg)
+                print(res.errStr)
+            #endif
+        }
+    }
+
+}

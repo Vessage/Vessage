@@ -78,7 +78,7 @@ class LittlePaperMainController: UIViewController {
     }
     
     @IBAction func tellFriends(sender: AnyObject) {
-        ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIENDS_LITTLE_PAPER".littlePaperString,alertMsg: "TELL_FRIENDS_LITTLE_PAPER_ALERT_MSG".littlePaperString)
+        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIENDS_LITTLE_PAPER".littlePaperString,alertMsg: "TELL_FRIENDS_LITTLE_PAPER_ALERT_MSG".littlePaperString)
     }
     
     @IBAction func onClickNewPaperButton(sender: AnyObject) {

@@ -100,7 +100,7 @@ class ConversationListController: UITableViewController {
     }
     
     private func initMJRefreshHeader() {
-        let mjHeader = MJRefreshGifHeader(refreshingBlock: refreshNewUsers)
+        let mjHeader = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(ConversationListController.refreshNewUsers(_:)))
         mjHeader.lastUpdatedTimeLabel.hidden = true
         mjHeader.stateLabel.hidden = true
         mjHeader.setImages(hudSpinImageArray, forState: .Refreshing)
@@ -112,7 +112,7 @@ class ConversationListController: UITableViewController {
     
     private var refreshedNewUserTime:NSDate!
     private let refreshNewUserIntervalMinutes = 10.0
-    private func refreshNewUsers() {
+    func refreshNewUsers(sender:AnyObject) {
         if refreshedNewUserTime == nil || abs(refreshedNewUserTime.totalMinutesSinceNow.doubleValue) > refreshNewUserIntervalMinutes {
             self.refreshedNewUserTime = NSDate()
             let locationService = ServiceContainer.getLocationService()
@@ -208,7 +208,7 @@ class ConversationListController: UITableViewController {
     }
     
     @IBAction func tellFriends(sender: AnyObject) {
-        ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
     }
     
     private func removeConversation(conversationId:String,message:String?){

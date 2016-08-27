@@ -25,7 +25,7 @@ extension BahamutTaskQueue{
 class SendChatImageHandler: BahamutTaskQueueStepHandler,ProgressTaskDelegate {
     static let key = "SendChatImage"
     private var queue:BahamutTaskQueue!
-    private var uploadDict = [String:SendVessageQueueTask]()
+    private var uploadDict = [String:SetChatImagesTask]()
     
     func initHandler(queue: BahamutTaskQueue) {
         self.queue = queue
@@ -37,6 +37,7 @@ class SendChatImageHandler: BahamutTaskQueueStepHandler,ProgressTaskDelegate {
             if fileKey != nil{
                 task.fileId = fileKey.fileId
                 task.saveModel()
+                self.uploadDict.updateValue(task, forKey: uploadTaskId)
                 ProgressTaskWatcher.sharedInstance.addTaskObserver(uploadTaskId, delegate: self)
             }else{
                 queue.doTaskStepError(task,message: "GET_FILE_KEY_ERROR")
@@ -57,11 +58,6 @@ class SendChatImageHandler: BahamutTaskQueueStepHandler,ProgressTaskDelegate {
     
     @objc func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let task = uploadDict.removeValueForKey(taskIdentifier){
-            if let path = ServiceContainer.getFileService().getFilePath(task.vessage.fileId, type: .Video){
-                if !PersistentFileHelper.deleteFile(path){
-                    NSLog("Delete Sended Vessage Failed Error:%@", path)
-                }
-            }
             queue.nextStep(task)
         }
     }

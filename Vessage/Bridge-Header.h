@@ -18,7 +18,6 @@
 
 #import <SMS_SDK/SMSSDK.h>
 #import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
-#import "SMSSDKUI.h"
 
 #import "UMMobClick/MobClick.h"
 #import "UMessage.h"

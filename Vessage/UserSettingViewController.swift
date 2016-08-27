@@ -67,7 +67,7 @@ struct MyDetailCellModel {
 }
 
 //MARK:UserSettingViewController
-class UserSettingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate //,ChatBackgroundPickerControllerDelegate
+class UserSettingViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
 {
     static let aboutAppReuseId = "aboutApp"
     static let clearCacheCellReuseId = "clearCache"
@@ -240,68 +240,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         return resultCell
     }
     
-    /*
-    //MARK: change chat background
-    func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
-        sender.dismissViewControllerAnimated(true, completion: nil)
-    }
     
-    func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
-        
-    }
-    
-    func changeChatBcg(_:UITapGestureRecognizer)
-    {
-        ChatImageMgrViewController.showChatImageMgrVeiwController(self)
-    }
- */
-    
-    //MARK: bind mobile
-    func bindMobile(_:UITapGestureRecognizer)
-    {
-        #if RELEASE
-            SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
-                if responseState == SMSUIResponseStateSelfVerify{
-                    self.validateMobile(phoneNo, zone: zone, code: code)
-                }
-            }
-        #else
-            let title = "输入手机号"
-            let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-            alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
-                textfield.placeholder = "手机号"
-                textfield.borderStyle = .None
-            })
-            
-            let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
-                let phoneNo = alertController.textFields?[0].text ?? ""
-                if String.isNullOrEmpty(phoneNo)
-                {
-                    self.playToast("手机号不能为空")
-                }else{
-                    self.validateMobile(phoneNo, zone: "86", code: "1234")
-                }
-            })
-            let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
-            alertController.addAction(no)
-            alertController.addAction(yes)
-            self.showAlert(alertController)
-        #endif
-        
-    }
-    
-    private func validateMobile(phoneNo:String,zone:String,code:String){
-        let hud = self.showAnimationHud()
-        ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc,newUserId) -> Void in
-            hud.hideAsync(false)
-            if let newId = newUserId{
-                ServiceContainer.getAccountService().reBindUserId(newId)
-                EntryNavigationController.start()
-            }else if suc{
-                self.tableView.reloadData()
-            }
-        })
-    }
     
     //MARK: change password
     func changePassword(_:UITapGestureRecognizer)
@@ -358,47 +297,27 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         return cell
     }
     
-    /*
-    func tapTextProperty(aTap:UITapGestureRecognizer)
-    {
-        let cell = aTap.view as! MyDetailTextPropertyCell
-        if cell.info!.editable
-        {
-            let propertySet = cell.info!.propertySet
-            UIEditTextPropertyViewController.showEditPropertyViewController(self.navigationController!, propertySet:propertySet, controllerTitle: propertySet.propertyLabel, delegate: self)
-        }
-    }
-    
-    func editPropertySave(propertyIdentifier: String!, newValue: String!)
-    {
-        let userService = ServiceContainer.getUserService()
-        let ppt = self.textPropertyCells.filter{$0.propertySet.propertyIdentifier == propertyIdentifier}.first!
-        ppt.propertySet.propertyValue = newValue
-        switch propertyIdentifier
-        {
-            
-            case InfoIds.nickName:
-                userService.changeUserNickName(newValue){ isSuc in
-                    if isSuc
-                    {
-                        self.tableView.reloadData()
-                        self.playCheckMark(String(format: "MODIFY_KEY_SUC".localizedString(), "NICK".localizedString()))
-                    }else
-                    {
-                        self.playToast(String(format: "SET_KEY_FAILED".localizedString(), "NICK".localizedString()))
-                    }
-                    
-                }
-        default: break
-        }
-    }
- */
-    
     static func showUserSettingViewController(navController:UINavigationController){
         navController.pushViewController(instanceFromStoryBoard(), animated: true)
     }
     
     static func instanceFromStoryBoard()->UserSettingViewController{
         return instanceFromStoryBoard("User", identifier: "UserSettingViewController") as! UserSettingViewController
+    }
+}
+
+extension UserSettingViewController:ValidateMobileViewControllerDelegate{
+    //MARK: bind mobile
+    func bindMobile(_:UITapGestureRecognizer)
+    {
+        ValidateMobileViewController.showValidateMobileViewController(self,delegate: self)
+    }
+    
+    func validateMobileCancel(sender: ValidateMobileViewController) {
+        
+    }
+    
+    func validateMobile(sender: ValidateMobileViewController, suc: Bool) {
+        self.tableView.reloadData()
     }
 }

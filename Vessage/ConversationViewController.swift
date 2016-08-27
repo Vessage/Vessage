@@ -534,7 +534,7 @@ extension ConversationViewController{
     private func showSendTellFriendAlert(){
         let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
             let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
-            ShareHelper.showTellTextMsgToFriendsAlert(self, content: contentText)
+            ShareHelper.instance.showTellTextMsgToFriendsAlert(self, content: contentText)
         })
         let name = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
         self.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: name, actions: [send])
@@ -621,13 +621,12 @@ extension ConversationViewController{
 extension ConversationViewController:HandleBahamutCmdDelegate{
     func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
         switch method {
-        case "showInviteFriendsAlert":ShareHelper.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+        case "showInviteFriendsAlert":ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
         case "showSetupChatImagesController":showChatImagesMrgController(1)
         case "showSetupChatBackgroundController":showChatImagesMrgController(0)
         case "playNextButtonAnimation":playNextButtonAnimation()
         case "playFaceTextButtonAnimation":playFaceTextButtonAnimation()
         case "playVideoChatButtonAnimation":playVideoChatButtonAnimation()
-        case "showUserGuide":SetupChatImagesController.showSetupViewController(self)
         default:
             break
         }

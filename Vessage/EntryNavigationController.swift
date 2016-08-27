@@ -9,7 +9,7 @@
 import UIKit
 
 //MARK: EntryNavigationController
-class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate {
+class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate,ValidateMobileViewControllerDelegate {
 
     var launchScr:LaunchScreen!
     let screenWaitTimeInterval = 1.0
@@ -66,7 +66,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             BahamutTaskQueue.defaultInstance.useSetChatImageHandlers()
             showMainView()
         }else{
-            ValidateMobileViewController.showValidateMobileViewController(self)
+            ValidateMobileViewController.showValidateMobileViewController(self,delegate: self)
         }
         
         let locationService = ServiceContainer.getLocationService()
@@ -75,6 +75,15 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         }
         locationService.addObserver(self, selector: #selector(EntryNavigationController.onHereLocationUpdated(_:)), name: LocationService.hereUpdated, object: nil)
         BahamutRFKit.sharedInstance.addObserver(self, selector: #selector(EntryNavigationController.onTokenInvalidated(_:)), name: BahamutRFKit.onTokenInvalidated, object: nil)
+    }
+    
+    //MARK:ValidateMobileViewController Delegate
+    func validateMobile(sender: ValidateMobileViewController, rebindedNewUserId: String) {
+        ServiceContainer.getAccountService().reBindUserId(rebindedNewUserId)
+    }
+    
+    func validateMobileCancel(sender: ValidateMobileViewController) {
+        ServiceContainer.instance.userLogout()
     }
     
     func onTokenInvalidated(_:AnyObject)

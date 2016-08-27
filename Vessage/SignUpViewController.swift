@@ -16,13 +16,7 @@ let RegistAccountPasswordValue = "RegistAccountPasswordValue"
 //MARK: SignUpViewController
 class SignUpViewController: UIViewController {
 
-    @IBOutlet weak var signupButton: UIButton!{
-        didSet{
-            let img = UIImage(named: "nextRound")!.imageWithRenderingMode(.AlwaysTemplate)
-            signupButton.setImage(img, forState: .Normal)
-            signupButton.tintColor = UIColor.whiteColor()
-        }
-    }
+    @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var refreshingIndicator: UIActivityIndicatorView!{
         didSet{
             refreshingIndicator.hidesWhenStopped = true

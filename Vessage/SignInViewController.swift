@@ -18,13 +18,7 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
             refreshingIndicator.stopAnimating()
         }
     }
-    @IBOutlet weak var loginButton: UIButton!{
-        didSet{
-            let img = UIImage(named: "check")!.imageWithRenderingMode(.AlwaysTemplate)
-            loginButton.setImage(img, forState: .Normal)
-            loginButton.tintColor = UIColor.whiteColor()
-        }
-    }
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginInfoTextField: UITextField!{
         didSet{
             loginInfoTextField.delegate = self

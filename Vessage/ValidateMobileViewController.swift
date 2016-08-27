@@ -8,46 +8,79 @@
 
 import UIKit
 
+@objc
+protocol ValidateMobileViewControllerDelegate {
+    optional func validateMobile(sender:ValidateMobileViewController,suc:Bool)
+    optional func validateMobile(sender:ValidateMobileViewController,rebindedNewUserId:String)
+    optional func validateMobileCancel(sender:ValidateMobileViewController)
+}
+
 //MARK: ValidateMobileViewController
 class ValidateMobileViewController: UIViewController {
+    private var smsCodeSended = false
+    weak var delegate:ValidateMobileViewControllerDelegate?
+    private var exitButtonHandler:(()->Void)?
+    @IBOutlet weak var validateButton: UIButton!
+    @IBOutlet weak var smsCodeTextFiled: UITextField!
+    @IBOutlet weak var mobileTextField: UITextField!
     
     @IBAction func validateMobile(sender: AnyObject) {
-        #if DEBUG
-            showTestAlert()
-        #else
-            showSendSMSController()
-        #endif
-    }
-    
-    private func showSendSMSController(){
-        SMSSDKUI.showVerificationCodeViewWithMetohd(SMSGetCodeMethodSMS) { (responseState, phoneNo, zone,code, error) -> Void in
-            if responseState == SMSUIResponseStateSelfVerify{
-                self.validateMobile(phoneNo, zone: zone, code: code)
-            }
+        let mobile = self.mobileTextField?.text ?? ""
+        let code = self.smsCodeTextFiled?.text ?? ""
+        
+        if mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code) {
+            validateMobile(self.mobileTextField.text!, zone: "86", code: smsCodeTextFiled.text!)
+        }else if mobile.isMobileNumber(){
+            sendSMS()
         }
     }
     
-    private func showTestAlert(){
-        let title = "输入手机号"
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
-            textfield.placeholder = "手机号"
-            textfield.borderStyle = .None
-        })
-        
-        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
-            let phoneNo = alertController.textFields?[0].text ?? ""
-            if String.isNullOrEmpty(phoneNo)
-            {
-                self.playToast("手机号不能为空")
-            }else{
-                self.validateMobile(phoneNo, zone: "86", code: "1234")
+    @IBAction func mobileValueChanged(sender: AnyObject) {
+        updateButton()
+    }
+    
+    @IBAction func codeValueChanged(sender: AnyObject) {
+        updateButton()
+    }
+    
+    
+    
+    private func updateButton(){
+        let mobile = self.mobileTextField?.text ?? ""
+        let code = self.smsCodeTextFiled?.text ?? ""
+        validateButton.enabled = true
+        if mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code) {
+            validateButton.setImage(UIImage(named: "check")!, forState: .Normal)
+        }else if mobile.isMobileNumber(){
+            validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+        }else{
+            validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+            validateButton.enabled = false
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+        validateButton.enabled = false
+    }
+    
+    private func sendSMS(){
+        #if DEBUG
+            self.smsCodeSended = true
+            self.smsCodeTextFiled.becomeFirstResponder()
+        #else
+            let hud = self.showAnimationHud()
+            SMSSDK.getVerificationCodeByMethod(SMSGetCodeMethodSMS, phoneNumber: mobileTextField.text!, zone: "86", customIdentifier: nil) { (error) in
+                hud.hide(true)
+                if error == nil{
+                    self.smsCodeSended = true
+                    self.smsCodeTextFiled.becomeFirstResponder()
+                }else{
+                    self.playCrossMark("GET_SMS_CODE_ERROR".localizedString())
+                }
             }
-        })
-        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
-        alertController.addAction(no)
-        alertController.addAction(yes)
-        self.showAlert(alertController)
+        #endif
     }
     
     private func validateMobile(phoneNo:String,zone:String,code:String){
@@ -55,11 +88,14 @@ class ValidateMobileViewController: UIViewController {
         ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc,newUserId) -> Void in
             hud.hideAsync(false)
             if let newId = newUserId{
-                ServiceContainer.getAccountService().reBindUserId(newId)
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismissViewControllerAnimated(true){
+                    self.delegate?.validateMobile?(self, rebindedNewUserId: newId)
+                }
                 MobClick.event("Vege_FinishValidateMobile")
             }else if suc{
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismissViewControllerAnimated(true){
+                    self.delegate?.validateMobile?(self, suc: true)
+                }
                 MobClick.event("Vege_FinishValidateMobile")
             }else{
                 self.playToast("VALIDATE_MOBILE_CODE_ERROR".localizedString())
@@ -68,13 +104,15 @@ class ValidateMobileViewController: UIViewController {
     }
     
     @IBAction func logout(sender: AnyObject) {
-        ServiceContainer.instance.userLogout()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true){
+        }
+        self.delegate?.validateMobileCancel?(self)
     }
     
-    static func showValidateMobileViewController(vc:UIViewController)
+    static func showValidateMobileViewController(vc:UIViewController,delegate:ValidateMobileViewControllerDelegate?)
     {
-        let controller = instanceFromStoryBoard("UserGuide", identifier: "ValidateMobileViewController") as! ValidateMobileViewController
+        let controller = instanceFromStoryBoard("AccountSign", identifier: "ValidateMobileViewController") as! ValidateMobileViewController
+        controller.delegate = delegate
         vc.presentViewController(controller, animated: true) { () -> Void in
             
         }

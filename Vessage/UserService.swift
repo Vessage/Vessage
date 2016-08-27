@@ -530,7 +530,7 @@ extension UserService{
         req.code = code
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ValidateMobileResult>) -> Void in
             if result.isSuccess{
-                NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: nil, userInfo: nil)
+                
                 if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
                     #if DEBUG
                         print("---------------------------------------------")
@@ -548,8 +548,6 @@ extension UserService{
                     callback(suc: true, newUserId: nil)
                 }
             }else{
-                let error = NSError(domain: "", code: result.statusCode ?? 999, userInfo: nil)
-                NSNotificationCenter.defaultCenter().postNotificationName("OnValidateMobileCodeResult", object: error, userInfo: nil)
                 callback(suc: false,newUserId: nil)
             }
         }

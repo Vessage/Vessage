@@ -291,13 +291,13 @@ extension ChatBackgroundPickerController{
             
         }else
         {
-            hud.hide(true)
+            hud.hideAnimated(true)
             self.playToast("SET_CHAT_BCG_FAILED".localizedString())
         }
     }
     
     func onTaskFinished(a:NSNotification) {
-        hud?.hide(true)
+        hud.hideAnimated(true)
         BahamutTaskQueue.defaultInstance.removeObserver(self)
         let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
             if let handler = self.delegate?.chatBackgroundPickerSetedImage{
@@ -308,13 +308,13 @@ extension ChatBackgroundPickerController{
     }
     
     func onTaskStepError(a:NSNotification) {
-        hud?.hide(true)
+        hud.hideAnimated(true)
         BahamutTaskQueue.defaultInstance.removeObserver(self)
         self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
     }
     
     func onTaskCanceled(a:NSNotification) {
-        hud?.hide(true)
+        hud.hideAnimated(true)
         BahamutTaskQueue.defaultInstance.removeObserver(self)
         self.showAlert("SET_CHAT_BCG_FAILED".localizedString(), msg: nil)
     }

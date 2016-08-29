@@ -11,27 +11,44 @@ import LTMorphingLabel
 import MJRefresh
 
 class NiceFaceGuessYouController: UIViewController {
+    static let audioSwipe:NSURL = {
+        NSBundle.mainBundle().URLForResource("nfc_swipe", withExtension: "wav")!
+    }()
+    static let audioBingo:NSURL = {
+        NSBundle.mainBundle().URLForResource("nfc_bingo", withExtension: "wav")!
+    }()
     
-    @IBOutlet weak var leftAnswerLabel: LTMorphingLabel!{
+    static let audioError:NSURL = {
+        NSBundle.mainBundle().URLForResource("nfc_error", withExtension: "wav")!
+    }()
+    
+    let leftAnswerColor = UIColor.orangeColor()
+    let rightAnswerColor = UIColor.purpleColor()
+    
+    @IBOutlet weak var leftAnswerLabel: UILabel!{
         didSet{
             leftAnswerLabel.hidden = true
-            leftAnswerLabel.morphingEffect = .Evaporate
-            leftAnswerLabel.backgroundColor = UIColor.orangeColor()
+            //leftAnswerLabel.morphingEffect = .Evaporate
+            leftAnswerLabel.backgroundColor = leftAnswerColor
             leftAnswerLabel.clipsToBounds = true
             leftAnswerLabel.layer.cornerRadius = leftAnswerLabel.frame.height / 2
             leftAnswerLabel.userInteractionEnabled = true
             leftAnswerLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.tapLeftAnswer(_:))))
+            leftAnswerLabel.layer.borderColor = leftAnswerColor.CGColor
+            leftAnswerLabel.layer.borderWidth = 1
         }
     }
-    @IBOutlet weak var rightAnswerLabel: LTMorphingLabel!{
+    @IBOutlet weak var rightAnswerLabel: UILabel!{
         didSet{
             rightAnswerLabel.hidden = true
-            rightAnswerLabel.morphingEffect = .Evaporate
-            rightAnswerLabel.backgroundColor = UIColor.purpleColor()
+            //rightAnswerLabel.morphingEffect = .Evaporate
+            rightAnswerLabel.backgroundColor = rightAnswerColor
             rightAnswerLabel.clipsToBounds = true
             rightAnswerLabel.layer.cornerRadius = rightAnswerLabel.frame.height / 2
             rightAnswerLabel.userInteractionEnabled = true
             rightAnswerLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.tapRightAnswer(_:))))
+            rightAnswerLabel.layer.borderColor = rightAnswerColor.CGColor
+            rightAnswerLabel.layer.borderWidth = 1
         }
     }
     @IBOutlet weak var tableView: UITableView!{
@@ -44,6 +61,7 @@ class NiceFaceGuessYouController: UIViewController {
         didSet{
             puzzleLabel.text = nil
             puzzleLabel.morphingEffect = .Sparkle
+            puzzleLabel.layer.cornerRadius = puzzleLabel.frame.height / 2
         }
     }
     
@@ -71,9 +89,11 @@ class NiceFaceGuessYouController: UIViewController {
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Bottom)
                 if isShowingMyProfile {
                     flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
-                }else if !swipeTipsShown{
-                    flashTipsLabel("SELECT_ANSWER_TIPS".niceFaceClubString)
-                    swipeTipsShown = true
+                }else {
+                    if !swipeTipsShown{
+                        flashTipsLabel("SELECT_ANSWER_TIPS".niceFaceClubString)
+                        swipeTipsShown = true
+                    }
                 }
             }
         }
@@ -85,18 +105,20 @@ class NiceFaceGuessYouController: UIViewController {
     }
     
     private var isShowingMyProfile:Bool{
-        return profile != nil && myProfile != nil && profile.profileId == myProfile.profileId
+        return profile != nil && myProfile != nil && profile.id == myProfile.id
     }
     
     private var swipeTipsShown = false
+    private var showLoadMordTipsTimes = 0
     
     private var currentPuzzleIndex = 0{
         didSet{
             leftAnswerLabel?.hidden = currentPuzzle == nil || isShowingMyProfile
             rightAnswerLabel?.hidden = currentPuzzle == nil || isShowingMyProfile
             self.puzzleLabel?.text = nil
+            self.puzzleLabel?.layer.borderWidth = 0
             if isShowingMyProfile {
-                puzzleLabel?.text = nil
+                puzzleLabel?.text = " "
             }else if self.profile?.sex > 0{
                 puzzleLabel?.text = "HE_LIKES".niceFaceClubString
             }else if self.profile?.sex < 0{
@@ -129,6 +151,7 @@ extension NiceFaceGuessYouController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
+        /*
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(NiceFaceGuessYouController.onPullTableView(_:)))
         header.setTitle("PULL_TO_NEXT_PROFILE".niceFaceClubString, forState: .Idle)
         header.setTitle("PULL_TO_NEXT_PROFILE".niceFaceClubString, forState: .Pulling)
@@ -136,12 +159,18 @@ extension NiceFaceGuessYouController{
         header.setTitle("PULL_TO_NEXT_PROFILE".niceFaceClubString, forState: .WillRefresh)
         header.lastUpdatedTimeLabel.hidden = true
         tableView.mj_header = header
+ */
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.tapView(_:)))
+        self.view.addGestureRecognizer(tapGes)
         let swipeLeftGes = UISwipeGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.swipeLeft(_:)))
         let swipeRightGes = UISwipeGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.swipeRight(_:)))
+        let swipeDownGes = UISwipeGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.swipeDown(_:)))
         swipeLeftGes.direction = .Left
         swipeRightGes.direction = .Right
+        swipeDownGes.direction = .Down
         self.view.addGestureRecognizer(swipeLeftGes)
         self.view.addGestureRecognizer(swipeRightGes)
+        self.view.addGestureRecognizer(swipeDownGes)
     }
     
     func showBenchMarkAlert() {
@@ -160,7 +189,6 @@ extension NiceFaceGuessYouController{
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.hidesBarsOnTap = false
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -170,35 +198,28 @@ extension NiceFaceGuessYouController{
         initMyProfile()
     }
     
-    private func hideNavBar(){
-        self.navigationController?.hidesBarsOnTap = true
-        dispatch_main_queue_after(1000) {
+    private func hideNavBar(delay:UInt64=1000){
+        dispatch_main_queue_after(delay) {
             self.navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
     
     private func initMyProfile(){
-        if NiceFaceClubManager.instance.refreshCachedMyFaceProfile() == nil{
-            let hud = self.showAnimationHud()
-            NiceFaceClubManager.instance.getMyNiceFaceProfile({ (mp) in
-                hud.hide(true)
-                if let p = mp{
-                    self.profile = p
-                    if p.score < NiceFaceClubManager.minScore{
-                        self.showBenchMarkAlert()
-                    }
-                }else{
-                    let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-                        self.navigationController?.popViewControllerAnimated(true)
-                    })
-                    self.showAlert("NICE_FACE_CLUB".niceFaceClubString, msg: "FETCH_YOUR_PROFILE_ERROR".niceFaceClubString, actions: [ok])
+        let hud = self.showAnimationHud()
+        NiceFaceClubManager.instance.getMyNiceFaceProfile({ (mp) in
+            hud.hideAnimated(true)
+            if let p = mp{
+                self.profile = p
+                if p.score < NiceFaceClubManager.minScore{
+                    self.showBenchMarkAlert()
                 }
-            })
-        }else if myProfile.score < NiceFaceClubManager.minScore{
-            self.showBenchMarkAlert()
-        }else if profile == nil{
-            profile = myProfile
-        }
+            }else{
+                let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+                self.showAlert("NICE_FACE_CLUB".niceFaceClubString, msg: "FETCH_YOUR_PROFILE_ERROR".niceFaceClubString, actions: [ok])
+            }
+        })
     }
 }
 
@@ -212,7 +233,7 @@ extension NiceFaceGuessYouController{
         self.tipsLabel.text = msg
         self.tipsLabel.sizeToFit()
         let x = self.view.frame.width / 2
-        let y = self.tableView.frame.origin.y + self.tableView.frame.height + 16
+        let y = self.tableView.frame.origin.y + self.tableView.frame.height + 13
         self.tipsLabel.center = CGPointMake(x, y)
         self.view.addSubview(self.tipsLabel)
         UIAnimationHelper.flashView(self.tipsLabel, duration: 0.6, autoStop: true, stopAfterMs: 3600){
@@ -256,7 +277,7 @@ extension NiceFaceGuessYouController{
         UserSexValueViewController.showUserProfileViewController(self, sexValue: ServiceContainer.getUserService().myProfile.sex){ newValue in
             let hud = self.showAnimationHud()
             ServiceContainer.getUserService().setUserSexValue(newValue){ suc in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if suc{
                     self.playCheckMark("EDIT_SEX_VALUE_SUC".localizedString()){
                     }
@@ -268,71 +289,75 @@ extension NiceFaceGuessYouController{
     }
     
     func onPullTableView(sender:AnyObject) {
-        nextProfile()
-    }
-    
-    func swipeDown(ges:UISwipeGestureRecognizer)  {
         
     }
     
-    func swipeLeft(ges:UITapGestureRecognizer)  {
+    func tapView(ges:UITapGestureRecognizer)  {
+        let point = ges.locationInView(self.view)
+        if point.y < self.view.frame.height * 0.33 {
+            self.navigationController?.setNavigationBarHidden(!self.navigationController!.navigationBarHidden, animated: true)
+        }
+    }
+    
+    func swipeDown(ges:UIGestureRecognizer)  {
+        hideNavBar(0)
+        nextProfile()
+    }
+    
+    func swipeLeft(ges:UIGestureRecognizer)  {
         tapLeftAnswer(ges)
     }
     
-    func swipeRight(ges:UITapGestureRecognizer)  {
+    func swipeRight(ges:UIGestureRecognizer)  {
         tapRightAnswer(ges)
     }
     
-    func tapLeftAnswer(ges:UITapGestureRecognizer) {
+    func tapLeftAnswer(ges:UIGestureRecognizer) {
+        selectAnswer(true, view: self.leftAnswerLabel)
+    }
+    
+    func tapRightAnswer(ges:UIGestureRecognizer) {
+        selectAnswer(false, view: self.rightAnswerLabel)
+    }
+    
+    private func selectAnswer(left:Bool,view:UIView){
+        hideNavBar(0)
         if isShowingMyProfile {
             return
         }
         if let cp = currentPuzzle {
-            SystemSoundHelper.keyTink()
-            leftAnswerLabel.animationMaxToMin(0.1, maxScale: 1.2, completion: {
-                self.selectedAnswer.append(cp.leftAnswer)
+            self.playSwipeAudio()
+            view.animationMaxToMin(0.1, maxScale: 1.6, completion: {
+                self.selectedAnswer.append(left ? cp.leftAnswer:cp.rightAnswer)
                 self.nextPuzzle()
             })
         }
     }
     
-    func tapRightAnswer(ges:UITapGestureRecognizer) {
-        if isShowingMyProfile {
-            return
-        }
-        if let cp = currentPuzzle {
-            SystemSoundHelper.keyTink()
-            rightAnswerLabel.animationMaxToMin(0.1, maxScale: 1.2, completion: {
-                self.selectedAnswer.append(cp.rightAnswer)
-                self.nextPuzzle()
-            })
-        }
+    private func playSwipeAudio() {
+        SystemSoundHelper.playSound(NiceFaceGuessYouController.audioSwipe)
     }
     
     private func nextProfile(){
         if profiles.count <= 1 {
             loadMoreProfiles()
-        }else if self.profiles.count > 1{
-            if let p = self.profile {
-                profiles.removeElement{$0.profileId == p.profileId}
-            }
-        }
-        if profiles.count > 0 {
-            self.profile = profiles[random() % profiles.count]
-            self.tableView?.mj_header.endRefreshing()
         }else{
-            loadMoreProfiles()
+            if let p = self.profile {
+                profiles.removeElement{$0.id == p.id}
+            }
+            self.profile = profiles[random() % profiles.count]
+            self.playSwipeAudio()
         }
     }
     
     private func loadMoreProfiles() {
         let hud = self.showAnimationHud()
         NiceFaceClubManager.instance.loadProfiles({ (profiles) in
-            hud.hide(true)
-            self.tableView?.mj_header.endRefreshing()
+            hud.hideAnimated(true)
             if profiles.count > 0{
                 self.profiles.appendContentsOf(profiles)
                 self.profile = self.profiles[random() % profiles.count]
+                self.playSwipeAudio()
             }
         })
     }
@@ -347,18 +372,30 @@ extension NiceFaceGuessYouController{
     }
     
     private func finishAnswer(){
-        puzzleLabel.text = selectedAnswer.joinWithSeparator("")
+        puzzleLabel.text = selectedAnswer.filter{!$0.hasBegin("#")}.joinWithSeparator("")
+        if let colorHex = (selectedAnswer.filter{$0.hasBegin("#")}.first){
+            let color = UIColor.init(hexString: colorHex)
+            puzzleLabel.layer.borderColor = color.CGColor
+            puzzleLabel.layer.borderWidth = 2
+        }
         let hud = self.showAnimationHud()
-        NiceFaceClubManager.instance.guessMember(self.profile.profileId, answer: selectedAnswer){ res in
-            hud.hide(true)
+        NiceFaceClubManager.instance.guessMember(self.profile.id, answer: selectedAnswer){ res in
+            hud.hideAnimated(true)
             if res.pass{
+                SystemSoundHelper.playSound(NiceFaceGuessYouController.audioBingo)
                 let ok = UIAlertAction(title: "GO_CHAT".niceFaceClubString, style: .Default, handler: { (ac) in
-                    ConversationViewController.showConversationViewController(self.navigationController!, userId: res.memberUserId)
+                    ConversationViewController.showConversationViewController(self.navigationController!, userId: res.userId)
                 })
-                self.showAlert(self.profile.nick, msg: "YOU_GUESS_ME".niceFaceClubString,actions: [ok])
+                self.showAlert(self.profile.nick, msg: res.msg.niceFaceClubString,actions: [ok])
             }else{
-                let oo = UIAlertAction(title: "OO".niceFaceClubString, style: .Cancel, handler: nil)
-                self.showAlert(self.profile.nick, msg: "YOU_NOT_GUESS_ME".niceFaceClubString,actions: [oo])
+                SystemSoundHelper.playSound(NiceFaceGuessYouController.audioError)
+                self.showLoadMordTipsTimes += 1
+                if self.showLoadMordTipsTimes < 3{
+                    self.flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
+                }
+                self.puzzleLabel?.text = " "
+                self.puzzleLabel?.layer.borderWidth = 0
+                self.puzzleLabel?.text = res.msg
             }
         }
     }
@@ -368,17 +405,19 @@ extension NiceFaceGuessYouController{
             leftAnswerLabel.text = nil
             rightAnswerLabel.text = nil
             if cp.leftAnswer.hasBegin("#") {
+                leftAnswerLabel.text = " "
                 leftAnswerLabel.backgroundColor = UIColor(hexString: cp.leftAnswer)
             }else{
                 leftAnswerLabel.text = cp.leftAnswer
-                leftAnswerLabel.backgroundColor = UIColor.orangeColor()
+                leftAnswerLabel.backgroundColor = leftAnswerColor
             }
             
             if cp.rightAnswer.hasBegin("#") {
+                rightAnswerLabel.text = " "
                 rightAnswerLabel.backgroundColor = UIColor(hexString: cp.rightAnswer)
             }else{
                 rightAnswerLabel.text = cp.rightAnswer
-                rightAnswerLabel.backgroundColor = UIColor.redColor()
+                rightAnswerLabel.backgroundColor = rightAnswerColor
             }
         }
     }
@@ -413,7 +452,7 @@ class NiceFaceImageCell: UITableViewCell {
     @IBOutlet weak var dislikeButton: UIButton!
     @IBOutlet weak var faceImageView: UIImageView!
     @IBOutlet weak var faceScoreLabel: UILabel!
-    
+    weak var rootController:NiceFaceGuessYouController!
     func updateCell() {
         likeButton?.hidden = true
         dislikeButton?.hidden = true
@@ -421,13 +460,16 @@ class NiceFaceImageCell: UITableViewCell {
         if let p = self.profile {
             faceScoreProgress?.setProgress(p.score / 10, animated: true)
             faceScoreLabel?.text = "\(p.score)"
-            ServiceContainer.getFileService().setAvatar(self.faceImageView, iconFileId: p.faceImage)
+            let hud = rootController?.showAnimationHud()
+            ServiceContainer.getFileService().setAvatar(self.faceImageView, iconFileId: p.faceId){ suc in
+                hud?.hideAnimated(true)
+            }
         }
         
     }
     
     @IBAction func dislike(sender: AnyObject) {
-        NiceFaceClubManager.instance.dislikeMember(self.profile.profileId)
+        NiceFaceClubManager.instance.dislikeMember(self.profile.id)
         likeButton.hidden = true
         dislikeButton.hidden = true
         flashTipsLabel.text = "PROFILE_NICE_DOWN".niceFaceClubString
@@ -442,7 +484,7 @@ class NiceFaceImageCell: UITableViewCell {
     }
     
     @IBAction func like(sender: AnyObject) {
-        NiceFaceClubManager.instance.likeMember(self.profile.profileId)
+        NiceFaceClubManager.instance.likeMember(self.profile.id)
         likeButton.hidden = true
         dislikeButton.hidden = true
         flashTipsLabel.text = "PROFILE_NICE_UP".niceFaceClubString
@@ -463,6 +505,7 @@ extension NiceFaceGuessYouController:UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(NiceFaceImageCell.reuseId, forIndexPath: indexPath) as! NiceFaceImageCell
         cell.profile = self.profile
+        cell.rootController = self
         return cell
     }
     

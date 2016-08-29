@@ -46,7 +46,7 @@ extension ConversationListController:UISearchBarDelegate
                     if nil == userService.getCachedUserByAccountId(accoundId){
                         let hud = self.showAnimationHud()
                         userService.getUserProfileByAccountId(accoundId, updatedCallback: { (user) in
-                            hud.hide(true)
+                            hud.hideAnimated(true)
                             if let u = user{
                                 let model = SearchResultModel(keyword: accoundId,user: u)
                                 self.searchResult.insert(model, atIndex: 0)

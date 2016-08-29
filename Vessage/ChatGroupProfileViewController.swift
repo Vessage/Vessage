@@ -147,7 +147,7 @@ extension ChatGroupProfileViewController{
             }else{
                 let hud = self.showAnimationHud()
                 ServiceContainer.getChatGroupService().editChatGroupName(self.chatGroup.groupId, inviteCode: self.chatGroup.inviteCode, newName: newNoteName){ suc in
-                    hud.hide(true)
+                    hud.hideAnimated(true)
                     if suc{
                         self.playCheckMark("GROUP_NAME_EDITED".localizedString())
                     }else{
@@ -168,7 +168,7 @@ extension ChatGroupProfileViewController{
         let okAction = UIAlertAction(title: "YES".localizedString(), style: .Default) { (ac) in
             let hud = self.showAnimationHud()
             ServiceContainer.getChatGroupService().quitChatGroup(self.chatGroup.groupId){ suc in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if suc{
                     self.playToast("YOU_EXITED_GROUP_CHAT".localizedString()){
                         self.navigationController?.popViewControllerAnimated(true)

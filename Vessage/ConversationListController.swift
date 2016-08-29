@@ -225,7 +225,7 @@ class ConversationListController: UITableViewController {
         }else{
             let hud = self.showAnimationHud()
             self.userService.registNewUserByMobile(mobile, noteName: noteName ?? mobile, updatedCallback: { (user) in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if let u = user{
                     ConversationViewController.showConversationViewController(self.navigationController!, userId: u.userId)
                 }else{

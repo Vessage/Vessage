@@ -38,7 +38,7 @@ class ConversationListGroupChatCell: ConversationListCellBase,SelectVessageUserV
         let groupName = String(format: "GROUP_CHAT_WITH_X_X_PEOPLE".localizedString(), selectedUsers.first!.nickName,"\(selectedUsers.count + 1)")
         let hud = self.rootController.showAnimationHud()
         ServiceContainer.getChatGroupService().createChatGroup(groupName,userIds: selectedUsers.map{$0.userId}){ chatGroup in
-            hud.hide(true)
+            hud.hideAnimated(true)
             if let cg = chatGroup{
                 let conversation = ServiceContainer.getConversationService().openConversationByGroup(cg)
                 ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: conversation)

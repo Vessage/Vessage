@@ -72,7 +72,7 @@ class ValidateMobileViewController: UIViewController {
         #else
             let hud = self.showAnimationHud()
             SMSSDK.getVerificationCodeByMethod(SMSGetCodeMethodSMS, phoneNumber: mobileTextField.text!, zone: "86", customIdentifier: nil) { (error) in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if error == nil{
                     self.smsCodeSended = true
                     self.smsCodeTextFiled.becomeFirstResponder()

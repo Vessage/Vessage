@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */; };
+		E7006AB41D7276F5002D8776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7006AAB1D7276F5002D8776 /* Assets.xcassets */; };
+		E7006AB51D7276F5002D8776 /* NFCMessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AAC1D7276F5002D8776 /* NFCMessageAlert.swift */; };
+		E7006AB61D7276F5002D8776 /* NiceFaceClub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7006AAD1D7276F5002D8776 /* NiceFaceClub.storyboard */; };
+		E7006AB71D7276F5002D8776 /* NiceFaceClub.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7006AAE1D7276F5002D8776 /* NiceFaceClub.strings */; };
+		E7006AB81D7276F5002D8776 /* NiceFaceClubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AAF1D7276F5002D8776 /* NiceFaceClubManager.swift */; };
+		E7006AB91D7276F5002D8776 /* NiceFaceClubRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB01D7276F5002D8776 /* NiceFaceClubRF.swift */; };
+		E7006ABA1D7276F5002D8776 /* NiceFaceGuessYouController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB11D7276F5002D8776 /* NiceFaceGuessYouController.swift */; };
+		E7006ABB1D7276F5002D8776 /* PuzzleAnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB21D7276F5002D8776 /* PuzzleAnswerController.swift */; };
+		E7006ABC1D7276F5002D8776 /* SetupNiceFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB31D7276F5002D8776 /* SetupNiceFaceViewController.swift */; };
 		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
 		E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ConversationViewController.swift */; };
 		E708AB421C86CAA50071104E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AB401C86CAA50071104E /* Main.storyboard */; };
@@ -216,6 +225,15 @@
 		B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Faceboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
 		CC1E1CDDEB7ADF7CC49DE252 /* Pods-Faceboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Faceboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Faceboard/Pods-Faceboard.debug.xcconfig"; sourceTree = "<group>"; };
+		E7006AAB1D7276F5002D8776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E7006AAC1D7276F5002D8776 /* NFCMessageAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMessageAlert.swift; sourceTree = "<group>"; };
+		E7006AAD1D7276F5002D8776 /* NiceFaceClub.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NiceFaceClub.storyboard; sourceTree = "<group>"; };
+		E7006AAE1D7276F5002D8776 /* NiceFaceClub.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = NiceFaceClub.strings; sourceTree = "<group>"; };
+		E7006AAF1D7276F5002D8776 /* NiceFaceClubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubManager.swift; sourceTree = "<group>"; };
+		E7006AB01D7276F5002D8776 /* NiceFaceClubRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubRF.swift; sourceTree = "<group>"; };
+		E7006AB11D7276F5002D8776 /* NiceFaceGuessYouController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceGuessYouController.swift; sourceTree = "<group>"; };
+		E7006AB21D7276F5002D8776 /* PuzzleAnswerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleAnswerController.swift; sourceTree = "<group>"; };
+		E7006AB31D7276F5002D8776 /* SetupNiceFaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNiceFaceViewController.swift; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
 		E708AB3E1C86CAA50071104E /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -485,6 +503,22 @@
 				B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E7006AAA1D7276F5002D8776 /* NiceFaceClub */ = {
+			isa = PBXGroup;
+			children = (
+				E7006AAB1D7276F5002D8776 /* Assets.xcassets */,
+				E7006AAC1D7276F5002D8776 /* NFCMessageAlert.swift */,
+				E7006AAD1D7276F5002D8776 /* NiceFaceClub.storyboard */,
+				E7006AAF1D7276F5002D8776 /* NiceFaceClubManager.swift */,
+				E7006AAE1D7276F5002D8776 /* NiceFaceClub.strings */,
+				E7006AB01D7276F5002D8776 /* NiceFaceClubRF.swift */,
+				E7006AB11D7276F5002D8776 /* NiceFaceGuessYouController.swift */,
+				E7006AB21D7276F5002D8776 /* PuzzleAnswerController.swift */,
+				E7006AB31D7276F5002D8776 /* SetupNiceFaceViewController.swift */,
+			);
+			path = NiceFaceClub;
 			sourceTree = "<group>";
 		};
 		E708AB301C86CAA50071104E = {
@@ -966,6 +1000,7 @@
 		E7BFC3911CDB1C2C00CDB392 /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E7006AAA1D7276F5002D8776 /* NiceFaceClub */,
 				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
 				E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */,
 			);
@@ -1175,6 +1210,7 @@
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */,
+				E7006AB41D7276F5002D8776 /* Assets.xcassets in Resources */,
 				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
 				E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
@@ -1188,12 +1224,14 @@
 				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
+				E7006AB71D7276F5002D8776 /* NiceFaceClub.strings in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
+				E7006AB61D7276F5002D8776 /* NiceFaceClub.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,6 +1304,7 @@
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
 				E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */,
+				E7006ABA1D7276F5002D8776 /* NiceFaceGuessYouController.swift in Sources */,
 				E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */,
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
 				E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */,
@@ -1279,6 +1318,7 @@
 				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
 				E708AB701C86CE1D0071104E /* CommonValueCast.swift in Sources */,
 				E708AB6C1C86CE1D0071104E /* ArrayUtil.swift in Sources */,
+				E7006ABC1D7276F5002D8776 /* SetupNiceFaceViewController.swift in Sources */,
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
 				E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
@@ -1315,6 +1355,7 @@
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */,
+				E7006AB81D7276F5002D8776 /* NiceFaceClubManager.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
@@ -1360,6 +1401,7 @@
 				E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
+				E7006ABB1D7276F5002D8776 /* PuzzleAnswerController.swift in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */,
 				E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */,
@@ -1371,6 +1413,7 @@
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
+				E7006AB51D7276F5002D8776 /* NFCMessageAlert.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
 				E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */,
 				E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */,
@@ -1385,6 +1428,7 @@
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
 				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,
 				E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */,
+				E7006AB91D7276F5002D8776 /* NiceFaceClubRF.swift in Sources */,
 				E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */,
 				E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */,
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,

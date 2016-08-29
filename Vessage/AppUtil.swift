@@ -194,7 +194,7 @@ extension UIViewController{
         let hud = self.showActivityHudWithMessage(title, message: message, async: async, completionHandler: completionHandler)
         hud.mode = .CustomView
         hud.customView = imv
-        hud.color = UIColor.clearColor()
+        hud.bezelView.color = UIColor.clearColor()
         return hud
     }
 }
@@ -210,8 +210,8 @@ func getRandomConversationBackground() -> UIImage {
 }
 
 extension EVObject{
-    func toMiniJsonString(performKeyCleanup:Bool = false) -> String {
-        let json = toJsonString(performKeyCleanup)
+    func toMiniJsonString() -> String {
+        let json = toJsonString()
         return json.split("\n").map{$0.trim()}.joinWithSeparator(" ")
     }
 }

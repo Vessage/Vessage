@@ -105,7 +105,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
             }else if info.code == LittlePaperReadResponse.CODE_ACCEPT_READ{
                 let hud = self.showAnimationHud()
                 LittlePaperManager.instance.refreshOpenedPaper(paper, callback: { (updated) in
-                    hud.hide(true)
+                    hud.hideAnimated(true)
                     if updated != nil{
                         self.showPaperMessageDetailViewController(updated!)
                     }else{
@@ -135,7 +135,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
         let accept = UIAlertAction(title: "ACCEPT_READ".littlePaperString, style: .Default, handler: { (ac) in
             let hud = self.showAnimationHud()
             LittlePaperManager.instance.acceptReadPaperForReader(info.paperId, reader: info.asker, callback: { (isOk, errorMsg) in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if isOk{
                     self.tableView.reloadData()
                 }else{
@@ -147,7 +147,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
         let reject = UIAlertAction(title: "REJECT_READ".littlePaperString, style: .Default, handler: { (ac) in
             let hud = self.showAnimationHud()
             LittlePaperManager.instance.rejectReadPaperForReader(info.paperId, reader: info.asker, callback: { (isOk, errorMsg) in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if isOk{
                     self.tableView.reloadData()
                 }else{

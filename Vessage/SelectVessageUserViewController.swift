@@ -214,7 +214,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
                 if user == nil{
                     let hud = self.showAnimationHud()
                     userService.registNewUserByMobile(mobile, noteName: title, updatedCallback: { (mUser) in
-                        hud.hide(true)
+                        hud.hideAnimated(true)
                         if mUser != nil{
                             self.userInfos.insert(mUser!, atIndex: 0)
                             let indexPath = NSIndexPath(forRow: 0,inSection: self.SECTION_CONTACT_USER)

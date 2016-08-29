@@ -50,7 +50,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         UserSexValueViewController.showUserProfileViewController(self.rootController, sexValue: self.rootController.myProfile.sex){ newValue in
             let hud = self.rootController.showAnimationHud()
             ServiceContainer.getUserService().setUserSexValue(newValue){ suc in
-                hud.hide(true)
+                hud.hideAnimated(true)
                 if suc{
                     self.rootController.playCheckMark("EDIT_SEX_VALUE_SUC".localizedString()){
                         ServiceContainer.getUserService().setUserSexImageView(self.sexImageView, sexValue: newValue)

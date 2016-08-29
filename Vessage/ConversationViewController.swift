@@ -560,7 +560,7 @@ extension ConversationViewController{
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
-                        hud.hide(true)
+                        hud.hideAnimated(true)
                         if let g = group{
                             self.showConversationView(nvc, conversation: conversation, group: g)
                         }else{
@@ -574,7 +574,7 @@ extension ConversationViewController{
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
-                        hud.hide(true)
+                        hud.hideAnimated(true)
                         if let updatedUser = u{
                             showConversationView(nvc,conversation: conversation,user: updatedUser)
                         }else{

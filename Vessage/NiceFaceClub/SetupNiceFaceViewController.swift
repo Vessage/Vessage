@@ -93,6 +93,7 @@ class SetupNiceFaceViewController: UIViewController {
         camera.delegate = self
         camera.isRecordVideo = false
         camera.initCamera(self, previewView: self.previewView)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -236,7 +237,7 @@ extension SetupNiceFaceViewController{
             BahamutTaskQueue.defaultInstance.pushTask(task)
         }else
         {
-            hud?.hide(true)
+            hud?.hideAnimated(true)
             self.playCrossMark("SAVE_IMAGE_ERROR".localizedString())
         }
     }
@@ -260,7 +261,7 @@ extension SetupNiceFaceViewController{
     
     func setNiceFace(imageId:String) {
         NiceFaceClubManager.instance.setUserNiceFace(faceScore, imageId: imageId, callback: { (suc) in
-            self.hud?.hide(true)
+            self.hud?.hideAnimated(true)
             if suc{
                 let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
                     self.onCloseClick(self)
@@ -273,12 +274,12 @@ extension SetupNiceFaceViewController{
     }
     
     func onTaskStepError(a:NSNotification) {
-        hud?.hide(true)
+        hud?.hideAnimated(true)
         self.showAlert("UPLOAD_NICE_FACE_IMAGE_ERROR".localizedString(), msg: nil)
     }
     
     func onTaskCanceled(a:NSNotification) {
-        hud?.hide(true)
+        hud?.hideAnimated(true)
         self.showAlert("UPLOAD_NICE_FACE_IMAGE_CANCELED".localizedString(), msg: nil)
     }
 }
@@ -314,6 +315,9 @@ extension SetupNiceFaceViewController{
     
     private func refreshAcceptPicButton() {
         acceptPicButton?.hidden = (faceScore?.highScore ?? 0) < NiceFaceClubManager.minScore
+        if !(acceptPicButton?.hidden ?? true){
+            UIAnimationHelper.flashView(acceptPicButton!, duration: 0.2, autoStop: true, stopAfterMs: 3000, completion: nil)
+        }
     }
     
     private func refreshShotButton() {
@@ -334,7 +338,7 @@ extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismissViewControllerAnimated(true) {
-            self.hud?.hide(true)
+            self.hud?.hideAnimated(true)
         }
     }
     
@@ -347,7 +351,7 @@ extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
                 if let img = CIImage(data: imgData){
                     let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
                     let faces = faceDetector.featuresInImage(img)
-                    self.hud?.hide(true)
+                    self.hud?.hideAnimated(true)
                     if faces.count > 0{
                         self.camera.pauseCaptureSession()
                         self.initImageView()
@@ -359,7 +363,7 @@ extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
                     }
                 }
             }
-            self.hud?.hide(true)
+            self.hud?.hideAnimated(true)
             self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
         }
     }

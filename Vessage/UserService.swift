@@ -408,8 +408,25 @@ extension UserService{
         let req = ChangeAvatarRequest()
         req.avatar = avatar
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                self.myProfile.avatar = avatar
+                self.myProfile.saveModel()
+            }
             callback(result.isSuccess)
         }
+    }
+    
+    func changeUserMotto(newMotto:String,callback:(Bool)->Void) {
+        let req = ChangeMottoRequest()
+        req.motto = newMotto
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+            if result.isSuccess{
+                self.myProfile.motto = newMotto
+                self.myProfile.saveModel()
+            }
+            callback(result.isSuccess)
+        }
+        
     }
 }
 

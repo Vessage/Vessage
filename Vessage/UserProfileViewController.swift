@@ -26,12 +26,18 @@ class UserProfileViewController: UIViewController {
                 self.accountIdLabel.text = "MOBILE_USER".localizedString()
                 self.nameLabel.text = ServiceContainer.getUserService().getUserNotedName(profile.userId)
             }
+            mottoLabel.text = profile.motto ?? "DEFAULT_VGER_MOTTO".localizedString()
             sexImageView.hidden = false
             avatarImageView.hidden = false
             ServiceContainer.getUserService().setUserSexImageView(self.sexImageView, sexValue: profile.sex)
         }
     }
     
+    @IBOutlet weak var mottoLabel: LTMorphingLabel!{
+        didSet{
+            mottoLabel.morphingEffect = .Pixelate
+        }
+    }
     @IBOutlet weak var bcgMaskView: UIView!
     
     @IBOutlet weak var sexImageView: UIImageView!{

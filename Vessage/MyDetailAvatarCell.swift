@@ -15,6 +15,14 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
     static let reuseIdentifier = "MyDetailAvatarCell"
     var rootController:UserSettingViewController!
     
+    @IBOutlet weak var mottoLabel: LTMorphingLabel!{
+        didSet{
+            mottoLabel.morphingEffect = .Pixelate
+            mottoLabel.userInteractionEnabled = true
+            mottoLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MyDetailAvatarCell.onTapMotto(_:))))
+        }
+    }
+    
     @IBOutlet weak var sexImageView: UIImageView!{
         didSet{
             sexImageView.userInteractionEnabled = true
@@ -137,8 +145,6 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
             uService.setMyAvatar(fileKey.fileId){ (isSuc) -> Void in
                 if isSuc
                 {
-                    self.rootController.myProfile.avatar = fileKey.accessKey
-                    self.rootController.myProfile.saveModel()
                     self.avatarImageView.image = PersistentManager.sharedInstance.getImage(fileKey.accessKey)
                     self.rootController.playCheckMark("SET_AVATAR_SUC".localizedString())
                 }
@@ -151,9 +157,32 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         self.rootController.playToast("SET_AVATAR_FAILED".localizedString())
     }
     
+    //MARK: Motto
+    func onTapMotto(a:AnyObject) {
+        let propertySet = UIEditTextPropertySet()
+        propertySet.propertyIdentifier = "motto"
+        propertySet.propertyLabel = "MOTTO".localizedString()
+        propertySet.propertyValue = rootController.myProfile.motto
+        propertySet.isOneLineValue = false
+        UIEditTextPropertyViewController.showEditPropertyViewController(self.rootController.navigationController!, propertySet:propertySet, controllerTitle: propertySet.propertyLabel, delegate: self)
+    }
+    
+    private func modifyMotto(newValue: String!){
+        
+        ServiceContainer.getUserService().changeUserMotto(newValue){ isSuc in
+            if isSuc
+            {
+                self.nickNameLabel.text = newValue
+                self.rootController.playCheckMark(String(format: "MODIFY_KEY_SUC".localizedString(), "NICK".localizedString()))
+            }else
+            {
+                self.rootController.playToast(String(format: "SET_KEY_FAILED".localizedString(), "NICK".localizedString()))
+            }
+            
+        }
+    }
     
     //MARK: Nick
-    
     func onTapNick(a:AnyObject) {
         let propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = "nickname"
@@ -162,8 +191,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         UIEditTextPropertyViewController.showEditPropertyViewController(self.rootController.navigationController!, propertySet:propertySet, controllerTitle: propertySet.propertyLabel, delegate: self)
     }
     
-    func editPropertySave(propertyIdentifier: String!, newValue: String!)
-    {
+    private func modifyNick(newValue: String!){
         ServiceContainer.getUserService().changeUserNickName(newValue){ isSuc in
             if isSuc
             {
@@ -174,6 +202,18 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
                 self.rootController.playToast(String(format: "SET_KEY_FAILED".localizedString(), "NICK".localizedString()))
             }
             
+        }
+    }
+    
+    //MARK: Edit Property Delegate
+    func editPropertySave(propertyIdentifier: String!, newValue: String!)
+    {
+        
+        switch propertyIdentifier {
+        case "motto":modifyMotto(newValue)
+        case "nickname":modifyNick(newValue)
+        default:
+            break;
         }
     }
 }

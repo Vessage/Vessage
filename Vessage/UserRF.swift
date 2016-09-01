@@ -281,6 +281,20 @@ class ChangeNickRequest: BahamutRFRequestBase {
     }
 }
 
+class ChangeMottoRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/VessageUsers/Motto"
+    }
+    
+    var motto:String!{
+        didSet{
+            self.paramenters["motto"] = motto
+        }
+    }
+}
+
 class RegistMobileUserRequest: BahamutRFRequestBase {
     override init() {
         super.init()

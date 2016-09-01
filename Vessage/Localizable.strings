@@ -171,7 +171,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //Vege
 APP_NAME = "VG";
-VESSAGE_MOTTO = "一种新的交流方式";
+VESSAGE_MOTTO = "高颜值者的聊天社群";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";

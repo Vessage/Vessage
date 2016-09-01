@@ -103,7 +103,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func newVessageFromServer(){
+    func newVessageFromServer(completion:(()->Void)? = nil){
         let req = GetNewVessagesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Vessage]>) -> Void in
             if let vsgs = result.returnObject{
@@ -124,6 +124,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                     SystemSoundHelper.playSound(1003)
                 }
             }
+            completion?()
         }
     }
     

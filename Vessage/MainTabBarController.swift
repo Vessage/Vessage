@@ -96,8 +96,9 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         viewController.presentViewController(controller, animated: false) { () -> Void in
             completion()
             ServiceContainer.getActivityService().getActivitiesBoardData()
-            ServiceContainer.getAppService().trySendFirstLaunchToServer()
-            ServiceContainer.getVessageService().newVessageFromServer()
+            ServiceContainer.getVessageService().newVessageFromServer(){
+                ServiceContainer.getAppService().trySendFirstLaunchToServer()
+            }
             #if DEBUG
                 print("MainTabBarView Shown")
             #endif

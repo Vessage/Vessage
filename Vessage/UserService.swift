@@ -416,14 +416,18 @@ extension UserService{
 //MARK: Sex Value
 extension UserService{
     func setUserSexValue(newValue:Int,callback:(Bool)->Void){
-        let req = ChangeUserSexValueRequest()
-        req.value = newValue
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
-            if result.isSuccess{
-                self.myProfile.sex = newValue
-                self.myProfile.saveModel()
+        if newValue == self.myProfile.sex {
+            callback(true)
+        }else{
+            let req = ChangeUserSexValueRequest()
+            req.value = newValue
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
+                if result.isSuccess{
+                    self.myProfile.sex = newValue
+                    self.myProfile.saveModel()
+                }
+                callback(result.isSuccess)
             }
-            callback(result.isSuccess)
         }
     }
 }

@@ -53,7 +53,6 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var pinMark: UIView!{
         didSet{
-            //pinMark.hidden = true
             pinMark.clipsToBounds = true
             pinMark.layer.cornerRadius = pinMark.frame.height / 2
         }

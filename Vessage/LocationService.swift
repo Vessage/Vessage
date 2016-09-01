@@ -18,7 +18,7 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
         locationManager = CLLocationManager()
         locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.distanceFilter = 700.0
+        self.locationManager.distanceFilter = 1000.0
         self.locationManager.startUpdatingLocation()
     }
     

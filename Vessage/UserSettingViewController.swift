@@ -93,12 +93,16 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.backgroundColor = UIColor.lightTextColor()
         myProfile = ServiceContainer.getUserService().myProfile
+        self.tableView.alpha = 0.1
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         initPropertySet()
         tableView.reloadData()
+        UIView.animateWithDuration(0.3) { 
+            self.tableView.alpha = 1
+        }
     }
     
     deinit{

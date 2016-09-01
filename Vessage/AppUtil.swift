@@ -194,6 +194,7 @@ extension UIViewController{
         let hud = self.showActivityHudWithMessage(title, message: message, async: async, completionHandler: completionHandler)
         hud.mode = .CustomView
         hud.customView = imv
+        hud.bezelView.style = .SolidColor
         hud.bezelView.color = UIColor.clearColor()
         return hud
     }

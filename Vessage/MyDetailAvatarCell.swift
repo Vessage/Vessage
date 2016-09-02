@@ -172,11 +172,11 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         ServiceContainer.getUserService().changeUserMotto(newValue){ isSuc in
             if isSuc
             {
-                self.nickNameLabel.text = newValue
-                self.rootController.playCheckMark(String(format: "MODIFY_KEY_SUC".localizedString(), "NICK".localizedString()))
+                self.mottoLabel.text = newValue
+                self.rootController.playCheckMark(String(format: "MODIFY_KEY_SUC".localizedString(), "MOTTO".localizedString()))
             }else
             {
-                self.rootController.playToast(String(format: "SET_KEY_FAILED".localizedString(), "NICK".localizedString()))
+                self.rootController.playToast(String(format: "SET_KEY_FAILED".localizedString(), "MOTTO".localizedString()))
             }
             
         }

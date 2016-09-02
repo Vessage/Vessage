@@ -15,7 +15,6 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         didSet{
             if let value = conversationBadge {
                 UserSetting.setUserIntValue("ConversationListBadge", value: value)
-                
             }
             self.viewControllers?[0].tabBarItem?.badgeValue = intToBadgeString(conversationBadge)
         }
@@ -49,6 +48,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.instance.addObserver(self, selector: #selector(MainTabBarController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         tabBar.tintColor = UIColor.themeColor
     }
+    
     
     deinit{
         self.viewControllers = nil

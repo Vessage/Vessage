@@ -25,6 +25,10 @@ class NiceFaceClubManager:NSObject {
         return mgr
     }()
     
+    var needSetSex:Bool{
+        return preferredSex == 0 && myNiceFaceProfile.sex == 0
+    }
+    
     var needSetMemberPuzzle:Bool{
         return membersProfileRead >= 2 && String.isNullOrWhiteSpace(myNiceFaceProfile.puzzles)
     }
@@ -205,5 +209,58 @@ class NiceFaceClubManager:NSObject {
                 callback(res:res)
             }
         }
+    }
+}
+
+let NFCReadMemberProfileLimitedPerDay = 10
+
+extension NiceFaceClubManager{
+    private var lastLoadMemberProfileDay:Int{
+        get{
+            return UserSetting.getUserIntValue("NFC_LAST_LOAD_MP_DAY")
+        }
+    }
+    
+    private func setTodayLoadedMemperProfiles() {
+        UserSetting.setUserIntValue("NFC_LAST_LOAD_MP_DAY", value: NSDate().totalDaysSince1970.integerValue)
+    }
+    
+    var canShareAddTimes:Bool{
+        return !UserSetting.isSettingEnable("NFC_TODAY_ADDTION_TIMES_SHARED")
+    }
+    
+    func reqestShareAddTimes() -> Bool {
+        if canShareAddTimes {
+            UserSetting.enableSetting("NFC_TODAY_ADDTION_TIMES_SHARED")
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    var loadMemberProfileLimitedTimes:Int{
+        get{
+            if lastLoadMemberProfileDay < NSDate().totalDaysSince1970.integerValue {
+                UserSetting.disableSetting("NFC_TODAY_ADDTION_TIMES_SHARED")
+                UserSetting.setUserIntValue("NFC_TODAY_LOAD_MP_L_TIMES", value: NFCReadMemberProfileLimitedPerDay)
+                setTodayLoadedMemperProfiles()
+                return NFCReadMemberProfileLimitedPerDay
+            }
+            return UserSetting.getUserIntValue("NFC_TODAY_LOAD_MP_L_TIMES")
+        }
+    }
+    
+    func useLoadMemberProfileOnec() -> Bool {
+        let leftTimes = loadMemberProfileLimitedTimes
+        if leftTimes > 0 {
+            UserSetting.setUserIntValue("NFC_TODAY_LOAD_MP_L_TIMES", value: leftTimes - 1)
+            return true
+        }
+        return false
+    }
+    
+    func addLoadMemberTimes(times:Int) {
+        let leftTimes = loadMemberProfileLimitedTimes
+        UserSetting.setUserIntValue("NFC_TODAY_LOAD_MP_L_TIMES", value: leftTimes + times)
     }
 }

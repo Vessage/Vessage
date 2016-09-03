@@ -25,6 +25,12 @@ class NiceFaceGuessYouController: UIViewController {
     let leftAnswerColor = UIColor.orangeColor()
     let rightAnswerColor = UIColor.purpleColor()
     
+    @IBOutlet weak var limitedTimesLabel: UILabel!{
+        didSet{
+            limitedTimesLabel.hidden = true
+        }
+    }
+    
     @IBOutlet weak var leftAnswerLabel: UILabel!{
         didSet{
             leftAnswerLabel.hidden = true
@@ -84,7 +90,9 @@ class NiceFaceGuessYouController: UIViewController {
                 if isShowingMyProfile {
                     self.currentPuzzleIndex = 0
                     if self.profile.score >= NiceFaceClubManager.minScore {
-                        flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
+                        if NiceFaceClubManager.instance.loadMemberProfileLimitedTimes > 0 {
+                            flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
+                        }
                         self.tableView.reloadData()
                     }
                 }else {
@@ -159,6 +167,16 @@ extension NiceFaceGuessYouController{
         self.view.addGestureRecognizer(swipeRightGes)
         self.view.addGestureRecognizer(swipeDownGes)
         NiceFaceClubManager.faceScoreAddition = false
+        refreshLimitedTimesLabel()
+    }
+    
+    private func refreshLimitedTimesLabel() {
+        let times = NiceFaceClubManager.instance.loadMemberProfileLimitedTimes
+        if times > 0 {
+            self.limitedTimesLabel?.text = String(format: "TODAY_LEFT_LOAD_MP_X_TIMES".niceFaceClubString, "\(times)")
+        }else{
+            self.limitedTimesLabel?.text = "TODAY_NO_LEFT_LOAD_MP_TIMES".niceFaceClubString
+        }
     }
     
     private func showBenchMarkAlert() {
@@ -200,6 +218,8 @@ extension NiceFaceGuessYouController{
                 self.profile = p
                 if p.score < NiceFaceClubManager.minScore{
                     self.showBenchMarkAlert()
+                }else{
+                    self.limitedTimesLabel.hidden = false
                 }
             }else{
                 let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
@@ -209,6 +229,7 @@ extension NiceFaceGuessYouController{
             }
         })
     }
+    
 }
 
 extension NiceFaceGuessYouController{
@@ -326,14 +347,35 @@ extension NiceFaceGuessYouController{
         if NiceFaceClubManager.instance.needSetMemberPuzzle {
             showNeedSetPuzzleAlert()
         }else if profiles.count <= 1 {
+            tryShowInviteAddTimesAlert()
             loadMoreProfiles()
         }else{
             if let p = self.profile {
                 profiles.removeElement{$0.id == p.id}
             }
-            self.profile = profiles.first
-            self.playSwipeAudio()
+            setProfile(profiles.first!)
         }
+    }
+    
+    private func setProfile(p:UserNiceFaceProfile){
+        if NiceFaceClubManager.instance.useLoadMemberProfileOnec() {
+            self.profile = p
+            self.playSwipeAudio()
+        }else{
+            self.tryShowInviteAddTimesAlert()
+        }
+        refreshLimitedTimesLabel()
+    }
+    
+    private func tryShowInviteAddTimesAlert() -> Bool{
+        if NiceFaceClubManager.instance.reqestShareAddTimes() {
+            let alert = NFCShareAlert.showNFCShareAlert(self, title: "SHARE_ADD_MP_TIMES_TITLE".niceFaceClubString, message: "SHARE_ADD_MP_TIMES_MSG".niceFaceClubString)
+            alert.onSharedHandler = { alert in
+                NiceFaceClubManager.instance.addLoadMemberTimes(10)
+                self.refreshLimitedTimesLabel()
+            }
+        }
+        return false
     }
     
     private func showNeedSetPuzzleAlert(){
@@ -350,13 +392,15 @@ extension NiceFaceGuessYouController{
     }
     
     private func loadMoreProfiles() {
+        if NiceFaceClubManager.instance.loadMemberProfileLimitedTimes <= 0 {
+            return
+        }
         let hud = self.showAnimationHud()
         NiceFaceClubManager.instance.loadProfiles({ (profiles) in
             hud.hideAnimated(true)
             if profiles.count > 0{
                 self.profiles = profiles
-                self.profile = self.profiles.first
-                self.playSwipeAudio()
+                self.setProfile(self.profiles.first!)
             }else{
                 NFCShareAlert.showNFCShareAlert(self, title: "NO_MORE_MEMBER_PROFILES".niceFaceClubString, message: "NO_MORE_MEMBER_PROFILES_MSG".niceFaceClubString)
             }
@@ -391,7 +435,7 @@ extension NiceFaceGuessYouController{
             }else{
                 SystemSoundHelper.playSound(NiceFaceGuessYouController.audioError)
                 self.showLoadMordTipsTimes += 1
-                if self.showLoadMordTipsTimes < 3{
+                if self.showLoadMordTipsTimes < 3 && NiceFaceClubManager.instance.loadMemberProfileLimitedTimes > 0{
                     self.flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
                 }
                 self.puzzleLabel?.text = " "

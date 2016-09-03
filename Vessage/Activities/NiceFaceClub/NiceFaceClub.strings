@@ -13,7 +13,6 @@ SET_NICE_FACE_ERROR = "设置出错";
 RETRY_TEST_FACE = "重试?";
 SAVE_IMAGE_ERROR = "保存文件失败";
 NICE_FACE_SETTED_MSG = "恭喜你成为NFC会员，现在你可以通过<刷题交友>来认识更多高颜值的朋友啦！";
-PULL_TO_NEXT_PROFILE = "下划发现更多高颜值会员";
 MODIFY_NICE_FACE = "更新颜值照片";
 MODIFY_PUZZLE_ANSWER = "验证问题";
 MODIFY_SEX = "性别设置";
@@ -22,7 +21,7 @@ NICE_FACE_MEMBER = "高颜值会员";
 UPDATE_MEMBER_PROFILE = "更新你的会员信息";
 FETCH_YOUR_PROFILE_ERROR = "加载你的会员信息出错，请稍后再试>_<!";
 LOADING_OTHER_MEMBER = "加载更多高颜值会员";
-YOU_NEED_FACE_BENCHMARK = "通过测试即可加入俱乐部，加入后可结识更多高颜值朋友";
+YOU_NEED_FACE_BENCHMARK = "通过AI颜值测试即可加入俱乐部，加入后可结识更多高颜值朋友";
 EXIT = "退出";
 OO = "哦";
 GO_CHAT = "进入聊天";
@@ -31,7 +30,7 @@ PROFILE_NICE_DOWN = "  Ta的颜值⬇️ ";
 SHARE_NICE_FACE_CLUB_MSG = "邀请你加入VG高颜值俱乐部，只有高颜值者才能加入哦！";
 SHARE_VG_ALERT_MSG = "分享给更多高颜值好友，你的颜值测试也有加分哦！";
 UPDATE_YOUR_NICE_FACE = "更新你的会员照片，让更多会员看到你更高颜值的一面";
-PULL_TO_LOAD_OTHER_PROFILE = "⬇️下拉发现更多高颜值会员";
+PULL_TO_LOAD_OTHER_PROFILE = "⬇️下划发现更多高颜值会员";
 SELECT_ANSWER_TIPS = "⬅️左滑选左边 右划选右边➡️";
 GUESS_PLAY_TIPS_TITLE = "刷题交友";
 GUESS_PLAY_TIPS = "左右刷对方的验证答案，刷对了即可与Ta聊天~";
@@ -54,6 +53,15 @@ SET_PUZZLE = "设置验证";
 NO_MORE_MEMBER_PROFILES = "刷不到更多的会员了";
 NO_MORE_MEMBER_PROFILES_MSG = "邀请好友，让更多的高颜值朋友加入俱乐部吧~";
 
+SET_PUZZLE_MESSAGE = "为了让你尽可能在俱乐部结识到有共同话题的好友，请认真选择你的验证答案。";
+NFC_TIPS = "俱乐部提示";
+
 FEMALE_MEMBERS = "女生";
 MALE_MEMBERS = "男生";
 ALL_MEMBERS = "所有人";
+
+TODAY_LEFT_LOAD_MP_X_TIMES = "今天还有%@次下划次数";
+TODAY_NO_LEFT_LOAD_MP_TIMES = "今天下划次数已经用完，明天再来俱乐部玩吧~";
+
+SHARE_ADD_MP_TIMES_TITLE = "今天下划次数已经用完";
+SHARE_ADD_MP_TIMES_MSG = "今天分享俱乐部给好友可以再刷10次";

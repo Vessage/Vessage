@@ -13,6 +13,7 @@ class SetupNFCPuzzleViewController: UIViewController {
     let LEAST_PUZZLE = 3
     @IBOutlet weak var tableView: UITableView!
     private var puzzle:MemberPuzzles!
+    private var showTips = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
@@ -22,12 +23,11 @@ class SetupNFCPuzzleViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if self.tableView.delegate == nil {
-            
-            
             if self.puzzle == nil {
                 if let url = NSBundle.mainBundle().URLForResource("nfc_puzzles", withExtension: "json"){
                     if let json = PersistentFileHelper.readTextFile(url){
                         self.puzzle = MemberPuzzles(json: json)
+                        self.showTips = true
                     }
                 }
             }
@@ -37,6 +37,13 @@ class SetupNFCPuzzleViewController: UIViewController {
             
             self.tableView.delegate = self
             self.tableView.dataSource = self
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if showTips {
+            self.showAlert("NFC_TIPS".niceFaceClubString, msg: "SET_PUZZLE_MESSAGE".niceFaceClubString)
         }
     }
     
@@ -52,6 +59,9 @@ class SetupNFCPuzzleViewController: UIViewController {
             if suc{
                 self.playCheckMark("MEMBER_PUZZLE_UPDATED".niceFaceClubString){
                     self.navigationController?.popViewControllerAnimated(true)
+                    if NiceFaceClubManager.instance.needSetSex{
+                        NFCSexAlertController.showNFCSexAlert(self.navigationController!)
+                    }
                 }
             }else{
                 self.playCrossMark("UPDAT_MEMBER_PUZZLE_ERROR".niceFaceClubString)

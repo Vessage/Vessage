@@ -12,7 +12,7 @@ class NFCShareAlert:UIViewController{
     
     @IBOutlet weak var bcgMaskView: UIView!
     var onCloseHandler:((NFCShareAlert)->Void)?
-    var onTestScoreHandler:((NFCShareAlert)->Void)?
+    var onSharedHandler:((NFCShareAlert)->Void)?
     
     var alertTitle:String!{
         didSet{
@@ -98,6 +98,7 @@ class NFCShareAlert:UIViewController{
     func onShareSuccess(a:NSNotification) {
         NiceFaceClubManager.faceScoreAddition = true
         shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
+        onSharedHandler?(self)
     }
     
     deinit{

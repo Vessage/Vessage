@@ -100,6 +100,7 @@
 		E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */; };
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
 		E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */; };
+		E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7711B0C1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld */; };
 		E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */; };
 		E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */; };
 		E7933B2F1D42FF64000FCE84 /* VessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */; };
@@ -334,6 +335,7 @@
 		E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerProxy.swift; sourceTree = "<group>"; };
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
 		E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarTitle.swift; sourceTree = "<group>"; };
+		E7711B0D1D7B2349009D9DCD /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
 		E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageHandler.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 		E7CC54D91D7A6CF200BDE82E /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				E7711B0C1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld */,
 				E7CC54E71D7A6D3F00BDE82E /* ShareChatEntity.swift */,
 				E7CC54DC1D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift */,
 				E7CC54DD1D7A6CF200BDE82E /* MessageEntity.swift */,
@@ -1379,6 +1382,7 @@
 				E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
 				E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */,
+				E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */,
 				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
 				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,
@@ -1703,6 +1707,16 @@
 			);
 			currentVersion = E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */;
 			path = BahamutModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E7711B0C1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E7711B0D1D7B2349009D9DCD /* BahamutMessage.xcdatamodel */,
+			);
+			currentVersion = E7711B0D1D7B2349009D9DCD /* BahamutMessage.xcdatamodel */;
+			path = BahamutMessage.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

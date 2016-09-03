@@ -148,11 +148,11 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
             let vsg = Vessage()
             vsg.isGroup = self.conversation.isGroup
             vsg.typeId = Vessage.typeFaceText
-            vsg.sender = userService.myProfile.userId
             let json = try! NSJSONSerialization.dataWithJSONObject(["textMessage":textMessage], options: NSJSONWritingOptions(rawValue: 0))
             vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
             vsg.fileId = chatImage.imageId
             VessageQueue.sharedInstance.pushNewVessageTo(self.conversation.chatterId,vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
+            self.playVessageManager.sendingVessage = vsg
         }else{
             self.playToast("No Chat Image Selected")
         }

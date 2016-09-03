@@ -8,15 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */; };
-		E7006AB41D7276F5002D8776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7006AAB1D7276F5002D8776 /* Assets.xcassets */; };
-		E7006AB51D7276F5002D8776 /* NFCMessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AAC1D7276F5002D8776 /* NFCMessageAlert.swift */; };
-		E7006AB61D7276F5002D8776 /* NiceFaceClub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7006AAD1D7276F5002D8776 /* NiceFaceClub.storyboard */; };
-		E7006AB71D7276F5002D8776 /* NiceFaceClub.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7006AAE1D7276F5002D8776 /* NiceFaceClub.strings */; };
-		E7006AB81D7276F5002D8776 /* NiceFaceClubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AAF1D7276F5002D8776 /* NiceFaceClubManager.swift */; };
-		E7006AB91D7276F5002D8776 /* NiceFaceClubRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB01D7276F5002D8776 /* NiceFaceClubRF.swift */; };
-		E7006ABA1D7276F5002D8776 /* NiceFaceGuessYouController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB11D7276F5002D8776 /* NiceFaceGuessYouController.swift */; };
-		E7006ABB1D7276F5002D8776 /* PuzzleAnswerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB21D7276F5002D8776 /* PuzzleAnswerController.swift */; };
-		E7006ABC1D7276F5002D8776 /* SetupNiceFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7006AB31D7276F5002D8776 /* SetupNiceFaceViewController.swift */; };
 		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
 		E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ConversationViewController.swift */; };
 		E708AB421C86CAA50071104E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AB401C86CAA50071104E /* Main.storyboard */; };
@@ -95,15 +86,12 @@
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
-		E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E71DF7791D390DEE00311855 /* LittlePaperAssets.xcassets */; };
 		E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
 		E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = E72E25811D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m */; };
-		E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */; };
 		E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */; };
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
-		E72F66011CE0DB180094BA10 /* PaperMessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
@@ -125,12 +113,6 @@
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
 		E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */; };
 		E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
-		E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */; };
-		E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */; };
-		E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */; };
-		E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */; };
-		E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */; };
-		E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */; };
 		E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */; };
 		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
@@ -141,17 +123,14 @@
 		E7BB96341D461D7400ECBD11 /* FaceTextChatBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
-		E7BFC3931CDB6CCF00CDB392 /* ActivityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */; };
-		E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */; };
-		E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */; };
-		E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */; };
-		E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */; };
-		E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */; };
-		E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
-		E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */; };
 		E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */; };
 		E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */; };
+		E7CC54E21D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54DC1D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift */; };
+		E7CC54E31D7A6CF200BDE82E /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54DD1D7A6CF200BDE82E /* MessageEntity.swift */; };
+		E7CC54E41D7A6CF200BDE82E /* MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54DE1D7A6CF200BDE82E /* MessageExtension.swift */; };
+		E7CC54E51D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54DF1D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift */; };
+		E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54E71D7A6D3F00BDE82E /* ShareChatEntity.swift */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -173,6 +152,30 @@
 		E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */; };
 		E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
+		E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF282F1D791AFD0064231F /* ActivityConfig.swift */; };
+		E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28301D791AFD0064231F /* ActivityListController.swift */; };
+		E7EF285A1D791AFD0064231F /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7EF283B1D791AFD0064231F /* LittlePaper.strings */; };
+		E7EF285B1D791AFD0064231F /* LittlePaperAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7EF283C1D791AFD0064231F /* LittlePaperAssets.xcassets */; };
+		E7EF285C1D791AFD0064231F /* LittlePaperMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF283D1D791AFD0064231F /* LittlePaperMainController.swift */; };
+		E7EF285D1D791AFD0064231F /* LittlePaperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF283E1D791AFD0064231F /* LittlePaperManager.swift */; };
+		E7EF285E1D791AFD0064231F /* LittlePaperMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7EF283F1D791AFD0064231F /* LittlePaperMessage.storyboard */; };
+		E7EF285F1D791AFD0064231F /* LittlePaperMessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28401D791AFD0064231F /* LittlePaperMessageListController.swift */; };
+		E7EF28601D791AFD0064231F /* LittlePaperResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28411D791AFD0064231F /* LittlePaperResponseViewController.swift */; };
+		E7EF28611D791AFD0064231F /* LittlePaperRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28421D791AFD0064231F /* LittlePaperRF.swift */; };
+		E7EF28621D791AFD0064231F /* PaperMessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28431D791AFD0064231F /* PaperMessageDetailViewController.swift */; };
+		E7EF28631D791AFD0064231F /* WritePaperMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28441D791AFD0064231F /* WritePaperMessageViewController.swift */; };
+		E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7EF28461D791AFD0064231F /* Assets.xcassets */; };
+		E7EF28651D791AFD0064231F /* NFCMessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */; };
+		E7EF28661D791AFD0064231F /* NFCSexAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28481D791AFD0064231F /* NFCSexAlertController.swift */; };
+		E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */; };
+		E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */; };
+		E7EF28691D791AFD0064231F /* NiceFaceClubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF284B1D791AFD0064231F /* NiceFaceClubManager.swift */; };
+		E7EF286A1D791AFD0064231F /* NiceFaceClubRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF284C1D791AFD0064231F /* NiceFaceClubRF.swift */; };
+		E7EF286B1D791AFD0064231F /* NiceFaceGuessYouController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF284D1D791AFD0064231F /* NiceFaceGuessYouController.swift */; };
+		E7EF286C1D791AFD0064231F /* SetupNFCPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF284E1D791AFD0064231F /* SetupNFCPuzzleViewController.swift */; };
+		E7EF286D1D791AFD0064231F /* SetupNiceFaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF284F1D791AFD0064231F /* SetupNiceFaceViewController.swift */; };
+		E7EF286F1D7943930064231F /* NFCShareAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF286E1D7943930064231F /* NFCShareAlert.swift */; };
+		E7EF28711D7958A90064231F /* nfc_puzzles.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EF28701D7958A90064231F /* nfc_puzzles.json */; };
 		E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1B1B61D4DB40D00EBE078 /* AppRF.swift */; };
 		E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */; };
 		E7F216631CFBD35E00447DA9 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */; };
@@ -201,7 +204,6 @@
 		E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */; };
 		E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */; };
 		E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */; };
-		E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7FC8A811D0510A100A05001 /* LittlePaper.strings */; };
 		E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -225,15 +227,6 @@
 		B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Faceboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
 		CC1E1CDDEB7ADF7CC49DE252 /* Pods-Faceboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Faceboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Faceboard/Pods-Faceboard.debug.xcconfig"; sourceTree = "<group>"; };
-		E7006AAB1D7276F5002D8776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E7006AAC1D7276F5002D8776 /* NFCMessageAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMessageAlert.swift; sourceTree = "<group>"; };
-		E7006AAD1D7276F5002D8776 /* NiceFaceClub.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NiceFaceClub.storyboard; sourceTree = "<group>"; };
-		E7006AAE1D7276F5002D8776 /* NiceFaceClub.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = NiceFaceClub.strings; sourceTree = "<group>"; };
-		E7006AAF1D7276F5002D8776 /* NiceFaceClubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubManager.swift; sourceTree = "<group>"; };
-		E7006AB01D7276F5002D8776 /* NiceFaceClubRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubRF.swift; sourceTree = "<group>"; };
-		E7006AB11D7276F5002D8776 /* NiceFaceGuessYouController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceGuessYouController.swift; sourceTree = "<group>"; };
-		E7006AB21D7276F5002D8776 /* PuzzleAnswerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleAnswerController.swift; sourceTree = "<group>"; };
-		E7006AB31D7276F5002D8776 /* SetupNiceFaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNiceFaceViewController.swift; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
 		E708AB3E1C86CAA50071104E /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -323,16 +316,13 @@
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
 		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
-		E71DF7791D390DEE00311855 /* LittlePaperAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LittlePaperAssets.xcassets; sourceTree = "<group>"; };
 		E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatCellTableViewCell.swift; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
 		E72E25801D6B2FFD00DA6E5C /* UIView+AEScaningEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AEScaningEffect.h"; sourceTree = "<group>"; };
 		E72E25811D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AEScaningEffect.m"; sourceTree = "<group>"; };
-		E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMessageListController.swift; sourceTree = "<group>"; };
 		E72F65FA1CE0878B0094BA10 /* SelectVessageUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVessageUserViewController.swift; sourceTree = "<group>"; };
 		E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCollectionViewController.swift; sourceTree = "<group>"; };
-		E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperMessageDetailViewController.swift; sourceTree = "<group>"; };
 		E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityService.swift; sourceTree = "<group>"; };
 		E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesRF.swift; sourceTree = "<group>"; };
 		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
@@ -357,12 +347,6 @@
 		E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueHandlers.swift; sourceTree = "<group>"; };
 		E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageExtension.swift; sourceTree = "<group>"; };
 		E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
-		E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
-		E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
-		E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageExtension.swift; sourceTree = "<group>"; };
-		E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
 		E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSexValueViewController.swift; sourceTree = "<group>"; };
 		E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailAvatarCell.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
@@ -373,17 +357,14 @@
 		E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceTextChatBubble.xib; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListController.swift; sourceTree = "<group>"; };
-		E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMainController.swift; sourceTree = "<group>"; };
-		E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperManager.swift; sourceTree = "<group>"; };
-		E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LittlePaperMessage.storyboard; sourceTree = "<group>"; };
-		E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperRF.swift; sourceTree = "<group>"; };
-		E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
-		E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityConfig.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
-		E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperResponseViewController.swift; sourceTree = "<group>"; };
 		E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutObjectSortable.swift; sourceTree = "<group>"; };
 		E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AvartarAndFace.xcassets; sourceTree = "<group>"; };
+		E7CC54DC1D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E7CC54DD1D7A6CF200BDE82E /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
+		E7CC54DE1D7A6CF200BDE82E /* MessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageExtension.swift; sourceTree = "<group>"; };
+		E7CC54DF1D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E7CC54E71D7A6D3F00BDE82E /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -405,6 +386,30 @@
 		E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatImageBoardController.storyboard; sourceTree = "<group>"; };
 		E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageBoardController.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
+		E7EF282F1D791AFD0064231F /* ActivityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityConfig.swift; sourceTree = "<group>"; };
+		E7EF28301D791AFD0064231F /* ActivityListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListController.swift; sourceTree = "<group>"; };
+		E7EF283B1D791AFD0064231F /* LittlePaper.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LittlePaper.strings; sourceTree = "<group>"; };
+		E7EF283C1D791AFD0064231F /* LittlePaperAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LittlePaperAssets.xcassets; sourceTree = "<group>"; };
+		E7EF283D1D791AFD0064231F /* LittlePaperMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMainController.swift; sourceTree = "<group>"; };
+		E7EF283E1D791AFD0064231F /* LittlePaperManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperManager.swift; sourceTree = "<group>"; };
+		E7EF283F1D791AFD0064231F /* LittlePaperMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LittlePaperMessage.storyboard; sourceTree = "<group>"; };
+		E7EF28401D791AFD0064231F /* LittlePaperMessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperMessageListController.swift; sourceTree = "<group>"; };
+		E7EF28411D791AFD0064231F /* LittlePaperResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperResponseViewController.swift; sourceTree = "<group>"; };
+		E7EF28421D791AFD0064231F /* LittlePaperRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LittlePaperRF.swift; sourceTree = "<group>"; };
+		E7EF28431D791AFD0064231F /* PaperMessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperMessageDetailViewController.swift; sourceTree = "<group>"; };
+		E7EF28441D791AFD0064231F /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
+		E7EF28461D791AFD0064231F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMessageAlert.swift; sourceTree = "<group>"; };
+		E7EF28481D791AFD0064231F /* NFCSexAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCSexAlertController.swift; sourceTree = "<group>"; };
+		E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NiceFaceClub.storyboard; sourceTree = "<group>"; };
+		E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = NiceFaceClub.strings; sourceTree = "<group>"; };
+		E7EF284B1D791AFD0064231F /* NiceFaceClubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubManager.swift; sourceTree = "<group>"; };
+		E7EF284C1D791AFD0064231F /* NiceFaceClubRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubRF.swift; sourceTree = "<group>"; };
+		E7EF284D1D791AFD0064231F /* NiceFaceGuessYouController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceGuessYouController.swift; sourceTree = "<group>"; };
+		E7EF284E1D791AFD0064231F /* SetupNFCPuzzleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNFCPuzzleViewController.swift; sourceTree = "<group>"; };
+		E7EF284F1D791AFD0064231F /* SetupNiceFaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupNiceFaceViewController.swift; sourceTree = "<group>"; };
+		E7EF286E1D7943930064231F /* NFCShareAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCShareAlert.swift; sourceTree = "<group>"; };
+		E7EF28701D7958A90064231F /* nfc_puzzles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = nfc_puzzles.json; sourceTree = "<group>"; };
 		E7F1B1B61D4DB40D00EBE078 /* AppRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRF.swift; sourceTree = "<group>"; };
 		E7F1BB321D33387C00D1C899 /* BahamutConfigJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutConfigJson.swift; sourceTree = "<group>"; };
 		E7F2165E1CFBD35E00447DA9 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
@@ -436,7 +441,6 @@
 		E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetChatImagesTask.swift; sourceTree = "<group>"; };
 		E7F9AB8F1D5D68B400E2D1EA /* VideoPreviewBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoPreviewBubble.xib; sourceTree = "<group>"; };
 		E7F9AB921D5D6C0200E2D1EA /* VideoPreviewBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPreviewBubble.swift; sourceTree = "<group>"; };
-		E7FC8A811D0510A100A05001 /* LittlePaper.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LittlePaper.strings; sourceTree = "<group>"; };
 		E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -503,22 +507,6 @@
 				B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E7006AAA1D7276F5002D8776 /* NiceFaceClub */ = {
-			isa = PBXGroup;
-			children = (
-				E7006AAB1D7276F5002D8776 /* Assets.xcassets */,
-				E7006AAC1D7276F5002D8776 /* NFCMessageAlert.swift */,
-				E7006AAD1D7276F5002D8776 /* NiceFaceClub.storyboard */,
-				E7006AAF1D7276F5002D8776 /* NiceFaceClubManager.swift */,
-				E7006AAE1D7276F5002D8776 /* NiceFaceClub.strings */,
-				E7006AB01D7276F5002D8776 /* NiceFaceClubRF.swift */,
-				E7006AB11D7276F5002D8776 /* NiceFaceGuessYouController.swift */,
-				E7006AB21D7276F5002D8776 /* PuzzleAnswerController.swift */,
-				E7006AB31D7276F5002D8776 /* SetupNiceFaceViewController.swift */,
-			);
-			path = NiceFaceClub;
 			sourceTree = "<group>";
 		};
 		E708AB301C86CAA50071104E = {
@@ -605,7 +593,7 @@
 		E708AB751C86CF8A0071104E /* Persistents */ = {
 			isa = PBXGroup;
 			children = (
-				E7B1529B1CAE5B2300830AB3 /* Message */,
+				E7CC54D91D7A6CF200BDE82E /* Message */,
 				E708AB761C86CF8A0071104E /* Base */,
 				E708AB7B1C86CF8A0071104E /* CoreData */,
 				E708AB811C86CF8A0071104E /* LocalFile */,
@@ -742,7 +730,7 @@
 		E708AC631C86EC070071104E /* CoreService */ = {
 			isa = PBXGroup;
 			children = (
-				E73CF7CB1CE4E661005EF7BB /* ActivityService */,
+				E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */,
 				E708AC8F1C871A850071104E /* UserService.swift */,
 				E708AC911C871B610071104E /* VessageService.swift */,
 				E708AC931C871C000071104E /* ConversationService.swift */,
@@ -822,10 +810,10 @@
 		E708ACA21C8752300071104E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				E7EF282E1D791AFD0064231F /* Activities */,
 				E708ABF31C86D6F20071104E /* RestfulAPI */,
 				E708ACA31C8752440071104E /* AppMain */,
 				E71844491D498CA800D3EDEF /* Views */,
-				E7BFC3911CDB1C2C00CDB392 /* Activities */,
 				E708AC631C86EC070071104E /* CoreService */,
 				E75A703F1C8C5F0A0029F0BD /* Conversation */,
 				E708ACA41C87525A0071104E /* Account */,
@@ -936,15 +924,6 @@
 			path = AEScaningEffect;
 			sourceTree = "<group>";
 		};
-		E73CF7CB1CE4E661005EF7BB /* ActivityService */ = {
-			isa = PBXGroup;
-			children = (
-				E7C04B011CDF7FAD00093E6C /* ActivityConfig.swift */,
-				E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */,
-			);
-			name = ActivityService;
-			sourceTree = "<group>";
-		};
 		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
@@ -984,46 +963,6 @@
 			name = SendVessageQueue;
 			sourceTree = "<group>";
 		};
-		E7B1529B1CAE5B2300830AB3 /* Message */ = {
-			isa = PBXGroup;
-			children = (
-				E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */,
-				E7B1529E1CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift */,
-				E7B1529F1CAE5B2300830AB3 /* MessageEntity.swift */,
-				E7B152A01CAE5B2300830AB3 /* MessageExtension.swift */,
-				E7B152A11CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift */,
-				E7B152A21CAE5B2300830AB3 /* ShareChatEntity.swift */,
-			);
-			path = Message;
-			sourceTree = "<group>";
-		};
-		E7BFC3911CDB1C2C00CDB392 /* Activities */ = {
-			isa = PBXGroup;
-			children = (
-				E7006AAA1D7276F5002D8776 /* NiceFaceClub */,
-				E7C04AF21CDF3AFE00093E6C /* LittlePaper */,
-				E7BFC3921CDB6CCF00CDB392 /* ActivityListController.swift */,
-			);
-			name = Activities;
-			sourceTree = "<group>";
-		};
-		E7C04AF21CDF3AFE00093E6C /* LittlePaper */ = {
-			isa = PBXGroup;
-			children = (
-				E71DF7791D390DEE00311855 /* LittlePaperAssets.xcassets */,
-				E7C04AF51CDF3AFE00093E6C /* LittlePaperMessage.storyboard */,
-				E72F66001CE0DB180094BA10 /* PaperMessageDetailViewController.swift */,
-				E7C04AF31CDF3AFE00093E6C /* LittlePaperMainController.swift */,
-				E7C04AF41CDF3AFE00093E6C /* LittlePaperManager.swift */,
-				E7C04AF61CDF3AFE00093E6C /* LittlePaperRF.swift */,
-				E7C04AF91CDF3AFE00093E6C /* WritePaperMessageViewController.swift */,
-				E72F65F81CE039AC0094BA10 /* LittlePaperMessageListController.swift */,
-				E7FC8A811D0510A100A05001 /* LittlePaper.strings */,
-				E7C6B90D1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift */,
-			);
-			path = LittlePaper;
-			sourceTree = "<group>";
-		};
 		E7C387EF1C982F510096AF85 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +974,18 @@
 				E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */,
 			);
 			name = ConversationList;
+			sourceTree = "<group>";
+		};
+		E7CC54D91D7A6CF200BDE82E /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				E7CC54E71D7A6D3F00BDE82E /* ShareChatEntity.swift */,
+				E7CC54DC1D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift */,
+				E7CC54DD1D7A6CF200BDE82E /* MessageEntity.swift */,
+				E7CC54DE1D7A6CF200BDE82E /* MessageExtension.swift */,
+				E7CC54DF1D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift */,
+			);
+			path = Message;
 			sourceTree = "<group>";
 		};
 		E7E237D21C998AEB008FF893 /* BahamutFilmView */ = {
@@ -1079,6 +1030,53 @@
 				E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */,
 			);
 			name = ConversationView;
+			sourceTree = "<group>";
+		};
+		E7EF282E1D791AFD0064231F /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				E7EF28451D791AFD0064231F /* NiceFaceClub */,
+				E7EF283A1D791AFD0064231F /* LittlePaper */,
+				E7EF282F1D791AFD0064231F /* ActivityConfig.swift */,
+				E7EF28301D791AFD0064231F /* ActivityListController.swift */,
+			);
+			path = Activities;
+			sourceTree = "<group>";
+		};
+		E7EF283A1D791AFD0064231F /* LittlePaper */ = {
+			isa = PBXGroup;
+			children = (
+				E7EF283B1D791AFD0064231F /* LittlePaper.strings */,
+				E7EF283C1D791AFD0064231F /* LittlePaperAssets.xcassets */,
+				E7EF283D1D791AFD0064231F /* LittlePaperMainController.swift */,
+				E7EF283E1D791AFD0064231F /* LittlePaperManager.swift */,
+				E7EF283F1D791AFD0064231F /* LittlePaperMessage.storyboard */,
+				E7EF28401D791AFD0064231F /* LittlePaperMessageListController.swift */,
+				E7EF28411D791AFD0064231F /* LittlePaperResponseViewController.swift */,
+				E7EF28421D791AFD0064231F /* LittlePaperRF.swift */,
+				E7EF28431D791AFD0064231F /* PaperMessageDetailViewController.swift */,
+				E7EF28441D791AFD0064231F /* WritePaperMessageViewController.swift */,
+			);
+			path = LittlePaper;
+			sourceTree = "<group>";
+		};
+		E7EF28451D791AFD0064231F /* NiceFaceClub */ = {
+			isa = PBXGroup;
+			children = (
+				E7EF28701D7958A90064231F /* nfc_puzzles.json */,
+				E7EF28461D791AFD0064231F /* Assets.xcassets */,
+				E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */,
+				E7EF28481D791AFD0064231F /* NFCSexAlertController.swift */,
+				E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */,
+				E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */,
+				E7EF286E1D7943930064231F /* NFCShareAlert.swift */,
+				E7EF284B1D791AFD0064231F /* NiceFaceClubManager.swift */,
+				E7EF284C1D791AFD0064231F /* NiceFaceClubRF.swift */,
+				E7EF284D1D791AFD0064231F /* NiceFaceGuessYouController.swift */,
+				E7EF284E1D791AFD0064231F /* SetupNFCPuzzleViewController.swift */,
+				E7EF284F1D791AFD0064231F /* SetupNiceFaceViewController.swift */,
+			);
+			path = NiceFaceClub;
 			sourceTree = "<group>";
 		};
 		E7F2165D1CFBD35E00447DA9 /* OpenSDK */ = {
@@ -1204,14 +1202,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */,
+				E7EF28711D7958A90064231F /* nfc_puzzles.json in Resources */,
 				E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
+				E7EF285E1D791AFD0064231F /* LittlePaperMessage.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
-				E7FC8A821D0510A100A05001 /* LittlePaper.strings in Resources */,
-				E7006AB41D7276F5002D8776 /* Assets.xcassets in Resources */,
-				E7C04AFC1CDF3AFE00093E6C /* LittlePaperMessage.storyboard in Resources */,
 				E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
@@ -1221,17 +1219,18 @@
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */,
-				E71DF77A1D390DEE00311855 /* LittlePaperAssets.xcassets in Resources */,
+				E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
+				E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
-				E7006AB71D7276F5002D8776 /* NiceFaceClub.strings in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E7F9AB901D5D68B400E2D1EA /* VideoPreviewBubble.xib in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
+				E7EF285A1D791AFD0064231F /* LittlePaper.strings in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
-				E7006AB61D7276F5002D8776 /* NiceFaceClub.storyboard in Resources */,
+				E7EF285B1D791AFD0064231F /* LittlePaperAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1294,7 +1293,7 @@
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
 				E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
-				E72F65F91CE039AC0094BA10 /* LittlePaperMessageListController.swift in Sources */,
+				E7EF285D1D791AFD0064231F /* LittlePaperManager.swift in Sources */,
 				E7E237D81C998AEB008FF893 /* KDCircularProgress.swift in Sources */,
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
 				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
@@ -1303,14 +1302,13 @@
 				E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,
+				E7CC54E31D7A6CF200BDE82E /* MessageEntity.swift in Sources */,
 				E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */,
-				E7006ABA1D7276F5002D8776 /* NiceFaceGuessYouController.swift in Sources */,
-				E7B152A61CAE5B2300830AB3 /* MessageExtension.swift in Sources */,
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
+				E7EF285F1D791AFD0064231F /* LittlePaperMessageListController.swift in Sources */,
 				E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */,
 				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
 				E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */,
-				E7B152A51CAE5B2300830AB3 /* MessageEntity.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
 				E718444F1D49BB7700D3EDEF /* UnknowVessageHandler.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
@@ -1318,8 +1316,8 @@
 				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
 				E708AB701C86CE1D0071104E /* CommonValueCast.swift in Sources */,
 				E708AB6C1C86CE1D0071104E /* ArrayUtil.swift in Sources */,
-				E7006ABC1D7276F5002D8776 /* SetupNiceFaceViewController.swift in Sources */,
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
+				E7CC54E51D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
 				E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */,
@@ -1327,10 +1325,11 @@
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
 				E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */,
 				E708ABA41C86CF8A0071104E /* ModelEntity.swift in Sources */,
-				E7B152A31CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld in Sources */,
+				E7EF286C1D791AFD0064231F /* SetupNFCPuzzleViewController.swift in Sources */,
+				E7EF28651D791AFD0064231F /* NFCMessageAlert.swift in Sources */,
+				E7EF285C1D791AFD0064231F /* LittlePaperMainController.swift in Sources */,
 				E7F2166D1CFBD7E300447DA9 /* ShareHelper.swift in Sources */,
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
-				E72F66011CE0DB180094BA10 /* PaperMessageDetailViewController.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
@@ -1342,31 +1341,29 @@
 				E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */,
 				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
-				E7BFC3931CDB6CCF00CDB392 /* ActivityListController.swift in Sources */,
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */,
+				E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */,
 				E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */,
+				E7EF286B1D791AFD0064231F /* NiceFaceGuessYouController.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */,
 				E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */,
-				E7C6B90E1D0DC5FB009555A5 /* LittlePaperResponseViewController.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */,
-				E7006AB81D7276F5002D8776 /* NiceFaceClubManager.swift in Sources */,
+				E7CC54E41D7A6CF200BDE82E /* MessageExtension.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
-				E7C04AFB1CDF3AFE00093E6C /* LittlePaperManager.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
-				E7C04B021CDF7FAD00093E6C /* ActivityConfig.swift in Sources */,
+				E7EF28621D791AFD0064231F /* PaperMessageDetailViewController.swift in Sources */,
 				E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
-				E7B152A81CAE5B2300830AB3 /* ShareChatEntity.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
@@ -1376,7 +1373,6 @@
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
 				E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
-				E7B152A41CAE5B2300830AB3 /* MessageEntity+CoreDataProperties.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
 				E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
@@ -1392,7 +1388,8 @@
 				E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */,
 				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
-				E7C04AFA1CDF3AFE00093E6C /* LittlePaperMainController.swift in Sources */,
+				E7EF28611D791AFD0064231F /* LittlePaperRF.swift in Sources */,
+				E7EF28631D791AFD0064231F /* WritePaperMessageViewController.swift in Sources */,
 				E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */,
 				E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
@@ -1400,8 +1397,8 @@
 				E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */,
 				E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
+				E7EF286A1D791AFD0064231F /* NiceFaceClubRF.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
-				E7006ABB1D7276F5002D8776 /* PuzzleAnswerController.swift in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */,
 				E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */,
@@ -1413,33 +1410,36 @@
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
-				E7006AB51D7276F5002D8776 /* NFCMessageAlert.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
 				E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */,
-				E7C04AFD1CDF3AFE00093E6C /* LittlePaperRF.swift in Sources */,
-				E7B152A71CAE5B2300830AB3 /* ShareChatEntity+CoreDataProperties.swift in Sources */,
-				E7C04B001CDF3AFE00093E6C /* WritePaperMessageViewController.swift in Sources */,
 				E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */,
+				E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
+				E7EF28661D791AFD0064231F /* NFCSexAlertController.swift in Sources */,
+				E7EF286D1D791AFD0064231F /* SetupNiceFaceViewController.swift in Sources */,
+				E7CC54E21D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift in Sources */,
+				E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
 				E718444B1D498CDC00D3EDEF /* ImageChatInputView.swift in Sources */,
 				E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */,
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
+				E7EF286F1D7943930064231F /* NFCShareAlert.swift in Sources */,
 				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,
 				E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */,
-				E7006AB91D7276F5002D8776 /* NiceFaceClubRF.swift in Sources */,
 				E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */,
 				E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */,
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
 				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
 				E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */,
 				E7933B2F1D42FF64000FCE84 /* VessageHandler.swift in Sources */,
+				E7EF28601D791AFD0064231F /* LittlePaperResponseViewController.swift in Sources */,
 				E7F6F0821D69AB84001CD190 /* BahamutTaskQueueProtocol.swift in Sources */,
 				E708AB561C86CB6D0071104E /* UIButton+Badge.m in Sources */,
 				E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */,
 				E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */,
 				E708ABDF1C86D37D0071104E /* BahamutRFRequestBase.swift in Sources */,
+				E7EF28691D791AFD0064231F /* NiceFaceClubManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1703,16 +1703,6 @@
 			);
 			currentVersion = E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */;
 			path = BahamutModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		E7B1529C1CAE5B2300830AB3 /* BahamutMessage.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */,
-			);
-			currentVersion = E7B1529D1CAE5B2300830AB3 /* BahamutMessage.xcdatamodel */;
-			path = BahamutMessage.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -28,7 +28,6 @@ class NiceFaceGuessYouController: UIViewController {
     @IBOutlet weak var leftAnswerLabel: UILabel!{
         didSet{
             leftAnswerLabel.hidden = true
-            //leftAnswerLabel.morphingEffect = .Evaporate
             leftAnswerLabel.backgroundColor = leftAnswerColor
             leftAnswerLabel.clipsToBounds = true
             leftAnswerLabel.layer.cornerRadius = leftAnswerLabel.frame.height / 2
@@ -41,7 +40,6 @@ class NiceFaceGuessYouController: UIViewController {
     @IBOutlet weak var rightAnswerLabel: UILabel!{
         didSet{
             rightAnswerLabel.hidden = true
-            //rightAnswerLabel.morphingEffect = .Evaporate
             rightAnswerLabel.backgroundColor = rightAnswerColor
             rightAnswerLabel.clipsToBounds = true
             rightAnswerLabel.layer.cornerRadius = rightAnswerLabel.frame.height / 2
@@ -57,10 +55,9 @@ class NiceFaceGuessYouController: UIViewController {
         }
     }
     
-    @IBOutlet weak var puzzleLabel: LTMorphingLabel!{
+    @IBOutlet weak var puzzleLabel: UILabel!{
         didSet{
             puzzleLabel.text = nil
-            puzzleLabel.morphingEffect = .Sparkle
             puzzleLabel.layer.cornerRadius = puzzleLabel.frame.height / 2
         }
     }
@@ -82,14 +79,23 @@ class NiceFaceGuessYouController: UIViewController {
     private var profile:UserNiceFaceProfile!{
         didSet{
             if profile != nil {
-                self.tableView.hidden = false
-                self.puzzles = self.profile.getPuzzles().getRandomSubArray(3)
-                self.currentPuzzleIndex = 0
-                self.selectedAnswer.removeAll()
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Bottom)
+                self.tableView.hidden = self.profile.score < NiceFaceClubManager.minScore
+                
                 if isShowingMyProfile {
-                    flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
+                    self.currentPuzzleIndex = 0
+                    if self.profile.score >= NiceFaceClubManager.minScore {
+                        flashTipsLabel(" \("PULL_TO_LOAD_OTHER_PROFILE".niceFaceClubString)   ")
+                        self.tableView.reloadData()
+                    }
                 }else {
+                    self.puzzles = self.profile.getGuessPuzzles().messArrayUp()
+                    self.selectedAnswer.removeAll()
+                    self.currentPuzzleIndex = 0
+                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Bottom)
+                    if !UserSetting.isSettingEnable("NFC_GUESS_PLAY_SHOWN_KEY"){
+                        UserSetting.enableSetting("NFC_GUESS_PLAY_SHOWN_KEY")
+                        self.showAlert("GUESS_PLAY_TIPS_TITLE".niceFaceClubString, msg: "GUESS_PLAY_TIPS".niceFaceClubString)
+                    }
                     if !swipeTipsShown{
                         flashTipsLabel("SELECT_ANSWER_TIPS".niceFaceClubString)
                         swipeTipsShown = true
@@ -98,11 +104,7 @@ class NiceFaceGuessYouController: UIViewController {
             }
         }
     }
-    private var puzzles:[GuessYouPuzzle]!{
-        didSet{
-            tableView?.reloadData()
-        }
-    }
+    private var puzzles:[GuessPuzzle]!
     
     private var isShowingMyProfile:Bool{
         return profile != nil && myProfile != nil && profile.id == myProfile.id
@@ -119,19 +121,13 @@ class NiceFaceGuessYouController: UIViewController {
             self.puzzleLabel?.layer.borderWidth = 0
             if isShowingMyProfile {
                 puzzleLabel?.text = " "
-            }else if self.profile?.sex > 0{
-                puzzleLabel?.text = "HE_LIKES".niceFaceClubString
-            }else if self.profile?.sex < 0{
-                puzzleLabel?.text = "SHE_LIKES".niceFaceClubString
-            }else{
-                puzzleLabel?.text = "TA_LIKES".niceFaceClubString
-            }
-            if currentPuzzle != nil {
+            }else if currentPuzzle != nil {
+                puzzleLabel?.text = currentPuzzle.question
                 loadPuzzle()
             }
         }
     }
-    private var currentPuzzle:GuessYouPuzzle!{
+    private var currentPuzzle:GuessPuzzle!{
         if currentPuzzleIndex < puzzles?.count{
             return self.puzzles[currentPuzzleIndex]
         }
@@ -151,15 +147,6 @@ extension NiceFaceGuessYouController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = false
-        /*
-        let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(NiceFaceGuessYouController.onPullTableView(_:)))
-        header.setTitle("PULL_TO_NEXT_PROFILE".niceFaceClubString, forState: .Idle)
-        header.setTitle("PULL_TO_NEXT_PROFILE".niceFaceClubString, forState: .Pulling)
-        header.setTitle("LOADING_OTHER_MEMBER".niceFaceClubString, forState: .Refreshing)
-        header.setTitle("PULL_TO_NEXT_PROFILE".niceFaceClubString, forState: .WillRefresh)
-        header.lastUpdatedTimeLabel.hidden = true
-        tableView.mj_header = header
- */
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.tapView(_:)))
         self.view.addGestureRecognizer(tapGes)
         let swipeLeftGes = UISwipeGestureRecognizer(target: self, action: #selector(NiceFaceGuessYouController.swipeLeft(_:)))
@@ -171,9 +158,10 @@ extension NiceFaceGuessYouController{
         self.view.addGestureRecognizer(swipeLeftGes)
         self.view.addGestureRecognizer(swipeRightGes)
         self.view.addGestureRecognizer(swipeDownGes)
+        NiceFaceClubManager.faceScoreAddition = false
     }
     
-    func showBenchMarkAlert() {
+    private func showBenchMarkAlert() {
         let alert = NFCMessageAlert.showNFCMessageAlert(self, title: "NICE_FACE_CLUB".niceFaceClubString, message: "YOU_NEED_FACE_BENCHMARK".niceFaceClubString)
         alert.onTestScoreHandler = { alert in
             alert.dismissViewControllerAnimated(true, completion: {
@@ -248,6 +236,7 @@ extension NiceFaceGuessYouController{
         modifyNiceFace.setValue(UIImage(named: "nice_face_face")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         
         let modifyPuzzleAnswer = UIAlertAction(title: "MODIFY_PUZZLE_ANSWER".niceFaceClubString, style: .Default) { (ac) in
+            self.updateMemberPuzzles()
         }
         modifyPuzzleAnswer.setValue(UIImage(named: "nice_face_puzzle")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         
@@ -256,16 +245,26 @@ extension NiceFaceGuessYouController{
         }
         modifySex.setValue(UIImage(named: "nice_face_sex")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         
+        let userSettig = UIAlertAction(title: "USER_SETTING".niceFaceClubString, style: .Default) { (ac) in
+            UserSettingViewController.showUserSettingViewController(self.navigationController!)
+        }
+        userSettig.setValue(UIImage(named: "nfc_user_setting")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
+        
         let alert = UIAlertController(title: "NICE_FACE_MEMBER".niceFaceClubString, message: "UPDATE_MEMBER_PROFILE".niceFaceClubString, preferredStyle: .ActionSheet)
         alert.addAction(modifyNiceFace)
         alert.addAction(modifyPuzzleAnswer)
         alert.addAction(modifySex)
+        alert.addAction(userSettig)
         alert.addAction(ALERT_ACTION_CANCEL)
         self.showAlert(alert)
     }
     
+    private func updateMemberPuzzles(){
+        SetupNFCPuzzleViewController.showSetupNFCPuzzleController(self.navigationController!, puzzles: self.myProfile.getMemberPuzzle())
+    }
+    
     private func modifyNiceFace(aleadyMember:Bool = true){
-        let controller = SetupNiceFaceViewController.instanceFromStoryBoard("NiceFaceClub", identifier: "SetupNiceFaceViewController")
+        let controller = SetupNiceFaceViewController.instanceFromStoryBoard()
         self.presentViewController(controller, animated: true){
             if aleadyMember{
                 NFCMessageAlert.showNFCMessageAlert(controller, title: "NICE_FACE_CLUB".niceFaceClubString, message: "UPDATE_YOUR_NICE_FACE".niceFaceClubString)
@@ -274,27 +273,12 @@ extension NiceFaceGuessYouController{
     }
     
     private func modifySex() {
-        UserSexValueViewController.showUserProfileViewController(self, sexValue: ServiceContainer.getUserService().myProfile.sex){ newValue in
-            let hud = self.showAnimationHud()
-            ServiceContainer.getUserService().setUserSexValue(newValue){ suc in
-                hud.hideAnimated(true)
-                if suc{
-                    self.playCheckMark("EDIT_SEX_VALUE_SUC".localizedString()){
-                    }
-                }else{
-                    self.playCrossMark("EDIT_SEX_VALUE_ERROR".localizedString())
-                }
-            }
-        }
-    }
-    
-    func onPullTableView(sender:AnyObject) {
-        
+        NFCSexAlertController.showNFCSexAlert(self)
     }
     
     func tapView(ges:UITapGestureRecognizer)  {
         let point = ges.locationInView(self.view)
-        if point.y < self.view.frame.height * 0.33 {
+        if point.y < self.view.frame.height * 0.36 {
             self.navigationController?.setNavigationBarHidden(!self.navigationController!.navigationBarHidden, animated: true)
         }
     }
@@ -339,14 +323,29 @@ extension NiceFaceGuessYouController{
     }
     
     private func nextProfile(){
-        if profiles.count <= 1 {
+        if NiceFaceClubManager.instance.needSetMemberPuzzle {
+            showNeedSetPuzzleAlert()
+        }else if profiles.count <= 1 {
             loadMoreProfiles()
         }else{
             if let p = self.profile {
                 profiles.removeElement{$0.id == p.id}
             }
-            self.profile = profiles[random() % profiles.count]
+            self.profile = profiles.first
             self.playSwipeAudio()
+        }
+    }
+    
+    private func showNeedSetPuzzleAlert(){
+        let alert = NFCMessageAlert.showNFCMessageAlert(self, title: "CONTINUE_AFTER_SET_PUZZLE".niceFaceClubString, message: "CONTINUE_AFTER_SET_PUZZLE_MSG".niceFaceClubString)
+        alert.shareTipsLabel.text = "PASS_SHARE_TIPS".niceFaceClubString
+        alert.continueButton.setImage(UIImage(named: "nice_face_puzzle"), forState: .Normal)
+        alert.continueButton.setTitle("SET_PUZZLE".niceFaceClubString, forState: .Normal)
+        alert.shareButton.setTitle("INVITE_FRIENDS".niceFaceClubString, forState: .Normal)
+        alert.onTestScoreHandler = { alt in
+            alt.dismissViewControllerAnimated(true, completion: {
+                self.updateMemberPuzzles()
+            })
         }
     }
     
@@ -355,9 +354,11 @@ extension NiceFaceGuessYouController{
         NiceFaceClubManager.instance.loadProfiles({ (profiles) in
             hud.hideAnimated(true)
             if profiles.count > 0{
-                self.profiles.appendContentsOf(profiles)
-                self.profile = self.profiles[random() % profiles.count]
+                self.profiles = profiles
+                self.profile = self.profiles.first
                 self.playSwipeAudio()
+            }else{
+                NFCShareAlert.showNFCShareAlert(self, title: "NO_MORE_MEMBER_PROFILES".niceFaceClubString, message: "NO_MORE_MEMBER_PROFILES_MSG".niceFaceClubString)
             }
         })
     }

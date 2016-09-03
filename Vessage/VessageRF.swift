@@ -9,6 +9,8 @@
 import Foundation
 
 class Vessage: BahamutObject {
+    static let sendingVessageId = "sendingVessageId"
+    
     static let typeNoVessage = -2
     static let typeUnknow = -1
     static let typeVideo = 0
@@ -26,6 +28,10 @@ class Vessage: BahamutObject {
     var isGroup = false
     var typeId = 0
     var body:String!
+    
+    func isMySendingVessage() -> Bool {
+        return self.sender == Vessage.sendingVessageId
+    }
     
     func getSendTime()->NSDate!{
         return sendTime.dateTimeOfAccurateString

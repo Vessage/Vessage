@@ -238,6 +238,7 @@ RETRY_SEND_VESSAGE_TITLE = "传送出错，重试?";
 VESSAGE_SENDING = "正在传送";
 VESSAGE_SENDED = "已发送";
 VESSAGE_SEND_FAIL = "发送出错";
+MY_SENDING_VSG = "我发送的消息";
 
 REQUIRE_SMS_FUNCTION_TITLE = "需要发送短信权限";
 REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开VG的短信权限";

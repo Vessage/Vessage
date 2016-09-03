@@ -76,6 +76,9 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func readVessage(vessage:Vessage,refresh:Bool = true){
+        if vessage.isMySendingVessage() {
+            return
+        }
         if vessage.isRead == false{
             vessage.isRead = true
             if var cnt = notReadVessageCountMap[vessage.sender]{
@@ -93,6 +96,9 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func removeVessage(vessage:Vessage){
+        if vessage.isMySendingVessage() {
+            return
+        }
         readVessage(vessage,refresh: false)
         PersistentManager.sharedInstance.removeModel(vessage)
         PersistentManager.sharedInstance.refreshCache(Vessage)

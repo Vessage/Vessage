@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "letterPaper.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "nfc_user_setting.png",
       "scale" : "2x"
     },
     {

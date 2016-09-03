@@ -145,10 +145,10 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
                     switch customCmd {
                     case "NewVessageNotify":ServiceContainer.getVessageService().newVessageFromServer()
                     case "ActivityUpdatedNotify":ServiceContainer.getActivityService().getActivitiesBoardData()
-                    default:NSLog("Unknow Custom Notification:%@", customCmd)
+                    default:debugLog("Unknow Custom Notification:%@", customCmd)
                     }
                 }else{
-                    NSLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
+                    debugLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
                 }
                 return
             }

@@ -39,7 +39,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 handler = UnknowVessageHandler(manager: self, container: self.vessageView)
                 vessageHandlers.updateValue(handler!, forKey: Vessage.typeUnknow)
             }
-            NSLog("Unknow Vessage TypeId:\(typeId)")
+            debugLog("Unknow Vessage TypeId:\(typeId)")
             return handler!
         }
         vessageHandlers.updateValue(handler!, forKey: typeId)
@@ -72,21 +72,24 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     private var notReadVessages = [Vessage](){
         didSet{
-            var vsg:Vessage? = nil
-            if notReadVessages.count > 0{
-                vsg = notReadVessages.first
-            }else{
-                if let chatterId = self.conversation?.chatterId{
-                    if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
-                        notReadVessages.append(newestVsg)
-                        vsg = newestVsg
-                    }
-                }
-            }
-            presentingVesseage = vsg
+            presentingVesseage = getNeedPresentVessage()
             rightButton?.hidden = notReadVessages.count <= 1
             refreshBadge()
         }
+    }
+    
+    private func getNeedPresentVessage() -> Vessage?{
+        if notReadVessages.count > 0{
+            return notReadVessages.first
+        }else{
+            if let chatterId = self.conversation?.chatterId{
+                if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
+                    notReadVessages.append(newestVsg)
+                    return newestVsg
+                }
+            }
+        }
+        return nil
     }
     
     private var presentingVesseage:Vessage!{
@@ -95,8 +98,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 self.generateNoVessageHandler().onPresentingVessageSeted(oldValue, newVessage: nil)
             }else if oldValue?.vessageId == presentingVesseage.vessageId{
                 return
-            }
-            else{
+            }else{
                 self.generateVessageHandler(presentingVesseage.typeId).onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
             }
             
@@ -106,6 +108,25 @@ class PlayVessageManager: ConversationViewControllerProxy {
             
             if let endEventCmd = oldValue?.getBodyDict()["endEventCmd"] as? String{
                 BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(endEventCmd)
+            }
+        }
+    }
+    
+    var sendingVessage:Vessage!{
+        didSet{
+            if sendingVessage == nil {
+                presentingVesseage = getNeedPresentVessage()
+            }else{
+                presentingVesseage = sendingVessage
+                dispatch_main_queue_after(6000, handler: {
+                    if (self.presentingVesseage?.isMySendingVessage() ?? false) {
+                        self.presentingVesseage = self.getNeedPresentVessage()
+                        self.vessageView.alpha = 0.3
+                        UIView.animateWithDuration(0.2, animations: {
+                            self.vessageView.alpha = 1
+                        })
+                    }
+                })
             }
         }
     }

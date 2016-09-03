@@ -46,7 +46,11 @@ class VessageQueue: BahamutTaskQueue {
         let queueTask = SendVessageQueueTask()
         let vsg = vessage
         vsg.extraInfo = extraInfoString
-        vsg.sender = ServiceContainer.getUserService().myProfile.userId
+        vsg.sender = Vessage.sendingVessageId
+        vsg.isRead = true
+        vsg.vessageId = IdUtil.generateUniqueId()
+        vsg.sendTime = NSDate().toAccurateDateTimeString()
+        
         queueTask.steps = taskSteps
         queueTask.receiverId = receiverId
         queueTask.filePath = uploadFileUrl?.path!

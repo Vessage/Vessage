@@ -207,7 +207,7 @@ extension UIView{
 }
 
 func getRandomConversationBackground() -> UIImage {
-    return UIImage(named: "recording_bcg_\(rand() % 5)") ?? UIImage(named: "recording_bcg_0")!
+    return UIImage(named: "recording_bcg_\(random() % 5)") ?? UIImage(named: "recording_bcg_0")!
 }
 
 extension EVObject{

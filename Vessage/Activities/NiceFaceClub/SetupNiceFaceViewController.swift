@@ -109,6 +109,10 @@ class SetupNiceFaceViewController: UIViewController {
             print("Deinited:\(self.description)")
         #endif
     }
+    
+    static func instanceFromStoryBoard() -> SetupNiceFaceViewController{
+        return instanceFromStoryBoard("NiceFaceClub", identifier: "SetupNiceFaceViewController") as! SetupNiceFaceViewController
+    }
 
 }
 
@@ -191,6 +195,7 @@ extension SetupNiceFaceViewController{
         }
         
         let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (ac) in
+            self.closeButton?.hidden = false
             self.onRetakePicClick(ac)
         }
         
@@ -201,14 +206,30 @@ extension SetupNiceFaceViewController{
         self.retakePicButton?.hidden = true
         self.closeButton?.hidden = true
         let imgUrl = "\(niceFaceUploadResult.Host)\(niceFaceUploadResult.Url)"
-        let addtion:Float = 0.1
+        let addtion:Float = NiceFaceClubManager.faceScoreAddition ? 0.1 : 0
         NiceFaceClubManager.instance.faceScoreTest(imgUrl,addtion: addtion, callback: { (result) in
             if let r = result{
                 self.faceScore = r
                 self.view.stopScaning()
                 self.closeButton?.hidden = false
                 self.view.userInteractionEnabled = true
-                self.showAlert(nil, msg: r.msg)
+                let pass = r.hs >= NiceFaceClubManager.minScore
+                let alert = NFCMessageAlert.showNFCMessageAlert(self, title: "NICE_FACE_CLUB".niceFaceClubString, message: r.msg)
+                if pass{
+                    alert.shareButton.setTitle("INVITE_FRIENDS".niceFaceClubString, forState: .Normal)
+                    alert.shareTipsLabel.text = "PASS_SHARE_TIPS".niceFaceClubString
+                }
+                let btnTitle = pass ? "CONTINUE".niceFaceClubString : "CONTINUE_FACE_TEST".niceFaceClubString
+                alert.continueButton.setTitle(btnTitle, forState: .Normal)
+                alert.onTestScoreHandler = { nfcc in
+                    nfcc.dismissViewControllerAnimated(true, completion: {
+                        if pass{
+                            UIAnimationHelper.flashView(self.acceptPicButton!, duration: 0.2, autoStop: true, stopAfterMs: 3000, completion: nil)
+                        }else{
+                            self.onRetakePicClick(nfcc)
+                        }
+                    })
+                }
             }else{
                 self.showRetryAlert()
             }
@@ -315,9 +336,6 @@ extension SetupNiceFaceViewController{
     
     private func refreshAcceptPicButton() {
         acceptPicButton?.hidden = (faceScore?.highScore ?? 0) < NiceFaceClubManager.minScore
-        if !(acceptPicButton?.hidden ?? true){
-            UIAnimationHelper.flashView(acceptPicButton!, duration: 0.2, autoStop: true, stopAfterMs: 3000, completion: nil)
-        }
     }
     
     private func refreshShotButton() {

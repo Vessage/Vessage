@@ -27,6 +27,8 @@ class ConversationListCellBase:UITableViewCell{
 typealias ConversationListCellHandler = (cell:ConversationListCell)->Void
 class ConversationListCell:ConversationListCellBase{
     static let reuseId = "ConversationListCell"
+    private static var progressViewOriginTintColor:UIColor?
+    private static var progressViewDisappearingTintColor = UIColor.redColor()
     
     weak override var rootController:ConversationListController!{
         didSet{
@@ -37,7 +39,15 @@ class ConversationListCell:ConversationListCellBase{
     }
     
     @IBOutlet weak var sendingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var timeupProgressView: UIProgressView!
+    @IBOutlet weak var timeupProgressView: UIProgressView!{
+        didSet{
+            if ConversationListCell.progressViewOriginTintColor == nil {
+                ConversationListCell.progressViewOriginTintColor = timeupProgressView.progressTintColor
+            }else{
+                timeupProgressView.progressTintColor = ConversationListCell.progressViewOriginTintColor
+            }
+        }
+    }
     
     @IBOutlet weak var retrySendTaskButton: UIButton!{
         didSet{
@@ -169,16 +179,25 @@ class ConversationListCell:ConversationListCellBase{
             self.subLine = date.toFriendlyString()
             self.timeupProgressView?.hidden = false
             if let p = conversation.getConversationTimeUpProgressLeft(){
-                self.timeupProgressView?.progress = p
+                self.setTimeProgress(p)
             }
         }else{
             self.subLine = "UNKNOW_TIME".localizedString()
             self.timeupProgressView?.hidden = true
         }
         if conversation.pinned {
-            self.timeupProgressView?.progress = 1
+            self.setTimeProgress(1)
         }
         pinMark?.hidden = !conversation.pinned
+    }
+    
+    private func setTimeProgress(p:Float){
+        self.timeupProgressView?.progress = p
+        if p >= 0.2 {
+            self.timeupProgressView?.progressTintColor = ConversationListCell.progressViewOriginTintColor
+        }else{
+            self.timeupProgressView?.progressTintColor = ConversationListCell.progressViewDisappearingTintColor
+        }
     }
     
     private func updateWithChatGroup(group:ChatGroup){

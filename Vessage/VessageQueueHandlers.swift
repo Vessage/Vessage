@@ -66,7 +66,7 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
         if let task = uploadDict.removeValueForKey(taskIdentifier){
             if let path = ServiceContainer.getFileService().getFilePath(task.vessage.fileId, type: .Video){
                 if !PersistentFileHelper.deleteFile(path){
-                    NSLog("Delete Sended Vessage Failed Error:%@", path)
+                    debugLog("Delete Sended Vessage Failed Error:%@", path)
                 }
             }
             VessageQueue.sharedInstance.nextStep(task)

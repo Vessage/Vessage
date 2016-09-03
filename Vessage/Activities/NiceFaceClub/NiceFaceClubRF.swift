@@ -32,9 +32,20 @@ class NiceFaceTestResult :BahamutObject{
     }
 }
 
-class GuessYouPuzzle{
-    var leftAnswer:String!
-    var rightAnswer:String!
+class GuessPuzzle:EVObject{
+    var qs:String!
+    var l:String!
+    var r:String!
+    
+    var question:String!{
+        return qs
+    }
+    var leftAnswer:String!{
+        return l
+    }
+    var rightAnswer:String!{
+        return r
+    }
 }
 
 class GuessPuzzleResult: BahamutObject {
@@ -53,28 +64,34 @@ class UserNiceFaceProfile: BahamutObject {
     var score:Float = 0.0
     var puzzles:String!
     
-    func getPuzzles() -> [GuessYouPuzzle] {
+    func getGuessPuzzles() -> [GuessPuzzle] {
         if let ps = puzzles{
-            return ps.split(";").map({ (p) in
-                let gyp = GuessYouPuzzle()
-                let answers = p.split(",")
-                gyp.leftAnswer = answers[0]
-                gyp.rightAnswer = answers[1]
-                return gyp
-            })
+            if !String.isNullOrWhiteSpace(ps) {
+                return GuessPuzzle.arrayFromJson(ps)
+            }
         }
         return []
     }
+    
+    func getMemberPuzzle() -> MemberPuzzles? {
+        if let ps = puzzles{
+            if !String.isNullOrWhiteSpace(ps) {
+                return MemberPuzzles(json: ps)
+            }
+        }
+        return nil
+    }
 }
 
-class OnePuzzle: EVObject {
-    var correct:String!
-    var incorrect:String!
+class PuzzleModel: EVObject {
+    var question:String!
+    var correct:[String]!
+    var incorrect:[String]!
 }
 
-class MemberPuzzle: EVObject {
+class MemberPuzzles: EVObject {
     var leastCnt = 3
-    var puzzles:[OnePuzzle]!
+    var puzzles:[PuzzleModel]!
 }
 
 //MARK: Restful Request
@@ -89,6 +106,30 @@ class GetMyNiceFaceProfilesRequest: BahamutRFRequestBase {
         didSet{
             if let p = location{
                 self.paramenters["location"] = p
+            }
+        }
+    }
+}
+
+class UpdateMyProfileValuesRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/MyProfileValues"
+        self.method = .PUT
+    }
+    
+    var nick:String!{
+        didSet{
+            if let p = nick{
+                self.paramenters["nick"] = p
+            }
+        }
+    }
+    
+    var sex:Int!{
+        didSet{
+            if let p = sex{
+                self.paramenters["sex"] = "\(p)"
             }
         }
     }
@@ -116,10 +157,10 @@ class SetPuzzleAnswerRequest: BahamutRFRequestBase {
         self.method = .PUT
     }
     
-    var puzzle:MemberPuzzle!{
+    var puzzle:MemberPuzzles!{
         didSet{
             if let a = puzzle{
-                self.paramenters["answer"] = a.toMiniJsonString()
+                self.paramenters["puzzle"] = a.toMiniJsonString()
             }
         }
     }
@@ -176,7 +217,8 @@ class GuessPuzzleRequest: BahamutRFRequestBase {
     var answer:[String]!{
         didSet{
             if let a = answer{
-                self.paramenters["answer"] = a.joinWithSeparator(";")
+                let arr = a.map{"\"\($0)\""}
+                self.paramenters["answer"] = "[\(arr.joinWithSeparator(","))]"
             }
         }
     }

@@ -10,18 +10,20 @@ import Foundation
 
 class NFCMessageAlert:UIViewController{
     
-    @IBOutlet weak var testFaceScoreButton: UIButton!{
+    
+    @IBOutlet weak var continueButton: UIButton!{
         didSet{
-            testFaceScoreButton.layer.cornerRadius = 6
-            testFaceScoreButton.layer.borderColor = UIColor.orangeColor().CGColor
-            testFaceScoreButton.layer.borderWidth = 1
+            continueButton.layer.cornerRadius = 6
+            continueButton.layer.borderColor = UIColor.orangeColor().CGColor
+            continueButton.layer.borderWidth = 1
             
-            testFaceScoreButton.superview?.layer.cornerRadius = 6
-            testFaceScoreButton.superview?.layer.borderColor = UIColor.orangeColor().CGColor
-            testFaceScoreButton.superview?.layer.borderWidth = 1
+            continueButton.superview?.layer.cornerRadius = 6
+            continueButton.superview?.layer.borderColor = UIColor.orangeColor().CGColor
+            continueButton.superview?.layer.borderWidth = 1
         }
     }
     
+    @IBOutlet weak var shareTipsLabel: UILabel!
     @IBOutlet weak var bcgMaskView: UIView!
     var onCloseHandler:((NFCMessageAlert)->Void)?
     var onTestScoreHandler:((NFCMessageAlert)->Void)?
@@ -43,8 +45,12 @@ class NFCMessageAlert:UIViewController{
             shareButton.layer.cornerRadius = 6
             shareButton.layer.borderColor = UIColor.orangeColor().CGColor
             shareButton.layer.borderWidth = 1
+            if NiceFaceClubManager.faceScoreAddition {
+                shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
+            }
         }
     }
+    
     @IBOutlet weak var titleLabel: UILabel!{
         didSet{
             titleLabel.text = alertTitle
@@ -66,6 +72,9 @@ class NFCMessageAlert:UIViewController{
     
     @IBAction func onClickShare(sender: AnyObject) {
         ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_VG_ALERT_MSG".niceFaceClubString, title: "NICE_FACE_CLUB".niceFaceClubString)
+        #if DEBUG
+            self.onShareSuccess(NSNotification(name: ShareHelper.onShareSuccess, object: nil))
+        #endif
     }
     
     @IBAction func onClickTestFace(sender: AnyObject) {
@@ -104,6 +113,12 @@ class NFCMessageAlert:UIViewController{
     func onShareSuccess(a:NSNotification) {
         NiceFaceClubManager.faceScoreAddition = true
         shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
+    }
+    
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
     }
     
     static func showNFCMessageAlert(vc:UIViewController, title:String?, message:String?) -> NFCMessageAlert{

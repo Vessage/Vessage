@@ -200,6 +200,9 @@ extension ConversationViewController{
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
         outterNewVessageCount = 0
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "onSwipeLeft:")
+        swipeLeft.direction = .Left
+        self.view.addGestureRecognizer(swipeLeft)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -245,6 +248,9 @@ extension ConversationViewController{
 
 //MARK: Actions
 extension ConversationViewController{
+    func onSwipeLeft(_:UIGestureRecognizer) {
+        onClickRightButton(self.rightButton)
+    }
     
     func onBackItemClick(sender:AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)

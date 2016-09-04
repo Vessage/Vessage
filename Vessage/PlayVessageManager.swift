@@ -112,13 +112,15 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
+    let sendingVessageDisppearTimeMs:UInt64 = 10000
+    
     var sendingVessage:Vessage!{
         didSet{
             if sendingVessage == nil {
                 presentingVesseage = getNeedPresentVessage()
             }else{
                 presentingVesseage = sendingVessage
-                dispatch_main_queue_after(6000, handler: {
+                dispatch_main_queue_after(sendingVessageDisppearTimeMs, handler: {
                     if (self.presentingVesseage?.isMySendingVessage() ?? false) {
                         self.presentingVesseage = self.getNeedPresentVessage()
                         self.vessageView.alpha = 0.3

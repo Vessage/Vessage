@@ -237,7 +237,9 @@ class FaceScoreTestRequest: BahamutRFRequestBase {
     
     var addition:Float!{
         didSet{
-            self.paramenters["addition"] = "\(addition)"
+            if let a = addition {
+                self.paramenters["addition"] = String.init(format: "%.1f", a)
+            }
         }
     }
     

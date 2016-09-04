@@ -61,7 +61,7 @@ MALE_MEMBERS = "男生";
 ALL_MEMBERS = "所有人";
 
 TODAY_LEFT_LOAD_MP_X_TIMES = "今天还有%@次下划次数";
-TODAY_NO_LEFT_LOAD_MP_TIMES = "今天下划次数已经用完，明天再来俱乐部玩吧~";
+TODAY_NO_LEFT_LOAD_MP_TIMES = "今天下划次数已用完，明天再来吧~";
 
 SHARE_ADD_MP_TIMES_TITLE = "今天下划次数已经用完";
 SHARE_ADD_MP_TIMES_MSG = "今天分享俱乐部给好友可以再刷10次";

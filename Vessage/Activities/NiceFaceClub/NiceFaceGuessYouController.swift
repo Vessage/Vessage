@@ -368,7 +368,7 @@ extension NiceFaceGuessYouController{
     }
     
     private func tryShowInviteAddTimesAlert() -> Bool{
-        if NiceFaceClubManager.instance.reqestShareAddTimes() {
+        if NiceFaceClubManager.instance.loadMemberProfileLimitedTimes == 0 && NiceFaceClubManager.instance.reqestShareAddTimes(){
             let alert = NFCShareAlert.showNFCShareAlert(self, title: "SHARE_ADD_MP_TIMES_TITLE".niceFaceClubString, message: "SHARE_ADD_MP_TIMES_MSG".niceFaceClubString)
             alert.onSharedHandler = { alert in
                 NiceFaceClubManager.instance.addLoadMemberTimes(10)

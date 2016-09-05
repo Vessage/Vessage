@@ -337,10 +337,7 @@ extension UserService{
     func removeUserDeviceTokenFromServer(deviceToken:String!){
         let req = RemoveUserDeviceRequest()
         req.setDeviceToken(deviceToken)
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
-            if result.isSuccess{
-                
-            }
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
         }
     }
 }

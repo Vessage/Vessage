@@ -15,6 +15,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     let screenWaitTimeInterval = 1.0
     private static var instance:EntryNavigationController!
     
+    private var mainViewPresented = false
     
     //MARK: life circle
     override func viewDidLoad() {
@@ -28,11 +29,11 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.view.addSubview(launchScr.view)
+        self.mainViewPresented = false
         go()
     }
     
     func removeObservers(){
-        BahamutRFKit.sharedInstance.removeObserver(self)
         ServiceContainer.getLocationService().removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         
@@ -88,10 +89,11 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     
     func onTokenInvalidated(_:AnyObject)
     {
-        logoutWithAlert("TOKEN_TIMEOUT_PLEASE_RELOGIN".localizedString())
+        logoutWithAlert("USER_APP_TOKEN_TIMEOUT".localizedString())
     }
     
     private func logoutWithAlert(msg:String){
+        BahamutRFKit.sharedInstance.removeObserver(self)
         
         let alert = UIAlertController(title: nil, message: msg , preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .Default, handler: { (action) -> Void in
@@ -112,16 +114,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     func onOtherDeviceLogin(_:AnyObject)
     {
         logoutWithAlert("OTHER_DEVICE_HAD_LOGIN".localizedString())
-    }
-    
-    func onAppTokenInvalid(_:AnyObject)
-    {
-        let alert = UIAlertController(title: nil, message: "USER_APP_TOKEN_TIMEOUT".localizedString() , preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .Default, handler: { (action) -> Void in
-            ServiceContainer.instance.userLogout()
-            EntryNavigationController.start()
-        }))
-        self.showAlert(alert)
     }
     
     private func go()
@@ -162,6 +154,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         BahamutCmdManager.sharedInstance.registHandler(self)
         removeObservers()
         MainTabBarController.showMainController(self){
+            self.mainViewPresented = true
             self.launchScr?.view?.removeFromSuperview()
         }
     }
@@ -177,6 +170,9 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         BahamutTaskQueue.defaultInstance.releaseQueue()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             UIApplication.sharedApplication().delegate?.window!?.rootViewController = EntryNavigationController.instance
+            if !EntryNavigationController.instance.mainViewPresented{
+                EntryNavigationController.instance.go()
+            }
         })
     }
 }

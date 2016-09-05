@@ -73,12 +73,15 @@ class SetupNiceFaceViewController: UIViewController {
     
     private var hud:MBProgressHUD?
     
+    private var faceScoreAddtion:Float = 0.0
+    
     func initImageView() {
         if self.takedImageView == nil {
             takedImageView = UIImageView(frame: self.view.bounds)
             takedImageView.contentMode = .ScaleAspectFill
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -202,12 +205,14 @@ extension SetupNiceFaceViewController{
         self.showAlert("NETWORK_ERROR".localizedString(), msg: "RETRY_TEST_FACE".niceFaceClubString, actions: [ok,cancel])
     }
     
+    
+    
+    
     private func getFaceScoreTestResult() {
         self.retakePicButton?.hidden = true
         self.closeButton?.hidden = true
         let imgUrl = "\(niceFaceUploadResult.Host)\(niceFaceUploadResult.Url)"
-        let addtion:Float = NiceFaceClubManager.faceScoreAddition ? 0.1 : 0
-        NiceFaceClubManager.instance.faceScoreTest(imgUrl,addtion: addtion, callback: { (result) in
+        NiceFaceClubManager.instance.faceScoreTest(imgUrl,addtion: faceScoreAddtion, callback: { (result) in
             if let r = result{
                 self.faceScore = r
                 self.view.stopScaning()
@@ -221,6 +226,9 @@ extension SetupNiceFaceViewController{
                 }
                 let btnTitle = pass ? "CONTINUE".niceFaceClubString : "CONTINUE_FACE_TEST".niceFaceClubString
                 alert.continueButton.setTitle(btnTitle, forState: .Normal)
+                alert.onSharedHandler = { nfcc in
+                    self.faceScoreAddtion = 0.1
+                }
                 alert.onTestScoreHandler = { nfcc in
                     nfcc.dismissViewControllerAnimated(true, completion: {
                         if pass{

@@ -27,6 +27,7 @@ class NFCMessageAlert:UIViewController{
     @IBOutlet weak var bcgMaskView: UIView!
     var onCloseHandler:((NFCMessageAlert)->Void)?
     var onTestScoreHandler:((NFCMessageAlert)->Void)?
+    var onSharedHandler:((NFCMessageAlert)->Void)?
     
     var alertTitle:String!{
         didSet{
@@ -45,9 +46,6 @@ class NFCMessageAlert:UIViewController{
             shareButton.layer.cornerRadius = 6
             shareButton.layer.borderColor = UIColor.orangeColor().CGColor
             shareButton.layer.borderWidth = 1
-            if NiceFaceClubManager.faceScoreAddition {
-                shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
-            }
         }
     }
     
@@ -111,8 +109,8 @@ class NFCMessageAlert:UIViewController{
     }
     
     func onShareSuccess(a:NSNotification) {
-        NiceFaceClubManager.faceScoreAddition = true
         shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
+        onSharedHandler?(self)
     }
     
     deinit{

@@ -166,7 +166,6 @@ extension NiceFaceGuessYouController{
         self.view.addGestureRecognizer(swipeLeftGes)
         self.view.addGestureRecognizer(swipeRightGes)
         self.view.addGestureRecognizer(swipeDownGes)
-        NiceFaceClubManager.faceScoreAddition = false
         refreshLimitedTimesLabel()
     }
     
@@ -174,8 +173,11 @@ extension NiceFaceGuessYouController{
         let times = NiceFaceClubManager.instance.loadMemberProfileLimitedTimes
         if times > 0 {
             self.limitedTimesLabel?.text = String(format: "TODAY_LEFT_LOAD_MP_X_TIMES".niceFaceClubString, "\(times)")
+        }else if NiceFaceClubManager.instance.canShareAddTimes{
+            self.limitedTimesLabel?.text = "SWIPE_DOWN_TO_SHARE_ADD_LOAD_MP_TIMES".niceFaceClubString
         }else{
             self.limitedTimesLabel?.text = "TODAY_NO_LEFT_LOAD_MP_TIMES".niceFaceClubString
+            
         }
     }
     
@@ -351,7 +353,8 @@ extension NiceFaceGuessYouController{
             loadMoreProfiles()
         }else{
             if let p = self.profile {
-                profiles.removeElement{$0.id == p.id}
+                let readedProfile = profiles.removeElement{$0.id == p.id}
+                PersistentManager.sharedInstance.removeModels(readedProfile)
             }
             setProfile(profiles.first!)
         }
@@ -368,10 +371,11 @@ extension NiceFaceGuessYouController{
     }
     
     private func tryShowInviteAddTimesAlert() -> Bool{
-        if NiceFaceClubManager.instance.loadMemberProfileLimitedTimes == 0 && NiceFaceClubManager.instance.reqestShareAddTimes(){
+        if NiceFaceClubManager.instance.loadMemberProfileLimitedTimes == 0 && NiceFaceClubManager.instance.canShareAddTimes{
             let alert = NFCShareAlert.showNFCShareAlert(self, title: "SHARE_ADD_MP_TIMES_TITLE".niceFaceClubString, message: "SHARE_ADD_MP_TIMES_MSG".niceFaceClubString)
             alert.onSharedHandler = { alert in
                 NiceFaceClubManager.instance.addLoadMemberTimes(10)
+                NiceFaceClubManager.instance.setTodaySharedAddTimes()
                 self.refreshLimitedTimesLabel()
             }
         }
@@ -399,6 +403,7 @@ extension NiceFaceGuessYouController{
         NiceFaceClubManager.instance.loadProfiles({ (profiles) in
             hud.hideAnimated(true)
             if profiles.count > 0{
+                PersistentManager.sharedInstance.removeModels(self.profiles)
                 self.profiles = profiles
                 self.setProfile(self.profiles.first!)
             }else{

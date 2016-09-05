@@ -36,10 +36,6 @@ class NFCShareAlert:UIViewController{
             shareButton.superview?.layer.cornerRadius = 6
             shareButton.superview?.layer.borderColor = UIColor.orangeColor().CGColor
             shareButton.superview?.layer.borderWidth = 1
-            
-            if NiceFaceClubManager.faceScoreAddition {
-                shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
-            }
         }
     }
     
@@ -96,7 +92,6 @@ class NFCShareAlert:UIViewController{
     }
     
     func onShareSuccess(a:NSNotification) {
-        NiceFaceClubManager.faceScoreAddition = true
         shareButton.setImage(UIImage(named: "nice_face_shared")!, forState: .Normal)
         onSharedHandler?(self)
     }

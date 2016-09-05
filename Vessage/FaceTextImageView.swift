@@ -90,6 +90,12 @@ class FaceTextImageView: UIView {
         self.chatBubble.hidden = true
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
+    
     private var beginPoint:CGPoint!
     func onMoveChatBubble(ges:UIPanGestureRecognizer) {
         
@@ -125,6 +131,9 @@ class FaceTextImageView: UIView {
         self.addSubview(self.loadingImageView)
         self.loadingImageView.startAnimating()
         ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: fileId, defaultImage: getDefaultFace()) { (suc) in
+            if self.container == nil{
+                return
+            }
             self.imageLoaded = true
             self.loadingImageView.stopAnimating()
             self.loadingImageView.removeFromSuperview()
@@ -140,6 +149,9 @@ class FaceTextImageView: UIView {
                 
                 if !suc && timesLeft > 0{
                     ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: fileId,defaultImage: getDefaultFace()){ setted in
+                        if self.container == nil{
+                            return
+                        }
                         retryFetchChatImage(setted,timesLeft: timesLeft - 1)
                     }
                 }

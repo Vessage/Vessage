@@ -44,7 +44,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
 extension RecordVessageManager{
     
     override func onSwitchToManager() {
-        imageChatButton.hidden = true
+        nextVessageButton.hidden = true
         rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Normal)
         rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Highlighted)
         rightButton.hidden = false

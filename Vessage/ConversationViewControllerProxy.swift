@@ -79,8 +79,8 @@ class ConversationViewControllerProxy: NSObject {
         return rootController.backgroundImage
     }
     
-    var imageChatButton:UIButton!{
-        return rootController.imageChatButton
+    var nextVessageButton:UIButton!{
+        return rootController.nextVessageButton
     }
     
     

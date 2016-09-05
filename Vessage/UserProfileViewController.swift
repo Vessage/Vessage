@@ -12,7 +12,7 @@ import LTMorphingLabel
 class UserProfileViewController: UIViewController {
     private(set) var profile:VessageUser!{
         didSet{
-            ServiceContainer.getFileService().setAvatar(avatarImageView, iconFileId: profile.avatar, defaultImage: getDefaultAvatar(profile.accountId ?? "0"), callback: nil)
+            ServiceContainer.getFileService().setAvatar(avatarImageView, iconFileId: profile.avatar, defaultImage: getDefaultAvatar(profile.accountId ?? "0"))
             if let aId = profile.accountId {
                 self.accountIdLabel.text = String(format: "USER_ACCOUNT_FORMAT".localizedString(),aId)
                 var name = profile.nickName

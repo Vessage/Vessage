@@ -12,6 +12,10 @@ import Foundation
 class PlayVessageManager: ConversationViewControllerProxy {
     private var vessageHandlers = [Int:VessageHandler]()
     
+    var haveNextVessage:Bool{
+        return notReadVessages.count > 1
+    }
+    
     private func generateNoVessageHandler() -> VessageHandler{
         if let h = vessageHandlers[Vessage.typeNoVessage]{
             return h
@@ -47,12 +51,12 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     override func onSwitchToManager() {
-        imageChatButton.hidden = rootController.bottomBar.hidden
-        rightButton.setImage(UIImage(named: "playNext"), forState: .Normal)
-        rightButton.setImage(UIImage(named: "playNext"), forState: .Highlighted)
+        rightButton.hidden = false
+        rightButton.setImage(UIImage(named: "image_chat_btn"), forState: .Normal)
+        rightButton.setImage(UIImage(named: "image_chat_btn"), forState: .Highlighted)
         recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
         recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
-        rightButton.hidden = notReadVessages.count <= 1
+        refreshNextButton()
     }
     
     override func onReleaseManager() {
@@ -73,7 +77,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     private var notReadVessages = [Vessage](){
         didSet{
             presentingVesseage = getNeedPresentVessage()
-            rightButton?.hidden = notReadVessages.count <= 1
+            refreshNextButton()
             refreshBadge()
         }
     }
@@ -171,7 +175,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
             })
             notReadVessages = vessages
         }else{
-            rightButton?.hidden = notReadVessages.count <= 1
+            refreshNextButton()
             vessageView?.hidden = presentingVesseage == nil
         }
     }
@@ -185,6 +189,9 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     //MARK: actions
+    func refreshNextButton() {
+        self.nextVessageButton?.hidden = !haveNextVessage
+    }
     
     func refreshBadge(){
         if let chatterId = conversation.chatterId{

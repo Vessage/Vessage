@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -155,12 +155,12 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="snt-ld-l0F">
-                                        <rect key="frame" x="361" y="20" width="40" height="40"/>
+                                        <rect key="frame" x="353" y="16" width="48" height="48"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="AiI-yU-qD0"/>
-                                            <constraint firstAttribute="height" constant="40" id="zGX-wY-Vlh"/>
+                                            <constraint firstAttribute="width" constant="48" id="AiI-yU-qD0"/>
+                                            <constraint firstAttribute="height" constant="48" id="zGX-wY-Vlh"/>
                                         </constraints>
-                                        <state key="normal" image="playNext"/>
+                                        <state key="normal" image="image_chat_btn"/>
                                         <connections>
                                             <action selector="onClickRightButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="Cf0-mO-QLS"/>
                                         </connections>
@@ -179,14 +179,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6g-yL-8Wr">
-                                <rect key="frame" x="358" y="600" width="56" height="56"/>
+                                <rect key="frame" x="358" y="610" width="36" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="3gB-oJ-aCn"/>
-                                    <constraint firstAttribute="height" constant="56" id="azJ-jj-U0v"/>
+                                    <constraint firstAttribute="width" constant="36" id="3gB-oJ-aCn"/>
+                                    <constraint firstAttribute="height" constant="36" id="azJ-jj-U0v"/>
                                 </constraints>
-                                <state key="normal" title="图聊" image="image_chat_btn"/>
+                                <state key="normal" title="图聊" image="playNext"/>
                                 <connections>
-                                    <action selector="onClickImageChatButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="1eV-8N-ZaV"/>
+                                    <action selector="onClickNextButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="1eV-8N-ZaV"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-Iz-prr" customClass="VideoPreviewBubble" customModule="Vessage" customModuleProvider="target">
@@ -204,7 +204,7 @@
                         <constraints>
                             <constraint firstItem="t1h-Iv-vhL" firstAttribute="height" secondItem="VJP-zZ-5aI" secondAttribute="height" id="2oM-v8-Epg"/>
                             <constraint firstItem="kTW-83-PVY" firstAttribute="width" secondItem="VJP-zZ-5aI" secondAttribute="width" id="30s-2q-RF7"/>
-                            <constraint firstItem="J6g-yL-8Wr" firstAttribute="trailing" secondItem="cBx-c6-Kmj" secondAttribute="trailing" id="3Q4-Tu-Zoo"/>
+                            <constraint firstItem="J6g-yL-8Wr" firstAttribute="trailing" secondItem="cBx-c6-Kmj" secondAttribute="trailing" constant="-20" id="3Q4-Tu-Zoo"/>
                             <constraint firstItem="cBx-c6-Kmj" firstAttribute="leading" secondItem="VJP-zZ-5aI" secondAttribute="leading" id="3ZT-Yx-LED"/>
                             <constraint firstItem="kTW-83-PVY" firstAttribute="centerX" secondItem="VJP-zZ-5aI" secondAttribute="centerX" id="3qb-Vs-YlT"/>
                             <constraint firstItem="jtm-a8-MtZ" firstAttribute="width" secondItem="cBx-c6-Kmj" secondAttribute="width" id="40X-Hr-D45"/>
@@ -220,7 +220,7 @@
                             <constraint firstItem="Jug-Iz-prr" firstAttribute="leading" secondItem="cBx-c6-Kmj" secondAttribute="leading" constant="3" id="SvH-D0-eat"/>
                             <constraint firstItem="jtm-a8-MtZ" firstAttribute="height" secondItem="cBx-c6-Kmj" secondAttribute="height" id="ZTA-aK-nSC"/>
                             <constraint firstItem="t1h-Iv-vhL" firstAttribute="centerY" secondItem="VJP-zZ-5aI" secondAttribute="centerY" id="ams-ar-4Gb"/>
-                            <constraint firstItem="cBx-c6-Kmj" firstAttribute="top" secondItem="J6g-yL-8Wr" secondAttribute="bottom" id="aul-Rr-Bcq"/>
+                            <constraint firstItem="cBx-c6-Kmj" firstAttribute="top" secondItem="J6g-yL-8Wr" secondAttribute="bottom" constant="10" id="aul-Rr-Bcq"/>
                             <constraint firstItem="m0w-W8-lr9" firstAttribute="centerX" secondItem="VJP-zZ-5aI" secondAttribute="centerX" id="kbo-uW-O0V"/>
                             <constraint firstItem="jtm-a8-MtZ" firstAttribute="centerY" secondItem="cBx-c6-Kmj" secondAttribute="centerY" id="oyY-9V-uXU"/>
                             <constraint firstItem="kTW-83-PVY" firstAttribute="centerY" secondItem="VJP-zZ-5aI" secondAttribute="centerY" id="riN-Rb-1uZ"/>
@@ -245,8 +245,8 @@
                         <outlet property="conversationLeftTopLabel" destination="xNx-lk-PEP" id="gag-ny-JeT"/>
                         <outlet property="conversationRightBottomLabel" destination="JH5-p9-HH6" id="vzw-5K-dPD"/>
                         <outlet property="groupFaceContainer" destination="ZVm-Y7-rGc" id="gFz-2T-NLR"/>
-                        <outlet property="imageChatButton" destination="J6g-yL-8Wr" id="9uD-UH-Ht6"/>
                         <outlet property="middleButton" destination="gJj-nO-NGN" id="yIX-vm-ZrY"/>
+                        <outlet property="nextVessageButton" destination="J6g-yL-8Wr" id="9uD-UH-Ht6"/>
                         <outlet property="noSmileFaceTipsLabel" destination="khg-HQ-ttM" id="YZx-tJ-IFT"/>
                         <outlet property="previewRectView" destination="Jug-Iz-prr" id="kyn-0a-3Pl"/>
                         <outlet property="progressView" destination="m0w-W8-lr9" id="C9s-Xk-ADJ"/>

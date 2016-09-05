@@ -79,9 +79,9 @@ class ConversationViewController: UIViewController {
         return !isRecording
     }
     
-    @IBOutlet weak var imageChatButton: UIButton!{
+    @IBOutlet weak var nextVessageButton: UIButton!{
         didSet{
-            imageChatButton.hidden = true
+            nextVessageButton.hidden = true
         }
     }
     
@@ -200,7 +200,8 @@ extension ConversationViewController{
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
         outterNewVessageCount = 0
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "onSwipeLeft:")
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeLeft(_:)))
         swipeLeft.direction = .Left
         self.view.addGestureRecognizer(swipeLeft)
     }
@@ -249,7 +250,7 @@ extension ConversationViewController{
 //MARK: Actions
 extension ConversationViewController{
     func onSwipeLeft(_:UIGestureRecognizer) {
-        onClickRightButton(self.rightButton)
+        onClickNextButton(self.nextVessageButton)
     }
     
     func onBackItemClick(sender:AnyObject) {
@@ -289,18 +290,23 @@ extension ConversationViewController{
     }
     
     @IBAction func onClickRightButton(sender: UIView) {
-        sender.animationMaxToMin(0.1, maxScale: 1.2) {
-            if self.isReadingVessages {
-                self.playVessageManager.showNextVessage()
-            }else{
-                self.recordVessageManager.cancelRecord()
-                self.setReadingVessage()
+        if self.isReadingVessages {
+            sender.animationMaxToMin(0.1, maxScale: 1.2) {
+                self.tryShowImageChatInputView()
             }
+        }else{
+            self.recordVessageManager.cancelRecord()
+            self.setReadingVessage()
         }
+        
     }
     
-    @IBAction func onClickImageChatButton(sender: AnyObject) {
-        self.tryShowImageChatInputView()
+    @IBAction func onClickNextButton(sender: UIView) {
+        if self.isReadingVessages {
+            sender.animationMaxToMin(0.1, maxScale: 1.2) {
+                self.playVessageManager.showNextVessage()
+            }
+        }
     }
     
     private func showChatGroupProfile(){
@@ -353,13 +359,12 @@ extension ConversationViewController{
                 self.bottomBar.layer.frame = barLayerOriginFrame
                 self.bottomBarContainer.alpha = 1
                 self.bottomBarContainer.layer.frame = layerOriginFrame
-                let imageChatButtomLayerFrame = self.imageChatButton.layer.frame
-                self.imageChatButton.layer.frame = CGRectMake(imageChatButtomLayerFrame.origin.x + imageChatButtomLayerFrame.width, imageChatButtomLayerFrame.origin.y + imageChatButtomLayerFrame.height, imageChatButtomLayerFrame.width, imageChatButtomLayerFrame.height)
-                self.imageChatButton.alpha = 0.3
-                self.imageChatButton.hidden = false
+                let nextVessageButtonLayerFrame = self.nextVessageButton.layer.frame
+                self.nextVessageButton.layer.frame = CGRectMake(nextVessageButtonLayerFrame.origin.x + nextVessageButtonLayerFrame.width, nextVessageButtonLayerFrame.origin.y + nextVessageButtonLayerFrame.height, nextVessageButtonLayerFrame.width, nextVessageButtonLayerFrame.height)
+                self.nextVessageButton.alpha = 0.3
                 UIView.animateWithDuration(0.6){
-                    self.imageChatButton.layer.frame = imageChatButtomLayerFrame
-                    self.imageChatButton.alpha = 1
+                    self.nextVessageButton.layer.frame = nextVessageButtonLayerFrame
+                    self.nextVessageButton.alpha = 1
                 }
             }
         }
@@ -612,7 +617,7 @@ extension ConversationViewController{
 //MARK: animations
 extension ConversationViewController{
     func playNextButtonAnimation(){
-        UIAnimationHelper.flashView(rightButton, duration: 0.3, autoStop: true, stopAfterMs: 6000)
+        UIAnimationHelper.flashView(nextVessageButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
     }
     
     func playVideoChatButtonAnimation() {
@@ -620,7 +625,7 @@ extension ConversationViewController{
     }
     
     func playFaceTextButtonAnimation() {
-        UIAnimationHelper.flashView(imageChatButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
+        UIAnimationHelper.flashView(rightButton, duration: 0.3, autoStop: true, stopAfterMs: 6000)
     }
 }
 

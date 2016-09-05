@@ -17,7 +17,7 @@ extension String{
 class NiceFaceClubManager:NSObject {
     static let lastRefreshMemberTimeKey = "REFRESHED_MEMBER_PROFILE_HOURS"
     static let refreshMemberProfileIntervalHours = NSNumber(double: 1)
-    static var faceScoreAddition = false
+    
     static let minScore:Float = 8.0
     static let instance:NiceFaceClubManager = {
         let mgr = NiceFaceClubManager()
@@ -96,6 +96,11 @@ class NiceFaceClubManager:NSObject {
         }
     }
     
+}
+
+//MARK: Modify Member Profile
+extension NiceFaceClubManager{
+    
     func updateMyProfileValues() -> Bool{
         let userProfile = ServiceContainer.getUserService().myProfile
         let req = UpdateMyProfileValuesRequest()
@@ -126,45 +131,6 @@ class NiceFaceClubManager:NSObject {
         
     }
     
-    func faceScoreTest(imgUrl:String,addtion:Float,callback:(result:NiceFaceTestResult?)->Void) {
-        let req = FaceScoreTestRequest()
-        req.setImageUrl(imgUrl)
-        req.addition = addtion
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NiceFaceTestResult>) in
-            callback(result: result.returnObject)
-        }
-    }
-    
-    func loadProfiles(callback:([UserNiceFaceProfile])->Void) {
-        let req = GetNiceFaceProfilesRequest()
-        req.preferSex = preferredSex
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[UserNiceFaceProfile]>) in
-            var resultArr = [UserNiceFaceProfile]()
-            if result.isSuccess{
-                if let arr = result.returnObject{
-                    resultArr = arr
-                }
-            }
-            callback(resultArr)
-        }
-    }
-    
-    func setUserNiceFace(testResult:NiceFaceTestResult,imageId:String,callback:(Bool)->Void) {
-        let req = SetNiceFaceRequest()
-        req.imageId = imageId
-        req.testResultId = testResult.rId
-        req.testResultTimeSpan = testResult.ts
-        req.score = testResult.hs
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
-            if result.isSuccess{
-                self.myNiceFaceProfile.faceId = imageId
-                self.myNiceFaceProfile.score = testResult.highScore
-                self.myNiceFaceProfile.saveModel()
-                PersistentManager.sharedInstance.saveAll()
-            }
-            callback(result.isSuccess)
-        }
-    }
     
     func setUserPuzzle(memberPuzzles:MemberPuzzles,callback:(Bool)->Void) {
         let req = SetPuzzleAnswerRequest()
@@ -178,6 +144,11 @@ class NiceFaceClubManager:NSObject {
             callback(result.isSuccess)
         }
     }
+
+}
+
+//MARK: User Actions
+extension NiceFaceClubManager{
     
     func likeMember(profileId:String) {
         let req = LikeMemberRequest()
@@ -213,6 +184,38 @@ class NiceFaceClubManager:NSObject {
     }
 }
 
+//MARK: face score
+extension NiceFaceClubManager{
+    
+    func faceScoreTest(imgUrl:String,addtion:Float,callback:(result:NiceFaceTestResult?)->Void) {
+        let req = FaceScoreTestRequest()
+        req.setImageUrl(imgUrl)
+        req.addition = addtion
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NiceFaceTestResult>) in
+            callback(result: result.returnObject)
+        }
+    }
+    
+    func setUserNiceFace(testResult:NiceFaceTestResult,imageId:String,callback:(Bool)->Void) {
+        let req = SetNiceFaceRequest()
+        req.imageId = imageId
+        req.testResultId = testResult.rId
+        req.testResultTimeSpan = testResult.ts
+        req.score = testResult.hs
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
+            if result.isSuccess{
+                self.myNiceFaceProfile.faceId = imageId
+                self.myNiceFaceProfile.score = testResult.highScore
+                self.myNiceFaceProfile.saveModel()
+                PersistentManager.sharedInstance.saveAll()
+            }
+            callback(result.isSuccess)
+        }
+    }
+    
+}
+
+//MARK: Member Profiles
 let NFCReadMemberProfileLimitedPerDay = 10
 
 extension NiceFaceClubManager{
@@ -230,21 +233,38 @@ extension NiceFaceClubManager{
         return !UserSetting.isSettingEnable("NFC_TODAY_ADDTION_TIMES_SHARED")
     }
     
-    func reqestShareAddTimes() -> Bool {
-        if canShareAddTimes {
-            UserSetting.enableSetting("NFC_TODAY_ADDTION_TIMES_SHARED")
-            return true
+    func setTodaySharedAddTimes(){
+        UserSetting.enableSetting("NFC_TODAY_ADDTION_TIMES_SHARED")
+    }
+    
+    func loadProfiles(callback:([UserNiceFaceProfile])->Void) {
+        let cachedProfiles = PersistentManager.sharedInstance.getAllModel(UserNiceFaceProfile)
+        if cachedProfiles.count > 0 {
+            callback(cachedProfiles)
         }else{
-            return false
+            let req = GetNiceFaceProfilesRequest()
+            req.preferSex = preferredSex
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[UserNiceFaceProfile]>) in
+                var resultArr = [UserNiceFaceProfile]()
+                if result.isSuccess{
+                    if let arr = result.returnObject{
+                        resultArr = arr
+                        if arr.count > 0{
+                            self.setTodayLoadedMemperProfiles()
+                        }
+                    }
+                }
+                callback(resultArr)
+            }
         }
     }
     
     var loadMemberProfileLimitedTimes:Int{
         get{
             if lastLoadMemberProfileDay < NSDate().totalDaysSince1970.integerValue {
+                PersistentManager.sharedInstance.removeAllModels(UserNiceFaceProfile)
                 UserSetting.disableSetting("NFC_TODAY_ADDTION_TIMES_SHARED")
                 UserSetting.setUserIntValue("NFC_TODAY_LOAD_MP_L_TIMES", value: NFCReadMemberProfileLimitedPerDay)
-                setTodayLoadedMemperProfiles()
                 return NFCReadMemberProfileLimitedPerDay
             }
             return UserSetting.getUserIntValue("NFC_TODAY_LOAD_MP_L_TIMES")

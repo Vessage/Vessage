@@ -219,6 +219,7 @@ extension ConversationViewController{
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         showBottomBar()
         recordVessageManager.camera.openCamera()
     }
@@ -302,9 +303,16 @@ extension ConversationViewController{
     }
     
     @IBAction func onClickNextButton(sender: UIView) {
-        if self.isReadingVessages {
-            sender.animationMaxToMin(0.1, maxScale: 1.2) {
-                self.playVessageManager.showNextVessage()
+        if self.isReadingVessages{
+            if playVessageManager.haveNextVessage {
+                sender.animationMaxToMin(0.1, maxScale: 1.2) {
+                    self.playVessageManager.showNextVessage()
+                }
+            }else if playVessageManager.isPresentingVessage{
+                self.playVessageManager.flashTips("THE_LAST_NOT_READ_VESSAGE".localizedString())
+            }else{
+                self.playVideoChatButtonAnimation()
+                self.playFaceTextButtonAnimation()
             }
         }
     }
@@ -625,7 +633,7 @@ extension ConversationViewController{
     }
     
     func playFaceTextButtonAnimation() {
-        UIAnimationHelper.flashView(rightButton, duration: 0.3, autoStop: true, stopAfterMs: 6000)
+        UIAnimationHelper.flashView(rightButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
     }
 }
 

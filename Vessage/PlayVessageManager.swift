@@ -16,6 +16,36 @@ class PlayVessageManager: ConversationViewControllerProxy {
         return notReadVessages.count > 1
     }
     
+    var isPresentingVessage:Bool{
+        return self.presentingVesseage != nil
+    }
+    
+    
+    private var flashTipsView:UILabel!{
+        didSet{
+            flashTipsView.clipsToBounds = true
+            flashTipsView.layer.cornerRadius = 6
+            flashTipsView.textColor = UIColor.orangeColor()
+            flashTipsView.textAlignment = .Center
+            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
+        }
+    }
+    
+    func flashTips(msg:String) {
+        if flashTipsView == nil {
+            flashTipsView = UILabel()
+        }
+        
+        self.flashTipsView.text = msg
+        self.flashTipsView.sizeToFit()
+        let center = CGPointMake(self.rootController.view.frame.width / 2, self.vessageView.frame.origin.y - 10 - self.flashTipsView.frame.height / 2)
+        self.flashTipsView.center = center
+        self.rootController.view.addSubview(self.flashTipsView)
+        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.4, autoStop: true, stopAfterMs: 1600){
+            self.flashTipsView.removeFromSuperview()
+        }
+    }
+    
     private func generateNoVessageHandler() -> VessageHandler{
         if let h = vessageHandlers[Vessage.typeNoVessage]{
             return h
@@ -202,6 +232,9 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     func showNextVessage() {
+        if !haveNextVessage {
+            return
+        }
         if self.presentingVesseage.isRead{
             loadNextVessage()
         }else{

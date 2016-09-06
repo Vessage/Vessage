@@ -169,10 +169,14 @@ CONFIRM_PSW = "修改新密码为";
 OLD_NEW_PSW_SAME = "新旧密码相同";
 USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
+//APP Motto
+"VESSAGE_MOTTO_0" = "高颜值俱乐部";
+"VESSAGE_MOTTO_1" = "想聊就聊，不聊消失";
+"VESSAGE_MOTTO_2" = "高颜值者的聚集地";
+
 //Vege
 APP_NAME = "VG";
-VESSAGE_MOTTO = "高颜值者的聊天社群";
-DEFAULT_VGER_MOTTO = "我就是我!";
+DEFAULT_VGER_MOTTO = "和我聊天吧！";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";

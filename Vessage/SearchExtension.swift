@@ -36,22 +36,62 @@ class SearchResultModel{
 
 
 //MARK: ConversationListController extension UISearchBarDelegate
+let searchAccountIdLimitedPerMinute = 3
 extension ConversationListController:UISearchBarDelegate
 {
+    
+    private var lastMinuteSearchAccountId:NSNumber{
+        get{
+            return UserSetting.getUserNumberValue("LST_GET_ANT_ID_M") ?? NSNumber(integer:0)
+        }
+        set{
+            return UserSetting.setUserNumberValue("LST_GET_ANT_ID_M", value: newValue)
+        }
+    }
+    
+    private var lastMinuteSearchAccountIdCount:Int{
+        get{
+            return UserSetting.getUserIntValue("LST_M_GET_ANT_ID_CNT")
+        }
+        set{
+            return UserSetting.setUserIntValue("LST_M_GET_ANT_ID_CNT", value: newValue)
+        }
+    }
+    
+    private var canSearchByAccountId:Bool{
+        if UserSetting.godMode {
+            return true
+        }
+        
+        let now = NSDate().totalMinutesSince1970
+        if now.integerValue > lastMinuteSearchAccountId.integerValue{
+            lastMinuteSearchAccountId = now
+            lastMinuteSearchAccountIdCount = 0
+            return true
+        }else{
+            return lastMinuteSearchAccountIdCount < searchAccountIdLimitedPerMinute
+        }
+    }
+    
     //MARK: search bar delegate
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text.hasEnd("\n") {
             if let accoundId = searchBar.text{
                 if accoundId.isBahamutAccount() ?? false{
                     if nil == userService.getCachedUserByAccountId(accoundId){
-                        let hud = self.showAnimationHud()
-                        userService.getUserProfileByAccountId(accoundId, updatedCallback: { (user) in
-                            hud.hideAnimated(true)
-                            if let u = user{
-                                let model = SearchResultModel(keyword: accoundId,user: u)
-                                self.searchResult.insert(model, atIndex: 0)
-                            }
-                        })
+                        if canSearchByAccountId {
+                            let hud = self.showAnimationHud()
+                            userService.getUserProfileByAccountId(accoundId, updatedCallback: { (user) in
+                                hud.hideAnimated(true)
+                                if let u = user{
+                                    self.lastMinuteSearchAccountIdCount += 1
+                                    let model = SearchResultModel(keyword: accoundId,user: u)
+                                    self.searchResult.insert(model, atIndex: 0)
+                                }
+                            })
+                        }else{
+                            self.playToast(String(format: "SEARCH_ACCOUNTID_LIMITED_X".localizedString(), "\(searchAccountIdLimitedPerMinute)"))
+                        }
                     }
                 }
             }

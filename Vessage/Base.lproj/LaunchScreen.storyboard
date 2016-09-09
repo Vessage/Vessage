@@ -58,6 +58,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenIcon" width="128" height="128"/>
+        <image name="LaunchScreenIcon" width="256" height="256"/>
     </resources>
 </document>

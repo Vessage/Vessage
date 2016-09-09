@@ -53,8 +53,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     
     @objc func userLogout(userId: String) {
         setServiceNotReady()
-        removeUserDeviceTokenFromServer(VessageSetting.deviceToken)
-        myProfile = nil
         activeUsers.removeAll()
         nearUsers.removeAll()
     }

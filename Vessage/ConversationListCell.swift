@@ -302,7 +302,5 @@ class ConversationListCell:ConversationListCellBase{
             }
         }
     }
-
-    
 }
 

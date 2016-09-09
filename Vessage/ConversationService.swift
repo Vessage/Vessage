@@ -122,8 +122,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
                 if conversation.chatterId == nil{
                     conversation.chatterId = vsg.sender
                 }
-                if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(vsg.sendTime.dateTimeOfAccurateString){
-                    conversation.lastMessageTime = vsg.sendTime
+                if let date = vsg.getSendTime() {
+                    if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(date){
+                        conversation.lastMessageTime = vsg.sendTime
+                    }
                 }
                 conversation.saveModel()
                 self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])

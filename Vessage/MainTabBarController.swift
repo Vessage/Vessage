@@ -63,6 +63,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.getVessageService().removeObserver(self)
         ServiceContainer.getActivityService().removeObserver(self)
         self.dismissViewControllerAnimated(false, completion: nil)
+        ServiceContainer.getUserService().removeUserDeviceTokenFromServer(VessageSetting.deviceToken)
     }
     
     func onActivitiesBadgeUpdated(a:NSNotification){

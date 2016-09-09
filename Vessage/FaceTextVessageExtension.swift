@@ -28,8 +28,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         chatImageBoardShown = false
         chatImageBoardSourceView?.removeFromSuperview()
         chatImageBoardController?.dismissViewControllerAnimated(true, completion: nil)
-        self.imageChatInputView.inputTextField.resignFirstResponder()
-        self.imageChatInputResponderTextFiled.resignFirstResponder()
+        self.hideKeyBoard()
     }
     
     //MARK: ImageChatInputViewDelegate
@@ -41,7 +40,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     func imageChatInputViewDidEndEditing(textField: UITextView) {
-        
+        imageChatInputResponderTextFiled.resignFirstResponder()
     }
     
     func imageChatInputViewDidClickSend(sender: AnyObject?, textField: UITextView) {

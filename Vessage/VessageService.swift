@@ -29,10 +29,11 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     
     static let onVessageRead = "onVessageRead"
     static let onVessageRemoved = "onVessageRemoved"
-    //private static let notReadVessageCountStoreKey = "NewVsgCntKey"
+    
     @objc static var ServiceName:String {return "Vessage Service"}
     
-    private var notReadVessageCountMap:[String:Int]!
+    private var notReadVessageCountMap = [String:Int]()
+    private var vsgCntLock = NSRecursiveLock()
     
     @objc func appStartInit(appName: String) {
         
@@ -44,13 +45,15 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLogout(userId: String) {
+        vsgCntLock.unlock()
         setServiceNotReady()
     }
     
     private func initNotReadVessageCountMap(){
-        notReadVessageCountMap = [String:Int]()
         var newestVsgMap = [String:Vessage]()
         let vsgs = PersistentManager.sharedInstance.getAllModel(Vessage)
+        vsgCntLock.lock()
+        notReadVessageCountMap.removeAll()
         vsgs.forEach { (vsg) in
             if !vsg.isRead{
                 if let cnt = notReadVessageCountMap[vsg.sender]{
@@ -58,6 +61,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                 }else{
                     notReadVessageCountMap[vsg.sender] = 1
                 }
+                
             }else{
                 if let nvsg = newestVsgMap[vsg.sender]{
                     if nvsg.getSendTime().compare(vsg.getSendTime()) == .OrderedDescending{
@@ -71,6 +75,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                 }
             }
         }
+        vsgCntLock.unlock()
         PersistentManager.sharedInstance.saveAll()
         PersistentManager.sharedInstance.refreshCache(Vessage)
     }
@@ -81,12 +86,14 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
         if vessage.isRead == false{
             vessage.isRead = true
+            vsgCntLock.lock()
             if var cnt = notReadVessageCountMap[vessage.sender]{
                 cnt = cnt > 1 ? cnt - 1 : 0
                 notReadVessageCountMap[vessage.sender] = cnt
             }else{
                 notReadVessageCountMap[vessage.sender] = 0
             }
+            vsgCntLock.unlock()
             self.postNotificationNameWithMainAsync(VessageService.onVessageRead, object: self, userInfo: [VessageServiceNotificationValue:vessage])
         }
         if refresh{
@@ -118,11 +125,13 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                     PersistentManager.sharedInstance.saveAll()
                     PersistentManager.sharedInstance.refreshCache(Vessage)
                     vsgs.forEach({ (vsg) in
+                        self.vsgCntLock.lock()
                         if let cnt = self.notReadVessageCountMap[vsg.sender]{
                             self.notReadVessageCountMap[vsg.sender] = cnt + 1
                         }else{
                             self.notReadVessageCountMap[vsg.sender] = 1
                         }
+                        self.vsgCntLock.unlock()
                         self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                     })
                     self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:vsgs])

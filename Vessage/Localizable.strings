@@ -232,6 +232,8 @@ UNPIN = "取消Pin";
 GET_SMS_CODE_ERROR = "获取验证码失败,请重试";
 NOT_MOBILE_NO = "请输入正确的手机号";
 
+SEARCH_ACCOUNTID_LIMITED_X = "每分钟最多搜索%@次";
+
 //MARK: Send Vessage
 POST_VESSAGE_ERROR = "发送消息失败";
 GET_FILE_KEY_ERROR = "获取消息文件头出错";
@@ -310,7 +312,7 @@ NOT_IN_CHAT_GROUP = "已退出群聊...";
 EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组?";
 YOU_EXITED_GROUP_CHAT = "你已退出群组";
 EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
-GROUP_CHAT_AT_LEASE_2_PEOPLE = "至少选择两个好友哦~";
+"GROUP_CHAT_AT_LEASE_2_PEOPLE" = "至少选择两个好友哦~";
 NO_SUCH_GROUP = "群组不存在";
 
 //MARK: Face Text Chat

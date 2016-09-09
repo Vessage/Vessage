@@ -112,6 +112,7 @@ class ConversationListController: UITableViewController {
     
     private var refreshedNewUserTime:NSDate!
     private let refreshNewUserIntervalMinutes = 10.0
+    private let refreshListIntervalSeconds = 60.0
     func refreshNewUsers(sender:AnyObject) {
         if refreshedNewUserTime == nil || abs(refreshedNewUserTime.totalMinutesSinceNow.doubleValue) > refreshNewUserIntervalMinutes {
             self.refreshedNewUserTime = NSDate()
@@ -133,7 +134,7 @@ class ConversationListController: UITableViewController {
         
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         
-        refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(100, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
+        refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(refreshListIntervalSeconds, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
         
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageQueue.onTaskFinished, object: nil)
     }

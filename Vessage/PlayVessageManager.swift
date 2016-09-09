@@ -35,7 +35,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
         if flashTipsView == nil {
             flashTipsView = UILabel()
         }
-        
         self.flashTipsView.text = msg
         self.flashTipsView.sizeToFit()
         let center = CGPointMake(self.rootController.view.frame.width / 2, self.vessageView.frame.origin.y - 10 - self.flashTipsView.frame.height / 2)
@@ -219,16 +218,12 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     //MARK: actions
-    func refreshNextButton() {
+    private func refreshNextButton() {
         self.nextVessageButton?.hidden = !haveNextVessage
     }
     
     func refreshBadge(){
-        if let chatterId = conversation.chatterId{
-            self.badgeValue = vessageService.getChatterNotReadVessageCount(chatterId)
-        }else{
-            self.badgeValue = 0
-        }
+        self.badgeValue = notReadVessages.filter{!$0.isRead}.count
     }
     
     func showNextVessage() {
@@ -246,7 +241,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
-    func loadNextVessage(){
+    private func loadNextVessage(){
         if notReadVessages.count <= 1{
             rootController.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
         }else{

@@ -13,74 +13,74 @@ class ConversationViewControllerProxy: NSObject {
     private(set) weak var rootController:ConversationViewController!
     
     var isGroupChat:Bool{
-        return rootController.isGroupChat
+        return rootController?.isGroupChat ?? false
     }
     
     var chatGroup:ChatGroup!{
-        return rootController.chatGroup
+        return rootController?.chatGroup
     }
     
     
     var vessageView:UIView!{
-        return rootController.vessageView
+        return rootController?.vessageView
     }
     var fileService:FileService!{
-        return rootController.fileService
+        return rootController?.fileService
     }
     
     var conversation:Conversation!{
-        return rootController.conversation
+        return rootController?.conversation
     }
     
     
     var chatter:VessageUser!{
-        return rootController.chatter
+        return rootController?.chatter
     }
     var vessageService:VessageService!{
-        return rootController.vessageService
+        return rootController?.vessageService
     }
     var rightButton:UIButton!{
-        return rootController.rightButton
+        return rootController?.rightButton
     }
     var badgeLabel:UILabel!{
-        return rootController.badgeLabel
+        return rootController?.badgeLabel
     }
     
     var conversationLeftTopLabel:UILabel!{
-        return rootController.conversationLeftTopLabel
+        return rootController?.conversationLeftTopLabel
     }
     
     var conversationRightBottomLabel:UILabel!{
-        return rootController.conversationRightBottomLabel
+        return rootController?.conversationRightBottomLabel
     }
     
     var recordButton: UIButton!{
-        return rootController.middleButton
+        return rootController?.middleButton
     }
     
-    var groupFaceImageViewContainer:UIView{
-        return rootController.groupFaceContainer
+    var groupFaceImageViewContainer:UIView!{
+        return rootController?.groupFaceContainer
     }
     
     var noSmileFaceTipsLabel: UILabel!{
-        return rootController.noSmileFaceTipsLabel
+        return rootController?.noSmileFaceTipsLabel
     }
     var recordingFlashView: UIView!{
-        return rootController.recordingFlashView
+        return rootController?.recordingFlashView
     }
     var recordingProgress:KDCircularProgress!{
-        return rootController.recordingProgress
+        return rootController?.recordingProgress
     }
     var previewRectView: VideoPreviewBubble!{
-        return rootController.previewRectView
+        return rootController?.previewRectView
     }
     
     var backgroundImage:UIImageView!{
-        return rootController.backgroundImage
+        return rootController?.backgroundImage
     }
     
     var nextVessageButton:UIButton!{
-        return rootController.nextVessageButton
+        return rootController?.nextVessageButton
     }
     
     

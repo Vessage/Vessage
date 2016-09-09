@@ -20,7 +20,6 @@ class ConversationListController: UITableViewController {
     let vessageService = ServiceContainer.getVessageService()
     let userService = ServiceContainer.getUserService()
     let groupService = ServiceContainer.getChatGroupService()
-    private var refreshListTimer:NSTimer!
     
     //MARK: search property
     var searchResult = [SearchResultModel](){
@@ -91,6 +90,12 @@ class ConversationListController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.tryShowConversationsTimeUpTips()
+        ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.intervalTimeTaskPerMinute, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        ServiceContainer.getAppService().removeObserver(self)
     }
     
     deinit{
@@ -134,14 +139,11 @@ class ConversationListController: UITableViewController {
         
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         
-        refreshListTimer = NSTimer.scheduledTimerWithTimeInterval(refreshListIntervalSeconds, target: self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), userInfo: nil, repeats: true)
-        
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageQueue.onTaskFinished, object: nil)
     }
     
     private func releaseController(){
-        refreshListTimer?.invalidate()
-        refreshListTimer = nil
+        ServiceContainer.getAppService().removeObserver(self)
         VessageQueue.sharedInstance.removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)

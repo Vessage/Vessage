@@ -19,7 +19,14 @@ let NotifiedFirstLuanchBuildKey = "NotifiedFirstLuanchBuildKey"
 //MARK: AppService
 class AppService: NSNotificationCenter,ServiceProtocol
 {
+    static let intervalTimeTaskPerMinute = "intervalTimeTaskPerMinute"
+    
+    static let onAppResignActive = "onAppResignActive"
+    static let onAppBecomeActive = "onAppBecomeActive"
+    
     @objc static var ServiceName:String{return "App Service"}
+    private var intervalTaskTimer:NSTimer?
+    
     @objc func appStartInit(appName: String) {
     }
     @objc func userLoginInit(userId:String)
@@ -48,5 +55,20 @@ class AppService: NSNotificationCenter,ServiceProtocol
     
     func getOnlineLatestVersion() {
         
+    }
+    
+    func appResignActive() {
+        intervalTaskTimer?.invalidate()
+        intervalTaskTimer = nil
+        self.postNotificationName(AppService.onAppResignActive, object: self)
+    }
+    
+    func appBecomeActive() {
+        intervalTaskTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(AppService.onIntervalTimerTask(_:)), userInfo: nil, repeats: true)
+        self.postNotificationName(AppService.onAppBecomeActive, object: self)
+    }
+    
+    func onIntervalTimerTask(_:AnyObject?) {
+        self.postNotificationName(AppService.intervalTimeTaskPerMinute, object: self)
     }
 }

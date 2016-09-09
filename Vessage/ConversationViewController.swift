@@ -222,6 +222,7 @@ extension ConversationViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         showBottomBar()
         recordVessageManager.camera.openCamera()
+        ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -230,6 +231,7 @@ extension ConversationViewController{
             releaseController()
         }
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        ServiceContainer.getAppService().removeObserver(self)
     }
     
     private func releaseController(){
@@ -395,6 +397,13 @@ extension ConversationViewController{
         vessageService.removeObserver(self)
         chatGroupService.removeObserver(self)
         removeSendVessageObservers()
+    }
+    
+    func onAppResignActive(_:AnyObject?) {
+        if isRecording {
+            self.recordVessageManager.cancelRecord()
+            self.setReadingVessage()
+        }
     }
     
     func onUserNoteNameUpdated(a:NSNotification) {

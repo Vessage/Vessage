@@ -145,7 +145,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
-    let sendingVessageDisppearTimeMs:UInt64 = 10000
+    static let sendingVessageDisppearTimeMs:UInt64 = 10000
     
     var sendingVessage:Vessage!{
         didSet{
@@ -153,13 +153,15 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 presentingVesseage = getNeedPresentVessage()
             }else{
                 presentingVesseage = sendingVessage
-                dispatch_main_queue_after(sendingVessageDisppearTimeMs, handler: {
-                    if (self.presentingVesseage?.isMySendingVessage() ?? false) {
-                        self.presentingVesseage = self.getNeedPresentVessage()
-                        self.vessageView.alpha = 0.3
-                        UIView.animateWithDuration(0.2, animations: {
-                            self.vessageView.alpha = 1
-                        })
+                dispatch_main_queue_after(PlayVessageManager.sendingVessageDisppearTimeMs, handler: {
+                    if let vsgView = self.vessageView{
+                        if (self.presentingVesseage?.isMySendingVessage() ?? false) {
+                            self.presentingVesseage = self.getNeedPresentVessage()
+                            vsgView.alpha = 0.3
+                            UIView.animateWithDuration(0.2, animations: {
+                                vsgView.alpha = 1
+                            })
+                        }
                     }
                 })
             }
@@ -253,4 +255,9 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
+    deinit{
+        #if DEBUG
+            print("Deinited:\(self.description)")
+        #endif
+    }
 }

@@ -198,9 +198,9 @@ NO_SUCH_CONVERSATION = "没有找到该对话";
 NO_SUCH_USER = "找不到该用户>_<!";
 
 NEED_SET_CHAT_BCG_TITLE = "设置对讲表情";
-NEED_SET_CHAT_BCG_MSG = "大头照会在视频对讲时展示给好友哦~";
+NEED_SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友哦~";
 
-SET_CHAT_BCG_MSG = "大头照会在视频对讲时展示给好友哦~";
+SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友哦~";
 
 UNKNOW_USER = "佚名";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
@@ -298,7 +298,7 @@ EXTRA_SERVICE_DISPLAY_NAME = "奇趣";
 
 CHAT_BCG_SETED_TITLE = "对讲表情已设置";
 CHAT_BCG_SETED_MSG = "马上开始视频对讲";
-CHAT_BCG_NOT_SET_TITLE = "下次再设置视频对讲大头照";
+CHAT_BCG_NOT_SET_TITLE = "下次再设置视频对讲大头贴";
 
 //MARK:Group
 NEW_GROUP_CHAT = "群聊";
@@ -322,8 +322,8 @@ EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
 NO_SUCH_GROUP = "群组不存在";
 
 //MARK: Face Text Chat
-U_MUST_SET_CHAT_IMAGES = "发大头照消息前请设置好你的大头照~";
-NO_CHAT_IMAGES = "还没有设置聊天大头照哦~";
-V_CHAT_IMG = "视频大头照";
+U_MUST_SET_CHAT_IMAGES = "发大头贴消息前请设置好你的大头贴~";
+NO_CHAT_IMAGES = "还没有设置聊天大头贴哦~";
+V_CHAT_IMG = "视频大头贴";
 NOT_SET = "未设置";
-FACE_TEXT_CHAT_IMGS = "常用大头照聊天表情";
+FACE_TEXT_CHAT_IMGS = "常用大头贴聊天表情";

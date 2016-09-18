@@ -27,6 +27,9 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     weak var delegate:VessageCameraDelegate?
     var isRecordVideo:Bool = true
     private(set) var cameraInited = false
+    var cameraRunning:Bool{
+        return captureSession?.running ?? false
+    }
     private var rootViewController:UIViewController!
     private var view:UIView!
     private var captureSession: AVCaptureSession!
@@ -190,7 +193,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     }
     
     func openCamera() {
-        if cameraInited == true{
+        if cameraInited == true && !cameraRunning{
             initNotification()
             captureSession.startRunning()
         }

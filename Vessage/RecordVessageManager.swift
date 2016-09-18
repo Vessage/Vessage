@@ -21,6 +21,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
             updateRecordButton()
             updateRecordingProgress()
             previewRectView?.hidden = !recording
+            recordingFlashView?.hidden = !recording
         }
     }
     private let maxRecordTime:CGFloat = 16
@@ -288,7 +289,7 @@ extension RecordVessageManager{
 extension RecordVessageManager:VessageCameraDelegate{
     func startRecord()
     {
-        camera.openCamera()
+        MobClick.event("Vege_RecordVessage")
         #if DEBUG
         if isInSimulator() {
             startSimulatorRecord()
@@ -307,14 +308,25 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     private func startRealCameraRecord(){
-        if camera.cameraInited{
-            userClickSend = true
-            MobClick.event("Vege_RecordVessage")
-            camera.resumeCaptureSession()
-            camera.startRecord()
+        if !camera.cameraRunning {
+            camera.openCamera()
+        }
+        
+        if self.camera.cameraInited{
+            self.userClickSend = true
+            self.camera.resumeCaptureSession()
+            self.recordButton.hidden = true
+            dispatch_main_queue_after(100, handler: {
+                self.recordButton.hidden = false
+                self.camera.startRecord()
+            })
+            
         }else{
             self.rootController.playToast("CAMERA_NOT_INITED".localizedString())
         }
+        
+        
+        
     }
     
     func cancelRecord() {
@@ -342,14 +354,9 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     func vessageCameraReady() {
-        if !rootController.isRecording {
-            camera.pauseCaptureSession()
-        }
-        recordButton.hidden = false
     }
     
     func vessageCameraSessionClosed() {
-        //recordButton.hidden = true
     }
     
     func vessageCameraVideoSaved(videoSavedUrl video: NSURL) {

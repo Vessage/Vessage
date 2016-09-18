@@ -147,7 +147,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
             self.chatImageBoardSourceView?.removeFromSuperview()
             self.chatImageBoardController?.dismissViewControllerAnimated(true){
                 #if DEBUG
-                    print("颜文字:\(chatImage.imageType)")
+                    print("大头照:\(chatImage.imageType)")
                 #endif
             }
             self.imageChatInputView.refreshSendButtonColor()

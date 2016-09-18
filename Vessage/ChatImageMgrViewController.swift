@@ -10,7 +10,7 @@ import UIKit
 import LTMorphingLabel
 
 let defaultImageTypes = [
-    ["type":"正常","settedMsg":"Hello~","notSetMsg":"设置你的常用表情，马上和好友玩新的颜文字聊天!"],
+    ["type":"正常","settedMsg":"Hello~","notSetMsg":"设置你的常用表情，马上和好友玩新的大头照聊天!"],
     ["type":"逗逼","settedMsg":"你才是逗逼😊","notSetMsg":"听说聊天时逗逼的人最可爱~"],
     ["type":"卖萌","settedMsg":"感觉全世界萌萌哒~","notSetMsg":"和Ta聊天时可以卖个萌哦😉"],
     ["type":"高兴","settedMsg":"今天不知道为什么，我很嗨心~~~","notSetMsg":"一个高兴表情，把快乐传递给朋友~"],
@@ -19,7 +19,8 @@ let defaultImageTypes = [
 ]
 
 class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,ChatBackgroundPickerControllerDelegate {
-
+    
+    @IBOutlet weak var tipsLabel: UILabel!
     @IBOutlet weak var noChatImageTipsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageTypeLabel: LTMorphingLabel!{
@@ -106,17 +107,18 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
         faceImageView.initContainer(cell.contentView)
         cell.contentView.addSubview(faceImageView)
         if index == 0 {
-            self.navigationItem.title = "视频对讲表情"
-            faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "设置对讲表情，好友发对讲消息时可见")
+            self.navigationItem.title = "V_CHAT_IMG".localizedString()
+            faceImageView.setTextImage(userService.myProfile.mainChatImage, message: "SET_CHAT_BCG_MSG".localizedString())
             if userService.isUserChatBackgroundIsSeted {
                 self.imageTypeLabel.text = " "
                 self.noChatImageTipsButton.hidden = true
             }else{
-                self.imageTypeLabel.text = "未设置"
+                self.imageTypeLabel.text = "NOT_SET".localizedString()
                 self.noChatImageTipsButton.hidden = false
             }
+            self.tipsLabel.hidden = noChatImageTipsButton.hidden
         }else{
-            self.navigationItem.title = "常用颜文字聊天表情"
+            self.navigationItem.title = "FACE_TEXT_CHAT_IMGS".localizedString()
             let dict = defaultImageTypes[index - 1]
             if let type = dict["type"]{
                 if let ci = self.myChatImages[type] {
@@ -124,11 +126,13 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
                     faceImageView.setTextImage(ci.imageId, message: dict["settedMsg"])
                     self.noChatImageTipsButton.hidden = true
                 }else{
-                    self.imageTypeLabel.text = "\(type)(未设置)"
+                    self.imageTypeLabel.text = "\(type)(\("NOT_SET".localizedString()))"
                     faceImageView.setTextImage("", message: dict["notSetMsg"])
                     self.noChatImageTipsButton.hidden = false
+                    
                 }
             }
+            self.tipsLabel.hidden = noChatImageTipsButton.hidden
             
         }
         if let chatBubbleMoveGesture = faceImageView.chatBubbleMoveGesture{

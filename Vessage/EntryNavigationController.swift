@@ -47,7 +47,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         self.view.addSubview(launchScr.view)
         ColorSets.themeColor = UIColor(hexString: "#00ADFF")
         launchScr.mottoLabel.updateConstraints()
-        let motto = "VESSAGE_MOTTO_\(random() % 3)".localizedString()
+        let motto = "VESSAGE_MOTTO_\(random() % 5)".localizedString()
         launchScr.mottoLabel.text = motto
         launchScr.mottoLabel.hidden = false
     }

@@ -13,7 +13,7 @@ import MBProgressHUD
 class RecordVessageManager: ConversationViewControllerProxy {
     
     //MARK: Properties
-    private(set) var camera:VessageCamera!
+    private var camera:VessageCamera!
     private var recordingTimer:NSTimer!
     private var userClickSend = false
     private var recording = false{
@@ -54,15 +54,18 @@ extension RecordVessageManager{
     
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
+        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
+        initCamera()
+        groupAvatarManager = GroupChatAvatarManager()
+        groupAvatarManager.initManager(self.groupFaceImageViewContainer)
+        
+    }
+    
+    private func initCamera(){
         camera = VessageCamera()
         camera.delegate = self
         self.previewRectView.hidden = true
         camera.initCamera(rootController,previewView: self.previewRectView.videoPreviewView)
-        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
-        
-        groupAvatarManager = GroupChatAvatarManager()
-        groupAvatarManager.initManager(self.groupFaceImageViewContainer)
-        
     }
     
     override func onReleaseManager() {
@@ -285,6 +288,7 @@ extension RecordVessageManager{
 extension RecordVessageManager:VessageCameraDelegate{
     func startRecord()
     {
+        camera.openCamera()
         #if DEBUG
         if isInSimulator() {
             startSimulatorRecord()

@@ -173,9 +173,7 @@ extension ConversationViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.backgroundImage.image = getRandomConversationBackground()
-        
         initChatImageButton()
-        
         playVessageManager = PlayVessageManager()
         playVessageManager.initManager(self)
         recordVessageManager = RecordVessageManager()
@@ -204,6 +202,7 @@ extension ConversationViewController{
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeLeft(_:)))
         swipeLeft.direction = .Left
         self.view.addGestureRecognizer(swipeLeft)
+        self.nextVessageButton.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -221,7 +220,6 @@ extension ConversationViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         showBottomBar()
-        recordVessageManager.camera.openCamera()
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
     }
     
@@ -262,14 +260,13 @@ extension ConversationViewController{
     
     @IBAction func onClickMiddleButton(sender: UIView) {
         
+        self.view.userInteractionEnabled = false
         sender.animationMaxToMin(0.1, maxScale: 1.2) { 
             if self.outChatGroup {
                 self.playToast("NOT_IN_CHAT_GROUP".localizedString())
-                return
-            }
-            
-            if self.isReadingVessages {
+            }else if self.isReadingVessages {
                 if self.needSetChatBackgroundAndShow() {
+                    self.view.userInteractionEnabled = true
                     return
                 }
                 self.startRecording()
@@ -278,6 +275,7 @@ extension ConversationViewController{
                 self.recordVessageManager.sendVessage()
             }
         }
+        self.view.userInteractionEnabled = true
     }
     
     func clickRightBarItem(sender: AnyObject) {
@@ -351,7 +349,7 @@ extension ConversationViewController{
         isRecording = false
         recordViewContainer.hidden = true
         vessageViewContainer.hidden = false
-        bottomBar.alpha = 0.8
+        bottomBar.alpha = 1
         navigationController?.navigationBarHidden = false
         playVessageManager.onSwitchToManager()
     }
@@ -365,12 +363,14 @@ extension ConversationViewController{
             bottomBar.hidden = false
             let barLayerOriginFrame = bottomBar.layer.frame
             bottomBar.layer.frame = CGRectMake(barLayerOriginFrame.origin.x, barLayerOriginFrame.origin.y + barLayerOriginFrame.height, barLayerOriginFrame.width, barLayerOriginFrame.height)
+            nextVessageButton?.hidden = true
             UIView.animateWithDuration(0.1) {
                 self.bottomBar.layer.frame = barLayerOriginFrame
                 self.bottomBarContainer.alpha = 1
                 self.bottomBarContainer.layer.frame = layerOriginFrame
                 let nextVessageButtonLayerFrame = self.nextVessageButton.layer.frame
                 self.nextVessageButton.layer.frame = CGRectMake(nextVessageButtonLayerFrame.origin.x + nextVessageButtonLayerFrame.width, nextVessageButtonLayerFrame.origin.y + nextVessageButtonLayerFrame.height, nextVessageButtonLayerFrame.width, nextVessageButtonLayerFrame.height)
+                self.playVessageManager.refreshNextButton()
                 self.nextVessageButton.alpha = 0.3
                 UIView.animateWithDuration(0.6){
                     self.nextVessageButton.layer.frame = nextVessageButtonLayerFrame
@@ -550,12 +550,13 @@ extension ConversationViewController{
     }
     
     func resetTitle(_:AnyObject?) {
-        self.progressView.hidden = true
-        
-        if isGroupChat {
-            self.controllerTitle = chatGroup.groupName
-        }else{
-            self.controllerTitle = userService.getUserNotedName(conversation.chatterId)
+        if let con = self.conversation {
+            self.progressView.hidden = true
+            if isGroupChat {
+                self.controllerTitle = chatGroup.groupName
+            }else{
+                self.controllerTitle = userService.getUserNotedName(con.chatterId)
+            }
         }
     }
     

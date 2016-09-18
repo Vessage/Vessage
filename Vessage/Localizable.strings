@@ -172,7 +172,9 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 //APP Motto
 "VESSAGE_MOTTO_0" = "高颜值俱乐部";
 "VESSAGE_MOTTO_1" = "想聊就聊，不聊消失";
-"VESSAGE_MOTTO_2" = "高颜值者的聚集地";
+"VESSAGE_MOTTO_2" = "高颜值者的秘密花园";
+"VESSAGE_MOTTO_3" = "视频对讲机";
+"VESSAGE_MOTTO_4" = "大头贴聊天";
 
 //Vege
 APP_NAME = "VG";
@@ -196,7 +198,9 @@ NO_SUCH_CONVERSATION = "没有找到该对话";
 NO_SUCH_USER = "找不到该用户>_<!";
 
 NEED_SET_CHAT_BCG_TITLE = "设置对讲表情";
-NEED_SET_CHAT_BCG_MSG = "表情会在视频对讲时展示给好友";
+NEED_SET_CHAT_BCG_MSG = "大头照会在视频对讲时展示给好友哦~";
+
+SET_CHAT_BCG_MSG = "大头照会在视频对讲时展示给好友哦~";
 
 UNKNOW_USER = "佚名";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
@@ -232,6 +236,7 @@ UNPIN = "取消Pin";
 GET_SMS_CODE_ERROR = "获取验证码失败,请重试";
 NOT_MOBILE_NO = "请输入正确的手机号";
 
+SEARCH_LIMIT = "账号搜索限制";
 SEARCH_ACCOUNTID_LIMITED_X = "每分钟最多搜索%@次";
 
 //MARK: Send Vessage
@@ -285,6 +290,7 @@ OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "向未注册的手机号发出消息，好友用手机注册后可以收到你的消息~";
 GROUP_CHAT = "一起聊天吧";
 WX_SHARE_TITLE_FORMAT = "我的VG号:%@";
+SHARE_FUN_APP = "抓到一只好玩的App";
 UNKNOW_VESSAGE_TYPE = "未知的消息类型>_<\n请升级到最新版本查看这条消息!";
 NO_VESSAGE_TIPS = "没有消息\n\n点击按钮开始与Ta聊天";
 
@@ -292,7 +298,7 @@ EXTRA_SERVICE_DISPLAY_NAME = "奇趣";
 
 CHAT_BCG_SETED_TITLE = "对讲表情已设置";
 CHAT_BCG_SETED_MSG = "马上开始视频对讲";
-CHAT_BCG_NOT_SET_TITLE = "下次设置视频对讲表情";
+CHAT_BCG_NOT_SET_TITLE = "下次再设置视频对讲大头照";
 
 //MARK:Group
 NEW_GROUP_CHAT = "群聊";
@@ -316,5 +322,8 @@ EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
 NO_SUCH_GROUP = "群组不存在";
 
 //MARK: Face Text Chat
-U_MUST_SET_CHAT_IMAGES = "需要设置颜文字表情才能给Ta发消息哦!";
-NO_CHAT_IMAGES = "还没有设置颜文字表情";
+U_MUST_SET_CHAT_IMAGES = "发大头照消息前请设置好你的大头照~";
+NO_CHAT_IMAGES = "还没有设置聊天大头照哦~";
+V_CHAT_IMG = "视频大头照";
+NOT_SET = "未设置";
+FACE_TEXT_CHAT_IMGS = "常用大头照聊天表情";

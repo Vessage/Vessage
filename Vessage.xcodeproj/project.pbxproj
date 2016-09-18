@@ -118,8 +118,6 @@
 		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
 		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
-		E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */; };
-		E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E7B9F9F61D4F9CD800BF6699 /* demo_group_video_chat.mp4 */; };
 		E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */; };
 		E7BB96341D461D7400ECBD11 /* FaceTextChatBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
@@ -353,8 +351,6 @@
 		E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailAvatarCell.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
 		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
-		E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo_face_text.mp4; sourceTree = "<group>"; };
-		E7B9F9F61D4F9CD800BF6699 /* demo_group_video_chat.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demo_group_video_chat.mp4; sourceTree = "<group>"; };
 		E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageChatInputView.xib; sourceTree = "<group>"; };
 		E7BB96331D461D7400ECBD11 /* FaceTextChatBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FaceTextChatBubble.xib; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
@@ -721,7 +717,6 @@
 		E708AC0C1C86DEC40071104E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E72617681D4F199300A8B484 /* Videos */,
 				E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
 				E708ACA11C8752090071104E /* UI */,
@@ -906,15 +901,6 @@
 				E718867C1C9FFD840028B016 /* UMessage.h */,
 			);
 			path = UMessageSdk;
-			sourceTree = "<group>";
-		};
-		E72617681D4F199300A8B484 /* Videos */ = {
-			isa = PBXGroup;
-			children = (
-				E7B9F9F41D4F782300BF6699 /* demo_face_text.mp4 */,
-				E7B9F9F61D4F9CD800BF6699 /* demo_group_video_chat.mp4 */,
-			);
-			path = Videos;
 			sourceTree = "<group>";
 		};
 		E72E257F1D6B2FFD00DA6E5C /* AEScaningEffect */ = {
@@ -1207,7 +1193,6 @@
 			files = (
 				E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */,
 				E7EF28711D7958A90064231F /* nfc_puzzles.json in Resources */,
-				E7B9F9F51D4F782300BF6699 /* demo_face_text.mp4 in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
@@ -1221,7 +1206,6 @@
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
-				E7B9F9F71D4F9CD800BF6699 /* demo_group_video_chat.mp4 in Resources */,
 				E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */,

@@ -43,7 +43,7 @@ class ShareHelper:NSNotificationCenter{
     private func sendTellFriendWX(type:UInt32,textMsg:String?){
         let url = "http://a.app.qq.com/o/simple.jsp?pkgname=cn.bahamut.vessage"
         let msg = WXMediaMessage()
-        msg.title = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
+        msg.title = WXSceneSession.rawValue == type ? String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId) : "SHARE_FUN_APP".localizedString()
         msg.description = textMsg
         msg.setThumbImage(UIImage(named: "shareIcon"))
         

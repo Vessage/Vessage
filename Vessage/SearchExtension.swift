@@ -60,7 +60,7 @@ extension ConversationListController:UISearchBarDelegate
     
     private var canSearchByAccountId:Bool{
         if UserSetting.godMode {
-            return true
+            //return true
         }
         
         let now = NSDate().totalMinutesSince1970
@@ -90,7 +90,7 @@ extension ConversationListController:UISearchBarDelegate
                                 }
                             })
                         }else{
-                            self.playToast(String(format: "SEARCH_ACCOUNTID_LIMITED_X".localizedString(), "\(searchAccountIdLimitedPerMinute)"))
+                            self.showAlert("SEARCH_LIMIT".localizedString(), msg: String(format: "SEARCH_ACCOUNTID_LIMITED_X".localizedString(), "\(searchAccountIdLimitedPerMinute)"))
                         }
                     }
                 }

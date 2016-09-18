@@ -220,7 +220,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     //MARK: actions
-    private func refreshNextButton() {
+    func refreshNextButton() {
         self.nextVessageButton?.hidden = !haveNextVessage
     }
     

@@ -90,7 +90,9 @@ class ConversationListController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.tryShowConversationsTimeUpTips()
+        
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.intervalTimeTaskPerMinute, object: nil)
+        ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.onAppBecomeActive, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -117,7 +119,6 @@ class ConversationListController: UITableViewController {
     
     private var refreshedNewUserTime:NSDate!
     private let refreshNewUserIntervalMinutes = 10.0
-    private let refreshListIntervalSeconds = 60.0
     func refreshNewUsers(sender:AnyObject) {
         if refreshedNewUserTime == nil || abs(refreshedNewUserTime.totalMinutesSinceNow.doubleValue) > refreshNewUserIntervalMinutes {
             self.refreshedNewUserTime = NSDate()
@@ -169,7 +170,6 @@ class ConversationListController: UITableViewController {
             }
         }
     }
-    
     
     func onTimerRefreshList(_:AnyObject?) {
         self.conversationService.clearTimeUpConversations()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -328,7 +328,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIC-63-DtJ">
-                                <rect key="frame" x="133" y="673" width="150" height="30"/>
+                                <rect key="frame" x="118" y="669" width="180" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="点击图片设置聊天表情">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -336,10 +337,19 @@
                                     <action selector="onClickNoChatImageTipsButton:" destination="f9U-Mh-hnK" eventType="touchUpInside" id="aas-CU-dVk"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可能需要准备各种特效相机哦~~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQd-vu-ugC">
+                                <rect key="frame" x="40" y="570" width="142" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="AQd-vu-ugC" firstAttribute="leading" secondItem="QrC-aq-rUA" secondAttribute="leading" id="4rk-X8-sQk"/>
+                            <constraint firstItem="AQd-vu-ugC" firstAttribute="top" secondItem="QrC-aq-rUA" secondAttribute="bottom" constant="3" id="7Le-Qo-guQ"/>
                             <constraint firstItem="ORU-x7-wgr" firstAttribute="top" secondItem="4CI-V0-NxH" secondAttribute="bottom" constant="10" id="9SX-js-A9B"/>
+                            <constraint firstItem="AQd-vu-ugC" firstAttribute="top" secondItem="QrC-aq-rUA" secondAttribute="top" id="I94-aS-GP2"/>
                             <constraint firstItem="SFt-MN-Gut" firstAttribute="centerX" secondItem="QrC-aq-rUA" secondAttribute="centerX" id="M6w-IB-NDz"/>
                             <constraint firstItem="QrC-aq-rUA" firstAttribute="centerX" secondItem="8V3-j7-VlC" secondAttribute="centerX" id="RVN-IZ-WB3"/>
                             <constraint firstItem="MIC-63-DtJ" firstAttribute="centerX" secondItem="SFt-MN-Gut" secondAttribute="centerX" id="T7Q-iD-xMb"/>
@@ -349,6 +359,11 @@
                             <constraint firstItem="ORU-x7-wgr" firstAttribute="centerX" secondItem="8V3-j7-VlC" secondAttribute="centerX" id="wsG-r7-3gC"/>
                             <constraint firstItem="QrC-aq-rUA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8V3-j7-VlC" secondAttribute="leadingMargin" constant="20" id="ywO-sN-fd9"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="I94-aS-GP2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="常用聊天表情" id="QIT-B4-8ha">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="xRw-pv-Saw">
@@ -365,6 +380,7 @@
                         <outlet property="noChatImageTipsButton" destination="MIC-63-DtJ" id="dYI-MG-EJX"/>
                         <outlet property="pageControl" destination="SFt-MN-Gut" id="Q4A-D5-w4k"/>
                         <outlet property="tableView" destination="QrC-aq-rUA" id="7bx-hi-vCT"/>
+                        <outlet property="tipsLabel" destination="AQd-vu-ugC" id="eML-nz-AQW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYQ-P9-WDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -544,8 +560,8 @@
                                             <action selector="onSlideChanged:" destination="aXW-8i-ddK" eventType="valueChanged" id="2WX-18-tTt"/>
                                         </connections>
                                     </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="性格" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebR-7Z-cdK">
-                                        <rect key="frame" x="123" y="10" width="34" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="性别设置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebR-7Z-cdK">
+                                        <rect key="frame" x="106" y="10" width="68" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

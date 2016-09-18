@@ -129,7 +129,6 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         setupAudioSession()
         setupFaceDetect()
         captureSession.commitConfiguration()
-        
     }
     
     private func setupVideoSession(){

@@ -243,14 +243,7 @@ extension VessageAppDelegate:WXApiDelegate{
     
     func onResp(resp: BaseResp!) {
         if let res = resp as? SendMessageToWXResp{
-            let strTitle = "发送媒体消息结果"
-            let strMsg = String(format: "errcode:%d", res.errCode)
             NSNotificationCenter.defaultCenter().postNotificationName(OnWXShareResponse, object: self, userInfo: [kWXShareResponseValue:res])
-            #if DEBUG
-                print(strTitle)
-                print(strMsg)
-                print(res.errStr)
-            #endif
         }
     }
 

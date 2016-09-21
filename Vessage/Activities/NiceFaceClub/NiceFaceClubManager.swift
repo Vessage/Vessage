@@ -238,7 +238,7 @@ extension NiceFaceClubManager{
     }
     
     func loadProfiles(callback:([UserNiceFaceProfile])->Void) {
-        let cachedProfiles = PersistentManager.sharedInstance.getAllModel(UserNiceFaceProfile)
+        let cachedProfiles = PersistentManager.sharedInstance.getAllModel(UserNiceFaceProfile).filter{$0.id != self.myNiceFaceProfile.id}
         if cachedProfiles.count > 0 {
             callback(cachedProfiles)
         }else{

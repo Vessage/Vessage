@@ -257,12 +257,12 @@ REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开VG的短信权限";
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta吧?";
 NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧!\n%@";
 
-CONTACTS = "与手机好友聊天";
+CONTACTS = "手机通讯录";
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
 REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到VG的应用选项并开启通讯录权限，然后再打开App";
-OPEN_A_CONTACT_CONVERSATION = "开始与Ta聊天~";
+OPEN_A_CONTACT_CONVERSATION = "与手机好友聊天";
 NEW_CONVERSATION = "开始对讲";
 
 NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
@@ -327,3 +327,9 @@ NO_CHAT_IMAGES = "还没有设置聊天大头贴哦~";
 V_CHAT_IMG = "视频大头贴";
 NOT_SET = "未设置";
 FACE_TEXT_CHAT_IMGS = "常用大头贴聊天表情";
+
+SMS_CODE_SENDED_TITLE = "验证码发送中";
+SMS_CODE_SENDED_MSG = "请等候短信，30秒后可重新发送";
+NOT_MOBILE_NO = "请填写正确的手机号";
+NOT_SMS_CODE = "请填写正确的验证码";
+X_SEC_RESEND_SMS_CODE = "%d秒后可再次发送验证码";

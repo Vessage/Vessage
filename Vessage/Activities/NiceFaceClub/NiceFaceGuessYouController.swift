@@ -361,7 +361,9 @@ extension NiceFaceGuessYouController{
     }
     
     private func setProfile(p:UserNiceFaceProfile){
-        if NiceFaceClubManager.instance.useLoadMemberProfileOnec() {
+        if self.profile.id == self.myProfile.id {
+            self.profile = p
+        }else if NiceFaceClubManager.instance.useLoadMemberProfileOnec() {
             self.profile = p
             self.playSwipeAudio()
         }else{

@@ -16,23 +16,50 @@ protocol ValidateMobileViewControllerDelegate {
 }
 
 //MARK: ValidateMobileViewController
-class ValidateMobileViewController: UIViewController {
-    private var smsCodeSended = false
+class ValidateMobileViewController: UIViewController,UITextFieldDelegate {
+    private var smsCodeSended = false{
+        didSet{
+            self.smsCodeTextFiled?.enabled = smsCodeSended
+        }
+    }
+    private var smsCodeSendedDate:NSDate!
     weak var delegate:ValidateMobileViewControllerDelegate?
     private var exitButtonHandler:(()->Void)?
     @IBOutlet weak var validateButton: UIButton!
-    @IBOutlet weak var smsCodeTextFiled: UITextField!
+    @IBOutlet weak var smsCodeTextFiled: UITextField!{
+        didSet{
+            smsCodeTextFiled.enabled = false
+        }
+    }
     @IBOutlet weak var mobileTextField: UITextField!
     
     @IBAction func validateMobile(sender: AnyObject) {
         let mobile = self.mobileTextField?.text ?? ""
         let code = self.smsCodeTextFiled?.text ?? ""
         
-        if mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code) {
-            validateMobile(self.mobileTextField.text!, zone: "86", code: smsCodeTextFiled.text!)
-        }else if mobile.isMobileNumber(){
+        if self.mobileTextField.isFirstResponder(){
             sendSMS()
+        }else if self.smsCodeTextFiled.isFirstResponder(){
+            if !mobile.isMobileNumber(){
+                self.playCrossMark("NOT_MOBILE_NO".localizedString())
+            }else if String.isNullOrWhiteSpace(code){
+                self.playCrossMark("NOT_SMS_CODE".localizedString())
+            }else{
+                validateMobile(mobile, zone: "86", code: code)
+            }
+        }else{
+            if mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code) {
+                validateMobile(mobile, zone: "86", code: code)
+            }else if mobile.isMobileNumber(){
+                sendSMS()
+            }else{
+                self.mobileTextField.becomeFirstResponder()
+            }
         }
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        updateButton()
     }
     
     @IBAction func mobileValueChanged(sender: AnyObject) {
@@ -43,39 +70,64 @@ class ValidateMobileViewController: UIViewController {
         updateButton()
     }
     
-    
+    @IBAction func onMobileTipsClick(sender: AnyObject) {
+        self.showAlert("手机不可逆加密匹配", msg: "用户A手机M加密成不可逆密文P保存\n\n用户B查找手机M，M加密成P，匹配出A");
+    }
     
     private func updateButton(){
         let mobile = self.mobileTextField?.text ?? ""
         let code = self.smsCodeTextFiled?.text ?? ""
-        validateButton.enabled = true
-        if mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code) {
+        
+        if self.mobileTextField.isFirstResponder() {
+            validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+            validateButton.enabled = mobile.isMobileNumber()
+        }else if self.smsCodeTextFiled.isFirstResponder(){
             validateButton.setImage(UIImage(named: "check")!, forState: .Normal)
-        }else if mobile.isMobileNumber(){
-            validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+            validateButton.enabled = mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code)
         }else{
-            validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
-            validateButton.enabled = false
+            if mobile.isMobileNumber() && !String.isNullOrWhiteSpace(code) {
+                validateButton.setImage(UIImage(named: "check")!, forState: .Normal)
+            }else if mobile.isMobileNumber(){
+                validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+            }else{
+                validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
+                validateButton.enabled = false
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mobileTextField.delegate = self
+        smsCodeTextFiled.delegate = self
         validateButton.setImage(UIImage(named: "nextRound")!, forState: .Normal)
         validateButton.enabled = false
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.mobileTextField.becomeFirstResponder()
+    }
+    
     private func sendSMS(){
+        if self.smsCodeSended && abs(self.smsCodeSendedDate.totalSecondsSinceNow.integerValue) < 30 {
+            self.playToast(String(format: "X_SEC_RESEND_SMS_CODE".localizedString(), 30 - abs(self.smsCodeSendedDate.totalSecondsSinceNow.integerValue)))
+            return
+        }
         #if DEBUG
             self.smsCodeSended = true
+            self.smsCodeSendedDate = NSDate()
             self.smsCodeTextFiled.becomeFirstResponder()
+            self.showAlert("SMS_CODE_SENDED_TITLE".localizedString(), msg: "SMS_CODE_SENDED_MSG".localizedString())
         #else
             let hud = self.showAnimationHud()
             SMSSDK.getVerificationCodeByMethod(SMSGetCodeMethodSMS, phoneNumber: mobileTextField.text!, zone: "86", customIdentifier: nil) { (error) in
                 hud.hideAnimated(true)
                 if error == nil{
                     self.smsCodeSended = true
+                    self.smsCodeSendedDate = NSDate()
                     self.smsCodeTextFiled.becomeFirstResponder()
+                    self.showAlert("SMS_CODE_SENDED_TITLE".localizedString(), msg: "SMS_CODE_SENDED_MSG".localizedString())
                 }else{
                     self.playCrossMark("GET_SMS_CODE_ERROR".localizedString())
                 }

@@ -264,15 +264,9 @@
                                     <action selector="mobileValueChanged:" destination="IPN-Cj-hPq" eventType="editingChanged" id="9xQ-li-gjk"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="绑定手机号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1B-lt-enT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="验证手机号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1B-lt-enT">
                                 <rect key="frame" x="132" y="176" width="150" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用于查找手机好友和接收消息" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoV-ch-owk">
-                                <rect key="frame" x="116" y="215" width="182" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -285,18 +279,28 @@
                                     <action selector="codeValueChanged:" destination="IPN-Cj-hPq" eventType="editingChanged" id="9ef-D0-ZcF"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ue-Kf-gUY">
+                                <rect key="frame" x="98" y="215" width="218" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="仅用于匹配手机好友(不可逆加密匹配)">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onMobileTipsClick:" destination="IPN-Cj-hPq" eventType="touchUpInside" id="gLU-YJ-sHz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="7ue-Kf-gUY" firstAttribute="centerX" secondItem="x1B-lt-enT" secondAttribute="centerX" id="3uM-Bv-zrr"/>
                             <constraint firstItem="4en-Og-WVw" firstAttribute="centerX" secondItem="Mjd-dI-Q0v" secondAttribute="centerX" id="4b6-yF-ljA"/>
                             <constraint firstItem="qK1-Vr-nom" firstAttribute="centerX" secondItem="Mjd-dI-Q0v" secondAttribute="centerX" id="AfN-wg-Zum"/>
                             <constraint firstItem="4en-Og-WVw" firstAttribute="top" secondItem="x1B-lt-enT" secondAttribute="bottom" constant="48" id="Bzm-WW-Vh3"/>
                             <constraint firstItem="Spg-ap-WQZ" firstAttribute="width" secondItem="4en-Og-WVw" secondAttribute="width" id="CJv-33-wb6"/>
                             <constraint firstItem="4en-Og-WVw" firstAttribute="centerY" secondItem="Mjd-dI-Q0v" secondAttribute="centerY" constant="-90" id="G7K-nx-jLc"/>
-                            <constraint firstItem="UoV-ch-owk" firstAttribute="centerX" secondItem="x1B-lt-enT" secondAttribute="centerX" id="TR9-zK-sxp"/>
                             <constraint firstItem="4en-Og-WVw" firstAttribute="width" secondItem="Mjd-dI-Q0v" secondAttribute="width" constant="-60" id="ZUh-Xv-h7x"/>
                             <constraint firstItem="x1B-lt-enT" firstAttribute="centerX" secondItem="4en-Og-WVw" secondAttribute="centerX" id="aLL-ga-xWS"/>
-                            <constraint firstItem="UoV-ch-owk" firstAttribute="top" secondItem="x1B-lt-enT" secondAttribute="bottom" constant="3" id="coS-Qa-wNn"/>
+                            <constraint firstItem="7ue-Kf-gUY" firstAttribute="top" secondItem="x1B-lt-enT" secondAttribute="bottom" constant="3" id="fqe-k7-oVj"/>
                             <constraint firstItem="QDi-MR-sSA" firstAttribute="centerX" secondItem="Spg-ap-WQZ" secondAttribute="centerX" id="jl7-Pl-hky"/>
                             <constraint firstItem="Spg-ap-WQZ" firstAttribute="centerX" secondItem="4en-Og-WVw" secondAttribute="centerX" id="ka7-c9-gse"/>
                             <constraint firstItem="Spg-ap-WQZ" firstAttribute="height" secondItem="4en-Og-WVw" secondAttribute="height" id="o9w-pT-h0S"/>

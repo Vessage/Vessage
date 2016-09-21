@@ -45,7 +45,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLogout(userId: String) {
-        vsgCntLock.unlock()
         setServiceNotReady()
     }
     

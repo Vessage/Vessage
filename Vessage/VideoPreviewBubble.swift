@@ -35,7 +35,7 @@ class VideoPreviewBubble: UIView {
     private(set) var videoPreviewView: UIView!
     
     static func instanceFromXib() -> VideoPreviewBubble{
-        return NSBundle.mainBundle().loadNibNamed("VideoPreviewBubble", owner: nil, options: nil)[0] as! VideoPreviewBubble
+        return NSBundle.mainBundle().loadNibNamed("VideoPreviewBubble", owner: nil, options: nil)![0] as! VideoPreviewBubble
     }
     
     

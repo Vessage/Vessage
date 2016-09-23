@@ -229,7 +229,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         faceLayer?.hidden = true
         captureSession.stopRunning()
         let cgImage = context.createCGImage(ciImage, fromRect: ciImage.extent)
-        let image = UIImage(CGImage: cgImage)
+        let image = UIImage(CGImage: cgImage!)
         if let saveHandler = self.delegate?.vessageCameraImage{
             saveHandler(image)
         }
@@ -277,13 +277,13 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     var tmpFilmURL:NSURL {
         let tempDir = NSTemporaryDirectory()
         let url = NSURL(fileURLWithPath: tempDir).URLByAppendingPathComponent("tmpVessage.mp4")
-        return url
+        return url!
     }
     
     var tmpCompressedFilmURL:NSURL{
         let tempDir = NSTemporaryDirectory()
         let url = NSURL(fileURLWithPath: tempDir).URLByAppendingPathComponent("tmpVessageC.mp4")
-        return url
+        return url!
     }
     
     func checkForAndDeleteFile(url:NSURL) {

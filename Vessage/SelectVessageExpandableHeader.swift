@@ -22,7 +22,7 @@ class SelectVessageExpandableHeader: UIView {
     }
     
     static func instanceFromXib() -> SelectVessageExpandableHeader{
-        return NSBundle.mainBundle().loadNibNamed("SelectVessageExpandableHeader", owner: nil, options: nil)[0] as! SelectVessageExpandableHeader
+        return NSBundle.mainBundle().loadNibNamed("SelectVessageExpandableHeader", owner: nil, options: nil)![0] as! SelectVessageExpandableHeader
     }
     
 }

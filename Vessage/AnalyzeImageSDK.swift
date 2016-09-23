@@ -14,7 +14,7 @@ class AnalyzeImageSDK {
         return AnalyzeImageSDK()
     }()
     var subscriptionKey:String{
-        return VessageConfig.bahamutConfig.faceDetectSubscriptionKey[random() % VessageConfig.bahamutConfig.faceDetectSubscriptionKey.count]
+        return VessageConfig.bahamutConfig.faceDetectSubscriptionKey![Int(arc4random()) % VessageConfig.bahamutConfig.faceDetectSubscriptionKey.count]
     }
     
     func detectFace(picUrl:String) {

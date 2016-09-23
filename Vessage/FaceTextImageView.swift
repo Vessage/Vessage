@@ -24,7 +24,7 @@ class FaceTextChatBubble: UIView {
     }
     
     static func instanceFromXib() -> FaceTextChatBubble{
-        let view = NSBundle.mainBundle().loadNibNamed("FaceTextChatBubble", owner: nil, options: nil)[0] as! FaceTextChatBubble
+        let view = NSBundle.mainBundle().loadNibNamed("FaceTextChatBubble", owner: nil, options: nil)![0] as! FaceTextChatBubble
         view.backgroundColor = UIColor.clearColor()
         view.userInteractionEnabled = true
         return view
@@ -177,7 +177,7 @@ class FaceTextImageView: UIView {
         if let cgi = self.imageView.image!.CGImage{
             
             let img = CIImage(CGImage: cgi, options: nil)
-            let faces = self.faceDetector.featuresInImage(img)
+            let faces = self.faceDetector!.featuresInImage(img)
             if let face = faces.last as? CIFaceFeature{
                 
                 let previewBox = self.imageView.bounds

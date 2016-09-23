@@ -72,7 +72,7 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     }
 
     static func instanceFromXib() -> ImageChatInputView{
-        let view = NSBundle.mainBundle().loadNibNamed("ImageChatInputView", owner: nil, options: nil)[0] as! ImageChatInputView
+        let view = NSBundle.mainBundle().loadNibNamed("ImageChatInputView", owner: nil, options: nil)![0] as! ImageChatInputView
         view.backgroundColor = UIColor.clearColor()
         return view
     }

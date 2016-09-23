@@ -375,7 +375,7 @@ extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
         {
             if let imgData = UIImageJPEGRepresentation(image, 1.0){
                 if let img = CIImage(data: imgData){
-                    let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
+                    let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])!
                     let faces = faceDetector.featuresInImage(img)
                     self.hud?.hideAnimated(true)
                     if faces.count > 0{

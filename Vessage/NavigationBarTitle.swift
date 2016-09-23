@@ -46,7 +46,7 @@ class NavigationBarTitle: UIView {
     
     
     static func instanceFromXib() -> NavigationBarTitle{
-        let view = NSBundle.mainBundle().loadNibNamed("NavigationBarTitle", owner: nil, options: nil)[0] as! NavigationBarTitle
+        let view = NSBundle.mainBundle().loadNibNamed("NavigationBarTitle", owner: nil, options: nil)![0] as! NavigationBarTitle
         view.backgroundColor = UIColor.clearColor()
         return view
     }

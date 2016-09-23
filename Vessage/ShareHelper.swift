@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 let kShareHelperShareType = "kShareHelperShareType"
 
 enum ShareHelperShareType:Int {
@@ -120,18 +121,17 @@ extension UIViewController:MFMessageComposeViewControllerDelegate,UINavigationCo
     public func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         controller.dismissViewControllerAnimated(true) {
             switch result{
-            case MessageComposeResultCancelled:
+            case MessageComposeResult.Cancelled:
                 self.playCrossMark("CANCEL".localizedString())
                 ShareHelper.instance.postNotificationName(ShareHelper.onShareCancel, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
                 MobClick.event("Vege_CancelSendNotifySMS")
-            case MessageComposeResultFailed:
+            case MessageComposeResult.Failed:
                 self.playCrossMark("FAIL".localizedString())
                 ShareHelper.instance.postNotificationName(ShareHelper.onShareFail, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
-            case MessageComposeResultSent:
+            case MessageComposeResult.Sent:
                 self.playCheckMark("SUCCESS".localizedString())
                 ShareHelper.instance.postNotificationName(ShareHelper.onShareSuccess, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
                 MobClick.event("Vege_UserSendSMSToFriend")
-            default:break;
             }
         }
     }

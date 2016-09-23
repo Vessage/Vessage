@@ -206,6 +206,10 @@ extension UIView{
     }
 }
 
+func random() -> Int {
+    return NSNumber(unsignedInt: arc4random()).integerValue
+}
+
 func getRandomConversationBackground() -> UIImage {
     return UIImage(named: "recording_bcg_\(random() % 5)") ?? UIImage(named: "recording_bcg_0")!
 }

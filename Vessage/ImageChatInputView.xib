@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,24 +13,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-ep-SS3">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pzB-U5-Ar3">
-                    <rect key="frame" x="6" y="5" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="QAd-WO-xYQ"/>
                         <constraint firstAttribute="height" constant="32" id="wLP-oJ-v3m"/>
                     </constraints>
-                    <state key="normal" title="Button" image="default_face_head"/>
+                    <state key="normal" title="Button" image="chat_image_mgr"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="6"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="onClickChatImageButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="rSW-H8-uwM"/>
+                        <action selector="onClickChatImageButtonWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="pzN-Xu-M3C"/>
                     </connections>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TIF-Cs-PHJ">
-                    <rect key="frame" x="44" y="2" width="490" height="38"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                     <userDefinedRuntimeAttributes>
@@ -40,17 +44,16 @@
                             <real key="value" value="0.10000000000000001"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColorFromUIColor">
-                            <color key="value" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="value" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aj9-YQ-lO8">
-                    <rect key="frame" x="540" y="4" width="52" height="34"/>
-                    <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <inset key="contentEdgeInsets" minX="8" minY="6" maxX="8" maxY="6"/>
                     <state key="normal" title="发送">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -58,11 +61,11 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="onClickSendButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="F8P-dt-5vX"/>
+                        <action selector="onClickSendButtonWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="Tk7-2J-odL"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Aj9-YQ-lO8" firstAttribute="leading" secondItem="TIF-Cs-PHJ" secondAttribute="trailing" constant="6" id="4WZ-Mf-Txu"/>
                 <constraint firstItem="pzB-U5-Ar3" firstAttribute="leading" secondItem="qlD-ep-SS3" secondAttribute="leading" constant="6" id="5Fr-SC-MYZ"/>
@@ -93,6 +96,6 @@
         </view>
     </objects>
     <resources>
-        <image name="default_face_head" width="63" height="64"/>
+        <image name="chat_image_mgr" width="128" height="128"/>
     </resources>
 </document>

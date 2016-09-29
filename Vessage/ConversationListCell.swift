@@ -29,6 +29,7 @@ class ConversationListCell:ConversationListCellBase{
     static let reuseId = "ConversationListCell"
     private static var progressViewOriginTintColor:UIColor?
     private static var progressViewDisappearingTintColor = UIColor.redColor()
+    private static var progressViewTimingTintColor = UIColor.orangeColor()
     
     weak override var rootController:ConversationListController!{
         didSet{
@@ -193,10 +194,12 @@ class ConversationListCell:ConversationListCellBase{
     
     private func setTimeProgress(p:Float){
         self.timeupProgressView?.progress = p
-        if p >= 0.2 {
-            self.timeupProgressView?.progressTintColor = ConversationListCell.progressViewOriginTintColor
-        }else{
+        if p < 0.3 {
             self.timeupProgressView?.progressTintColor = ConversationListCell.progressViewDisappearingTintColor
+        }else if p < 0.6{
+            self.timeupProgressView?.progressTintColor = ConversationListCell.progressViewTimingTintColor
+        }else{
+            self.timeupProgressView?.progressTintColor = ConversationListCell.progressViewOriginTintColor
         }
     }
     

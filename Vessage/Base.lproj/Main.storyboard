@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="b01-Lg-UG8">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="b01-Lg-UG8">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Main Tab Bar Controller-->
@@ -11,11 +12,10 @@
             <objects>
                 <tabBarController storyboardIdentifier="MainTabBarController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fbs-wf-wGU" customClass="MainTabBarController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" itemPositioning="fill" id="6dJ-AJ-pxp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="VHg-WR-b7D" kind="relationship" relationship="viewControllers" id="9hX-Ow-BCd"/>
@@ -24,32 +24,30 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WpS-P6-IPS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="654" y="1089"/>
+            <point key="canvasLocation" x="561" y="1089"/>
         </scene>
         <!--奇趣-->
         <scene sceneID="6RM-39-W1b">
             <objects>
                 <tableViewController storyboardIdentifier="ActivityListController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wPu-tu-atQ" customClass="ActivityListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YX3-Ju-1g4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ActivityListCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="ActivityListCell" id="YE7-6d-8ZT" customClass="ActivityListCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YE7-6d-8ZT" id="qhQ-0l-EBc">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ce-4C-H7P">
-                                            <rect key="frame" x="55" y="11" width="107" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-0O-pHs">
-                                            <rect key="frame" x="379" y="8" width="27" height="27"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="27" id="PiS-YG-lov"/>
                                                 <constraint firstAttribute="height" constant="27" id="UyZ-j7-1aW"/>
@@ -57,30 +55,27 @@
                                             <state key="normal" title="Button" image="next"/>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favorite" translatesAutoresizingMaskIntoConstraints="NO" id="OWn-Gz-aV7">
-                                            <rect key="frame" x="15" y="6" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="32" id="PmM-k0-MPH"/>
                                                 <constraint firstAttribute="height" constant="32" id="ivx-Du-M8f"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1g-5I-Oez">
-                                            <rect key="frame" x="43" y="4" width="6" height="6"/>
-                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="6" id="0AT-yu-E7M"/>
                                                 <constraint firstAttribute="width" constant="6" id="coS-aW-FWh"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2U-2W-h21">
-                                            <rect key="frame" x="356" y="12" width="20" height="20"/>
-                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="DRb-iu-hFb"/>
                                                 <constraint firstAttribute="height" constant="20" id="eVH-C3-Xdc"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -112,42 +107,39 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="奇趣" id="158-Av-uUs"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I3J-om-2HA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1640" y="1089"/>
+            <point key="canvasLocation" x="1854" y="1089"/>
         </scene>
         <!--VG-->
         <scene sceneID="NRH-Hx-J3J">
             <objects>
                 <tableViewController storyboardIdentifier="ConversationListController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GQB-c1-diR" customClass="ConversationListController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="gog-cn-YH0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" text="" placeholder="好友的VG号、手机或昵称" id="eVN-fp-SWQ">
-                            <rect key="frame" x="0.0" y="64" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits" spellCheckingType="no"/>
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListContactCell" rowHeight="64" id="BFQ-pW-Avf" customClass="ConversationListContactCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="136" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFQ-pW-Avf" id="QCi-aS-PcC">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                    <frame key="frameInset" width="375" height="63"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="l5d-k1-rfq">
-                                            <rect key="frame" x="374" y="16" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="0mi-rN-n0F"/>
                                                 <constraint firstAttribute="width" constant="32" id="eX2-x8-zrI"/>
                                             </constraints>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts" translatesAutoresizingMaskIntoConstraints="NO" id="IBS-1L-o8S">
-                                            <rect key="frame" x="8" y="8" width="48" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="3uz-DE-okS"/>
                                                 <constraint firstAttribute="height" constant="48" id="m8C-Qe-MWI"/>
@@ -160,9 +152,8 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通讯录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHF-ve-t4x">
-                                            <rect key="frame" x="64" y="21" width="51" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -186,27 +177,24 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListGroupChatCell" rowHeight="67" id="eqc-1n-Tx6" customClass="ConversationListGroupChatCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="200" width="414" height="67"/>
+                                <rect key="frame" x="0.0" y="200" width="375" height="67"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqc-1n-Tx6" id="Dzp-rL-num">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                    <frame key="frameInset" width="375" height="66"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开始多人聊天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fE3-aP-UTo">
-                                            <rect key="frame" x="64" y="23" width="102" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="pep-dO-8sA">
-                                            <rect key="frame" x="374" y="17" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="XxD-1M-6o1"/>
                                                 <constraint firstAttribute="width" constant="32" id="nrQ-oJ-aC6"/>
                                             </constraints>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_chat" translatesAutoresizingMaskIntoConstraints="NO" id="dSY-LO-hOV">
-                                            <rect key="frame" x="8" y="9" width="48" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="i96-A4-QX5"/>
                                                 <constraint firstAttribute="height" constant="48" id="za1-30-0p7"/>
@@ -236,27 +224,24 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatImageManageCell" rowHeight="67" id="McZ-Aw-ZfF" customClass="ChatImageManageCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="267" width="414" height="67"/>
+                                <rect key="frame" x="0.0" y="267" width="375" height="67"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="McZ-Aw-ZfF" id="RjB-WW-LK2">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                    <frame key="frameInset" width="375" height="66"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的聊天大头贴" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-T2-sni">
-                                            <rect key="frame" x="64" y="23" width="119" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="xz3-wT-QtQ">
-                                            <rect key="frame" x="374" y="17" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="Hdi-47-MtV"/>
                                                 <constraint firstAttribute="width" constant="32" id="pjl-oP-cTg"/>
                                             </constraints>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_image_mgr" translatesAutoresizingMaskIntoConstraints="NO" id="xwp-Ov-Axd">
-                                            <rect key="frame" x="8" y="9" width="48" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="9Pk-e8-qr5"/>
                                                 <constraint firstAttribute="height" constant="48" id="VNv-wp-aec"/>
@@ -286,69 +271,59 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListCell" rowHeight="60" id="Szw-pL-qT1" customClass="ConversationListCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="334" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="334" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Szw-pL-qT1" id="eWr-qG-EjH">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
+                                    <frame key="frameInset" width="375" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="03z-SN-R3E">
-                                            <rect key="frame" x="8" y="6" width="48" height="48"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="48" id="hee-Q0-YcE"/>
                                                 <constraint firstAttribute="width" constant="48" id="ybJ-cN-jyh"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-03-03" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swc-Ov-KHA">
-                                            <rect key="frame" x="64" y="40" width="80" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13600062135" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMF-UU-uRh">
-                                            <rect key="frame" x="64" y="6" width="108" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdM-g7-C0u">
-                                            <rect key="frame" x="378" y="20" width="20" height="20"/>
-                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="57d-aA-0WN"/>
                                                 <constraint firstAttribute="height" constant="20" id="kpI-l3-o9F"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="b0w-n1-x1U">
-                                            <rect key="frame" x="0.0" y="59" width="414" height="2"/>
                                             <rect key="contentStretch" x="0.0" y="1" width="1" height="1"/>
-                                            <color key="progressTintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="trackTintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="progressTintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="trackTintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </progressView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xU0-5K-qqp">
-                                            <rect key="frame" x="180" y="6" width="20" height="20"/>
-                                        </activityIndicatorView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xU0-5K-qqp"/>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gk8-mB-tUE">
-                                            <rect key="frame" x="180" y="2" width="30" height="30"/>
                                             <state key="normal" title="重发"/>
                                             <connections>
                                                 <action selector="retrySend:" destination="Szw-pL-qT1" eventType="touchUpInside" id="1h5-Sz-0Zq"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tp3-nC-ehD">
-                                            <rect key="frame" x="218" y="2" width="30" height="30"/>
                                             <state key="normal" title="取消"/>
                                             <connections>
                                                 <action selector="cancelSend:" destination="Szw-pL-qT1" eventType="touchUpInside" id="iwE-LR-1UT"/>
                                             </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoB-aT-LB8">
-                                            <rect key="frame" x="5" y="3" width="8" height="8"/>
-                                            <color key="backgroundColor" red="0.95517904639999995" green="0.012051097849999999" blue="0.14785571810000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.95517904639999995" green="0.012051097849999999" blue="0.14785571810000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="8" id="4GV-io-zb8"/>
                                                 <constraint firstAttribute="height" constant="8" id="n4a-dZ-HeY"/>
@@ -410,20 +385,19 @@
                     <navigationItem key="navigationItem" title="VG" id="Pbk-1i-UuZ">
                         <barButtonItem key="backBarButtonItem" title="对话" id="SYV-9s-CQ9"/>
                         <barButtonItem key="leftBarButtonItem" image="share" id="Cp7-nQ-LAi">
-                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="tellFriends:" destination="GQB-c1-diR" id="xmg-rq-faT"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settings" id="MDS-hM-X8B">
-                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="showUserSetting:" destination="GQB-c1-diR" id="GKS-sL-3ud"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="searchBar" destination="eVN-fp-SWQ" id="pAg-LR-Iph"/>
                     </connections>
@@ -437,7 +411,6 @@
             <objects>
                 <navigationController storyboardIdentifier="EntryNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b01-Lg-UG8" customClass="EntryNavigationController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XFm-bm-RRF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -446,7 +419,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bq5-D7-MDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="185" y="1089"/>
+            <point key="canvasLocation" x="-49" y="1089"/>
         </scene>
         <!--对话-->
         <scene sceneID="KlX-7X-0Wt">
@@ -465,7 +438,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zWx-oX-dRT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="654" y="1927"/>
+            <point key="canvasLocation" x="382" y="1926"/>
         </scene>
         <!--奇趣-->
         <scene sceneID="iOe-Dl-sy6">
@@ -484,7 +457,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bxb-Db-G5S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140" y="1089"/>
+            <point key="canvasLocation" x="1202" y="1089"/>
         </scene>
     </scenes>
     <resources>

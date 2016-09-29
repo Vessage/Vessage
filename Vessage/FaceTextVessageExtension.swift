@@ -121,10 +121,15 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     private func showNoChatImagesAlert(){
-        let ok = UIAlertAction(title: "OK".localizedString(), style: .Default) { (ac) in
+        if hadChatImagesMgrControllerShown{
+             let ok = UIAlertAction(title: "OK".localizedString(), style: .Default) { (ac) in
+                self.showChatImagesMrgController(1)
+             }
+             self.showAlert("NO_CHAT_IMAGES".localizedString(), msg: "U_MUST_SET_CHAT_IMAGES".localizedString(), actions: [ok])
+        }else{
             self.showChatImagesMrgController(1)
         }
-        self.showAlert("NO_CHAT_IMAGES".localizedString(), msg: "U_MUST_SET_CHAT_IMAGES".localizedString(), actions: [ok])
+        hadChatImagesMgrControllerShown = true
     }
     
     private func initChatImageBoard(){

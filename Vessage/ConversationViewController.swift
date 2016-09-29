@@ -159,6 +159,8 @@ class ConversationViewController: UIViewController {
     var chatImageBoardController:ChatImageBoardController!
     var chatImageBoardShown = false
     
+    var hadChatImagesMgrControllerShown = false
+    
     deinit{
         #if DEBUG
             print("Deinited:\(self.description)")

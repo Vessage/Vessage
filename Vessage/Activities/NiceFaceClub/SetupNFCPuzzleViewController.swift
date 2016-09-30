@@ -221,14 +221,15 @@ class PuzzleAnswerCell: UICollectionViewCell {
     
     @IBOutlet weak var answerLabel: UILabel!{
         didSet{
+            answerLabel.layoutIfNeeded()
             answerLabel.clipsToBounds = true
+            answerLabel.layer.cornerRadius = self.answerLabel!.frame.height / 2
             answerLabel.layer.borderColor = UIColor.orangeColor().CGColor
             answerLabel.layer.borderWidth = 1
         }
     }
     
     override func layoutSubviews() {
-        self.answerLabel?.layer.cornerRadius = self.answerLabel!.frame.height / 2
-        super.layoutSubviews()
+                super.layoutSubviews()
     }
 }

@@ -13,6 +13,7 @@ import Foundation
     optional func imageChatInputViewDidClickChatImage(sender:AnyObject?);
     optional func imageChatInputViewDidEndEditing(textField: UITextView);
     optional func imageChatInputViewChanged(textField: UITextView);
+    optional func imageChatInputViewDidBeginEditing(textField: UITextView);
 }
 
 class ImageChatInputView: UIView,UITextViewDelegate {
@@ -41,6 +42,7 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     //MARK:UITextFieldDelegate
     func textViewDidBeginEditing(textView: UITextView) {
         refreshSendButtonColor()
+        delegate?.imageChatInputViewDidBeginEditing?(textView)
     }
     
     func textViewDidChange(textView: UITextView) {
@@ -55,9 +57,7 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        if let handler = delegate?.imageChatInputViewDidEndEditing {
-            handler(textView)
-        }
+        delegate?.imageChatInputViewDidEndEditing?(textView)
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {

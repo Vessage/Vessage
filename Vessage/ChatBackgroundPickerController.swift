@@ -49,6 +49,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,UII
     
     @IBOutlet weak var closeRecordViewButton: UIButton!{
         didSet{
+            closeRecordViewButton.layoutIfNeeded()
             closeRecordViewButton.layer.cornerRadius = closeRecordViewButton.frame.size.height / 2
         }
     }
@@ -64,6 +65,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,UII
     
     @IBOutlet weak var middleButton: UIButton!{
         didSet{
+            middleButton.layoutIfNeeded()
             middleButton.hidden = true
             middleButton.layer.cornerRadius = middleButton.frame.size.height / 2
         }

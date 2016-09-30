@@ -15,6 +15,7 @@ class SetupNiceFaceViewController: UIViewController {
 
     @IBOutlet weak var faceScoreViewMask: UIView!{
         didSet{
+            faceScoreViewMask.layoutIfNeeded()
             faceScoreViewMask.clipsToBounds = true
             faceScoreViewMask.layer.cornerRadius = faceScoreViewMask.frame.height / 2
         }
@@ -22,6 +23,7 @@ class SetupNiceFaceViewController: UIViewController {
     @IBOutlet weak var faceScoreLabel: UILabel!
     @IBOutlet weak var faceScoreView: UIProgressView!{
         didSet{
+            self.faceScoreView.superview?.layoutIfNeeded()
             self.faceScoreView.superview?.clipsToBounds = true
             self.faceScoreView.superview?.layer.cornerRadius = self.faceScoreView.superview!.frame.height / 2
         }

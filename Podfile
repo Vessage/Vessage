@@ -19,5 +19,7 @@ target "Vessage" do
     pod 'YUCIHighPassSkinSmoothing'
 
     pod 'LTMorphingLabel'
+    
+    #pod 'KDCircularProgress'
 end
 

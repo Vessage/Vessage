@@ -64,6 +64,7 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var pinMark: UIView!{
         didSet{
+            pinMark.layoutIfNeeded()
             pinMark.clipsToBounds = true
             pinMark.layer.cornerRadius = pinMark.frame.height / 2
         }
@@ -71,6 +72,7 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
+            badgeLabel.layoutIfNeeded()
             badgeLabel.hidden = true
             badgeLabel.clipsToBounds = true
             badgeLabel.layer.cornerRadius = 10

@@ -28,8 +28,13 @@ class VideoPreviewBubble: UIView {
         contentView.frame = bounds
         addSubview(contentView)
         videoPreviewView = contentView.viewWithTag(1)
-        videoPreviewView.layer.cornerRadius = bounds.height / 2
         videoPreviewView.clipsToBounds = true
+    }
+    
+    override func drawRect(rect: CGRect) {
+        contentView.frame = bounds
+        videoPreviewView.layer.cornerRadius = bounds.height / 2
+        super.drawRect(rect)
     }
     
     private(set) var videoPreviewView: UIView!

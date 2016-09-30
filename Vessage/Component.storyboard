@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Property Title-->
@@ -16,22 +17,19 @@
                         <viewControllerLayoutGuide type="bottom" id="EcZ-f8-ELd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="51c-sN-QF4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7xo-mY-Wlp">
-                                <rect key="frame" x="134" y="75" width="270" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdo-fQ-PTU">
-                                <rect key="frame" x="10" y="78" width="116" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Property Text Value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nk5-Bf-jD5">
-                                <rect key="frame" x="10" y="107" width="394" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="v7b-tF-iAI"/>
                                 </constraints>
@@ -39,7 +37,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="nk5-Bf-jD5" firstAttribute="trailing" secondItem="7xo-mY-Wlp" secondAttribute="trailing" id="0rM-49-E0z"/>
                             <constraint firstItem="7xo-mY-Wlp" firstAttribute="leading" secondItem="pdo-fQ-PTU" secondAttribute="trailing" constant="8" symbolic="YES" id="0u7-Gt-elA"/>
@@ -56,7 +54,7 @@
                     <navigationItem key="navigationItem" title="Property Title" id="Dm0-mm-emb">
                         <barButtonItem key="rightBarButtonItem" image="check_blue" id="cgl-wU-IdO">
                             <inset key="imageInsets" minX="8" minY="10" maxX="8" maxY="6"/>
-                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="save:" destination="tyS-aP-qD2" id="bf2-mq-3j6"/>
                             </connections>
@@ -64,7 +62,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="propertyNameLabel" destination="pdo-fQ-PTU" id="fMZ-hD-rLs"/>
                         <outlet property="propertyValueTextField" destination="7xo-mY-Wlp" id="FGK-d2-Yn1"/>
@@ -84,11 +81,10 @@
                         <viewControllerLayoutGuide type="bottom" id="IeP-4o-YCa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="y2W-b4-5zo">
-                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5x-zf-wES">
-                                <rect key="frame" x="222" y="219" width="67" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="67" id="krs-Yt-xnn"/>
                                     <constraint firstAttribute="height" constant="67" id="ne5-Cx-S1n"/>
@@ -99,7 +95,6 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MQS-5b-vht">
-                                <rect key="frame" x="132" y="219" width="67" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="9Ku-UX-7HP"/>
                                     <constraint firstAttribute="width" constant="67" id="hO3-be-REA"/>
@@ -116,19 +111,17 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反馈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iCL-D7-Wl8">
-                                <rect key="frame" x="148" y="294" width="34" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="评价" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpC-QY-SjT">
-                                <rect key="frame" x="239" y="294" width="34" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="iCL-D7-Wl8" firstAttribute="top" secondItem="MQS-5b-vht" secondAttribute="bottom" constant="8" symbolic="YES" id="8JU-ri-kCZ"/>
                             <constraint firstItem="e5x-zf-wES" firstAttribute="leading" secondItem="MQS-5b-vht" secondAttribute="trailing" constant="23" id="9kX-vG-3ka"/>
@@ -155,11 +148,10 @@
                         <barButtonItem key="backBarButtonItem" title="返回" id="5cc-bd-ztp"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rw4-dW-tnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1162" y="2036"/>
+            <point key="canvasLocation" x="1487" y="2035"/>
         </scene>
     </scenes>
     <resources>

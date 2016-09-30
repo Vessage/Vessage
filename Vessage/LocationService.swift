@@ -17,12 +17,13 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
     @objc func appStartInit(appName:String) {
         locationManager = CLLocationManager()
         locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         self.locationManager.distanceFilter = 1000.0
-        self.locationManager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func userLoginInit(userId: String) {
+        self.locationManager.startUpdatingLocation()
         self.setServiceReady()
     }
     

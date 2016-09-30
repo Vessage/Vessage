@@ -32,10 +32,15 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     //MARK: ImageChatInputViewDelegate
+    func imageChatInputViewDidBeginEditing(textField: UITextView) {
+        imageChatInputViewChanged(textField)
+    }
     
     func imageChatInputViewChanged(textField: UITextView) {
         if String.isNullOrEmpty(textField.text) {
-            chatImageBoardController?.dismissViewControllerAnimated(true, completion: nil)
+            hideChatImageBoard()
+        }else{
+            showChatImageBoard()
         }
     }
     
@@ -72,10 +77,12 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     
     func chatImageBoardController(appearController sender: ChatImageBoardController) {
         self.chatImageBoardShown = true
+        chatImageBoardShowing = false
     }
     
     func chatImageBoardController(dissmissController sender: ChatImageBoardController) {
         self.chatImageBoardShown = false
+        chatImageBoardShowing = false
     }
     
     func chatImageBoardController(sender: ChatImageBoardController, selectedIndexPath: NSIndexPath, selectedItem: ChatImage, deselectItem: ChatImage?) {
@@ -96,8 +103,21 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     private func showChatImageBoard() {
+        if chatImageBoardShown || chatImageBoardShowing {
+            return
+        }
+        chatImageBoardShowing = true
         self.initChatImageBoard()
         self.presentChatImageBoard()
+    }
+    
+    private func hideChatImageBoard(){
+        if chatImageBoardShown{
+            chatImageBoardShowing = true
+            chatImageBoardController?.dismissViewControllerAnimated(true){
+                self.chatImageBoardShowing = false
+            }
+        }
     }
     
     private func presentChatImageBoard(){

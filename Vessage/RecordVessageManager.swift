@@ -189,6 +189,7 @@ class GroupChatAvatarManager:NSObject {
             let imgView = avatarImageGroup[i]
             let fileId = userFaceIds[key]!
             imgView.contentMode = String.isNullOrEmpty(fileId) ? .ScaleAspectFit : .ScaleAspectFill
+            imgView.layoutIfNeeded()
             imgView.layer.cornerRadius = self.userFaceIds.count > 1 ? imgView.frame.width / 2 : 0
             imgView.clipsToBounds = self.userFaceIds.count > 1
             ServiceContainer.getFileService().setAvatar(imgView, iconFileId: fileId, defaultImage: df)
@@ -378,6 +379,7 @@ extension RecordVessageManager:VessageCameraDelegate{
 
     func recordingFlashing(_:AnyObject?){
         if recording{
+            recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
             recordingTime += 1
             self.recordingFlashView.hidden = !self.recordingFlashView.hidden
         }else{
@@ -387,8 +389,8 @@ extension RecordVessageManager:VessageCameraDelegate{
     
     private func updateRecordingProgress(){
         let maxAngle:CGFloat = 360
-        let angle = Int(recordingTime / maxRecordTime * maxAngle)
-        self.recordingProgress?.angle = angle
+        let angle = recordingTime / maxRecordTime * maxAngle
+        self.recordingProgress?.angle = Double(angle)
         self.recordingProgress?.hidden = !recording
     }
     

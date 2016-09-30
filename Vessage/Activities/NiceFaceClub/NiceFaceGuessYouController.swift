@@ -33,6 +33,7 @@ class NiceFaceGuessYouController: UIViewController {
     
     @IBOutlet weak var leftAnswerLabel: UILabel!{
         didSet{
+            leftAnswerLabel.layoutIfNeeded()
             leftAnswerLabel.hidden = true
             leftAnswerLabel.backgroundColor = leftAnswerColor
             leftAnswerLabel.clipsToBounds = true
@@ -45,6 +46,7 @@ class NiceFaceGuessYouController: UIViewController {
     }
     @IBOutlet weak var rightAnswerLabel: UILabel!{
         didSet{
+            rightAnswerLabel.layoutIfNeeded()
             rightAnswerLabel.hidden = true
             rightAnswerLabel.backgroundColor = rightAnswerColor
             rightAnswerLabel.clipsToBounds = true
@@ -63,6 +65,7 @@ class NiceFaceGuessYouController: UIViewController {
     
     @IBOutlet weak var puzzleLabel: UILabel!{
         didSet{
+            puzzleLabel.layoutIfNeeded()
             puzzleLabel.text = nil
             puzzleLabel.layer.cornerRadius = puzzleLabel.frame.height / 2
         }
@@ -486,6 +489,7 @@ class NiceFaceImageCell: UITableViewCell {
     
     @IBOutlet weak var flashTipsLabel: UILabel!{
         didSet{
+            flashTipsLabel.layoutIfNeeded()
             flashTipsLabel.clipsToBounds = true
             flashTipsLabel.hidden = true
             flashTipsLabel.layer.cornerRadius = flashTipsLabel.frame.height / 2
@@ -496,6 +500,7 @@ class NiceFaceImageCell: UITableViewCell {
     
     @IBOutlet weak var faceScoreProgress: UIProgressView!{
         didSet{
+            faceScoreProgress.superview?.layoutIfNeeded()
             faceScoreProgress.superview?.clipsToBounds = true
             faceScoreProgress.superview?.layer.cornerRadius = faceScoreProgress.superview!.frame.height / 2
         }

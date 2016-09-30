@@ -45,6 +45,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
     
     @IBOutlet weak var avatarImageView: UIImageView!{
         didSet{
+            avatarImageView.layoutIfNeeded()
             avatarImageView.userInteractionEnabled = true
             avatarImageView.clipsToBounds = true
             avatarImageView.layer.cornerRadius = avatarImageView.frame.height / 2

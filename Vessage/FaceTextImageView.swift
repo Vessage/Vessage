@@ -36,6 +36,7 @@ class FaceTextImageView: UIView {
     private var loadingImageView:UIImageView!
     private var imageView:UIImageView!{
         didSet{
+            imageView.layoutIfNeeded()
             imageView.clipsToBounds = true
             imageView.contentMode = .ScaleAspectFill
         }
@@ -117,6 +118,7 @@ class FaceTextImageView: UIView {
     }
     
     private func render(){
+        container.layoutIfNeeded()
         self.frame = container.bounds
         self.imageView.frame = self.bounds
     }

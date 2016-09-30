@@ -195,6 +195,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     func openCamera() {
         if cameraInited == true && !cameraRunning{
             initNotification()
+            previewLayer.bounds = view.bounds
             captureSession.startRunning()
         }
     }

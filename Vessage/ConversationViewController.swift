@@ -137,12 +137,14 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet weak var recordingProgress: KDCircularProgress!{
         didSet{
+            recordingProgress.layoutIfNeeded()
             recordingProgress.hidden = true
         }
     }
     
     @IBOutlet weak var recordingFlashView: UIView!{
         didSet{
+            recordingFlashView.layoutIfNeeded()
             recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
             recordingFlashView.hidden = true
         }
@@ -158,6 +160,7 @@ class ConversationViewController: UIViewController {
     var chatImageBoardSourceView:UIView!
     var chatImageBoardController:ChatImageBoardController!
     var chatImageBoardShown = false
+    var chatImageBoardShowing = false
     
     var hadChatImagesMgrControllerShown = false
     

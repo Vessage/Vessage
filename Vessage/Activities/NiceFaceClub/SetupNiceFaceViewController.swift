@@ -281,11 +281,6 @@ extension SetupNiceFaceViewController{
                 ServiceContainer.getUserService().setChatBackground(task.fileId, imageType: nil, callback: { (suc) in
                 })
             }
-            
-            if ServiceContainer.getUserService().myChatImages.count <= 0 {
-                ServiceContainer.getUserService().setChatBackground(task.fileId, imageType: defaultImageTypes.first?["type"], callback: { (suc) in
-                })
-            }
             self.setNiceFace(task.fileId)
         }
     }

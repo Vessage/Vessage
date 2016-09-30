@@ -10,8 +10,18 @@ import UIKit
 
 class ChatImageBoardCell: UICollectionViewCell {
     static let reuseId = "ChatImageBoardCell"
-    @IBOutlet weak var checkedImage: UIImageView!
-    @IBOutlet weak var chatImageView: UIImageView!
+    @IBOutlet weak var checkedImage: UIImageView!{
+        didSet{
+            checkedImage.layoutIfNeeded()
+            checkedImage.clipsToBounds = true
+        }
+    }
+    @IBOutlet weak var chatImageView: UIImageView!{
+        didSet{
+            chatImageView.layoutIfNeeded()
+            chatImageView.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var imageTypeLabel: UILabel!
     override var selected: Bool{
         didSet{
@@ -30,7 +40,7 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
 
     @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate : ChatImageBoardControllerDelegate?
-    private var chatImages = [ChatImage]()
+    private(set) var chatImages = [ChatImage]()
     var fileService = ServiceContainer.getFileService()
     private(set) var selectedChatImage:ChatImage!
     
@@ -40,12 +50,11 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         self.collectionView.dataSource = self
         self.collectionView.allowsSelection = true
         self.collectionView.allowsMultipleSelection = false
-        
     }
     
-    private func reloadChatImages(){
+    func reloadChatImages(){
         chatImages.removeAll()
-        var cimages = ServiceContainer.getUserService().myChatImages.messArrayUp()
+        var cimages = ServiceContainer.getUserService().getMyChatImages().messArrayUp()
         defaultImageTypes.forEach({ (dict) in
             if let t = dict["type"]{
                 if let index = (cimages.indexOf{$0.imageType == t}){
@@ -54,12 +63,11 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
             }
         })
         chatImages.appendContentsOf(cimages)
-        self.collectionView.reloadData()
+        self.collectionView?.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reloadChatImages()
         if chatImages.count > 0 {
             self.selectedChatImage = chatImages.first
             self.collectionView.selectItemAtIndexPath(NSIndexPath(forRow: 0,inSection: 0), animated: true, scrollPosition: .Left)

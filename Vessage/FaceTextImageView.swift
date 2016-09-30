@@ -9,25 +9,119 @@
 import Foundation
 
 class FaceTextChatBubble: UIView {
+    private let TAG = "FaceTextChatBubble:%@"
+    private let bubbleOriginSize:CGPoint = CGPointMake(793,569);
+    private let scrollViewOriginRect:CGRect = CGRectMake(156,156,474,315);
+    private let bubbleMinRadio:CGFloat = 0.3
+    private let bubbleMaxRadio:CGFloat = 0.6
+    private var bubbleStartPointRatio:CGPoint{return CGPointMake(391 / bubbleOriginSize.x,0)}
+    private var bubbleTextViewRatio:CGFloat{return 1 * scrollViewOriginRect.height / scrollViewOriginRect.width}
+    
+    private var scrollViewFinalPos = CGPoint()
+    private var textViewFinalWidth:CGFloat = 0
+    private var textViewFinalHeight:CGFloat = 0
+    private var scrollViewFinalHeight:CGFloat = 0
+    private var finalRatio:CGFloat = 0.3
+    private var finalImageViewWidth:CGFloat = 0
+    private var finalImageViewHeight:CGFloat = 0
+    private var bubbleStartPoint = CGPoint()
+    
+    private var bubbleText:String!
+    
+    var containerWidth:CGFloat = 0
+    
+    private var bubbleTextView:UITextView!{
+        didSet{
+            bubbleTextView.layoutIfNeeded()
+            bubbleTextView.backgroundColor = UIColor.clearColor()
+            bubbleTextView.scrollEnabled = true
+            bubbleTextView.editable = false
+            self.addSubview(bubbleTextView)
+        }
+    }
+    
+    private var bubbleImageView:UIImageView!{
+        didSet{
+            bubbleImageView.image = UIImage(named: "cloud_bubble")
+            bubbleImageView.layoutIfNeeded()
+            bubbleImageView.contentMode = .ScaleAspectFit
+            self.addSubview(bubbleImageView)
+            self.sendSubviewToBack(bubbleImageView)
+        }
+    }
+    
+    func initSubviews() {
+        bubbleTextView = UITextView()
+        bubbleImageView = UIImageView()
+    }
+    
+    func scrollText(y:CGFloat) {
+        
+    }
+}
 
-    var messageContent:String!{
-        didSet{
+extension FaceTextChatBubble{
+    func setBubbleText(bubbleText:String) {
+        self.bubbleText = bubbleText
+        bubbleTextView.text = bubbleText
+        measureViewSize()
+        setMeasuredValues()
+    }
+    
+    func getBubbleStartPoint() -> CGPoint {
+        return CGPoint(x: bubbleStartPoint.x, y: bubbleStartPoint.y)
+    }
+    
+    private func setMeasuredValues(){
+        bubbleImageView.frame = CGRectMake(0, 0, finalImageViewWidth, finalImageViewHeight)
+        bubbleTextView.frame = CGRectMake(scrollViewFinalPos.x,scrollViewFinalPos.y,textViewFinalWidth,scrollViewFinalHeight)
+        self.frame.size.height = finalImageViewHeight
+        self.frame.size.width = finalImageViewWidth
+    }
+    
+    private func measureViewSize() {
+        debugLog(TAG,"------------------Start Measure------------------------")
+        debugLog(TAG,"containerWidth:\(containerWidth)")
+        var widthRadio = bubbleMinRadio
+        let tv = bubbleTextView
+        
+        for (; widthRadio <= bubbleMaxRadio; widthRadio += 0.01) {
+            textViewFinalWidth = containerWidth * widthRadio
+            textViewFinalHeight = textViewFinalWidth * bubbleTextViewRatio
             
-            messageContentTextView?.text = messageContent
+            tv.frame.size.width = textViewFinalWidth;
+            tv.layoutIfNeeded()
+            tv.sizeToFit()
+            let measuredHeight = tv.contentSize.height
+            scrollViewFinalHeight = textViewFinalHeight;
+            
+            debugLog(TAG,"radio:\(widthRadio)")
+            debugLog(TAG,"measuredHeight:\(measuredHeight)")
+            debugLog(TAG,"scrollViewFinalHeight:\(scrollViewFinalHeight)")
+            debugLog(TAG,"textViewFinalWidth:\(textViewFinalWidth)")
+            
+            if (measuredHeight <= textViewFinalHeight) {
+                debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)");
+                break
+            } else if (widthRadio == bubbleMaxRadio) {
+                textViewFinalHeight = measuredHeight
+            }
+            debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)")
         }
-    }
-    
-    @IBOutlet weak var messageContentTextView: UILabel!{
-        didSet{
-            messageContentTextView.userInteractionEnabled = false
-        }
-    }
-    
-    static func instanceFromXib() -> FaceTextChatBubble{
-        let view = NSBundle.mainBundle().loadNibNamed("FaceTextChatBubble", owner: nil, options: nil)![0] as! FaceTextChatBubble
-        view.backgroundColor = UIColor.clearColor()
-        view.userInteractionEnabled = true
-        return view
+        
+        debugLog(TAG,"Select Radio:\(widthRadio)")
+        finalRatio = textViewFinalWidth / scrollViewOriginRect.width
+        finalImageViewWidth = bubbleOriginSize.x * finalRatio
+        finalImageViewHeight = finalImageViewWidth * bubbleTextViewRatio
+        debugLog(TAG,"finalImageViewWidth:\(finalImageViewWidth)")
+        debugLog(TAG,"finalImageViewHeight:\(finalImageViewHeight)")
+        scrollViewFinalPos.x = scrollViewOriginRect.origin.x * finalRatio
+        scrollViewFinalPos.y = scrollViewOriginRect.origin.y * finalRatio
+        debugLog(TAG,"scrollViewFinalPos:\(scrollViewFinalPos)");
+        bubbleStartPoint.x = finalImageViewWidth * bubbleStartPointRatio.x
+        bubbleStartPoint.y = finalImageViewHeight * bubbleStartPointRatio.y
+        debugLog(TAG,"bubbleStartPoint:\(bubbleStartPoint)");
+        debugLog(TAG,"------------------End Measure------------------------");
     }
 }
 
@@ -69,7 +163,8 @@ class FaceTextImageView: UIView {
     func initContainer(container:UIView) {
         self.container = container
         self.imageView = UIImageView()
-        self.chatBubble = FaceTextChatBubble.instanceFromXib()
+        self.chatBubble = FaceTextChatBubble()
+        self.chatBubble.initSubviews()
         self.chatBubbleMoveGesture = UIPanGestureRecognizer(target: self, action: #selector(FaceTextImageView.onMoveChatBubble(_:)))
         if chatBubbleMovable {
             self.chatBubble.addGestureRecognizer(self.chatBubbleMoveGesture)
@@ -96,6 +191,7 @@ class FaceTextImageView: UIView {
             print("Deinited:\(self.description)")
         #endif
     }
+    
     
     private var beginPoint:CGPoint!
     func onMoveChatBubble(ges:UIPanGestureRecognizer) {
@@ -126,7 +222,8 @@ class FaceTextImageView: UIView {
     func setTextImage(fileId:String!,message:String!,onMessagePresented:(()->Void)? = nil) {
         self.imageLoaded = false
         self.render()
-        self.chatBubble.messageContent = message
+        self.chatBubble.containerWidth = self.container.bounds.width
+        self.chatBubble.setBubbleText(message + message + message)
         self.chatBubble.hidden = true
         self.imageView.hidden = true
         self.loadingImageView.center = self.center
@@ -242,11 +339,12 @@ class FaceTextImageView: UIView {
     }
     
     func setChatBubblePosition(position:CGPoint) {
-        let width = self.imageView.frame.width + 10
-        let str = self.chatBubble.messageContent!
-        let strRect = str.boundingRectWithSize(CGSizeMake(width, CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:self.chatBubble.messageContentTextView.font], context: nil)
-        self.chatBubble.frame = CGRectMake(position.x - width / 2,position.y,width,strRect.height + strRect.height / 14 * 42 + 30)
-        self.chatBubble.messageContentTextView.frame = self.chatBubble.bounds
+        
+        let bubbleStartPoint = chatBubble.getBubbleStartPoint();
+        let movePoint = CGPointMake(position.x - bubbleStartPoint.x,position.y - bubbleStartPoint.y );
+        debugLog("chatBubbleFrame:\(chatBubble.frame)")
+        debugLog("movePoint:\(movePoint)")
+        chatBubble.frame.origin = movePoint
         self.chatBubbleAnimateShow()
     }
     

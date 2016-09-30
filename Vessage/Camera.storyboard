@@ -63,16 +63,25 @@
                                     <constraint firstAttribute="width" constant="48" id="oHo-Wa-Hgz"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jcr-cQ-ben">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="MDe-hl-cHH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="OXS-YO-Oks" secondAttribute="bottom" constant="20" symbolic="YES" id="6W7-EQ-UGD"/>
                             <constraint firstItem="b8r-rD-AwH" firstAttribute="top" secondItem="t5Y-UI-xNu" secondAttribute="bottom" constant="2" id="Boc-vU-oYW"/>
                             <constraint firstItem="t5Y-UI-xNu" firstAttribute="centerY" secondItem="Zde-Z4-kJ4" secondAttribute="centerY" id="FSL-Xw-v2B"/>
+                            <constraint firstItem="Jcr-cQ-ben" firstAttribute="centerY" secondItem="BjQ-TE-Hc8" secondAttribute="centerY" constant="-20" id="GWQ-zP-je6"/>
+                            <constraint firstItem="Jcr-cQ-ben" firstAttribute="height" secondItem="BjQ-TE-Hc8" secondAttribute="height" constant="-180" id="OQs-qV-UEn"/>
                             <constraint firstItem="QOA-me-dGz" firstAttribute="height" secondItem="BjQ-TE-Hc8" secondAttribute="height" id="QBe-O1-Kod"/>
                             <constraint firstItem="Zde-Z4-kJ4" firstAttribute="trailing" secondItem="BjQ-TE-Hc8" secondAttribute="trailingMargin" id="RNB-jd-T2n"/>
                             <constraint firstAttribute="leadingMargin" secondItem="t5Y-UI-xNu" secondAttribute="leading" id="SoW-OM-bTY"/>
                             <constraint firstItem="b8r-rD-AwH" firstAttribute="centerX" secondItem="t5Y-UI-xNu" secondAttribute="centerX" id="T7A-rg-FmU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Jcr-cQ-ben" secondAttribute="trailing" constant="-10" id="Tlp-Cj-O4a"/>
                             <constraint firstItem="Zde-Z4-kJ4" firstAttribute="bottom" secondItem="OXS-YO-Oks" secondAttribute="bottom" constant="-3" id="Xb7-Ij-UFT"/>
                             <constraint firstItem="OXS-YO-Oks" firstAttribute="centerX" secondItem="BjQ-TE-Hc8" secondAttribute="centerX" id="aJd-Ro-eA3"/>
                             <constraint firstItem="fiS-Ym-TYZ" firstAttribute="centerX" secondItem="Zde-Z4-kJ4" secondAttribute="centerX" id="dPe-QX-bcs"/>
@@ -89,6 +98,7 @@
                     <connections>
                         <outlet property="closeRecordViewButton" destination="1cU-2p-a4q" id="nWp-Hr-kZm"/>
                         <outlet property="demoFaceView" destination="QOA-me-dGz" id="eCs-h3-Cbw"/>
+                        <outlet property="easyShotView" destination="Jcr-cQ-ben" id="Ybk-Vv-4wl"/>
                         <outlet property="leftButton" destination="t5Y-UI-xNu" id="42i-Fc-j4H"/>
                         <outlet property="leftButtonTip" destination="b8r-rD-AwH" id="stR-o8-rMj"/>
                         <outlet property="middleButton" destination="OXS-YO-Oks" id="f5v-BM-Beh"/>

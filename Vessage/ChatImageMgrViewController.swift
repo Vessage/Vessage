@@ -53,7 +53,7 @@ class ChatImageMgrViewController: UIViewController,UITableViewDelegate,UITableVi
 
     private func initMyChatImages(){
         myChatImages.removeAll()
-        userService.myChatImages.forEach({ (ci) in
+        userService.getMyChatImages(false).forEach({ (ci) in
             myChatImages.updateValue(ci, forKey: ci.imageType)
         })
     }

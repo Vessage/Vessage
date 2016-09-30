@@ -529,7 +529,6 @@
 		E708AB3B1C86CAA50071104E /* Vessage */ = {
 			isa = PBXGroup;
 			children = (
-				E79CAB731D9DEC3500FB0F6D /* Vessage.entitlements */,
 				E7F22C271C9BE57800CD38D1 /* Libs */,
 				E708ACA91C8752BF0071104E /* ArchBase */,
 				E708AC0C1C86DEC40071104E /* Assets */,
@@ -542,6 +541,7 @@
 		E708AB4E1C86CB470071104E /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E79CAB731D9DEC3500FB0F6D /* Vessage.entitlements */,
 				E7F22C571C9BF19800CD38D1 /* country.plist */,
 				E708AB481C86CAA50071104E /* Info.plist */,
 				E708AB4F1C86CB570071104E /* Bridge-Header.h */,

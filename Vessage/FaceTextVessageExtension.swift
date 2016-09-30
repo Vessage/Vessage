@@ -94,7 +94,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     //MARK: actions
     
     func tryShowImageChatInputView(){
-        if userService.myChatImages.count > 0{
+        if userService.hasChatImages{
             self.imageChatInputResponderTextFiled.becomeFirstResponder()
             self.imageChatInputView.inputTextField.becomeFirstResponder()
         }else{
@@ -126,8 +126,9 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         self.view.addSubview(self.chatImageBoardSourceView)
         
         if let ppvc = self.chatImageBoardController.popoverPresentationController{
-            if userService.myChatImages.count > 0{
-                let lineCount = CGFloat(userService.myChatImages.count > 4 ? 4 : userService.myChatImages.count)
+            
+            if self.chatImageBoardController.chatImages.count > 0{
+                let lineCount = CGFloat(self.chatImageBoardController.chatImages.count > 4 ? 4 : self.chatImageBoardController.chatImages.count)
                 self.chatImageBoardController.preferredContentSize = CGSizeMake(lineCount * (72) + (lineCount - 1) * 3 + 12, 112)
                 ppvc.sourceView = self.chatImageBoardSourceView
                 ppvc.sourceRect = self.chatImageBoardSourceView.bounds
@@ -161,6 +162,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
             self.chatImageBoardController = ChatImageBoardController.instanceFromStoryBoard()
             self.chatImageBoardController.modalPresentationStyle = .Popover
             self.chatImageBoardController.delegate = self
+            self.chatImageBoardController.reloadChatImages()
         }
     }
     

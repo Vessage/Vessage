@@ -27,6 +27,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,UII
             previewRectView.backgroundColor = UIColor.clearColor()
         }
     }
+    @IBOutlet weak var easyShotView: UIView!
 
     @IBOutlet weak var demoFaceView: UIImageView!{
         didSet{
@@ -106,6 +107,7 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,UII
         previewRectView = UIView(frame: self.view.bounds)
         self.view.addSubview(previewRectView)
         self.view.sendSubviewToBack(previewRectView)
+        self.easyShotView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatBackgroundPickerController.onTapEasyShotView(_:))))
         camera.initCamera(self,previewView: self.previewRectView)
     }
     
@@ -135,17 +137,29 @@ class ChatBackgroundPickerController: UIViewController,VessageCameraDelegate,UII
         }
     }
     
+    func onTapEasyShotView(a:UITapGestureRecognizer) {
+        shot()
+    }
+    
     @IBAction func middleButtonClicked(sender: AnyObject) {
+        if self.previewing{
+            shot()
+        }else{
+            self.sendTakedImage()
+        }
+    }
+    
+    private func shot() -> Bool{
         if self.previewing{
             if camera.detectedFaces{
                 SystemSoundHelper.cameraShutter()
                 self.camera.takePicture()
+                return true
             }else{
                 self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
             }
-        }else{
-            self.sendTakedImage()
         }
+        return false
     }
     
     func rightButtonClicked(sender: AnyObject) {

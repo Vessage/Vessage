@@ -35,7 +35,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private let getNearUserIntervalHours = 2.0
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!
-    private(set) var myChatImages = [ChatImage]()
+    private var myChatImages = [ChatImage]()
     private(set) var activeUsers = [VessageUser]()
     private(set) var nearUsers = [VessageUser]()
     
@@ -446,6 +446,25 @@ extension UserService{
 
 //MARK: User Chat Images
 extension UserService{
+    
+    var hasChatImages:Bool{
+        return self.myChatImages.count > 0 || self.isUserChatBackgroundIsSeted
+    }
+    
+    func getMyChatImages(withVideoChatImage:Bool = true) -> [ChatImage] {
+        if !withVideoChatImage {
+            return self.myChatImages
+        }
+        var chatImgs = [ChatImage]()
+        chatImgs.appendContentsOf(self.myChatImages)
+        if isUserChatBackgroundIsSeted {
+            let ci = ChatImage()
+            ci.imageId = myProfile.mainChatImage
+            ci.imageType = "V_CHAT_IMG".localizedString()
+            chatImgs.append(ci)
+        }
+        return chatImgs;
+    }
     
     func fetchUserChatImages(userId:String) {
         let req = GetUserChatImageRequest()

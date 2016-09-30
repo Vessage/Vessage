@@ -28,7 +28,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="onClickChatImageButtonWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="pzN-Xu-M3C"/>
+                        <action selector="onClickChatImageButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="4pN-ea-w2J"/>
                     </connections>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TIF-Cs-PHJ">
@@ -61,7 +61,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="onClickSendButtonWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="Tk7-2J-odL"/>
+                        <action selector="onClickSendButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="8it-Zj-peO"/>
                     </connections>
                 </button>
             </subviews>

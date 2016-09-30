@@ -21,6 +21,7 @@ class UnknowVessageHandler: VessageHandlerBase {
     
     override func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage!) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
+        container.layoutIfNeeded()
         container.removeAllSubviews()
         container.addSubview(tipsLabel)
         tipsLabel.frame = container.bounds
@@ -48,6 +49,7 @@ class NoVessageHandler: VessageHandlerBase {
     
     override func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage!) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
+        container.layoutIfNeeded()
         container.backgroundColor = UIColor.clearColor()
         container.removeAllSubviews()
         container.addSubview(tipsLabel)

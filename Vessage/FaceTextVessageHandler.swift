@@ -34,7 +34,7 @@ class FaceTextViewFullScreenController: UIViewController {
     }
 }
 
-class FaceTextVessageHandler: VessageHandlerBase {
+class FaceTextVessageHandler: VessageHandlerBase,HandlePanGesture {
     private var faceTextView:FaceTextImageView!
     
     override init(manager:PlayVessageManager,container:UIView) {
@@ -44,6 +44,10 @@ class FaceTextVessageHandler: VessageHandlerBase {
         let ges = UITapGestureRecognizer(target: self, action: #selector(FaceTextVessageHandler.onTapFaceTextView(_:)))
         ges.numberOfTapsRequired = 2
         self.faceTextView.addGestureRecognizer(ges)
+    }
+    
+    func onPan(v: CGPoint) {
+        self.faceTextView?.scrollBubbleText(v.y)
     }
     
     func onTapFaceTextView(ges:UITapGestureRecognizer) {

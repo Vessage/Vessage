@@ -88,6 +88,8 @@
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
 		E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */; };
+		E7204C8D1DA1EBA100CA4261 /* ImageVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7204C8C1DA1EBA100CA4261 /* ImageVessageHandler.swift */; };
+		E7204C8F1DA1EC5400CA4261 /* VessageHandlerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7204C8E1DA1EC5400CA4261 /* VessageHandlerFactory.swift */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
 		E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = E72E25811D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m */; };
@@ -317,6 +319,8 @@
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
 		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatCellTableViewCell.swift; sourceTree = "<group>"; };
+		E7204C8C1DA1EBA100CA4261 /* ImageVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVessageHandler.swift; sourceTree = "<group>"; };
+		E7204C8E1DA1EC5400CA4261 /* VessageHandlerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageHandlerFactory.swift; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
 		E72E25801D6B2FFD00DA6E5C /* UIView+AEScaningEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AEScaningEffect.h"; sourceTree = "<group>"; };
@@ -931,6 +935,8 @@
 				E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */,
 				E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */,
 				E718444E1D49BB7700D3EDEF /* UnknowVessageHandler.swift */,
+				E7204C8C1DA1EBA100CA4261 /* ImageVessageHandler.swift */,
+				E7204C8E1DA1EC5400CA4261 /* VessageHandlerFactory.swift */,
 			);
 			name = VessageHandlers;
 			sourceTree = "<group>";
@@ -1281,6 +1287,7 @@
 			files = (
 				E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */,
 				E708AC941C871C000071104E /* ConversationService.swift in Sources */,
+				E7204C8F1DA1EC5400CA4261 /* VessageHandlerFactory.swift in Sources */,
 				E7F9AB931D5D6C0200E2D1EA /* VideoPreviewBubble.swift in Sources */,
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
 				E7EF285D1D791AFD0064231F /* LittlePaperManager.swift in Sources */,
@@ -1406,6 +1413,7 @@
 				E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */,
 				E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
+				E7204C8D1DA1EBA100CA4261 /* ImageVessageHandler.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
 				E7EF28661D791AFD0064231F /* NFCSexAlertController.swift in Sources */,
 				E7EF286D1D791AFD0064231F /* SetupNiceFaceViewController.swift in Sources */,

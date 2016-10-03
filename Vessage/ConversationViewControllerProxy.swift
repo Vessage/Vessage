@@ -90,10 +90,15 @@ class ConversationViewControllerProxy: NSObject {
     func initManager(controller:ConversationViewController) {
         self.rootController = controller
     }
+    
     func onReleaseManager() {
         self.rootController = nil
     }
     func onSwitchToManager() {
-        self.rootController = nil
+        self.rootController.currentManager = self
+    }
+    
+    func onPanGesture(v:CGPoint) {
+        
     }
 }

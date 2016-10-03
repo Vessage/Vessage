@@ -10,7 +10,6 @@ import Foundation
 
 //MARK: PlayVessageManager
 class PlayVessageManager: ConversationViewControllerProxy {
-    private var vessageHandlers = [Int:VessageHandler]()
     
     var haveNextVessage:Bool{
         return notReadVessages.count > 1
@@ -19,7 +18,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
     var isPresentingVessage:Bool{
         return self.presentingVesseage != nil
     }
-    
     
     private var flashTipsView:UILabel!{
         didSet{
@@ -30,6 +28,8 @@ class PlayVessageManager: ConversationViewControllerProxy {
             flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         }
     }
+    
+    private var vessageHandlerFactory:VessageHandlerFactory!
     
     func flashTips(msg:String) {
         if flashTipsView == nil {
@@ -46,37 +46,11 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     private func generateNoVessageHandler() -> VessageHandler{
-        if let h = vessageHandlers[Vessage.typeNoVessage]{
-            return h
-        }else{
-            let handler = NoVessageHandler(manager: self, container: self.vessageView)
-            vessageHandlers.updateValue(handler, forKey: Vessage.typeNoVessage)
-            return handler
-        }
+        return vessageHandlerFactory.generateNoVessageHandler()
     }
     
     private func generateVessageHandler(typeId:Int) -> VessageHandler{
-        var handler:VessageHandler? = vessageHandlers[typeId]
-        if handler != nil {
-            return handler!
-        }
-        switch typeId {
-        case Vessage.typeVideo:
-            handler = VideoVessageHandler(manager: self,container: self.vessageView)
-        case Vessage.typeFaceText:
-            handler = FaceTextVessageHandler(manager: self, container: self.vessageView)
-        default:
-            if let h = vessageHandlers[Vessage.typeUnknow]{
-                handler = h
-            }else{
-                handler = UnknowVessageHandler(manager: self, container: self.vessageView)
-                vessageHandlers.updateValue(handler!, forKey: Vessage.typeUnknow)
-            }
-            debugLog("Unknow Vessage TypeId:\(typeId)")
-            return handler!
-        }
-        vessageHandlers.updateValue(handler!, forKey: typeId)
-        return handler!
+        return vessageHandlerFactory.generateVessageHandler(typeId)
     }
     
     override func onSwitchToManager() {
@@ -86,21 +60,24 @@ class PlayVessageManager: ConversationViewControllerProxy {
         recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
         recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
         refreshNextButton()
+        super.onSwitchToManager()
     }
     
     override func onReleaseManager() {
         ServiceContainer.getVessageService().removeObserver(self)
-        vessageHandlers.forEach { (key,handler) in
-            handler.releaseHandler()
-        }
-        vessageHandlers.removeAll()
+        vessageHandlerFactory.release()
         super.onReleaseManager()
     }
     
     override func initManager(controller: ConversationViewController) {
         super.initManager(controller)
         vessageService.addObserver(self, selector: #selector(PlayVessageManager.onVessageReaded(_:)), name: VessageService.onVessageRead, object: nil)
+        vessageHandlerFactory = VessageHandlerFactory(manager: self, vessageView: self.vessageView)
         loadNotReadVessages()
+    }
+    
+    override func onPanGesture(v: CGPoint) {
+        (currentVessageHandler as? HandlePanGesture)?.onPan(v)
     }
     
     private var notReadVessages = [Vessage](){
@@ -125,15 +102,20 @@ class PlayVessageManager: ConversationViewControllerProxy {
         return nil
     }
     
+    private var currentVessageHandler:VessageHandler!
+    
     private var presentingVesseage:Vessage!{
         didSet{
             if presentingVesseage == nil{
-                self.generateNoVessageHandler().onPresentingVessageSeted(oldValue, newVessage: nil)
+                currentVessageHandler = self.generateNoVessageHandler()
+                
             }else if oldValue?.vessageId == presentingVesseage.vessageId{
                 return
             }else{
-                self.generateVessageHandler(presentingVesseage.typeId).onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
+                currentVessageHandler = self.generateVessageHandler(presentingVesseage.typeId)
             }
+            
+            currentVessageHandler?.onPresentingVessageSeted(oldValue, newVessage: presentingVesseage)
             
             if let startEventCmd = presentingVesseage?.getBodyDict()["startEventCmd"] as? String{
                 BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(startEventCmd)

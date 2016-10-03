@@ -217,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jff-tT-Bc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="627" y="472"/>
+            <point key="canvasLocation" x="799" y="472"/>
         </scene>
         <!--修改密码-->
         <scene sceneID="gUz-Pn-rHB">
@@ -269,7 +269,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hdp-ct-ND4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1125" y="472"/>
+            <point key="canvasLocation" x="1430" y="472"/>
         </scene>
         <!--常用聊天表情-->
         <scene sceneID="S6v-LE-fty">
@@ -293,7 +293,7 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatImageCell" rowHeight="419" id="lLL-ze-UID">
-                                        <rect key="frame" x="0.0" y="28" width="303" height="420"/>
+                                        <rect key="frame" x="0.0" y="28" width="303" height="419"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLL-ze-UID" id="4au-5z-EIX">
                                             <frame key="frameInset" width="303" height="418"/>
@@ -317,7 +317,7 @@
                                     <action selector="onClickNoChatImageTipsButton:" destination="f9U-Mh-hnK" eventType="touchUpInside" id="aas-CU-dVk"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可能需要准备各种特效相机哦~~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQd-vu-ugC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请准备好各种美颜特效相机~~" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AQd-vu-ugC">
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -473,7 +473,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qX4-Nz-DBD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="472"/>
+            <point key="canvasLocation" x="121" y="472"/>
         </scene>
         <!--User Sex Value View Controller-->
         <scene sceneID="mgv-hq-rmG">
@@ -596,7 +596,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbM-cL-CLR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-368" y="472"/>
+            <point key="canvasLocation" x="-556" y="472"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="APY-DP-fJm">

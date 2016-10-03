@@ -13,9 +13,11 @@ class FaceTextChatBubble: UIView {
     private let bubbleOriginSize:CGPoint = CGPointMake(793,569);
     private let scrollViewOriginRect:CGRect = CGRectMake(156,156,474,315);
     private let bubbleMinRadio:CGFloat = 0.3
-    private let bubbleMaxRadio:CGFloat = 0.6
-    private var bubbleStartPointRatio:CGPoint{return CGPointMake(391 / bubbleOriginSize.x,0)}
+    private let bubbleMaxRadio:CGFloat = 0.67
+    private var bubbleStartPointRatio:CGPoint{return CGPointMake(420 / bubbleOriginSize.x,0)}
     private var bubbleTextViewRatio:CGFloat{return 1 * scrollViewOriginRect.height / scrollViewOriginRect.width}
+    
+    private var fontSize:CGFloat = 13.8
     
     private var scrollViewFinalPos = CGPoint()
     private var textViewFinalWidth:CGFloat = 0
@@ -36,6 +38,8 @@ class FaceTextChatBubble: UIView {
             bubbleTextView.backgroundColor = UIColor.clearColor()
             bubbleTextView.scrollEnabled = true
             bubbleTextView.editable = false
+            bubbleTextView.textAlignment = .Center
+            bubbleTextView.font = UIFont.systemFontOfSize(fontSize)
             self.addSubview(bubbleTextView)
         }
     }
@@ -49,6 +53,9 @@ class FaceTextChatBubble: UIView {
             self.sendSubviewToBack(bubbleImageView)
         }
     }
+}
+
+extension FaceTextChatBubble{
     
     func initSubviews() {
         bubbleTextView = UITextView()
@@ -56,11 +63,19 @@ class FaceTextChatBubble: UIView {
     }
     
     func scrollText(y:CGFloat) {
-        
+        if !bubbleTextView.scrollEnabled {
+            return
+        }
+        let v = y / -60
+        var fy = bubbleTextView.contentOffset.y + v
+        if fy < 0 {
+            fy = 0
+        }else if fy > bubbleTextView.contentSize.height - bubbleTextView.frame.height{
+            fy = bubbleTextView.contentSize.height - bubbleTextView.frame.height
+        }
+        bubbleTextView.contentOffset.y = fy
     }
-}
-
-extension FaceTextChatBubble{
+    
     func setBubbleText(bubbleText:String) {
         self.bubbleText = bubbleText
         bubbleTextView.text = bubbleText
@@ -82,10 +97,9 @@ extension FaceTextChatBubble{
     private func measureViewSize() {
         debugLog(TAG,"------------------Start Measure------------------------")
         debugLog(TAG,"containerWidth:\(containerWidth)")
-        var widthRadio = bubbleMinRadio
         let tv = bubbleTextView
         
-        for (; widthRadio <= bubbleMaxRadio; widthRadio += 0.01) {
+        for widthRadio in bubbleMinRadio.stride(to: bubbleMaxRadio, by: 0.01){
             textViewFinalWidth = containerWidth * widthRadio
             textViewFinalHeight = textViewFinalWidth * bubbleTextViewRatio
             
@@ -102,14 +116,17 @@ extension FaceTextChatBubble{
             
             if (measuredHeight <= textViewFinalHeight) {
                 debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)");
+                bubbleTextView.scrollEnabled = false
+                debugLog(TAG,"Select Radio:\(widthRadio)")
                 break
             } else if (widthRadio == bubbleMaxRadio) {
                 textViewFinalHeight = measuredHeight
+                bubbleTextView.scrollEnabled = true
+                debugLog(TAG,"Select Radio:\(widthRadio)")
             }
             debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)")
         }
         
-        debugLog(TAG,"Select Radio:\(widthRadio)")
         finalRatio = textViewFinalWidth / scrollViewOriginRect.width
         finalImageViewWidth = bubbleOriginSize.x * finalRatio
         finalImageViewHeight = finalImageViewWidth * bubbleTextViewRatio
@@ -223,7 +240,7 @@ class FaceTextImageView: UIView {
         self.imageLoaded = false
         self.render()
         self.chatBubble.containerWidth = self.container.bounds.width
-        self.chatBubble.setBubbleText(message + message + message)
+        self.chatBubble.setBubbleText(message)
         self.chatBubble.hidden = true
         self.imageView.hidden = true
         self.loadingImageView.center = self.center
@@ -269,6 +286,10 @@ class FaceTextImageView: UIView {
             retryFetchChatImage(suc, timesLeft: 2)
             onMessagePresented?()
         }
+    }
+    
+    func scrollBubbleText(y:CGFloat) {
+        chatBubble?.scrollText(y)
     }
     
     func adjustChatBubble() {
@@ -355,6 +376,7 @@ class FaceTextImageView: UIView {
         UIView.setAnimationCurve(.EaseInOut)
         UIView.setAnimationDuration(0.6)
         self.chatBubble.alpha = 1
+        self.chatBubble.bubbleTextView.flashScrollIndicators()
         UIView.commitAnimations()
     }
 }

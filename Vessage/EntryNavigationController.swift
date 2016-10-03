@@ -12,7 +12,8 @@ import UIKit
 class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate,ValidateMobileViewControllerDelegate {
 
     var launchScr:LaunchScreen!
-    let screenWaitTimeInterval = 1.0
+    let screenWaitTimeInterval = 1.2
+    let mottoCount = 7
     private static var instance:EntryNavigationController!
     
     private var mainViewPresented = false
@@ -26,6 +27,11 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         setWaitingScreen()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setRandomMotto()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.view.addSubview(launchScr.view)
@@ -36,7 +42,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     func removeObservers(){
         ServiceContainer.getLocationService().removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
-        
     }
 
     private func setWaitingScreen() {
@@ -47,9 +52,13 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         self.view.addSubview(launchScr.view)
         ColorSets.themeColor = UIColor(hexString: "#00ADFF")
         launchScr.mottoLabel.updateConstraints()
-        let motto = "VESSAGE_MOTTO_\(random() % 5)".localizedString()
-        launchScr.mottoLabel.text = motto
         launchScr.mottoLabel.hidden = false
+        setRandomMotto()
+    }
+    
+    private func setRandomMotto(){
+        let motto = "VESSAGE_MOTTO_\(random() % mottoCount)".localizedString()
+        launchScr.mottoLabel.text = motto
     }
     
     func allServicesReady(_:AnyObject)

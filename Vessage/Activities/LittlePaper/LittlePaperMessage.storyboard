@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Little Paper Main Controller-->
@@ -16,22 +17,19 @@
                         <viewControllerLayoutGuide type="bottom" id="QJl-tw-pDe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="6cr-x6-sfg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="letterPaper" translatesAutoresizingMaskIntoConstraints="NO" id="llo-Jk-6HO">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="letterPaper" translatesAutoresizingMaskIntoConstraints="NO" id="llo-Jk-6HO"/>
                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4t-c3-Pqs">
-                                <rect key="frame" x="92" y="264" width="230" height="56"/>
-                                <color key="backgroundColor" red="0.63117873958044846" green="0.89802662465951999" blue="0.98431372549019602" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.63117873958044846" green="0.89802662465951999" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="hih-Ea-tGU"/>
                                     <constraint firstAttribute="width" constant="230" id="qR7-bG-acX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="23"/>
                                 <state key="normal" title="传纸条">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -43,11 +41,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONO-53-h3e">
-                                <rect key="frame" x="92" y="340" width="230" height="56"/>
-                                <color key="backgroundColor" red="0.63117873958044846" green="0.89802662465951999" blue="0.98431372549019602" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.63117873958044846" green="0.89802662465951999" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="23"/>
                                 <state key="normal" title="纸条盒子">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -59,35 +56,31 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小纸条" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pba-Eh-1hQ">
-                                <rect key="frame" x="173" y="204" width="69" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rrl-2a-3nk">
-                                <rect key="frame" x="361" y="696" width="30" height="30"/>
                                 <state key="normal" title="返回">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="onClickCloseButton" destination="fTJ-B6-5Sx" eventType="touchUpInside" id="Adz-k5-4w2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2M-Kj-KSe">
-                                <rect key="frame" x="20" y="696" width="122" height="30"/>
                                 <state key="normal" title="曾与你传纸条的Ta">
-                                    <color key="titleColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="tellFriends:" destination="fTJ-B6-5Sx" eventType="touchUpInside" id="HMO-IF-s3S"/>
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gdl-qF-sKh">
-                                <rect key="frame" x="92" y="416" width="230" height="56"/>
-                                <color key="backgroundColor" red="0.63117873960000004" green="0.89802662470000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.63117873960000004" green="0.89802662470000005" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="23"/>
                                 <state key="normal" title="消息盒子">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -98,15 +91,21 @@
                                     <action selector="onClickReturnBox" destination="fTJ-B6-5Sx" eventType="touchUpInside" id="QE0-iC-gb9"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="让好友链帮你把纸条传给想认识的Ta" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8MA-fG-eN5" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="8MA-fG-eN5" firstAttribute="top" secondItem="Pba-Eh-1hQ" secondAttribute="bottom" constant="6" id="66y-UC-Aq8"/>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="width" secondItem="6cr-x6-sfg" secondAttribute="width" id="9Ei-PA-Jwj"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="centerY" secondItem="llo-Jk-6HO" secondAttribute="centerY" id="CCA-z6-UUa"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="height" secondItem="W4t-c3-Pqs" secondAttribute="height" id="Cb4-Qz-IjC"/>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="height" secondItem="6cr-x6-sfg" secondAttribute="height" id="JLs-Nn-2st"/>
                             <constraint firstItem="Gdl-qF-sKh" firstAttribute="width" secondItem="ONO-53-h3e" secondAttribute="width" id="JnH-co-yoO"/>
-                            <constraint firstItem="W4t-c3-Pqs" firstAttribute="top" secondItem="Pba-Eh-1hQ" secondAttribute="bottom" constant="32" id="MRV-Fc-W4W"/>
+                            <constraint firstItem="W4t-c3-Pqs" firstAttribute="top" secondItem="Pba-Eh-1hQ" secondAttribute="bottom" constant="42" id="MRV-Fc-W4W"/>
                             <constraint firstItem="Pba-Eh-1hQ" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="OtE-Pk-uDq"/>
                             <constraint firstItem="W4t-c3-Pqs" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="Plk-pd-FOe"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="centerX" secondItem="6cr-x6-sfg" secondAttribute="centerX" id="Qlv-TM-ais"/>
@@ -115,6 +114,7 @@
                             <constraint firstItem="Gdl-qF-sKh" firstAttribute="top" secondItem="ONO-53-h3e" secondAttribute="bottom" constant="20" id="TbY-fp-vDU"/>
                             <constraint firstItem="QJl-tw-pDe" firstAttribute="top" secondItem="Rrl-2a-3nk" secondAttribute="bottom" constant="10" id="UgA-eg-LSV"/>
                             <constraint firstItem="Gdl-qF-sKh" firstAttribute="height" secondItem="ONO-53-h3e" secondAttribute="height" id="UrF-Wz-fYQ"/>
+                            <constraint firstItem="8MA-fG-eN5" firstAttribute="centerX" secondItem="Pba-Eh-1hQ" secondAttribute="centerX" id="Yrr-wh-Aoc"/>
                             <constraint firstItem="llo-Jk-6HO" firstAttribute="centerY" secondItem="6cr-x6-sfg" secondAttribute="centerY" id="mcD-1w-Dg0"/>
                             <constraint firstItem="QJl-tw-pDe" firstAttribute="top" secondItem="y2M-Kj-KSe" secondAttribute="bottom" constant="10" id="n7Q-Fl-ZQW"/>
                             <constraint firstItem="ONO-53-h3e" firstAttribute="width" secondItem="W4t-c3-Pqs" secondAttribute="width" id="nsp-pv-Ycw"/>
@@ -123,7 +123,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Rrl-2a-3nk" secondAttribute="trailing" constant="3" id="vCZ-N1-aeZ"/>
                         </constraints>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="newPaperButton" destination="W4t-c3-Pqs" id="Krz-xf-ZKK"/>
                         <outlet property="paperBoxButton" destination="ONO-53-h3e" id="zAR-eS-bp3"/>
@@ -132,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tyz-dj-FeJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="573" y="503"/>
+            <point key="canvasLocation" x="378" y="502"/>
         </scene>
         <!--纸条盒子-->
         <scene sceneID="mOG-L9-2PC">
@@ -143,34 +142,29 @@
                         <viewControllerLayoutGuide type="bottom" id="ihH-Tt-NmV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="o8J-L5-pkl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePaper" translatesAutoresizingMaskIntoConstraints="NO" id="h4d-XU-VqY">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePaper" translatesAutoresizingMaskIntoConstraints="NO" id="h4d-XU-VqY"/>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wWD-L8-aMg">
-                                <rect key="frame" x="0.0" y="64" width="414" height="612"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LittlePaperMessageListCell" rowHeight="56" id="Afb-F3-K2o" customClass="LittlePaperMessageListCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="56"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Afb-F3-K2o" id="H0M-04-IZB">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                            <frame key="frameInset" width="375" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3q-cU-qHh">
-                                                    <rect key="frame" x="8" y="5" width="398" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="纸条传给: " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wc6-gw-GMw">
-                                                            <rect key="frame" x="62" y="13" width="328" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="Wc6-gw-GMw" secondAttribute="trailing" constant="8" id="Srj-CD-0F9"/>
                                                         <constraint firstItem="Wc6-gw-GMw" firstAttribute="centerY" secondItem="G3q-cU-qHh" secondAttribute="centerY" id="gIM-vN-2nC"/>
@@ -182,29 +176,26 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papers" translatesAutoresizingMaskIntoConstraints="NO" id="Dgk-fn-QYW">
-                                                    <rect key="frame" x="8" y="4" width="48" height="48"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="48" id="ThE-Kl-FXL"/>
                                                         <constraint firstAttribute="width" constant="48" id="lWi-IH-iML"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check_blue" translatesAutoresizingMaskIntoConstraints="NO" id="F4K-LF-qMX">
-                                                    <rect key="frame" x="16" y="12" width="32" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="bDR-3Z-4JY"/>
                                                         <constraint firstAttribute="height" constant="32" id="nkG-uq-lXd"/>
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vxo-Xf-C0e">
-                                                    <rect key="frame" x="50" y="10" width="6" height="6"/>
-                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="6" id="5Em-df-4K4"/>
                                                         <constraint firstAttribute="width" constant="6" id="eYv-PK-BNM"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="Vxo-Xf-C0e" firstAttribute="trailing" secondItem="Dgk-fn-QYW" secondAttribute="trailing" id="Lrc-53-Sio"/>
                                                 <constraint firstItem="G3q-cU-qHh" firstAttribute="top" secondItem="H0M-04-IZB" secondAttribute="topMargin" constant="-3" id="TZA-eE-Kcy"/>
@@ -227,7 +218,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="finishMarkImage" destination="F4K-LF-qMX" id="OkW-xp-19y"/>
                                             <outlet property="messageTitleLabel" destination="Wc6-gw-GMw" id="Mca-Mt-jSd"/>
@@ -237,20 +228,18 @@
                                 </prototypes>
                             </tableView>
                             <view alpha="0.14999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7FW-ZL-Ip4">
-                                <rect key="frame" x="0.0" y="676" width="414" height="60"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="OhM-dw-bnz"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JZi-im-bLp">
-                                <rect key="frame" x="212" y="693" width="91" height="30"/>
-                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="已阅读">
-                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="disabled">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -262,13 +251,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyX-oB-1rs">
-                                <rect key="frame" x="111" y="693" width="91" height="30"/>
-                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="已转发">
-                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="disabled">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -280,17 +268,16 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WeG-iR-zNd">
-                                <rect key="frame" x="10" y="693" width="91" height="30"/>
-                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="EIN-Ub-f7t"/>
                                     <constraint firstAttribute="height" constant="30" id="FQg-zt-A82"/>
                                 </constraints>
                                 <state key="normal" title="新纸条">
-                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="disabled">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -308,13 +295,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QrS-pg-CSr">
-                                <rect key="frame" x="313" y="693" width="91" height="30"/>
-                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="已发送">
-                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <state key="disabled">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -364,7 +350,6 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="eDU-mj-PM0"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="openedButton" destination="JZi-im-bLp" id="MkH-80-VMp"/>
                         <outlet property="postedButton" destination="lyX-oB-1rs" id="m5G-yp-EG6"/>
@@ -375,7 +360,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3gq-Ym-7cJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1987" y="503"/>
+            <point key="canvasLocation" x="377" y="1210"/>
         </scene>
         <!--消息盒子-->
         <scene sceneID="76O-qL-jRx">
@@ -386,47 +371,40 @@
                         <viewControllerLayoutGuide type="bottom" id="S19-iT-5Of"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="r0S-mD-GFJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePaper" translatesAutoresizingMaskIntoConstraints="NO" id="tQO-7L-bZO">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePaper" translatesAutoresizingMaskIntoConstraints="NO" id="tQO-7L-bZO"/>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZIc-6G-a36">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LittlePaperResponseCell" rowHeight="67" id="AP9-EU-XOe" customClass="LittlePaperResponseCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="67"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="67"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AP9-EU-XOe" id="Kfp-Qb-6K9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                            <frame key="frameInset" width="375" height="66"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="papers" translatesAutoresizingMaskIntoConstraints="NO" id="bwU-sK-pwd">
-                                                    <rect key="frame" x="15" y="15" width="36" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="36" id="3DK-PD-RkY"/>
                                                         <constraint firstAttribute="height" constant="36" id="ckc-4W-rtc"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="传给 王晓丽的纸条" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8Q-5u-SsK">
-                                                    <rect key="frame" x="59" y="8" width="347" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view alpha="0.60000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjQ-2V-Etg">
-                                                    <rect key="frame" x="8" y="5" width="398" height="56"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="王晓丽 请求打开" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GA-iy-SnW">
-                                                            <rect key="frame" x="51" y="29" width="102" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="3"/>
@@ -434,7 +412,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="leadingMargin" secondItem="bwU-sK-pwd" secondAttribute="leading" constant="-7" id="0Wh-Sd-WV3"/>
                                                 <constraint firstItem="G8Q-5u-SsK" firstAttribute="top" secondItem="Kfp-Qb-6K9" secondAttribute="topMargin" id="3iz-fF-gfz"/>
@@ -459,7 +437,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="headLine" destination="G8Q-5u-SsK" id="6YF-vw-Dck"/>
                                             <outlet property="subLine" destination="2GA-iy-SnW" id="v1s-pS-Zdd"/>
@@ -468,7 +446,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZIc-6G-a36" firstAttribute="leading" secondItem="r0S-mD-GFJ" secondAttribute="leading" id="4os-9P-fcV"/>
                             <constraint firstItem="ZIc-6G-a36" firstAttribute="top" secondItem="ufc-xo-IaV" secondAttribute="bottom" id="8cZ-hp-YiR"/>
@@ -500,14 +478,13 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="tableView" destination="ZIc-6G-a36" id="4k6-Qu-0t2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sV9-Mv-S6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2493" y="503"/>
+            <point key="canvasLocation" x="1058" y="1210"/>
         </scene>
         <!--纸条-->
         <scene sceneID="4Hq-nd-jv8">
@@ -518,35 +495,30 @@
                         <viewControllerLayoutGuide type="bottom" id="rHp-BH-iQO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cVa-DW-4bb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePaper" translatesAutoresizingMaskIntoConstraints="NO" id="Qju-fw-dZ7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whitePaper" translatesAutoresizingMaskIntoConstraints="NO" id="Qju-fw-dZ7"/>
                             <view alpha="0.15000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChM-fb-COU">
-                                <rect key="frame" x="0.0" y="676" width="414" height="60"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="n6C-E5-746"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="高一7班 王晓丽" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gd4-9K-PK0">
-                                <rect key="frame" x="149" y="247" width="116" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9UU-Cq-F6w">
-                                <rect key="frame" x="20" y="684" width="182" height="42"/>
-                                <color key="backgroundColor" red="0.91504992338294233" green="1" blue="0.91584997722045236" alpha="0.80304418103448272" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.91504992338294233" green="1" blue="0.91584997722045236" alpha="0.80304418103448272" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="rGp-Zq-0cj"/>
                                     <constraint firstAttribute="height" constant="42" id="uJT-hy-ypf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="打开纸条">
-                                    <color key="titleColor" red="0.0" green="0.67806078634159705" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.67806078634159705" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -563,14 +535,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xdk-Yl-VjC">
-                                <rect key="frame" x="212" y="684" width="182" height="42"/>
-                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.91504992340000002" green="1" blue="0.91584997720000005" alpha="0.80304418099999997" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="Unk-2x-0EV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="传递下去">
-                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -587,14 +558,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DlQ-Hg-5bX">
-                                <rect key="frame" x="143" y="691" width="128" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="67q-nq-MCB"/>
                                     <constraint firstAttribute="height" constant="56" id="T5b-rF-vCh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="已经由 王晓丽 打开">
-                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -607,23 +577,21 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="纸条传给" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cq-b4-4vD">
-                                <rect key="frame" x="181" y="223" width="52" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtO-1G-Co3">
-                                <rect key="frame" x="40" y="278" width="334" height="180"/>
-                                <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.98535410479999996" blue="0.92112741970000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="hzr-4r-ROu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Gd4-9K-PK0" firstAttribute="top" secondItem="9cq-b4-4vD" secondAttribute="bottom" constant="8" id="0NM-Yi-2EL"/>
                             <constraint firstItem="xdk-Yl-VjC" firstAttribute="leading" secondItem="9UU-Cq-F6w" secondAttribute="trailing" constant="10" id="2Ib-3g-qhC"/>
@@ -658,7 +626,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="messageContentLabel" destination="rtO-1G-Co3" id="WM6-L9-GFl"/>
                         <outlet property="openPaperButton" destination="9UU-Cq-F6w" id="Dv2-18-HXf"/>
@@ -669,7 +636,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btx-6B-rmj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1542" y="503"/>
+            <point key="canvasLocation" x="1729" y="502"/>
         </scene>
         <!--Write Paper Message View Controller-->
         <scene sceneID="KIl-zK-HfG">
@@ -680,21 +647,17 @@
                         <viewControllerLayoutGuide type="bottom" id="KLd-yL-2Ll"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="66R-0O-a2G">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="letterPaper" translatesAutoresizingMaskIntoConstraints="NO" id="cR1-O2-Yhv">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="letterPaper" translatesAutoresizingMaskIntoConstraints="NO" id="cR1-O2-Yhv"/>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="传纸条" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GmD-P1-atc">
-                                <rect key="frame" x="173" y="47" width="69" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="K2S-sD-LfH">
-                                <rect key="frame" x="40" y="121" width="334" height="173"/>
-                                <color key="backgroundColor" red="1" green="0.98535410483781916" blue="0.92112741965171074" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="0.98535410483781916" blue="0.92112741965171074" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="173" id="huR-GZ-dj8"/>
                                 </constraints>
@@ -707,8 +670,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textView>
                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDQ-oR-UfI">
-                                <rect key="frame" x="274" y="314" width="100" height="36"/>
-                                <color key="backgroundColor" red="0.63117873960000004" green="0.89802662470000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.63117873960000004" green="0.89802662470000005" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="EVL-kE-FxK"/>
                                     <constraint firstAttribute="width" constant="100" id="qO2-dM-bQx"/>
@@ -724,38 +686,34 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGj-gl-GEN">
-                                <rect key="frame" x="361" y="696" width="30" height="30"/>
                                 <state key="normal" title="取消">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="onClickCancelButton" destination="UcS-H1-XzW" eventType="touchUpInside" id="NE1-Jk-ILJ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R04-dQ-4hn">
-                                <rect key="frame" x="10" y="694" width="200" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="j8o-Oo-JRJ"/>
                                 </constraints>
                                 <string key="text">打开纸条需要你的同意。
 纸条打开后不能继续传递了。</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="纸条传给谁？(如:高一7班 王晓丽)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fy8-3V-KTb">
-                                <rect key="frame" x="40" y="83" width="334" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小纸条内容" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EOV-wk-Z8e">
-                                <rect key="frame" x="60" y="197" width="294" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="EOV-wk-Z8e" firstAttribute="centerY" secondItem="K2S-sD-LfH" secondAttribute="centerY" id="1eu-zx-VzJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wGj-gl-GEN" secondAttribute="trailing" constant="3" id="2eh-pI-uG0"/>
@@ -781,7 +739,6 @@
                         </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="messageTextView" destination="K2S-sD-LfH" id="ptf-O8-7Uj"/>
                         <outlet property="msgContentTipsLabel" destination="EOV-wk-Z8e" id="nDs-0x-2XU"/>

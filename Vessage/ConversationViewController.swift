@@ -68,6 +68,8 @@ class ConversationViewController: UIViewController {
     private(set) var playVessageManager:PlayVessageManager!
     private(set) var recordVessageManager:RecordVessageManager!
     
+    var currentManager:ConversationViewControllerProxy!
+    
     let conversationService = ServiceContainer.getConversationService()
     let userService = ServiceContainer.getUserService()
     let fileService = ServiceContainer.getService(FileService)
@@ -208,6 +210,9 @@ extension ConversationViewController{
         swipeLeft.direction = .Left
         self.view.addGestureRecognizer(swipeLeft)
         self.nextVessageButton.hidden = true
+        let panGes = UIPanGestureRecognizer(target: self, action: #selector(ConversationViewController.onPanGesture(_:)))
+        panGes.requireGestureRecognizerToFail(swipeLeft)
+        self.view.addGestureRecognizer(panGes)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -255,6 +260,12 @@ extension ConversationViewController{
 
 //MARK: Actions
 extension ConversationViewController{
+    
+    func onPanGesture(a:UIPanGestureRecognizer) {
+        let v = a.velocityInView(self.view)
+        currentManager?.onPanGesture(v)
+    }
+    
     func onSwipeLeft(_:UIGestureRecognizer) {
         onClickNextButton(self.nextVessageButton)
     }

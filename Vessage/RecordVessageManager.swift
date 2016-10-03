@@ -51,6 +51,7 @@ extension RecordVessageManager{
         rightButton.hidden = false
         groupAvatarManager.renderImageViews()
         groupAvatarManager.refreshFaces()
+        super.onSwitchToManager()
     }
     
     override func initManager(controller: ConversationViewController) {
@@ -275,7 +276,7 @@ extension RecordVessageManager{
         let chatterId = self.conversation.chatterId
         let vsg = Vessage()
         vsg.isGroup = isGroupChat
-        vsg.typeId = Vessage.typeVideo
+        vsg.typeId = Vessage.typeChatVideo
         #if DEBUG
             PersistentFileHelper.deleteFile(url.path!)
             vsg.fileId = "5790435e99cc251974a42f61"

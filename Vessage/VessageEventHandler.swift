@@ -11,3 +11,7 @@ protocol VessageEventHandler{
     func onEvent(eventId:String,parameters:[String:AnyObject])
     func releaseHandler()
 }
+
+protocol HandlePanGesture {
+    func onPan(v:CGPoint)
+}

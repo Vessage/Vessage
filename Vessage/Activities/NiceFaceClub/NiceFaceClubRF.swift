@@ -79,11 +79,15 @@ class NFCPost: BahamutObject {
     var lc:Int = 0 //Like Count
     
     var t:Int = NFCPost.typeNormalPost //Type
+    
+    var pster:String! //Poster
 }
 
 class NFCMainBoardData: EVObject {
-    var newMemCnt = 0 //New Member Joined
-    var newLikes = 0
+    var nMemCnt = 0 //New Member Joined
+    var nlks = 0 //New Likes
+    var tlks = 0 //Total likes
+    var annc:String! //Announcement
     var posts:[NFCPost]!
 }
 
@@ -219,7 +223,7 @@ class GetNFCPostReqeust: GetNFCPostBase {
     }
 }
 
-class GetNFCNewMemberPost: GetNFCPostBase {
+class GetNFCNewMemberPostRequest: GetNFCPostBase {
     override init() {
         super.init()
         self.api = "/NiceFaceClub/NewMemberPost"
@@ -227,7 +231,7 @@ class GetNFCNewMemberPost: GetNFCPostBase {
     }
 }
 
-class NFCPostNew: BahamutRFRequestBase {
+class NFCPostNewRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/NiceFaceClub/NewPost"

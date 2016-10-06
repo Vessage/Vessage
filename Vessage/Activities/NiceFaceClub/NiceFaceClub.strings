@@ -6,7 +6,7 @@
   Copyright © 2016年 Bahamut. All rights reserved.
 */
 NFC = "高颜值俱乐部";
-NFC_ANONYMOUS_TIPS = "围观只可以点赞";
+NFC_ANONYMOUS_TIPS = "仅限正式会员进行此操作,敬请谅解>_<";
 NICE_FACE_CLUB = "高颜值俱乐部";
 UPLOAD_NICE_FACE_IMAGE_ERROR = "上传图片出错";
 UPLOAD_NICE_FACE_IMAGE_CANCELED = "取消上传图片";
@@ -76,4 +76,6 @@ POST_NEW_ERROR = "Po新照片出错";
 NO_MEMBER_USERID_FOUND = "找不到该用户>_<";
 LIKE_POST_OP_ERROR = "点赞失败>_<";
 
-NEED_X_LIKE_TO_JOIN_NFC = "还需要%d个❤️";
+NEWER_NEED_X_LIKE_TO_JOIN_NFC = "新会员需获得到%d个❤️才能正式加入NFC~";
+NO_NEW_LIKES = "暂时没有获得新的赞";
+DEFAULT_NFC_ANC = "欢迎来到NFC!";

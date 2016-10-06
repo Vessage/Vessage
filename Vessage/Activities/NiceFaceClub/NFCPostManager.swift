@@ -44,10 +44,10 @@ class NFCPostManager {
             p.pid = IdUtil.generateUniqueId()
             p.t = NFCPost.typeNormalPost
             p.ts = NSNumber(double: NSDate().timeIntervalSince1970)
-            
+            p.pster = "me"
             let d = NFCMainBoardData()
-            d.newLikes = 100
-            d.newMemCnt = 300
+            d.nlks = 100
+            d.nMemCnt = 300
             d.posts = [p,p,p]
             callback(data: d)
             return
@@ -70,7 +70,7 @@ class NFCPostManager {
     func getNFCPosts(type:Int,startTimeSpan:NSNumber,pageCount:Int,callback:(posts:[NFCPost])->Void) {
         let req:GetNFCPostBase!
         if type == NFCPost.typeNewMemberPost {
-            req = GetNFCNewMemberPost()
+            req = GetNFCNewMemberPostRequest()
         }else{
             req = GetNFCPostReqeust()
         }
@@ -84,6 +84,7 @@ class NFCPostManager {
             p.mbId = IdUtil.generateUniqueId()
             p.pid = IdUtil.generateUniqueId()
             p.t = type
+            p.pster = "me"
             p.ts = NSNumber(double: NSDate().timeIntervalSince1970)
             callback(posts: [p])
             return
@@ -133,7 +134,7 @@ class NFCPostManager {
     }
     
     func newPost(imageId:String,callback:(post:NFCPost?)->Void) {
-        let req = NFCPostNew()
+        let req = NFCPostNewRequest()
         req.image = imageId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NFCPost>) in
             callback(post: result.returnObject)

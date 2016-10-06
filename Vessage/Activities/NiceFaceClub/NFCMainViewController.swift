@@ -8,6 +8,15 @@
 
 import Foundation
 import MJRefresh
+import LTMorphingLabel
+import ImageSlideshow
+
+class NFCMainInfoCell: UITableViewCell {
+    static let reuseId = "NFCMainInfoCell"
+    
+    @IBOutlet weak var announcementLabel: UILabel!
+    @IBOutlet weak var newLikesLabel: LTMorphingLabel!
+}
 
 class NFCPostCell: UITableViewCell {
     static let reuseId = "NFCPostCell"
@@ -23,40 +32,54 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var memberCardButton: UIButton!
     @IBOutlet weak var likeMarkImage: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeTipsLabel: UILabel!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var imageContentView: UIImageView!
-    
-    let nfcLikeCountBaseLimit = 10
+    @IBOutlet weak var imageContentView: UIImageView!{
+        didSet{
+            imageContentView.userInteractionEnabled = true
+            imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCPostCell.onTapImage(_:))))
+        }
+    }
     
     weak var rootController:NFCMainViewController?
     var post:NFCPost!{
         didSet{
             if post != nil {
-                let oldImg = oldValue?.img ?? ""
-                if oldImg != post.img {
-                    imageContentView.image = nil
-                    ServiceContainer.getFileService().setAvatar(imageContentView, iconFileId: post.img)
-                }
-                let dateString = NSDate(timeIntervalSince1970: post.ts.doubleValue).toFriendlyString()
+                let dateString = "\(NSDate(timeIntervalSince1970: post.ts.doubleValue).toFriendlyString()) By \(post.pster)"
                 dateLabel?.text = dateString
-                updateLikeTipsLabel()
+                self.likeTipsLabel?.text = self.post.lc.friendString
                 chatButton.hidden = !NFCPostManager.instance.likedInCached(post.pid)
+                memberCardButton.hidden = chatButton.hidden
             }
         }
     }
     
-    
-    
-    private func updateLikeTipsLabel(){
-        if post.t == NFCPost.typeNewMemberPost && post.lc < nfcLikeCountBaseLimit{
-            likeTipsLabel?.text = "\(post.lc.friendString) (\(String(format: "NEED_X_LIKE_TO_JOIN_NFC".niceFaceClubString, nfcLikeCountBaseLimit - post.lc)))"
-        }else{
-            likeTipsLabel?.text = post.lc.friendString
+    func onTapImage(ges:UITapGestureRecognizer) {
+        let slideshow = ImageSlideshow()
+        slideshow.setImageInputs([ImageSource(image: imageContentView.image!)])
+        let ctr = FullScreenSlideshowViewController()
+        // called when full-screen VC dismissed and used to set the page to our original slideshow
+        ctr.pageSelected = { page in
+            slideshow.setScrollViewPage(page, animated: false)
         }
+        
+        // set the initial page
+        ctr.initialImageIndex = slideshow.scrollViewPage
+        // set the inputs
+        ctr.inputs = slideshow.images
+        let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
+        ctr.transitioningDelegate = slideshowTransitioningDelegate
+        self.rootController?.presentViewController(ctr, animated: true, completion: nil)
+        
+    }
+    
+    func updateImage() {
+        imageContentView.image = nil
+        ServiceContainer.getFileService().setAvatar(imageContentView, iconFileId: post.img,defaultImage: getDefaultFace())
     }
     
     func playLikeAnimation() {
@@ -64,7 +87,13 @@ class NFCPostCell: UITableViewCell {
         likeTipsLabel.text = "+1"
         self.post.lc += 1
         likeTipsLabel.animationMaxToMin(0.3, maxScale: 1.6) {
-            self.updateLikeTipsLabel()
+            self.likeTipsLabel?.text = self.post.lc.friendString
+            self.chatButton.hidden = false
+            self.chatButton.animationMaxToMin(0.2, maxScale: 1.3){
+                self.memberCardButton.hidden = false
+                self.memberCardButton.animationMaxToMin(0.2, maxScale: 1.3, completion: nil)
+            }
+            
         }
     }
     
@@ -107,7 +136,6 @@ extension NFCPostCell{
             NFCPostManager.instance.likePost(self.post.pid, callback: { (suc) in
                 hud?.hideAnimated(true)
                 if(suc){
-                    self.chatButton.hidden = false
                     self.playLikeAnimation()
                 }else{
                     self.rootController?.playCrossMark("LIKE_POST_OP_ERROR".niceFaceClubString)
@@ -126,8 +154,8 @@ extension NFCPostCell{
 }
 
 class NFCMainViewController: UIViewController {
-    
-    @IBOutlet weak var rookieButton: UIButton!
+    let nfcLikeCountBaseLimit = 10
+    @IBOutlet weak var newMemberButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -157,6 +185,8 @@ class NFCMainViewController: UIViewController {
         }
     }
     
+    private var boardData:NFCMainBoardData!
+    
     private var taskFileMap = [String:FileAccessInfo]()
     
     
@@ -168,11 +198,21 @@ class NFCMainViewController: UIViewController {
 
 extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return posts[listType].count
+        return posts[listType].count + 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts[listType][section].count
+        if section == 0 {
+            return 1
+        }
+        return posts[listType][section - 1].count
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 10
+        }
+        return 0
     }
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
@@ -184,11 +224,50 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(NFCMainInfoCell.reuseId, forIndexPath: indexPath) as! NFCMainInfoCell
+            if (self.boardData?.nlks ?? 0) > 0 {
+                cell.newLikesLabel.text = "+\(self.boardData.nlks.friendString)"
+            }else{
+                cell.newLikesLabel.text = "NO_NEW_LIKES".niceFaceClubString
+            }
+            
+            if listType == newMemberListType {
+                cell.announcementLabel.text = String(format: "NEWER_NEED_X_LIKE_TO_JOIN_NFC".niceFaceClubString,nfcLikeCountBaseLimit)
+            }else{
+                cell.announcementLabel.text = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_NFC_ANC".niceFaceClubString : self.boardData?.annc
+            }
+            return cell
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier(NFCPostCell.reuseId, forIndexPath: indexPath) as! NFCPostCell
         cell.setSeparatorFullWidth()
         cell.rootController = self
-        cell.post = posts[listType][indexPath.section][indexPath.row]
+        cell.post = postOfIndexPath(indexPath)
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let c = cell as? NFCPostCell {
+            c.updateImage()
+        }
+    }
+    
+    func postOfIndexPath(indexPath:NSIndexPath) -> NFCPost? {
+        return posts[listType][indexPath.section - 1][indexPath.row]
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        cell?.selected = false
+        if indexPath.section == 0 {
+            if tryShowForbiddenAnymoursAlert() {
+                return
+            }
+            switchListType(myPostListType)
+        }else{
+            let post = postOfIndexPath(indexPath)
+            debugLog(post.debugDescription)
+        }
     }
 }
 
@@ -214,7 +293,7 @@ extension NFCMainViewController{
         }
     }
     
-    @IBAction func onRookieButtonClick(sender: AnyObject) {
+    @IBAction func onnewMemberButtonClick(sender: AnyObject) {
         if tryShowForbiddenAnymoursAlert(){
             return
         }
@@ -224,7 +303,7 @@ extension NFCMainViewController{
     
     private func tryShowForbiddenAnymoursAlert() -> Bool{
         if profile.score < NiceFaceClubManager.minScore {
-            self.showAlert("NFC".niceFaceClubString, msg: "NFC_ANONYMOUS_TIPS".niceFaceClubString)
+            self.showAlert("NFC".niceFaceClubString, msg: "NFC_ANONYMOUS_TIPS".niceFaceClubString,actions: [ALERT_ACTION_I_SEE])
             return true
         }
         return false
@@ -267,7 +346,7 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         {
             NFCPostManager.instance.newPost(fileKey.fileId, callback: { (post) in
                 if let p = post{
-                    self.playCheckMark(""){
+                    self.playCheckMark(){
                         self.posts[self.homeListType].append([p])
                         self.tableView.scrollsToTop = true
                     }
@@ -334,7 +413,8 @@ extension NFCMainViewController{
                 self.tableView.mj_footer?.endRefreshing()
                 self.tableView.mj_header?.endRefreshing()
                 if let d = data{
-                    self.rookieButton.badgeValue = d.newMemCnt > 0 ? d.newMemCnt.friendString : nil
+                    self.boardData = d
+                    self.newMemberButton.badgeValue = d.nMemCnt > 0 ? d.nMemCnt.friendString : nil
                     if d.posts != nil && d.posts.count > 0{
                         self.posts[self.homeListType].append(d.posts)
                     }else{
@@ -360,7 +440,7 @@ extension NFCMainViewController{
     
     func switchListType(type:Int) {
         homeButton?.enabled = type != homeListType
-        rookieButton?.enabled = type != newMemberListType
+        newMemberButton?.enabled = type != newMemberListType
         self.listType = type
         if posts[listType].count == 0 {
             refreshPosts()

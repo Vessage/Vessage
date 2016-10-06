@@ -337,7 +337,7 @@
                                                         <constraint firstAttribute="width" constant="22" id="odQ-sw-3mF"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tU-sX-ucd">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tU-sX-ucd">
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -361,6 +361,7 @@
                                                 <constraint firstItem="GXj-1b-fpk" firstAttribute="top" secondItem="VaJ-AK-Rhv" secondAttribute="bottom" constant="6" id="5nn-8Z-6bo"/>
                                                 <constraint firstItem="FrY-bU-gec" firstAttribute="top" secondItem="TLX-ik-zPo" secondAttribute="bottom" constant="6" id="6Nc-rU-Ynx"/>
                                                 <constraint firstItem="69v-Sh-3bn" firstAttribute="centerY" secondItem="TLX-ik-zPo" secondAttribute="centerY" id="8Bh-Ze-Utf"/>
+                                                <constraint firstItem="8tU-sX-ucd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VaJ-AK-Rhv" secondAttribute="trailing" constant="20" id="BQj-8p-cX7"/>
                                                 <constraint firstItem="S5e-AY-GPk" firstAttribute="leading" secondItem="fsT-Aa-aXD" secondAttribute="trailing" constant="10" id="CkI-5b-HQU"/>
                                                 <constraint firstItem="TLX-ik-zPo" firstAttribute="trailing" secondItem="vKm-Xn-9gd" secondAttribute="trailingMargin" id="Cvh-ff-3iT"/>
                                                 <constraint firstItem="S5e-AY-GPk" firstAttribute="bottom" secondItem="TLX-ik-zPo" secondAttribute="bottom" constant="-6" id="F8J-6A-03f"/>
@@ -398,6 +399,55 @@
                                             <outlet property="likeButton" destination="S5e-AY-GPk" id="0iB-DL-iUd"/>
                                             <outlet property="likeMarkImage" destination="FrY-bU-gec" id="6z7-P5-bPb"/>
                                             <outlet property="likeTipsLabel" destination="VaJ-AK-Rhv" id="JZE-JC-nHu"/>
+                                            <outlet property="memberCardButton" destination="VH4-a1-J7h" id="I44-WY-SN4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NFCMainInfoCell" rowHeight="90" id="Wn7-rb-9G0" customClass="NFCMainInfoCell" customModule="Vessage" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="436" width="375" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wn7-rb-9G0" id="QkN-6u-BCW">
+                                            <frame key="frameInset" width="375" height="90"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_red" translatesAutoresizingMaskIntoConstraints="NO" id="Ssq-q2-7HA">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="3ZD-7A-XA6"/>
+                                                        <constraint firstAttribute="height" constant="22" id="weq-Cr-GMQ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnP-y9-q2a" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYJ-JD-hQO">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="6B8-3p-1ew">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="NHj-UB-TVP"/>
+                                                        <constraint firstAttribute="width" constant="24" id="xSB-os-3Pm"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="HYJ-JD-hQO" secondAttribute="trailing" id="3GO-Ke-i4Q"/>
+                                                <constraint firstItem="HYJ-JD-hQO" firstAttribute="top" secondItem="Ssq-q2-7HA" secondAttribute="bottom" constant="8" id="A8f-tl-R0e"/>
+                                                <constraint firstItem="DnP-y9-q2a" firstAttribute="centerY" secondItem="Ssq-q2-7HA" secondAttribute="centerY" id="FsZ-AQ-CZJ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="HYJ-JD-hQO" secondAttribute="bottom" id="JC5-Ku-lnF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6B8-3p-1ew" secondAttribute="trailing" id="QsB-Eh-Yk9"/>
+                                                <constraint firstAttribute="topMargin" secondItem="Ssq-q2-7HA" secondAttribute="top" id="RK7-Ph-BuI"/>
+                                                <constraint firstItem="6B8-3p-1ew" firstAttribute="centerY" secondItem="DnP-y9-q2a" secondAttribute="centerY" id="VVT-Hr-8NI"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="Ssq-q2-7HA" secondAttribute="leading" id="luV-cq-GLt"/>
+                                                <constraint firstItem="HYJ-JD-hQO" firstAttribute="leading" secondItem="Ssq-q2-7HA" secondAttribute="leading" id="uUd-vs-rMs"/>
+                                                <constraint firstItem="DnP-y9-q2a" firstAttribute="leading" secondItem="Ssq-q2-7HA" secondAttribute="trailing" constant="8" id="v5D-XD-Ljg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="announcementLabel" destination="HYJ-JD-hQO" id="shM-kD-FeN"/>
+                                            <outlet property="newLikesLabel" destination="DnP-y9-q2a" id="Hbp-eE-xJW"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -445,7 +495,7 @@
                                                         <color key="titleColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="onRookieButtonClick:" destination="agZ-w7-omg" eventType="touchUpInside" id="nUz-Mz-797"/>
+                                                        <action selector="onnewMemberButtonClick:" destination="agZ-w7-omg" eventType="touchUpInside" id="nUz-Mz-797"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -510,7 +560,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <connections>
                         <outlet property="homeButton" destination="Mep-VN-MMZ" id="OI8-n3-8MX"/>
-                        <outlet property="rookieButton" destination="Xup-mM-sy9" id="D0b-Tb-K9i"/>
+                        <outlet property="newMemberButton" destination="Xup-mM-sy9" id="D0b-Tb-K9i"/>
                         <outlet property="tableView" destination="wq4-b1-eoa" id="q7h-Kj-C9S"/>
                     </connections>
                 </viewController>
@@ -610,6 +660,7 @@
         <image name="bahamut_crossmark" width="64" height="64"/>
         <image name="camera_shot" width="85" height="85"/>
         <image name="heart_red" width="128" height="128"/>
+        <image name="next" width="72" height="72"/>
         <image name="nfc_chat" width="128" height="128"/>
         <image name="nfc_id_card" width="64" height="64"/>
         <image name="nfc_id_card_btn" width="128" height="128"/>

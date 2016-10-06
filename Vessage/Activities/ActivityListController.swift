@@ -142,9 +142,7 @@ class ActivityListController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(ActivityListCell.reuseId, forIndexPath: indexPath) as! ActivityListCell
         cell.rootController = self
         cell.activityInfo = activityService.getEnabledActivities()[indexPath.row]
-        cell.preservesSuperviewLayoutMargins = false
-        cell.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.setSeparatorFullWidth()
         return cell
     }
     

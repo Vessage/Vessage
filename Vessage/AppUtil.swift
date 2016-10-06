@@ -152,7 +152,7 @@ extension String{
         
         if self =~ "^\\d{6,9}$"{
             if let aId = Int(self){
-                return aId >= 147258
+                return (aId >= 10000 && aId <= 20000) || aId >= 147258
             }
         }
         return false
@@ -218,5 +218,67 @@ extension EVObject{
     func toMiniJsonString() -> String {
         let json = toJsonString()
         return json.split("\n").map{$0.trim()}.joinWithSeparator(" ")
+    }
+}
+
+extension UITableViewCell{
+    func setSeparatorFullWidth() {
+        self.preservesSuperviewLayoutMargins = false
+        self.separatorInset = UIEdgeInsetsZero
+        self.layoutMargins = UIEdgeInsetsZero
+    }
+}
+
+extension Int64{
+    var friendString:String{
+        if self >= 1000 {
+            return "\(self / 1000)k"
+        }
+        return "\(self)"
+    }
+}
+
+extension Int32{
+    var friendString:String{
+        if self >= 1000 {
+            return "\(self / 1000)k"
+        }
+        return "\(self)"
+    }
+}
+
+extension Int{
+    var friendString:String{
+        if self >= 10000 {
+            return "\(self / 1000)k"
+        }
+        return "\(self)"
+    }
+}
+
+extension UIImagePickerController{
+    static func showUIImagePickerAlert(viewController:UIViewController,title:String!,message:String!) -> UIImagePickerController{
+        let imagePicker = UIImagePickerController()
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
+        let camera = UIAlertAction(title: "TAKE_NEW_PHOTO".localizedString(), style: .Default) { _ in
+            imagePicker.sourceType = .Camera
+            imagePicker.allowsEditing = true
+            viewController.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        camera.setValue(UIImage(named: "avartar_camera")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
+        if !isInSimulator() {
+            alert.addAction(camera)
+        }
+        
+        let album = UIAlertAction(title:"SELECT_PHOTO".localizedString(), style: .Default) { _ in
+            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.allowsEditing = true
+            viewController.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+        album.setValue(UIImage(named: "avartar_select")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
+        alert.addAction(album)
+        alert.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel){ _ in})
+        viewController.showAlert(alert)
+        return imagePicker
     }
 }

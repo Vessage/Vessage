@@ -238,9 +238,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
                 resultCell = cell
             }
         }
-        resultCell.preservesSuperviewLayoutMargins = false
-        resultCell.separatorInset = UIEdgeInsetsZero
-        resultCell.layoutMargins = UIEdgeInsetsZero
+        resultCell.setSeparatorFullWidth()
         return resultCell
     }
     

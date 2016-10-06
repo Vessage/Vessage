@@ -92,13 +92,13 @@ extension FaceTextChatBubble{
         bubbleTextView.frame = CGRectMake(scrollViewFinalPos.x,scrollViewFinalPos.y,textViewFinalWidth,scrollViewFinalHeight)
         self.frame.size.height = finalImageViewHeight
         self.frame.size.width = finalImageViewWidth
+        bubbleTextView.contentOffset.y = 0
     }
     
     private func measureViewSize() {
         debugLog(TAG,"------------------Start Measure------------------------")
         debugLog(TAG,"containerWidth:\(containerWidth)")
         let tv = bubbleTextView
-        
         for widthRadio in bubbleMinRadio.stride(to: bubbleMaxRadio, by: 0.01){
             textViewFinalWidth = containerWidth * widthRadio
             textViewFinalHeight = textViewFinalWidth * bubbleTextViewRatio
@@ -116,17 +116,14 @@ extension FaceTextChatBubble{
             
             if (measuredHeight <= textViewFinalHeight) {
                 debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)");
-                bubbleTextView.scrollEnabled = false
                 debugLog(TAG,"Select Radio:\(widthRadio)")
                 break
             } else if (widthRadio == bubbleMaxRadio) {
                 textViewFinalHeight = measuredHeight
-                bubbleTextView.scrollEnabled = true
                 debugLog(TAG,"Select Radio:\(widthRadio)")
             }
             debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)")
         }
-        
         finalRatio = textViewFinalWidth / scrollViewOriginRect.width
         finalImageViewWidth = bubbleOriginSize.x * finalRatio
         finalImageViewHeight = finalImageViewWidth * bubbleTextViewRatio

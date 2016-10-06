@@ -202,9 +202,7 @@ extension ChatGroupProfileViewController:UITableViewDelegate,UITableViewDataSour
             return cell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("ExitGroupChatCell", forIndexPath: indexPath)
-            cell.preservesSuperviewLayoutMargins = false
-            cell.separatorInset = UIEdgeInsetsZero
-            cell.layoutMargins = UIEdgeInsetsZero
+            cell.setSeparatorFullWidth()
             return cell
         }
     }

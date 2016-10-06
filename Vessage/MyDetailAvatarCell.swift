@@ -75,48 +75,15 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
     
     func tapAvatar(aTap:UITapGestureRecognizer)
     {
-        let alert = UIAlertController(title: "CHANGE_AVATAR".localizedString(), message: nil, preferredStyle: .ActionSheet)
-        let camera = UIAlertAction(title: "TAKE_NEW_PHOTO".localizedString(), style: .Default) { _ in
-            self.newPictureWithCamera()
-        }
-        camera.setValue(UIImage(named: "avartar_camera")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
-        alert.addAction(camera)
-        let album = UIAlertAction(title:"SELECT_PHOTO".localizedString(), style: .Default) { _ in
-            self.selectPictureFromAlbum()
-        }
-        album.setValue(UIImage(named: "avartar_select")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
-        alert.addAction(album)
-        alert.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel){ _ in})
-        self.rootController.showAlert(alert)
-    }
-    
-    private var imagePickerController:UIImagePickerController! = UIImagePickerController()
-        {
-        didSet{
-            imagePickerController.delegate = self
-        }
-    }
-    
-    private func newPictureWithCamera()
-    {
-        imagePickerController.sourceType = .Camera
-        imagePickerController.allowsEditing = true
-        self.rootController.presentViewController(imagePickerController, animated: true, completion: nil)
-    }
-    
-    private func selectPictureFromAlbum()
-    {
-        imagePickerController.sourceType = .PhotoLibrary
-        imagePickerController.allowsEditing = true
-        imagePickerController.delegate = self
-        self.rootController.presentViewController(imagePickerController, animated: true, completion: nil)
+        let imagePicker = UIImagePickerController.showUIImagePickerAlert(self.rootController, title: "CHANGE_AVATAR".localizedString(), message: nil)
+        imagePicker.delegate = self
     }
     
     //MARK: upload avatar
     private var taskFileMap = [String:FileAccessInfo]()
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        imagePickerController.dismissViewControllerAnimated(true)
+        picker.dismissViewControllerAnimated(true)
         {
             let avatarImage = image.scaleToWidthOf(UserSettingViewController.avatarWidth, quality: UserSettingViewController.avatarQuality)
             self.avatarImageView.image = avatarImage

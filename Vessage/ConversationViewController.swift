@@ -166,6 +166,8 @@ class ConversationViewController: UIViewController {
     
     var hadChatImagesMgrControllerShown = false
     
+    private var initMessage:[String:AnyObject]!
+    
     deinit{
         #if DEBUG
             print("Deinited:\(self.description)")
@@ -231,6 +233,15 @@ extension ConversationViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         showBottomBar()
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
+        
+        if initMessage != nil {
+            if let t = initMessage["input_text"] as? String{
+                if tryShowImageChatInputView(){
+                    imageChatInputView.inputTextField.text = t
+                }
+            }
+            initMessage = nil
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -589,25 +600,25 @@ extension ConversationViewController{
 //MARK: Show ConversationViewController Extension
 extension ConversationViewController{
     
-    static func showConversationViewController(nvc:UINavigationController,userId: String) {
+    static func showConversationViewController(nvc:UINavigationController,userId: String,initMessage:[String:AnyObject]? = nil) {
         let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
         ConversationViewController.showConversationViewController(nvc, conversation: conversation)
     }
     
-    static func showConversationViewController(nvc:UINavigationController,conversation:Conversation)
+    static func showConversationViewController(nvc:UINavigationController,conversation:Conversation,initMessage:[String:AnyObject]? = nil)
     {
         if String.isNullOrEmpty(conversation.chatterId) {
             nvc.playToast("NO_SUCH_USER".localizedString())
         }else{
             if conversation.isGroup {
                 if let group = ServiceContainer.getChatGroupService().getChatGroup(conversation.chatterId){
-                    showConversationView(nvc, conversation: conversation, group: group)
+                    showConversationView(nvc, conversation: conversation, group: group,initMessage: initMessage)
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
                         hud.hideAnimated(true)
                         if let g = group{
-                            self.showConversationView(nvc, conversation: conversation, group: g)
+                            self.showConversationView(nvc, conversation: conversation, group: g,initMessage: initMessage)
                         }else{
                             nvc.playToast("NO_SUCH_GROUP".localizedString())
                         }
@@ -615,13 +626,13 @@ extension ConversationViewController{
                 }
             }else{
                 if let user = ServiceContainer.getUserService().getCachedUserProfile(conversation.chatterId){
-                    showConversationView(nvc,conversation: conversation,user: user)
+                    showConversationView(nvc,conversation: conversation,user: user,initMessage: initMessage)
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
                         hud.hideAnimated(true)
                         if let updatedUser = u{
-                            showConversationView(nvc,conversation: conversation,user: updatedUser)
+                            showConversationView(nvc,conversation: conversation,user: updatedUser,initMessage: initMessage)
                         }else{
                             nvc.playToast("NO_SUCH_USER".localizedString())
                         }
@@ -632,17 +643,19 @@ extension ConversationViewController{
         
     }
     
-    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup){
+    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup,initMessage:[String:AnyObject]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatGroup = group
+        controller.initMessage = initMessage
         nvc.pushViewController(controller, animated: true)
     }
     
-    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser){
+    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser,initMessage:[String:AnyObject]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatter = user
+        controller.initMessage = initMessage
         nvc.pushViewController(controller, animated: true)
     }
 

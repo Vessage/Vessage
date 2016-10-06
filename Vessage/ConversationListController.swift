@@ -336,9 +336,7 @@ class ConversationListController: UITableViewController {
             cell = normalTableView(tableView, indexPath: indexPath)
         }
         cell.selected = false
-        cell.preservesSuperviewLayoutMargins = false
-        cell.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.setSeparatorFullWidth()
         return cell
     }
     

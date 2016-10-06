@@ -93,12 +93,14 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     
     //MARK: actions
     
-    func tryShowImageChatInputView(){
+    func tryShowImageChatInputView() -> Bool{
         if userService.hasChatImages{
             self.imageChatInputResponderTextFiled.becomeFirstResponder()
             self.imageChatInputView.inputTextField.becomeFirstResponder()
+            return true
         }else{
             showNoChatImagesAlert()
+            return false
         }
     }
     

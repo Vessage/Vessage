@@ -32,30 +32,6 @@ class NiceFaceTestResult :BahamutObject{
     }
 }
 
-class GuessPuzzle:EVObject{
-    var qs:String!
-    var l:String!
-    var r:String!
-    
-    var question:String!{
-        return qs
-    }
-    var leftAnswer:String!{
-        return l
-    }
-    var rightAnswer:String!{
-        return r
-    }
-}
-
-class GuessPuzzleResult: BahamutObject {
-    var id:String!
-    var pass = false
-    var msg:String!
-    var nick:String!
-    var userId:String!
-}
-
 class UserNiceFaceProfile: BahamutObject {
     var id:String!
     var nick:String!
@@ -83,15 +59,32 @@ class UserNiceFaceProfile: BahamutObject {
     }
 }
 
-class PuzzleModel: EVObject {
-    var question:String!
-    var correct:[String]!
-    var incorrect:[String]!
+class NFCPost: BahamutObject {
+    
+    static let typeNormalPost = 0
+    static let typeNewMemberPost = 1
+    
+    override func getObjectUniqueIdName() -> String {
+        return "pid"
+    }
+    
+    var pid:String! //Post Id
+    
+    var mbId:String! //NFC Member Id
+    
+    var img:String! //Post Image
+    
+    var ts:NSNumber! //Timespan
+    
+    var lc:Int = 0 //Like Count
+    
+    var t:Int = NFCPost.typeNormalPost //Type
 }
 
-class MemberPuzzles: EVObject {
-    var leastCnt = 3
-    var puzzles:[PuzzleModel]!
+class NFCMainBoardData: EVObject {
+    var newMemCnt = 0 //New Member Joined
+    var newLikes = 0
+    var posts:[NFCPost]!
 }
 
 //MARK: Restful Request
@@ -130,95 +123,6 @@ class UpdateMyProfileValuesRequest: BahamutRFRequestBase {
         didSet{
             if let p = sex{
                 self.paramenters["sex"] = "\(p)"
-            }
-        }
-    }
-}
-
-class GetNiceFaceProfilesRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/NiceFaces"
-        self.method = .GET
-    }
-    
-    var preferSex:Int = 0{
-        didSet{
-            self.paramenters["preferSex"] = "\(preferSex)"
-        }
-    }
-    
-}
-
-class SetPuzzleAnswerRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/PuzzleAnswer"
-        self.method = .PUT
-    }
-    
-    var puzzle:MemberPuzzles!{
-        didSet{
-            if let a = puzzle{
-                self.paramenters["puzzle"] = a.toMiniJsonString()
-            }
-        }
-    }
-}
-
-class LikeMemberRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/Like"
-        self.method = .POST
-    }
-    
-    var profileId:String!{
-        didSet{
-            if let p = profileId{
-                self.paramenters["profileId"] = p
-            }
-        }
-    }
-    
-}
-
-class DislikeMemberRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/Dislike"
-        self.method = .POST
-    }
-    
-    var profileId:String!{
-        didSet{
-            if let p = profileId{
-                self.paramenters["profileId"] = p
-            }
-        }
-    }
-}
-
-class GuessPuzzleRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/Puzzle"
-        self.method = .POST
-    }
-    
-    var profileId:String!{
-        didSet{
-            if let p = profileId{
-                self.paramenters["profileId"] = p
-            }
-        }
-    }
-    
-    var answer:[String]!{
-        didSet{
-            if let a = answer{
-                let arr = a.map{"\"\($0)\""}
-                self.paramenters["answer"] = "[\(arr.joinWithSeparator(","))]"
             }
         }
     }
@@ -285,3 +189,84 @@ class SetNiceFaceRequest: BahamutRFRequestBase {
     }
 }
 
+class GetNFCMainBoardDataRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/NFCMainBoardData"
+        self.method = .GET
+    }
+}
+
+class GetNFCPostBase: BahamutRFRequestBase {
+    var ts:NSNumber!{
+        didSet{
+            paramenters.updateValue("\(ts.longLongValue)", forKey: "ts")
+        }
+    }
+    
+    var cnt:NSNumber = 20{
+        didSet{
+            paramenters.updateValue("\(cnt.longLongValue)", forKey: "cnt")
+        }
+    }
+}
+
+class GetNFCPostReqeust: GetNFCPostBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/Posts"
+        self.method = .GET
+    }
+}
+
+class GetNFCNewMemberPost: GetNFCPostBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/NewMemberPost"
+        self.method = .GET
+    }
+}
+
+class NFCPostNew: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/NewPost"
+        self.method = .POST
+    }
+    
+    var image:String!{
+        didSet{
+            paramenters.updateValue(image, forKey: "image")
+        }
+    }
+}
+
+class NFCLikePostRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/LikePost"
+        self.method = .POST
+    }
+    
+    var postId:String!{
+        didSet{
+            paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+    
+}
+
+class GetNFCMemberUserIdRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/ChatMember"
+        self.method = .GET
+    }
+    
+    var memberId:String!{
+        didSet{
+            paramenters.updateValue(memberId, forKey: "memberId")
+        }
+    }
+    
+}

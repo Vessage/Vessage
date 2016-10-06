@@ -5,6 +5,8 @@
   Created by AlexChow on 16/8/23.
   Copyright © 2016年 Bahamut. All rights reserved.
 */
+NFC = "高颜值俱乐部";
+NFC_ANONYMOUS_TIPS = "围观只可以点赞";
 NICE_FACE_CLUB = "高颜值俱乐部";
 UPLOAD_NICE_FACE_IMAGE_ERROR = "上传图片出错";
 UPLOAD_NICE_FACE_IMAGE_CANCELED = "取消上传图片";
@@ -66,3 +68,12 @@ TODAY_NO_LEFT_LOAD_MP_TIMES = "今天下划次数已用完,明天再来吧~";
 
 SHARE_ADD_MP_TIMES_TITLE = "今天下划次数已经用完";
 SHARE_ADD_MP_TIMES_MSG = "今天分享俱乐部给好友可以再刷10次";
+
+REFRESH_ERROR = "刷新数据出错";
+NO_POSTS = "没有刷到更多动态了";
+POST_NEW_SHARE = "Po新照片";
+POST_NEW_ERROR = "Po新照片出错";
+NO_MEMBER_USERID_FOUND = "找不到该用户>_<";
+LIKE_POST_OP_ERROR = "点赞失败>_<";
+
+NEED_X_LIKE_TO_JOIN_NFC = "还需要%d个❤️";

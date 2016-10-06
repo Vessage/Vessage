@@ -10,6 +10,17 @@ import Foundation
 
 class NFCMessageAlert:UIViewController{
     
+    @IBOutlet weak var anonymousButton: UIButton!{
+        didSet{
+            anonymousButton.layer.cornerRadius = 6
+            anonymousButton.layer.borderColor = UIColor.orangeColor().CGColor
+            anonymousButton.layer.borderWidth = 1
+            
+            anonymousButton.superview?.layer.cornerRadius = 6
+            anonymousButton.superview?.layer.borderColor = UIColor.orangeColor().CGColor
+            anonymousButton.superview?.layer.borderWidth = 1
+        }
+    }
     
     @IBOutlet weak var continueButton: UIButton!{
         didSet{
@@ -27,6 +38,9 @@ class NFCMessageAlert:UIViewController{
     @IBOutlet weak var bcgMaskView: UIView!
     var onCloseHandler:((NFCMessageAlert)->Void)?
     var onTestScoreHandler:((NFCMessageAlert)->Void)?
+    
+    var onAnonymousHandler:((NFCMessageAlert)->Void)?
+    
     var onSharedHandler:((NFCMessageAlert)->Void)?
     
     var alertTitle:String!{
@@ -68,6 +82,11 @@ class NFCMessageAlert:UIViewController{
         }
     }
     
+    @IBAction func onClickAnonymous(sender: AnyObject) {
+        onAnonymousHandler?(self)
+        
+    }
+    
     @IBAction func onClickShare(sender: AnyObject) {
         ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_VG_ALERT_MSG".niceFaceClubString, title: "NICE_FACE_CLUB".niceFaceClubString)
         #if DEBUG
@@ -91,6 +110,7 @@ class NFCMessageAlert:UIViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         bcgMaskView.hidden = true
+        anonymousButton.hidden = onAnonymousHandler == nil
     }
     
     override func viewDidAppear(animated: Bool) {

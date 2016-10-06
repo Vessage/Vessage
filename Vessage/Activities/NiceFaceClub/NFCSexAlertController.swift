@@ -103,7 +103,6 @@ class NFCSexAlertController:UIViewController{
                 self.playCrossMark("UPDATE_SEX_INFO_ERROR".niceFaceClubString)
             }
         }
-        
     }
     
     static func showNFCSexAlert(vc:UIViewController) -> NFCSexAlertController{

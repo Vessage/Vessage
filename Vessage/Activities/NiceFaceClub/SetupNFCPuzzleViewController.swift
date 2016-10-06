@@ -70,7 +70,7 @@ class SetupNFCPuzzleViewController: UIViewController {
     }
     
     static func instanceFromStoryBoard() -> SetupNFCPuzzleViewController{
-        return instanceFromStoryBoard("NiceFaceClub", identifier: "SetupNFCPuzzleViewController") as! SetupNFCPuzzleViewController
+        return instanceFromStoryBoard("NFCGuess", identifier: "SetupNFCPuzzleViewController") as! SetupNFCPuzzleViewController
     }
     
     static func showSetupNFCPuzzleController(nvc:UINavigationController,puzzles:MemberPuzzles?){
@@ -95,9 +95,7 @@ extension SetupNFCPuzzleViewController:UITableViewDelegate,UITableViewDataSource
         let p = puzzle.puzzles[indexPath.row]
         cell.rootController = self
         cell.puzzleModel = p
-        cell.preservesSuperviewLayoutMargins = false
-        cell.separatorInset = UIEdgeInsetsZero
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.setSeparatorFullWidth()
         return cell
     }
     

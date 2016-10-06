@@ -20,6 +20,8 @@ target "Vessage" do
 
     pod 'LTMorphingLabel'
     
+    pod 'ImageSlideshow', '~> 0.6'
+    
     #pod 'KDCircularProgress'
 end
 

@@ -32,11 +32,13 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
+    
     @IBOutlet weak var memberCardButton: UIButton!
     @IBOutlet weak var likeMarkImage: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeTipsLabel: UILabel!
     @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var newCommentButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
@@ -54,6 +56,7 @@ class NFCPostCell: UITableViewCell {
                 self.likeTipsLabel?.text = self.post.lc.friendString
                 chatButton.hidden = !NFCPostManager.instance.likedInCached(post.pid)
                 memberCardButton.hidden = chatButton.hidden
+                newCommentButton.hidden = chatButton.hidden
             }
         }
     }
@@ -74,24 +77,30 @@ class NFCPostCell: UITableViewCell {
         let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
         ctr.transitioningDelegate = slideshowTransitioningDelegate
         self.rootController?.presentViewController(ctr, animated: true, completion: nil)
-        
     }
     
     func updateImage() {
         imageContentView.image = nil
-        ServiceContainer.getFileService().setAvatar(imageContentView, iconFileId: post.img,defaultImage: getDefaultFace())
+        imageContentView.contentMode = .Center
+        ServiceContainer.getFileService().setAvatar(imageContentView, iconFileId: post.img,defaultImage: UIImage(named:"nfc_post_img_bcg")){ suc in
+            if suc{
+                self.imageContentView.contentMode = .ScaleAspectFill
+            }
+        }
     }
     
     func playLikeAnimation() {
         likeMarkImage.animationMaxToMin(0.3, maxScale: 1.6, completion: nil)
         likeTipsLabel.text = "+1"
-        self.post.lc += 1
+        
         likeTipsLabel.animationMaxToMin(0.3, maxScale: 1.6) {
             self.likeTipsLabel?.text = self.post.lc.friendString
-            self.chatButton.hidden = false
-            self.chatButton.animationMaxToMin(0.2, maxScale: 1.3){
-                self.memberCardButton.hidden = false
-                self.memberCardButton.animationMaxToMin(0.2, maxScale: 1.3, completion: nil)
+            self.memberCardButton.hidden = false
+            self.memberCardButton.animationMaxToMin(0.2, maxScale: 1.3){
+                self.chatButton.hidden = false
+                self.chatButton.animationMaxToMin(0.2, maxScale: 1.3){
+                    self.newCommentButton.hidden = false
+                }
             }
             
         }
@@ -103,6 +112,10 @@ class NFCPostCell: UITableViewCell {
 }
 
 extension NFCPostCell{
+    @IBAction func onClickNewComment(sender: AnyObject) {
+        NFCPostCommentViewController.showNFCMemberCardAlert(self.rootController!.navigationController!, postId: self.post.pid)
+    }
+    
     @IBAction func onClickChat(sender: AnyObject) {
         if rootController?.tryShowForbiddenAnymoursAlert() ?? true{
             return
@@ -125,17 +138,22 @@ extension NFCPostCell{
     @IBAction func onClickCardButton(sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
-            
+            NFCMemberCardAlert.showNFCMemberCardAlert(self.rootController!, memberId: self.post.mbId)
         }
     }
     
     @IBAction func onClickLike(sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
+            if NFCPostManager.instance.likedInCached(self.post.pid){
+                self.likeMarkImage.animationMaxToMin(0.3, maxScale: 1.6, completion: nil)
+                return;
+            }
             let hud = self.rootController?.showAnimationHud()
             NFCPostManager.instance.likePost(self.post.pid, callback: { (suc) in
                 hud?.hideAnimated(true)
                 if(suc){
+                    self.post.lc += 1
                     self.playLikeAnimation()
                 }else{
                     self.rootController?.playCrossMark("LIKE_POST_OP_ERROR".niceFaceClubString)
@@ -264,9 +282,6 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
                 return
             }
             switchListType(myPostListType)
-        }else{
-            let post = postOfIndexPath(indexPath)
-            debugLog(post.debugDescription)
         }
     }
 }
@@ -276,6 +291,7 @@ extension NFCMainViewController{
         if tryShowForbiddenAnymoursAlert(){
             return
         }
+        NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: self.profile.id)
     }
     
     @IBAction func onHomeButtonClick(sender: AnyObject) {
@@ -302,7 +318,7 @@ extension NFCMainViewController{
     
     
     private func tryShowForbiddenAnymoursAlert() -> Bool{
-        if profile.score < NiceFaceClubManager.minScore {
+        if !NiceFaceClubManager.instance.isValidatedMember {
             self.showAlert("NFC".niceFaceClubString, msg: "NFC_ANONYMOUS_TIPS".niceFaceClubString,actions: [ALERT_ACTION_I_SEE])
             return true
         }

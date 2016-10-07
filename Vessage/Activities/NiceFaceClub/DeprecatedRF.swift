@@ -40,39 +40,6 @@ class SetPuzzleAnswerRequest: BahamutRFRequestBase {
     }
 }
 
-class LikeMemberRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/Like"
-        self.method = .POST
-    }
-    
-    var profileId:String!{
-        didSet{
-            if let p = profileId{
-                self.paramenters["profileId"] = p
-            }
-        }
-    }
-    
-}
-
-class DislikeMemberRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/NiceFaceClub/Dislike"
-        self.method = .POST
-    }
-    
-    var profileId:String!{
-        didSet{
-            if let p = profileId{
-                self.paramenters["profileId"] = p
-            }
-        }
-    }
-}
-
 class GuessPuzzleRequest: BahamutRFRequestBase {
     override init() {
         super.init()
@@ -131,4 +98,24 @@ class PuzzleModel: EVObject {
 class MemberPuzzles: EVObject {
     var leastCnt = 3
     var puzzles:[PuzzleModel]!
+}
+
+extension UserNiceFaceProfile{
+    func getGuessPuzzles() -> [GuessPuzzle] {
+        if let ps = puzzles{
+            if !String.isNullOrWhiteSpace(ps) {
+                return GuessPuzzle.arrayFromJson(ps)
+            }
+        }
+        return []
+    }
+    
+    func getMemberPuzzle() -> MemberPuzzles? {
+        if let ps = puzzles{
+            if !String.isNullOrWhiteSpace(ps) {
+                return MemberPuzzles(json: ps)
+            }
+        }
+        return nil
+    }
 }

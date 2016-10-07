@@ -38,25 +38,12 @@ class UserNiceFaceProfile: BahamutObject {
     var sex = 0
     var faceId:String!
     var score:Float = 0.0
-    var puzzles:String!
+    //var puzzles:String!
+    var likes:Int64 = 0
     
-    func getGuessPuzzles() -> [GuessPuzzle] {
-        if let ps = puzzles{
-            if !String.isNullOrWhiteSpace(ps) {
-                return GuessPuzzle.arrayFromJson(ps)
-            }
-        }
-        return []
-    }
+    //local properties
+    var updatedTs:Int64 = 0
     
-    func getMemberPuzzle() -> MemberPuzzles? {
-        if let ps = puzzles{
-            if !String.isNullOrWhiteSpace(ps) {
-                return MemberPuzzles(json: ps)
-            }
-        }
-        return nil
-    }
 }
 
 class NFCPost: BahamutObject {
@@ -89,6 +76,13 @@ class NFCMainBoardData: EVObject {
     var tlks = 0 //Total likes
     var annc:String! //Announcement
     var posts:[NFCPost]!
+}
+
+class NFCPostComment: EVObject {
+    var cmt:String! //Comment Content
+    var ts:Int64 = 0 //Time Span Create
+    var psterNk:String! //Poster nick
+    var pster:String! //Poster User Id
 }
 
 //MARK: Restful Request
@@ -127,6 +121,54 @@ class UpdateMyProfileValuesRequest: BahamutRFRequestBase {
         didSet{
             if let p = sex{
                 self.paramenters["sex"] = "\(p)"
+            }
+        }
+    }
+}
+
+class GetNFCMemberProfilesRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/Profiles"
+        self.method = .GET
+    }
+    
+    var profileId:String!{
+        didSet{
+            paramenters.updateValue(profileId, forKey: "profileId")
+        }
+    }
+    
+}
+
+class LikeMemberRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/Like"
+        self.method = .POST
+    }
+    
+    var profileId:String!{
+        didSet{
+            if let p = profileId{
+                self.paramenters["profileId"] = p
+            }
+        }
+    }
+    
+}
+
+class DislikeMemberRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/Dislike"
+        self.method = .POST
+    }
+    
+    var profileId:String!{
+        didSet{
+            if let p = profileId{
+                self.paramenters["profileId"] = p
             }
         }
     }

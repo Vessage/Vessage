@@ -104,6 +104,10 @@
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
 		E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */; };
 		E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7711B0C1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld */; };
+		E7740ED61DA7373E0022A903 /* NFCMemberCardAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740ED51DA7373E0022A903 /* NFCMemberCardAlert.swift */; };
+		E7740ED81DA74EA70022A903 /* NFCPostCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */; };
+		E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7740ED91DA75C8E0022A903 /* NFCCommentInputView.xib */; };
+		E7740EE31DA764C30022A903 /* NFCCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740EDB1DA75D990022A903 /* NFCCommentInputView.swift */; };
 		E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */; };
 		E7933B2D1D42F839000FCE84 /* FaceTextVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */; };
 		E7933B2F1D42FF64000FCE84 /* VessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */; };
@@ -115,7 +119,6 @@
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
-		E7AD4DC31DA4F76300A0176F /* DeprecatedRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD4DC21DA4F76300A0176F /* DeprecatedRF.swift */; };
 		E7AD4DC51DA5071600A0176F /* NFCPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD4DC41DA5071600A0176F /* NFCPostManager.swift */; };
 		E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */; };
 		E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
@@ -170,7 +173,6 @@
 		E7EF28631D791AFD0064231F /* WritePaperMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28441D791AFD0064231F /* WritePaperMessageViewController.swift */; };
 		E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7EF28461D791AFD0064231F /* Assets.xcassets */; };
 		E7EF28651D791AFD0064231F /* NFCMessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */; };
-		E7EF28661D791AFD0064231F /* NFCSexAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28481D791AFD0064231F /* NFCSexAlertController.swift */; };
 		E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */; };
 		E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */; };
 		E7EF28691D791AFD0064231F /* NiceFaceClubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF284B1D791AFD0064231F /* NiceFaceClubManager.swift */; };
@@ -339,6 +341,10 @@
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
 		E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarTitle.swift; sourceTree = "<group>"; };
 		E7711B0D1D7B2349009D9DCD /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
+		E7740ED51DA7373E0022A903 /* NFCMemberCardAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMemberCardAlert.swift; sourceTree = "<group>"; };
+		E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostCommentViewController.swift; sourceTree = "<group>"; };
+		E7740ED91DA75C8E0022A903 /* NFCCommentInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFCCommentInputView.xib; sourceTree = "<group>"; };
+		E7740EDB1DA75D990022A903 /* NFCCommentInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCCommentInputView.swift; sourceTree = "<group>"; };
 		E7933B2A1D42F7EB000FCE84 /* VideoVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2C1D42F839000FCE84 /* FaceTextVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageHandler.swift; sourceTree = "<group>"; };
 		E7933B2E1D42FF64000FCE84 /* VessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageHandler.swift; sourceTree = "<group>"; };
@@ -351,7 +357,6 @@
 		E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageEventHandler.swift; sourceTree = "<group>"; };
 		E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueProtocal.swift; sourceTree = "<group>"; };
 		E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueHandlers.swift; sourceTree = "<group>"; };
-		E7AD4DC21DA4F76300A0176F /* DeprecatedRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeprecatedRF.swift; sourceTree = "<group>"; };
 		E7AD4DC41DA5071600A0176F /* NFCPostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostManager.swift; sourceTree = "<group>"; };
 		E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageExtension.swift; sourceTree = "<group>"; };
 		E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -406,7 +411,6 @@
 		E7EF28441D791AFD0064231F /* WritePaperMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePaperMessageViewController.swift; sourceTree = "<group>"; };
 		E7EF28461D791AFD0064231F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMessageAlert.swift; sourceTree = "<group>"; };
-		E7EF28481D791AFD0064231F /* NFCSexAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCSexAlertController.swift; sourceTree = "<group>"; };
 		E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NiceFaceClub.storyboard; sourceTree = "<group>"; };
 		E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = NiceFaceClub.strings; sourceTree = "<group>"; };
 		E7EF284B1D791AFD0064231F /* NiceFaceClubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceFaceClubManager.swift; sourceTree = "<group>"; };
@@ -959,14 +963,6 @@
 			name = SendVessageQueue;
 			sourceTree = "<group>";
 		};
-		E7AD4DC61DA50CD200A0176F /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				E7AD4DC21DA4F76300A0176F /* DeprecatedRF.swift */,
-			);
-			name = Deprecated;
-			sourceTree = "<group>";
-		};
 		E7C387EF1C982F510096AF85 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1068,10 +1064,8 @@
 		E7EF28451D791AFD0064231F /* NiceFaceClub */ = {
 			isa = PBXGroup;
 			children = (
-				E7AD4DC61DA50CD200A0176F /* Deprecated */,
 				E7EF28461D791AFD0064231F /* Assets.xcassets */,
 				E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */,
-				E7EF28481D791AFD0064231F /* NFCSexAlertController.swift */,
 				E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */,
 				E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */,
 				E7EF286E1D7943930064231F /* NFCShareAlert.swift */,
@@ -1080,6 +1074,10 @@
 				E7EF284F1D791AFD0064231F /* SetupNiceFaceViewController.swift */,
 				E7BB6EAA1DA3AEFE00D88A7C /* NFCMainViewController.swift */,
 				E7AD4DC41DA5071600A0176F /* NFCPostManager.swift */,
+				E7740ED51DA7373E0022A903 /* NFCMemberCardAlert.swift */,
+				E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */,
+				E7740ED91DA75C8E0022A903 /* NFCCommentInputView.xib */,
+				E7740EDB1DA75D990022A903 /* NFCCommentInputView.swift */,
 			);
 			path = NiceFaceClub;
 			sourceTree = "<group>";
@@ -1226,6 +1224,7 @@
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
+				E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
@@ -1334,6 +1333,7 @@
 				E7F2166D1CFBD7E300447DA9 /* ShareHelper.swift in Sources */,
 				E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */,
 				E708ACAB1C87536D0071104E /* LaunchScreen.swift in Sources */,
+				E7740ED61DA7373E0022A903 /* NFCMemberCardAlert.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
@@ -1381,7 +1381,6 @@
 				E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */,
-				E7AD4DC31DA4F76300A0176F /* DeprecatedRF.swift in Sources */,
 				E708AB931C86CF8A0071104E /* FileType.swift in Sources */,
 				E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */,
 				E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */,
@@ -1401,6 +1400,7 @@
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */,
 				E7933B2B1D42F7EB000FCE84 /* VideoVessageHandler.swift in Sources */,
+				E7740EE31DA764C30022A903 /* NFCCommentInputView.swift in Sources */,
 				E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */,
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E7EF286A1D791AFD0064231F /* NiceFaceClubRF.swift in Sources */,
@@ -1418,12 +1418,12 @@
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
 				E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */,
+				E7740ED81DA74EA70022A903 /* NFCPostCommentViewController.swift in Sources */,
 				E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */,
 				E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E7204C8D1DA1EBA100CA4261 /* ImageVessageHandler.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,
-				E7EF28661D791AFD0064231F /* NFCSexAlertController.swift in Sources */,
 				E7EF286D1D791AFD0064231F /* SetupNiceFaceViewController.swift in Sources */,
 				E7CC54E21D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift in Sources */,
 				E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */,

@@ -84,7 +84,7 @@ func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId) -> UIIm
 
 extension FileService
 {
-    func setAvatar(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
+    func setAvatar(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
     {
         imageView.image = defaultImage
         if String.isNullOrWhiteSpace(fileId) == false

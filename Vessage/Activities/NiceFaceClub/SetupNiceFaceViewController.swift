@@ -116,7 +116,7 @@ class SetupNiceFaceViewController: UIViewController {
     }
     
     static func instanceFromStoryBoard() -> SetupNiceFaceViewController{
-        return instanceFromStoryBoard("NFCGuess", identifier: "SetupNiceFaceViewController") as! SetupNiceFaceViewController
+        return instanceFromStoryBoard("NiceFaceClub", identifier: "SetupNiceFaceViewController") as! SetupNiceFaceViewController
     }
 
 }
@@ -206,9 +206,6 @@ extension SetupNiceFaceViewController{
         
         self.showAlert("NETWORK_ERROR".localizedString(), msg: "RETRY_TEST_FACE".niceFaceClubString, actions: [ok,cancel])
     }
-    
-    
-    
     
     private func getFaceScoreTestResult() {
         self.retakePicButton?.hidden = true

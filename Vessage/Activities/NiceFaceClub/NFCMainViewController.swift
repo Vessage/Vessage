@@ -41,8 +41,6 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
-    
-    
     weak var rootController:NFCMainViewController?
     var post:NFCPost!{
         didSet{
@@ -180,7 +178,6 @@ class NFCMainViewController: UIViewController {
             tableView.tableFooterView = UIView()
         }
     }
-    
     private var profile:UserNiceFaceProfile!
     
     private var posts:[[[NFCPost]]] = [
@@ -203,6 +200,14 @@ class NFCMainViewController: UIViewController {
     
     private var taskFileMap = [String:FileAccessInfo]()
     
+    private var showControllerTimes:Int{
+        get{
+            return UserSetting.getUserIntValue("ShowNFCMainView")
+        }
+        set{
+            UserSetting.setUserIntValue("ShowNFCMainView", value: newValue)
+        }
+    }
     
     deinit {
         NFCPostManager.instance.releaseManager();
@@ -283,6 +288,11 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
 }
 
 extension NFCMainViewController{
+    
+    private func shareNFC() {
+        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_NFC_ALERT_MSG".niceFaceClubString, title: "NFC".niceFaceClubString)
+    }
+    
     @IBAction func onClickMemberButton(sender: AnyObject) {
         if tryShowForbiddenAnymoursAlert(){
             return
@@ -403,7 +413,9 @@ extension NFCMainViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if profile == nil {
+        if self.profile != nil {
+            start()
+        }else{
             initMyProfile()
         }
     }
@@ -430,6 +442,7 @@ extension NFCMainViewController{
                     self.newMemberButton.badgeValue = d.nMemCnt > 0 ? d.nMemCnt.friendString : nil
                     if d.posts != nil && d.posts.count > 0{
                         self.posts[NFCPost.typeNormalPost].append(d.posts)
+                        self.tryShowShareAlert()
                     }else{
                         self.playToast("NO_POSTS".niceFaceClubString)
                     }
@@ -459,14 +472,13 @@ extension NFCMainViewController{
     }
     
     private func anonymousMode(){
-        if profile == nil {
-            self.profile = UserNiceFaceProfile()
-            self.profile.faceId = nil
-            self.profile.nick = ""
-            self.profile.id = IdUtil.generateUniqueId()
-            self.profile.score = 6.0
-            self.profile.sex = 0
-        }
+        self.profile = UserNiceFaceProfile()
+        self.profile.faceId = nil
+        self.profile.nick = ""
+        self.profile.id = "Anonymous"
+        self.profile.score = 6.0
+        self.profile.sex = 0
+        self.profile.mbAcpt = true
         switchListType(NFCPost.typeNormalPost)
         showViews()
     }
@@ -479,13 +491,7 @@ extension NFCMainViewController{
             hud.hideAnimated(true)
             if let p = mp{
                 self.profile = p
-                if p.score < NiceFaceClubManager.minScore{
-                    self.showBenchMarkAlert()
-                }else{
-                    self.switchListType(NFCPost.typeNormalPost)
-                    self.showViews()
-                    self.refreshPosts()
-                }
+                self.start()
             }else{
                 let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
                     self.navigationController?.popViewControllerAnimated(true)
@@ -495,13 +501,35 @@ extension NFCMainViewController{
         })
     }
     
+    private func start(){
+        if profile.id != "Anonymous" && (profile.score < NiceFaceClubManager.minScore || profile.mbAcpt == false){
+            self.showBenchMarkAlert()
+        }else{
+            self.switchListType(NFCPost.typeNormalPost)
+            self.showViews()
+            if self.posts.count == 0 {
+                self.refreshPosts()
+            }
+        }
+    }
+    
+    private func tryShowShareAlert(){
+        showControllerTimes += 1
+        let sct = showControllerTimes
+        if sct == 3 || sct == 9 || sct == 23 || sct == 42 || sct == 60 {
+            self.shareNFC()
+        }
+    }
+    
     private func showBenchMarkAlert() {
-        let alert = NFCMessageAlert.showNFCMessageAlert(self, title: "NICE_FACE_CLUB".niceFaceClubString, message: "YOU_NEED_FACE_BENCHMARK".niceFaceClubString)
+        let msg = profile.score < NiceFaceClubManager.minScore ? "YOU_NEED_FACE_BENCHMARK".niceFaceClubString : "NEED_LIKE_TO_JOIN_NFC".niceFaceClubString
+        let alert = NFCMessageAlert.showNFCMessageAlert(self, title: "NICE_FACE_CLUB".niceFaceClubString, message: msg)
         alert.onTestScoreHandler = { alert in
             alert.dismissViewControllerAnimated(true, completion: {
                 self.modifyNiceFace(false)
             })
         }
+        
         alert.onAnonymousHandler = { alert in
             self.anonymousMode()
             alert.dismissViewControllerAnimated(true, completion: nil)

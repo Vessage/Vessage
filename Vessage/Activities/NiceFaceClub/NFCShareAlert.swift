@@ -59,7 +59,7 @@ class NFCShareAlert:UIViewController{
     }
     
     @IBAction func onClickShare(sender: AnyObject) {
-        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_VG_ALERT_MSG".niceFaceClubString, title: "NICE_FACE_CLUB".niceFaceClubString)
+        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_NFC_ALERT_MSG".niceFaceClubString, title: "NICE_FACE_CLUB".niceFaceClubString)
         #if DEBUG
             self.onShareSuccess(NSNotification(name: ShareHelper.onShareSuccess, object: nil))
         #endif

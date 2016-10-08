@@ -38,12 +38,18 @@ class UserNiceFaceProfile: BahamutObject {
     var sex = 0
     var faceId:String!
     var score:Float = 0.0
-    //var puzzles:String!
     var likes:Int64 = 0
+    
+    var mbAcpt:Bool = false //Member Accepted
     
     //local properties
     var updatedTs:Int64 = 0
     
+    /* Deprecated
+     
+    var puzzles:String!
+     
+    */
 }
 
 class NFCPost: BahamutObject {
@@ -74,6 +80,7 @@ class NFCPost: BahamutObject {
 class NFCMainBoardData: EVObject {
     var nMemCnt = 0 //New Member Joined
     var nlks = 0 //New Likes
+    var ncmt = 0 //New Comments
     var tlks = 0 //Total likes
     var annc:String! //Announcement
     var posts:[NFCPost]!

@@ -170,11 +170,11 @@ class NFCPostManager {
         #if DEBUG            
             if "1" == "\(1)"{
                 let cmt = NFCPostComment()
-                cmt.cmt = "Test"
+                cmt.cmt = "自拍时间到"
                 cmt.pster = "sdfa"
-                cmt.psterNk = "Nick"
+                cmt.psterNk = "妮妮"
                 cmt.ts = Int64(NSDate().timeIntervalSince1970)
-                callback(comments: [cmt,cmt,cmt])
+                callback(comments: [cmt])
                 return
             }
         #endif

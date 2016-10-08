@@ -11,7 +11,7 @@ import Foundation
 class UserSetting
 {
     #if DEBUG
-        static var godMode = true
+        static var godMode = false
     #else
         static var godMode = false
     #endif

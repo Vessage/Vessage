@@ -30,9 +30,8 @@ class NiceFaceClubManager:NSObject {
     private(set) var myNiceFaceProfile:UserNiceFaceProfile!
     
     var isValidatedMember:Bool{
-        return (myNiceFaceProfile?.score ?? 0) >= NiceFaceClubManager.minScore
+        return (myNiceFaceProfile?.score ?? 0) >= NiceFaceClubManager.minScore && myNiceFaceProfile.mbAcpt
     }
-    
     
     func onShareSuccess(a:NSNotification) {
         shareTimes += 1
@@ -53,7 +52,9 @@ class NiceFaceClubManager:NSObject {
                 if let lastRefreshHours = UserSetting.getUserNumberValue(NiceFaceClubManager.lastRefreshMemberTimeKey){
                     if NSDate().totalHoursSince1970.doubleValue - lastRefreshHours.doubleValue < NiceFaceClubManager.refreshMemberProfileIntervalHours.doubleValue {
                         callback(mp)
-                        return
+                        if mp.mbAcpt {
+                            return
+                        }
                     }
                 }
             }
@@ -100,6 +101,9 @@ class NiceFaceClubManager:NSObject {
 extension NiceFaceClubManager{
     
     func updateMyProfileValues() -> Bool{
+        if myNiceFaceProfile == nil || myNiceFaceProfile.score < NiceFaceClubManager.minScore{
+            return false
+        }
         let userProfile = ServiceContainer.getUserService().myProfile
         let req = UpdateMyProfileValuesRequest()
         var needUpdate = false

@@ -80,3 +80,5 @@ NEWER_NEED_X_LIKE_TO_JOIN_NFC = "新会员需获得到%d个❤️才能正式加
 NO_NEW_LIKES = "暂时没有获得新的赞";
 DEFAULT_NFC_ANC = "欢迎来到NFC!";
 NO_PROFILE_LOADED = "加载会员出错，请稍后再试>_<";
+INPUT_COMMENT_CONTENT = "请写下只言片语~";
+NFC_HELLO = "你好，很高兴在高颜值俱乐部认识你！";

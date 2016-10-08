@@ -233,15 +233,16 @@ extension ConversationViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         showBottomBar()
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
-        
-        if initMessage != nil {
-            if let t = initMessage["input_text"] as? String{
-                if tryShowImageChatInputView(){
-                    imageChatInputView.inputTextField.text = t
-                }
+        handleInitMessage()
+    }
+    
+    private func handleInitMessage(){
+        if let t = initMessage?["input_text"] as? String{
+            if tryShowImageChatInputView(){
+                imageChatInputView.inputTextField.insertText(t)
             }
-            initMessage = nil
         }
+        initMessage = nil
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -601,8 +602,13 @@ extension ConversationViewController{
 extension ConversationViewController{
     
     static func showConversationViewController(nvc:UINavigationController,userId: String,initMessage:[String:AnyObject]? = nil) {
-        let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
-        ConversationViewController.showConversationViewController(nvc, conversation: conversation)
+        if userId == ServiceContainer.getUserService().myProfile.userId {
+            nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
+        }else{
+            let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
+            ConversationViewController.showConversationViewController(nvc, conversation: conversation)
+        }
+        
     }
     
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation,initMessage:[String:AnyObject]? = nil)

@@ -100,6 +100,7 @@
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
+		E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E766D7511DA89881009A4D01 /* NFCGodRF.swift */; };
 		E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */; };
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
 		E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */; };
@@ -337,6 +338,7 @@
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		E766D7511DA89881009A4D01 /* NFCGodRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCGodRF.swift; sourceTree = "<group>"; };
 		E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerProxy.swift; sourceTree = "<group>"; };
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
 		E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarTitle.swift; sourceTree = "<group>"; };
@@ -1078,6 +1080,7 @@
 				E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */,
 				E7740ED91DA75C8E0022A903 /* NFCCommentInputView.xib */,
 				E7740EDB1DA75D990022A903 /* NFCCommentInputView.swift */,
+				E766D7511DA89881009A4D01 /* NFCGodRF.swift */,
 			);
 			path = NiceFaceClub;
 			sourceTree = "<group>";
@@ -1364,6 +1367,7 @@
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7EF28621D791AFD0064231F /* PaperMessageDetailViewController.swift in Sources */,
 				E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */,
+				E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,

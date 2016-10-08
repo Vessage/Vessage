@@ -20,18 +20,12 @@ class NFCMainInfoCell: UITableViewCell {
 
 class NFCPostCell: UITableViewCell {
     static let reuseId = "NFCPostCell"
-    @IBOutlet weak var blackListButton: UIButton!{
+    
+    @IBOutlet weak var godPanel: UIView!{
         didSet{
-            blackListButton.hidden = true//!UserSetting.godMode
+            godPanel.hidden = !UserSetting.godMode
         }
     }
-    
-    @IBOutlet weak var godLikeButton: UIButton!{
-        didSet{
-            godLikeButton.hidden = true//!UserSetting.godMode
-        }
-    }
-    
     
     @IBOutlet weak var memberCardButton: UIButton!
     @IBOutlet weak var likeMarkImage: UIImageView!
@@ -47,6 +41,8 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
+    
+    
     weak var rootController:NFCMainViewController?
     var post:NFCPost!{
         didSet{
@@ -55,7 +51,7 @@ class NFCPostCell: UITableViewCell {
                 dateLabel?.text = dateString
                 self.likeTipsLabel?.text = self.post.lc.friendString
                 chatButton.hidden = !NFCPostManager.instance.likedInCached(post.pid)
-                memberCardButton.hidden = chatButton.hidden
+                memberCardButton.hidden = true
                 newCommentButton.hidden = chatButton.hidden
             }
         }
@@ -95,14 +91,13 @@ class NFCPostCell: UITableViewCell {
         
         likeTipsLabel.animationMaxToMin(0.3, maxScale: 1.6) {
             self.likeTipsLabel?.text = self.post.lc.friendString
-            self.memberCardButton.hidden = false
-            self.memberCardButton.animationMaxToMin(0.2, maxScale: 1.3){
-                self.chatButton.hidden = false
-                self.chatButton.animationMaxToMin(0.2, maxScale: 1.3){
-                    self.newCommentButton.hidden = false
+            self.chatButton.hidden = false
+            self.chatButton.animationMaxToMin(0.2, maxScale: 1.3){
+                self.newCommentButton.hidden = false
+                self.newCommentButton.animationMaxToMin(0.2, maxScale: 1.3){
+                    
                 }
             }
-            
         }
     }
     
@@ -128,7 +123,8 @@ extension NFCPostCell{
                 if String.isNullOrWhiteSpace(userId){
                     self.rootController?.playCrossMark("NO_MEMBER_USERID_FOUND".niceFaceClubString)
                 }else{
-                    ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: userId!)
+                    let msg = ["input_text":"NFC_HELLO".niceFaceClubString]
+                    ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: userId!,initMessage: msg)
                 }
             })
         }
@@ -163,11 +159,15 @@ extension NFCPostCell{
     }
     
     @IBAction func onBlackListButtonClick(sender: AnyObject) {
-        
+        NFCPostManager.instance.godBlockMember(post.mbId)
     }
     
     @IBAction func onGodLikeButtonClick(sender: AnyObject) {
-        
+        NFCPostManager.instance.godLikePost(post.pid)
+    }
+    
+    @IBAction func onClickGodRmPost(sender: AnyObject) {
+        NFCPostManager.instance.godDeletePost(post.pid)
     }
 }
 
@@ -192,10 +192,6 @@ class NFCMainViewController: UIViewController {
             tableView?.reloadData()
         }
     }
-    
-    let homeListType = 0
-    let newMemberListType = 1
-    let myPostListType = 2
     
     private var listType:Int = 0{
         didSet{
@@ -250,7 +246,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
                 cell.newLikesLabel.text = "NO_NEW_LIKES".niceFaceClubString
             }
             
-            if listType == newMemberListType {
+            if listType == NFCPost.typeNewMemberPost {
                 cell.announcementLabel.text = String(format: "NEWER_NEED_X_LIKE_TO_JOIN_NFC".niceFaceClubString,nfcLikeCountBaseLimit)
             }else{
                 cell.announcementLabel.text = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_NFC_ANC".niceFaceClubString : self.boardData?.annc
@@ -281,7 +277,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
             if tryShowForbiddenAnymoursAlert() {
                 return
             }
-            switchListType(myPostListType)
+            switchListType(NFCPost.typeMyPost)
         }
     }
 }
@@ -291,11 +287,12 @@ extension NFCMainViewController{
         if tryShowForbiddenAnymoursAlert(){
             return
         }
-        NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: self.profile.id)
+        UserSettingViewController.showUserSettingViewController(self.navigationController!)
+        //NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: self.profile.id)
     }
     
     @IBAction func onHomeButtonClick(sender: AnyObject) {
-        switchListType(homeListType)
+        switchListType(NFCPost.typeNormalPost)
     }
     
     @IBAction func newPostButton(sender: AnyObject) {
@@ -309,11 +306,11 @@ extension NFCMainViewController{
         }
     }
     
-    @IBAction func onnewMemberButtonClick(sender: AnyObject) {
+    @IBAction func onNewMemberButtonClick(sender: AnyObject) {
         if tryShowForbiddenAnymoursAlert(){
             return
         }
-        switchListType(newMemberListType)
+        switchListType(NFCPost.typeNewMemberPost)
     }
     
     
@@ -363,7 +360,7 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
             NFCPostManager.instance.newPost(fileKey.fileId, callback: { (post) in
                 if let p = post{
                     self.playCheckMark(){
-                        self.posts[self.homeListType].append([p])
+                        self.posts[NFCPost.typeNormalPost].append([p])
                         self.tableView.scrollsToTop = true
                     }
                 }else{
@@ -420,19 +417,19 @@ extension NFCMainViewController{
     }
     
     private func refreshPosts() {
-        let hud = self.showAnimationHud()
+        
         let lastPost = posts[listType].last?.last
         let ts = lastPost?.ts ?? 0
-        if listType == homeListType && lastPost == nil{
+        if listType == NFCPost.typeNormalPost && lastPost == nil{
+            let hud = self.showAnimationHud()
             NFCPostManager.instance.getMainBoardData({ (data) in
                 hud.hideAnimated(true)
-                self.tableView.mj_footer?.endRefreshing()
                 self.tableView.mj_header?.endRefreshing()
                 if let d = data{
                     self.boardData = d
                     self.newMemberButton.badgeValue = d.nMemCnt > 0 ? d.nMemCnt.friendString : nil
                     if d.posts != nil && d.posts.count > 0{
-                        self.posts[self.homeListType].append(d.posts)
+                        self.posts[NFCPost.typeNormalPost].append(d.posts)
                     }else{
                         self.playToast("NO_POSTS".niceFaceClubString)
                     }
@@ -442,9 +439,7 @@ extension NFCMainViewController{
             })
         }else{
             NFCPostManager.instance.getNFCPosts(listType,startTimeSpan: ts, pageCount: 20, callback: { (posts) in
-                hud.hideAnimated(true)
-                self.tableView.mj_footer.endRefreshing()
-                self.tableView.mj_header.endRefreshing()
+                self.tableView.mj_footer?.endRefreshing()
                 if posts.count > 0{
                     self.posts[self.listType].append(posts)
                 }else{
@@ -455,8 +450,8 @@ extension NFCMainViewController{
     }
     
     func switchListType(type:Int) {
-        homeButton?.enabled = type != homeListType
-        newMemberButton?.enabled = type != newMemberListType
+        homeButton?.enabled = type != NFCPost.typeNormalPost
+        newMemberButton?.enabled = type != NFCPost.typeNewMemberPost
         self.listType = type
         if posts[listType].count == 0 {
             refreshPosts()
@@ -472,7 +467,7 @@ extension NFCMainViewController{
             self.profile.score = 6.0
             self.profile.sex = 0
         }
-        switchListType(homeListType)
+        switchListType(NFCPost.typeNormalPost)
         showViews()
     }
 }
@@ -487,7 +482,7 @@ extension NFCMainViewController{
                 if p.score < NiceFaceClubManager.minScore{
                     self.showBenchMarkAlert()
                 }else{
-                    self.switchListType(self.homeListType)
+                    self.switchListType(NFCPost.typeNormalPost)
                     self.showViews()
                     self.refreshPosts()
                 }

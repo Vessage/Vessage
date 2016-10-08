@@ -50,6 +50,7 @@ class NFCPost: BahamutObject {
     
     static let typeNormalPost = 0
     static let typeNewMemberPost = 1
+    static let typeMyPost = 2
     
     override func getObjectUniqueIdName() -> String {
         return "pid"
@@ -273,6 +274,14 @@ class GetNFCNewMemberPostRequest: GetNFCPostBase {
     }
 }
 
+class GetMyNFCPostRequest: GetNFCPostBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/MyPost"
+        self.method = .GET
+    }
+}
+
 class NFCPostNewRequest: BahamutRFRequestBase {
     override init() {
         super.init()
@@ -315,4 +324,44 @@ class GetNFCMemberUserIdRequest: BahamutRFRequestBase {
         }
     }
     
+}
+
+class NFCNewCommentRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/PostComments"
+        self.method = .POST
+    }
+    
+    var postId:String!{
+        didSet{
+            paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+    
+    var comment:String!{
+        didSet{
+            paramenters.updateValue(comment, forKey: "comment")
+        }
+    }
+}
+
+class GetNFCPostCommentRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/PostComments"
+        self.method = .GET
+    }
+    
+    var ts:NSNumber!{
+        didSet{
+            paramenters.updateValue("\(ts.longLongValue)", forKey: "ts")
+        }
+    }
+    
+    var postId:String!{
+        didSet{
+            paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
 }

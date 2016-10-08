@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import MJRefresh
+import MBProgressHUD
 
 class NFCPostCommentCell: UITableViewCell {
     static let reuseId = "NFCPostCommentCell"
@@ -33,14 +35,29 @@ class NFCPostCommentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         tableView.tableFooterView = UIView()
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
         tableView.tableFooterView?.backgroundColor = UIColor.lightGrayColor()
-        tableView.dataSource = self
-        tableView.delegate = self
         self.view.addSubview(responseTextField)
         responseTextField.hidden = true
         responseTextField.inputAccessoryView = commentInputView
         commentInputView.delegate = self
+        tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(NFCPostCommentViewController.mjHeaderRefresh(_:)))
+        tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(NFCPostCommentViewController.mjFooterRefresh(_:)))
+        tableView.dataSource = self
+        tableView.delegate = self
+        refreshPostComments()
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCPostCommentViewController.onTapView(_:))))
+    }
+    
+    func onTapView(ges:UITapGestureRecognizer) {
+        self.responseTextField.endEditing(true)
+        self.commentInputView.inputTextField?.endEditing(true)
+        self.hideKeyBoard()
     }
     
     @IBAction func onNewCommentClick(sender: AnyObject) {
@@ -59,6 +76,41 @@ class NFCPostCommentViewController: UIViewController {
         return false
     }
     
+    func mjFooterRefresh(a:AnyObject?) {
+        refreshPostComments()
+    }
+    
+    func mjHeaderRefresh(a:AnyObject?) {
+        if self.comments.count > 0 {
+            tableView.mj_header.endRefreshing()
+        }else{
+            refreshPostComments()
+        }
+    }
+
+    func refreshPostComments() {
+        var ts:Int64 = 0
+        if let lastCmt = self.comments.last?.last {
+            ts = lastCmt.ts
+        }
+        
+        var hud:MBProgressHUD?
+        if ts == 0 {
+            hud = self.showAnimationHud()
+        }
+        NFCPostManager.instance.getPostComment(postId, ts: ts) { (comments) in
+            hud?.hideAnimated(true)
+            if hud == nil{
+                self.tableView?.mj_footer?.endRefreshing()
+            }else{
+                self.tableView?.mj_header?.endRefreshing()
+            }
+            if let cmts = comments{
+                self.comments.append(cmts)
+            }
+        }
+    }
+    
     static func showNFCMemberCardAlert(vc:UINavigationController, postId:String) -> NFCPostCommentViewController{
         let controller = instanceFromStoryBoard("NiceFaceClub", identifier: "NFCPostCommentViewController") as! NFCPostCommentViewController
         controller.postId = postId
@@ -69,9 +121,31 @@ class NFCPostCommentViewController: UIViewController {
 
 extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
     func commentInputViewDidClickSend(sender: NFCCommentInputView, textField: UITextField) {
-        textField.text = nil
-        commentInputView.inputTextField.resignFirstResponder()
-        responseTextField.resignFirstResponder()
+        let cmt = textField.text
+        if !String.isNullOrWhiteSpace(cmt) {
+            textField.text = nil
+            commentInputView.inputTextField.resignFirstResponder()
+            responseTextField.resignFirstResponder()
+            let hud = self.showAnimationHud()
+            NFCPostManager.instance.newPostComment(self.postId, comment: cmt!, callback: { (posted,msg) in
+                hud.hideAnimated(true)
+                if posted{
+                    self.playCheckMark(){
+                        let ncomment = NFCPostComment()
+                        ncomment.cmt = cmt
+                        ncomment.pster = ServiceContainer.getUserService().myProfile.userId
+                        ncomment.psterNk = "ME".localizedString()
+                        ncomment.ts = Int64(NSDate().timeIntervalSince1970)
+                        self.comments.append([ncomment])
+                    }
+                }else{
+                    self.playCrossMark(msg)
+                }
+            })
+        }else{
+            self.playToast("INPUT_COMMENT_CONTENT".niceFaceClubString)
+        }
+        
     }
 }
 

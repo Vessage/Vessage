@@ -189,6 +189,8 @@ SET_CHAT_BCG_SUCCESS = "设置成功";
 
 OPEN_NEW_CHAT_WITH_MOBILE = "开始新的对话";
 
+CANT_CHAT_WITH_YOURSELF = "不能和自己对话哦>_<";
+
 CHOOSE_PHONE_NO = "选择手机号";
 PEOPLE_NO_MOBILE = "没有手机号";
 

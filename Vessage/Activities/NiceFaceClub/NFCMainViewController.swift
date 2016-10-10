@@ -66,6 +66,17 @@ class NFCMainViewController: UIViewController {
         }
     }
     
+    private var tipsLabel:UILabel!{
+        didSet{
+            tipsLabel.text = nil
+            tipsLabel.clipsToBounds = true
+            tipsLabel.layer.cornerRadius = 8
+            tipsLabel.textColor = UIColor.orangeColor()
+            tipsLabel.textAlignment = .Center
+            tipsLabel.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
+        }
+    }
+    
     deinit {
         NFCPostManager.instance.releaseManager();
         debugLog("Deinited:\(self.description)")
@@ -178,7 +189,7 @@ extension NFCMainViewController{
                         self.posts[NFCPost.typeNormalPost].append(d.posts)
                         self.tryShowShareAlert()
                     }else{
-                        self.playToast("NO_POSTS".niceFaceClubString)
+                        self.flashTipsLabel("NO_POSTS".niceFaceClubString)
                     }
                     
                 }else{
@@ -193,7 +204,7 @@ extension NFCMainViewController{
                 if posts.count > 0{
                     self.posts[self.listType].append(posts)
                 }else{
-                    self.playToast("NO_POSTS".niceFaceClubString)
+                    self.flashTipsLabel("NO_POSTS".niceFaceClubString)
                 }
                 self.setMJFooter()
                 self.tableView?.reloadData()
@@ -294,6 +305,24 @@ extension NFCMainViewController{
             if aleadyMember{
                 NFCMessageAlert.showNFCMessageAlert(controller, title: "NICE_FACE_CLUB".niceFaceClubString, message: "UPDATE_YOUR_NICE_FACE".niceFaceClubString)
             }
+        }
+    }
+}
+
+extension NFCMainViewController{
+    private func flashTipsLabel(msg:String){
+        
+        if tipsLabel == nil {
+            tipsLabel = UILabel()
+        }
+        self.tipsLabel.text = msg
+        self.tipsLabel.sizeToFit()
+        let x = self.view.frame.width / 2
+        let y = self.tableView.frame.origin.y + self.tableView.frame.height - 16
+        self.tipsLabel.center = CGPointMake(x, y)
+        self.view.addSubview(self.tipsLabel)
+        UIAnimationHelper.flashView(self.tipsLabel, duration: 0.6, autoStop: true, stopAfterMs: 3600){
+            self.tipsLabel.removeFromSuperview()
         }
     }
 }

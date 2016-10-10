@@ -46,6 +46,16 @@ class NFCPostCell: UITableViewCell {
     
     @IBOutlet weak var commentTipsLabel: UILabel!
     
+    @IBAction func godLikeClick(sender: AnyObject) {
+        NFCPostManager.instance.godLikePost(post.pid)
+    }
+    @IBAction func godBlockMemberClick(sender: AnyObject) {
+        NFCPostManager.instance.godBlockMember(post.mbId)
+    }
+    @IBAction func godRmPostClick(sender: AnyObject) {
+        NFCPostManager.instance.godDeletePost(post.pid)
+    }
+    
     weak var rootController:NFCMainViewController?
     var post:NFCPost!{
         didSet{
@@ -174,16 +184,5 @@ extension NFCPostCell{
         }
     }
     
-    @IBAction func onBlackListButtonClick(sender: AnyObject) {
-        NFCPostManager.instance.godBlockMember(post.mbId)
-    }
-    
-    @IBAction func onGodLikeButtonClick(sender: AnyObject) {
-        NFCPostManager.instance.godLikePost(post.pid)
-    }
-    
-    @IBAction func onClickGodRmPost(sender: AnyObject) {
-        NFCPostManager.instance.godDeletePost(post.pid)
-    }
 }
 

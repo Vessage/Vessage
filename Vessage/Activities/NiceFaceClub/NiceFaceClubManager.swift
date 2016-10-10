@@ -170,6 +170,9 @@ extension NiceFaceClubManager{
         req.score = testResult.hs
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
             if result.isSuccess{
+                if self.myNiceFaceProfile.score < NiceFaceClubManager.minScore{
+                    self.myNiceFaceProfile.mbAcpt = false
+                }
                 self.myNiceFaceProfile.faceId = imageId
                 self.myNiceFaceProfile.score = testResult.highScore
                 self.myNiceFaceProfile.saveModel()

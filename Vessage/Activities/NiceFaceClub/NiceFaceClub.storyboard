@@ -350,19 +350,19 @@
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAt-oO-4ht">
                                                             <state key="normal" title="点赞"/>
                                                             <connections>
-                                                                <action selector="onGodLikeButtonClick:" destination="agZ-w7-omg" eventType="touchUpInside" id="24u-xv-3aE"/>
+                                                                <action selector="godLikeClick:" destination="nrq-gL-vuh" eventType="touchUpInside" id="iL4-Vd-aD2"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e22-Xt-HAS">
                                                             <state key="normal" title="拉黑"/>
                                                             <connections>
-                                                                <action selector="onBlackListButtonClick:" destination="agZ-w7-omg" eventType="touchUpInside" id="0XG-6u-J4m"/>
+                                                                <action selector="godBlockMemberClick:" destination="nrq-gL-vuh" eventType="touchUpInside" id="MN0-QV-7Ok"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6V-vc-gCF">
                                                             <state key="normal" title="删帖"/>
                                                             <connections>
-                                                                <action selector="onClickGodRmPost:" destination="nrq-gL-vuh" eventType="touchUpInside" id="h5U-Lq-XlZ"/>
+                                                                <action selector="godRmPostClick:" destination="nrq-gL-vuh" eventType="touchUpInside" id="gzQ-ka-xIZ"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>

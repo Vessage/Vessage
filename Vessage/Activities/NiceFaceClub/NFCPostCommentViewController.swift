@@ -19,7 +19,7 @@ class NFCPostCommentCell: UITableViewCell {
 
 class NFCPostCommentViewController: UIViewController {
     
-    private var postId:String!
+    private var post:NFCPost!
     
     private var comments = [[NFCPostComment]](){
         didSet{
@@ -41,7 +41,7 @@ class NFCPostCommentViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.tableFooterView?.backgroundColor = UIColor.lightGrayColor()
+        tableView.backgroundColor = UIColor(hexString: "#f6f6f6")
         self.view.addSubview(responseTextField)
         responseTextField.hidden = true
         responseTextField.inputAccessoryView = commentInputView
@@ -68,7 +68,7 @@ class NFCPostCommentViewController: UIViewController {
         commentInputView.inputTextField.becomeFirstResponder()
     }
     
-    private func tryShowForbiddenAnymoursAlert() -> Bool{
+    func tryShowForbiddenAnymoursAlert() -> Bool{
         if !NiceFaceClubManager.instance.isValidatedMember {
             self.showAlert("NFC".niceFaceClubString, msg: "NFC_ANONYMOUS_TIPS".niceFaceClubString,actions: [ALERT_ACTION_I_SEE])
             return true
@@ -89,16 +89,10 @@ class NFCPostCommentViewController: UIViewController {
     }
 
     func refreshPostComments() {
-        var ts:Int64 = 0
-        if let lastCmt = self.comments.last?.last {
-            ts = lastCmt.ts
-        }
+        let ts:Int64 = self.comments.last?.last?.ts ?? 0
+        let hud:MBProgressHUD? = ts == 0 ? self.showActivityHud() : nil
         
-        var hud:MBProgressHUD?
-        if ts == 0 {
-            hud = self.showAnimationHud()
-        }
-        NFCPostManager.instance.getPostComment(postId, ts: ts) { (comments) in
+        NFCPostManager.instance.getPostComment(self.post.pid, ts: ts) { (comments) in
             hud?.hideAnimated(true)
             if hud == nil{
                 self.tableView?.mj_footer?.endRefreshing()
@@ -106,14 +100,18 @@ class NFCPostCommentViewController: UIViewController {
                 self.tableView?.mj_header?.endRefreshing()
             }
             if let cmts = comments{
-                self.comments.append(cmts)
+                if cmts.count > 0{
+                    self.comments.append(cmts)
+                }else{
+                    self.tableView?.mj_footer?.endRefreshingWithNoMoreData()
+                }
             }
         }
     }
     
-    static func showNFCMemberCardAlert(vc:UINavigationController, postId:String) -> NFCPostCommentViewController{
+    static func showNFCMemberCardAlert(vc:UINavigationController, post:NFCPost) -> NFCPostCommentViewController{
         let controller = instanceFromStoryBoard("NiceFaceClub", identifier: "NFCPostCommentViewController") as! NFCPostCommentViewController
-        controller.postId = postId
+        controller.post = post
         vc.pushViewController(controller, animated: true)
         return controller
     }
@@ -126,8 +124,8 @@ extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
             textField.text = nil
             commentInputView.inputTextField.resignFirstResponder()
             responseTextField.resignFirstResponder()
-            let hud = self.showAnimationHud()
-            NFCPostManager.instance.newPostComment(self.postId, comment: cmt!, callback: { (posted,msg) in
+            let hud = self.showActivityHud()
+            NFCPostManager.instance.newPostComment(self.post.pid, comment: cmt!, callback: { (posted,msg) in
                 hud.hideAnimated(true)
                 if posted{
                     self.playCheckMark(){
@@ -136,6 +134,7 @@ extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
                         ncomment.pster = ServiceContainer.getUserService().myProfile.userId
                         ncomment.psterNk = "ME".localizedString()
                         ncomment.ts = Int64(NSDate().timeIntervalSince1970)
+                        self.post.cmtCnt += 1
                         self.comments.append([ncomment])
                     }
                 }else{

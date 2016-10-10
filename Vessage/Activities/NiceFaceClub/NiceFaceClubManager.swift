@@ -28,6 +28,7 @@ class NiceFaceClubManager:NSObject {
     private var shareTimes = 0
     private var loadMemberProfileLeftTime = 0
     private(set) var myNiceFaceProfile:UserNiceFaceProfile!
+    private(set) var userId:String!
     
     var isValidatedMember:Bool{
         return (myNiceFaceProfile?.score ?? 0) >= NiceFaceClubManager.minScore && myNiceFaceProfile.mbAcpt
@@ -38,7 +39,7 @@ class NiceFaceClubManager:NSObject {
     }
     
     private func refreshCachedMyFaceProfile() -> UserNiceFaceProfile? {
-        let userId = ServiceContainer.getUserService().myProfile.userId
+        self.userId = ServiceContainer.getUserService().myProfile.userId
         self.myNiceFaceProfile = PersistentManager.sharedInstance.getModel(UserNiceFaceProfile.self, idValue: userId)
         return self.myNiceFaceProfile
     }

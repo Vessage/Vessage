@@ -34,9 +34,9 @@ class NFCPostManager {
     
     private var likedPost = [String:Bool]()
     
-    func getMainBoardData(callback:(data:NFCMainBoardData?)->Void) {
+    func getMainBoardData(postCnt:Int,callback:(data:NFCMainBoardData?)->Void) {
         #if DEBUG
-            if "1" == "\(1)"{
+            if "2" == "\(1)"{
                 let p = NFCPost()
                 p.img = "579eaacf9c46b95c3f884f9d"
                 p.lc = 100
@@ -55,6 +55,7 @@ class NFCPostManager {
         #endif
         
         let req = GetNFCMainBoardDataRequest()
+        req.postCnt = postCnt
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NFCMainBoardData>) in
             callback(data: result.returnObject)
         }
@@ -71,7 +72,7 @@ class NFCPostManager {
     func getNFCPosts(type:Int,startTimeSpan:NSNumber,pageCount:Int,callback:(posts:[NFCPost])->Void) {
         
         #if DEBUG
-            if "1" == "\(1)"{
+            if "2" == "\(1)"{
                 let p = NFCPost()
                 p.img = "579eaacf9c46b95c3f884f9d"
                 p.lc = type == 1 ? 2 : 11234
@@ -112,7 +113,7 @@ class NFCPostManager {
     
     func likePost(postId:String,callback:(suc:Bool)->Void) {
         #if DEBUG
-            if "1" == "\(1)"{
+            if "2" == "\(1)"{
                 callback(suc: true)
                 return
             }
@@ -151,7 +152,7 @@ class NFCPostManager {
     func newPostComment(postId:String,comment:String,callback:(posted:Bool,msg:String?)->Void) {
         
         #if DEBUG
-            if "1" == "\(1)"{
+            if "2" == "\(1)"{
                 callback(posted: true,msg: nil)
                 return
             }
@@ -168,7 +169,7 @@ class NFCPostManager {
     
     func getPostComment(postId:String,ts:Int64,callback:(comments:[NFCPostComment]?)->Void) {
         #if DEBUG            
-            if "1" == "\(1)"{
+            if "2" == "\(1)"{
                 let cmt = NFCPostComment()
                 cmt.cmt = "自拍时间到"
                 cmt.pster = "sdfa"
@@ -181,7 +182,7 @@ class NFCPostManager {
         
         let req = GetNFCPostCommentRequest()
         req.postId = postId
-        req.ts = NSNumber(longLong:ts)
+        req.ts = ts
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[NFCPostComment]>) in
             callback(comments: result.returnObject)
         }

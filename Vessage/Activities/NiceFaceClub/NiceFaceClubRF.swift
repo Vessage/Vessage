@@ -42,6 +42,9 @@ class UserNiceFaceProfile: BahamutObject {
     
     var mbAcpt:Bool = false //Member Accepted
     
+    var mbId:String! //not null when profile is self 
+    
+    
     //local properties
     var updatedTs:Int64 = 0
     
@@ -68,13 +71,17 @@ class NFCPost: BahamutObject {
     
     var img:String! //Post Image
     
-    var ts:NSNumber! //Timespan
+    var ts:NSNumber! //Post Timespan
     
     var lc:Int = 0 //Like Count
     
     var t:Int = NFCPost.typeNormalPost //Type
     
     var pster:String! //Poster
+    
+    var cmtCnt:Int = 0 //Comment Count
+    
+    var upTs:NSNumber! //Update Timespan
 }
 
 class NFCMainBoardData: EVObject {
@@ -249,6 +256,12 @@ class GetNFCMainBoardDataRequest: BahamutRFRequestBase {
         self.api = "/NiceFaceClub/NFCMainBoardData"
         self.method = .GET
     }
+    
+    var postCnt:Int = 20{
+        didSet{
+            paramenters.updateValue("\(postCnt)", forKey: "postCnt")
+        }
+    }
 }
 
 class GetNFCPostBase: BahamutRFRequestBase {
@@ -258,9 +271,9 @@ class GetNFCPostBase: BahamutRFRequestBase {
         }
     }
     
-    var cnt:NSNumber = 20{
+    var cnt:Int = 20{
         didSet{
-            paramenters.updateValue("\(cnt.longLongValue)", forKey: "cnt")
+            paramenters.updateValue("\(cnt)", forKey: "cnt")
         }
     }
 }
@@ -360,9 +373,9 @@ class GetNFCPostCommentRequest: BahamutRFRequestBase {
         self.method = .GET
     }
     
-    var ts:NSNumber!{
+    var ts:Int64 = 0{
         didSet{
-            paramenters.updateValue("\(ts.longLongValue)", forKey: "ts")
+            paramenters.updateValue("\(ts)", forKey: "ts")
         }
     }
     

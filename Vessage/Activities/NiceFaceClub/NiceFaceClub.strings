@@ -77,10 +77,11 @@ POST_NEW_ERROR = "Po新照片出错";
 NO_MEMBER_USERID_FOUND = "找不到该用户>_<";
 LIKE_POST_OP_ERROR = "点赞失败>_<";
 
-NEWER_NEED_X_LIKE_TO_JOIN_NFC = "新会员获得到%d个❤️正式加入NFC~";
+NEWER_NEED_X_LIKE_TO_JOIN_NFC = "新会员需得到%d个赞才能加入NFC~";
 NO_NEW_LIKES = "暂时没有获得新的赞";
-DEFAULT_NFC_ANC = "在这里晒图分享你的颜值生活，结识好朋友!";
+DEFAULT_NFC_ANC = "分享多彩生活，结识高颜值朋友!";
 NO_PROFILE_LOADED = "加载会员出错，请稍后再试>_<";
 INPUT_COMMENT_CONTENT = "请写下只言片语~";
 NFC_HELLO = "你好，很高兴在高颜值俱乐部认识你！";
 NEED_LIKE_TO_JOIN_NFC = "需要得到其他会员点赞后才能正式加入";
+MY_NFC_POST_WALL = "我的照片";

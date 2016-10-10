@@ -256,7 +256,7 @@ extension SetupNiceFaceViewController{
     
     private func pushSetNiceFaceUploadTask(){
         
-        hud = showAnimationHud()
+        hud = showActivityHud()
         if let filePath = ChatBackgroundPickerController.saveChatImage(takedImage!){
             let task = SetChatImagesTask()
             task.filePath = filePath
@@ -348,7 +348,7 @@ extension SetupNiceFaceViewController{
 extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
     
     private func showAlbum(){
-        self.hud = self.showAnimationHud()
+        self.hud = self.showActivityHud()
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .PhotoLibrary
         imagePickerController.allowsEditing = false

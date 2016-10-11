@@ -203,11 +203,10 @@ extension VessageAppDelegate:WXApiDelegate{
     func onReq(req: BaseReq!) {
         if req is GetMessageFromWXReq
         {
-            // 微信请求App提供内容， 需要app提供内容后使用sendRsp返回
-            let strTitle = "微信请求App提供内容"
-            let strMsg = "微信请求App提供内容，App要调用sendResp:GetMessageFromWXResp返回给微信"
-            
             #if DEBUG
+                // 微信请求App提供内容， 需要app提供内容后使用sendRsp返回
+                let strTitle = "微信请求App提供内容"
+                let strMsg = "微信请求App提供内容，App要调用sendResp:GetMessageFromWXResp返回给微信"
                 print(strTitle)
                 print(strMsg)
             #endif

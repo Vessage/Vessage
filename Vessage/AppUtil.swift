@@ -149,11 +149,8 @@ extension FileService
 
 extension String{
     func isBahamutAccount() -> Bool{
-        
-        if self =~ "^\\d{6,9}$"{
-            if let aId = Int(self){
-                return (aId >= 10000 && aId <= 20000) || aId >= 147258
-            }
+        if let aId = Int(self) {
+            return (aId >= 10000 && aId <= 20000) || (self =~ "^\\d{6,9}$" && aId >= 147258)
         }
         return false
     }

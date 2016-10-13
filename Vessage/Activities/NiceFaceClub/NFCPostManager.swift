@@ -35,25 +35,7 @@ class NFCPostManager {
     private var likedPost = [String:Bool]()
     
     func getMainBoardData(postCnt:Int,callback:(data:NFCMainBoardData?)->Void) {
-        #if DEBUG
-            if "2" == "\(1)"{
-                let p = NFCPost()
-                p.img = "579eaacf9c46b95c3f884f9d"
-                p.lc = 100
-                p.mbId = IdUtil.generateUniqueId()
-                p.pid = IdUtil.generateUniqueId()
-                p.t = NFCPost.typeNormalPost
-                p.ts = NSNumber(double: NSDate().timeIntervalSince1970)
-                p.pster = "me"
-                let d = NFCMainBoardData()
-                d.nlks = 100
-                d.nMemCnt = 300
-                d.posts = [p,p,p]
-                callback(data: d)
-                return
-            }
-        #endif
-        
+
         let req = GetNFCMainBoardDataRequest()
         req.postCnt = postCnt
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NFCMainBoardData>) in
@@ -61,31 +43,16 @@ class NFCPostManager {
         }
     }
     
-    func getNFCNormalPosts(startTimeSpan:NSNumber,pageCount:Int,callback:(posts:[NFCPost])->Void) {
+    func getNFCNormalPosts(startTimeSpan:Int64,pageCount:Int,callback:(posts:[NFCPost])->Void) {
         getNFCPosts(NFCPost.typeNormalPost, startTimeSpan: startTimeSpan, pageCount: pageCount, callback: callback)
     }
     
-    func getNFCNewMemberPosts(startTimeSpan:NSNumber,pageCount:Int,callback:(posts:[NFCPost])->Void) {
+    func getNFCNewMemberPosts(startTimeSpan:Int64,pageCount:Int,callback:(posts:[NFCPost])->Void) {
         getNFCPosts(NFCPost.typeNewMemberPost, startTimeSpan: startTimeSpan, pageCount: pageCount, callback: callback)
     }
     
-    func getNFCPosts(type:Int,startTimeSpan:NSNumber,pageCount:Int,callback:(posts:[NFCPost])->Void) {
-        
-        #if DEBUG
-            if "2" == "\(1)"{
-                let p = NFCPost()
-                p.img = "579eaacf9c46b95c3f884f9d"
-                p.lc = type == 1 ? 2 : 11234
-                p.mbId = IdUtil.generateUniqueId()
-                p.pid = IdUtil.generateUniqueId()
-                p.t = type
-                p.pster = "me"
-                p.ts = NSNumber(double: NSDate().timeIntervalSince1970)
-                callback(posts: [p])
-                return
-            }
-        #endif
-        
+    func getNFCPosts(type:Int,startTimeSpan:Int64,pageCount:Int,callback:(posts:[NFCPost])->Void) {
+
         let req:GetNFCPostBase!
         if type == NFCPost.typeMyPost {
             req = GetMyNFCPostRequest()
@@ -112,13 +79,7 @@ class NFCPostManager {
     }
     
     func likePost(postId:String,callback:(suc:Bool)->Void) {
-        #if DEBUG
-            if "2" == "\(1)"{
-                callback(suc: true)
-                return
-            }
-        #endif
-        
+
         let req = NFCLikePostRequest()
         req.postId = postId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
@@ -150,15 +111,7 @@ class NFCPostManager {
     }
     
     func newPostComment(postId:String,comment:String,callback:(posted:Bool,msg:String?)->Void) {
-        
-        #if DEBUG
-            if "2" == "\(1)"{
-                callback(posted: true,msg: nil)
-                return
-            }
-        #endif
-        
-        
+
         let req = NFCNewCommentRequest()
         req.postId = postId
         req.comment = comment
@@ -168,18 +121,7 @@ class NFCPostManager {
     }
     
     func getPostComment(postId:String,ts:Int64,callback:(comments:[NFCPostComment]?)->Void) {
-        #if DEBUG            
-            if "2" == "\(1)"{
-                let cmt = NFCPostComment()
-                cmt.cmt = "自拍时间到"
-                cmt.pster = "sdfa"
-                cmt.psterNk = "妮妮"
-                cmt.ts = Int64(NSDate().timeIntervalSince1970)
-                callback(comments: [cmt])
-                return
-            }
-        #endif
-        
+
         let req = GetNFCPostCommentRequest()
         req.postId = postId
         req.ts = ts
@@ -188,32 +130,32 @@ class NFCPostManager {
         }
     }
     
-    func godLikePost(postId:String) {
+}
+
+//MARK: God Methods
+extension NFCPostManager{
+    
+    func godLikePost(postId:String,callback:(Bool)->Void) {
         let req = GodLikePostRequest()
         req.postId = postId
-        
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
-            
+            callback(result.isSuccess)
         }
     }
     
-    func godDeletePost(postId:String) {
+    func godDeletePost(postId:String,callback:(Bool)->Void) {
         let req = GodDeletePostRequest()
         req.postId = postId
-        
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
-            
+            callback(result.isSuccess)
         }
     }
     
-    func godBlockMember(memberId:String) {
+    func godBlockMember(memberId:String,callback:(Bool)->Void) {
         let req = GodBlockMemberRequest()
         req.memberId = memberId
-        
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
-            
+            callback(result.isSuccess)
         }
     }
-    
-    
 }

@@ -132,8 +132,22 @@ extension NFCMainViewController{
         if tryShowForbiddenAnymoursAlert(){
             return
         }
-        UserSettingViewController.showUserSettingViewController(self.navigationController!)
-        //NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: self.profile.id)
+        let modifyNiceFace = UIAlertAction(title: "MODIFY_NICE_FACE".niceFaceClubString, style: .Default) { (ac) in
+            self.modifyNiceFace()
+        }
+        let memberCard = UIAlertAction(title: "MEMBER_CARD".niceFaceClubString, style: .Default) { (ac) in
+            NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: self.profile.mbId)
+        }
+        let userSettig = UIAlertAction(title: "UPDATE_MEMBER_PROFILE".niceFaceClubString, style: .Default) { (ac) in
+            UserSettingViewController.showUserSettingViewController(self.navigationController!)
+        }
+        let alert = UIAlertController(title: "MEMBER_PROFILE".niceFaceClubString, message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(modifyNiceFace)
+        alert.addAction(userSettig)
+        alert.addAction(memberCard)
+        alert.addAction(ALERT_ACTION_CANCEL)
+        self.showAlert(alert)
+        
     }
     
     @IBAction func onHomeButtonClick(sender: AnyObject) {
@@ -177,7 +191,7 @@ extension NFCMainViewController{
     
     private func refreshPosts() {
         let lastPost = posts[listType].last?.last
-        let ts = lastPost?.ts ?? NSNumber(double: NSDate().timeIntervalSince1970 * 1000)
+        let ts = lastPost?.ts ?? Int64(NSDate().timeIntervalSince1970 * 1000)
         let hud:MBProgressHUD? = lastPost == nil ? self.showActivityHud() : nil
         if listType == NFCPost.typeNormalPost && lastPost == nil{
             NFCPostManager.instance.getMainBoardData(postPageCount,callback: { (data) in
@@ -358,7 +372,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
             case NFCPost.typeMyPost:
                 cell.announcementLabel.text = "MY_NFC_POST_WALL".niceFaceClubString
             case NFCPost.typeNewMemberPost:
-                cell.announcementLabel.text = String(format: "NEWER_NEED_X_LIKE_TO_JOIN_NFC".niceFaceClubString,nfcLikeCountBaseLimit)
+                cell.announcementLabel.text = String.isNullOrWhiteSpace(self.boardData?.newMemAnnc) ? String(format: "NEWER_NEED_X_LIKE_TO_JOIN_NFC".niceFaceClubString,nfcLikeCountBaseLimit) : self.boardData?.newMemAnnc
             default:
                 cell.announcementLabel.text = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_NFC_ANC".niceFaceClubString : self.boardData?.annc
             }

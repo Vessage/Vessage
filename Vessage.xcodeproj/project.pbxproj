@@ -1070,8 +1070,8 @@
 			children = (
 				E7EF28461D791AFD0064231F /* Assets.xcassets */,
 				E7EF28471D791AFD0064231F /* NFCMessageAlert.swift */,
-				E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */,
 				E7EF284A1D791AFD0064231F /* NiceFaceClub.strings */,
+				E7EF28491D791AFD0064231F /* NiceFaceClub.storyboard */,
 				E7EF286E1D7943930064231F /* NFCShareAlert.swift */,
 				E7EF284B1D791AFD0064231F /* NiceFaceClubManager.swift */,
 				E7EF284C1D791AFD0064231F /* NiceFaceClubRF.swift */,

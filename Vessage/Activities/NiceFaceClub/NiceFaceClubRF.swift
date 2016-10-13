@@ -71,7 +71,7 @@ class NFCPost: BahamutObject {
     
     var img:String! //Post Image
     
-    var ts:NSNumber! //Post Timespan
+    var ts:Int64 = 0 //Post Timespan
     
     var lc:Int = 0 //Like Count
     
@@ -81,7 +81,16 @@ class NFCPost: BahamutObject {
     
     var cmtCnt:Int = 0 //Comment Count
     
-    var upTs:NSNumber! //Update Timespan
+    var upTs:Int64 = 0 //Update Timespan
+}
+
+extension NFCPost{
+    func getPostDateFriendString() -> String {
+        if ts <= 0 {
+            return "UNKNOW_DATE_TIME".niceFaceClubString
+        }
+        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
+    }
 }
 
 class NFCMainBoardData: EVObject {
@@ -90,6 +99,7 @@ class NFCMainBoardData: EVObject {
     var ncmt = 0 //New Comments
     var tlks = 0 //Total likes
     var annc:String! //Announcement
+    var newMemAnnc:String! //New Member Announcement
     var posts:[NFCPost]!
 }
 
@@ -98,6 +108,15 @@ class NFCPostComment: EVObject {
     var ts:Int64 = 0 //Time Span Create
     var psterNk:String! //Poster nick
     var pster:String! //Poster User Id
+}
+
+extension NFCPostComment{
+    func getPostDateFriendString() -> String {
+        if ts <= 0 {
+            return "UNKNOW_DATE_TIME".niceFaceClubString
+        }
+        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
+    }
 }
 
 //MARK: Restful Request
@@ -265,9 +284,11 @@ class GetNFCMainBoardDataRequest: BahamutRFRequestBase {
 }
 
 class GetNFCPostBase: BahamutRFRequestBase {
-    var ts:NSNumber!{
+    var ts:Int64!{
         didSet{
-            paramenters.updateValue("\(ts.longLongValue)", forKey: "ts")
+            if let t = ts {
+                paramenters.updateValue("\(t)", forKey: "ts")
+            }
         }
     }
     

@@ -46,27 +46,17 @@ class NFCPostCell: UITableViewCell {
     
     @IBOutlet weak var commentTipsLabel: UILabel!
     
-    @IBAction func godLikeClick(sender: AnyObject) {
-        NFCPostManager.instance.godLikePost(post.pid)
-    }
-    @IBAction func godBlockMemberClick(sender: AnyObject) {
-        NFCPostManager.instance.godBlockMember(post.mbId)
-    }
-    @IBAction func godRmPostClick(sender: AnyObject) {
-        NFCPostManager.instance.godDeletePost(post.pid)
-    }
-    
     weak var rootController:NFCMainViewController?
     var post:NFCPost!{
         didSet{
             if post != nil {
-                let dateString = "\(NSDate(timeIntervalSince1970: post.ts.doubleValue).toFriendlyString()) By \(post.pster)"
+                let dateString = "\(post.getPostDateFriendString()) By \(post.pster)"
                 dateLabel?.text = dateString
                 self.likeTipsLabel?.text = self.post.lc.friendString
                 chatButton.hidden = isSelfPost ? true : !NFCPostManager.instance.likedInCached(post.pid)
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
                 commentTipsLabel.text = self.post.cmtCnt.friendString
-                memberCardButton.hidden = true
+                memberCardButton.hidden = isSelfPost ? false : chatButton.hidden
             }
         }
     }
@@ -110,17 +100,19 @@ class NFCPostCell: UITableViewCell {
     }
     
     func playLikeAnimation() {
-        likeMarkImage.animationMaxToMin(0.3, maxScale: 1.6, completion: nil)
+        likeMarkImage.animationMaxToMin(0.2, maxScale: 1.6, completion: nil)
         likeTipsLabel.text = "+1"
-        likeTipsLabel.animationMaxToMin(0.3, maxScale: 1.6) {
+        likeTipsLabel.animationMaxToMin(0.2, maxScale: 1.6) {
             self.likeTipsLabel?.text = self.post.lc.friendString
             if !self.isSelfPost{
                 self.chatButton.hidden = false
-                self.chatButton.animationMaxToMin(0.2, maxScale: 1.3){
-                    self.newCommentButton.hidden = false
-                    self.newCommentButton.animationMaxToMin(0.2, maxScale: 1.3){
-                        
-                    }
+                self.chatButton.animationMaxToMin(0.1, maxScale: 1.3){
+                    self.memberCardButton.hidden = false
+                    self.memberCardButton.animationMaxToMin(0.1, maxScale: 1.3, completion: { 
+                        self.newCommentButton.hidden = false
+                        self.newCommentButton.animationMaxToMin(0.1, maxScale: 1.3){
+                        }
+                    })
                 }
             }
         }
@@ -186,3 +178,30 @@ extension NFCPostCell{
     
 }
 
+//MARK: God Methods
+extension NFCPostCell{
+    @IBAction func godLikeClick(sender: AnyObject) {
+        let hud = self.rootController?.showActivityHud()
+        NFCPostManager.instance.godLikePost(post.pid){ suc in
+            hud?.hideAnimated(true)
+            suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+        }
+    }
+    
+    @IBAction func godBlockMemberClick(sender: AnyObject){
+        let hud = self.rootController?.showActivityHud()
+        NFCPostManager.instance.godBlockMember(post.mbId) { suc in
+            hud?.hideAnimated(true)
+            suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+        }
+    }
+    
+    @IBAction func godRmPostClick(sender: AnyObject){
+        let hud = self.rootController?.showActivityHud()
+        NFCPostManager.instance.godDeletePost(post.pid) { suc in
+            hud?.hideAnimated(true)
+            suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+        }
+    }
+    
+}

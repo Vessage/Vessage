@@ -52,8 +52,8 @@ class NiceFaceClubManager:NSObject {
             }else if !updateMyProfileValues(){
                 if let lastRefreshHours = UserSetting.getUserNumberValue(NiceFaceClubManager.lastRefreshMemberTimeKey){
                     if NSDate().totalHoursSince1970.doubleValue - lastRefreshHours.doubleValue < NiceFaceClubManager.refreshMemberProfileIntervalHours.doubleValue {
-                        callback(mp)
                         if mp.mbAcpt {
+                            callback(mp)
                             return
                         }
                     }

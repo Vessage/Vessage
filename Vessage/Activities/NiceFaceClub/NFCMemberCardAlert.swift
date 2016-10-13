@@ -10,6 +10,29 @@ import Foundation
 
 class NFCMemberCardAlert:UIViewController{
     
+    @IBOutlet weak var faceScoreLabel: UILabel!{
+        didSet{
+            faceScoreLabel.superview?.layoutIfNeeded()
+            faceScoreLabel.superview?.clipsToBounds = true
+            faceScoreLabel.superview?.layer.cornerRadius = faceScoreLabel.superview!.frame.height / 2
+        }
+    }
+    @IBOutlet weak var sexImage: UIImageView!
+    @IBOutlet weak var mottoLabel: UILabel!
+    @IBOutlet weak var nickLabel: UILabel!
+    @IBOutlet weak var likesLabel: UILabel!
+    @IBOutlet weak var faceProgress: KDCircularProgress!
+    @IBOutlet weak var imageView: UIImageView!{
+        didSet{
+            imageView.layoutIfNeeded()
+            imageView.clipsToBounds = true
+            imageView.contentMode = .ScaleAspectFill
+            imageView.layer.cornerRadius = imageView.frame.height / 2
+            imageView.layer.borderWidth = 0.6
+            imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+            imageView.superview?.layer.cornerRadius = 10
+        }
+    }
     @IBOutlet weak var bcgMaskView: UIView!{
         didSet{
             bcgMaskView?.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMemberCardAlert.onTapBagMask(_:))))
@@ -38,7 +61,15 @@ class NFCMemberCardAlert:UIViewController{
     }
     
     private func updateCardView(profile:UserNiceFaceProfile){
-        
+        ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: profile.faceId)
+        self.nickLabel.text = profile.nick
+        ServiceContainer.getUserService().setUserSexImageView(self.sexImage, sexValue: profile.sex)
+        self.likesLabel.text = "\(profile.likes)"
+        let angle = Double(360 * profile.score / 10)
+        self.faceProgress.animateToAngle(angle, duration: 0.3, completion: nil)
+        self.mottoLabel.text = ServiceContainer.getUserService().myProfile.motto ?? "DEFAULT_MOTTO".niceFaceClubString
+        self.faceScoreLabel.text = "\(profile.score)"
+        self.faceProgress.superview?.hidden = false
     }
     
     func onTapBagMask(_:UITapGestureRecognizer) {
@@ -47,6 +78,7 @@ class NFCMemberCardAlert:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imageView.superview?.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {

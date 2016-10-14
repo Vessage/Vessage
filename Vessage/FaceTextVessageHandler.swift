@@ -79,12 +79,11 @@ class FaceTextVessageHandler: VessageHandlerBase,HandlePanGesture {
     }
     
     private func refreshConversationLabel(){
-        let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
         if presentingVesseage.isMySendingVessage() {
             playVessageManager.leftTopLabelText = "MY_SENDING_VSG".localizedString()
         }else{
-            let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
-            playVessageManager.leftTopLabelText = "\(friendTimeString) \(readStatus)"
+            let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
+            playVessageManager.leftTopLabelText = friendTimeString
         }
         playVessageManager.rightBottomLabelText = nil
     }

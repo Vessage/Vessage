@@ -10,6 +10,8 @@ import Foundation
 
 class ImageVessageHandler: VessageHandlerBase {
     private var imageView:UIImageView!
+    private var loadingIndicator:UIActivityIndicatorView!
+    private var imageLoaded = false
     
     override init(manager: PlayVessageManager, container: UIView) {
         super.init(manager: manager, container: container)
@@ -19,35 +21,64 @@ class ImageVessageHandler: VessageHandlerBase {
         imageView.userInteractionEnabled = true
         imageView.contentMode = .ScaleAspectFill
         self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(ImageVessageHandler.onTapImage(_:))))
+        self.loadingIndicator = UIActivityIndicatorView()
     }
     
     override func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage!) {
-        
+        super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
         if let oldVsg = oldVessage{
             if oldVsg.typeId != newVessage.typeId {
                 container.removeAllSubviews()
                 initVessageViews()
-                
             }
-            UIAnimationHelper.animationPageCurlView(imageView, duration: 0.3, completion: { () -> Void in
-                ServiceContainer.getFileService().setImage(self.imageView, iconFileId: newVessage.fileId){ suc in
-                    if suc{
-                        ServiceContainer.getVessageService().readVessage(newVessage)
-                    }
-                }
-            })
+            refreshImage()
         }else{
             initVessageViews()
-            ServiceContainer.getFileService().setImage(self.imageView, iconFileId: newVessage.fileId){ suc in
-                if suc{
-                    ServiceContainer.getVessageService().readVessage(newVessage)
-                }
-            }
+            refreshImage()
         }
     }
     
+    private func refreshImage(){
+        imageLoaded = false
+        showLoadingIndicator()
+        ServiceContainer.getFileService().setImage(self.imageView, iconFileId: presentingVesseage.fileId,defaultImage: UIImage(named: "recording_bcg_0")!){ suc in
+            self.imageLoaded = suc
+            if suc{
+                ServiceContainer.getVessageService().readVessage(self.presentingVesseage)
+                self.loadingIndicator.removeFromSuperview()
+            }else{
+                self.loadingIndicator.stopAnimating()
+            }
+        }
+        refreshConversationLabel()
+    }
+    
+    private func showLoadingIndicator(){
+        self.container.addSubview(self.loadingIndicator)
+        let x = (self.container.frame.width - 20) / 2
+        let y = (self.container.frame.height - 20) / 2
+        self.loadingIndicator.frame = CGRectMake(x, y, 20, 20)
+        container.bringSubviewToFront(self.loadingIndicator)
+        self.loadingIndicator.startAnimating()
+        self.loadingIndicator.hidesWhenStopped = false
+    }
+    
+    private func refreshConversationLabel(){
+        if presentingVesseage.isMySendingVessage() {
+            playVessageManager.leftTopLabelText = "MY_SENDING_VSG".localizedString()
+        }else{
+            let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
+            playVessageManager.rightBottomLabelText = friendTimeString
+        }
+        playVessageManager.leftTopLabelText = nil
+    }
+    
     func onTapImage(ges:UITapGestureRecognizer) {
-        self.imageView?.slideShowFullScreen(self.playVessageManager.rootController)
+        if imageLoaded {
+            self.imageView?.slideShowFullScreen(self.playVessageManager.rootController)
+        }else{
+            refreshImage()
+        }
     }
     
     private func initVessageViews() {

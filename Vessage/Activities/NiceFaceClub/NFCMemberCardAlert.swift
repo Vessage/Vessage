@@ -13,8 +13,10 @@ class NFCMemberCardAlert:UIViewController{
     @IBOutlet weak var faceScoreLabel: UILabel!{
         didSet{
             faceScoreLabel.superview?.layoutIfNeeded()
+            faceScoreLabel.superview?.userInteractionEnabled = true
             faceScoreLabel.superview?.clipsToBounds = true
             faceScoreLabel.superview?.layer.cornerRadius = faceScoreLabel.superview!.frame.height / 2
+            self.faceScoreLabel.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMemberCardAlert.onTapImage(_:))))
         }
     }
     @IBOutlet weak var sexImage: UIImageView!
@@ -31,7 +33,7 @@ class NFCMemberCardAlert:UIViewController{
             imageView.layer.borderWidth = 0.6
             imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageView.superview?.layer.cornerRadius = 10
-            self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMemberCardAlert.onTapImage(_:))))
+            
         }
     }
     @IBOutlet weak var bcgMaskView: UIView!{

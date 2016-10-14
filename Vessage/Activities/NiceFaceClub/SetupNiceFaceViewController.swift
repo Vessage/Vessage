@@ -84,7 +84,6 @@ class SetupNiceFaceViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSetChatImageObservers()

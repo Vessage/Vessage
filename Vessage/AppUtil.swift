@@ -292,7 +292,7 @@ extension UIImageView{
             ctr.pageSelected = { page in
                 slideshow.setScrollViewPage(page, animated: false)
             }
-            
+            ctr.modalTransitionStyle = .CoverVertical
             // set the initial page
             ctr.initialImageIndex = slideshow.scrollViewPage
             // set the inputs

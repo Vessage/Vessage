@@ -53,6 +53,7 @@ class UserProfileViewController: UIViewController {
             avatarImageView.superview?.layer.borderColor = UIColor.lightGrayColor().CGColor
             avatarImageView.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserProfileViewController.onTapAlertContainer(_:))))
             avatarImageView.hidden = true
+            avatarImageView.userInteractionEnabled = true
             avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(UserProfileViewController.onTapImage(_:))))
         }
     }

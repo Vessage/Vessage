@@ -12,7 +12,7 @@ import LTMorphingLabel
 class UserProfileViewController: UIViewController {
     private(set) var profile:VessageUser!{
         didSet{
-            ServiceContainer.getFileService().setAvatar(avatarImageView, iconFileId: profile.avatar, defaultImage: getDefaultAvatar(profile.accountId ?? "0"))
+            ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: profile.avatar, defaultImage: getDefaultAvatar(profile.accountId ?? "0"))
             if let aId = profile.accountId {
                 self.accountIdLabel.text = String(format: "USER_ACCOUNT_FORMAT".localizedString(),aId)
                 var name = profile.nickName
@@ -53,8 +53,10 @@ class UserProfileViewController: UIViewController {
             avatarImageView.superview?.layer.borderColor = UIColor.lightGrayColor().CGColor
             avatarImageView.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserProfileViewController.onTapAlertContainer(_:))))
             avatarImageView.hidden = true
+            avatarImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(UserProfileViewController.onTapImage(_:))))
         }
     }
+    
     @IBOutlet weak var accountIdLabel: LTMorphingLabel!{
         didSet{
             accountIdLabel.morphingEffect = .Pixelate
@@ -95,6 +97,10 @@ class UserProfileViewController: UIViewController {
     }
     
     func onTapAlertContainer(a:UITapGestureRecognizer) {
+    }
+    
+    func onTapImage(ges:UITapGestureRecognizer) {
+        avatarImageView.slideShowFullScreen(self)
     }
     
     func onTapView(a:UITapGestureRecognizer) {

@@ -9,7 +9,6 @@
 import Foundation
 import MJRefresh
 import LTMorphingLabel
-import ImageSlideshow
 
 class NFCMainInfoCell: UITableViewCell {
     static let reuseId = "NFCMainInfoCell"
@@ -56,7 +55,7 @@ class NFCPostCell: UITableViewCell {
                 chatButton.hidden = isSelfPost ? true : !NFCPostManager.instance.likedInCached(post.pid)
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
                 commentTipsLabel.text = self.post.cmtCnt.friendString
-                memberCardButton.hidden = isSelfPost ? false : chatButton.hidden
+                memberCardButton.hidden = chatButton.hidden
             }
         }
     }
@@ -69,28 +68,16 @@ class NFCPostCell: UITableViewCell {
     }
     
     func onTapImage(ges:UITapGestureRecognizer) {
-        let slideshow = ImageSlideshow()
-        slideshow.setImageInputs([ImageSource(image: imageContentView.image!)])
-        let ctr = FullScreenSlideshowViewController()
-        // called when full-screen VC dismissed and used to set the page to our original slideshow
-        ctr.pageSelected = { page in
-            slideshow.setScrollViewPage(page, animated: false)
+        if let vc = self.rootController{
+            self.imageContentView.slideShowFullScreen(vc)
         }
-        
-        // set the initial page
-        ctr.initialImageIndex = slideshow.scrollViewPage
-        // set the inputs
-        ctr.inputs = slideshow.images
-        let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
-        ctr.transitioningDelegate = slideshowTransitioningDelegate
-        self.rootController?.presentViewController(ctr, animated: true, completion: nil)
     }
     
     func updateImage() {
         imageContentView.image = nil
         imageContentView.contentMode = .Center
         if let img = post?.img {
-            ServiceContainer.getFileService().setAvatar(imageContentView, iconFileId: img,defaultImage: UIImage(named:"nfc_post_img_bcg")){ suc in
+            ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: UIImage(named:"nfc_post_img_bcg")){ suc in
                 if suc{
                     self.imageContentView.contentMode = .ScaleAspectFill
                 }

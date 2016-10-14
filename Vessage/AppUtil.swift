@@ -11,6 +11,7 @@ import AddressBook
 import AddressBookUI
 import MBProgressHUD
 import EVReflection
+import ImageSlideshow
 
 func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mobile:String,personTitle:String)->Void) {
     let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
@@ -84,7 +85,7 @@ func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId) -> UIIm
 
 extension FileService
 {
-    func setAvatar(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
+    func setImage(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
     {
         imageView.image = defaultImage
         if String.isNullOrWhiteSpace(fileId) == false
@@ -120,7 +121,7 @@ extension FileService
         }
     }
     
-    func setAvatar(button:UIButton,iconFileId fileId:String!)
+    func setImage(button:UIButton,iconFileId fileId:String!)
     {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             let image = UIImage(named: "defaultAvatar")
@@ -277,5 +278,29 @@ extension UIImagePickerController{
         alert.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel){ _ in})
         viewController.showAlert(alert)
         return imagePicker
+    }
+}
+
+extension UIImageView{
+    func slideShowFullScreen(vc:UIViewController) {
+        if let img = self.image {
+            let slideshow = ImageSlideshow()
+            slideshow.setImageInputs([ImageSource(image: img)])
+            slideshow.pageControlPosition = .Hidden
+            let ctr = FullScreenSlideshowViewController()
+            // called when full-screen VC dismissed and used to set the page to our original slideshow
+            ctr.pageSelected = { page in
+                slideshow.setScrollViewPage(page, animated: false)
+            }
+            
+            // set the initial page
+            ctr.initialImageIndex = slideshow.scrollViewPage
+            // set the inputs
+            ctr.inputs = slideshow.images
+            ctr.slideshow.pageControlPosition = .Hidden
+            let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
+            ctr.transitioningDelegate = slideshowTransitioningDelegate
+            vc.presentViewController(ctr, animated: true, completion: nil)
+        }
     }
 }

@@ -8,7 +8,7 @@
 NFC = "高颜值俱乐部";
 NFC_ANONYMOUS_TIPS = "仅限正式会员进行此操作,敬请谅解>_<";
 NICE_FACE_CLUB = "高颜值俱乐部";
-DEFAULT_MOTTO = "高颜值俱乐部";
+DEFAULT_MOTTO = "暂无签名";
 UPLOAD_NICE_FACE_IMAGE_ERROR = "上传图片出错";
 UPLOAD_NICE_FACE_IMAGE_CANCELED = "取消上传图片";
 NICE_FACE_SETTED = "图片通过验证";

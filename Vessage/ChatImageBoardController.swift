@@ -117,7 +117,7 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         let chatImage = self.chatImages[indexPath.row]
         cell.imageTypeLabel.text = chatImage.imageType
         cell.checkedImage.hidden = !cell.selected
-        fileService.setAvatar(cell.chatImageView, iconFileId: chatImage.imageId,defaultImage: getDefaultFace())
+        fileService.setImage(cell.chatImageView, iconFileId: chatImage.imageId,defaultImage: getDefaultFace())
         #if DEBUG
             print("ChatImage:\(chatImage.imageId)")
         #endif

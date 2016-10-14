@@ -87,9 +87,9 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         {
             let avatarImage = image.scaleToWidthOf(UserSettingViewController.avatarWidth, quality: UserSettingViewController.avatarQuality)
             self.avatarImageView.image = avatarImage
-            let fService = ServiceContainer.getService(FileService)
+            let fService = ServiceContainer.getFileService()
             let imageData = UIImageJPEGRepresentation(avatarImage,1)
-            let localPath = fService.createLocalStoreFileName(FileType.Image)
+            let localPath = PersistentManager.sharedInstance.createTmpFileName(.Image)
             if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
             {
                 fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in

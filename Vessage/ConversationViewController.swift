@@ -81,17 +81,21 @@ class ConversationViewController: UIViewController {
         return !isRecording
     }
     
-    @IBOutlet weak var nextVessageButton: UIButton!{
-        didSet{
-            nextVessageButton.hidden = true
-        }
-    }
+    @IBOutlet weak var leftButton: UIButton!
     
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
     
-    @IBOutlet weak var middleButton: UIButton!
+    @IBOutlet weak var middleButton: UIButton!{
+        didSet{
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ConversationViewController.onLongPressMiddleButton(_:)))
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onClickMiddleButton(_:)))
+            tap.requireGestureRecognizerToFail(longPress)
+            middleButton.addGestureRecognizer(longPress)
+            middleButton.addGestureRecognizer(tap)
+        }
+    }
     
     @IBOutlet weak var bottomBar: UIView!{
         didSet{
@@ -211,9 +215,14 @@ extension ConversationViewController{
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeLeft(_:)))
         swipeLeft.direction = .Left
         self.view.addGestureRecognizer(swipeLeft)
-        self.nextVessageButton.hidden = true
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeRight(_:)))
+        swipeRight.direction = .Right
+        self.view.addGestureRecognizer(swipeRight)
+        
         let panGes = UIPanGestureRecognizer(target: self, action: #selector(ConversationViewController.onPanGesture(_:)))
         panGes.requireGestureRecognizerToFail(swipeLeft)
+        panGes.requireGestureRecognizerToFail(swipeRight)
         self.view.addGestureRecognizer(panGes)
     }
     
@@ -278,23 +287,29 @@ extension ConversationViewController{
         currentManager?.onPanGesture(v)
     }
     
+    func onSwipeRight(_:UIGestureRecognizer) {
+        if self.isReadingVessages {
+            self.playVessageManager.showPreviousVessage()
+        }
+    }
+    
     func onSwipeLeft(_:UIGestureRecognizer) {
-        onClickNextButton(self.nextVessageButton)
+        if self.isReadingVessages{
+            self.playVessageManager.showNextVessage()
+        }
     }
     
     func onBackItemClick(sender:AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func onClickMiddleButton(sender: UIView) {
-        
+    func onClickMiddleButton(sender: UITapGestureRecognizer) {
         self.view.userInteractionEnabled = false
-        sender.animationMaxToMin(0.1, maxScale: 1.2) { 
+        self.middleButton.animationMaxToMin(0.1, maxScale: 1.2) {
             if self.outChatGroup {
                 self.playToast("NOT_IN_CHAT_GROUP".localizedString())
             }else if self.isReadingVessages {
                 if self.needSetChatBackgroundAndShow() {
-                    self.view.userInteractionEnabled = true
                     return
                 }
                 self.startRecording()
@@ -302,8 +317,12 @@ extension ConversationViewController{
                 self.setReadingVessage()
                 self.recordVessageManager.sendVessage()
             }
+            self.view.userInteractionEnabled = true
         }
-        self.view.userInteractionEnabled = true
+    }
+    
+    func onLongPressMiddleButton(sender:UILongPressGestureRecognizer) {
+        
     }
     
     func clickRightBarItem(sender: AnyObject) {
@@ -330,18 +349,15 @@ extension ConversationViewController{
         
     }
     
-    @IBAction func onClickNextButton(sender: UIView) {
-        if self.isReadingVessages{
-            if playVessageManager.haveNextVessage {
-                sender.animationMaxToMin(0.1, maxScale: 1.2) {
-                    self.playVessageManager.showNextVessage()
-                }
-            }else if playVessageManager.isPresentingVessage{
-                self.playVessageManager.flashTips("THE_LAST_NOT_READ_VESSAGE".localizedString())
-            }else{
-                self.playVideoChatButtonAnimation()
-                self.playFaceTextButtonAnimation()
+    @IBAction func onClickLeftButton(sender: UIView) {
+        self.view.userInteractionEnabled = false
+        self.leftButton.animationMaxToMin(0.1, maxScale: 1.2) {
+            if self.outChatGroup {
+                self.playToast("NOT_IN_CHAT_GROUP".localizedString())
+            }else if self.isReadingVessages {
+                self.showSendImageAlert()
             }
+            self.view.userInteractionEnabled = true
         }
     }
     
@@ -391,19 +407,10 @@ extension ConversationViewController{
             bottomBar.hidden = false
             let barLayerOriginFrame = bottomBar.layer.frame
             bottomBar.layer.frame = CGRectMake(barLayerOriginFrame.origin.x, barLayerOriginFrame.origin.y + barLayerOriginFrame.height, barLayerOriginFrame.width, barLayerOriginFrame.height)
-            nextVessageButton?.hidden = true
             UIView.animateWithDuration(0.1) {
                 self.bottomBar.layer.frame = barLayerOriginFrame
                 self.bottomBarContainer.alpha = 1
                 self.bottomBarContainer.layer.frame = layerOriginFrame
-                let nextVessageButtonLayerFrame = self.nextVessageButton.layer.frame
-                self.nextVessageButton.layer.frame = CGRectMake(nextVessageButtonLayerFrame.origin.x + nextVessageButtonLayerFrame.width, nextVessageButtonLayerFrame.origin.y + nextVessageButtonLayerFrame.height, nextVessageButtonLayerFrame.width, nextVessageButtonLayerFrame.height)
-                self.playVessageManager.refreshNextButton()
-                self.nextVessageButton.alpha = 0.3
-                UIView.animateWithDuration(0.6){
-                    self.nextVessageButton.layer.frame = nextVessageButtonLayerFrame
-                    self.nextVessageButton.alpha = 1
-                }
             }
         }
     }
@@ -588,6 +595,14 @@ extension ConversationViewController{
         }
     }
     
+    func setProgressSending() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.progressView.progress = 0.1
+            self.progressView.hidden = false
+            self.controllerTitle = "VESSAGE_SENDING".localizedString()
+        }
+    }
+    
     private func showSendTellFriendAlert(){
         let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
             let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
@@ -670,7 +685,7 @@ extension ConversationViewController{
 //MARK: animations
 extension ConversationViewController{
     func playNextButtonAnimation(){
-        UIAnimationHelper.flashView(nextVessageButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
+        UIAnimationHelper.flashView(leftButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
     }
     
     func playVideoChatButtonAnimation() {

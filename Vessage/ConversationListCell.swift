@@ -116,7 +116,7 @@ class ConversationListCell:ConversationListCellBase{
                 if String.isNullOrEmpty(self.avatar) {
                     imgView.image = getDefaultAvatar(defaultAvatarId)
                 }else{
-                    ServiceContainer.getService(FileService).setAvatar(imgView, iconFileId: avatar)
+                    ServiceContainer.getFileService().setImage(imgView, iconFileId: avatar)
                 }
             }
         }

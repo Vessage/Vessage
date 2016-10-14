@@ -44,7 +44,7 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     }
     
     override func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
-        ServiceContainer.getService(FileService).sendFileToAliOSS(task.filePath, type: .Video) { (uploadTaskId, fileKey) -> Void in
+        ServiceContainer.getFileService().sendFileToAliOSS(task.filePath, type: .NoType) { (uploadTaskId, fileKey) -> Void in
             if fileKey != nil{
                 task.vessage.fileId = fileKey.fileId
                 task.saveModel()
@@ -64,10 +64,14 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     
     @objc func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let task = uploadDict.removeValueForKey(taskIdentifier){
-            if let path = ServiceContainer.getFileService().getFilePath(task.vessage.fileId, type: .Video){
-                if !PersistentFileHelper.deleteFile(path){
-                    debugLog("Delete Sended Vessage Failed Error:%@", path)
+            var fileDeleted = false
+            if task.vessage.typeId != Vessage.typeFaceText {
+                if let fileId = task.vessage.fileId {
+                    fileDeleted = ServiceContainer.getFileService().removeFile(fileId, type: .NoType)
                 }
+            }
+            if fileDeleted == false {
+                debugLog("Delete Sended Vessage File Error:%@", task.filePath)
             }
             VessageQueue.sharedInstance.nextStep(task)
         }

@@ -289,7 +289,7 @@ extension ChatBackgroundPickerController{
     static func saveChatImage(chatImage:UIImage) -> String?{
         let img = chatImage.scaleToWidthOf(ChatBackgroundPickerController.chatImageWidth)
         let imageData = UIImageJPEGRepresentation(img, ChatBackgroundPickerController.chatImageQuality)
-        let localPath = ServiceContainer.getFileService().createLocalStoreFileName(FileType.Image)
+        let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
         return PersistentFileHelper.storeFile(imageData!, filePath: localPath) ? localPath : nil
     }
     

@@ -31,6 +31,7 @@ class NFCMemberCardAlert:UIViewController{
             imageView.layer.borderWidth = 0.6
             imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageView.superview?.layer.cornerRadius = 10
+            self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMemberCardAlert.onTapImage(_:))))
         }
     }
     @IBOutlet weak var bcgMaskView: UIView!{
@@ -61,7 +62,7 @@ class NFCMemberCardAlert:UIViewController{
     }
     
     private func updateCardView(profile:UserNiceFaceProfile){
-        ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: profile.faceId)
+        ServiceContainer.getFileService().setImage(self.imageView, iconFileId: profile.faceId)
         self.nickLabel.text = profile.nick
         ServiceContainer.getUserService().setUserSexImageView(self.sexImage, sexValue: profile.sex)
         self.likesLabel.text = "\(profile.likes)"
@@ -70,6 +71,10 @@ class NFCMemberCardAlert:UIViewController{
         self.mottoLabel.text = ServiceContainer.getUserService().myProfile.motto ?? "DEFAULT_MOTTO".niceFaceClubString
         self.faceScoreLabel.text = "\(profile.score)"
         self.faceProgress.superview?.hidden = false
+    }
+    
+    func onTapImage(ges:UITapGestureRecognizer) {
+        self.imageView.slideShowFullScreen(self)
     }
     
     func onTapBagMask(_:UITapGestureRecognizer) {

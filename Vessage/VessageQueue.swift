@@ -56,5 +56,6 @@ class VessageQueue: BahamutTaskQueue {
         queueTask.filePath = uploadFileUrl?.path!
         queueTask.vessage = vsg
         pushTask(queueTask)
+        MobClick.event("Vege_ConfirmSendVessage")
     }
 }

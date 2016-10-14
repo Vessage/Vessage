@@ -40,6 +40,8 @@ class VessageHandlerFactory{
             handler = VideoVessageHandler(manager: self.manager,container: self.vessageView)
         case Vessage.typeFaceText:
             handler = FaceTextVessageHandler(manager: self.manager, container: self.vessageView)
+        case Vessage.typeImage:
+            handler = ImageVessageHandler(manager: self.manager, container: self.vessageView)
         default:
             if let h = vessageHandlers[Vessage.typeUnknow]{
                 handler = h

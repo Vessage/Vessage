@@ -243,7 +243,7 @@ class FaceTextImageView: UIView {
         self.loadingImageView.center = self.center
         self.addSubview(self.loadingImageView)
         self.loadingImageView.startAnimating()
-        ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: fileId, defaultImage: getDefaultFace()) { (suc) in
+        ServiceContainer.getFileService().setImage(self.imageView, iconFileId: fileId, defaultImage: getDefaultFace()) { (suc) in
             if self.container == nil{
                 return
             }
@@ -261,7 +261,7 @@ class FaceTextImageView: UIView {
                 }
                 
                 if !suc && timesLeft > 0{
-                    ServiceContainer.getFileService().setAvatar(self.imageView, iconFileId: fileId,defaultImage: getDefaultFace()){ setted in
+                    ServiceContainer.getFileService().setImage(self.imageView, iconFileId: fileId,defaultImage: getDefaultFace()){ setted in
                         if self.container == nil{
                             return
                         }

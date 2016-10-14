@@ -79,10 +79,9 @@ class ConversationViewControllerProxy: NSObject {
         return rootController?.backgroundImage
     }
     
-    var nextVessageButton:UIButton!{
-        return rootController?.nextVessageButton
+    var leftButton:UIButton!{
+        return rootController?.leftButton
     }
-    
     
     func onVessageReceived(vessages:Vessage) {}
     func onChatterUpdated(chatter:VessageUser) {}

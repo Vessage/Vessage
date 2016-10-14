@@ -9,7 +9,6 @@
 import Foundation
 import MJRefresh
 import LTMorphingLabel
-import ImageSlideshow
 import MBProgressHUD
 
 //MARK: NFCMainViewController
@@ -425,7 +424,7 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
             
             let fService = ServiceContainer.getService(FileService)
             let imageData = UIImageJPEGRepresentation(avatarImage,1)
-            let localPath = fService.createLocalStoreFileName(FileType.Image)
+            let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
             
             if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
             {

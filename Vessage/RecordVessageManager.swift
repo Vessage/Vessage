@@ -45,7 +45,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
 extension RecordVessageManager{
     
     override func onSwitchToManager() {
-        nextVessageButton.hidden = true
+        leftButton.hidden = true
         rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Normal)
         rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Highlighted)
         rightButton.hidden = false
@@ -193,7 +193,7 @@ class GroupChatAvatarManager:NSObject {
             imgView.layoutIfNeeded()
             imgView.layer.cornerRadius = self.userFaceIds.count > 1 ? imgView.frame.width / 2 : 0
             imgView.clipsToBounds = self.userFaceIds.count > 1
-            ServiceContainer.getFileService().setAvatar(imgView, iconFileId: fileId, defaultImage: df)
+            ServiceContainer.getFileService().setImage(imgView, iconFileId: fileId, defaultImage: df)
             i += 1
         }
     }
@@ -267,20 +267,20 @@ extension RecordVessageManager{
     }
     
     private func pushNewVessageToQueue(url:NSURL){
-        MobClick.event("Vege_ConfirmSendVessage")
-        dispatch_async(dispatch_get_main_queue()) {
-            self.rootController.progressView.progress = 0.2
-            self.rootController.progressView.hidden = false
-            self.rootController.controllerTitle = "VESSAGE_SENDING".localizedString()
-        }
+        self.rootController.setProgressSending()
         let chatterId = self.conversation.chatterId
         let vsg = Vessage()
         vsg.isGroup = isGroupChat
         vsg.typeId = Vessage.typeChatVideo
+        
         #if DEBUG
-            PersistentFileHelper.deleteFile(url.path!)
-            vsg.fileId = "5790435e99cc251974a42f61"
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
+            if isInSimulator() {
+                PersistentFileHelper.deleteFile(url.path!)
+                vsg.fileId = "5790435e99cc251974a42f61"
+                VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
+            }else{
+                VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
+            }
         #else
             VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
         #endif

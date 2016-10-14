@@ -269,7 +269,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
     func getAvatarCell() -> MyDetailAvatarCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailAvatarCell.reuseIdentifier) as! MyDetailAvatarCell
-        ServiceContainer.getService(FileService).setAvatar(cell.avatarImageView, iconFileId: myProfile.avatar)
+        ServiceContainer.getFileService().setImage(cell.avatarImageView, iconFileId: myProfile.avatar)
         ServiceContainer.getUserService().setUserSexImageView(cell.sexImageView, sexValue: myProfile.sex)
         cell.mottoLabel.text = myProfile.motto ?? "DEFAULT_VGER_MOTTO".localizedString()
         cell.nickNameLabel.text = myProfile.nickName

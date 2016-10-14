@@ -207,7 +207,9 @@ NEED_SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友哦~";
 SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友哦~";
 
 UNKNOW_USER = "佚名";
+NO_NOT_READ_VESSAGE = "还没有收到消息~";
 THE_LAST_NOT_READ_VESSAGE = "已经是最后一条消息了";
+NO_PREVIOUS_VESSAGE = "前面没有消息了~";
 NOTE_CONVERSATION_A_NAME = "修改联系人备注";
 CONVERSATION_NAME = "备注";
 NOTE = "备注";
@@ -337,3 +339,7 @@ SMS_CODE_SENDED_MSG = "请等候短信，30秒后可重新发送";
 NOT_MOBILE_NO = "请填写正确的手机号";
 NOT_SMS_CODE = "请填写正确的验证码";
 X_SEC_RESEND_SMS_CODE = "%d秒后可再次发送验证码";
+
+SEND_IMAGE = "发送图片";
+SELECT_IMG_SOURCE = "选择图片来源";
+PROCESS_IMAGE_ERROR = "处理图片错误";

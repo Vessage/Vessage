@@ -36,7 +36,7 @@ class SelectVessageUserListCell: UITableViewCell {
             if String.isNullOrEmpty(user.avatar) {
                 avatarImage.image = getDefaultAvatar(user.accountId ?? "0")
             }else{
-                ServiceContainer.getService(FileService).setAvatar(avatarImage, iconFileId: user.avatar)
+                ServiceContainer.getFileService().setImage(avatarImage, iconFileId: user.avatar)
             }
         }
     }

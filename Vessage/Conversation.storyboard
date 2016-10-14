@@ -107,9 +107,6 @@
                                             <constraint firstAttribute="width" constant="64" id="Dnx-F3-3hY"/>
                                         </constraints>
                                         <state key="normal" image="chat"/>
-                                        <connections>
-                                            <action selector="onClickMiddleButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="eiz-Ad-16A"/>
-                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vtn-Gc-h4f">
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -155,9 +152,9 @@
                                             <constraint firstAttribute="width" constant="48" id="3gB-oJ-aCn"/>
                                             <constraint firstAttribute="height" constant="48" id="azJ-jj-U0v"/>
                                         </constraints>
-                                        <state key="normal" title="图聊" image="play_next"/>
+                                        <state key="normal" title="图聊" image="send_image_btn"/>
                                         <connections>
-                                            <action selector="onClickNextButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="1eV-8N-ZaV"/>
+                                            <action selector="onClickLeftButton:" destination="fyq-GP-eaY" eventType="touchUpInside" id="1eV-8N-ZaV"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -225,8 +222,8 @@
                         <outlet property="conversationLeftTopLabel" destination="xNx-lk-PEP" id="gag-ny-JeT"/>
                         <outlet property="conversationRightBottomLabel" destination="JH5-p9-HH6" id="vzw-5K-dPD"/>
                         <outlet property="groupFaceContainer" destination="ZVm-Y7-rGc" id="gFz-2T-NLR"/>
+                        <outlet property="leftButton" destination="J6g-yL-8Wr" id="9uD-UH-Ht6"/>
                         <outlet property="middleButton" destination="gJj-nO-NGN" id="yIX-vm-ZrY"/>
-                        <outlet property="nextVessageButton" destination="J6g-yL-8Wr" id="9uD-UH-Ht6"/>
                         <outlet property="noSmileFaceTipsLabel" destination="khg-HQ-ttM" id="YZx-tJ-IFT"/>
                         <outlet property="previewRectView" destination="Jug-Iz-prr" id="kyn-0a-3Pl"/>
                         <outlet property="progressView" destination="m0w-W8-lr9" id="C9s-Xk-ADJ"/>
@@ -395,6 +392,6 @@
         <image name="defaultAvatar" width="128" height="128"/>
         <image name="image_chat_btn" width="128" height="128"/>
         <image name="next" width="72" height="72"/>
-        <image name="play_next" width="256" height="256"/>
+        <image name="send_image_btn" width="128" height="128"/>
     </resources>
 </document>

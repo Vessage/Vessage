@@ -170,6 +170,7 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     
     private func sendImageChatVessage() {
         if let chatImage = self.chatImageBoardController.selectedChatImage{
+            self.setProgressSending()
             let textMessage = self.imageChatInputView.inputTextField.text
             
             self.imageChatInputView.inputTextField.text = nil

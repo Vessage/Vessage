@@ -10,15 +10,6 @@ import Foundation
 
 //MARK: PlayVessageManager
 class PlayVessageManager: ConversationViewControllerProxy {
-    
-    var haveNextVessage:Bool{
-        return notReadVessages.count > 1
-    }
-    
-    var isPresentingVessage:Bool{
-        return self.presentingVesseage != nil
-    }
-    
     private var flashTipsView:UILabel!{
         didSet{
             flashTipsView.clipsToBounds = true
@@ -28,6 +19,8 @@ class PlayVessageManager: ConversationViewControllerProxy {
             flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         }
     }
+    
+    private var currentVessageHandler:VessageHandler!
     
     private var vessageHandlerFactory:VessageHandlerFactory!
     
@@ -54,18 +47,19 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     override func onSwitchToManager() {
+        leftButton.hidden = false
         rightButton.hidden = false
         rightButton.setImage(UIImage(named: "image_chat_btn"), forState: .Normal)
         rightButton.setImage(UIImage(named: "image_chat_btn"), forState: .Highlighted)
         recordButton.setImage(UIImage(named: "chat"), forState: .Normal)
         recordButton.setImage(UIImage(named: "chat"), forState: .Highlighted)
-        refreshNextButton()
         super.onSwitchToManager()
     }
     
     override func onReleaseManager() {
         ServiceContainer.getVessageService().removeObserver(self)
         vessageHandlerFactory.release()
+        removeReadedVessages()
         super.onReleaseManager()
     }
     
@@ -83,14 +77,40 @@ class PlayVessageManager: ConversationViewControllerProxy {
     private var notReadVessages = [Vessage](){
         didSet{
             presentingVesseage = getNeedPresentVessage()
-            refreshNextButton()
             refreshBadge()
         }
     }
     
+    var haveNextVessage:Bool{
+        return notReadVessages.count > currentVessageIndex
+    }
+    
+    var havePreviousVessage:Bool{
+        return notReadVessages.count > 0 && currentVessageIndex > 0
+    }
+    
+    var currentVessageIndex = 0{
+        didSet{
+            if let vsg = getNeedPresentVessage() {
+                self.presentingVesseage = vsg
+            }
+        }
+    }
+    
+    var currentIndexVessage:Vessage?{
+        return notReadVessages.count > currentVessageIndex ? notReadVessages[currentVessageIndex] : nil
+    }
+    
+    
+    var isPresentingVessage:Bool{
+        return self.presentingVesseage != nil
+    }
+    
+    private var removedVessages = [String:Vessage]()
+    
     private func getNeedPresentVessage() -> Vessage?{
-        if notReadVessages.count > 0{
-            return notReadVessages.first
+        if notReadVessages.count > currentVessageIndex{
+            return notReadVessages[currentVessageIndex]
         }else{
             if let chatterId = self.conversation?.chatterId{
                 if let newestVsg = vessageService.getCachedNewestVessage(chatterId){
@@ -101,8 +121,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
         return nil
     }
-    
-    private var currentVessageHandler:VessageHandler!
     
     private var presentingVesseage:Vessage!{
         didSet{
@@ -188,7 +206,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
             })
             notReadVessages = vessages
         }else{
-            refreshNextButton()
             vessageView?.hidden = presentingVesseage == nil
         }
     }
@@ -202,23 +219,32 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     //MARK: actions
-    func refreshNextButton() {
-        self.nextVessageButton?.hidden = !haveNextVessage
-    }
     
     func refreshBadge(){
         self.badgeValue = notReadVessages.filter{!$0.isRead}.count
     }
     
-    func showNextVessage() {
-        if !haveNextVessage {
+    func showPreviousVessage() {
+        if !havePreviousVessage {
+            self.flashTips("NO_PREVIOUS_VESSAGE".localizedString())
             return
         }
-        if self.presentingVesseage.isRead{
+        if currentVessageIndex > 0 {
+            currentVessageIndex -= 1
+        }
+    }
+    
+    func showNextVessage() {
+        if notReadVessages.count == 0 {
+            self.flashTips("NO_NOT_READ_VESSAGE".localizedString())
+        }else if notReadVessages.count - 1 <= currentVessageIndex{
+            self.flashTips("THE_LAST_NOT_READ_VESSAGE".localizedString())
+        }else if self.presentingVesseage.isRead{
             loadNextVessage()
         }else{
             let continueAction = UIAlertAction(title: "CONTINUE".localizedString(), style: .Default, handler: { (action) -> Void in
                 MobClick.event("Vege_JumpVessage")
+                self.vessageService.readVessage(self.presentingVesseage)
                 self.loadNextVessage()
             })
             rootController.showAlert("CLICK_NEXT_MESSAGE_TIPS_TITLE".localizedString(), msg: "CLICK_NEXT_MESSAGE_TIPS".localizedString(), actions: [ALERT_ACTION_I_SEE,continueAction])
@@ -226,18 +252,38 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     private func loadNextVessage(){
-        if notReadVessages.count <= 1{
-            rootController.playToast("THE_LAST_NOT_READ_VESSAGE".localizedString())
+        if let cv = currentIndexVessage {
+            removedVessages.updateValue(cv, forKey: cv.vessageId)
+            currentVessageIndex += 1
         }else{
-            let vsg = notReadVessages.removeFirst()
-            vessageService.removeVessage(vsg)
-            if let filePath = fileService.getFilePath(vsg.fileId, type: .Video){
-                PersistentFileHelper.deleteFile(filePath)
+            self.flashTips("NO_NOT_READ_VESSAGE".localizedString())
+        }
+    }
+    
+    func removeReadedVessages() {
+        dispatch_async(dispatch_get_main_queue()) {
+            let vService = ServiceContainer.getVessageService()
+            let fService = ServiceContainer.getFileService()
+            
+            self.removedVessages.forEach { (key,value) in
+                vService.removeVessage(value)
+                var removed = false
+                if value.typeId == Vessage.typeChatVideo{
+                    removed = fService.removeFile(value.fileId, type: .Video)
+                }else if value.typeId == Vessage.typeImage{
+                    removed = fService.removeFile(value.fileId, type: .Image)
+                }
+                if removed{
+                    debugLog("Vessage File Removed:%@", value.fileId)
+                }else{
+                    debugLog("Remove Vessage File Fail:%@", value.fileId)
+                }
             }
         }
     }
     
     deinit{
+        
         #if DEBUG
             print("Deinited:\(self.description)")
         #endif

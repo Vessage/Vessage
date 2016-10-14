@@ -266,7 +266,7 @@ extension ChatGroupProfileViewController:UICollectionViewDelegate,UICollectionVi
     }
     
     private func updateCell(cell:GroupUserCollectionCell,user:VessageUser){
-        fileService.setAvatar(cell.avatar, iconFileId: user.avatar,defaultImage: getDefaultAvatar(user.accountId ?? ""))
+        fileService.setImage(cell.avatar, iconFileId: user.avatar,defaultImage: getDefaultAvatar(user.accountId ?? ""))
         cell.nick.text = userService.getUserNotedName(user.userId)
     }
 }

@@ -310,6 +310,7 @@ extension ConversationViewController{
                 self.playToast("NOT_IN_CHAT_GROUP".localizedString())
             }else if self.isReadingVessages {
                 if self.needSetChatBackgroundAndShow() {
+                    self.view.userInteractionEnabled = true
                     return
                 }
                 self.startRecording()

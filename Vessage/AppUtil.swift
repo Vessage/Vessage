@@ -300,7 +300,45 @@ extension UIImageView{
             ctr.slideshow.pageControlPosition = .Hidden
             let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
             ctr.transitioningDelegate = slideshowTransitioningDelegate
-            vc.presentViewController(ctr, animated: true, completion: nil)
+            vc.presentViewController(ctr, animated: true){
+                ctr.enableTapViewCloseController()
+            }
         }
+    }
+}
+
+extension FullScreenSlideshowViewController{
+    func enableTapViewCloseController(hideCloseButton:Bool = true) {
+        if hideCloseButton {
+            self.closeButton.hidden = hideCloseButton
+        }
+        let ges = UITapGestureRecognizer(target: self, action: #selector(FullScreenSlideshowViewController.onTapView(_:)))
+        ges.numberOfTapsRequired = 1
+        self.slideshow.slideshowItems.forEach { (item) in
+            if let iges = item.gestureRecognizer{
+                ges.requireGestureRecognizerToFail(iges)
+            }
+        }
+        self.view.addGestureRecognizer(ges)
+    }
+    
+    func disableTapViewCloseController() {
+        self.closeButton.hidden = false
+        if let gess = self.view.gestureRecognizers{
+            gess.forEach({ (ges) in
+                if let g = ges as? UITapGestureRecognizer{
+                    g.removeTarget(self, action: #selector(FullScreenSlideshowViewController.onTapView(_:)))
+                }
+            })
+        }
+    }
+    
+    func onTapView(tap:UITapGestureRecognizer) {
+        // if pageSelected closure set, send call it with current page
+        if let pageSelected = pageSelected {
+            pageSelected(page: slideshow.scrollViewPage)
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

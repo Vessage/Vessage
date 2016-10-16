@@ -622,7 +622,7 @@ extension ConversationViewController{
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
         }else{
             let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
-            ConversationViewController.showConversationViewController(nvc, conversation: conversation)
+            ConversationViewController.showConversationViewController(nvc, conversation: conversation,initMessage: initMessage)
         }
         
     }

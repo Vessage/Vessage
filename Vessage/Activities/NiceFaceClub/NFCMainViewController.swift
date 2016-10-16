@@ -22,6 +22,7 @@ class NFCMainViewController: UIViewController {
             tableView.tableFooterView = UIView()
         }
     }
+    private var postingAnimationImageView:UIImageView!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     private(set) var profile:UserNiceFaceProfile!
     
@@ -154,6 +155,7 @@ extension NFCMainViewController{
     }
     
     @IBAction func newPostButton(sender: AnyObject) {
+        
         if tryShowForbiddenAnymoursAlert(){
             return
         }
@@ -178,6 +180,42 @@ extension NFCMainViewController{
             return true
         }
         return false
+    }
+    
+    func playPostingIndicatorAnimation(img:UIImage?) {
+        if img == nil {
+            return
+        }
+        if nil == postingAnimationImageView {
+            self.postingAnimationImageView = UIImageView()
+            self.postingAnimationImageView.contentMode = .ScaleAspectFill
+        }
+        let width = self.view.frame.width - 20
+        let height = width
+        let y = (self.view.frame.height - height) / 2
+        let frame = CGRectMake(0 - width, y, width, height)
+        self.postingAnimationImageView.frame = frame
+        self.postingAnimationImageView.image = img
+        self.view.addSubview(postingAnimationImageView)
+        
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
+        animation.fromValue = NSValue(CGPoint: CGPointMake(self.view.frame.width / 2, self.view.frame.height / 2))
+        animation.toValue = NSValue(CGPoint: CGPointMake(0 + 36, self.view.frame.height - 24))
+        animation.duration = 0.6
+        
+        let animation2 = CABasicAnimation(keyPath: "transform.scale")
+        animation2.fromValue = CGFloat(1)
+        animation2.toValue = CGFloat(0.01)
+        animation2.duration = 0.6
+        animation2.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        
+        postingAnimationImageView.layer.addAnimation(animation2, forKey: "postingScale")
+        self.postingAnimationImageView.hidden = false
+        UIAnimationHelper.playAnimation(self.postingAnimationImageView, animation: animation, key: "movePostingImg") {
+            self.postingAnimationImageView.hidden = true
+            self.postingAnimationImageView.removeFromSuperview()
+        }
     }
 }
 
@@ -420,10 +458,10 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
 extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
         picker.dismissViewControllerAnimated(true) {
-            let avatarImage = image.scaleToWidthOf(600, quality: 0.8)
+            let imageForSend = image.scaleToWidthOf(600, quality: 0.8)
             
             let fService = ServiceContainer.getService(FileService)
-            let imageData = UIImageJPEGRepresentation(avatarImage,1)
+            let imageData = UIImageJPEGRepresentation(imageForSend,1)
             let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
             
             if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
@@ -438,6 +476,9 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                         post.img = fk.fileId
                         post.pid = taskId
                         self.posting.insert(post, atIndex: 0)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.playPostingIndicatorAnimation(imageForSend)
+                        })
                     }else{
                         self.playToast("POST_NEW_ERROR".niceFaceClubString)
                     }

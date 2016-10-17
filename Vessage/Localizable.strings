@@ -172,7 +172,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 //APP Motto
 "VESSAGE_MOTTO_0" = "高颜值俱乐部";
 "VESSAGE_MOTTO_1" = "想聊就聊，不聊消失";
-"VESSAGE_MOTTO_2" = "高颜值者的秘密花园";
+"VESSAGE_MOTTO_2" = "个性聊天";
 "VESSAGE_MOTTO_3" = "视频对讲";
 "VESSAGE_MOTTO_4" = "大头贴聊天";
 "VESSAGE_MOTTO_5" = "体验不一样的贴纸聊天";

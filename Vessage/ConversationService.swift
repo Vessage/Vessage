@@ -261,6 +261,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversation
     }
     
+    func existsConversationOfUserId(userId:String) -> Bool {
+        return (conversations.filter{userId == $0.chatterId ?? ""}).count > 0
+    }
+    
     func openConversationByUserId(userId:String) -> Conversation {
         
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{

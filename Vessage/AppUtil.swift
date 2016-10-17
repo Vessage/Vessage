@@ -298,6 +298,7 @@ extension UIImageView{
             // set the inputs
             ctr.inputs = slideshow.images
             ctr.slideshow.pageControlPosition = .Hidden
+            ctr.modalTransitionStyle = .CrossDissolve
             let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
             ctr.transitioningDelegate = slideshowTransitioningDelegate
             vc.presentViewController(ctr, animated: true){

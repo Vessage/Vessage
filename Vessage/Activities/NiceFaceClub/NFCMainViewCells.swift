@@ -10,14 +10,56 @@ import Foundation
 import MJRefresh
 import LTMorphingLabel
 
+@objc protocol NFCMainInfoCellDelegate {
+    optional func nfcMainInfoCellDidClickNewComment(sender:UIView,cell:NFCMainInfoCell)
+    optional func nfcMainInfoCellDidClickNewLikes(sender:UIView,cell:NFCMainInfoCell)
+    optional func nfcMainInfoCellDidClickMyPosts(sender:UIView,cell:NFCMainInfoCell)
+}
+
 class NFCMainInfoCell: UITableViewCell {
     static let reuseId = "NFCMainInfoCell"
-    
-    @IBOutlet weak var nextTipsLabel: UILabel!
-    @IBOutlet weak var nextImageView: UIImageView!
+    weak var delegate:NFCMainInfoCellDelegate?
+    @IBOutlet weak var nextTipsLabel: UILabel!{
+        didSet{
+            nextTipsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMainInfoCell.onTapViews(_:))))
+        }
+    }
+    @IBOutlet weak var nextImageView: UIImageView!{
+        didSet{
+            nextImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMainInfoCell.onTapViews(_:))))
+        }
+    }
     @IBOutlet weak var announcementLabel: UILabel!
-    @IBOutlet weak var newCmtLabel: LTMorphingLabel!
-    @IBOutlet weak var newLikesLabel: LTMorphingLabel!
+    @IBOutlet weak var newCommentImageView: UIImageView!{
+        didSet{
+            newCommentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMainInfoCell.onTapViews(_:))))
+        }
+    }
+    @IBOutlet weak var newCmtLabel: LTMorphingLabel!{
+        didSet{
+            newCmtLabel.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMainInfoCell.onTapViews(_:))))
+        }
+    }
+    @IBOutlet weak var likeImageView: UIImageView!{
+        didSet{
+            likeImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMainInfoCell.onTapViews(_:))))
+        }
+    }
+    @IBOutlet weak var newLikesLabel: LTMorphingLabel!{
+        didSet{
+            newLikesLabel.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMainInfoCell.onTapViews(_:))))
+        }
+    }
+    
+    func onTapViews(a:UITapGestureRecognizer) {
+        if a.view == newCmtLabel || a.view == newCommentImageView {
+            delegate?.nfcMainInfoCellDidClickNewComment?(a.view!,cell:self)
+        }else if a.view == newLikesLabel || a.view == likeImageView{
+            delegate?.nfcMainInfoCellDidClickNewLikes?(a.view!,cell:self)
+        }else if a.view == nextTipsLabel || a.view == nextImageView{
+            delegate?.nfcMainInfoCellDidClickMyPosts?(a.view!,cell:self)
+        }
+    }
 }
 
 class NFCPostCell: UITableViewCell {
@@ -127,7 +169,8 @@ extension NFCPostCell{
                 if String.isNullOrWhiteSpace(userId){
                     self.rootController?.playCrossMark("NO_MEMBER_USERID_FOUND".niceFaceClubString)
                 }else{
-                    let msg = ["input_text":"NFC_HELLO".niceFaceClubString]
+                    
+                    let msg:[String:AnyObject]? = ServiceContainer.getConversationService().existsConversationOfUserId(userId!) ? nil : ["input_text":"NFC_HELLO".niceFaceClubString]
                     ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: userId!,initMessage: msg)
                 }
             })
@@ -150,7 +193,12 @@ extension NFCPostCell{
                 return;
             }
             let hud = self.rootController?.showActivityHud()
-            NFCPostManager.instance.likePost(self.post.pid, callback: { (suc) in
+            let profile = self.rootController!.profile
+            var profileId = profile.id
+            if profileId == NiceFaceClubManager.AnonymousProfileId{
+               profileId = nil
+            }
+            NFCPostManager.instance.likePost(self.post.pid,mbId: profileId,nick: profile.nick, callback: { (suc) in
                 hud?.hideAnimated(true)
                 if(suc){
                     self.post.lc += 1

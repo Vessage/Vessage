@@ -89,3 +89,7 @@ NFC_HELLO = "你好，很高兴在高颜值俱乐部认识你！";
 NEED_LIKE_TO_JOIN_NFC = "需要得到其他会员点赞后才能正式加入";
 MY_NFC_POST_WALL = "我的照片";
 UNKNOW_DATE_TIME = "失落的时间";
+
+NFC_POST_COMMENT_NAME = "只言片语";
+NFC_MEMBER = "俱乐部会员";
+NFC_ANONYMOUS = "普通用户";

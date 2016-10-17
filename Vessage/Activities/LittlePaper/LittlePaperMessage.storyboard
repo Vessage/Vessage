@@ -150,10 +150,10 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LittlePaperMessageListCell" rowHeight="56" id="Afb-F3-K2o" customClass="LittlePaperMessageListCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="56"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="56"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Afb-F3-K2o" id="H0M-04-IZB">
-                                            <frame key="frameInset" width="375" height="56"/>
+                                            <frame key="frameInset" width="1000" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3q-cU-qHh">
@@ -431,9 +431,9 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="YN3-20-iuO"/>
                                                     <exclude reference="xhL-Ww-HJb"/>
                                                     <exclude reference="zYu-Cr-TFE"/>
-                                                    <exclude reference="YN3-20-iuO"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

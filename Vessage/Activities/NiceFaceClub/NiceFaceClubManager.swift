@@ -17,7 +17,7 @@ extension String{
 class NiceFaceClubManager:NSObject {
     static let lastRefreshMemberTimeKey = "REFRESHED_MEMBER_PROFILE_HOURS"
     static let refreshMemberProfileIntervalHours = NSNumber(double: 1)
-    
+    static let AnonymousProfileId = "Anonymous"
     static let minScore:Float = 8.0
     static let instance:NiceFaceClubManager = {
         let mgr = NiceFaceClubManager()

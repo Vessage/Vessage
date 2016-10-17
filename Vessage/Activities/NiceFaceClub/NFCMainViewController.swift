@@ -285,8 +285,8 @@ extension NFCMainViewController{
     private func anonymousMode(){
         self.profile = UserNiceFaceProfile()
         self.profile.faceId = nil
-        self.profile.nick = ""
-        self.profile.id = "Anonymous"
+        self.profile.nick = ServiceContainer.getUserService().myProfile.nickName
+        self.profile.id = NiceFaceClubManager.AnonymousProfileId
         self.profile.score = 6.0
         self.profile.sex = 0
         self.profile.mbAcpt = true
@@ -405,6 +405,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
             cell.newCmtLabel.text = "+\(self.boardData?.ncmt.friendString ?? "0")"
             cell.nextImageView.hidden = listType == NFCPost.typeMyPost
             cell.nextTipsLabel.hidden = cell.nextImageView.hidden
+            cell.delegate = self
             switch listType {
             case NFCPost.typeMyPost:
                 cell.announcementLabel.text = "MY_NFC_POST_WALL".niceFaceClubString
@@ -441,14 +442,49 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell?.selected = false
-        if indexPath.section == 0 {
-            if tryShowForbiddenAnymoursAlert() {
-                return
-            }
-            switchListType(NFCPost.typeMyPost)
-        }else{
+        if indexPath.section != 0 {
             if let post = postOfIndexPath(indexPath){
                 NFCPostCommentViewController.showNFCMemberCardAlert(self.navigationController!, post: post)
+            }
+        }
+    }
+}
+
+//MARK: NFCMainInfoCellDelegate
+extension NFCMainViewController:NFCMainInfoCellDelegate{
+    func nfcMainInfoCellDidClickMyPosts(sender:UIView,cell:NFCMainInfoCell) {
+        if tryShowForbiddenAnymoursAlert() {
+            return
+        }
+        cell.nextImageView.animationMaxToMin(0.1, maxScale: 1.2) {
+            self.switchListType(NFCPost.typeMyPost)
+        }
+    }
+    
+    func nfcMainInfoCellDidClickNewLikes(sender:UIView,cell:NFCMainInfoCell) {
+        if tryShowForbiddenAnymoursAlert() {
+            return
+        }
+        cell.likeImageView.animationMaxToMin(0.1, maxScale: 1.2) {
+            if let cnt = self.boardData?.nlks{
+                self.boardData?.nlks = 0
+                let ctr = NFCReceivedLikeViewController.instanceFromStoryBoard()
+                self.navigationController?.pushViewController(ctr, animated: true)
+                ctr.loadInitLikes(cnt == 0 ? 10 : cnt)
+            }
+        }
+    }
+    
+    func nfcMainInfoCellDidClickNewComment(sender:UIView,cell:NFCMainInfoCell) {
+        if tryShowForbiddenAnymoursAlert() {
+            return
+        }
+        cell.newCommentImageView.animationMaxToMin(0.1, maxScale: 1.2) {
+            if let cnt = self.boardData?.ncmt{
+                self.boardData?.ncmt = 0
+                let ctr = NFCMyCommentViewController.instanceFromStoryBoard()
+                self.navigationController?.pushViewController(ctr, animated: true)
+                ctr.loadInitComments(cnt == 0 ? 10 : cnt)
             }
         }
     }

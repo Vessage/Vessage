@@ -53,7 +53,7 @@ class NFCPostManager {
     
     func getNFCPosts(type:Int,startTimeSpan:Int64,pageCount:Int,callback:(posts:[NFCPost])->Void) {
 
-        let req:GetNFCPostBase!
+        let req:GetNFCValuesRequestBase!
         if type == NFCPost.typeMyPost {
             req = GetMyNFCPostRequest()
         }else if type == NFCPost.typeNewMemberPost {
@@ -78,10 +78,12 @@ class NFCPostManager {
         return likedPost[postId] ?? false
     }
     
-    func likePost(postId:String,callback:(suc:Bool)->Void) {
+    func likePost(postId:String,mbId:String!,nick:String!,callback:(suc:Bool)->Void) {
 
         let req = NFCLikePostRequest()
         req.postId = postId
+        req.memberId = mbId
+        req.nick = nick
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
             if result.isSuccess{
                 self.likedPost.updateValue(true, forKey: postId)
@@ -110,11 +112,12 @@ class NFCPostManager {
         }
     }
     
-    func newPostComment(postId:String,comment:String,callback:(posted:Bool,msg:String?)->Void) {
-
+    func newPostComment(postId:String,comment:String,atMember:String! = nil,atUserNick:String! = nil,callback:(posted:Bool,msg:String?)->Void) {
         let req = NFCNewCommentRequest()
         req.postId = postId
         req.comment = comment
+        req.atMember = atMember
+        req.atUserNick = atUserNick
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             callback(posted: result.isSuccess,msg: result.returnObject?.msg)
         }
@@ -126,6 +129,24 @@ class NFCPostManager {
         req.postId = postId
         req.ts = ts
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[NFCPostComment]>) in
+            callback(comments: result.returnObject)
+        }
+    }
+    
+    func getMyComments(ts:Int64,cnt:Int,callback:(comments:[NFCPostComment]?)->Void) {
+        let req = GetNFCMyCommentsRequest()
+        req.cnt = cnt
+        req.ts = ts
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[NFCPostComment]>) in
+            callback(comments: result.returnObject)
+        }
+    }
+    
+    func getMyReceivedLikes(ts:Int64,cnt:Int,callback:(comments:[NFCPostLike]?)->Void) {
+        let req = GetNFCMyReceivedLikesRequest()
+        req.ts = ts
+        req.cnt = cnt
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[NFCPostLike]>) in
             callback(comments: result.returnObject)
         }
     }

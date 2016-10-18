@@ -156,8 +156,6 @@ class ValidateMobileViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func logout(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true){
-        }
         self.delegate?.validateMobileCancel?(self)
     }
     

@@ -88,15 +88,6 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         BahamutRFKit.sharedInstance.addObserver(self, selector: #selector(EntryNavigationController.onTokenInvalidated(_:)), name: BahamutRFKit.onTokenInvalidated, object: nil)
     }
     
-    //MARK:ValidateMobileViewController Delegate
-    func validateMobile(sender: ValidateMobileViewController, rebindedNewUserId: String) {
-        ServiceContainer.getAccountService().reBindUserId(rebindedNewUserId)
-    }
-    
-    func validateMobileCancel(sender: ValidateMobileViewController) {
-        ServiceContainer.instance.userLogout()
-    }
-    
     func onTokenInvalidated(_:AnyObject)
     {
         logoutWithAlert("USER_APP_TOKEN_TIMEOUT".localizedString())
@@ -185,4 +176,28 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
             }
         })
     }
+}
+
+//MARK:ValidateMobileViewController Delegate
+extension EntryNavigationController{
+    func validateMobile(sender: ValidateMobileViewController, rebindedNewUserId: String) {
+        ServiceContainer.getAccountService().reBindUserId(rebindedNewUserId)
+    }
+    
+    func validateMobileCancel(sender: ValidateMobileViewController) {
+        let ignore = UIAlertAction(title: "IGNORE_SETUP_MOBILE".localizedString(), style: .Default) { (ac) in
+            ServiceContainer.getUserService().useTempMobile()
+            sender.dismissViewControllerAnimated(true, completion: nil)
+        }
+        let resume = UIAlertAction(title: "CONTINUE_SETUP_MOBILE".localizedString(), style: .Cancel) { (ac) in
+            
+        }
+        self.showAlert("CANCEL_SETUP_MOBILE_TITLE".localizedString(), msg: "CANCEL_SETUP_MOBILE_MSG".localizedString(), actions: [resume,ignore])
+        
+    }
+    
+    func validateMobile(sender: ValidateMobileViewController, suc: Bool) {
+        
+    }
+    
 }

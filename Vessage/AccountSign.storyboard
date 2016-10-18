@@ -210,7 +210,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK1-Vr-nom">
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="取消">
+                                <state key="normal" title="跳过">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -249,7 +249,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ue-Kf-gUY">
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="仅用于匹配手机好友(不可逆加密匹配)">
+                                <state key="normal" title="仅用于匹配好友，点击查看安全匹配规则">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>

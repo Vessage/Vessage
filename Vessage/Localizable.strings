@@ -194,6 +194,11 @@ CANT_CHAT_WITH_YOURSELF = "不能和自己对话哦>_<";
 CHOOSE_PHONE_NO = "选择手机号";
 PEOPLE_NO_MOBILE = "没有手机号";
 
+IGNORE_SETUP_MOBILE = "跳过设置";
+CONTINUE_SETUP_MOBILE = "继续设置";
+CANCEL_SETUP_MOBILE_TITLE = "确定跳过设置手机号？";
+CANCEL_SETUP_MOBILE_MSG = "跳过后将接收不到朋友通过手机号发送给你的消息，建议继续设置";
+
 OPEN_MOBILE_CONVERSATION_FAIL = "打开对话出错，请检查网络>_<";
 
 ASK_REMOVE_CONVERSATION_TITLE = "确定移除对话?";

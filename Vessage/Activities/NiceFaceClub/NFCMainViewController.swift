@@ -99,6 +99,7 @@ extension NFCMainViewController{
         tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(NFCMainViewController.mjFooterRefresh(_:)))
         tableView?.mj_footer.automaticallyHidden = true
         homeButton.superview?.superview?.superview?.hidden = true
+        MobClick.event("NFC_Login")
     }
     
     func mjFooterRefresh(a:AnyObject?) {

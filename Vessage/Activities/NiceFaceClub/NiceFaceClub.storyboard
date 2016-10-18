@@ -456,7 +456,7 @@
                                                         <constraint firstAttribute="height" constant="22" id="weq-Cr-GMQ"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnP-y9-q2a" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
+                                                <label opaque="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DnP-y9-q2a" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -472,7 +472,7 @@
                                                         <constraint firstAttribute="width" constant="22" id="OIh-9j-bxN"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ach-De-Sta" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
+                                                <label opaque="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ach-De-Sta" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -485,7 +485,7 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Ach-De-Sta" firstAttribute="leading" secondItem="36T-hu-Bwd" secondAttribute="trailing" constant="8" id="0Mi-e2-xfh"/>
+                                                <constraint firstItem="Ach-De-Sta" firstAttribute="leading" secondItem="36T-hu-Bwd" secondAttribute="trailing" id="0Mi-e2-xfh"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="HYJ-JD-hQO" secondAttribute="trailing" id="3GO-Ke-i4Q"/>
                                                 <constraint firstItem="lg6-fE-XnT" firstAttribute="centerY" secondItem="MGH-fS-RAk" secondAttribute="centerY" id="6v9-FV-pbu"/>
                                                 <constraint firstItem="HYJ-JD-hQO" firstAttribute="top" secondItem="Ssq-q2-7HA" secondAttribute="bottom" constant="12" id="A8f-tl-R0e"/>
@@ -494,14 +494,14 @@
                                                 <constraint firstItem="DnP-y9-q2a" firstAttribute="centerY" secondItem="Ssq-q2-7HA" secondAttribute="centerY" id="FsZ-AQ-CZJ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="HYJ-JD-hQO" secondAttribute="bottom" id="JC5-Ku-lnF"/>
                                                 <constraint firstItem="MGH-fS-RAk" firstAttribute="width" secondItem="36T-hu-Bwd" secondAttribute="width" id="Ncy-tH-AKg"/>
-                                                <constraint firstAttribute="topMargin" secondItem="Ssq-q2-7HA" secondAttribute="top" id="RK7-Ph-BuI"/>
+                                                <constraint firstAttribute="topMargin" secondItem="Ssq-q2-7HA" secondAttribute="top" constant="-6" id="RK7-Ph-BuI"/>
                                                 <constraint firstItem="Ach-De-Sta" firstAttribute="centerY" secondItem="36T-hu-Bwd" secondAttribute="centerY" id="YcM-EL-7X1"/>
                                                 <constraint firstItem="MGH-fS-RAk" firstAttribute="leading" secondItem="lg6-fE-XnT" secondAttribute="trailing" constant="8" id="gaq-bw-sA1"/>
                                                 <constraint firstItem="36T-hu-Bwd" firstAttribute="leading" secondItem="DnP-y9-q2a" secondAttribute="trailing" constant="25" id="gk1-dX-cRh"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="Ssq-q2-7HA" secondAttribute="leading" id="luV-cq-GLt"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="MGH-fS-RAk" secondAttribute="trailing" constant="6" id="o4W-8y-HfV"/>
                                                 <constraint firstItem="HYJ-JD-hQO" firstAttribute="leading" secondItem="Ssq-q2-7HA" secondAttribute="leading" id="uUd-vs-rMs"/>
-                                                <constraint firstItem="DnP-y9-q2a" firstAttribute="leading" secondItem="Ssq-q2-7HA" secondAttribute="trailing" constant="8" id="v5D-XD-Ljg"/>
+                                                <constraint firstItem="DnP-y9-q2a" firstAttribute="leading" secondItem="Ssq-q2-7HA" secondAttribute="trailing" id="v5D-XD-Ljg"/>
                                                 <constraint firstItem="36T-hu-Bwd" firstAttribute="centerY" secondItem="DnP-y9-q2a" secondAttribute="centerY" id="vK7-9T-hCX"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -903,10 +903,10 @@
                                 <color key="sectionIndexBackgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.72999999999999998" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NFCPostCommentCell" rowHeight="80" id="Wxi-XX-zXS" customClass="NFCPostCommentCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wxi-XX-zXS" id="eB3-TM-7BP">
-                                            <frame key="frameInset" width="375" height="80"/>
+                                            <frame key="frameInset" width="1000" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyZ-eX-JTp">
@@ -1113,10 +1113,10 @@
                                 <color key="sectionIndexBackgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.72999999999999998" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NFCReceivedLikeCell" rowHeight="84" id="tSc-LO-Rfa" customClass="NFCReceivedLikeCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="84"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="84"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tSc-LO-Rfa" id="rGl-xc-Sz5">
-                                            <frame key="frameInset" width="375" height="84"/>
+                                            <frame key="frameInset" width="1000" height="84"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKF-7l-u8E">

@@ -19,6 +19,7 @@ class NFCReceivedLikeCell: UITableViewCell {
     static let reuseId = "NFCReceivedLikeCell"
     @IBOutlet weak var postImageView: UIImageView!{
         didSet{
+            postImageView.contentMode = .ScaleAspectFill
             postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCReceivedLikeCell.onTapViews(_:))))
         }
     }

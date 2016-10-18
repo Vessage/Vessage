@@ -34,7 +34,15 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private let getActiveUserIntervalHours = 6.0
     private let getNearUserIntervalHours = 2.0
     private var userNotedNames = [String:String]()
-    private(set) var myProfile:VessageUser!
+    private(set) var myProfile:VessageUser!{
+        didSet{
+            if let _ = myProfile{
+                if !isUserMobileValidated && UserSetting.isSettingEnable("USE_TMP_MOBILE") {
+                    myProfile.mobile = defaultTempMobile
+                }
+            }
+        }
+    }
     private var myChatImages = [ChatImage]()
     private(set) var activeUsers = [VessageUser]()
     private(set) var nearUsers = [VessageUser]()
@@ -541,9 +549,22 @@ class ValidateMobileResult:MsgResult{
     var newUserId:String!
 }
 
+let defaultTempMobile = "13600000000"
+
 extension UserService{
+    
+    var isTempMobileUser:Bool{
+        return isUserMobileValidated && self.myProfile.mobile == defaultTempMobile
+    }
+    
+    func useTempMobile() {
+        self.myProfile.mobile = defaultTempMobile
+        self.myProfile.saveModel()
+        UserSetting.enableSetting("USE_TMP_MOBILE")
+    }
+    
     func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
-        
+        UserSetting.disableSetting("USE_TMP_MOBILE")
         let req = SendMobileVSMSRequest()
         req.mobile = mobile
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
@@ -557,7 +578,7 @@ extension UserService{
     }
     
     func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,callback:(suc:Bool,newUserId:String?)->Void){
-        
+        UserSetting.disableSetting("USE_TMP_MOBILE")
         let req = ValidateMobileVSMSRequest()
         req.smsAppkey = smsAppkey
         req.mobile = mobile

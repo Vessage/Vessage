@@ -127,7 +127,9 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         propertySet = UIEditTextPropertySet()
         propertySet.propertyIdentifier = InfoIds.changePsw
         propertySet.propertyLabel = "BIND_MOBILE".localizedString()
-        if let mobile = myProfile.mobile{
+        if ServiceContainer.getUserService().isTempMobileUser {
+            propertySet.propertyValue = "NOT_SET".localizedString()
+        }else if let mobile = myProfile.mobile{
             let length = mobile.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
             let subfix = mobile.substringFromIndex(length - 4)
             propertySet.propertyValue = "***\(subfix)"

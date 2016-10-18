@@ -93,3 +93,5 @@ UNKNOW_DATE_TIME = "失落的时间";
 NFC_POST_COMMENT_NAME = "只言片语";
 NFC_MEMBER = "俱乐部会员";
 NFC_ANONYMOUS = "普通用户";
+DATE_X_LIKE_YOUR_IMG = "%@赞了你的照片";
+CHAT_WITH_TA = "和Ta搭讪";

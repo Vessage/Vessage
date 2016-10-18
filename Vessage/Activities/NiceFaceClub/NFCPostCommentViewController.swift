@@ -176,7 +176,7 @@ class NFCPostCommentViewController: UIViewController {
         }
     }
     
-    static func showNFCMemberCardAlert(vc:UINavigationController, post:NFCPost) -> NFCPostCommentViewController{
+    static func showPostCommentViewController(vc:UINavigationController, post:NFCPost) -> NFCPostCommentViewController{
         let controller = instanceFromStoryBoard("NiceFaceClub", identifier: "NFCPostCommentViewController") as! NFCPostCommentViewController
         controller.post = post
         vc.pushViewController(controller, animated: true)

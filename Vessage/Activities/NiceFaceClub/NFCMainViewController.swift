@@ -284,13 +284,7 @@ extension NFCMainViewController{
     }
     
     private func anonymousMode(){
-        self.profile = UserNiceFaceProfile()
-        self.profile.faceId = nil
-        self.profile.nick = ServiceContainer.getUserService().myProfile.nickName
-        self.profile.id = NiceFaceClubManager.AnonymousProfileId
-        self.profile.score = 6.0
-        self.profile.sex = 0
-        self.profile.mbAcpt = true
+        self.profile = NiceFaceClubManager.instance.anonymousMode()
         switchListType(NFCPost.typeNormalPost)
         showViews()
     }
@@ -314,7 +308,7 @@ extension NFCMainViewController{
     }
     
     private func start(){
-        if profile.id != "Anonymous" && (profile.score < NiceFaceClubManager.minScore || profile.mbAcpt == false){
+        if !profile.isAnonymous() && (profile.score < NiceFaceClubManager.minScore || profile.mbAcpt == false){
             self.showBenchMarkAlert()
         }else{
             self.switchListType(NFCPost.typeNormalPost)
@@ -445,7 +439,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
         cell?.selected = false
         if indexPath.section != 0 {
             if let post = postOfIndexPath(indexPath){
-                NFCPostCommentViewController.showNFCMemberCardAlert(self.navigationController!, post: post)
+                NFCPostCommentViewController.showPostCommentViewController(self.navigationController!, post: post)
             }
         }
     }

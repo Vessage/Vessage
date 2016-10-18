@@ -14,10 +14,16 @@ extension String{
     }
 }
 
+extension UserNiceFaceProfile{
+    func isAnonymous() -> Bool {
+        return self.id != nil && self.id == NiceFaceClubManager.AnonymousProfileId
+    }
+}
+
 class NiceFaceClubManager:NSObject {
     static let lastRefreshMemberTimeKey = "REFRESHED_MEMBER_PROFILE_HOURS"
     static let refreshMemberProfileIntervalHours = NSNumber(double: 1)
-    static let AnonymousProfileId = "Anonymous"
+    private static let AnonymousProfileId = "Anonymous"
     static let minScore:Float = 8.0
     static let instance:NiceFaceClubManager = {
         let mgr = NiceFaceClubManager()
@@ -41,6 +47,17 @@ class NiceFaceClubManager:NSObject {
     private func refreshCachedMyFaceProfile() -> UserNiceFaceProfile? {
         self.userId = ServiceContainer.getUserService().myProfile.userId
         self.myNiceFaceProfile = PersistentManager.sharedInstance.getModel(UserNiceFaceProfile.self, idValue: userId)
+        return self.myNiceFaceProfile
+    }
+    
+    func anonymousMode() -> UserNiceFaceProfile{
+        self.myNiceFaceProfile = UserNiceFaceProfile()
+        self.myNiceFaceProfile.faceId = nil
+        self.myNiceFaceProfile.nick = ServiceContainer.getUserService().myProfile.nickName
+        self.myNiceFaceProfile.id = NiceFaceClubManager.AnonymousProfileId
+        self.myNiceFaceProfile.score = 6.0
+        self.myNiceFaceProfile.sex = 0
+        self.myNiceFaceProfile.mbAcpt = true
         return self.myNiceFaceProfile
     }
     

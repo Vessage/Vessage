@@ -19,10 +19,28 @@ class NFCMemberCardAlert:UIViewController{
             self.faceScoreLabel.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(NFCMemberCardAlert.onTapImage(_:))))
         }
     }
+    var chatable:Bool{
+        if let profile = NiceFaceClubManager.instance.myNiceFaceProfile{
+            return profile.isAnonymous() == false && profile.mbId != profileId
+        }
+        return false
+    }
+    var editable:Bool{
+        if let mbId = NiceFaceClubManager.instance.myNiceFaceProfile?.mbId{
+            return mbId == profileId
+        }
+        return false
+    }
+    
+    
     @IBOutlet weak var sexImage: UIImageView!
     @IBOutlet weak var mottoLabel: UILabel!
     @IBOutlet weak var nickLabel: UILabel!
-    @IBOutlet weak var likesLabel: UILabel!
+    @IBOutlet weak var likesLabel: UILabel!{
+        didSet{
+            likesLabel.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCMemberCardAlert.onTapCard(_:))))
+        }
+    }
     @IBOutlet weak var faceProgress: KDCircularProgress!
     @IBOutlet weak var imageView: UIImageView!{
         didSet{
@@ -75,6 +93,60 @@ class NFCMemberCardAlert:UIViewController{
         self.faceProgress.superview?.hidden = false
     }
     
+    private func modifyNiceFace(aleadyMember:Bool = true){
+        let controller = SetupNiceFaceViewController.instanceFromStoryBoard()
+        self.presentViewController(controller, animated: true){
+            if aleadyMember{
+                NFCMessageAlert.showNFCMessageAlert(controller, title: "NICE_FACE_CLUB".niceFaceClubString, message: "UPDATE_YOUR_NICE_FACE".niceFaceClubString)
+            }
+        }
+    }
+    
+    func onTapCard(ges:UITapGestureRecognizer) {
+        var actions = [UIAlertAction]()
+        
+        if editable {
+            let modifyNiceFace = UIAlertAction(title: "MODIFY_NICE_FACE".niceFaceClubString, style: .Default) { (ac) in
+                self.modifyNiceFace()
+            }
+            let userSettig = UIAlertAction(title: "UPDATE_MEMBER_PROFILE".niceFaceClubString, style: .Default) { (ac) in
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+                UserSettingViewController.showUserSettingViewController(self.navigationController!)
+            }
+            actions.append(modifyNiceFace)
+            actions.append(userSettig)
+        }
+        
+        if chatable {
+            let chatAction = UIAlertAction(title: "CHAT_WITH_TA".niceFaceClubString, style: .Default, handler: { (ac) in
+                self.chatWithMember()
+            })
+            actions.append(chatAction)
+        }
+        
+        if actions.count > 0 {
+            actions.append(ALERT_ACTION_CANCEL)
+            let alertController = UIAlertController(title: nickLabel.text, message: nil, preferredStyle: .ActionSheet)
+            actions.forEach{alertController.addAction($0)}
+            self.showAlert(alertController)
+        }
+    }
+    
+    private func chatWithMember(){
+        let hud = self.showActivityHud()
+        NFCPostManager.instance.chatMember(self.profileId, callback: { (userId) in
+            hud.hideAnimated(true)
+            if String.isNullOrWhiteSpace(userId){
+                self.playCrossMark("NO_MEMBER_USERID_FOUND".niceFaceClubString)
+            }else{
+                
+                let msg:[String:AnyObject]? = ServiceContainer.getConversationService().existsConversationOfUserId(userId!) ? nil : ["input_text":"NFC_HELLO".niceFaceClubString]
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+                ConversationViewController.showConversationViewController(self.navigationController!, userId: userId!,initMessage: msg)
+            }
+        })
+    }
+    
     func onTapImage(ges:UITapGestureRecognizer) {
         self.imageView.slideShowFullScreen(self)
     }
@@ -90,6 +162,7 @@ class NFCMemberCardAlert:UIViewController{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         bcgMaskView.hidden = true
     }
     
@@ -115,10 +188,12 @@ class NFCMemberCardAlert:UIViewController{
     
     static func showNFCMemberCardAlert(vc:UIViewController, memberId:String) -> NFCMemberCardAlert{
         let controller = instanceFromStoryBoard("NiceFaceClub", identifier: "NFCMemberCardAlert") as! NFCMemberCardAlert
-        controller.providesPresentationContextTransitionStyle = true
-        controller.definesPresentationContext = true
-        controller.modalPresentationStyle = .OverCurrentContext
-        vc.presentViewController(controller, animated: true) {
+        let nvc = UINavigationController(rootViewController: controller)
+        nvc.setNavigationBarHidden(true, animated: false)
+        nvc.providesPresentationContextTransitionStyle = true
+        nvc.definesPresentationContext = true
+        nvc.modalPresentationStyle = .OverCurrentContext
+        vc.presentViewController(nvc, animated: true) {
             controller.profileId = memberId
         }
         return controller

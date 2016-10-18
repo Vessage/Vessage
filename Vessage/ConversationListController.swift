@@ -207,7 +207,7 @@ class ConversationListController: UITableViewController {
     
     //MARK: actions
     @IBAction func showUserSetting(sender: AnyObject) {
-        UserSettingViewController.showUserSettingViewController(self.navigationController!)
+        UserSettingViewController.showUserSettingViewController(self.navigationController!,basicMode: false)
     }
     
     @IBAction func tellFriends(sender: AnyObject) {

@@ -20,12 +20,18 @@ class NFCReceivedLikeCell: UITableViewCell {
     @IBOutlet weak var postImageView: UIImageView!{
         didSet{
             postImageView.contentMode = .ScaleAspectFill
+            postImageView.clipsToBounds = true
             postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCReceivedLikeCell.onTapViews(_:))))
         }
     }
     @IBOutlet weak var likeUserNickLabel: UILabel!{
         didSet{
             likeUserNickLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCReceivedLikeCell.onTapViews(_:))))
+        }
+    }
+    @IBOutlet weak var userInfoLabel: UILabel!{
+        didSet{
+            userInfoLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCReceivedLikeCell.onTapViews(_:))))
         }
     }
     @IBOutlet weak var likeInfoLabel: UILabel!{
@@ -37,8 +43,10 @@ class NFCReceivedLikeCell: UITableViewCell {
     weak var delegate:NFCLikeCellDelegate?
     func updateCell() {
         if let lk = like{
-            likeInfoLabel.text = String.isNullOrWhiteSpace(lk.mbId) ? "NFC_ANONYMOUS".niceFaceClubString : "NFC_MEMBER".niceFaceClubString
+            userInfoLabel.text = String.isNullOrWhiteSpace(lk.mbId) ? "NFC_ANONYMOUS".niceFaceClubString : "NFC_MEMBER".niceFaceClubString
             likeUserNickLabel.text = lk.nick
+            let timeString = lk.getPostDateFriendString()
+            likeInfoLabel.text = String(format: "DATE_X_LIKE_YOUR_IMG".niceFaceClubString, timeString)
             ServiceContainer.getFileService().setImage(self.postImageView, iconFileId: lk.img, defaultImage: UIImage(named:"nfc_post_img_bcg"), callback: nil)
         }
     }
@@ -46,7 +54,7 @@ class NFCReceivedLikeCell: UITableViewCell {
     func onTapViews(ges:UITapGestureRecognizer) {
         if ges.view == postImageView {
             delegate?.nfcLikeCellDidClickImage?(ges.view!, cell: self, like: like)
-        }else if ges.view == likeUserNickLabel{
+        }else if ges.view == likeUserNickLabel || ges.view == userInfoLabel{
             delegate?.nfcLikeCellDidClickPoster?(ges.view!, cell: self, like: like)
         }else if ges.view == likeInfoLabel{
             delegate?.nfcLikeCellDidClickLikeInfo?(ges.view!, cell: self, like: like)

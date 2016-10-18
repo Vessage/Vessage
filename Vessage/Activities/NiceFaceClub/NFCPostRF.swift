@@ -86,11 +86,16 @@ class NFCPostLike: EVObject {
 }
 
 extension NFCPostLike{
-    func getPostDateFriendString() -> String {
+    func getPostDateFriendString(formatter:NSDateFormatter! = nil) -> String {
         if ts <= 0 {
             return "UNKNOW_DATE_TIME".niceFaceClubString
         }
-        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
+        var fmt = formatter
+        if formatter == nil{
+            fmt = NSDateFormatter()
+            fmt.dateFormat = ""
+        }
+        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString(fmt)
     }
 }
 

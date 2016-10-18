@@ -81,6 +81,7 @@ class NFCPostCell: UITableViewCell {
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
             imageContentView.userInteractionEnabled = true
+            imageContentView.clipsToBounds = true
             imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCPostCell.onTapImage(_:))))
         }
     }
@@ -154,7 +155,7 @@ class NFCPostCell: UITableViewCell {
 
 extension NFCPostCell{
     @IBAction func onClickNewComment(sender: AnyObject) {
-        NFCPostCommentViewController.showNFCMemberCardAlert(self.rootController!.navigationController!, post: self.post)
+        NFCPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post)
     }
     
     @IBAction func onClickChat(sender: AnyObject) {
@@ -194,16 +195,12 @@ extension NFCPostCell{
             }
             let hud = self.rootController?.showActivityHud()
             let profile = self.rootController!.profile
-            var profileId = profile.id
-            if profileId == NiceFaceClubManager.AnonymousProfileId{
-               profileId = nil
-            }
-            NFCPostManager.instance.likePost(self.post.pid,mbId: profileId,nick: profile.nick, callback: { (suc) in
+            let memberId = profile.mbId ?? nil
+            NFCPostManager.instance.likePost(self.post.pid,mbId: memberId,nick: profile.nick, callback: { (suc) in
                 hud?.hideAnimated(true)
                 if(suc){
                     self.post.lc += 1
                     self.playLikeAnimation()
-                    
                 }else{
                     self.rootController?.playCrossMark("LIKE_POST_OP_ERROR".niceFaceClubString)
                 }

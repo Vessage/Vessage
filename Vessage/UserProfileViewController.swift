@@ -124,7 +124,7 @@ class UserProfileViewController: UIViewController {
     
     func onUserProfileUpdated(a:NSNotification) {
         if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if user.userId == profile.userId {
+            if profile != nil && user.userId == profile.userId {
                 self.profile = user
             }
         }

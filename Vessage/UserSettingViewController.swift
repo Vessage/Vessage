@@ -87,6 +87,8 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         static let useTink = "useTink"
     }
     
+    var basicMode = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -195,11 +197,14 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        //user infos + about + clear tmp file + exit account
+        if basicMode {
+            return textPropertyCells.count > 0 ? 1 : 0
+        }
         return textPropertyCells.count > 0 ? 2 : 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //user infos + about + clear tmp file + exit account
         if section == 0
         {
             return 1 + textPropertyCells.count
@@ -302,8 +307,10 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         return cell
     }
     
-    static func showUserSettingViewController(navController:UINavigationController){
-        navController.pushViewController(instanceFromStoryBoard(), animated: true)
+    static func showUserSettingViewController(navController:UINavigationController,basicMode:Bool = true){
+        let controller = instanceFromStoryBoard()
+        controller.basicMode = basicMode
+        navController.pushViewController(controller, animated: true)
     }
     
     static func instanceFromStoryBoard()->UserSettingViewController{

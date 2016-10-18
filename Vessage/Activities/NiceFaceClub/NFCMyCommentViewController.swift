@@ -32,6 +32,7 @@ class NFCMyCommentCell: UITableViewCell {
     @IBOutlet weak var postImageView: UIImageView!{
         didSet{
             postImageView.contentMode = .ScaleAspectFill
+            postImageView.clipsToBounds = true
             postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCMyCommentCell.onTapViews(_:))))
         }
     }

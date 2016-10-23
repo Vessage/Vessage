@@ -92,7 +92,6 @@ class NFCPostCommentViewController: UIViewController {
     
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -184,6 +183,7 @@ class NFCPostCommentViewController: UIViewController {
     }
 }
 
+//MARK: NFCCommentInputViewDelegate
 extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
     func commentInputViewDidClickSend(sender: NFCCommentInputView, textField: UITextField) {
         let cmt = textField.text

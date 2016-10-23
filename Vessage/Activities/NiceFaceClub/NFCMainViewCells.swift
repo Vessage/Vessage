@@ -85,7 +85,6 @@ class NFCPostCell: UITableViewCell {
             imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCPostCell.onTapImage(_:))))
         }
     }
-    
     @IBOutlet weak var commentTipsLabel: UILabel!
     
     weak var rootController:NFCMainViewController?
@@ -154,6 +153,60 @@ class NFCPostCell: UITableViewCell {
 }
 
 extension NFCPostCell{
+    
+    @IBAction func onClickMore(sender: AnyObject) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        var isPoster = false
+        
+        if let mbId = NiceFaceClubManager.instance.myNiceFaceProfile.mbId {
+            if mbId == post.pster {
+                isPoster = true
+            }
+        }
+        
+        if isPoster {
+            let ac = UIAlertAction(title: "DELETE_POST".niceFaceClubString, style: .Default, handler: { (ac) in
+                let dtPst = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+                    let hud = self.rootController!.showActivityHud()
+                    NFCPostManager.instance.deletePost(self.post.pid, callback: { (suc) in
+                        hud.hideAnimated(true)
+                        if suc{
+                            self.rootController?.playCheckMark(){
+                                self.rootController?.removePost(self.post.pid)
+                            }
+                        }else{
+                            self.rootController?.playCrossMark()
+                        }
+                    })
+                })
+                self.rootController!.showAlert("DELETE_POST".niceFaceClubString, msg: "SURE_DELETE_POST".niceFaceClubString, actions: [dtPst,ALERT_ACTION_CANCEL])
+                
+            })
+            alert.addAction(ac)
+        }else{
+            let ac = UIAlertAction(title: "REPORT_POST".niceFaceClubString, style: .Default, handler: { (ac) in
+                
+                let rpPst = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+                    let hud = self.rootController!.showActivityHud()
+                    NFCPostManager.instance.reportObjectionablePost(self.post.pid, callback: { (suc) in
+                        hud.hideAnimated(true)
+                        if suc{
+                            self.rootController?.playCheckMark()
+                        }else{
+                            self.rootController?.playCrossMark()
+                        }
+                        
+                    })
+                })
+                self.rootController!.showAlert("REPORT_POST".niceFaceClubString, msg: "SURE_REPORT_POST".niceFaceClubString, actions: [rpPst,ALERT_ACTION_CANCEL])
+                
+            })
+            alert.addAction(ac)
+        }
+        alert.addAction(ALERT_ACTION_CANCEL)
+        self.rootController!.showAlert(alert)
+    }
+    
     @IBAction func onClickNewComment(sender: AnyObject) {
         NFCPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post)
     }
@@ -221,19 +274,26 @@ extension NFCPostCell{
     }
     
     @IBAction func godBlockMemberClick(sender: AnyObject){
-        let hud = self.rootController?.showActivityHud()
-        NFCPostManager.instance.godBlockMember(post.mbId) { suc in
-            hud?.hideAnimated(true)
-            suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+        let ac = UIAlertAction(title: "Yes", style: .Default) { (a) in
+            let hud = self.rootController?.showActivityHud()
+            NFCPostManager.instance.godBlockMember(self.post.mbId) { suc in
+                hud?.hideAnimated(true)
+                suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+            }
         }
+        self.rootController?.showAlert("Block Member", msg: "Block This User Forever?", actions: [ac,ALERT_ACTION_CANCEL])
+        
     }
     
     @IBAction func godRmPostClick(sender: AnyObject){
-        let hud = self.rootController?.showActivityHud()
-        NFCPostManager.instance.godDeletePost(post.pid) { suc in
-            hud?.hideAnimated(true)
-            suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+        let ac = UIAlertAction(title: "Yes", style: .Default) { (a) in
+            let hud = self.rootController?.showActivityHud()
+            NFCPostManager.instance.godDeletePost(self.post.pid) { suc in
+                hud?.hideAnimated(true)
+                suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
+            }
         }
+        self.rootController?.showAlert("Remove Post", msg: "Remove This Post Forever?", actions: [ac,ALERT_ACTION_CANCEL])
     }
     
 }

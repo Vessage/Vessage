@@ -371,12 +371,12 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
+                                                        <constraint firstItem="z6V-vc-gCF" firstAttribute="leading" secondItem="owJ-Qh-Jhk" secondAttribute="leading" constant="20" id="9XL-cv-Gs7"/>
                                                         <constraint firstItem="z6V-vc-gCF" firstAttribute="centerY" secondItem="e22-Xt-HAS" secondAttribute="centerY" id="C6x-h9-bb4"/>
                                                         <constraint firstItem="zAt-oO-4ht" firstAttribute="centerY" secondItem="owJ-Qh-Jhk" secondAttribute="centerY" id="FkX-ir-V98"/>
                                                         <constraint firstAttribute="height" constant="64" id="Xvy-QA-xRg"/>
                                                         <constraint firstItem="zAt-oO-4ht" firstAttribute="leading" secondItem="e22-Xt-HAS" secondAttribute="trailing" constant="30" id="btk-Kz-Bob"/>
                                                         <constraint firstItem="e22-Xt-HAS" firstAttribute="leading" secondItem="z6V-vc-gCF" secondAttribute="trailing" constant="30" id="neR-d4-AsO"/>
-                                                        <constraint firstAttribute="trailing" secondItem="zAt-oO-4ht" secondAttribute="trailing" constant="8" id="sad-uW-CfD"/>
                                                         <constraint firstItem="e22-Xt-HAS" firstAttribute="centerY" secondItem="zAt-oO-4ht" secondAttribute="centerY" id="xcc-bG-jpk"/>
                                                     </constraints>
                                                 </view>
@@ -385,6 +385,15 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xF5-s9-axe">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                    <state key="normal" title="...">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onClickMore:" destination="nrq-gL-vuh" eventType="touchUpInside" id="42Y-CZ-RdA"/>
+                                                    </connections>
+                                                </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nfc_comment" translatesAutoresizingMaskIntoConstraints="NO" id="gwU-Oa-P4M">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="enc-mX-6pm"/>
@@ -417,11 +426,13 @@
                                                 <constraint firstItem="LJJ-0Y-1WM" firstAttribute="leading" secondItem="gwU-Oa-P4M" secondAttribute="trailing" constant="6" id="aCq-3P-76Q"/>
                                                 <constraint firstItem="gwU-Oa-P4M" firstAttribute="centerY" secondItem="VaJ-AK-Rhv" secondAttribute="centerY" id="dtD-6V-Qh2"/>
                                                 <constraint firstItem="VH4-a1-J7h" firstAttribute="width" secondItem="fsT-Aa-aXD" secondAttribute="width" id="efS-cc-Fss"/>
+                                                <constraint firstItem="xF5-s9-axe" firstAttribute="top" secondItem="TLX-ik-zPo" secondAttribute="top" constant="6" id="iLP-DA-hWB"/>
                                                 <constraint firstItem="TLX-ik-zPo" firstAttribute="top" secondItem="vKm-Xn-9gd" secondAttribute="topMargin" id="ilk-CC-HLh"/>
                                                 <constraint firstItem="S5e-AY-GPk" firstAttribute="trailing" secondItem="TLX-ik-zPo" secondAttribute="trailing" constant="-6" id="mGv-xN-e1j"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="8tU-sX-ucd" secondAttribute="trailing" constant="6" id="nN7-xR-8Xb"/>
                                                 <constraint firstItem="S5e-AY-GPk" firstAttribute="leading" secondItem="n3Q-xk-MGv" secondAttribute="trailing" constant="16" id="oZD-0t-ytP"/>
                                                 <constraint firstItem="VH4-a1-J7h" firstAttribute="leading" secondItem="fsT-Aa-aXD" secondAttribute="trailing" constant="10" id="oxT-My-Xli"/>
+                                                <constraint firstItem="xF5-s9-axe" firstAttribute="trailing" secondItem="TLX-ik-zPo" secondAttribute="trailing" constant="-6" id="qBW-85-bvm"/>
                                                 <constraint firstItem="fsT-Aa-aXD" firstAttribute="height" secondItem="S5e-AY-GPk" secondAttribute="height" id="tpv-05-p3L"/>
                                                 <constraint firstItem="VH4-a1-J7h" firstAttribute="centerY" secondItem="fsT-Aa-aXD" secondAttribute="centerY" id="wMi-UU-XLx"/>
                                                 <constraint firstItem="TLX-ik-zPo" firstAttribute="leading" secondItem="vKm-Xn-9gd" secondAttribute="leadingMargin" id="wv0-Bf-Jsb"/>
@@ -444,10 +455,10 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NFCMainInfoCell" rowHeight="90" id="Wn7-rb-9G0" customClass="NFCMainInfoCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="436" width="375" height="90"/>
+                                        <rect key="frame" x="0.0" y="436" width="1000" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wn7-rb-9G0" id="QkN-6u-BCW">
-                                            <frame key="frameInset" width="375" height="90"/>
+                                            <frame key="frameInset" width="1000" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_red" translatesAutoresizingMaskIntoConstraints="NO" id="Ssq-q2-7HA">
@@ -1113,10 +1124,10 @@
                                 <color key="sectionIndexBackgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.72999999999999998" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NFCReceivedLikeCell" rowHeight="84" id="tSc-LO-Rfa" customClass="NFCReceivedLikeCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="84"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="84"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tSc-LO-Rfa" id="rGl-xc-Sz5">
-                                            <frame key="frameInset" width="375" height="84"/>
+                                            <frame key="frameInset" width="1000" height="84"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKF-7l-u8E">

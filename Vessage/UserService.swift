@@ -32,7 +32,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private var forceGetUserProfileOnce:Bool = false
     private let notUpdateUserInMinutes:Double = 18
     private let getActiveUserIntervalHours = 6.0
-    private let getNearUserIntervalHours = 2.0
+    private let getNearUserIntervalHours = 1.0
     private var userNotedNames = [String:String]()
     private(set) var myProfile:VessageUser!{
         didSet{
@@ -260,7 +260,7 @@ extension UserService{
         }
     }
     
-    func getNearUsers(location:String,checkTime:Bool = false,callback:(([VessageUser])->Void)? = nil){
+    func getNearUsers(location:String,checkTime:Bool = true,callback:(([VessageUser])->Void)? = nil){
         let key = "GET_NEAR_USERS_TIME"
         if checkTime{
             if let time = UserSetting.getUserNumberValue(key){

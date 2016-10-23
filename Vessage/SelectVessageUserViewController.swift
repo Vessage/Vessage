@@ -32,11 +32,13 @@ class SelectVessageUserListCell: UITableViewCell {
     
     var user:VessageUser!{
         didSet{
-            nickLabel.text = ServiceContainer.getUserService().getUserNotedName(user.userId)
-            if String.isNullOrEmpty(user.avatar) {
-                avatarImage.image = getDefaultAvatar(user.accountId ?? "0")
-            }else{
-                ServiceContainer.getFileService().setImage(avatarImage, iconFileId: user.avatar)
+            if let u = user{
+                nickLabel.text = ServiceContainer.getUserService().getUserNotedNameIfExists(u.userId) ?? u.nickName
+                if String.isNullOrEmpty(u.avatar) {
+                    avatarImage.image = getDefaultAvatar(u.accountId ?? "0")
+                }else{
+                    ServiceContainer.getFileService().setImage(avatarImage, iconFileId: user.avatar)
+                }
             }
         }
     }
@@ -154,7 +156,9 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         if showNearUsers {
             if let location = ServiceContainer.getLocationService().hereLocationString{
                 userService.getNearUsers(location, callback: { (nearUsers) in
-                    self.nearUsers = nearUsers
+                    if nearUsers.count > 0{
+                        self.nearUsers = nearUsers
+                    }
                 })
             }
         }

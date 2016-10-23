@@ -44,6 +44,10 @@ class VessageUser: BahamutObject {
     
     var sex = 0
     
+    var acTs:Int64 = 0
+    var location:[Double]!
+    
+    
 }
 
 extension VessageUser{

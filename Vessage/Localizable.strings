@@ -51,6 +51,7 @@ NO = "否";
 OK = "好";
 I_SEE = "知道了";
 REMOVE = "移除";
+BACK = "返回";
 INVALID_VALUE = "设置无效";
 USE_ANOTHER_VALUE = "请使用另外的值!";
 CONTINUE = "继续";
@@ -70,6 +71,7 @@ UNKNOW_ACTION = "未知操作";
 INIT_USER_DATA_ERROR = "获取用户数据失败，请重新登录!";
 UNKNOW_ERROR = "发生未知错误";
 UNKNOW_TIME = "消失的时间";
+PRIVACY = "隐私政策";
 
 //System
 SETTING = "Setting";
@@ -280,8 +282,11 @@ NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
 UNLOADED_USER = "佚名";
 ACTIVE_USERS = "广场";
 INVITE_FRIENDS_TO_CONVERSATION = "邀请更多小伙伴来玩VG聊天吧~";
-ACTIVE_USER = "活跃的VGer";
-NEAR_USER = "附近的VGer";
+ACTIVE_USER = "活跃的人";
+NEAR_USER = "附近的人";
+NEAR_USER_AT_X = "附近%@m";
+ACTIVE_NEAR_USER_AT_X = "活跃于附近%@m";
+ACTIVE_NEAR_USER = "在附近活跃的人";
 CONVERSATION_USERS = "正在对话的好友";
 
 VSG_READED = "已读";

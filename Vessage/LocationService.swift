@@ -36,8 +36,20 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
         self.locationManager.startUpdatingLocation()
     }
     
-    private(set) var here:CLLocation!
-    
+    private var _here:CLLocation!
+    private(set) var here:CLLocation!{
+        get{
+            #if DEBUG
+                if isInSimulator() {
+                    return CLLocation(latitude: 23.1, longitude: 113.3)
+                }
+            #endif
+            return _here
+        }
+        set{
+            _here = newValue
+        }
+    }
     var hereLocationString:String!{
         if let h = here{
             return "{ \"type\": \"Point\", \"coordinates\": [\(h.coordinate.longitude), \(h.coordinate.latitude)] }"

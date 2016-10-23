@@ -287,3 +287,31 @@ class GetNFCMyCommentsRequest: GetNFCValuesRequestBase {
         self.method = .GET
     }
 }
+
+class DeleteNFCPostRequest: GetNFCValuesRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/Posts"
+        self.method = .DELETE
+    }
+    
+    var postId:String!{
+        didSet{
+            paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+}
+
+class ReportObjectionableNFCPostRequest: GetNFCValuesRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/ObjectionablePosts"
+        self.method = .PUT
+    }
+    
+    var postId:String!{
+        didSet{
+            paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+}

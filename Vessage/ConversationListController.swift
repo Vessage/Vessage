@@ -124,7 +124,7 @@ class ConversationListController: UITableViewController {
             self.refreshedNewUserTime = NSDate()
             let locationService = ServiceContainer.getLocationService()
             if let hereLocation = locationService.hereLocationString{
-                ServiceContainer.getUserService().getNearUsers(hereLocation)
+                ServiceContainer.getUserService().getNearUsers(hereLocation,checkTime: false)
             }
             ServiceContainer.getUserService().getActiveUsers(){ users in
                 self.tableView.mj_header?.endRefreshing()

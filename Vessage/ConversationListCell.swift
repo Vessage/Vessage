@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreLocation
+
 //MARK: ConversationListCellBase
 class ConversationListCellBase:UITableViewCell{
     weak var rootController:ConversationListController!
@@ -88,6 +90,22 @@ class ConversationListCell:ConversationListCellBase{
     @IBOutlet weak var subLineLabel: UILabel!
     
     var conversationListCellHandler:ConversationListCellHandler!
+    
+    func getUserDistance(user:VessageUser!)->Double?{
+        if (user?.location?.count ?? 0 ) >= 2 {
+            let lat = user.location[1]
+            let lon = user.location[0]
+            let p2 = CLLocation(latitude: lat, longitude: lon)
+            if let p1 = ServiceContainer.getLocationService().here{
+                let dis = p1.distanceFromLocation(p2)
+                return dis
+            }
+        }
+        
+        return nil
+    }
+    
+    
     var originModel:AnyObject?{
         didSet{
             pinMark?.hidden = true
@@ -95,15 +113,30 @@ class ConversationListCell:ConversationListCellBase{
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
             }else if let searchResult = originModel as? SearchResultModel{
-                if let conversation = searchResult.conversation{
-                    updateWithConversation(conversation)
-                }else if let user = searchResult.user{
-                    updateWithUser(user)
-                    if searchResult.activeUser {
-                        subLine = "ACTIVE_USER".localizedString()
+                switch searchResult.type {
+                case .userActiveNear:
+                    updateWithUser(searchResult.user)
+                    var sl = "ACTIVE_NEAR_USER".localizedString()
+                    if let dis = getUserDistance(searchResult.user){
+                        sl = String(format: "ACTIVE_NEAR_USER_AT_X".localizedString(), Int(dis).friendString)
                     }
-                }else if let mobile = searchResult.mobile{
-                    updateWithMobile(mobile)
+                    subLine = sl
+                    
+                case .userActive:
+                    updateWithUser(searchResult.user)
+                    subLine = "ACTIVE_USER".localizedString()
+                case .userNear:
+                    updateWithUser(searchResult.user)
+                    var sl = "NEAR_USER".localizedString()
+                    if let dis = getUserDistance(searchResult.user){
+                        sl = String(format: "NEAR_USER_AT_X".localizedString(), Int(dis).friendString)
+                    }
+                    subLine = sl
+                case .userNormal:updateWithUser(searchResult.user)
+                case .mobile:updateWithMobile(searchResult.mobile)
+                case .conversation:updateWithConversation(searchResult.conversation)
+                default: break
+                    
                 }
             }
         }
@@ -212,7 +245,7 @@ class ConversationListCell:ConversationListCellBase{
     }
     
     private func updateWithUser(user:VessageUser){
-        self.headLine = self.rootController.userService.getUserNotedName(user.userId)
+        self.headLine = self.rootController.userService.getUserNotedNameIfExists(user.userId) ?? user.nickName
         self.subLine = user.accountId
         self.updateAvatarWithUser(user)
         self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(user.userId)

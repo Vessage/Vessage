@@ -153,6 +153,25 @@ class NFCPostManager {
     
 }
 
+//MARK: Manage Post
+extension NFCPostManager{
+    func deletePost(postId:String,callback:(Bool)->Void) {
+        let req = DeleteNFCPostRequest()
+        req.postId = postId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
+            callback(result.isSuccess)
+        }
+    }
+    
+    func reportObjectionablePost(postId:String,callback:(Bool)->Void) {
+        let req = ReportObjectionableNFCPostRequest()
+        req.postId = postId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
+            callback(result.isSuccess)
+        }
+    }
+}
+
 //MARK: God Methods
 extension NFCPostManager{
     

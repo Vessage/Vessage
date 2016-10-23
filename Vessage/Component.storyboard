@@ -146,6 +146,11 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="VG" id="Pqk-wb-cOY">
                         <barButtonItem key="backBarButtonItem" title="返回" id="5cc-bd-ztp"/>
+                        <barButtonItem key="rightBarButtonItem" title="隐私政策" id="JE3-eM-rug">
+                            <connections>
+                                <action selector="onClickPrivacy:" destination="0MV-u5-SjZ" id="tr5-p0-2op"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                 </viewController>
@@ -155,7 +160,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="check_blue" width="42" height="42"/>
+        <image name="check_blue" width="25" height="25"/>
         <image name="heart_circle" width="128" height="128"/>
         <image name="mail_circle" width="128" height="128"/>
     </resources>

@@ -247,7 +247,7 @@ extension Int32{
 
 extension Int{
     var friendString:String{
-        if self >= 10000 {
+        if self >= 1000 {
             return "\(self / 1000)k"
         }
         return "\(self)"

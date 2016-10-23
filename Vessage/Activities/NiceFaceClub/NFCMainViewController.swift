@@ -125,6 +125,18 @@ extension NFCMainViewController{
 //MARK: actions
 extension NFCMainViewController{
     
+    func removePost(postId:String) ->Bool {
+        let typeList = self.posts[listType]
+        for var psts in typeList {
+            if let index = (psts.indexOf{$0.pid == postId}){
+                psts.removeAtIndex(index)
+                self.tableView.reloadData()
+                return true
+            }
+        }
+        return false
+    }
+    
     private func shareNFC() {
         ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_NFC_ALERT_MSG".niceFaceClubString, title: "NFC".niceFaceClubString)
     }
@@ -381,7 +393,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return (profile?.isAnonymous() ?? true) ? 0 : 1
         }
         return posts[listType][section - 1].count
     }
@@ -463,6 +475,7 @@ extension NFCMainViewController:NFCMainInfoCellDelegate{
         cell.likeImageView.animationMaxToMin(0.1, maxScale: 1.2) {
             if let cnt = self.boardData?.nlks{
                 self.boardData?.nlks = 0
+                cell.newLikesLabel.text = "+0"
                 let ctr = NFCReceivedLikeViewController.instanceFromStoryBoard()
                 self.navigationController?.pushViewController(ctr, animated: true)
                 ctr.loadInitLikes(cnt == 0 ? 10 : cnt)
@@ -477,6 +490,7 @@ extension NFCMainViewController:NFCMainInfoCellDelegate{
         cell.newCommentImageView.animationMaxToMin(0.1, maxScale: 1.2) {
             if let cnt = self.boardData?.ncmt{
                 self.boardData?.ncmt = 0
+                cell.newCmtLabel.text = "+0"
                 let ctr = NFCMyCommentViewController.instanceFromStoryBoard()
                 self.navigationController?.pushViewController(ctr, animated: true)
                 ctr.loadInitComments(cnt == 0 ? 10 : cnt)

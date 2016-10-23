@@ -25,6 +25,16 @@ class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
         self.navigationItem.title = "\(VessageConfig.appName) \(VessageConfig.appVersion)"
     }
     
+    @IBAction func onClickPrivacy(sender: AnyObject) {
+        showPrivacy()
+    }
+    
+    
+    
+    private func showPrivacy() {
+        SimpleBrowser.openUrl(self.navigationController!, url: VessageConfig.bahamutConfig.appPrivacyPage,title: "PRIVACY".localizedString())
+    }
+    
     @IBAction func showInAppStore(sender: AnyObject)
     {
         let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.appStoreId)"

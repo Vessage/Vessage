@@ -95,3 +95,7 @@ NFC_MEMBER = "俱乐部会员";
 NFC_ANONYMOUS = "普通用户";
 DATE_X_LIKE_YOUR_IMG = "%@赞了你的照片";
 CHAT_WITH_TA = "和Ta搭讪";
+DELETE_POST = "删除该照片";
+REPORT_POST = "举报该照片";
+SURE_DELETE_POST = "删除照片后不可恢复，确定删除该照片？";
+SURE_REPORT_POST = "如果频繁恶意举报，你的账户将会被拉黑，确定举报该照片？";

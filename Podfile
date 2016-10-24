@@ -4,7 +4,7 @@ use_frameworks!
 target "Vessage" do
     pod 'Alamofire'#, '~> 3.4'
 
-    pod 'EVReflection'#, '~> 2.20.0'
+    pod 'EVReflection', '~> 2'
 
     pod 'AlamofireJsonToObjects'#, '~> 1.3.0'
 

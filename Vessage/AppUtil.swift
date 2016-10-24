@@ -255,12 +255,12 @@ extension Int{
 }
 
 extension UIImagePickerController{
-    static func showUIImagePickerAlert(viewController:UIViewController,title:String!,message:String!) -> UIImagePickerController{
+    static func showUIImagePickerAlert(viewController:UIViewController,title:String!,message:String!,allowsEditing:Bool = false) -> UIImagePickerController{
         let imagePicker = UIImagePickerController()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
         let camera = UIAlertAction(title: "TAKE_NEW_PHOTO".localizedString(), style: .Default) { _ in
             imagePicker.sourceType = .Camera
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = allowsEditing
             viewController.presentViewController(imagePicker, animated: true, completion: nil)
         }
         camera.setValue(UIImage(named: "avartar_camera")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
@@ -270,7 +270,7 @@ extension UIImagePickerController{
         
         let album = UIAlertAction(title:"SELECT_PHOTO".localizedString(), style: .Default) { _ in
             imagePicker.sourceType = .PhotoLibrary
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = allowsEditing
             viewController.presentViewController(imagePicker, animated: true, completion: nil)
         }
         album.setValue(UIImage(named: "avartar_select")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")

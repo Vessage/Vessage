@@ -1,17 +1,17 @@
 PODS:
-  - Alamofire (3.4.2)
+  - Alamofire (3.5.1)
   - AlamofireJsonToObjects (1.6.0):
     - Alamofire
     - EVReflection
-  - AliyunOSSiOS (2.5.2)
+  - AliyunOSSiOS (2.5.3)
   - EVReflection (2.46.0)
   - ImageSlideshow (0.6):
     - ImageSlideshow/Core (= 0.6)
   - ImageSlideshow/Core (0.6)
-  - LTMorphingLabel (0.2.1)
+  - LTMorphingLabel (0.3.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - UMengAnalytics (4.1.0)
+  - UMengAnalytics (4.1.2)
   - Vivid (0.8)
   - YUCIHighPassSkinSmoothing (1.4):
     - Vivid
@@ -20,7 +20,7 @@ DEPENDENCIES:
   - Alamofire
   - AlamofireJsonToObjects
   - AliyunOSSiOS
-  - EVReflection
+  - EVReflection (~> 2)
   - ImageSlideshow (~> 0.6)
   - LTMorphingLabel
   - MBProgressHUD
@@ -29,18 +29,18 @@ DEPENDENCIES:
   - YUCIHighPassSkinSmoothing
 
 SPEC CHECKSUMS:
-  Alamofire: 6aa33201d20d069e1598891cf928883ff1888c7a
+  Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
   AlamofireJsonToObjects: e5155c1c58493c44d7ebe56bbb1aa65d95e82c68
-  AliyunOSSiOS: 146e2766bf73df9c9f645de6f2d8a92ceb7c8be4
+  AliyunOSSiOS: 80e7617a5f4b5af50888a8946f6a744726032972
   EVReflection: 17b377f0dd86a0f6ceccab574d0e22962a2f107e
   ImageSlideshow: 06bfd96b5e56264d2d9d38262b73e32034b85288
-  LTMorphingLabel: 1858358ea38ef4d548e1f58b648b0d08ec3a62ed
+  LTMorphingLabel: 2777d8d9cb699125f48dfcd95d78bd3d77c87ade
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  UMengAnalytics: 19b28253793d77dff10fb7d502faad1fb6b8ce4a
+  UMengAnalytics: 8d95752776c32f5b954d40edc7f23944882a7c14
   Vivid: 65d28aba89fc750fceda8172c8b233f27d0ac18b
   YUCIHighPassSkinSmoothing: 8418fd1bf605ec22b647c57745b863b352f72097
 
-PODFILE CHECKSUM: 0fa30e60d93e524a646b4d64f396a2722efc6535
+PODFILE CHECKSUM: 676909192cb7b6b2963745b2aaf378bb8172ef56
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.1.1

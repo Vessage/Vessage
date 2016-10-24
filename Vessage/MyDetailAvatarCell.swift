@@ -75,7 +75,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
     
     func tapAvatar(aTap:UITapGestureRecognizer)
     {
-        let imagePicker = UIImagePickerController.showUIImagePickerAlert(self.rootController, title: "CHANGE_AVATAR".localizedString(), message: nil)
+        let imagePicker = UIImagePickerController.showUIImagePickerAlert(self.rootController, title: "CHANGE_AVATAR".localizedString(), message: nil,allowsEditing: true)
         imagePicker.delegate = self
     }
     

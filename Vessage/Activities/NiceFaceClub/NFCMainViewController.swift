@@ -24,7 +24,18 @@ class NFCMainViewController: UIViewController {
     }
     private var postingAnimationImageView:UIImageView!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
-    private(set) var profile:UserNiceFaceProfile!
+    private(set) var profile:UserNiceFaceProfile!{
+        didSet{
+            if let p = profile{
+                let umsgTag = "NFCMember";
+                if p.isValidateMember() {
+                    UMessage.addTag(umsgTag,response:nil)
+                }else{
+                    UMessage.removeTag(umsgTag, response: nil)
+                }
+            }
+        }
+    }
     
     private var posts:[[[NFCPost]]] = [[[NFCPost]](),[[NFCPost]](),[[NFCPost]]()]
     
@@ -127,12 +138,14 @@ extension NFCMainViewController{
     
     func removePost(postId:String) ->Bool {
         let typeList = self.posts[listType]
-        for var psts in typeList {
+        var i = 0
+        for psts in typeList {
             if let index = (psts.indexOf{$0.pid == postId}){
-                psts.removeAtIndex(index)
+                self.posts[listType][i].removeAtIndex(index)
                 self.tableView.reloadData()
                 return true
             }
+            i += 1
         }
         return false
     }
@@ -320,6 +333,7 @@ extension NFCMainViewController{
     }
     
     private func start(){
+        
         if !profile.isAnonymous() && (profile.score < NiceFaceClubManager.minScore || profile.mbAcpt == false){
             self.showBenchMarkAlert()
         }else{

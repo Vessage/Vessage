@@ -159,7 +159,7 @@ extension NFCPostCell{
         var isPoster = false
         
         if let mbId = NiceFaceClubManager.instance.myNiceFaceProfile.mbId {
-            if mbId == post.pster {
+            if mbId == post.mbId {
                 isPoster = true
             }
         }

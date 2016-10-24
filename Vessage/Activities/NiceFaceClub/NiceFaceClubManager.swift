@@ -18,6 +18,10 @@ extension UserNiceFaceProfile{
     func isAnonymous() -> Bool {
         return self.id != nil && self.id == NiceFaceClubManager.AnonymousProfileId
     }
+    
+    func isValidateMember() -> Bool {
+        return self.score >= NiceFaceClubManager.minScore && self.mbAcpt
+    }
 }
 
 class NiceFaceClubManager:NSObject {
@@ -37,7 +41,7 @@ class NiceFaceClubManager:NSObject {
     private(set) var userId:String!
     
     var isValidatedMember:Bool{
-        return (myNiceFaceProfile?.score ?? 0) >= NiceFaceClubManager.minScore && myNiceFaceProfile.mbAcpt
+        return myNiceFaceProfile?.isValidateMember() ?? false
     }
     
     func onShareSuccess(a:NSNotification) {

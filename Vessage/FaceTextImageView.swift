@@ -8,16 +8,85 @@
 
 import Foundation
 
-class FaceTextChatBubble: UIView {
-    private let TAG = "FaceTextChatBubble:%@"
-    private let bubbleOriginSize:CGPoint = CGPointMake(793,569);
-    private let scrollViewOriginRect:CGRect = CGRectMake(156,156,474,315);
-    private let bubbleMinRadio:CGFloat = 0.3
-    private let bubbleMaxRadio:CGFloat = 0.67
-    private var bubbleStartPointRatio:CGPoint{return CGPointMake(420 / bubbleOriginSize.x,0)}
-    private var bubbleTextViewRatio:CGFloat{return 1 * scrollViewOriginRect.height / scrollViewOriginRect.width}
+extension BubbleMetadata{
+    func getOriginSize() -> CGPoint {
+        return CGPointMake(CGFloat(size[0]), CGFloat(size[1]))
+    }
     
-    private var fontSize:CGFloat = 13.8
+    func getScrollOriginRect() -> CGRect {
+        return CGRectMake(CGFloat(scrollableRect[0]), CGFloat(scrollableRect[1]), CGFloat(scrollableRect[2]), CGFloat(scrollableRect[3]))
+    }
+    
+    func getMinRadio() -> CGFloat {
+        return CGFloat(radio[0])
+    }
+    
+    func getMaxRadio() -> CGFloat {
+        return CGFloat(radio[1])
+    }
+    
+    func getStartPointRatio() -> CGPoint {
+        return CGPointMake(CGFloat(startPoint[0] / size[0]),CGFloat(startPoint[1] / size[1]))
+    }
+    
+    func getTextViewRatio() -> CGFloat {
+        return CGFloat(1 * scrollableRect[3] / scrollableRect[2])
+    }
+    
+    func getBubbleImage() -> UIImage? {
+        if type == BubbleMetadata.typeEmbeded {
+            return UIImage(named: bubbleId)
+        }
+        return nil
+    }
+}
+
+
+class FaceTextChatBubble: UIView {
+    
+    class VerticalCenterTextView: UITextView {
+        
+        private var contentLabel:UILabel = {return UILabel()}()
+        
+        override var font: UIFont?{
+            didSet{
+                contentLabel.font = font
+            }
+        }
+        
+        override func drawRect(rect: CGRect) {
+            super.drawRect(rect)
+            if contentLabel.hidden {
+                contentLabel.removeFromSuperview()
+            }else{
+                contentLabel.font = self.font
+                contentLabel.textAlignment = .Center
+                contentLabel.numberOfLines = 0
+                self.addSubview(contentLabel)
+                contentLabel.frame = self.bounds
+            }
+            
+        }
+        
+        private var contentText:String?
+        
+        override var scrollEnabled: Bool{
+            didSet{
+                if false == scrollEnabled {
+                    contentText = text
+                    text = nil
+                }else{
+                    text = contentText
+                }
+                contentLabel.hidden = scrollEnabled
+                contentLabel.text = contentText
+            }
+        }
+    }
+    
+    private let TAG = "FaceTextChatBubble:%@"
+
+    private var fontSize:CGFloat = 14.3
     
     private var scrollViewFinalPos = CGPoint()
     private var textViewFinalWidth:CGFloat = 0
@@ -27,6 +96,8 @@ class FaceTextChatBubble: UIView {
     private var finalImageViewWidth:CGFloat = 0
     private var finalImageViewHeight:CGFloat = 0
     private var bubbleStartPoint = CGPoint()
+    
+    private var bubbleMetadata:BubbleMetadata! = FaceTextBubbleConfig.embededBubbles.first
     
     private var bubbleText:String!
     
@@ -39,6 +110,7 @@ class FaceTextChatBubble: UIView {
             bubbleTextView.scrollEnabled = true
             bubbleTextView.editable = false
             bubbleTextView.textAlignment = .Center
+            bubbleTextView.contentMode = .Center
             bubbleTextView.font = UIFont.systemFontOfSize(fontSize)
             self.addSubview(bubbleTextView)
         }
@@ -46,9 +118,8 @@ class FaceTextChatBubble: UIView {
     
     private var bubbleImageView:UIImageView!{
         didSet{
-            bubbleImageView.image = UIImage(named: "cloud_bubble")
             bubbleImageView.layoutIfNeeded()
-            bubbleImageView.contentMode = .ScaleAspectFit
+            bubbleImageView.contentMode = .ScaleToFill
             self.addSubview(bubbleImageView)
             self.sendSubviewToBack(bubbleImageView)
         }
@@ -58,7 +129,7 @@ class FaceTextChatBubble: UIView {
 extension FaceTextChatBubble{
     
     func initSubviews() {
-        bubbleTextView = UITextView()
+        bubbleTextView = VerticalCenterTextView()
         bubbleImageView = UIImageView()
     }
     
@@ -66,7 +137,7 @@ extension FaceTextChatBubble{
         if !bubbleTextView.scrollEnabled {
             return
         }
-        let v = y / -60
+        let v = y / -80
         var fy = bubbleTextView.contentOffset.y + v
         if fy < 0 {
             fy = 0
@@ -77,8 +148,15 @@ extension FaceTextChatBubble{
     }
     
     func setBubbleText(bubbleText:String) {
-        self.bubbleText = bubbleText
-        bubbleTextView.text = bubbleText
+        self.bubbleText = "abcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdef"
+        bubbleTextView.text = self.bubbleText
+        bubbleMetadata = FaceTextBubbleConfig.randomBubble
+        if let img = bubbleMetadata?.getBubbleImage(){
+            bubbleImageView.image = img
+        }else{
+            bubbleMetadata = FaceTextBubbleConfig.defaultBubble
+            bubbleImageView.image = bubbleMetadata?.getBubbleImage()
+        }
         measureViewSize()
         setMeasuredValues()
     }
@@ -92,13 +170,30 @@ extension FaceTextChatBubble{
         bubbleTextView.frame = CGRectMake(scrollViewFinalPos.x,scrollViewFinalPos.y,textViewFinalWidth,scrollViewFinalHeight)
         self.frame.size.height = finalImageViewHeight
         self.frame.size.width = finalImageViewWidth
-        bubbleTextView.contentOffset.y = 0
+        
+        #if DEBUG1
+            debugPrint(bubbleTextView.contentSize)
+            debugPrint(bubbleTextView.frame.size)
+            bubbleTextView.layer.borderColor = UIColor.redColor().CGColor
+            bubbleTextView.layer.borderWidth = 1
+            
+            bubbleImageView.layer.borderColor = UIColor.blueColor().CGColor
+            bubbleImageView.layer.borderWidth = 1
+        #endif
     }
     
     private func measureViewSize() {
         debugLog(TAG,"------------------Start Measure------------------------")
         debugLog(TAG,"containerWidth:\(containerWidth)")
         let tv = bubbleTextView
+        
+        let bubbleTextViewRatio = bubbleMetadata.getTextViewRatio()
+        let scrollViewOriginRect = bubbleMetadata.getScrollOriginRect()
+        let bubbleMinRadio = bubbleMetadata.getMinRadio()
+        let bubbleMaxRadio = bubbleMetadata.getMaxRadio()
+        let bubbleOriginSize = self.bubbleMetadata.getOriginSize()
+        let bubbleStartPointRatio = bubbleMetadata.getStartPointRatio()
+ 
         for widthRadio in bubbleMinRadio.stride(to: bubbleMaxRadio, by: 0.01){
             textViewFinalWidth = containerWidth * widthRadio
             textViewFinalHeight = textViewFinalWidth * bubbleTextViewRatio
@@ -117,16 +212,19 @@ extension FaceTextChatBubble{
             if (measuredHeight <= textViewFinalHeight) {
                 debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)");
                 debugLog(TAG,"Select Radio:\(widthRadio)")
+                bubbleTextView.scrollEnabled = false
                 break
             } else if (widthRadio == bubbleMaxRadio) {
                 textViewFinalHeight = measuredHeight
+                bubbleTextView.scrollEnabled = true
+                bubbleTextView.scrollRectToVisible(CGRectMake(0, 0, 10, 10), animated: true)
                 debugLog(TAG,"Select Radio:\(widthRadio)")
             }
             debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)")
         }
         finalRatio = textViewFinalWidth / scrollViewOriginRect.width
         finalImageViewWidth = bubbleOriginSize.x * finalRatio
-        finalImageViewHeight = finalImageViewWidth * bubbleTextViewRatio
+        finalImageViewHeight = bubbleOriginSize.y * finalRatio
         debugLog(TAG,"finalImageViewWidth:\(finalImageViewWidth)")
         debugLog(TAG,"finalImageViewHeight:\(finalImageViewHeight)")
         scrollViewFinalPos.x = scrollViewOriginRect.origin.x * finalRatio
@@ -334,7 +432,7 @@ class FaceTextImageView: UIView {
                 //rotate 180'
                 rect = CGRectMake(rect.origin.x, previewBox.height - rect.origin.y - rect.height, rect.width, rect.height)
                 
-                #if DEBUG
+                #if DEBUG1
                     self.container.addSubview(faceMask)
                     faceMask.frame = rect
                 #endif

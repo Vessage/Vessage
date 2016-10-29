@@ -170,19 +170,9 @@ extension ConversationListController:UISearchBarDelegate
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if UserSetting.isAppstoreReviewing && searchText.md5 == "1ecb0d59240781171ce96454f60f09db"{
+        if GodModeManager.checkGodCode(self, code: searchText) {
             isSearching = false
-            UserSetting.godMode = true
-            self.showAlert("Manager Mode", msg: "Request Manager Mode Successful")
             return
-        }
-        
-        let testModeStrs = searchText.split(">")
-        if testModeStrs.count == 2 {
-            if DeveloperMainPanelController.isShowDeveloperPanel(self, id: testModeStrs[0], psw: testModeStrs[1]){
-                isSearching = false
-                return
-            }
         }
         
         searchResult.removeAll()

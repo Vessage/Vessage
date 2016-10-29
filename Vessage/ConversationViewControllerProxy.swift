@@ -39,24 +39,6 @@ class ConversationViewControllerProxy: NSObject {
     var vessageService:VessageService!{
         return rootController?.vessageService
     }
-    var rightButton:UIButton!{
-        return rootController?.rightButton
-    }
-    var badgeLabel:UILabel!{
-        return rootController?.badgeLabel
-    }
-    
-    var conversationLeftTopLabel:UILabel!{
-        return rootController?.conversationLeftTopLabel
-    }
-    
-    var conversationRightBottomLabel:UILabel!{
-        return rootController?.conversationRightBottomLabel
-    }
-    
-    var recordButton: UIButton!{
-        return rootController?.middleButton
-    }
     
     var groupFaceImageViewContainer:UIView!{
         return rootController?.groupFaceContainer
@@ -71,7 +53,7 @@ class ConversationViewControllerProxy: NSObject {
     var recordingProgress:KDCircularProgress!{
         return rootController?.recordingProgress
     }
-    var previewRectView: VideoPreviewBubble!{
+    var previewRectView: UIView!{
         return rootController?.previewRectView
     }
     
@@ -79,13 +61,18 @@ class ConversationViewControllerProxy: NSObject {
         return rootController?.backgroundImage
     }
     
-    var leftButton:UIButton!{
-        return rootController?.leftButton
-    }
-    
-    func onVessageReceived(vessages:Vessage) {}
+    func onVessagesReceived(vessages:[Vessage]) {}
+
+    func onInitChatter(chatter:VessageUser) {}
+    func onInitGroup(chatGroup:ChatGroup) {}
+
     func onChatterUpdated(chatter:VessageUser) {}
     func onChatGroupUpdated(chatGroup:ChatGroup) {}
+    
+    func onKeyBoardHidden() {}
+    
+    func onKeyBoardShown() {}
+    
     func initManager(controller:ConversationViewController) {
         self.rootController = controller
     }
@@ -95,9 +82,5 @@ class ConversationViewControllerProxy: NSObject {
     }
     func onSwitchToManager() {
         self.rootController.currentManager = self
-    }
-    
-    func onPanGesture(v:CGPoint) {
-        
     }
 }

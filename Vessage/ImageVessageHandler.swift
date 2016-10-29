@@ -65,12 +65,12 @@ class ImageVessageHandler: VessageHandlerBase {
     
     private func refreshConversationLabel(){
         if presentingVesseage.isMySendingVessage() {
-            playVessageManager.leftTopLabelText = "MY_SENDING_VSG".localizedString()
+            let msg = "MY_SENDING_VSG".localizedString()
         }else{
             let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
-            playVessageManager.rightBottomLabelText = friendTimeString
+            
         }
-        playVessageManager.leftTopLabelText = nil
+        
     }
     
     func onTapImage(ges:UITapGestureRecognizer) {

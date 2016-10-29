@@ -94,3 +94,39 @@ class DeveloperMainPanelController: UIViewController
     }
     
 }
+
+class GodModeManager {
+    static func checkGodCode(vc:UIViewController,code:String) -> Bool{
+        let testModeStrs = code.split(">")
+        if testModeStrs.count == 2 {
+            if DeveloperMainPanelController.isShowDeveloperPanel(vc, id: testModeStrs[0], psw: testModeStrs[1]){
+                return true
+            }
+        }
+        
+        if UserSetting.isAppstoreReviewing && code.md5 == "1ecb0d59240781171ce96454f60f09db"{
+            UserSetting.godMode = true
+            vc.showAlert("Manager Mode", msg: "Request Manager Mode Successful")
+            return true
+        }
+        
+        if UserSetting.godMode == false {
+            return false
+        }
+        
+        #if DEBUG
+            if code == "autorefreshoff" {
+                vc.showAlert("God Mode", msg: "Auto Refresh Off")
+                ConversationListController.autoRefreshData = false
+                return true
+            }else if code == "autorefreshon"{
+                vc.showAlert("God Mode", msg: "Auto Refresh On")
+                ConversationListController.autoRefreshData = true
+                return true
+            }
+        #endif
+        
+        
+        return false
+    }
+}

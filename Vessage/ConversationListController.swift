@@ -64,9 +64,30 @@ class ConversationListController: UITableViewController {
         }
     }
     
+    //MARK:Debug Get Data
+    #if DEBUG
+    static var autoRefreshData:Bool = false{
+        didSet{
+            if autoRefreshData && getDataTimer == nil{
+                getDataTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ConversationListController.onDebugGetData(_:)), userInfo: nil, repeats: true)
+            }else{
+                getDataTimer?.invalidate()
+                getDataTimer = nil
+            }
+        }
+    }
+    private static var getDataTimer:NSTimer!
+    static func onDebugGetData(_:NSTimer) {
+        dispatch_async(dispatch_get_main_queue()) {
+            ServiceContainer.getVessageService().newVessageFromServer()
+        }
+    }
+    #endif
+    
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let dict = [NSForegroundColorAttributeName:UIColor.themeColor]
         self.navigationController?.navigationBar.titleTextAttributes = dict
         self.tableView.showsVerticalScrollIndicator = false
@@ -149,6 +170,10 @@ class ConversationListController: UITableViewController {
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getConversationService().removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
+        
+        #if DEBUG
+            ConversationListController.autoRefreshData = false
+        #endif
     }
     
     //MARK: notifications

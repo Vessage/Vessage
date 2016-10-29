@@ -82,6 +82,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         self.view.layer.insertSublayer(previewLayer, atIndex: 0)
         if TARGET_IPHONE_SIMULATOR == Int32("1") {
             self.rootViewController.playToast("Simulator No Camera");
+            self.previewLayer.hidden = true
             return
         } else {
             setupCaptureSession()

@@ -31,6 +31,10 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate,HandleBahamutCmdDele
         vessagePlayer.releasePlayer()
     }
     
+    override func onLeftVessageNumberUpdated(oldNumber: Int, newNumber: Int) {
+        //TODO:
+    }
+    
     override func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage!) {
         super.onPresentingVessageSeted(oldVessage, newVessage: newVessage)
         if let oldVsg = oldVessage{
@@ -51,8 +55,8 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate,HandleBahamutCmdDele
     private func refreshConversationLabel(){
         let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
         let readStatus = presentingVesseage.isRead ? "VSG_READED".localizedString() : "VSG_UNREADED".localizedString()
-        playVessageManager.rightBottomLabelText = "\(friendTimeString) \(readStatus)"
-        playVessageManager.leftTopLabelText = nil
+        let info = "\(friendTimeString) \(readStatus)"
+        
     }
     
     //private var vessagePlayer:BahamutFilmView!
@@ -84,7 +88,6 @@ class VideoVessageHandler:VessageHandlerBase,PlayerDelegate,HandleBahamutCmdDele
         if self.presentingVesseage?.isRead == false {
             MobClick.event("Vege_ReadVessage")
             ServiceContainer.getVessageService().readVessage(self.presentingVesseage)
-            playVessageManager.refreshBadge()
         }
         if let cmd = self.presentingVesseage.getBodyDict()["videoStartedEvent"] as? String{
             BahamutCmdManager.sharedInstance.handleBahamutEncodedCmdWithMainQueue(cmd)

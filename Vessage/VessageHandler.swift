@@ -11,10 +11,11 @@ import Foundation
 //MARK: VessageHandler
 protocol VessageHandler{
     func onPresentingVessageSeted(oldVessage: Vessage?,newVessage:Vessage!)
+    func onLeftVessageNumberUpdated(oldNumber:Int,newNumber:Int)
     func releaseHandler()
 }
 
-class VessageHandlerBase: NSObject,VessageHandler {
+class VessageHandlerBase: NSObject,VessageHandler,HandleSwipeGesture {
     weak private(set) var container:UIView!
     private(set) var playVessageManager:PlayVessageManager!
     private(set) var presentingVesseage:Vessage!
@@ -25,9 +26,25 @@ class VessageHandlerBase: NSObject,VessageHandler {
         self.container = container
     }
     
+    func onLeftVessageNumberUpdated(oldNumber: Int, newNumber: Int) {
+        
+    }
+    
     func onPresentingVessageSeted(oldVessage: Vessage?, newVessage: Vessage!) {
         self.container.backgroundColor = UIColor.lightGrayColor()
         self.presentingVesseage = newVessage
+    }
+    
+    func onSwipe(direction: UISwipeGestureRecognizerDirection) -> Bool {
+        if direction == .Left {
+            playVessageManager?.showNextVessage()
+            return true
+        }else if direction == .Right{
+            playVessageManager?.showPreviousVessage()
+            return true
+        }else{
+            return false
+        }
     }
     
     func releaseHandler() {

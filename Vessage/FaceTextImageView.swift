@@ -43,50 +43,9 @@ extension BubbleMetadata{
 
 
 class FaceTextChatBubble: UIView {
-    
-    class VerticalCenterTextView: UITextView {
-        
-        private var contentLabel:UILabel = {return UILabel()}()
-        
-        override var font: UIFont?{
-            didSet{
-                contentLabel.font = font
-            }
-        }
-        
-        override func drawRect(rect: CGRect) {
-            super.drawRect(rect)
-            if contentLabel.hidden {
-                contentLabel.removeFromSuperview()
-            }else{
-                contentLabel.font = self.font
-                contentLabel.textAlignment = .Center
-                contentLabel.numberOfLines = 0
-                self.addSubview(contentLabel)
-                contentLabel.frame = self.bounds
-            }
-            
-        }
-        
-        private var contentText:String?
-        
-        override var scrollEnabled: Bool{
-            didSet{
-                if false == scrollEnabled {
-                    contentText = text
-                    text = nil
-                }else{
-                    text = contentText
-                }
-                contentLabel.hidden = scrollEnabled
-                contentLabel.text = contentText
-            }
-        }
-    }
-    
     private let TAG = "FaceTextChatBubble:%@"
 
-    private var fontSize:CGFloat = 14.3
+    private var fontSize:CGFloat = 13
     
     private var scrollViewFinalPos = CGPoint()
     private var textViewFinalWidth:CGFloat = 0
@@ -97,7 +56,7 @@ class FaceTextChatBubble: UIView {
     private var finalImageViewHeight:CGFloat = 0
     private var bubbleStartPoint = CGPoint()
     
-    private var bubbleMetadata:BubbleMetadata! = FaceTextBubbleConfig.embededBubbles.first
+    private var bubbleMetadata:BubbleMetadata! = nil
     
     private var bubbleText:String!
     
@@ -107,11 +66,8 @@ class FaceTextChatBubble: UIView {
         didSet{
             bubbleTextView.layoutIfNeeded()
             bubbleTextView.backgroundColor = UIColor.clearColor()
-            bubbleTextView.scrollEnabled = true
             bubbleTextView.editable = false
-            bubbleTextView.textAlignment = .Center
-            bubbleTextView.contentMode = .Center
-            bubbleTextView.font = UIFont.systemFontOfSize(fontSize)
+            bubbleTextView.autocorrectionType = .No
             self.addSubview(bubbleTextView)
         }
     }
@@ -129,13 +85,13 @@ class FaceTextChatBubble: UIView {
 extension FaceTextChatBubble{
     
     func initSubviews() {
-        bubbleTextView = VerticalCenterTextView()
+        bubbleTextView = UITextView()
         bubbleImageView = UIImageView()
     }
     
-    func scrollText(y:CGFloat) {
+    func scrollText(y:CGFloat) -> Bool{
         if !bubbleTextView.scrollEnabled {
-            return
+            return false
         }
         let v = y / -80
         var fy = bubbleTextView.contentOffset.y + v
@@ -145,12 +101,12 @@ extension FaceTextChatBubble{
             fy = bubbleTextView.contentSize.height - bubbleTextView.frame.height
         }
         bubbleTextView.contentOffset.y = fy
+        return true
     }
     
     func setBubbleText(bubbleText:String) {
-        self.bubbleText = "abcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdefbcdef"
-        bubbleTextView.text = self.bubbleText
-        bubbleMetadata = FaceTextBubbleConfig.randomBubble
+        self.bubbleText = bubbleText
+        bubbleMetadata = FaceTextBubbleConfig.getSutableBubble(bubbleText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
         if let img = bubbleMetadata?.getBubbleImage(){
             bubbleImageView.image = img
         }else{
@@ -171,7 +127,7 @@ extension FaceTextChatBubble{
         self.frame.size.height = finalImageViewHeight
         self.frame.size.width = finalImageViewWidth
         
-        #if DEBUG1
+        #if DEBUG
             debugPrint(bubbleTextView.contentSize)
             debugPrint(bubbleTextView.frame.size)
             bubbleTextView.layer.borderColor = UIColor.redColor().CGColor
@@ -185,8 +141,12 @@ extension FaceTextChatBubble{
     private func measureViewSize() {
         debugLog(TAG,"------------------Start Measure------------------------")
         debugLog(TAG,"containerWidth:\(containerWidth)")
+        self.layoutIfNeeded()
+        bubbleTextView.textContainerInset = UIEdgeInsetsZero
+        bubbleTextView.textAlignment = .Left
+        bubbleTextView.font = UIFont.systemFontOfSize(fontSize)
         let tv = bubbleTextView
-        
+        tv.text = bubbleText
         let bubbleTextViewRatio = bubbleMetadata.getTextViewRatio()
         let scrollViewOriginRect = bubbleMetadata.getScrollOriginRect()
         let bubbleMinRadio = bubbleMetadata.getMinRadio()
@@ -197,7 +157,7 @@ extension FaceTextChatBubble{
         for widthRadio in bubbleMinRadio.stride(to: bubbleMaxRadio, by: 0.01){
             textViewFinalWidth = containerWidth * widthRadio
             textViewFinalHeight = textViewFinalWidth * bubbleTextViewRatio
-            
+            tv.hidden = false
             tv.frame.size.width = textViewFinalWidth;
             tv.layoutIfNeeded()
             tv.sizeToFit()
@@ -217,7 +177,6 @@ extension FaceTextChatBubble{
             } else if (widthRadio == bubbleMaxRadio) {
                 textViewFinalHeight = measuredHeight
                 bubbleTextView.scrollEnabled = true
-                bubbleTextView.scrollRectToVisible(CGRectMake(0, 0, 10, 10), animated: true)
                 debugLog(TAG,"Select Radio:\(widthRadio)")
             }
             debugLog(TAG,"textViewFinalHeight:\(textViewFinalHeight)")
@@ -262,6 +221,17 @@ class FaceTextImageView: UIView {
     private(set) var imageLoaded:Bool = false
     let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])
     
+    var messages = [String]()
+    var messageIndex = -1{
+        didSet{
+            if messageIndex >= 0 {
+                let m = messages[messageIndex]
+                chatBubble?.setBubbleText(m)
+                debugLog("Text Message:%@", m)
+            }
+        }
+    }
+    
     #if DEBUG
     private var faceMask:UIView!
     private func initFaceMask(){
@@ -274,9 +244,9 @@ class FaceTextImageView: UIView {
     
     func initContainer(container:UIView) {
         self.container = container
-        self.imageView = UIImageView()
         self.chatBubble = FaceTextChatBubble()
         self.chatBubble.initSubviews()
+        self.imageView = UIImageView()
         self.chatBubbleMoveGesture = UIPanGestureRecognizer(target: self, action: #selector(FaceTextImageView.onMoveChatBubble(_:)))
         if chatBubbleMovable {
             self.chatBubble.addGestureRecognizer(self.chatBubbleMoveGesture)
@@ -331,11 +301,78 @@ class FaceTextImageView: UIView {
         self.imageView.frame = self.bounds
     }
     
+    private static let sentenceRegex = "[^,.;!?，。；！？\\n]+[,.;!?，。；！？\\n]+"
+    private static let messageEndWithSeparatorPrefix = "[,.;!?，。；！？\n]+$"
+    
+    static func separatMessage(message:String) -> [String]{
+        var msgs = [String]()
+        var tmpMessage = message
+        let maxBubbleLimit = FaceTextBubbleConfig.maxTextLengthBubble.textLimit
+        
+        var hasSuffix = false
+        
+        if let regex = RegexMatcher(messageEndWithSeparatorPrefix).regex{
+            if regex.matchesInString(tmpMessage, options: [], range: NSMakeRange(0, tmpMessage.characters.count)).count > 0{
+                hasSuffix = true
+            }
+        }
+        
+        if !hasSuffix {
+            tmpMessage = "\(tmpMessage)."
+        }
+        
+        let rm = RegexMatcher(FaceTextImageView.sentenceRegex)
+        let range = NSMakeRange(0, tmpMessage.characters.count)
+        //let range = NSMakeRange(0, tmpMessage.lengthOfBytesUsingEncoding(NSUnicodeStringEncoding))
+        if let matches = rm.regex?.matchesInString(tmpMessage, options: [],range: range){
+            for match in matches {
+                if let r = match.range.toRange(){
+                    let msg = tmpMessage.substringWithRange(r)
+                    msgs.append(msg)
+                }
+            }
+        }else{
+            msgs.append(message)
+        }
+        var tmpMsgs = [String]()
+        var i = 0
+        while i < msgs.count {
+            let m = msgs[i]
+            let l = m.lengthOfBytesUsingEncoding(NSUnicodeStringEncoding)
+            if i < msgs.count - 2{
+                let m1 = msgs[i + 1]
+                let l1 = m.lengthOfBytesUsingEncoding(NSUnicodeStringEncoding)
+                if l + l1 < maxBubbleLimit{
+                    msgs[i + 1] = "\(m)\(m1)"
+                }else{
+                    tmpMsgs.append(msgs[i])
+                }
+            }else{
+                tmpMsgs.append(msgs[i])
+            }
+            i += 1
+        }
+        msgs = tmpMsgs
+        
+        #if DEBUG
+            debugPrint("___________________________________")
+            msgs.forEach({ (m) in
+                debugPrint(m)
+            })
+            debugPrint("___________________________________")
+        #endif
+        
+        return msgs
+    }
+    
     func setTextImage(fileId:String!,message:String!,onMessagePresented:(()->Void)? = nil) {
         self.imageLoaded = false
         self.render()
         self.chatBubble.containerWidth = self.container.bounds.width
-        self.chatBubble.setBubbleText(message)
+        //self.chatBubble.setBubbleText(message)
+        messages.removeAll()
+        messages.appendContentsOf(FaceTextImageView.separatMessage(message))
+        messageIndex = messages.count > 0 ? 0 : -1
         self.chatBubble.hidden = true
         self.imageView.hidden = true
         self.loadingImageView.center = self.center
@@ -383,8 +420,32 @@ class FaceTextImageView: UIView {
         }
     }
     
-    func scrollBubbleText(y:CGFloat) {
-        chatBubble?.scrollText(y)
+    var hasNextText:Bool{
+        return messages.count > 0 && messageIndex < messages.count - 1
+    }
+    
+    var hasPreviousText:Bool{
+        return messages.count > 0 && messageIndex > 0
+    }
+    
+    func showNextText() -> Bool {
+        if hasNextText {
+            messageIndex += 1
+            return true
+        }
+        return false
+    }
+    
+    func showPreviousText() -> Bool {
+        if hasPreviousText {
+            messageIndex -= 1
+            return true
+        }
+        return false
+    }
+    
+    func scrollBubbleText(y:CGFloat) ->Bool {
+        return chatBubble?.scrollText(y) ?? false
     }
     
     func adjustChatBubble() {

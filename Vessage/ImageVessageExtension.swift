@@ -34,8 +34,7 @@ extension ConversationViewController:UIImagePickerControllerDelegate{
                 vsg.typeId = Vessage.typeImage
                 let url = NSURL(fileURLWithPath: localPath)
                 VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
-            }else
-            {
+            }else{
                 self.playCrossMark("PROCESS_IMAGE_ERROR".localizedString())
             }
         }

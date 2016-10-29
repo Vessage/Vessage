@@ -23,13 +23,15 @@ class Vessage: BahamutObject {
     }
     var vessageId:String!
     var fileId:String!
-    var sender:String!
+    var sender:String! //groupid if is group vessage
     var isRead = false
     var sendTime:String!
     var extraInfo:String!
     var isGroup = false
     var typeId = 0
     var body:String!
+    
+    var gSender:String! //vessage sender of group if is group vessage
     
     func isMySendingVessage() -> Bool {
         return self.sender == Vessage.sendingVessageId

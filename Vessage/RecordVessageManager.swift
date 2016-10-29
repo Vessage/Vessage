@@ -18,7 +18,6 @@ class RecordVessageManager: ConversationViewControllerProxy {
     private var userClickSend = false
     private var recording = false{
         didSet{
-            updateRecordButton()
             updateRecordingProgress()
             previewRectView?.hidden = !recording
             recordingFlashView?.hidden = !recording
@@ -37,7 +36,6 @@ class RecordVessageManager: ConversationViewControllerProxy {
             }
         }
     }
-    private var videoPreviewBubble:VideoPreviewBubble!
     private var groupAvatarManager:GroupChatAvatarManager!
 }
 
@@ -45,10 +43,6 @@ class RecordVessageManager: ConversationViewControllerProxy {
 extension RecordVessageManager{
     
     override func onSwitchToManager() {
-        leftButton.hidden = true
-        rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Normal)
-        rightButton.setImage(UIImage(named: "record_video_cross"), forState: .Highlighted)
-        rightButton.hidden = false
         groupAvatarManager.renderImageViews()
         groupAvatarManager.refreshFaces()
         super.onSwitchToManager()
@@ -60,14 +54,18 @@ extension RecordVessageManager{
         initCamera()
         groupAvatarManager = GroupChatAvatarManager()
         groupAvatarManager.initManager(self.groupFaceImageViewContainer)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(RecordVessageManager.onClickSendRecord(_:)))
+        self.rootController.sendRecordButton.addGestureRecognizer(tap)
         
+        let tapCancel = UITapGestureRecognizer(target: self, action: #selector(RecordVessageManager.onClickCancelRecordButton(_:)))
+        self.rootController.cancelRecordButton.addGestureRecognizer(tapCancel)
     }
     
     private func initCamera(){
         camera = VessageCamera()
         camera.delegate = self
         self.previewRectView.hidden = true
-        camera.initCamera(rootController,previewView: self.previewRectView.videoPreviewView)
+        camera.initCamera(rootController,previewView: self.previewRectView)
     }
     
     override func onReleaseManager() {
@@ -138,7 +136,7 @@ class GroupChatAvatarManager:NSObject {
             return
         }
         
-        var containerFrame = self.container.frame
+        var containerFrame = self.container.bounds
         if count > 1 {
             containerFrame = CGRectMake(containerFrame.origin.x, containerFrame.origin.y, containerFrame.width, containerFrame.height - 80)
         }
@@ -200,6 +198,15 @@ class GroupChatAvatarManager:NSObject {
 }
 
 extension RecordVessageManager{
+
+    override func onInitChatter(chatter: VessageUser){
+        onChatterUpdated(chatter)
+    }
+
+    override func onInitGroup(chatGroup:ChatGroup){
+        onChatGroupUpdated(chatGroup)
+    }
+
     override func onChatterUpdated(chatter: VessageUser) {
         noSmileFaceTipsLabel.hidden = chatter.mainChatImage != nil
         groupAvatarManager.setFaces([chatter.userId:chatter.mainChatImage])
@@ -225,6 +232,16 @@ extension RecordVessageManager{
 
 //MARK: Send Vessage
 extension RecordVessageManager{
+    func onClickCancelRecordButton(_:UITapGestureRecognizer) {
+        self.cancelRecord()
+        self.rootController.setReadingVessage()
+    }
+    
+    func onClickSendRecord(_:UITapGestureRecognizer) {
+        self.rootController.setReadingVessage()
+        self.sendVessage()
+    }
+    
     func sendVessage() {
         if recording {
             prepareSendRecord()
@@ -233,7 +250,7 @@ extension RecordVessageManager{
     
     private func prepareSendRecord()
     {
-        recordButton.userInteractionEnabled = false
+        self.rootController.sendRecordButton.userInteractionEnabled = false
         #if DEBUG
             if isInSimulator(){
                 recording = false
@@ -317,9 +334,9 @@ extension RecordVessageManager:VessageCameraDelegate{
         if self.camera.cameraInited{
             self.userClickSend = true
             self.camera.resumeCaptureSession()
-            self.recordButton.hidden = true
+            self.rootController.sendRecordButton.hidden = true
             dispatch_main_queue_after(100, handler: {
-                self.recordButton.hidden = false
+                self.rootController.sendRecordButton.hidden = false
                 self.camera.startRecord()
             })
             
@@ -362,7 +379,7 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     func vessageCameraVideoSaved(videoSavedUrl video: NSURL) {
-        recordButton.userInteractionEnabled = true
+        self.rootController.sendRecordButton.userInteractionEnabled = true
         let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
         if PersistentFileHelper.moveFile(video.path!, destinationPath: newFilePath)
         {
@@ -374,7 +391,7 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     func vessageCameraSaveVideoError(saveVideoError msg: String?) {
-        recordButton.userInteractionEnabled = true
+        self.rootController.sendRecordButton.userInteractionEnabled = true
         self.rootController.playToast("SAVE_VIDEO_FAILED".localizedString())
     }
 
@@ -393,15 +410,5 @@ extension RecordVessageManager:VessageCameraDelegate{
         let angle = recordingTime / maxRecordTime * maxAngle
         self.recordingProgress?.angle = Double(angle)
         self.recordingProgress?.hidden = !recording
-    }
-    
-    private func updateRecordButton(){
-        if recording{
-            recordButton?.setImage(UIImage(named: "record_video_check"), forState: .Normal)
-            recordButton?.setImage(UIImage(named: "record_video_check"), forState: .Highlighted)
-        }else{
-            recordButton?.setImage(UIImage(named: "chat"), forState: .Normal)
-            recordButton?.setImage(UIImage(named: "chat"), forState: .Highlighted)
-        }
     }
 }

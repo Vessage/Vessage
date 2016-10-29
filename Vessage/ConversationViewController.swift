@@ -81,61 +81,33 @@ class ConversationViewController: UIViewController {
         return !isRecording
     }
     
-    @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var topChattersBoardHeight: NSLayoutConstraint!
+    @IBOutlet weak var topChattersBoard: ChattersBoard!
+    @IBOutlet weak var bottomChattersBoardHeight: NSLayoutConstraint!
+    @IBOutlet weak var bottomChattersBoard: ChattersBoard!
+    @IBOutlet weak var sendImageButton: UIButton!
+    @IBOutlet weak var sendFaceTextButton: UIButton!
+    @IBOutlet weak var sendVideoChatButton: UIButton!
     
+    @IBOutlet weak var notReadNumLabel: UILabel!{
+        didSet{
+            notReadNumLabel.clipsToBounds = true
+            notReadNumLabel.layer.cornerRadius = 12
+        }
+    }
+    @IBOutlet weak var readingProgress: KDCircularProgress!
     @IBOutlet weak var progressView: UIProgressView!
+    
     @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
     
-    @IBOutlet weak var middleButton: UIButton!{
-        didSet{
-            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(ConversationViewController.onLongPressMiddleButton(_:)))
-            let tap = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onClickMiddleButton(_:)))
-            tap.requireGestureRecognizerToFail(longPress)
-            middleButton.addGestureRecognizer(longPress)
-            middleButton.addGestureRecognizer(tap)
-        }
-    }
-    
-    @IBOutlet weak var bottomBar: UIView!{
-        didSet{
-            bottomBar.hidden = true
-        }
-    }
-    @IBOutlet weak var bottomBarContainer: UIView!{
-        didSet{
-            bottomBarContainer.hidden = true
-        }
-    }
-    @IBOutlet weak var rightButton: UIButton!{
-        didSet{
-            rightButton.hidden = true
-        }
-    }
-    
-    //MARK: Read Vessage Views
-    @IBOutlet weak var badgeLabel: UILabel!{
-        didSet{
-            badgeLabel.hidden = true
-            badgeLabel.clipsToBounds = true
-            badgeLabel.layer.cornerRadius = 10
-        }
-    }
-    
-    @IBOutlet weak var conversationLeftTopLabel: UILabel!{
-        didSet{
-            conversationLeftTopLabel.text = nil
-        }
-    }
-    @IBOutlet weak var conversationRightBottomLabel: UILabel!{
-        didSet{
-            conversationRightBottomLabel.text = nil
-        }
-    }
     @IBOutlet weak var vessageView: UIView!
     
     //MARK: Record Views
-    @IBOutlet weak var previewRectView: VideoPreviewBubble!{
+    @IBOutlet weak var sendRecordButton: UIButton!
+    @IBOutlet weak var cancelRecordButton: UIButton!
+    
+    @IBOutlet weak var previewRectView: UIView!{
         didSet{
             previewRectView.backgroundColor = UIColor.clearColor()
         }
@@ -163,10 +135,6 @@ class ConversationViewController: UIViewController {
     
     var imageChatInputView:ImageChatInputView!
     var imageChatInputResponderTextFiled:UITextField!
-    var chatImageBoardSourceView:UIView!
-    var chatImageBoardController:ChatImageBoardController!
-    var chatImageBoardShown = false
-    var chatImageBoardShowing = false
     
     var hadChatImagesMgrControllerShown = false
     
@@ -177,7 +145,18 @@ class ConversationViewController: UIViewController {
             print("Deinited:\(self.description)")
         #endif
     }
+    
+}
 
+extension ConversationViewController{
+    func onKeyBoardShown(a:NSNotification) {
+        currentManager?.onKeyBoardShown()
+    }
+    
+    func onKeyboardHidden(a:NSNotification) {
+        self.hideKeyBoard()
+        currentManager?.onKeyBoardHidden()
+    }
 }
 
 //MARK: Life Circle
@@ -193,12 +172,12 @@ extension ConversationViewController{
         recordVessageManager.initManager(self)
         addObservers()
         if let chatter = self.chatter{
-            recordVessageManager.onChatterUpdated(chatter)
-            playVessageManager.onChatterUpdated(chatter)
+            recordVessageManager.onInitChatter(chatter)
+            playVessageManager.onInitChatter(chatter)
             ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
         }else if let group = self.chatGroup{
-            recordVessageManager.onChatGroupUpdated(group)
-            playVessageManager.onChatGroupUpdated(group)
+            recordVessageManager.onInitGroup(group)
+            playVessageManager.onInitGroup(group)
             ServiceContainer.getChatGroupService().fetchChatGroup(group.groupId){ updatedGroup in
                 if let ug = updatedGroup{
                     ug.chatters.forEach({ (userId) in
@@ -212,11 +191,11 @@ extension ConversationViewController{
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
         outterNewVessageCount = 0
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeLeft(_:)))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
         swipeLeft.direction = .Left
         self.view.addGestureRecognizer(swipeLeft)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeRight(_:)))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
         swipeRight.direction = .Right
         self.view.addGestureRecognizer(swipeRight)
         
@@ -243,6 +222,7 @@ extension ConversationViewController{
         showBottomBar()
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
         handleInitMessage()
+        playVessageManager.loadVessages()
     }
     
     private func handleInitMessage(){
@@ -283,43 +263,20 @@ extension ConversationViewController{
 extension ConversationViewController{
     
     func onPanGesture(a:UIPanGestureRecognizer) {
-        let v = a.velocityInView(self.view)
-        currentManager?.onPanGesture(v)
-    }
-    
-    func onSwipeRight(_:UIGestureRecognizer) {
-        if self.isReadingVessages {
-            self.playVessageManager.showPreviousVessage()
+        if let handler = currentManager as? HandlePanGesture {
+            let v = a.velocityInView(self.view)
+            handler.onPan(v)
         }
     }
     
-    func onSwipeLeft(_:UIGestureRecognizer) {
-        if self.isReadingVessages{
-            self.playVessageManager.showNextVessage()
+    func onSwipe(a:UISwipeGestureRecognizer) {
+        if let handler = currentManager as? HandleSwipeGesture{
+            handler.onSwipe(a.direction)
         }
     }
     
     func onBackItemClick(sender:AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func onClickMiddleButton(sender: UITapGestureRecognizer) {
-        self.view.userInteractionEnabled = false
-        self.middleButton.animationMaxToMin(0.1, maxScale: 1.2) {
-            if self.outChatGroup {
-                self.playToast("NOT_IN_CHAT_GROUP".localizedString())
-            }else if self.isReadingVessages {
-                if self.needSetChatBackgroundAndShow() {
-                    self.view.userInteractionEnabled = true
-                    return
-                }
-                self.startRecording()
-            }else{
-                self.setReadingVessage()
-                self.recordVessageManager.sendVessage()
-            }
-            self.view.userInteractionEnabled = true
-        }
     }
     
     func onLongPressMiddleButton(sender:UILongPressGestureRecognizer) {
@@ -338,29 +295,7 @@ extension ConversationViewController{
         }
     }
     
-    @IBAction func onClickRightButton(sender: UIView) {
-        if self.isReadingVessages {
-            sender.animationMaxToMin(0.1, maxScale: 1.2) {
-                self.tryShowImageChatInputView()
-            }
-        }else{
-            self.recordVessageManager.cancelRecord()
-            self.setReadingVessage()
-        }
-        
-    }
     
-    @IBAction func onClickLeftButton(sender: UIView) {
-        self.view.userInteractionEnabled = false
-        self.leftButton.animationMaxToMin(0.1, maxScale: 1.2) {
-            if self.outChatGroup {
-                self.playToast("NOT_IN_CHAT_GROUP".localizedString())
-            }else if self.isReadingVessages {
-                self.showSendImageAlert()
-            }
-            self.view.userInteractionEnabled = true
-        }
-    }
     
     private func showChatGroupProfile(){
         ChatGroupProfileViewController.showProfileViewController(self.navigationController!, chatGroup: self.chatGroup)
@@ -374,18 +309,18 @@ extension ConversationViewController{
         }
     }
     
-    private func startRecording() {
+    func startRecording() {
         isRecording = true
+        navigationController?.navigationBarHidden = true
         vessageViewContainer.hidden = true
         recordViewContainer.hidden = false
+        
         recordViewContainer.alpha = 0.3
-        bottomBar.alpha = 1
         UIView.beginAnimations("RecordViewContainer", context: nil)
         UIView.setAnimationDuration(0.3)
         recordViewContainer.alpha = 1
-        bottomBar.alpha = 0
         UIView.commitAnimations()
-        navigationController?.navigationBarHidden = true
+ 
         recordVessageManager.onSwitchToManager()
         recordVessageManager.startRecord()
     }
@@ -394,26 +329,12 @@ extension ConversationViewController{
         isRecording = false
         recordViewContainer.hidden = true
         vessageViewContainer.hidden = false
-        bottomBar.alpha = 1
         navigationController?.navigationBarHidden = false
         playVessageManager.onSwitchToManager()
     }
     
     private func showBottomBar(){
-        if(bottomBarContainer.hidden){
-            let layerOriginFrame = bottomBarContainer.layer.frame
-            bottomBarContainer.layer.frame = CGRectMake(layerOriginFrame.origin.x, layerOriginFrame.origin.y + layerOriginFrame.height, layerOriginFrame.width, layerOriginFrame.height)
-            bottomBarContainer.hidden = false
-            bottomBarContainer.alpha = 0.1
-            bottomBar.hidden = false
-            let barLayerOriginFrame = bottomBar.layer.frame
-            bottomBar.layer.frame = CGRectMake(barLayerOriginFrame.origin.x, barLayerOriginFrame.origin.y + barLayerOriginFrame.height, barLayerOriginFrame.width, barLayerOriginFrame.height)
-            UIView.animateWithDuration(0.1) {
-                self.bottomBar.layer.frame = barLayerOriginFrame
-                self.bottomBarContainer.alpha = 1
-                self.bottomBarContainer.layer.frame = layerOriginFrame
-            }
-        }
+        
     }
 }
 
@@ -470,15 +391,20 @@ extension ConversationViewController{
     
     func onNewVessagesReveiced(a:NSNotification){
         var otherConversationVessageCount = 0
+        var received = [Vessage]()
+        
         if let msgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
             msgs.forEach({ (msg) in
                 if msg.sender == self.conversation?.chatterId{
-                    self.playVessageManager.onVessageReceived(msg)
-                    self.recordVessageManager.onVessageReceived(msg)
+                    received.append(msg)
                 }else{
                     otherConversationVessageCount += 1
                 }
             })
+        }
+        if received.count > 0 {
+            self.playVessageManager.onVessagesReceived(received)
+            self.recordVessageManager.onVessagesReceived(received)
         }
         outterNewVessageCount += otherConversationVessageCount
     }
@@ -507,7 +433,7 @@ extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
         self.showAlert("CHAT_BCG_NOT_SET_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
     }
     
-    private func needSetChatBackgroundAndShow() -> Bool{
+    func needSetChatBackgroundAndShow() -> Bool{
         if !needSetChatImageIfNotExists || userService.isUserChatBackgroundIsSeted{
             return false
         }else{
@@ -685,26 +611,23 @@ extension ConversationViewController{
 
 //MARK: animations
 extension ConversationViewController{
-    func playNextButtonAnimation(){
-        UIAnimationHelper.flashView(leftButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
-    }
     
     func playVideoChatButtonAnimation() {
-        UIAnimationHelper.flashView(middleButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
+        UIAnimationHelper.flashView(sendVideoChatButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
     }
     
     func playFaceTextButtonAnimation() {
-        UIAnimationHelper.flashView(rightButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
+        UIAnimationHelper.flashView(sendFaceTextButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
     }
 }
 
+//MARK:HandleBahamutCmdDelegate
 extension ConversationViewController:HandleBahamutCmdDelegate{
     func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
         switch method {
         case "showInviteFriendsAlert":ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
         case "showSetupChatImagesController":showChatImagesMrgController(1)
         case "showSetupChatBackgroundController":showChatImagesMrgController(0)
-        case "playNextButtonAnimation":playNextButtonAnimation()
         case "playFaceTextButtonAnimation":playFaceTextButtonAnimation()
         case "playVideoChatButtonAnimation":playVideoChatButtonAnimation()
         default:

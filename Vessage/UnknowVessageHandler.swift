@@ -30,8 +30,7 @@ class UnknowVessageHandler: VessageHandlerBase {
     
     private func refreshConversationLabel(){
         let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
-        playVessageManager.rightBottomLabelText = friendTimeString
-        playVessageManager.leftTopLabelText = nil
+        
     }
 }
 
@@ -58,7 +57,5 @@ class NoVessageHandler: VessageHandlerBase {
     }
     
     private func refreshConversationLabel(){
-        playVessageManager.rightBottomLabelText = nil
-        playVessageManager.leftTopLabelText = nil
     }
 }

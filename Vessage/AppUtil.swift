@@ -85,64 +85,52 @@ func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId) -> UIIm
 
 extension FileService
 {
-    func setImage(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
+    func getImage(iconFileId fileId:String!,callback:((image:UIImage?)->Void))
     {
-        imageView.image = defaultImage
         if String.isNullOrWhiteSpace(fileId) == false
         {
             if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
             {
-                imageView.image = uiimage
-                if let handler = callback{
-                    handler(suc:true)
-                }
+                callback(image: uiimage)
             }else
             {
                 self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
                     if filePath != nil
                     {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            imageView.image = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
-                            if let handler = callback{
-                                handler(suc:true)
-                            }
+                            let image = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
+                            callback(image: image)
                         })
                     }else{
-                        if let handler = callback{
-                            handler(suc:false)
-                        }
+                        callback(image: nil)
                     }
                 })
             }
         }else{
-            if let handler = callback{
-                handler(suc:false)
+            callback(image: nil)
+        }
+    }
+    
+    func setImage(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
+    {
+        imageView.image = defaultImage
+        getImage(iconFileId: fileId) { (img) in
+            if let image = img{
+                imageView.image = image
+                callback?(suc: true)
+            }else{
+                callback?(suc: false)
             }
         }
     }
     
     func setImage(button:UIButton,iconFileId fileId:String!)
     {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            let image = UIImage(named: "defaultAvatar")
-            button.setImage(image, forState: .Normal)
-            if String.isNullOrWhiteSpace(fileId) == false
-            {
-                if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
-                {
-                    button.setImage(uiimage, forState: .Normal)
-                }else
-                {
-                    self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
-                        if filePath != nil
-                        {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                let img = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
-                                button.setImage(img, forState: .Normal)
-                            })
-                        }
-                    })
-                }
+        let image = UIImage(named: "defaultAvatar")
+        button.setImage(image, forState: .Normal)
+        getImage(iconFileId: fileId) { (img) in
+            if let image = img{
+                button.setImage(image, forState: .Normal)
             }
         }
     }
@@ -170,9 +158,13 @@ func intToBadgeString(value:Int!) -> String?{
     return "\(value)"
 }
 
-func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!){
-    badgeLabel?.hidden = intToBadgeString(value) == nil
+func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!,autoHide:Bool = true){
     badgeLabel?.text = intToBadgeString(value)
+    if autoHide {
+        badgeLabel?.hidden = badgeLabel?.text == nil
+    }else{
+        badgeLabel?.text = badgeLabel?.text ?? "0"
+    }
     badgeLabel?.animationMaxToMin()
 }
 

@@ -46,8 +46,23 @@ class FaceTextVessageHandler: VessageHandlerBase,HandlePanGesture {
         self.faceTextView.addGestureRecognizer(ges)
     }
     
-    func onPan(v: CGPoint) {
-        self.faceTextView?.scrollBubbleText(v.y)
+    override func onSwipe(direction: UISwipeGestureRecognizerDirection) -> Bool {
+        if self.faceTextView == nil {
+            super.onSwipe(direction)
+            return false
+        }else if direction == .Left && self.faceTextView.hasNextText {
+            self.faceTextView.showNextText()
+        }else if direction == .Right && self.faceTextView.hasPreviousText{
+            self.faceTextView.showPreviousText()
+        }else{
+            super.onSwipe(direction)
+            return false
+        }
+        return true
+    }
+    
+    func onPan(v: CGPoint) -> Bool {
+        return self.faceTextView?.scrollBubbleText(v.y) ?? false
     }
     
     func onTapFaceTextView(ges:UITapGestureRecognizer) {
@@ -80,12 +95,12 @@ class FaceTextVessageHandler: VessageHandlerBase,HandlePanGesture {
     
     private func refreshConversationLabel(){
         if presentingVesseage.isMySendingVessage() {
-            playVessageManager.leftTopLabelText = "MY_SENDING_VSG".localizedString()
+            let msg = "MY_SENDING_VSG".localizedString()
         }else{
             let friendTimeString = presentingVesseage.sendTime?.dateTimeOfAccurateString.toFriendlyString() ?? "UNKNOW_TIME".localizedString()
-            playVessageManager.leftTopLabelText = friendTimeString
+            
         }
-        playVessageManager.rightBottomLabelText = nil
+        
     }
     
     override func releaseHandler() {

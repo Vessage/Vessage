@@ -13,5 +13,9 @@ protocol VessageEventHandler{
 }
 
 protocol HandlePanGesture {
-    func onPan(v:CGPoint)
+    func onPan(v:CGPoint) -> Bool
+}
+
+protocol HandleSwipeGesture {
+    func onSwipe(direction:UISwipeGestureRecognizerDirection) -> Bool
 }

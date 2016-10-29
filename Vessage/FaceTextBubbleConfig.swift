@@ -8,10 +8,9 @@
 
 import Foundation
 private let faceTextConfig = [
-    ["bubbleId":"face_text_bubble_0","type":BubbleMetadata.typeEmbeded,"size":[600,442],"scrollableRect":[142,157,285,184],"radio":[0.23,0.48],"startPoint":[300,60]],
-    ["bubbleId":"face_text_bubble_1","type":BubbleMetadata.typeEmbeded,"size":[600,523],"scrollableRect":[100,130,366,304],"radio":[0.23,0.48],"startPoint":[297,5]],
-    ["bubbleId":"face_text_bubble_2","type":BubbleMetadata.typeEmbeded,"size":[600,400],"scrollableRect":[129,145,331,135],"radio":[0.23,0.48],"startPoint":[280,27]],
- 
+    ["bubbleId":"face_text_bubble_0","type":BubbleMetadata.typeEmbeded,"size":[600,442],"scrollableRect":[142,157,285,184],"radio":[0.18,0.48],"startPoint":[300,60],"textLimit":36],
+    ["bubbleId":"face_text_bubble_1","type":BubbleMetadata.typeEmbeded,"size":[600,523],"scrollableRect":[100,130,366,304],"radio":[0.18,0.48],"startPoint":[297,5],"textLimit":26],
+    ["bubbleId":"face_text_bubble_2","type":BubbleMetadata.typeEmbeded,"size":[600,400],"scrollableRect":[129,145,331,135],"radio":[0.18,0.48],"startPoint":[280,27],"textLimit":30]
 ]
 
 class BubbleMetadata: BahamutObject {
@@ -26,31 +25,47 @@ class BubbleMetadata: BahamutObject {
     var scrollableRect:[Double]!
     var radio:[Double]!
     var startPoint:[Double]!
+    var textLimit:Int = 0
+    
 }
 
 class FaceTextBubbleConfig {
-    private static var externalBubbles = { return [BubbleMetadata]()}()
     private static var externalBubblesMap = { return [String:BubbleMetadata]()}()
     static var defaultBubble:BubbleMetadata = {
-        return BubbleMetadata(dictionary:["bubbleId":"face_text_bubble_default","type":BubbleMetadata.typeEmbeded,"size":[793,569],"scrollableRect":[156,156,474,315],"radio":[0.3,0.67],"startPoint":[420,0]])
+        return BubbleMetadata(dictionary:["bubbleId":"face_text_bubble_default","type":BubbleMetadata.typeEmbeded,"size":[793,569],"scrollableRect":[156,156,474,315],"radio":[0.3,0.67],"startPoint":[420,0],"textLimit":32])
     }()
     
-    static var randomBubble:BubbleMetadata{
-        if random() % 10 > 5 || externalBubbles.count == 0{
-            return embededBubbles[random() % embededBubbles.count]
-        }else{
-            return externalBubbles[random() % externalBubbles.count]
+    private(set) static var maxTextLengthBubble = defaultBubble
+    
+    static func getSutableBubble(textLength:Int) -> BubbleMetadata{
+        for b in bubbles {
+            if b.textLimit > textLength {
+                return b
+            }
         }
+        return bubbles.last ?? defaultBubble
     }
     
     static func registBubble(bubble:BubbleMetadata){
-        externalBubbles.append(bubble)
+        bubbles.append(bubble)
+        bubbles.sortInPlace { (a, b) -> Bool in
+            return a.textLimit < b.textLimit
+        }
+        if bubble.textLimit > maxTextLengthBubble.textLimit{
+            maxTextLengthBubble = bubble
+        }
         externalBubblesMap.updateValue(bubble, forKey: bubble.bubbleId)
     }
     
-    static private(set) var embededBubbles:[BubbleMetadata] = {
+    static private var bubbles:[BubbleMetadata] = {
         return faceTextConfig.map({ (config) -> BubbleMetadata in
-            return BubbleMetadata(dictionary:config)
+            let bubble = BubbleMetadata(dictionary:config)
+            if bubble.textLimit > maxTextLengthBubble.textLimit{
+                maxTextLengthBubble = bubble
+            }
+            return bubble
+        }).sort({ (a, b) -> Bool in
+            return a.textLimit < b.textLimit
         })
     }()
 }

@@ -9,6 +9,8 @@
 import Foundation
 
 class VessageQueue: BahamutTaskQueue {
+    static let onPushNewVessageTask = "onPushNewVessageTask"
+    
     static var sharedInstance:VessageQueue = {
         return VessageQueue()
     }()
@@ -57,5 +59,6 @@ class VessageQueue: BahamutTaskQueue {
         queueTask.vessage = vsg
         pushTask(queueTask)
         MobClick.event("Vege_ConfirmSendVessage")
+        self.postNotificationNameWithMainAsync(VessageQueue.onPushNewVessageTask, object: self, userInfo: [kBahamutQueueTaskValue:queueTask])
     }
 }

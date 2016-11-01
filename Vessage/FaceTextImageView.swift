@@ -197,6 +197,8 @@ extension FaceTextChatBubble{
 }
 
 class FaceTextImageView: UIView {
+    var devideSentence = false
+    
     weak private var container:UIView!
     private var loadingImageView:UIImageView!
     private var imageView:UIImageView!{
@@ -371,7 +373,11 @@ class FaceTextImageView: UIView {
         self.chatBubble.containerWidth = self.container.bounds.width
         //self.chatBubble.setBubbleText(message)
         messages.removeAll()
-        messages.appendContentsOf(FaceTextImageView.separatMessage(message))
+        if devideSentence {
+            messages.appendContentsOf(FaceTextImageView.separatMessage(message))
+        }else{
+            messages.append(message)
+        }
         messageIndex = messages.count > 0 ? 0 : -1
         self.chatBubble.hidden = true
         self.imageView.hidden = true

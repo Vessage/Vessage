@@ -93,6 +93,22 @@ class GetUserInfoRequest: BahamutRFRequestBase {
     }
 }
 
+class GetUsersProfileRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .GET
+        self.api = "/VessageUsers/Profiles"
+    }
+    
+    var userIds:[String]!{
+        didSet{
+            if let us = userIds {
+                self.paramenters["userIds"] = us.joinWithSeparator(",")
+            }
+        }
+    }
+}
+
 class GetNearUsersInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()

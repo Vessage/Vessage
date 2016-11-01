@@ -39,7 +39,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="72" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_face" translatesAutoresizingMaskIntoConstraints="NO" id="B2r-j8-BXl">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_face" translatesAutoresizingMaskIntoConstraints="NO" id="B2r-j8-BXl">
                                                     <rect key="frame" x="9" y="8" width="54" height="72"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="54" id="GGI-nm-5mf"/>

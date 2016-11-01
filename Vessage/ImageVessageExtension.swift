@@ -32,6 +32,7 @@ extension ConversationViewController:UIImagePickerControllerDelegate{
                 let vsg = Vessage()
                 vsg.isGroup = self.isGroupChat
                 vsg.typeId = Vessage.typeImage
+                vsg.body = self.getSendVessageBodyString([:])
                 let url = NSURL(fileURLWithPath: localPath)
                 VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
             }else{

@@ -10,6 +10,7 @@ import Foundation
 
 class Vessage: BahamutObject {
     static let sendingVessageId = "sendingVessageId"
+    static let vgRandomVessageId = "vgRandomVessageId"
     
     static let typeNoVessage = -2
     static let typeUnknow = -1
@@ -33,8 +34,29 @@ class Vessage: BahamutObject {
     
     var gSender:String! //vessage sender of group if is group vessage
     
+    //MARK: local properties
+    var isReady:Bool!
+    
+    func getVessageRealSenderId() -> String? {
+        if isMySendingVessage() {
+            return ServiceContainer.getUserService().myProfile?.userId
+        }else if isGroup{
+            return gSender
+        }else{
+            return sender
+        }
+    }
+    
+    func isReceivedVessage() -> Bool {
+        return !isVGRandomVessage() && !isMySendingVessage()
+    }
+    
+    func isVGRandomVessage() -> Bool {
+        return self.vessageId == Vessage.vgRandomVessageId
+    }
+    
     func isMySendingVessage() -> Bool {
-        return self.sender == Vessage.sendingVessageId
+        return self.vessageId == Vessage.sendingVessageId
     }
     
     func getSendTime()->NSDate!{
@@ -128,6 +150,14 @@ class SendNewVessageRequestBase:BahamutRFRequestBase{
             }
         }
     }
+    
+    var ready:Bool = false{
+        didSet{
+            self.paramenters["ready"] = "\(ready)"
+        }
+    }
+    
+    
 }
 
 class SendNewVessageToMobileRequest: SendNewVessageRequestBase {

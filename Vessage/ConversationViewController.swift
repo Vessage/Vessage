@@ -14,43 +14,38 @@ class ConversationViewController: UIViewController {
     //MARK: Properties
     private var needSetChatImageIfNotExists = true
     
+    private var isNotRegistFriend = false
+    
     var isGroupChat:Bool{
-        return chatGroup != nil
+        return conversation.isGroup
     }
     
     private(set) var outterNewVessageCount:Int = 0{
         didSet{
-            if let backBtn = self.navigationController?.navigationBar.backItem?.backBarButtonItem {
-                var title = "\(VessageConfig.appName)"
-                if outterNewVessageCount > 99 {
-                    title = "\(title)(99+)"
-                }else if outterNewVessageCount > 0 {
-                    title = "\(title)(\(outterNewVessageCount))"
-                }
-                backBtn.title = title
+            let backBtn = UIBarButtonItem()
+            var title = "\(VessageConfig.appName)"
+            if outterNewVessageCount > 99 {
+                title = "\(title)(99+)"
+            }else if outterNewVessageCount > 0 {
+                title = "\(title)(\(outterNewVessageCount))"
             }
+            backBtn.title = title
+            self.navigationController?.navigationBar.backItem?.backBarButtonItem = backBtn
         }
     }
     
     private(set) var conversation:Conversation!
     
-    private(set) var chatter:VessageUser!{
-        didSet{
-            if let user = chatter{
-                recordVessageManager?.onChatterUpdated(user)
-                playVessageManager?.onChatterUpdated(user)
-                chatGroup = nil
-            }
-        }
+    private var defaultOtherChatterId:String?{
+        return (self.chatGroup?.chatters?.filter{$0 != UserSetting.userId})?.first
     }
     
     private(set) var chatGroup:ChatGroup!{
         didSet{
             if let cg = chatGroup {
-                outChatGroup = !chatGroup.chatters.contains(userService.myProfile.userId)
+                outChatGroup = !chatGroup.chatters.contains(UserSetting.userId)
                 recordVessageManager?.onChatGroupUpdated(cg)
                 playVessageManager?.onChatGroupUpdated(cg)
-                chatter = nil
             }else{
                 outChatGroup = false
             }
@@ -83,11 +78,19 @@ class ConversationViewController: UIViewController {
     
     @IBOutlet weak var topChattersBoardHeight: NSLayoutConstraint!
     @IBOutlet weak var topChattersBoard: ChattersBoard!
+    @IBOutlet weak var bottomChattersBoardBottom: NSLayoutConstraint!
     @IBOutlet weak var bottomChattersBoardHeight: NSLayoutConstraint!
     @IBOutlet weak var bottomChattersBoard: ChattersBoard!
     @IBOutlet weak var sendImageButton: UIButton!
     @IBOutlet weak var sendFaceTextButton: UIButton!
     @IBOutlet weak var sendVideoChatButton: UIButton!
+    @IBOutlet weak var mgrChatImagesButton: UIButton!{
+        didSet{
+            mgrChatImagesButton.layoutIfNeeded()
+            mgrChatImagesButton.clipsToBounds = true
+            mgrChatImagesButton.layer.cornerRadius = mgrChatImagesButton.frame.height / 2
+        }
+    }
     
     @IBOutlet weak var notReadNumLabel: UILabel!{
         didSet{
@@ -95,13 +98,12 @@ class ConversationViewController: UIViewController {
             notReadNumLabel.layer.cornerRadius = 12
         }
     }
+    @IBOutlet weak var readingLineProgress: UIProgressView!
     @IBOutlet weak var readingProgress: KDCircularProgress!
     @IBOutlet weak var progressView: UIProgressView!
     
     @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
-    
-    @IBOutlet weak var vessageView: UIView!
     
     //MARK: Record Views
     @IBOutlet weak var sendRecordButton: UIButton!
@@ -132,11 +134,27 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var groupFaceContainer: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
     
+    private var baseVessageBodyDict:[String:AnyObject]{
+        var dict = [String:AnyObject]()
+        if let selectedFaceId = playVessageManager.selectedImageId {
+            dict.updateValue(selectedFaceId, forKey: "faceId")
+        }
+        return dict
+    }
+    
+    func getSendVessageBodyString(values:[String:AnyObject?],withBaseDict:Bool = true) -> String? {
+        var bodyDict = withBaseDict ? baseVessageBodyDict : [String:AnyObject]()
+        values.forEach { (key,value) in
+            if let v = value{
+                bodyDict.updateValue(v, forKey: key)
+            }
+        }
+        let json = try! NSJSONSerialization.dataWithJSONObject(bodyDict, options: NSJSONWritingOptions(rawValue: 0))
+        return String(data: json, encoding: NSUTF8StringEncoding)
+    }
     
     var imageChatInputView:ImageChatInputView!
     var imageChatInputResponderTextFiled:UITextField!
-    
-    var hadChatImagesMgrControllerShown = false
     
     private var initMessage:[String:AnyObject]!
     
@@ -171,21 +189,11 @@ extension ConversationViewController{
         recordVessageManager = RecordVessageManager()
         recordVessageManager.initManager(self)
         addObservers()
-        if let chatter = self.chatter{
-            recordVessageManager.onInitChatter(chatter)
-            playVessageManager.onInitChatter(chatter)
-            ServiceContainer.getUserService().fetchLatestUserProfile(chatter)
-        }else if let group = self.chatGroup{
+        if let group = self.chatGroup{
             recordVessageManager.onInitGroup(group)
             playVessageManager.onInitGroup(group)
-            ServiceContainer.getChatGroupService().fetchChatGroup(group.groupId){ updatedGroup in
-                if let ug = updatedGroup{
-                    ug.chatters.forEach({ (userId) in
-                        ServiceContainer.getUserService().getUserProfile(userId)
-                    })
-                }
-            }
         }
+        
         setReadingVessage()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
@@ -250,7 +258,6 @@ extension ConversationViewController{
         self.playVessageManager = nil
         self.recordVessageManager = nil
         self.conversation = nil
-        self.chatter = nil
         self.chatGroup = nil
     }
     
@@ -302,11 +309,13 @@ extension ConversationViewController{
     }
     
     private func showChatterProfile(){
-        if let c = self.chatter{
-            userService.showUserProfile(self, user: c)
-        }else{
-            self.playToast("USER_DATA_NOT_READY_RETRY".localizedString())
+        if let c = defaultOtherChatterId{
+            if let user = userService.getCachedUserProfile(c) {
+                userService.showUserProfile(self, user: user)
+                return
+            }
         }
+        self.playToast("USER_DATA_NOT_READY_RETRY".localizedString())
     }
     
     func startRecording() {
@@ -383,8 +392,11 @@ extension ConversationViewController{
     
     func onUserProfileUpdated(a:NSNotification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if VessageUser.isTheSameUser(chatter, userb: self.chatter){
-                self.chatter = chatter
+            if let chatterids = self.chatGroup?.chatters{
+                if chatterids.contains(chatter.userId) {
+                    playVessageManager.onGroupChatterUpdated(chatter)
+                    recordVessageManager.onGroupChatterUpdated(chatter)
+                }
             }
         }
     }
@@ -504,7 +516,7 @@ extension ConversationViewController{
             if task.receiverId == self.conversation?.chatterId {
                 self.controllerTitle = "VESSAGE_SENDED".localizedString()
                 NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)
-                if !self.isGroupChat && String.isNullOrEmpty(chatter?.accountId) {
+                if isNotRegistFriend{
                     self.showSendTellFriendAlert()
                 }
             }
@@ -531,12 +543,14 @@ extension ConversationViewController{
     }
     
     private func showSendTellFriendAlert(){
-        let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
-            let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
-            ShareHelper.instance.showTellTextMsgToFriendsAlert(self, content: contentText)
-        })
-        let name = ServiceContainer.getUserService().getUserNotedName(chatter.userId)
-        self.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: name, actions: [send])
+        if let userId = defaultOtherChatterId{
+            let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+                let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
+                ShareHelper.instance.showTellTextMsgToFriendsAlert(self, content: contentText)
+            })
+            let name = ServiceContainer.getUserService().getUserNotedName(userId)
+            self.showAlert("SEND_NOTIFY_SMS_TO_FRIEND".localizedString(), msg: name, actions: [send])
+        }
     }
 }
 
@@ -544,7 +558,7 @@ extension ConversationViewController{
 extension ConversationViewController{
     
     static func showConversationViewController(nvc:UINavigationController,userId: String,initMessage:[String:AnyObject]? = nil) {
-        if userId == ServiceContainer.getUserService().myProfile.userId {
+        if userId == UserSetting.userId {
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
         }else{
             let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
@@ -560,13 +574,13 @@ extension ConversationViewController{
         }else{
             if conversation.isGroup {
                 if let group = ServiceContainer.getChatGroupService().getChatGroup(conversation.chatterId){
-                    showConversationView(nvc, conversation: conversation, group: group,initMessage: initMessage)
+                    showConversationView(nvc, conversation: conversation, group: group,refreshGroup: true, initMessage: initMessage)
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
                         hud.hideAnimated(true)
                         if let g = group{
-                            self.showConversationView(nvc, conversation: conversation, group: g,initMessage: initMessage)
+                            self.showConversationView(nvc, conversation: conversation, group: g,refreshGroup: false,initMessage: initMessage)
                         }else{
                             nvc.playToast("NO_SUCH_GROUP".localizedString())
                         }
@@ -574,13 +588,13 @@ extension ConversationViewController{
                 }
             }else{
                 if let user = ServiceContainer.getUserService().getCachedUserProfile(conversation.chatterId){
-                    showConversationView(nvc,conversation: conversation,user: user,initMessage: initMessage)
+                    showConversationView(nvc,conversation: conversation,user: user,refreshUser: true, initMessage: initMessage)
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
                         hud.hideAnimated(true)
                         if let updatedUser = u{
-                            showConversationView(nvc,conversation: conversation,user: updatedUser,initMessage: initMessage)
+                            showConversationView(nvc,conversation: conversation,user: updatedUser,refreshUser: false,initMessage: initMessage)
                         }else{
                             nvc.playToast("NO_SUCH_USER".localizedString())
                         }
@@ -591,20 +605,38 @@ extension ConversationViewController{
         
     }
     
-    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup,initMessage:[String:AnyObject]?){
+    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup,refreshGroup:Bool,initMessage:[String:AnyObject]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatGroup = group
         controller.initMessage = initMessage
         nvc.pushViewController(controller, animated: true)
+        if refreshGroup {
+            ServiceContainer.getChatGroupService().fetchChatGroup(group.groupId)
+        }
     }
     
-    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser,initMessage:[String:AnyObject]?){
+    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser,refreshUser:Bool,initMessage:[String:AnyObject]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
-        controller.chatter = user
+        if String.isNullOrWhiteSpace(user.accountId){
+            controller.isNotRegistFriend = true
+        }
+        
+        let groupChat = ChatGroup()
+        groupChat.chatters = [user.userId,UserSetting.userId]
+        groupChat.groupId = user.userId
+        groupChat.groupName = user.nickName
+        groupChat.hosters = groupChat.chatters
+        groupChat.inviteCode = user.userId
+            
+        controller.chatGroup = groupChat
+        
         controller.initMessage = initMessage
         nvc.pushViewController(controller, animated: true)
+        if refreshUser {
+            ServiceContainer.getUserService().fetchLatestUserProfile(user)
+        }
     }
 
 }

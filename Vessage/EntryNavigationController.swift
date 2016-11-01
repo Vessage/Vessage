@@ -72,9 +72,9 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         let isUserMobileValidated = userService.isUserMobileValidated
         if isUserMobileValidated
         {
-            VessageQueue.sharedInstance.initQueue(userService.myProfile.userId)
+            VessageQueue.sharedInstance.initQueue(UserSetting.userId)
             BubbleVessageHandlerManager.loadEmbededHandlers()
-            BahamutTaskQueue.defaultInstance.initQueue(userService.myProfile.userId)
+            BahamutTaskQueue.defaultInstance.initQueue(UserSetting.userId)
             BahamutTaskQueue.defaultInstance.useSetChatImageHandlers()
             showMainView()
         }else{

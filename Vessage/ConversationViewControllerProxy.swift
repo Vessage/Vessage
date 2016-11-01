@@ -20,10 +20,6 @@ class ConversationViewControllerProxy: NSObject {
         return rootController?.chatGroup
     }
     
-    
-    var vessageView:UIView!{
-        return rootController?.vessageView
-    }
     var fileService:FileService!{
         return rootController?.fileService
     }
@@ -32,10 +28,6 @@ class ConversationViewControllerProxy: NSObject {
         return rootController?.conversation
     }
     
-    
-    var chatter:VessageUser!{
-        return rootController?.chatter
-    }
     var vessageService:VessageService!{
         return rootController?.vessageService
     }
@@ -68,6 +60,7 @@ class ConversationViewControllerProxy: NSObject {
 
     func onChatterUpdated(chatter:VessageUser) {}
     func onChatGroupUpdated(chatGroup:ChatGroup) {}
+    func onGroupChatterUpdated(chatter:VessageUser) {}
     
     func onKeyBoardHidden() {}
     

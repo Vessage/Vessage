@@ -19,7 +19,7 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
 
     private(set) var chatGroup:ChatGroup!{
         didSet{
-            if chatGroup.hosters.contains(userService.myProfile.userId) {
+            if chatGroup.hosters.contains(UserSetting.userId) {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ChatGroupProfileViewController.addUserToGroup(_:)))
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
             }

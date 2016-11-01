@@ -8,7 +8,7 @@
 
 import Foundation
 class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
-    let defaultWidth:CGFloat = 160
+    let defaultWidth:CGFloat = 180
     let defaultHeight:CGFloat = 240
     
     private var videoPlayer:BahamutFilmView!

@@ -214,10 +214,9 @@ extension RecordVessageManager{
     
     override func onChatGroupUpdated(chatGroup: ChatGroup) {
         noSmileFaceTipsLabel.hidden = true
-        let myUserId = self.rootController.userService.myProfile.userId
         var userFaceIds = [String:String?]()
         for userId in chatGroup.chatters {
-            if userId == myUserId {
+            if userId == UserSetting.userId {
                 continue
             }else if let user = self.rootController.userService.getCachedUserProfile(userId){
                 userFaceIds.updateValue(user.mainChatImage, forKey: userId)
@@ -289,7 +288,7 @@ extension RecordVessageManager{
         let vsg = Vessage()
         vsg.isGroup = isGroupChat
         vsg.typeId = Vessage.typeChatVideo
-        
+        vsg.body = rootController.getSendVessageBodyString([:])
         #if DEBUG
             if isInSimulator() {
                 PersistentFileHelper.deleteFile(url.path!)

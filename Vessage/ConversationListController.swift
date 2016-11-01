@@ -96,6 +96,10 @@ class ConversationListController: UITableViewController {
         let titleView = NavigationBarTitle.instanceFromXib()
         self.navigationItem.titleView = titleView
         initMJRefreshHeader()
+        
+        #if DEBUG
+            ConversationListController.autoRefreshData = true
+        #endif
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -305,7 +309,7 @@ class ConversationListController: UITableViewController {
         }else{
             switch section {
             case ConversationListController.chatImageMgrSection:
-                return 1
+                return 0
             case ConversationListController.newConversationSection:
                 return 2
             default:

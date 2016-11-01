@@ -80,7 +80,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func readVessage(vessage:Vessage,refresh:Bool = true){
-        if vessage.isMySendingVessage() {
+        if !vessage.isReceivedVessage() {
             return
         }
         if vessage.isRead == false{
@@ -102,7 +102,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func removeVessage(vessage:Vessage){
-        if vessage.isMySendingVessage() {
+        if !vessage.isReceivedVessage() {
             return
         }
         readVessage(vessage,refresh: false)
@@ -180,7 +180,7 @@ extension VessageService{
         }
     }
     
-    func sendVessageToUser(receiverId:String?, vessage:Vessage, callback:(vessageId:String?)->Void){
+    func sendVessageToUser(receiverId:String?,vessage:Vessage, callback:(vessageId:String?)->Void){
         let req = SendNewVessageToUserRequest()
         req.receiverId = receiverId
         req.isGroup = vessage.isGroup
@@ -194,6 +194,7 @@ extension VessageService{
         req.fileId = vessage.fileId
         req.typeId = vessage.typeId
         req.body = vessage.body
+        req.ready = vessage.isReady ?? false
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
             if let vrm = result.returnObject{
                 vrm.saveModel()

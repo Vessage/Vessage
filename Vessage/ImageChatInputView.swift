@@ -9,11 +9,11 @@
 import Foundation
 
 @objc protocol ImageChatInputViewDelegate {
-    optional func imageChatInputViewDidClickSend(sender:AnyObject?,textField:UITextView);
-    optional func imageChatInputViewDidClickChatImage(sender:AnyObject?);
-    optional func imageChatInputViewDidEndEditing(textField: UITextView);
-    optional func imageChatInputViewChanged(textField: UITextView);
-    optional func imageChatInputViewDidBeginEditing(textField: UITextView);
+    optional func imageChatInputViewDidClickSend(sender:AnyObject?,textField:UITextView)
+    optional func imageChatInputViewDidClickChatImage(sender:AnyObject?)
+    optional func imageChatInputViewDidEndEditing(textField: UITextView)
+    optional func imageChatInputViewChanged(textField: UITextView)
+    optional func imageChatInputViewDidBeginEditing(textField: UITextView)
 }
 
 class ImageChatInputView: UIView,UITextViewDelegate {

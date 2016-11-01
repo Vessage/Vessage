@@ -115,11 +115,11 @@ class GodModeManager {
         }
         
         #if DEBUG
-            if code == "autorefreshoff" {
+            if code.lowercaseString == "autorefreshoff" {
                 vc.showAlert("God Mode", msg: "Auto Refresh Off")
                 ConversationListController.autoRefreshData = false
                 return true
-            }else if code == "autorefreshon"{
+            }else if code.lowercaseString == "autorefreshon"{
                 vc.showAlert("God Mode", msg: "Auto Refresh On")
                 ConversationListController.autoRefreshData = true
                 return true

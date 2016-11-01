@@ -8,9 +8,18 @@
 
 import Foundation
 
+private let randomTextVessageContents = [
+    ["?_?","??????","有事想和我聊聊？","...什么事？","......","☺️"],
+    ["。。。","！！！！"]
+]
+
 //MARK: PlayVessageManager
 class PlayVessageManager: ConversationViewControllerProxy {
-
+    
+    let chatterVessageBubbleColor = UIColor.whiteColor().adjustedHueColor(0.6)
+    let myVessageBubbleColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
+    
+    
     //MAKR: chatters baord
     private var chattersBoardManager:GroupedChattersBoardManager!
 
@@ -95,7 +104,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         var showingMySendedVsg = false
         if let cvsg = currentIndexVessage {
             if cvsg.isGroup {
-                showingMySendedVsg = cvsg.gSender == self.rootController.userService.myProfile.userId
+                showingMySendedVsg = cvsg.gSender == UserSetting.userId
             }else{
                 showingMySendedVsg = cvsg.isMySendingVessage()
             }
@@ -115,6 +124,8 @@ class PlayVessageManager: ConversationViewControllerProxy {
             if vessages.count == 0 {
                 if let v = vessageService.getCachedNewestVessage(self.conversation.chatterId){
                     vessages.append(v)
+                }else{
+                    vessages.append(getVGRandomVessage())
                 }
             }
             vessages.sortInPlace({ (a, b) -> Bool in
@@ -125,39 +136,83 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
-    //MARK: keyboard
-    var cachedTopChatterBoardHeight:CGFloat!
-    var cachedBottomChatters = [VessageUser]()
-    
-    override func onKeyBoardShown() {
-        if cachedBottomChatters.count > 0{
-            return
-        }
-        if cachedTopChatterBoardHeight == nil {
-            cachedTopChatterBoardHeight = self.rootController.topChattersBoardHeight.constant
-        }
-        self.rootController.topChattersBoardHeight.constant = cachedTopChatterBoardHeight * 0.8
-        cachedBottomChatters.removeAll()
-        cachedBottomChatters.appendContentsOf(self.rootController.bottomChattersBoard.chatters)
-        self.rootController.bottomChattersBoard.clearAllChatters()
-        self.rootController.topChattersBoard.addChatters(cachedBottomChatters)
-        dispatch_async(dispatch_get_main_queue()) { 
-            if let vsg = self.currentIndexVessage{
-                self.showBubbleVessage(nil, vessage: vsg, nextVessage: nil)
+    func getVGRandomVessage() -> Vessage {
+        let v = Vessage()
+        v.vessageId = Vessage.vgRandomVessageId
+        v.typeId = Vessage.typeFaceText
+        v.isGroup = self.conversation.isGroup
+        v.sender = self.conversation.chatterId
+        if self.conversation.isGroup {
+            let chatters = self.chattersBoardManager.chatterItems.filter{$0.chatterId != UserSetting.userId}
+            if chatters.count > 0 {
+                v.gSender = chatters[random() % chatters.count].chatterId
             }
         }
+        v.sendTime = NSDate().toAccurateDateTimeString()
+        v.isRead = true
+        let randomContents = self.conversation.isGroup ? randomTextVessageContents[1] : randomTextVessageContents[0]
+        let textMessage = randomContents[random() % randomContents.count]
+        v.body = self.rootController.getSendVessageBodyString(["textMessage":textMessage],withBaseDict: false)
+        return v
+    }
+    
+    //MARK: keyboard
+    var cachedBottomChatterBoardHeight:CGFloat!
+    var cachedBottomChatterBoardBottom:CGFloat!
+    var cachedTopChatterBoardHeigt:CGFloat!
+    
+    var cachedTopChatters = [ChattersBoardItem]()
+    var chatterMoved = false
+    
+    
+    override func onKeyBoardShown() {
+        self.rootController.navigationController?.setNavigationBarHidden(true, animated: true)
+        let bottomChattersBoard = self.rootController.bottomChattersBoard
+        let topChattersBoard = self.rootController.topChattersBoard
+        if cachedBottomChatterBoardHeight == nil {
+            cachedBottomChatterBoardHeight = self.rootController.bottomChattersBoardHeight.constant
+            cachedBottomChatterBoardBottom = self.rootController.bottomChattersBoardBottom.constant
+            cachedTopChatterBoardHeigt = self.rootController.topChattersBoardHeight.constant
+        }
+        
+        if chatterMoved == false {
+            cachedTopChatters.removeAll()
+            cachedTopChatters.appendContentsOf(topChattersBoard.chattersItems)
+            topChattersBoard.clearAllChatters()
+            bottomChattersBoard.addChatters(cachedTopChatters)
+            chatterMoved = true
+            dispatch_after(500, queue: dispatch_get_main_queue()) {
+                self.rootController.bottomChattersBoard.layoutIfNeeded()
+                if let vsg = self.currentIndexVessage{
+                    self.showBubbleVessage(nil, vessage: vsg, nextVessage: nil)
+                }
+            }
+        }
+        
+        let rect = self.rootController.view.convertRect(self.rootController.imageChatInputView.sendButton.frame, fromView: self.rootController.imageChatInputView)
+        let chatterNum = CGFloat(bottomChattersBoard.chattersItems.count)
+        let newHeight = bottomChattersBoard.chatterImageHeightOfNum(chatterNum, boardSize: bottomChattersBoard.frame.size) + 10
+        self.rootController.topChattersBoardHeight.constant = 0
+        self.rootController.bottomChattersBoardHeight.constant = newHeight
+        self.rootController.bottomChattersBoardBottom.constant = self.rootController.view.frame.height - rect.origin.y + 10
     }
     
     override func onKeyBoardHidden() {
-        self.rootController.topChattersBoardHeight.constant = cachedTopChatterBoardHeight
-        self.rootController.topChattersBoard.removeChatters(cachedBottomChatters)
-        self.rootController.bottomChattersBoard.addChatters(cachedBottomChatters)
-        cachedBottomChatters.removeAll()
-        dispatch_async(dispatch_get_main_queue()) {
+        self.rootController.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.rootController.bottomChattersBoardHeight.constant = cachedBottomChatterBoardHeight
+        self.rootController.bottomChattersBoardBottom.constant = cachedBottomChatterBoardBottom
+        self.rootController.topChattersBoardHeight.constant = cachedTopChatterBoardHeigt
+        self.rootController.bottomChattersBoard.removeChatters(cachedTopChatters)
+        self.rootController.topChattersBoard.addChatters(cachedTopChatters)
+        cachedTopChatters.removeAll()
+        hideBubbleVessage()
+        dispatch_after(500, queue: dispatch_get_main_queue()) { 
+            self.rootController.bottomChattersBoard.layoutIfNeeded()
             if let vsg = self.currentIndexVessage{
                 self.showBubbleVessage(nil, vessage: vsg, nextVessage: nil)
             }
         }
+        chatterMoved = false
     }
     
     //MARK: Notifications
@@ -210,6 +265,12 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
+    func onClickMgrChatImageButton(sender: UITapGestureRecognizer) {
+        self.rootController?.mgrChatImagesButton.animationMaxToMin(0.1, maxScale: 1.2, completion: { 
+            self.rootController?.showChatImagesMrgController(0)
+        })
+    }
+    
     func refreshNotReadVessageNumber(){
         let num = vessages.filter{!$0.isRead}.count
         if let l = self.rootController?.notReadNumLabel{
@@ -219,12 +280,16 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     func refreshReadingProgress() {
+        let progress = Float(currentVessageIndex + 1) / Float(vessages.count)
+        
         if vessages.count > 0 {
-            let angle = 360 * Double(currentVessageIndex + 1) / Double(vessages.count)
+            let angle = 360 * Double(progress)
             rootController?.readingProgress.animateToAngle(angle, duration: 0.2, completion: nil)
         }else{
             rootController?.readingProgress.animateToAngle(360, duration: 0.2, completion: nil)
         }
+        self.rootController.readingLineProgress.setProgress(progress, animated: true)
+        self.rootController.readingLineProgress.hidden = progress >= 1
     }
     
     func showPreviousVessage() {
@@ -256,7 +321,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     private func loadNextVessage(){
         if let cv = currentIndexVessage {
-            if cv.isMySendingVessage() == false {
+            if cv.isReceivedVessage() {
                 removedVessages.updateValue(cv, forKey: cv.vessageId)
             }
             currentVessageIndex += 1
@@ -272,6 +337,9 @@ class PlayVessageManager: ConversationViewControllerProxy {
             
             self.removedVessages.forEach { (key,value) in
                 vService.removeVessage(value)
+                if value.typeId == Vessage.typeFaceText{
+                    return
+                }
                 var removed = false
                 if value.typeId == Vessage.typeChatVideo{
                     removed = fService.removeFile(value.fileId, type: .Video)
@@ -285,6 +353,10 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 }
             }
         }
+    }
+    
+    func setChatterImage(chatterId:String,imageId:String) -> Bool {
+        return chattersBoardManager.setChatterImageId(chatterId, imageId: imageId)
     }
     
     deinit{
@@ -316,48 +388,73 @@ extension PlayVessageManager:HandleSwipeGesture,HandlePanGesture{
 }
 
 //MARK: Bubble Vessage
-protocol PlayVessageManagerSetter{
-    func setPlayVessageManager(manager:PlayVessageManager)
+protocol RequestPlayVessageManagerDelegate{
+    func setGetPlayVessageManagerDelegate(delegate:GetPlayVessageManagerDelegate)
+    func unsetGetPlayVessageManagerDelegate()
+}
+
+protocol GetPlayVessageManagerDelegate{
+    func getPlayVessageManager() -> PlayVessageManager
 }
 
 extension PlayVessageManager:ChattersBoardDelegate{
     func chattersBoard(sender: ChattersBoard, onClick imageView: UIImageView, chatter: VessageUser) {
         let uid = chatter.userId!
-        let myId = self.rootController.userService.myProfile.userId!
+        let myId = UserSetting.userId!
         if myId == uid {
-            self.initChatImageBoard()
-            let rect = self.rootController.vessageViewContainer.convertRect(imageView.frame, fromView: sender)
-            self.chatImageBoardSourceView.frame = rect
-            self.chatImageBoardSourceView.layer.borderColor = UIColor.blueColor().CGColor
-            self.chatImageBoardSourceView.layer.borderWidth = 2
-            self.chatImageBoardSourceView.layer.cornerRadius = rect.height / 2
-            self.rootController.vessageViewContainer.addSubview(self.chatImageBoardSourceView)
-            self.presentChatImageBoard(self.chatImageBoardSourceView.bounds, sourceView: chatImageBoardSourceView)
+            if self.rootController.userService.hasChatImages{
+                self.initChatImageBoard()
+                let rect = self.rootController.vessageViewContainer.convertRect(imageView.frame, fromView: sender)
+                self.chatImageBoardSourceView.frame = rect
+                self.chatImageBoardSourceView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.6).CGColor
+                self.chatImageBoardSourceView.layer.borderWidth = 2
+                self.chatImageBoardSourceView.layer.cornerRadius = rect.height / 2
+                self.rootController.vessageViewContainer.addSubview(self.chatImageBoardSourceView)
+                self.presentChatImageBoard(self.chatImageBoardSourceView.bounds, sourceView: chatImageBoardSourceView)
+            }else{
+                self.rootController.showNoChatImagesAlert()
+            }
         }else{
             debugPrint("Click Other Chatter")
         }
     }
 }
 
-extension PlayVessageManager{
+extension PlayVessageManager:GetPlayVessageManagerDelegate{
+    
+    func getPlayVessageManager() -> PlayVessageManager {
+        return self
+    }
+    
+    func hideBubbleVessage() {
+        vessageBubbleView?.hidden = true
+    }
     
     func showBubbleVessage(oldVessage:Vessage?,vessage:Vessage,nextVessage:Vessage?) -> Bool {
+        if let oldHandler = vessageBubbleHandler as? UnloadPresentContentHandler{
+            if let vsg = oldVessage{
+                oldHandler.unloadPresentContent(vsg)
+            }
+        }
+        if let oldHandler = vessageBubbleHandler as? RequestPlayVessageManagerDelegate {
+            oldHandler.unsetGetPlayVessageManagerDelegate()
+        }
+        
         let containerMinX = CGFloat(10)
         let containerMaxX = self.rootController.vessageViewContainer.bounds.width - 10
-        var chatterBoard:ChattersBoard! = self.rootController.bottomChattersBoard
-        let sender = vessage.isGroup ? vessage.gSender : vessage.isMySendingVessage() ? rootController.userService.myProfile.userId : vessage.sender
-        var chatterImageView:UIImageView! = chatterBoard.getChatterImageView(sender)
-        if chatterImageView == nil {
-            chatterBoard = self.rootController.topChattersBoard
-            chatterImageView = chatterBoard.getChatterImageView(sender)
-        }
-        if chatterImageView != nil{
+        
+        let sender = vessage.getVessageRealSenderId()!
+        if let (chatterBoard,chatterImageView) = chattersBoardManager.getChatterImageViewOfChatterId(sender){
+            
             if vessageBubbleView == nil {
                 vessageBubbleView = BezierBubbleView()
-                vessageBubbleView.bubbleViewLayer.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.5).CGColor
                 self.rootController.vessageViewContainer.addSubview(vessageBubbleView)
             }
-            
+            if let faceId = vessage.getBodyDict()["faceId"] as? String{
+                chatterBoard.setImageOfChatter(vessage.getVessageRealSenderId()!, imgId: faceId)
+            }
+            vessageBubbleView?.hidden = false
+            vessageBubbleView.bubbleViewLayer.fillColor = (vessage.isMySendingVessage() ? myVessageBubbleColor : chatterVessageBubbleColor).CGColor
             let rect = self.rootController.vessageViewContainer.convertRect(chatterImageView.frame, fromView: chatterBoard)
             let rectCenterX = rect.origin.x + rect.width / 2
             
@@ -376,15 +473,15 @@ extension PlayVessageManager{
                 containerX += containerMinX - (rectCenterX - containerSize.width / 2)
             }
             
-            var containerY:CGFloat = rect.origin.y - 10 - containerSize.height
+            var containerY:CGFloat = rect.origin.y - 5 - containerSize.height
             var d:BezierBubbleDirection!
             let startRatio = (rect.origin.x + rect.width/2 - containerX) / containerSize.width
             
-            if rect.origin.y > self.rootController.vessageViewContainer.frame.height / 2 {
-                d =  .Up(startXRatio: Float(startRatio))
+            if chatterBoard == self.rootController.bottomChattersBoard {
+                d = .Up(startXRatio: Float(startRatio))
             }else{
                 d = .Down(startXRatio:Float(startRatio))
-                containerY = rect.origin.y + rect.size.height + 10
+                containerY = rect.origin.y + rect.size.height + 5
             }
             vessageBubbleView.frame.size = containerSize
             let containerOrigin = CGPoint(x: containerX, y: containerY)
@@ -395,22 +492,19 @@ extension PlayVessageManager{
             }else{
                 vessageBubbleView.containerDelegate = nil
             }
-            if let setter = handler as? PlayVessageManagerSetter {
-                setter.setPlayVessageManager(self)
+            if let setter = handler as? RequestPlayVessageManagerDelegate{
+                setter.setGetPlayVessageManagerDelegate(self)
             }
             vessageBubbleView.layoutIfNeeded()
             contentView.frame = CGRect(origin: CGPointZero, size: contentSize)
             contentView.setNeedsDisplay()
             vessageBubbleView.setContentView(contentView)
-            if let oldHandler = vessageBubbleHandler as? UnloadPresentContentHandler{
-                if let vsg = oldVessage{
-                    oldHandler.unloadPresentContent(vsg)
-                }
-            }
+            
             handler.presentContent(oldVessage, newVessage: vessage, contentView: contentView)
             vessageBubbleHandler = handler
+            return true
         }
-        return true
+        return false
     }
     
     var bubbleContentMaxSize:CGSize{
@@ -427,7 +521,6 @@ extension PlayVessageManager{
 
 //MARK: Life Circle
 extension PlayVessageManager{
-
     override func onReleaseManager() {
         ServiceContainer.getVessageService().removeObserver(self)
         VessageQueue.sharedInstance.removeObserver(self)
@@ -446,6 +539,9 @@ extension PlayVessageManager{
         
         let tapSendImage = UITapGestureRecognizer(target: self, action: #selector(PlayVessageManager.onClickImageButton(_:)))
         self.rootController.sendImageButton.addGestureRecognizer(tapSendImage)
+        
+        let tapMgrChatImages = UITapGestureRecognizer(target: self, action: #selector(PlayVessageManager.onClickMgrChatImageButton(_:)))
+        self.rootController.mgrChatImagesButton.addGestureRecognizer(tapMgrChatImages)
         
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(PlayVessageManager.onNewVessagePushed(_:)), name: VessageQueue.onPushNewVessageTask, object: nil)
         
@@ -503,7 +599,7 @@ extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentat
     func chatImageBoardController(sender: ChatImageBoardController, selectedIndexPath: NSIndexPath, selectedItem: ChatImage, deselectItem: ChatImage?) {
         sender.dismissViewControllerAnimated(true) {
             if let imgid = selectedItem.imageId{
-                if let userId = self.rootController.userService.myProfile.userId{
+                if let userId = UserSetting.userId{
                     if let (board,_) = self.chattersBoardManager.getChatterImageViewOfChatterId(userId){
                         board.setImageOfChatter(userId, imgId: imgid)
                     }
@@ -529,11 +625,46 @@ extension PlayVessageManager{
     override func onInitGroup(chatGroup:ChatGroup){
         chattersBoardManager = GroupedChattersBoardManager()
         chattersBoardManager.registChattersBoards([self.rootController.topChattersBoard,self.rootController.bottomChattersBoard])
+        for b in chattersBoardManager.chattersBoards{
+            b.delegate = self
+        }
         onChatGroupUpdated(chatGroup)
     }
     
     override func onChatGroupUpdated(chatGroup: ChatGroup) {
+        var noReadyUsers = [String]()
+        
+        let chatters = self.chatGroup.chatters.map { (userId) -> VessageUser in
+            if let u = self.rootController.userService.getCachedUserProfile(userId){
+                return u
+            }else{
+                noReadyUsers.append(userId)
+                let u = VessageUser()
+                u.userId = userId
+                return u
+            }
+        }
+        chattersBoardManager.clearChatters(false)
+        if chatters.count <= 3 {
+            rootController.bottomChattersBoard.addChatters(chatters)
+        }else{
+            let cnt = chatters.count / 2
+            chatters.forIndexEach({ (i, element) in
+                if i < cnt{
+                    self.rootController.topChattersBoard.addChatter(element, isDrawNow: false)
+                }else{
+                    self.rootController.bottomChattersBoard.addChatter(element, isDrawNow: false)
+                }
+            })
+            self.rootController.topChattersBoard.drawBoard()
+            self.rootController.bottomChattersBoard.drawBoard()
+        }
         self.rootController.controllerTitle = chatGroup.groupName
+        rootController.userService.fetchUserProfilesByUserIds(noReadyUsers, callback: nil)
+    }
+    
+    override func onGroupChatterUpdated(chatter: VessageUser) {
+        chattersBoardManager.updateChatter(chatter)
     }
     
     override func onChatterUpdated(chatter: VessageUser) {
@@ -556,7 +687,12 @@ extension PlayVessageManager{
         }
         self.flashTipsView.text = msg
         self.flashTipsView.sizeToFit()
-        let center = CGPointMake(self.rootController.vessageViewContainer.frame.width / 2, self.rootController.vessageViewContainer.frame.height / 2)
+        let bottomChattersBoard = self.rootController.bottomChattersBoard
+        let topChattersBoard = self.rootController.topChattersBoard
+        let topChattersBoardBottomY = topChattersBoard.frame.origin.y + topChattersBoard.frame.height
+        
+        let centerY = topChattersBoardBottomY + (bottomChattersBoard.frame.origin.y - topChattersBoardBottomY) / 2
+        let center = CGPointMake(self.rootController.vessageViewContainer.frame.width / 2,centerY)
         self.flashTipsView.center = center
         self.rootController.view.addSubview(self.flashTipsView)
         UIAnimationHelper.flashView(self.flashTipsView, duration: 0.4, autoStop: true, stopAfterMs: 1600){

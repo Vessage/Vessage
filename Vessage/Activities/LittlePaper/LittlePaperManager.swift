@@ -96,7 +96,7 @@ class LittlePaperManager {
     
     private func loadCachedData(){
         paperMessagesList = [[LittlePaperMessage]](count: 4, repeatedValue: [LittlePaperMessage]())
-        myUserId = ServiceContainer.getUserService().myProfile.userId
+        myUserId = UserSetting.userId
         var msgs = PersistentManager.sharedInstance.getAllModel(LittlePaperMessage)
         mySendedMessages.appendContentsOf(msgs.removeElement{$0.isMySended(self.myUserId)})
         myOpenedMessages.appendContentsOf(msgs.removeElement{$0.isMyOpened(self.myUserId)})

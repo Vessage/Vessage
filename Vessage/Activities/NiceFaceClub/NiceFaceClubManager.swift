@@ -49,7 +49,7 @@ class NiceFaceClubManager:NSObject {
     }
     
     private func refreshCachedMyFaceProfile() -> UserNiceFaceProfile? {
-        self.userId = ServiceContainer.getUserService().myProfile.userId
+        self.userId = UserSetting.userId
         self.myNiceFaceProfile = PersistentManager.sharedInstance.getModel(UserNiceFaceProfile.self, idValue: userId)
         return self.myNiceFaceProfile
     }

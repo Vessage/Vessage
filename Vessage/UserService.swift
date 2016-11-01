@@ -232,6 +232,29 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }
         }
     }
+    
+    func fetchUserProfilesByUserIds(userIds:[String],callback:(([VessageUser]?)->Void)?) {
+        if userIds.count == 0 {
+            callback?([])
+        }else{
+            let req = GetUsersProfileRequest()
+            req.userIds = userIds
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) -> Void in
+                if result.isSuccess{
+                    if let users = result.returnObject{
+                        users.saveBahamutObjectModels()
+                        users.forEach({ (u) in
+                            self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:u])
+                        })
+                        callback?(users)
+                    }
+                }else{
+                    callback?(nil)
+                }
+            }
+            
+        }
+    }
 }
 
 //MARK: Fetch Special Users

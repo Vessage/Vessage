@@ -12,6 +12,27 @@ protocol ChattersBoardDelegate {
     func chattersBoard(sender:ChattersBoard,onClick imageView:UIImageView,chatter:VessageUser)
 }
 
+class ChattersBoardItem {
+    var chatterId:String!{
+        return chatter.userId
+    }
+    
+    var chatter:VessageUser!{
+        didSet{
+            if String.isNullOrWhiteSpace(self.itemImage) {
+                if let user = chatter{
+                    if let chatbcg = user.mainChatImage{
+                        self.itemImage = chatbcg
+                    }else if let avatar = user.avatar{
+                        self.itemImage = avatar
+                    }
+                }
+            }
+        }
+    }
+    var itemImage:String!
+}
+
 class ChattersBoard: UIView {
     let minItemSpace:CGFloat = 10
     let minTopBottomPadding:CGFloat = 10
@@ -19,9 +40,7 @@ class ChattersBoard: UIView {
     var delegate:ChattersBoardDelegate?
     
     private var chatterImageViews = [UIImageView]()
-    private(set) var chatters = [VessageUser]()
-    
-    private var chatterImageId = [String:String]()
+    private(set) var chattersItems = [ChattersBoardItem]()
     
     enum ItemHorizontalLayout {
         case Average,Center,MiddleAverage,Left,Right
@@ -30,7 +49,7 @@ class ChattersBoard: UIView {
     var itemHorizontalLayout:ItemHorizontalLayout = .Average
     
     func getChatterImageView(chatterId:String) -> UIImageView? {
-        if let index = (chatters.indexOf { $0.userId == chatterId}){
+        if let index = (chattersItems.indexOf { $0.chatterId == chatterId}){
             if self.chatterImageViews.count > index {
                 return chatterImageViews[index]
             }
@@ -39,18 +58,18 @@ class ChattersBoard: UIView {
     }
     
     func removeChatter(user:VessageUser,isDrawNow:Bool = true) -> Bool {
-        let c = chatters.removeElement{$0.userId == user.userId}
+        let c = chattersItems.removeElement{$0.chatterId == user.userId}
         if c.count > 0 && isDrawNow {
-            self.prepareImageViews()
-            self.setNeedsDisplay()
+            drawBoard()
         }
         return c.count > 0
     }
     
-    func clearAllChatters() {
-        self.chatters.removeAll()
-        self.prepareImageViews()
-        self.setNeedsDisplay()
+    func clearAllChatters(isDrawNow:Bool = true) {
+        self.chattersItems.removeAll()
+        if isDrawNow{
+            drawBoard()
+        }
     }
     
     func removeChatters(users:[VessageUser]) {
@@ -60,34 +79,83 @@ class ChattersBoard: UIView {
                 needDraw = true
             }}
         if needDraw {
-            self.prepareImageViews()
-            self.setNeedsDisplay()
+            drawBoard()
+        }
+    }
+    
+    func addChatters(items:[ChattersBoardItem]) {
+        var updated = false
+        
+        for item in items {
+            if (chattersItems.contains{$0.chatterId == item.chatterId}) == false {
+                updated = true
+                chattersItems.append(item)
+            }
+        }
+        
+        if updated {
+            drawBoard()
+        }
+    }
+    
+    func removeChatters(items:[ChattersBoardItem]) {
+        var updated = false
+        for item in items {
+            let r = (chattersItems.removeElement{$0.chatterId == item.chatterId})
+            if r.count > 0 {
+                updated = true
+            }
+        }
+        
+        if updated {
+            drawBoard()
         }
     }
     
     func addChatters(users:[VessageUser]) {
         users.forEach{self.addChatter($0,isDrawNow: false)}
+        drawBoard()
+    }
+    
+    func addChatter(user:VessageUser,isDrawNow:Bool = true) {
+        if !(chattersItems.contains{$0.chatterId == user.userId}) {
+            let newItem = ChattersBoardItem()
+            newItem.chatter = user
+            if user.userId == UserSetting.userId {
+                if let imgid = ServiceContainer.getUserService().getMyChatImages(false).first?.imageId {
+                    newItem.itemImage = imgid
+                }
+            }
+            chattersItems.append(newItem)
+            if isDrawNow {
+                drawBoard()
+            }
+        }
+    }
+    
+    func drawBoard() {
         self.prepareImageViews()
         self.setNeedsDisplay()
     }
     
-    func addChatter(user:VessageUser,isDrawNow:Bool = true) {
-        if !(chatters.contains{$0.userId == user.userId}) {
-            chatters.append(user)
-            if isDrawNow {
-                self.prepareImageViews()
-                self.setNeedsDisplay()
-            }
+    func updateChatter(chatter:VessageUser) -> Bool {
+        if let index = (chattersItems.indexOf{$0.chatterId == chatter.userId}){
+            chattersItems[index].chatter = chatter
+            drawBoard()
+            return true
         }
+        return false
     }
     
-    func setImageOfChatter(chatterId:String,imgId:String) {
-        chatterImageId.updateValue(imgId, forKey: chatterId)
-        if let index = (chatters.indexOf { $0.userId == chatterId}){
+    func setImageOfChatter(chatterId:String,imgId:String) -> Bool {
+        if let index = (chattersItems.indexOf { $0.chatterId == chatterId}){
             if self.chatterImageViews.count > index {
+                chattersItems[index].itemImage = imgId
                 self.updateImage(chatterImageViews[index], imgId: imgId)
+                return true
             }
         }
+        return false
         
     }
     
@@ -96,14 +164,18 @@ class ChattersBoard: UIView {
         self.measureImageViewsSize(rect)
     }
     
+    func chatterImageHeightOfNum(chattersNum:CGFloat,boardSize:CGSize) -> CGFloat {
+        let itemWidth = (boardSize.width - (chattersNum + 1) * minItemSpace) / chattersNum
+        let itemHeight = boardSize.height - minTopBottomPadding
+        return min(itemWidth, itemHeight)
+    }
+    
     private func measureImageViewsSize(rect: CGRect){
-        if chatters.count > chatterImageViews.count {
+        if chattersItems.count > chatterImageViews.count {
             return
         }
-        let chattersCount = CGFloat(chatters.count)
-        let itemWidth = (rect.width - (chattersCount + 1) * minItemSpace) / chattersCount
-        let itemHeight = rect.height - minTopBottomPadding
-        let itemWidthHeight = min(itemWidth, itemHeight)
+        let chattersCount = CGFloat(chattersItems.count)
+        let itemWidthHeight = chatterImageHeightOfNum(chattersCount, boardSize: rect.size)
         var firstItemX:CGFloat = 0
         var itemSpace:CGFloat = 0
         switch itemHorizontalLayout {
@@ -124,7 +196,7 @@ class ChattersBoard: UIView {
                 itemSpace = minItemSpace
         }
         let y = (rect.height - itemWidthHeight) / 2
-        chatters.forIndexEach { (i, element) in
+        chattersItems.forIndexEach { (i, element) in
             let imgv = self.chatterImageViews[i]
             
             let cgi = CGFloat(i)
@@ -137,20 +209,11 @@ class ChattersBoard: UIView {
             imgv.layer.cornerRadius = itemWidthHeight / 2
             imgv.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.6).CGColor
             imgv.layer.borderWidth = 1
-            if let userid = element.userId{
-                if let imgid = self.chatterImageId[userid]{
-                    self.updateImage(imgv, imgId: imgid)
-                }else if let chatbcg = element.mainChatImage{
-                    self.chatterImageId.updateValue(chatbcg, forKey: userid)
-                    self.updateImage(imgv, imgId: chatbcg)
-                }else if let avatar = element.avatar{
-                    self.chatterImageId.updateValue(avatar, forKey: userid)
-                    self.updateImage(imgv, imgId: avatar)
-                }else{
-                    self.updateImage(imgv, img: getDefaultAvatar(element.accountId ?? "0"))
-                }
+            if let imgid = element.itemImage{
+                self.updateImage(imgv, imgId: imgid)
+            }else{
+                self.updateImage(imgv, img: getDefaultAvatar(element.chatter.accountId ?? "0"))
             }
-            
             let indicator = (imgv.subviews.filter{$0 is UIActivityIndicatorView}).first as? UIActivityIndicatorView
             indicator?.center = CGPointMake(itemWidthHeight / 2, itemWidthHeight / 2)
         }
@@ -160,7 +223,7 @@ class ChattersBoard: UIView {
         chatterImageViews.forEach { (img) in
             img.removeFromSuperview()
         }
-        chatters.forIndexEach { (i, element) in
+        chattersItems.forIndexEach { (i, element) in
             var imgv:UIImageView! = nil
             if self.chatterImageViews.count > i{
                 imgv = self.chatterImageViews[i]
@@ -180,8 +243,8 @@ class ChattersBoard: UIView {
     func onTapChatterImage(a:UITapGestureRecognizer) {
         if let img = a.view as? UIImageView{
             if let index = self.chatterImageViews.indexOf(img){
-                if index < self.chatters.count{
-                    delegate?.chattersBoard(self, onClick: a.view as! UIImageView, chatter: self.chatters[index])
+                if index < self.chattersItems.count{
+                    delegate?.chattersBoard(self, onClick: a.view as! UIImageView, chatter: self.chattersItems[index].chatter)
                 }
             }
         }
@@ -208,6 +271,15 @@ class ChattersBoard: UIView {
 }
 
 class GroupedChattersBoardManager{
+    
+    var chatterItems:[ChattersBoardItem]{
+        var items = [ChattersBoardItem]()
+        chattersBoards.forEach { (cb) in
+            items.appendContentsOf(cb.chattersItems)
+        }
+        return items
+    }
+    
     private(set) var chattersBoards = [ChattersBoard]()
 
     func registChattersBoards(boards:[ChattersBoard]){
@@ -229,5 +301,29 @@ class GroupedChattersBoardManager{
             }
         }
         return nil
+    }
+    
+    func setChatterImageId(chatterId:String,imageId:String) -> Bool {
+        if let (b,_) = getChatterImageViewOfChatterId(chatterId) {
+            return b.setImageOfChatter(chatterId, imgId: imageId)
+        }
+        return false
+    }
+    
+    func updateChatter(chatter:VessageUser) -> Bool {
+        var updated = false
+        
+        for item in chattersBoards {
+            if item.updateChatter(chatter){
+                updated = true
+            }
+        }
+        return updated
+    }
+    
+    func clearChatters(isDrawNow:Bool = true) {
+        for b in chattersBoards {
+            b.clearAllChatters(isDrawNow)
+        }
     }
 }

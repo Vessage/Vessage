@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,PlayVessageManagerSetter,UnloadPresentContentHandler {
+class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessageManagerDelegate,UnloadPresentContentHandler {
     
     class ImageVessageContainer: UIView {
         private var imageView:UIImageView
@@ -43,14 +43,11 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,PlayVessageManage
         }
     }
     
-    
-    
     private var imageLoaded = false
     
-    private var playVessageManager:PlayVessageManager?
     private var vessage:Vessage!
     
-    let defaultWidth:CGFloat = 160
+    let defaultWidth:CGFloat = 180
     let defaultHeight:CGFloat = 240
     
     
@@ -58,16 +55,16 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,PlayVessageManage
         if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height > defaultHeight {
             return CGSize(width: defaultWidth, height: defaultHeight)
         }else if maxLimitedSize.height > maxLimitedSize.width {
-            return CGSize(width: maxLimitedSize.width, height: maxLimitedSize.height * maxLimitedSize.width / defaultWidth)
+            return CGSize(width: maxLimitedSize.width, height: maxLimitedSize.width * defaultHeight / defaultWidth)
         }else if maxLimitedSize.width > maxLimitedSize.height{
-            return CGSize(width: maxLimitedSize.width * maxLimitedSize.height / defaultHeight, height: maxLimitedSize.height)
+            return CGSize(width: maxLimitedSize.height * defaultWidth / defaultHeight, height: maxLimitedSize.height)
         }
         return CGSizeZero
     }
     
     func getContentView(vessage: Vessage) -> UIView {
         let container = ImageVessageContainer()
-        container.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(ImageVessageHandler.onTapImage(_:))))
+        container.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(ImageBubbleVessageHandler.onTapImage(_:))))
         return container
     }
     
@@ -79,13 +76,22 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,PlayVessageManage
     }
     
     func unloadPresentContent(vessage: Vessage) {
-        self.playVessageManager = nil
+        self.vessage = nil
     }
     
-    func setPlayVessageManager(manager: PlayVessageManager) {
-        self.playVessageManager = manager
+    private var playVessageManager:PlayVessageManager?{
+        return getPlayVessageManagerDelegate?.getPlayVessageManager()
     }
     
+    private var getPlayVessageManagerDelegate:GetPlayVessageManagerDelegate?
+    
+    func setGetPlayVessageManagerDelegate(delegate: GetPlayVessageManagerDelegate) {
+        self.getPlayVessageManagerDelegate = delegate
+    }
+    
+    func unsetGetPlayVessageManagerDelegate() {
+        self.getPlayVessageManagerDelegate = nil
+    }
     
     func onTapImage(ges:UITapGestureRecognizer) {
         if let c = ges.view as? ImageVessageContainer {

@@ -135,19 +135,7 @@ extension NFCReceivedLikeViewController:NFCLikeCellDelegate{
     func nfcLikeCellDidClickPoster(sender: UIView, cell: NFCReceivedLikeCell, like: NFCPostLike?) {
         if String.isNullOrWhiteSpace(like?.mbId){
             if let userId = like?.usrId{
-                if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
-                    UserProfileViewController.showUserProfileViewController(self, userProfile: user)
-                }else{
-                    let hud = self.showActivityHud()
-                    ServiceContainer.getUserService().getUserProfile(userId, updatedCallback: { (user) in
-                        hud.hideAnimated(true)
-                        if let u = user{
-                            UserProfileViewController.showUserProfileViewController(self, userProfile: u)
-                        }else{
-                            self.playCrossMark("NO_SUCH_USER".localizedString())
-                        }
-                    })
-                }
+                UserProfileViewController.showUserProfileViewController(self, userId: userId)
             }
             
         }else{

@@ -83,9 +83,7 @@ class NiceFaceClubManager:NSObject {
         }
         
         let req = GetMyNiceFaceProfilesRequest()
-        if let here = ServiceContainer.getLocationService().here {
-            req.location = "{\"long\":\(here.coordinate.longitude),\"lati\":\(here.coordinate.latitude),\"alti\":\(here.altitude)}"
-        }
+        req.location = ServiceContainer.getLocationService().hereShortString
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<UserNiceFaceProfile>) in
             if let profile = result.returnObject{
                 self.myNiceFaceProfile = profile

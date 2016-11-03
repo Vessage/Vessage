@@ -27,6 +27,7 @@ class ActivityInfo{
 }
 
 let ActivityInfoList = [
+    ActivityInfo(activityId: "1003", "晒&秀", "sns_icon", "SNS", "SNSMainViewController", true),
     ActivityInfo(activityId: "1002", "高颜值俱乐部", "NiceFaceClubIcon", "NiceFaceClub", "NFCMainViewController", true),
     //ActivityInfo(activityId: "1001", "一起帮帮忙", "littlePaperIcon", "HelpTogether", "HelpTogetherMainController", true),
     ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false),

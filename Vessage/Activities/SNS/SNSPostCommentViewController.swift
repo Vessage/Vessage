@@ -1,5 +1,5 @@
 //
-//  NFCPostCommentViewController.swift
+//  SNSPostCommentViewController.swift
 //  Vessage
 //
 //  Created by Alex Chow on 2016/10/7.
@@ -10,19 +10,19 @@ import Foundation
 import MJRefresh
 import MBProgressHUD
 
-@objc protocol NFCPostCommentCellDelegate {
-    optional func nfcPostCommentCellDidClickComment(sender:UILabel,cell:NFCPostCommentCell,comment:NFCPostComment?)
-    optional func nfcPostCommentCellDidClick(sender:UIView,cell:NFCPostCommentCell,comment:NFCPostComment?)
-    optional func nfcPostCommentCellDidClickPostInfo(sender:UILabel,cell:NFCPostCommentCell,comment:NFCPostComment?)
+@objc protocol SNSPostCommentCellDelegate {
+    optional func snsPostCommentCellDidClickComment(sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
+    optional func snsPostCommentCellDidClick(sender:UIView,cell:SNSPostCommentCell,comment:SNSPostComment?)
+    optional func snsPostCommentCellDidClickPostInfo(sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
 }
 
-class NFCPostCommentCell: UITableViewCell {
+class SNSPostCommentCell: UITableViewCell {
     
-    static let reuseId = "NFCPostCommentCell"
+    static let reuseId = "SNSPostCommentCell"
     
-    weak var delegate:NFCPostCommentCellDelegate?
+    weak var delegate:SNSPostCommentCellDelegate?
     
-    weak var comment:NFCPostComment!{
+    weak var comment:SNSPostComment!{
         didSet{
             if comment != nil{
                 initCell()
@@ -37,9 +37,9 @@ class NFCPostCommentCell: UITableViewCell {
     
     private func initCell() {
         if inited == false {
-            let cmtGes = UITapGestureRecognizer(target: self, action: #selector(NFCPostCommentCell.onTapCellView(_:)))
-            let pstGes = UITapGestureRecognizer(target: self, action: #selector(NFCPostCommentCell.onTapCellView(_:)))
-            let cellGes = UITapGestureRecognizer(target: self, action: #selector(NFCPostCommentCell.onTapCellView(_:)))
+            let cmtGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
+            let pstGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
+            let cellGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
             cellGes.requireGestureRecognizerToFail(cmtGes)
             cellGes.requireGestureRecognizerToFail(pstGes)
             self.commentLabel.addGestureRecognizer(cmtGes)
@@ -54,11 +54,11 @@ class NFCPostCommentCell: UITableViewCell {
     
     func onTapCellView(a:UITapGestureRecognizer) {
         if a.view == self.postInfoLabel {
-            delegate?.nfcPostCommentCellDidClickPostInfo?(a.view as! UILabel,cell: self, comment: comment)
+            delegate?.snsPostCommentCellDidClickPostInfo?(a.view as! UILabel,cell: self, comment: comment)
         }else if a.view == self.commentLabel{
-            delegate?.nfcPostCommentCellDidClickComment?(a.view as! UILabel,cell: self, comment: comment)
+            delegate?.snsPostCommentCellDidClickComment?(a.view as! UILabel,cell: self, comment: comment)
         }else if a.view == self.contentView{
-            delegate?.nfcPostCommentCellDidClick?(a.view!,cell: self, comment: comment)
+            delegate?.snsPostCommentCellDidClick?(a.view!,cell: self, comment: comment)
         }
     }
     
@@ -77,18 +77,18 @@ class NFCPostCommentCell: UITableViewCell {
     }
 }
 
-class NFCPostCommentViewController: UIViewController {
+class SNSPostCommentViewController: UIViewController {
     
-    private var post:NFCPost!
+    private var post:SNSPost!
     
-    private var comments = [[NFCPostComment]](){
+    private var comments = [[SNSPostComment]](){
         didSet{
             self.tableView?.reloadData()
         }
     }
     
     private var responseTextField = UITextField(frame:CGRectZero)
-    private var commentInputView = NFCCommentInputView.instanceFromXib()
+    private var commentInputView = SNSCommentInputView.instanceFromXib()
     
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -101,10 +101,10 @@ class NFCPostCommentViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = UIColor(hexString: "#f6f6f6")
-        tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(NFCPostCommentViewController.mjHeaderRefresh(_:)))
-        tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(NFCPostCommentViewController.mjFooterRefresh(_:)))
+        tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(SNSPostCommentViewController.mjHeaderRefresh(_:)))
+        tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSPostCommentViewController.mjFooterRefresh(_:)))
         self.view.addSubview(responseTextField)
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCPostCommentViewController.onTapView(_:))))
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentViewController.onTapView(_:))))
         responseTextField.hidden = true
         responseTextField.inputAccessoryView = commentInputView
         commentInputView.delegate = self
@@ -147,7 +147,7 @@ class NFCPostCommentViewController: UIViewController {
         let ts:Int64 = self.comments.last?.last?.ts ?? 0
         let hud:MBProgressHUD? = ts == 0 ? self.showActivityHud() : nil
         
-        NFCPostManager.instance.getPostComment(self.post.pid, ts: ts) { (comments) in
+        SNSPostManager.instance.getPostComment(self.post.pid, ts: ts) { (comments) in
             hud?.hideAnimated(true)
             if hud == nil{
                 self.tableView?.mj_footer?.endRefreshing()
@@ -167,29 +167,29 @@ class NFCPostCommentViewController: UIViewController {
         }
     }
     
-    static func showPostCommentViewController(vc:UINavigationController, post:NFCPost) -> NFCPostCommentViewController{
-        let controller = instanceFromStoryBoard("NiceFaceClub", identifier: "NFCPostCommentViewController") as! NFCPostCommentViewController
+    static func showPostCommentViewController(vc:UINavigationController, post:SNSPost) -> SNSPostCommentViewController{
+        let controller = instanceFromStoryBoard("SNS", identifier: "SNSPostCommentViewController") as! SNSPostCommentViewController
         controller.post = post
         vc.pushViewController(controller, animated: true)
         return controller
     }
 }
 
-//MARK: NFCCommentInputViewDelegate
-extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
-    func commentInputViewDidClickSend(sender: NFCCommentInputView, textField: UITextField) {
+//MARK: SNSCommentInputViewDelegate
+extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
+    func commentInputViewDidClickSend(sender: SNSCommentInputView, textField: UITextField) {
         let cmt = textField.text
         if !String.isNullOrWhiteSpace(cmt) {
             textField.text = nil
             sender.hideInputView()
-            let cmtObj = sender.model as? NFCPostComment
+            let cmtObj = sender.model as? SNSPostComment
             let hud = self.showActivityHud()
-            NFCPostManager.instance.newPostComment(self.post.pid, comment: cmt!,atMember: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
+            SNSPostManager.instance.newPostComment(self.post.pid, comment: cmt!,atUser: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
                 hud.hideAnimated(true)
                 if posted{
-                    let ncomment = NFCPostComment()
+                    let ncomment = SNSPostComment()
                     ncomment.cmt = cmt
-                    ncomment.pster = NiceFaceClubManager.instance.myNiceFaceProfile.mbId
+                    ncomment.pster = UserSetting.userId
                     ncomment.psterNk = "ME".localizedString()
                     ncomment.ts = DateHelper.UnixTimeSpanTotalMilliseconds
                     ncomment.atNick = cmtObj?.psterNk
@@ -204,17 +204,17 @@ extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
                 }
             })
         }else{
-            self.playToast("INPUT_COMMENT_CONTENT".niceFaceClubString)
+            self.playToast("INPUT_COMMENT_CONTENT".SNSString)
         }
     }
     
-    func commentInputViewDidEndEditing(sender: NFCCommentInputView, textField: UITextField) {
+    func commentInputViewDidEndEditing(sender: SNSCommentInputView, textField: UITextField) {
         responseTextField.resignFirstResponder()
     }
 }
 
 //MARK:UITableViewDelegate
-extension NFCPostCommentViewController:UITableViewDataSource,UITableViewDelegate{
+extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate{
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return comments.count
     }
@@ -224,7 +224,7 @@ extension NFCPostCommentViewController:UITableViewDataSource,UITableViewDelegate
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(NFCPostCommentCell.reuseId, forIndexPath: indexPath) as! NFCPostCommentCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SNSPostCommentCell.reuseId, forIndexPath: indexPath) as! SNSPostCommentCell
         let cmd = comments[indexPath.section][indexPath.row]
         cell.comment = cmd
         cell.delegate = self
@@ -232,23 +232,23 @@ extension NFCPostCommentViewController:UITableViewDataSource,UITableViewDelegate
     }
 }
 
-//MARK:NFCPostCommentCellDelegate
-extension NFCPostCommentViewController:NFCPostCommentCellDelegate{
+//MARK:SNSPostCommentCellDelegate
+extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
     
-    func nfcPostCommentCellDidClick(sender: UIView, cell: NFCPostCommentCell, comment: NFCPostComment?) {
+    func SNSPostCommentCellDidClick(sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         hideCommentInputView()
     }
     
-    func nfcPostCommentCellDidClickComment(sender: UILabel, cell: NFCPostCommentCell, comment: NFCPostComment?) {
+    func SNSPostCommentCellDidClickComment(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         if let cmd = comment{
             showNewCommentInputView(cmd, atUserNick: cmd.psterNk)
         }
     }
     
-    func nfcPostCommentCellDidClickPostInfo(sender: UILabel, cell: NFCPostCommentCell, comment: NFCPostComment?) {
+    func SNSPostCommentCellDidClickPostInfo(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         sender.animationMaxToMin(0.2, maxScale: 1.2) { 
             if let pster = comment?.pster{
-                NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: pster)
+                UserProfileViewController.showUserProfileViewController(self, userId: pster)
             }
         }
     }

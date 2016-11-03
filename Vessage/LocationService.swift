@@ -50,6 +50,15 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
             _here = newValue
         }
     }
+    
+    var hereShortString:String?{
+        if let here = self.here {
+            return "{\"long\":\(here.coordinate.longitude),\"lati\":\(here.coordinate.latitude),\"alti\":\(here.altitude)}"
+        }
+        return nil
+    }
+    
+    
     var hereLocationString:String!{
         if let h = here{
             return "{ \"type\": \"Point\", \"coordinates\": [\(h.coordinate.longitude), \(h.coordinate.latitude)] }"

@@ -117,6 +117,19 @@
 		E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */; };
 		E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */; };
 		E78739371DC0612600684320 /* BezierBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78739361DC0612600684320 /* BezierBubble.swift */; };
+		E7886A691DC97D3D00368C03 /* SNSCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A4F1DC97D3D00368C03 /* SNSCommentInputView.swift */; };
+		E7886A6A1DC97D3D00368C03 /* SNSCommentInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7886A501DC97D3D00368C03 /* SNSCommentInputView.xib */; };
+		E7886A6C1DC97D3D00368C03 /* SNSGodRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A521DC97D3D00368C03 /* SNSGodRF.swift */; };
+		E7886A6E1DC97D3D00368C03 /* SNSMainViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A541DC97D3D00368C03 /* SNSMainViewCells.swift */; };
+		E7886A6F1DC97D3D00368C03 /* SNSMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A551DC97D3D00368C03 /* SNSMainViewController.swift */; };
+		E7886A721DC97D3D00368C03 /* SNSMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A581DC97D3D00368C03 /* SNSMyCommentViewController.swift */; };
+		E7886A731DC97D3D00368C03 /* SNSPostCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A591DC97D3D00368C03 /* SNSPostCommentViewController.swift */; };
+		E7886A741DC97D3D00368C03 /* SNSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A5A1DC97D3D00368C03 /* SNSPostManager.swift */; };
+		E7886A751DC97D3D00368C03 /* SNSPostRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A5B1DC97D3D00368C03 /* SNSPostRF.swift */; };
+		E7886A761DC97D3D00368C03 /* SNSReceivedLikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7886A5C1DC97D3D00368C03 /* SNSReceivedLikeViewController.swift */; };
+		E7886A791DC97D3D00368C03 /* SNS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7886A5F1DC97D3D00368C03 /* SNS.storyboard */; };
+		E7886A7A1DC97D3D00368C03 /* SNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7886A601DC97D3D00368C03 /* SNS.strings */; };
+		E7886A811DC9DE9700368C03 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7886A801DC9DE9700368C03 /* Media.xcassets */; };
 		E78EA59C1DBB0E6000C49B9C /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EA59B1DBB0E6000C49B9C /* Math.swift */; };
 		E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */; };
 		E79917541D60D9CF002C42C2 /* ChatImageManageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */; };
@@ -362,6 +375,19 @@
 		E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewCells.swift; sourceTree = "<group>"; };
 		E78739361DC0612600684320 /* BezierBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierBubble.swift; sourceTree = "<group>"; };
+		E7886A4F1DC97D3D00368C03 /* SNSCommentInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSCommentInputView.swift; sourceTree = "<group>"; };
+		E7886A501DC97D3D00368C03 /* SNSCommentInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SNSCommentInputView.xib; sourceTree = "<group>"; };
+		E7886A521DC97D3D00368C03 /* SNSGodRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSGodRF.swift; sourceTree = "<group>"; };
+		E7886A541DC97D3D00368C03 /* SNSMainViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSMainViewCells.swift; sourceTree = "<group>"; };
+		E7886A551DC97D3D00368C03 /* SNSMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSMainViewController.swift; sourceTree = "<group>"; };
+		E7886A581DC97D3D00368C03 /* SNSMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSMyCommentViewController.swift; sourceTree = "<group>"; };
+		E7886A591DC97D3D00368C03 /* SNSPostCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSPostCommentViewController.swift; sourceTree = "<group>"; };
+		E7886A5A1DC97D3D00368C03 /* SNSPostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSPostManager.swift; sourceTree = "<group>"; };
+		E7886A5B1DC97D3D00368C03 /* SNSPostRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSPostRF.swift; sourceTree = "<group>"; };
+		E7886A5C1DC97D3D00368C03 /* SNSReceivedLikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SNSReceivedLikeViewController.swift; sourceTree = "<group>"; };
+		E7886A5F1DC97D3D00368C03 /* SNS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SNS.storyboard; sourceTree = "<group>"; };
+		E7886A601DC97D3D00368C03 /* SNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = SNS.strings; sourceTree = "<group>"; };
+		E7886A801DC9DE9700368C03 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		E78EA59B1DBB0E6000C49B9C /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBrowser.swift; sourceTree = "<group>"; };
 		E79917531D60D9CF002C42C2 /* ChatImageManageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageManageCell.swift; sourceTree = "<group>"; };
@@ -964,6 +990,26 @@
 			name = BubbleVessageHandler;
 			sourceTree = "<group>";
 		};
+		E7886A4B1DC97D3D00368C03 /* SNS */ = {
+			isa = PBXGroup;
+			children = (
+				E7886A4F1DC97D3D00368C03 /* SNSCommentInputView.swift */,
+				E7886A501DC97D3D00368C03 /* SNSCommentInputView.xib */,
+				E7886A521DC97D3D00368C03 /* SNSGodRF.swift */,
+				E7886A541DC97D3D00368C03 /* SNSMainViewCells.swift */,
+				E7886A551DC97D3D00368C03 /* SNSMainViewController.swift */,
+				E7886A581DC97D3D00368C03 /* SNSMyCommentViewController.swift */,
+				E7886A591DC97D3D00368C03 /* SNSPostCommentViewController.swift */,
+				E7886A5A1DC97D3D00368C03 /* SNSPostManager.swift */,
+				E7886A5B1DC97D3D00368C03 /* SNSPostRF.swift */,
+				E7886A5C1DC97D3D00368C03 /* SNSReceivedLikeViewController.swift */,
+				E7886A5F1DC97D3D00368C03 /* SNS.storyboard */,
+				E7886A601DC97D3D00368C03 /* SNS.strings */,
+				E7886A801DC9DE9700368C03 /* Media.xcassets */,
+			);
+			path = SNS;
+			sourceTree = "<group>";
+		};
 		E7ACEB791D4C217000009C5B /* VessageEventHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,6 +1113,7 @@
 		E7EF282E1D791AFD0064231F /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E7886A4B1DC97D3D00368C03 /* SNS */,
 				E7EF28451D791AFD0064231F /* NiceFaceClub */,
 				E7EF283A1D791AFD0064231F /* LittlePaper */,
 				E7EF282F1D791AFD0064231F /* ActivityConfig.swift */,
@@ -1242,13 +1289,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7886A7A1DC97D3D00368C03 /* SNS.strings in Resources */,
+				E7886A791DC97D3D00368C03 /* SNS.storyboard in Resources */,
 				E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E7EF285E1D791AFD0064231F /* LittlePaperMessage.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
+				E7886A6A1DC97D3D00368C03 /* SNSCommentInputView.xib in Resources */,
 				E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */,
+				E7886A811DC9DE9700368C03 /* Media.xcassets in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
 				E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */,
@@ -1333,6 +1384,7 @@
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
 				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
 				E79917541D60D9CF002C42C2 /* ChatImageManageCell.swift in Sources */,
+				E7886A741DC97D3D00368C03 /* SNSPostManager.swift in Sources */,
 				E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */,
 				E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
@@ -1372,6 +1424,7 @@
 				E7740ED61DA7373E0022A903 /* NFCMemberCardAlert.swift in Sources */,
 				E7687C291DB4A5CC00A1FD5E /* NFCReceivedLikeViewController.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
+				E7886A6E1DC97D3D00368C03 /* SNSMainViewCells.swift in Sources */,
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
@@ -1390,21 +1443,26 @@
 				E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */,
+				E7886A731DC97D3D00368C03 /* SNSPostCommentViewController.swift in Sources */,
 				E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E7687C251DB4837700A1FD5E /* NFCPostRF.swift in Sources */,
 				E708AB951C86CF8A0071104E /* PersistentFileHelper.swift in Sources */,
+				E7886A6F1DC97D3D00368C03 /* SNSMainViewController.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */,
 				E7CC54E41D7A6CF200BDE82E /* MessageExtension.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
+				E7886A721DC97D3D00368C03 /* SNSMyCommentViewController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E7D5182E1DBDA686007F6A5D /* FaceTextBubbleConfig.swift in Sources */,
+				E7886A6C1DC97D3D00368C03 /* SNSGodRF.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7EF28621D791AFD0064231F /* PaperMessageDetailViewController.swift in Sources */,
 				E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */,
+				E7886A751DC97D3D00368C03 /* SNSPostRF.swift in Sources */,
 				E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
@@ -1440,6 +1498,7 @@
 				E7DDCEFB1DBFA4BC00E61A56 /* ChattersBoard.swift in Sources */,
 				E7EF28631D791AFD0064231F /* WritePaperMessageViewController.swift in Sources */,
 				E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */,
+				E7886A691DC97D3D00368C03 /* SNSCommentInputView.swift in Sources */,
 				E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */,
@@ -1459,6 +1518,7 @@
 				E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */,
 				E708AB6F1C86CE1D0071104E /* MF_Base64Additions.m in Sources */,
 				E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */,
+				E7886A761DC97D3D00368C03 /* SNSReceivedLikeViewController.swift in Sources */,
 				E78EA59C1DBB0E6000C49B9C /* Math.swift in Sources */,
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,

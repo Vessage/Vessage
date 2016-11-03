@@ -136,6 +136,22 @@ class UserProfileViewController: UIViewController {
         #endif
     }
     
+    static func showUserProfileViewController(vc:UIViewController,userId:String){
+        if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
+            UserProfileViewController.showUserProfileViewController(vc, userProfile: user)
+        }else{
+            let hud = vc.showActivityHud()
+            ServiceContainer.getUserService().getUserProfile(userId, updatedCallback: { (user) in
+                hud.hideAnimated(true)
+                if let u = user{
+                    UserProfileViewController.showUserProfileViewController(vc, userProfile: u)
+                }else{
+                    vc.playCrossMark("NO_SUCH_USER".localizedString())
+                }
+            })
+        }
+    }
+    
     static func showUserProfileViewController(vc:UIViewController, userProfile:VessageUser){
         let controller = instanceFromStoryBoard("User", identifier: "UserProfileViewController") as! UserProfileViewController
         controller.providesPresentationContextTransitionStyle = true

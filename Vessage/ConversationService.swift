@@ -236,6 +236,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
     
+    func getChattingNormalUserIds() -> [String] {
+        return conversations.filter{!$0.isGroup && !String.isNullOrWhiteSpace($0.chatterId)}.map{$0.chatterId}
+    }
+    
     func removeTimeupedConversations() {
         timeupedConversations.removeAll()
     }

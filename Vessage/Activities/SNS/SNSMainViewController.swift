@@ -1,5 +1,5 @@
 //
-//  NFCMainViewController.swift
+//  SNSMainViewController.swift
 //  Vessage
 //
 //  Created by Alex Chow on 2016/10/4.
@@ -11,11 +11,12 @@ import MJRefresh
 import LTMorphingLabel
 import MBProgressHUD
 
-//MARK: NFCMainViewController
-class NFCMainViewController: UIViewController {
-    let nfcLikeCountBaseLimit = 10
+//MARK: SNSMainViewController
+class SNSMainViewController: UIViewController {
+    let SNSLikeCountBaseLimit = 10
     let postPageCount = 20
-    @IBOutlet weak var newMemberButton: UIButton!
+    @IBOutlet weak var newPostButton: UIButton!
+    @IBOutlet weak var myPostsButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -24,22 +25,10 @@ class NFCMainViewController: UIViewController {
     }
     private var postingAnimationImageView:UIImageView!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
-    private(set) var profile:UserNiceFaceProfile!{
-        didSet{
-            if let p = profile{
-                let umsgTag = "NFCMember";
-                if p.isValidateMember() {
-                    UMessage.addTag(umsgTag,response:nil)
-                }else{
-                    UMessage.removeTag(umsgTag, response: nil)
-                }
-            }
-        }
-    }
     
-    private var posts:[[[NFCPost]]] = [[[NFCPost]](),[[NFCPost]](),[[NFCPost]]()]
+    private var posts:[[[SNSPost]]] = [[[SNSPost]](),[[SNSPost]]()]
     
-    private var posting = [NFCPost](){
+    private var posting = [SNSPost](){
         didSet{
             if posting.count > 0 {
                 postingIndicator?.hidden = false
@@ -52,7 +41,7 @@ class NFCMainViewController: UIViewController {
     
     private var listTableViewOffset = [CGPointZero,CGPointZero,CGPointZero]
     
-    private var listType:Int = NFCPost.typeNormalPost{
+    private var listType:Int = 0{
         didSet{
             if listType != oldValue {
                 tableView?.mj_footer?.resetNoMoreData()
@@ -66,14 +55,14 @@ class NFCMainViewController: UIViewController {
         }
     }
     
-    private var boardData:NFCMainBoardData!
+    private var boardData:SNSMainBoardData!
     
     private var showControllerTimes:Int{
         get{
-            return UserSetting.getUserIntValue("ShowNFCMainView")
+            return UserSetting.getUserIntValue("ShowSNSMainView")
         }
         set{
-            UserSetting.setUserIntValue("ShowNFCMainView", value: newValue)
+            UserSetting.setUserIntValue("ShowSNSMainView", value: newValue)
         }
     }
     
@@ -89,16 +78,16 @@ class NFCMainViewController: UIViewController {
     }
     
     deinit {
-        NFCPostManager.instance.releaseManager();
+        SNSPostManager.instance.releaseManager();
         debugLog("Deinited:\(self.description)")
     }
 }
 
 //MARK: Life Circle
-extension NFCMainViewController{
+extension SNSMainViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
-        NFCPostManager.instance.initManager()
+        SNSPostManager.instance.initManager()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.hidden = true
@@ -106,11 +95,11 @@ extension NFCMainViewController{
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(NFCMainViewController.mjHeaderRefresh(_:)))
-        tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(NFCMainViewController.mjFooterRefresh(_:)))
+        tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjHeaderRefresh(_:)))
+        tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjFooterRefresh(_:)))
         tableView?.mj_footer.automaticallyHidden = true
         homeButton.superview?.superview?.superview?.hidden = true
-        MobClick.event("NFC_Login")
+        MobClick.event("SNS_Login")
     }
     
     func mjFooterRefresh(a:AnyObject?) {
@@ -125,16 +114,12 @@ extension NFCMainViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if self.profile != nil {
-            start()
-        }else{
-            initMyProfile()
-        }
+        start()
     }
 }
 
 //MARK: actions
-extension NFCMainViewController{
+extension SNSMainViewController{
     
     func removePost(postId:String) ->Bool {
         let typeList = self.posts[listType]
@@ -150,62 +135,24 @@ extension NFCMainViewController{
         return false
     }
     
-    private func shareNFC() {
-        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_NICE_FACE_CLUB_MSG".niceFaceClubString, alertMsg: "SHARE_NFC_ALERT_MSG".niceFaceClubString, title: "NFC".niceFaceClubString)
-    }
-    
-    @IBAction func onClickMemberButton(sender: AnyObject) {
-        if tryShowForbiddenAnymoursAlert(){
-            return
-        }
-        let modifyNiceFace = UIAlertAction(title: "MODIFY_NICE_FACE".niceFaceClubString, style: .Default) { (ac) in
-            self.modifyNiceFace()
-        }
-        let memberCard = UIAlertAction(title: "MEMBER_CARD".niceFaceClubString, style: .Default) { (ac) in
-            NFCMemberCardAlert.showNFCMemberCardAlert(self, memberId: self.profile.mbId)
-        }
-        let userSettig = UIAlertAction(title: "UPDATE_MEMBER_PROFILE".niceFaceClubString, style: .Default) { (ac) in
-            UserSettingViewController.showUserSettingViewController(self.navigationController!)
-        }
-        let alert = UIAlertController(title: "MEMBER_PROFILE".niceFaceClubString, message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(modifyNiceFace)
-        alert.addAction(userSettig)
-        alert.addAction(memberCard)
-        alert.addAction(ALERT_ACTION_CANCEL)
-        self.showAlert(alert)
-        
+    private func shareSNS() {
+        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_SNS_MSG".SNSString, alertMsg: "SHARE_SNS_ALERT_MSG".SNSString, title: "SNS".SNSString)
     }
     
     @IBAction func onHomeButtonClick(sender: AnyObject) {
-        switchListType(NFCPost.typeNormalPost)
+        switchListType(SNSPost.typeNormalPost)
     }
     
-    @IBAction func newPostButton(sender: AnyObject) {
-        
-        if tryShowForbiddenAnymoursAlert(){
-            return
-        }
+    @IBAction func onClickNewPostButton(sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
-            let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "NFC".niceFaceClubString, message: "POST_NEW_SHARE".niceFaceClubString)
+            let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "SNS".SNSString, message: "POST_NEW_SHARE".SNSString)
             imagePicker.delegate = self
         }
     }
     
-    @IBAction func onNewMemberButtonClick(sender: AnyObject) {
-        if tryShowForbiddenAnymoursAlert(){
-            return
-        }
-        switchListType(NFCPost.typeNewMemberPost)
-    }
-    
-    
-    func tryShowForbiddenAnymoursAlert() -> Bool{
-        if !NiceFaceClubManager.instance.isValidatedMember {
-            self.showAlert("NFC".niceFaceClubString, msg: "NFC_ANONYMOUS_TIPS".niceFaceClubString,actions: [ALERT_ACTION_I_SEE])
-            return true
-        }
-        return false
+    @IBAction func onMyPostButtonClick(sender: AnyObject) {
+        self.switchListType(SNSPost.typeMyPost)
     }
     
     func playPostingIndicatorAnimation(img:UIImage?) {
@@ -245,43 +192,56 @@ extension NFCMainViewController{
     }
 }
 
-extension NFCMainViewController{
+extension SNSMainViewController{
     
     private func showViews(){
         self.tableView.hidden = false
         homeButton.superview?.superview?.superview?.hidden = false
     }
     
+    private func showNewerAlert(){
+        let ok = UIAlertAction(title: "NEWER_ALERT_YES".SNSString, style: .Default) { (ac) in
+            self.onClickNewPostButton(self.newPostButton)
+        }
+        
+        let cancel = UIAlertAction(title: "NEWER_ALERT_NO".SNSString, style: .Default) { (ac) in
+            
+        }
+        
+        self.showAlert("NEWER_ALERT_TITLE".SNSString, msg: "NEWER_ALERT_MSG".SNSString, actions: [cancel,ok])
+    }
+    
     private func refreshPosts() {
         let lastPost = posts[listType].last?.last
         let ts = lastPost?.ts ?? Int64(NSDate().timeIntervalSince1970 * 1000)
         let hud:MBProgressHUD? = lastPost == nil ? self.showActivityHud() : nil
-        if listType == NFCPost.typeNormalPost && lastPost == nil{
-            NFCPostManager.instance.getMainBoardData(postPageCount,callback: { (data) in
+        if listType == SNSPost.typeNormalPost && lastPost == nil{
+            SNSPostManager.instance.getMainBoardData(postPageCount,callback: { (data) in
                 hud?.hideAnimated(true)
                 if let d = data{
                     self.boardData = d
-                    self.newMemberButton.badgeValue = d.nMemCnt > 0 ? d.nMemCnt.friendString : nil
                     if (d.posts?.count ?? 0) > 0{
-                        self.posts[NFCPost.typeNormalPost].append(d.posts)
+                        self.posts[SNSPost.typeNormalPost].append(d.posts)
                         self.tryShowShareAlert()
                     }else{
-                        self.flashTipsLabel("NO_POSTS".niceFaceClubString)
+                        self.flashTipsLabel("NO_POSTS".SNSString)
                     }
-                    
+                    if d.newer {
+                        self.showNewerAlert()
+                    }
                 }else{
-                    self.playCrossMark("REFRESH_ERROR".niceFaceClubString)
+                    self.playCrossMark("REFRESH_ERROR".SNSString)
                 }
                 self.setMJFooter()
                 self.tableView?.reloadData()
             })
         }else{
-            NFCPostManager.instance.getNFCPosts(listType,startTimeSpan: ts, pageCount: postPageCount, callback: { (posts) in
+            SNSPostManager.instance.getSNSPosts(listType,startTimeSpan: ts, pageCount: postPageCount, callback: { (posts) in
                 hud?.hideAnimated(true)
                 if posts.count > 0{
                     self.posts[self.listType].append(posts)
                 }else{
-                    self.flashTipsLabel("NO_POSTS".niceFaceClubString)
+                    self.flashTipsLabel("NO_POSTS".SNSString)
                 }
                 self.setMJFooter()
                 self.tableView?.reloadData()
@@ -300,88 +260,35 @@ extension NFCMainViewController{
     }
     
     func switchListType(type:Int) {
-        homeButton?.enabled = type != NFCPost.typeNormalPost
-        newMemberButton?.enabled = type != NFCPost.typeNewMemberPost
+        self.title = type == SNSPost.typeMyPost ? "MY_SNS_POST_WALL".SNSString : "SNS".SNSString
+        homeButton?.enabled = type != SNSPost.typeNormalPost
+        myPostsButton?.enabled = type != SNSPost.typeMyPost
         self.listType = type
         if posts[listType].count == 0 {
             refreshPosts()
         }
     }
-    
-    private func anonymousMode(){
-        self.profile = NiceFaceClubManager.instance.anonymousMode()
-        switchListType(NFCPost.typeNormalPost)
-        showViews()
-    }
 }
 
-extension NFCMainViewController{
-    private func initMyProfile(){
-        let hud = self.showActivityHud()
-        NiceFaceClubManager.instance.getMyNiceFaceProfile({ (mp) in
-            hud.hideAnimated(true)
-            if let p = mp{
-                self.profile = p
-                self.start()
-            }else{
-                let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-                    self.navigationController?.popViewControllerAnimated(true)
-                })
-                self.showAlert("NICE_FACE_CLUB".niceFaceClubString, msg: "FETCH_YOUR_PROFILE_ERROR".niceFaceClubString, actions: [ok])
-            }
-        })
-    }
+extension SNSMainViewController{
     
     private func start(){
         
-        if !profile.isAnonymous() && (profile.score < NiceFaceClubManager.minScore || profile.mbAcpt == false){
-            self.showBenchMarkAlert()
-        }else{
-            self.switchListType(self.listType)
-            self.showViews()
-        }
+        self.switchListType(SNSPost.typeNormalPost)
+        self.showViews()
     }
     
     private func tryShowShareAlert(){
         showControllerTimes += 1
         let sct = showControllerTimes
         if sct == 3 || sct == 9 || sct == 23 || sct == 42 || sct == 60 {
-            self.shareNFC()
+            self.shareSNS()
         }
     }
     
-    private func showBenchMarkAlert() {
-        let msg = profile.score < NiceFaceClubManager.minScore ? "YOU_NEED_FACE_BENCHMARK".niceFaceClubString : "NEED_LIKE_TO_JOIN_NFC".niceFaceClubString
-        let alert = NFCMessageAlert.showNFCMessageAlert(self, title: "NICE_FACE_CLUB".niceFaceClubString, message: msg)
-        alert.onTestScoreHandler = { alert in
-            alert.dismissViewControllerAnimated(true, completion: {
-                self.modifyNiceFace(false)
-            })
-        }
-        
-        alert.onAnonymousHandler = { alert in
-            self.anonymousMode()
-            alert.dismissViewControllerAnimated(true, completion: nil)
-            
-        }
-        alert.onCloseHandler = { alert in
-            alert.dismissViewControllerAnimated(true, completion: {
-                self.navigationController?.popViewControllerAnimated(true)
-            })
-        }
-    }
-    
-    private func modifyNiceFace(aleadyMember:Bool = true){
-        let controller = SetupNiceFaceViewController.instanceFromStoryBoard()
-        self.presentViewController(controller, animated: true){
-            if aleadyMember{
-                NFCMessageAlert.showNFCMessageAlert(controller, title: "NICE_FACE_CLUB".niceFaceClubString, message: "UPDATE_YOUR_NICE_FACE".niceFaceClubString)
-            }
-        }
-    }
 }
 
-extension NFCMainViewController{
+extension SNSMainViewController{
     private func flashTipsLabel(msg:String){
         
         if tipsLabel == nil {
@@ -400,14 +307,14 @@ extension NFCMainViewController{
 }
 
 //MARK: UITableViewDelegate
-extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
+extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return posts[listType].count + 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return (profile?.isAnonymous() ?? true) ? 0 : 1
+            return 1
         }
         return posts[listType][section - 1].count
     }
@@ -421,23 +328,20 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(NFCMainInfoCell.reuseId, forIndexPath: indexPath) as! NFCMainInfoCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(SNSMainInfoCell.reuseId, forIndexPath: indexPath) as! SNSMainInfoCell
             cell.newLikesLabel.text = "+\(self.boardData?.nlks.friendString ?? "0")"
             cell.newCmtLabel.text = "+\(self.boardData?.ncmt.friendString ?? "0")"
-            cell.nextImageView.hidden = listType == NFCPost.typeMyPost
-            cell.nextTipsLabel.hidden = cell.nextImageView.hidden
             cell.delegate = self
             switch listType {
-            case NFCPost.typeMyPost:
-                cell.announcementLabel.text = "MY_NFC_POST_WALL".niceFaceClubString
-            case NFCPost.typeNewMemberPost:
-                cell.announcementLabel.text = String.isNullOrWhiteSpace(self.boardData?.newMemAnnc) ? String(format: "NEWER_NEED_X_LIKE_TO_JOIN_NFC".niceFaceClubString,nfcLikeCountBaseLimit) : self.boardData?.newMemAnnc
+            case SNSPost.typeMyPost:
+                cell.announcementLabel.text = "MY_SNS_POST_WALL_ANC".SNSString
             default:
-                cell.announcementLabel.text = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_NFC_ANC".niceFaceClubString : self.boardData?.annc
+                let format = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_SNS_ANC".SNSString : self.boardData!.annc
+                cell.announcementLabel.text = String(format: format, ServiceContainer.getUserService().myProfile.nickName)
             }
             return cell
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(NFCPostCell.reuseId, forIndexPath: indexPath) as! NFCPostCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SNSPostCell.reuseId, forIndexPath: indexPath) as! SNSPostCell
         if let p = postOfIndexPath(indexPath) {
             cell.setSeparatorFullWidth()
             cell.rootController = self
@@ -448,54 +352,50 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let c = cell as? NFCPostCell {
+        if let c = cell as? SNSPostCell {
             c.updateImage()
         }
     }
     
-    func postOfIndexPath(indexPath:NSIndexPath) -> NFCPost? {
+    func postOfIndexPath(indexPath:NSIndexPath) -> SNSPost? {
         if posts[listType].count >= indexPath.section && posts[listType][indexPath.section - 1].count > indexPath.row{
             return posts[listType][indexPath.section - 1][indexPath.row]
         }
         return nil
     }
-}
-
-//MARK: NFCMainInfoCellDelegate
-extension NFCMainViewController:NFCMainInfoCellDelegate{
-    func nfcMainInfoCellDidClickMyPosts(sender:UIView,cell:NFCMainInfoCell) {
-        if tryShowForbiddenAnymoursAlert() {
-            return
-        }
-        cell.nextImageView.animationMaxToMin(0.1, maxScale: 1.2) {
-            self.switchListType(NFCPost.typeMyPost)
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        cell?.selected = false
+        if indexPath.section != 0 {
+            if let post = postOfIndexPath(indexPath){
+                SNSPostCommentViewController.showPostCommentViewController(self.navigationController!, post: post)
+            }
         }
     }
-    
-    func nfcMainInfoCellDidClickNewLikes(sender:UIView,cell:NFCMainInfoCell) {
-        if tryShowForbiddenAnymoursAlert() {
-            return
-        }
+}
+
+//MARK: SNSMainInfoCellDelegate
+extension SNSMainViewController:SNSMainInfoCellDelegate{
+
+    func snsMainInfoCellDidClickNewLikes(sender:UIView,cell:SNSMainInfoCell) {
         cell.likeImageView.animationMaxToMin(0.1, maxScale: 1.2) {
             if let cnt = self.boardData?.nlks{
                 self.boardData?.nlks = 0
                 cell.newLikesLabel.text = "+0"
-                let ctr = NFCReceivedLikeViewController.instanceFromStoryBoard()
+                let ctr = SNSReceivedLikeViewController.instanceFromStoryBoard()
                 self.navigationController?.pushViewController(ctr, animated: true)
                 ctr.loadInitLikes(cnt == 0 ? 10 : cnt)
             }
         }
     }
     
-    func nfcMainInfoCellDidClickNewComment(sender:UIView,cell:NFCMainInfoCell) {
-        if tryShowForbiddenAnymoursAlert() {
-            return
-        }
+    func snsMainInfoCellDidClickNewComment(sender:UIView,cell:SNSMainInfoCell) {
         cell.newCommentImageView.animationMaxToMin(0.1, maxScale: 1.2) {
             if let cnt = self.boardData?.ncmt{
                 self.boardData?.ncmt = 0
                 cell.newCmtLabel.text = "+0"
-                let ctr = NFCMyCommentViewController.instanceFromStoryBoard()
+                let ctr = SNSMyCommentViewController.instanceFromStoryBoard()
                 self.navigationController?.pushViewController(ctr, animated: true)
                 ctr.loadInitComments(cnt == 0 ? 10 : cnt)
             }
@@ -504,7 +404,7 @@ extension NFCMainViewController:NFCMainInfoCellDelegate{
 }
 
 //MARK: UIImagePickerControllerDelegate
-extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
+extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
         picker.dismissViewControllerAnimated(true) {
             let imageForSend = image.scaleToWidthOf(600, quality: 0.8)
@@ -521,7 +421,7 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                     ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
                     if let fk = fileKey
                     {
-                        let post = NFCPost()
+                        let post = SNSPost()
                         post.img = fk.fileId
                         post.pid = taskId
                         self.posting.insert(post, atIndex: 0)
@@ -529,12 +429,12 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                             self.playPostingIndicatorAnimation(imageForSend)
                         })
                     }else{
-                        self.playToast("POST_NEW_ERROR".niceFaceClubString)
+                        self.playToast("POST_NEW_ERROR".SNSString)
                     }
                 })
             }else
             {
-                self.playToast("POST_NEW_ERROR".niceFaceClubString)
+                self.playToast("POST_NEW_ERROR".SNSString)
             }
         }
     }
@@ -545,16 +445,16 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let tmpPost = (posting.filter{$0.pid == taskIdentifier}).first{
-            NFCPostManager.instance.newPost(tmpPost.img, callback: { (post) in
+            SNSPostManager.instance.newPost(tmpPost.img, callback: { (post) in
                 if let p = post{
                     self.playCheckMark(){
                         self.posting.removeElement{$0.pid == tmpPost.pid}
-                        self.posts[NFCPost.typeNormalPost].insert([p], atIndex: 0)
+                        self.posts[SNSPost.typeNormalPost].insert([p], atIndex: 0)
                         self.tableView?.setContentOffset(CGPointZero, animated: true)
                         self.tableView?.reloadData()
                     }
                 }else{
-                    self.playCrossMark("POST_NEW_ERROR".niceFaceClubString)
+                    self.playCrossMark("POST_NEW_ERROR".SNSString)
                 }
             })
         }

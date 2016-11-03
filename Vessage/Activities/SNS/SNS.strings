@@ -1,0 +1,44 @@
+/* 
+  SNS.strings
+  Vessage
+
+  Created by AlexChow on 16/8/23.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+SNS = "晒&秀";
+DEFAULT_MOTTO = "暂无签名";
+
+SAVE_IMAGE_ERROR = "保存文件失败";
+EXIT = "退出";
+OO = "哦";
+GO_CHAT = "进入聊天";
+
+SHARE_SNS_MSG = "我在VG晒&秀分享照片，你也快来吧！";
+SHARE_SNS_ALERT_MSG = "告诉常联系的朋友加入属于你们自己的分享圈！";
+
+REFRESH_ERROR = "刷新数据出错";
+NO_POSTS = "没有刷到更多动态了";
+POST_NEW_SHARE = "晒新照片";
+POST_NEW_ERROR = "晒新照片出错";
+NO_MEMBER_USERID_FOUND = "找不到该用户>_<";
+LIKE_POST_OP_ERROR = "点赞失败>_<";
+
+NO_NEW_LIKES = "暂时没有获得新的赞";
+DEFAULT_SNS_ANC = "%@，欢迎回来晒&秀！";
+NO_PROFILE_LOADED = "加载会员出错，请稍后再试>_<";
+INPUT_COMMENT_CONTENT = "请写下你的评论~";
+MY_SNS_POST_WALL = "我的照片";
+MY_SNS_POST_WALL_ANC = "SNS简单小规则:\n只有最近两周和你聊天的好友才能看到你分享的照片哦~";
+UNKNOW_DATE_TIME = "失落的时间";
+
+SNS_POST_COMMENT_NAME = "在此留下你的评论吧";
+DATE_X_LIKE_YOUR_IMG = "%@赞了你的照片";
+DELETE_POST = "删除该照片";
+REPORT_POST = "举报该照片";
+SURE_DELETE_POST = "删除照片后不可恢复，确定删除该照片？";
+SURE_REPORT_POST = "如果频繁恶意举报，你的账户将会被拉黑，确定举报该照片？";
+
+NEWER_ALERT_TITLE = "欢迎使用晒&秀";
+NEWER_ALERT_MSG = "\n晒&秀是让你和常聊天的好友分享照片的地方。没时间解释了，赶紧去晒一张照片吧？";
+NEWER_ALERT_YES = "马上晒照片";
+NEWER_ALERT_NO = "等会再晒";

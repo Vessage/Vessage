@@ -272,22 +272,11 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     func refreshNotReadVessageNumber(){
-        let num = vessages.filter{!$0.isRead}.count
-        if let l = self.rootController?.notReadNumLabel{
-            setBadgeLabelValue(l, value: num,autoHide: false)
-        }
         self.refreshReadingProgress()
     }
     
     func refreshReadingProgress() {
         let progress = Float(currentVessageIndex + 1) / Float(vessages.count)
-        
-        if vessages.count > 0 {
-            let angle = 360 * Double(progress)
-            rootController?.readingProgress.animateToAngle(angle, duration: 0.2, completion: nil)
-        }else{
-            rootController?.readingProgress.animateToAngle(360, duration: 0.2, completion: nil)
-        }
         self.rootController.readingLineProgress.setProgress(progress, animated: true)
         self.rootController.readingLineProgress.hidden = progress >= 1
     }

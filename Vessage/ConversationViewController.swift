@@ -92,14 +92,7 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var notReadNumLabel: UILabel!{
-        didSet{
-            notReadNumLabel.clipsToBounds = true
-            notReadNumLabel.layer.cornerRadius = 12
-        }
-    }
     @IBOutlet weak var readingLineProgress: UIProgressView!
-    @IBOutlet weak var readingProgress: KDCircularProgress!
     @IBOutlet weak var progressView: UIProgressView!
     
     @IBOutlet weak var recordViewContainer: UIView!

@@ -39,7 +39,7 @@ class Vessage: BahamutObject {
     
     func getVessageRealSenderId() -> String? {
         if isMySendingVessage() {
-            return ServiceContainer.getUserService().myProfile?.userId
+            return UserSetting.userId
         }else if isGroup{
             return gSender
         }else{

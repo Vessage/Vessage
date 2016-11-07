@@ -16,7 +16,7 @@ private let randomTextVessageContents = [
 //MARK: PlayVessageManager
 class PlayVessageManager: ConversationViewControllerProxy {
     
-    let chatterVessageBubbleColor = UIColor.whiteColor().adjustedHueColor(0.6)
+    let chatterVessageBubbleColor = UIColor.whiteColor().adjustedHueColor(0.8)
     let myVessageBubbleColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
     
     
@@ -34,13 +34,8 @@ class PlayVessageManager: ConversationViewControllerProxy {
     private var chatImageBoardSourceView:UIView!
     
     var selectedImageId:String?{
-        if chatImageBoardController == nil {
-            return self.rootController.userService.getMyChatImages(false).first?.imageId
-        }else{
-            return chatImageBoardController.selectedChatImage?.imageId
-        }
+        return chattersBoardManager?.getChatterItem(UserSetting.userId)?.itemImage
     }
-
 
     //MARK: flash tips properties
     private var flashTipsView:UILabel!
@@ -464,7 +459,7 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
             
             var containerY:CGFloat = rect.origin.y - 5 - containerSize.height
             var d:BezierBubbleDirection!
-            let startRatio = (rect.origin.x + rect.width/2 - containerX) / containerSize.width
+            let startRatio = (rectCenterX - containerX) / containerSize.width
             
             if chatterBoard == self.rootController.bottomChattersBoard {
                 d = .Up(startXRatio: Float(startRatio))
@@ -499,7 +494,7 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
     var bubbleContentMaxSize:CGSize{
         if let topChattersBoard = self.rootController?.topChattersBoard {
             if let bottomChattersBoard = self.rootController?.bottomChattersBoard{
-                let h = bottomChattersBoard.frame.origin.y - (topChattersBoard.frame.origin.y + topChattersBoard.frame.size.height) - 20
+                let h = bottomChattersBoard.frame.origin.y - (topChattersBoard.frame.origin.y + topChattersBoard.frame.size.height) - 40
                 return CGSize(width: self.rootController.vessageViewContainer.frame.width - 40, height: h)
             }
         }
@@ -600,17 +595,7 @@ extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentat
 
 //MARK: init chatters
 extension PlayVessageManager{
-    
-    override func onInitChatter(chatter: VessageUser){
-        chattersBoardManager = GroupedChattersBoardManager()
-        chattersBoardManager.registChattersBoards([self.rootController.topChattersBoard,self.rootController.bottomChattersBoard])
-        for b in chattersBoardManager.chattersBoards{
-            b.delegate = self
-        }
-        self.rootController.bottomChattersBoard.addChatters([chatter,self.rootController.userService.myProfile])
-        onChatterUpdated(chatter)
-    }
-    
+
     override func onInitGroup(chatGroup:ChatGroup){
         chattersBoardManager = GroupedChattersBoardManager()
         chattersBoardManager.registChattersBoards([self.rootController.topChattersBoard,self.rootController.bottomChattersBoard])
@@ -648,16 +633,16 @@ extension PlayVessageManager{
             self.rootController.topChattersBoard.drawBoard()
             self.rootController.bottomChattersBoard.drawBoard()
         }
-        self.rootController.controllerTitle = chatGroup.groupName
+        if isGroupChat {
+            self.rootController.controllerTitle = chatGroup.groupName
+        }else{
+            self.rootController.controllerTitle = self.rootController.userService.getUserNotedName(conversation.chatterId)
+        }
         rootController.userService.fetchUserProfilesByUserIds(noReadyUsers, callback: nil)
     }
     
     override func onGroupChatterUpdated(chatter: VessageUser) {
         chattersBoardManager.updateChatter(chatter)
-    }
-    
-    override func onChatterUpdated(chatter: VessageUser) {
-        self.rootController.controllerTitle = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
     }
 
 }

@@ -198,22 +198,13 @@ class GroupChatAvatarManager:NSObject {
 }
 
 extension RecordVessageManager{
-
-    override func onInitChatter(chatter: VessageUser){
-        onChatterUpdated(chatter)
-    }
-
     override func onInitGroup(chatGroup:ChatGroup){
         onChatGroupUpdated(chatGroup)
     }
 
-    override func onChatterUpdated(chatter: VessageUser) {
-        noSmileFaceTipsLabel.hidden = chatter.mainChatImage != nil
-        groupAvatarManager.setFaces([chatter.userId:chatter.mainChatImage])
-    }
     
     override func onChatGroupUpdated(chatGroup: ChatGroup) {
-        noSmileFaceTipsLabel.hidden = true
+        
         var userFaceIds = [String:String?]()
         for userId in chatGroup.chatters {
             if userId == UserSetting.userId {
@@ -224,7 +215,11 @@ extension RecordVessageManager{
                 userFaceIds.updateValue(nil, forKey: userId)
             }
         }
-        
+        if isGroupChat {
+            noSmileFaceTipsLabel.hidden = true
+        }else{
+            noSmileFaceTipsLabel.hidden = userFaceIds.keys.contains(conversation.chatterId)
+        }
         groupAvatarManager.setFaces(userFaceIds)
     }
 }

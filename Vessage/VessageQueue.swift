@@ -49,7 +49,6 @@ class VessageQueue: BahamutTaskQueue {
         let vsg = vessage
         vsg.vessageId = Vessage.sendingVessageId
         vsg.extraInfo = extraInfoString
-        vsg.sender = vessage.sender
         vsg.isRead = true
         vsg.sendTime = NSDate().toAccurateDateTimeString()
         

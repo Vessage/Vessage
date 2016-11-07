@@ -133,6 +133,15 @@ class ChattersBoard: UIView {
         }
     }
     
+    func getChatter(chatterId:String) -> ChattersBoardItem? {
+        for item in chattersItems {
+            if item.chatterId == chatterId {
+                return item
+            }
+        }
+        return nil
+    }
+    
     func drawBoard() {
         self.prepareImageViews()
         self.setNeedsDisplay()
@@ -292,6 +301,15 @@ class GroupedChattersBoardManager{
 
     func addChatters(chattersBoard:ChattersBoard,chatters:[VessageUser]){
         chattersBoard.addChatters(chatters)
+    }
+    
+    func getChatterItem(userId:String) -> ChattersBoardItem? {
+        for board in chattersBoards {
+            if let item = board.getChatter(userId) {
+                return item
+            }
+        }
+        return nil
     }
 
     func getChatterImageViewOfChatterId(chatterId:String) -> (board:ChattersBoard,chatterImageView:UIImageView)?{

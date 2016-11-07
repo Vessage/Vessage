@@ -52,7 +52,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
     
     
     func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize, contentView: UIView) -> CGSize {
-        if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height > defaultHeight {
+        if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height >= defaultHeight {
             return CGSize(width: defaultWidth, height: defaultHeight)
         }else if maxLimitedSize.height > maxLimitedSize.width {
             return CGSize(width: maxLimitedSize.width, height: maxLimitedSize.width * defaultHeight / defaultWidth)

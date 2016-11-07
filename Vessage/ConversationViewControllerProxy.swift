@@ -55,10 +55,10 @@ class ConversationViewControllerProxy: NSObject {
     
     func onVessagesReceived(vessages:[Vessage]) {}
 
-    func onInitChatter(chatter:VessageUser) {}
+    //func onInitChatter(chatter:VessageUser) {}
     func onInitGroup(chatGroup:ChatGroup) {}
 
-    func onChatterUpdated(chatter:VessageUser) {}
+    //func onChatterUpdated(chatter:VessageUser) {}
     func onChatGroupUpdated(chatGroup:ChatGroup) {}
     func onGroupChatterUpdated(chatter:VessageUser) {}
     

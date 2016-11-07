@@ -28,12 +28,12 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
     
     
     func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
-        if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height > defaultHeight {
+        if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height >= defaultHeight {
             return CGSize(width: defaultWidth, height: defaultHeight)
         }else if maxLimitedSize.height > maxLimitedSize.width {
-            return CGSize(width: maxLimitedSize.width, height: maxLimitedSize.height * maxLimitedSize.width / defaultWidth)
+            return CGSize(width: maxLimitedSize.width, height: maxLimitedSize.width * defaultHeight / defaultWidth)
         }else if maxLimitedSize.width > maxLimitedSize.height{
-            return CGSize(width: maxLimitedSize.width * maxLimitedSize.height / defaultHeight, height: maxLimitedSize.height)
+            return CGSize(width: maxLimitedSize.height * defaultWidth / defaultHeight, height: maxLimitedSize.height)
         }
         return CGSizeZero
     }

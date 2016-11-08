@@ -175,10 +175,10 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 "VESSAGE_MOTTO_0" = "高颜值俱乐部";
 "VESSAGE_MOTTO_1" = "想聊就聊，不聊消失";
 "VESSAGE_MOTTO_2" = "体验不一样的聊天";
-"VESSAGE_MOTTO_3" = "高颜值俱乐部";
+"VESSAGE_MOTTO_3" = "晒&秀 - 分享多彩生活";
 "VESSAGE_MOTTO_4" = "晒&秀 - 好朋友的分享圈";
-"VESSAGE_MOTTO_5" = "体验不一样的聊天";
-"VESSAGE_MOTTO_6" = "两周不聊自动消失";
+"VESSAGE_MOTTO_5" = "两周不聊，对话消失";
+"VESSAGE_MOTTO_6" = "两周不聊,自动消失";
 
 //Vege
 APP_NAME = "VG";

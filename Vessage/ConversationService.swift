@@ -18,7 +18,10 @@ class Conversation:BahamutObject
     var isGroup = false
     var chatterId:String!
     var chatterMobile:String!
-    var lastMessageTime:String!
+    //var lastMessageTime:String!
+    
+    var lstTs:Int64 = 0
+    
     
     var pinned = false
     
@@ -26,18 +29,21 @@ class Conversation:BahamutObject
 
 extension Conversation{
     
-    func getConversationTimeUpMinutesLeft() -> Double?{
-        if let date = lastMessageTime?.dateTimeOfAccurateString {
-            return ConversationMaxTimeUpMinutes - date.totalMinutesSinceNow.doubleValue * -1
+    func getLastUpdatedTime() -> NSDate {
+        if lstTs <= 0 {
+            lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
+            saveModel()
         }
-        return nil
+        return NSDate(timeIntervalSince1970: Double(lstTs) / 1000)
+    }
+    
+    func getConversationTimeUpMinutesLeft() -> Double{
+        return ConversationMaxTimeUpMinutes - getLastUpdatedTime().totalMinutesSinceNow.doubleValue
     }
     
     func getConversationTimeUpProgressLeft() -> Float? {
-        if let minLeft = getConversationTimeUpMinutesLeft() {
-            return Float(minLeft / ConversationMaxTimeUpMinutes)
-        }
-        return nil
+        let minLeft = getConversationTimeUpMinutesLeft()
+        return Float(minLeft / ConversationMaxTimeUpMinutes)
     }
 }
 
@@ -64,8 +70,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLoginInit(userId: String) {
-        self.setServiceReady()
-        refreshConversations()
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.setServiceReady()
+            self.refreshConversations()
+        }
     }
     
     @objc func userLogout(userId: String) {
@@ -97,7 +105,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
         if let chatterId = c.chatterId{
             if vsg.sender == chatterId{
-                c.lastMessageTime = vsg.sendTime
+                c.lstTs = vsg.ts
                 return true
             }
         }
@@ -122,10 +130,8 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
                 if conversation.chatterId == nil{
                     conversation.chatterId = vsg.sender
                 }
-                if let date = vsg.getSendTime() {
-                    if conversation.lastMessageTime.dateTimeOfAccurateString.isBefore(date){
-                        conversation.lastMessageTime = vsg.sendTime
-                    }
+                if vsg.ts > conversation.lstTs {
+                    conversation.lstTs = vsg.ts
                 }
                 conversation.saveModel()
                 self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
@@ -163,7 +169,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     private func setConversationNewestModifiedAt(index:Int?){
         if let i = index{
             let c = conversations.removeAtIndex(i)
-            c.lastMessageTime = NSDate().toAccurateDateTimeString()
+            c.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
             c.saveModel()
             conversations.insert(c, atIndex: 0)
             self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
@@ -198,7 +204,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.chatterId = vsg.sender
         conversation.isGroup = true
         conversation.conversationId = IdUtil.generateUniqueId()
-        conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
         conversation.saveModel()
         conversations.append(conversation)
         return conversation
@@ -209,10 +215,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         timeupedConversations.removeAll()
         var cons = PersistentManager.sharedInstance.getAllModel(Conversation)
         let timeUpCons = cons.removeElement { c -> Bool in
-            if let p = c.getConversationTimeUpMinutesLeft(){
-                return p < 3
-            }
-            return true
+            return c.getConversationTimeUpMinutesLeft() < 3
         }
         timeupedConversations.appendContentsOf(timeUpCons)
         PersistentManager.sharedInstance.removeModels(timeUpCons)
@@ -226,10 +229,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             if c.pinned{
                 return false
             }
-            if let p = c.getConversationTimeUpMinutesLeft(){
-                return p < 3
-            }
-            return true
+            return c.getConversationTimeUpMinutesLeft() < 3
         }
         timeupedConversations.appendContentsOf(timeUpCons)
         PersistentManager.sharedInstance.removeModels(timeUpCons)
@@ -246,7 +246,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     private func sortConversationList(){
         conversations.sortInPlace { (a, b) -> Bool in
-            a.lastMessageTime.dateTimeOfAccurateString.isAfter(b.lastMessageTime.dateTimeOfAccurateString)
+            a.lstTs > b.lstTs
         }
     }
     
@@ -258,7 +258,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.chatterId = group.groupId
         conversation.isGroup = true
         conversation.conversationId = IdUtil.generateUniqueId()
-        conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
         conversation.saveModel()
         conversations.append(conversation)
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
@@ -284,7 +284,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         let conversation = Conversation()
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.chatterId = userId
-        conversation.lastMessageTime = NSDate().toAccurateDateTimeString()
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
         conversation.saveModel()
         conversations.append(conversation)
         return conversation
@@ -334,8 +334,12 @@ extension ConversationService{
         if !conversation.pinned {
             return true
         }
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
         conversation.pinned = false
-        conversations.filter{$0.conversationId == conversation.conversationId}.first?.pinned = false
+        if let c = (conversations.filter{$0.conversationId == conversation.conversationId}.first){
+            c.pinned = false
+            c.lstTs = conversation.lstTs
+        }
         return true
     }
 }

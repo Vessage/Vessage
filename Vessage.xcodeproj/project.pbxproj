@@ -1247,7 +1247,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Bahamut;
 				TargetAttributes = {
 					E708AB381C86CAA50071104E = {
@@ -1589,6 +1589,7 @@
 		E708AB491C86CAA50071104E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1639,6 +1640,7 @@
 		E708AB4A1C86CAA50071104E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1684,7 +1686,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_ENTITLEMENTS = Vessage/Vessage.entitlements;
@@ -1721,7 +1723,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_ENTITLEMENTS = Vessage/Vessage.entitlements;

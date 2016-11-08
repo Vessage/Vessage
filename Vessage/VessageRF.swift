@@ -26,7 +26,7 @@ class Vessage: BahamutObject {
     var fileId:String!
     var sender:String! //groupid if is group vessage
     var isRead = false
-    var sendTime:String!
+    var ts:Int64 = 0
     var extraInfo:String!
     var isGroup = false
     var typeId = 0
@@ -60,7 +60,11 @@ class Vessage: BahamutObject {
     }
     
     func getSendTime()->NSDate!{
-        return sendTime.dateTimeOfAccurateString
+        if ts > 0 {
+            return NSDate(timeIntervalSince1970: Double(ts) / 1000)
+        }else{
+            return nil
+        }
     }
     
     func getBodyDict() -> [String:AnyObject] {

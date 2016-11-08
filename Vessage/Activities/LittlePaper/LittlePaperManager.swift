@@ -243,7 +243,7 @@ class LittlePaperManager {
             if let resultMsgs = result.returnObject{
                 for m in resultMsgs{
                     if let msg = (messages.filter{$0.paperId == m.paperId}).first{
-                        if msg.updatedTime.dateTimeOfAccurateString.isBefore(m.updatedTime.dateTimeOfAccurateString){
+                        if msg.uTs < m.uTs{
                             m.isUpdated = true
                             updated += 1
                             m.saveModel()
@@ -256,7 +256,6 @@ class LittlePaperManager {
                                 self.myOpenedMessages.removeElement{$0.paperId == m.paperId}
                                 self.myOpenedMessages.insert(m, atIndex: 0)
                             }
-                            
                         }
                     }
                 }

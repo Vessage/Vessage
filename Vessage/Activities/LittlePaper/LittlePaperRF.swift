@@ -19,7 +19,9 @@ class LittlePaperMessage: BahamutObject {
     var receiverInfo:String!
     var message:String!
     var postmen:[String]!
-    var updatedTime:String!
+    //var updatedTime:String!
+    var uTs:Int64 = 0
+    
     var isOpened = false
     var openNeedAccept = false
     

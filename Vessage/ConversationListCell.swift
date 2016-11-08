@@ -211,15 +211,10 @@ class ConversationListCell:ConversationListCellBase{
                 }
             }
         }
-        if let date = conversation.lastMessageTime?.dateTimeOfAccurateString {
-            self.subLine = date.toFriendlyString()
-            self.timeupProgressView?.hidden = false
-            if let p = conversation.getConversationTimeUpProgressLeft(){
-                self.setTimeProgress(p)
-            }
-        }else{
-            self.subLine = "UNKNOW_TIME".localizedString()
-            self.timeupProgressView?.hidden = true
+        self.subLine = conversation.getLastUpdatedTime().toFriendlyString()
+        self.timeupProgressView?.hidden = false
+        if let p = conversation.getConversationTimeUpProgressLeft(){
+            self.setTimeProgress(p)
         }
         if conversation.pinned {
             self.setTimeProgress(1)

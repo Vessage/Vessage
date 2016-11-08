@@ -40,8 +40,10 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLoginInit(userId: String) {
-        initNotReadVessageCountMap()
-        setServiceReady()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.initNotReadVessageCountMap()
+            self.setServiceReady()
+        }
     }
     
     @objc func userLogout(userId: String) {
@@ -63,7 +65,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                 
             }else{
                 if let nvsg = newestVsgMap[vsg.sender]{
-                    if nvsg.getSendTime().compare(vsg.getSendTime()) == .OrderedDescending{
+                    if nvsg.ts >= vsg.ts{
                         PersistentManager.sharedInstance.removeModel(vsg)
                     }else{
                         newestVsgMap[vsg.sender] = vsg
@@ -151,7 +153,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     func getCachedNewestVessage(chatterId:String) -> Vessage?{
         var vsgs = PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{ !String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId }
         vsgs.sortInPlace { (a, b) -> Bool in
-            a.sendTime.dateTimeOfAccurateString.isAfter(b.sendTime.dateTimeOfAccurateString)
+            a.ts > b.ts
         }
         return vsgs.first
     }

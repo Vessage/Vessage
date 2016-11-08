@@ -124,7 +124,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 }
             }
             vessages.sortInPlace({ (a, b) -> Bool in
-                a.sendTime.dateTimeOfAccurateString.isBefore(b.sendTime.dateTimeOfAccurateString)
+                a.ts < b.ts
             })
             self.vessages = vessages
             self.currentVessageIndex = 0
@@ -143,7 +143,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
                 v.gSender = chatters[random() % chatters.count].chatterId
             }
         }
-        v.sendTime = NSDate().toAccurateDateTimeString()
+        v.ts = DateHelper.UnixTimeSpanTotalMilliseconds
         v.isRead = true
         let randomContents = self.conversation.isGroup ? randomTextVessageContents[1] : randomTextVessageContents[0]
         let textMessage = randomContents[random() % randomContents.count]

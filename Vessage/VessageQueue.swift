@@ -50,7 +50,7 @@ class VessageQueue: BahamutTaskQueue {
         vsg.vessageId = Vessage.sendingVessageId
         vsg.extraInfo = extraInfoString
         vsg.isRead = true
-        vsg.sendTime = NSDate().toAccurateDateTimeString()
+        vsg.ts = NSDate().totalSecondsSince1970.longLongValue * 1000
         
         queueTask.steps = taskSteps
         queueTask.receiverId = receiverId

@@ -56,7 +56,9 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     }
     
     @objc func userLoginInit(userId: String) {
-        initServiceData(userId)
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.initServiceData(userId)
+        }
     }
     
     @objc func userLogout(userId: String) {

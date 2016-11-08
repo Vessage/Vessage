@@ -87,6 +87,7 @@ class NFCPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
             if result.isSuccess{
                 self.likedPost.updateValue(true, forKey: postId)
+                MobClick.event("NFC_LikePost")
             }
             callback(suc: result.isSuccess)
         }
@@ -110,6 +111,7 @@ class NFCPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NFCPost>) in
             callback(post: result.returnObject)
         }
+        MobClick.event("NFC_NewPost")
     }
     
     func newPostComment(postId:String,comment:String,atMember:String! = nil,atUserNick:String! = nil,callback:(posted:Bool,msg:String?)->Void) {
@@ -121,6 +123,7 @@ class NFCPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             callback(posted: result.isSuccess,msg: result.returnObject?.msg)
         }
+        MobClick.event("NFC_NewComment")
     }
     
     func getPostComment(postId:String,ts:Int64,callback:(comments:[NFCPostComment]?)->Void) {

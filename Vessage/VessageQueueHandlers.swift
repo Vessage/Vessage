@@ -64,15 +64,6 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     
     @objc func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let task = uploadDict.removeValueForKey(taskIdentifier){
-            var fileDeleted = false
-            if task.vessage.typeId != Vessage.typeFaceText {
-                if let fileId = task.vessage.fileId {
-                    fileDeleted = ServiceContainer.getFileService().removeFile(fileId, type: .NoType)
-                }
-            }
-            if fileDeleted == false {
-                debugLog("Delete Sended Vessage File Error:%@", task.filePath)
-            }
             VessageQueue.sharedInstance.nextStep(task)
         }
     }

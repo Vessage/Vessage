@@ -92,9 +92,11 @@ class SNSPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
             if result.isSuccess{
                 self.likedPost.updateValue(true, forKey: postId)
+                MobClick.event("SNS_LikePost")
             }
             callback(suc: result.isSuccess)
         }
+        
     }
     
     func newPost(imageId:String,callback:(post:SNSPost?)->Void) {
@@ -104,6 +106,7 @@ class SNSPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SNSPost>) in
             callback(post: result.returnObject)
         }
+        MobClick.event("SNS_NewPost")
     }
     
     func newPostComment(postId:String,comment:String,atUser:String! = nil,atUserNick:String! = nil,callback:(posted:Bool,msg:String?)->Void) {
@@ -115,6 +118,7 @@ class SNSPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             callback(posted: result.isSuccess,msg: result.returnObject?.msg)
         }
+        MobClick.event("SNS_NewComment")
     }
     
     func getPostComment(postId:String,ts:Int64,callback:(comments:[SNSPostComment]?)->Void) {

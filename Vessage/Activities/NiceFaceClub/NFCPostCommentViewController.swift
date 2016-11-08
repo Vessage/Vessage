@@ -110,7 +110,17 @@ class NFCPostCommentViewController: UIViewController {
         commentInputView.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
-        refreshPostComments()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if self.comments.count == 0 {
+            refreshPostComments(){
+                if self.comments.count == 0{
+                    self.showNewCommentInputView(nil, atUserNick: nil)
+                }
+            }
+        }
     }
     
     func onTapView(ges:UITapGestureRecognizer) {
@@ -143,7 +153,7 @@ class NFCPostCommentViewController: UIViewController {
         }
     }
 
-    func refreshPostComments() {
+    func refreshPostComments(callback:(()->Void)? = nil) {
         let ts:Int64 = self.comments.last?.last?.ts ?? 0
         let hud:MBProgressHUD? = ts == 0 ? self.showActivityHud() : nil
         
@@ -158,12 +168,10 @@ class NFCPostCommentViewController: UIViewController {
                 if cmts.count > 0{
                     self.comments.append(cmts)
                 }else{
-                    if self.comments.count == 0{
-                        self.showNewCommentInputView(nil, atUserNick: nil)
-                    }
                     self.tableView?.mj_footer?.endRefreshingWithNoMoreData()
                 }
             }
+            callback?()
         }
     }
     

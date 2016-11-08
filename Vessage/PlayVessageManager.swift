@@ -176,6 +176,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
             topChattersBoard.clearAllChatters()
             bottomChattersBoard.addChatters(cachedTopChatters)
             chatterMoved = true
+            hideBubbleVessage()
             dispatch_after(500, queue: dispatch_get_main_queue()) {
                 self.rootController.bottomChattersBoard.layoutIfNeeded()
                 if let vsg = self.currentIndexVessage{
@@ -321,19 +322,18 @@ class PlayVessageManager: ConversationViewControllerProxy {
             
             self.removedVessages.forEach { (key,value) in
                 vService.removeVessage(value)
+                var removed = false
                 if value.typeId == Vessage.typeFaceText{
                     return
-                }
-                var removed = false
-                if value.typeId == Vessage.typeChatVideo{
-                    removed = fService.removeFile(value.fileId, type: .Video)
-                }else if value.typeId == Vessage.typeImage{
-                    removed = fService.removeFile(value.fileId, type: .Image)
-                }
-                if removed{
-                    debugLog("Vessage File Removed:%@", value.fileId)
+                }else if let fileId = value.fileId{
+                    if value.typeId == Vessage.typeChatVideo{
+                        removed = fService.removeFile(fileId, type: .Video)
+                    }else if value.typeId == Vessage.typeImage{
+                        removed = fService.removeFile(fileId, type: .Image)
+                    }
+                    removed ? debugLog("Vessage File Removed:%@", fileId) : debugLog("Remove Vessage File Fail:%@", fileId)
                 }else{
-                    debugLog("Remove Vessage File Fail:%@", value.fileId)
+                    debugLog("Vessage No File Id:%@", value.vessageId)
                 }
             }
         }
@@ -394,7 +394,8 @@ extension PlayVessageManager:ChattersBoardDelegate{
                 self.chatImageBoardSourceView.layer.borderWidth = 2
                 self.chatImageBoardSourceView.layer.cornerRadius = rect.height / 2
                 self.rootController.vessageViewContainer.addSubview(self.chatImageBoardSourceView)
-                self.presentChatImageBoard(self.chatImageBoardSourceView.bounds, sourceView: chatImageBoardSourceView)
+                let arrowD = sender == self.rootController.bottomChattersBoard ? UIPopoverArrowDirection.Down : .Up
+                self.presentChatImageBoard(self.chatImageBoardSourceView.bounds, sourceView: chatImageBoardSourceView,arrowDirections: arrowD)
             }else{
                 self.rootController.showNoChatImagesAlert()
             }
@@ -547,7 +548,7 @@ extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentat
         }
     }
     
-    private func presentChatImageBoard(sourceRect:CGRect,sourceView:UIView){
+    private func presentChatImageBoard(sourceRect:CGRect,sourceView:UIView,arrowDirections:UIPopoverArrowDirection = .Any){
         if let ppvc = self.chatImageBoardController.popoverPresentationController{
             
             if self.chatImageBoardController.chatImages.count > 0{
@@ -556,7 +557,7 @@ extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentat
                 self.chatImageBoardController.preferredContentSize = preferredSize
                 ppvc.sourceView = sourceView
                 ppvc.sourceRect = sourceRect
-                ppvc.permittedArrowDirections = .Any
+                ppvc.permittedArrowDirections = arrowDirections
                 ppvc.delegate = self
                 ppvc.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
                 self.rootController.presentViewController(self.chatImageBoardController, animated: true, completion: nil)
@@ -574,10 +575,12 @@ extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentat
     
     //MARK: ChatImageBoardController Delegate
     func chatImageBoardController(appearController sender: ChatImageBoardController) {
+        self.vessageBubbleView?.hidden = true
     }
     
     func chatImageBoardController(dissmissController sender: ChatImageBoardController) {
         self.chatImageBoardSourceView?.removeFromSuperview()
+        self.vessageBubbleView?.hidden = false
     }
     
     func chatImageBoardController(sender: ChatImageBoardController, selectedIndexPath: NSIndexPath, selectedItem: ChatImage, deselectItem: ChatImage?) {

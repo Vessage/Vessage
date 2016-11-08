@@ -28,7 +28,7 @@ DEFAULT_SNS_ANC = "%@，欢迎回来晒&秀！";
 NO_PROFILE_LOADED = "加载会员出错，请稍后再试>_<";
 INPUT_COMMENT_CONTENT = "请写下你的评论~";
 MY_SNS_POST_WALL = "我的照片";
-MY_SNS_POST_WALL_ANC = "SNS简单小规则:\n只有最近两周和你聊天的好友才能看到你分享的照片哦~";
+MY_SNS_POST_WALL_ANC = "小规则:只有最近两周和你聊天的好友才能看到你分享的照片哦~";
 UNKNOW_DATE_TIME = "失落的时间";
 
 SNS_POST_COMMENT_NAME = "在此留下你的评论吧";

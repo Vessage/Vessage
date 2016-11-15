@@ -174,8 +174,9 @@ extension SNSMyCommentViewController:SNSCommentInputViewDelegate{
             textField.text = nil
             sender.hideInputView()
             let model = sender.model as! SNSPostComment
+            let myNick = ServiceContainer.getUserService().myProfile.nickName
             let hud = self.showActivityHud()
-            SNSPostManager.instance.newPostComment(model.postId, comment: cmt!,atUser: model.pster,atUserNick: model.psterNk, callback: { (posted,msg) in
+            SNSPostManager.instance.newPostComment(model.postId, comment: cmt!,senderNick: myNick,atUser: model.pster,atUserNick: model.psterNk, callback: { (posted,msg) in
                 hud.hideAnimated(true)
                 if posted{
                     let ncomment = SNSPostComment()

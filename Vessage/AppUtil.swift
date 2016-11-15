@@ -172,10 +172,18 @@ func isInSimulator() -> Bool{
     return TARGET_IPHONE_SIMULATOR == Int32("1")
 }
 
-let hudSpinImageArray = [UIImage(named:"spin_0")!,UIImage(named:"spin_1")!,UIImage(named:"spin_2")!]
+let hudSpinImageArray:[UIImage] = {
+    var spins = [UIImage]()
+    for i in 1...20{
+        //spins.append(UIImage(named:"spin_\(i)")!)
+    }
+    return spins
+}()
 
 extension UIViewController{
+    
     func showAnimationHud(title:String! = "",message:String! = "",async:Bool = true,completionHandler: HudHiddenCompletedHandler! = nil) -> MBProgressHUD {
+        /*
         let imv = UIImageView(frame: CGRectMake(0, 0, 64, 46))
         imv.animationImages = hudSpinImageArray
         imv.animationRepeatCount = 0
@@ -187,6 +195,8 @@ extension UIViewController{
         hud.bezelView.style = .SolidColor
         hud.bezelView.color = UIColor.clearColor()
         return hud
+        */
+        return self.showActivityHudWithMessage(title, message: message, async: async, completionHandler: completionHandler)
     }
 }
 

@@ -214,21 +214,6 @@ class SNSLikePostRequest: BahamutRFRequestBase {
     
 }
 
-class GetSNSMemberUserIdRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.api = "/SNS/ChatMember"
-        self.method = .GET
-    }
-    
-    var memberId:String!{
-        didSet{
-            paramenters.updateValue(memberId, forKey: "memberId")
-        }
-    }
-    
-}
-
 class SNSNewCommentRequest: BahamutRFRequestBase {
     override init() {
         super.init()
@@ -309,7 +294,7 @@ class GetSNSMyCommentsRequest: GetSNSValuesRequestBase {
     }
 }
 
-class DeleteSNSPostRequest: GetSNSValuesRequestBase {
+class DeleteSNSPostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/Posts"
@@ -323,7 +308,7 @@ class DeleteSNSPostRequest: GetSNSValuesRequestBase {
     }
 }
 
-class ReportObjectionableSNSPostRequest: GetSNSValuesRequestBase {
+class ReportObjectionableSNSPostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/ObjectionablePosts"

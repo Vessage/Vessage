@@ -117,7 +117,7 @@ class NFCPostCommentViewController: UIViewController {
         if self.comments.count == 0 {
             refreshPostComments(){
                 if self.comments.count == 0{
-                    self.showNewCommentInputView(nil, atUserNick: nil)
+                    self.showNewCommentInputView(nil, atUserNick: nil,validateFailTips: false)
                 }
             }
         }
@@ -137,8 +137,12 @@ class NFCPostCommentViewController: UIViewController {
         showNewCommentInputView(nil,atUserNick: nil)
     }
     
-    func showNewCommentInputView(model:AnyObject?,atUserNick:String?) {
-        commentInputView.showInputView(responseTextField, model: model, atUserNick: atUserNick)
+    func showNewCommentInputView(model:AnyObject?,atUserNick:String?,validateFailTips:Bool = true) {
+        if NiceFaceClubManager.instance.isValidatedMember {
+            commentInputView.showInputView(responseTextField, model: model, atUserNick: atUserNick)
+        }else if validateFailTips{
+            self.showAlert("NFC".niceFaceClubString, msg: "NFC_ANONYMOUS_TIPS".niceFaceClubString,actions: [ALERT_ACTION_I_SEE])
+        }
     }
     
     func mjFooterRefresh(a:AnyObject?) {

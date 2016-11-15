@@ -24,6 +24,9 @@ class AppService: NSNotificationCenter,ServiceProtocol
     static let onAppResignActive = "onAppResignActive"
     static let onAppBecomeActive = "onAppBecomeActive"
     
+    static let onAppEnterBackground = "onAppEnterBackground"
+    static let onAppWillEnterForeground = "onAppWillEnterForeground"
+    
     @objc static var ServiceName:String{return "App Service"}
     private var intervalTaskTimer:NSTimer?
     
@@ -37,6 +40,11 @@ class AppService: NSNotificationCenter,ServiceProtocol
     @objc func userLogout(userId: String) {
         self.setServiceNotReady()
     }
+    
+    var appDelegate:VessageAppDelegate?{
+        return UIApplication.sharedApplication().delegate as? VessageAppDelegate
+    }
+    
     
     func trySendFirstLaunchToServer() {
         let buildVersion = UserSetting.getUserIntValue(NotifiedFirstLuanchBuildKey)
@@ -55,6 +63,14 @@ class AppService: NSNotificationCenter,ServiceProtocol
     
     func getOnlineLatestVersion() {
         
+    }
+    
+    func appEnterBackground(){
+        self.postNotificationName(AppService.onAppEnterBackground, object: self)
+    }
+    
+    func appWillEnterForeground() {
+        self.postNotificationName(AppService.onAppWillEnterForeground, object: self)
     }
     
     func appResignActive() {

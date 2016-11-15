@@ -94,6 +94,7 @@
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
+		E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */; };
 		E756CBC11DB05BB00017E4A3 /* ImageVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E756CBC01DB05BB00017E4A3 /* ImageVessageExtension.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
@@ -352,6 +353,7 @@
 		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
 		E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YUCIHighPassSkinSmoothing.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/YUCIHighPassSkinSmoothing/YUCIHighPassSkinSmoothing.framework"; sourceTree = "<group>"; };
 		E73CFF891D655E39002A63C6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HudSpin.xcassets; sourceTree = "<group>"; };
 		E756CBC01DB05BB00017E4A3 /* ImageVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVessageExtension.swift; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -774,6 +776,7 @@
 		E708AC0C1C86DEC40071104E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */,
 				E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */,
 				E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
@@ -1309,6 +1312,7 @@
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
+				E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */,
 				E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */,

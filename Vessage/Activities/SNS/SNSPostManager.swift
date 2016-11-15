@@ -109,10 +109,11 @@ class SNSPostManager {
         MobClick.event("SNS_NewPost")
     }
     
-    func newPostComment(postId:String,comment:String,atUser:String! = nil,atUserNick:String! = nil,callback:(posted:Bool,msg:String?)->Void) {
+    func newPostComment(postId:String,comment:String,senderNick:String!,atUser:String! = nil,atUserNick:String! = nil,callback:(posted:Bool,msg:String?)->Void) {
         let req = SNSNewCommentRequest()
         req.postId = postId
         req.comment = comment
+        req.senderNick = senderNick
         req.atUser = atUser
         req.atUserNick = atUserNick
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in

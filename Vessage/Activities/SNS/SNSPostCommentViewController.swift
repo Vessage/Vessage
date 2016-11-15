@@ -187,9 +187,10 @@ extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
         if !String.isNullOrWhiteSpace(cmt) {
             textField.text = nil
             sender.hideInputView()
+            let myNick = ServiceContainer.getUserService().myProfile.nickName
             let cmtObj = sender.model as? SNSPostComment
             let hud = self.showActivityHud()
-            SNSPostManager.instance.newPostComment(self.post.pid, comment: cmt!,atUser: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
+            SNSPostManager.instance.newPostComment(self.post.pid, comment: cmt!,senderNick: myNick,atUser: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
                 hud.hideAnimated(true)
                 if posted{
                     let ncomment = SNSPostComment()

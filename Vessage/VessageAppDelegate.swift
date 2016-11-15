@@ -139,7 +139,8 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
-        if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
+        switch UIApplication.sharedApplication().applicationState {
+        case .Active:
             if let customCmd = userInfo["custom"] as? String{
                 if ServiceContainer.isAllServiceReady{
                     switch customCmd {
@@ -150,10 +151,9 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
                 }else{
                     debugLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
                 }
-                return
             }
+        default:UMessage.didReceiveRemoteNotification(userInfo)
         }
-        UMessage.didReceiveRemoteNotification(userInfo)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -167,22 +167,23 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
+        ServiceContainer.getAppService().appEnterBackground()
         PersistentManager.sharedInstance.saveAll()
-        
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
+        ServiceContainer.getAppService().appWillEnterForeground()
+    }
+
+    func applicationDidBecomeActive(application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        ServiceContainer.getAppService().appBecomeActive()
         if ServiceContainer.isAllServiceReady{
             ServiceContainer.getVessageService().newVessageFromServer()
             ServiceContainer.getActivityService().getActivitiesBoardData()
             ServiceContainer.getUserService().getActiveUsers(true)
             ServiceContainer.getUserService().registUserDeviceToken(VessageSetting.deviceToken,checkTime: true)
         }
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        ServiceContainer.getAppService().appBecomeActive()
     }
 
     func applicationWillTerminate(application: UIApplication) {

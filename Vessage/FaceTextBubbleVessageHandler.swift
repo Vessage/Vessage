@@ -72,11 +72,14 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVes
     func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
         if let label = contentView as? UILabel{
             label.text = vessage.getBodyDict()["textMessage"] as? String
-            label.textAlignment = .Left
+            
             let mSize = CGSize(width: maxLimitedSize.width * CGFloat(0.8), height: maxLimitedSize.height)
             var size = label.sizeThatFits(mSize)
             if size.width < 48 {
                 size.width = 48
+                label.textAlignment = .Center
+            }else{
+                label.textAlignment = .Left
             }
             return size
         }

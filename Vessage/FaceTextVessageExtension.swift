@@ -12,18 +12,24 @@ import Foundation
 extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresentationControllerDelegate {
     func initChatImageButton() {
         self.imageChatInputView = ImageChatInputView.instanceFromXib()
-        self.imageChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, 80)
+        self.imageChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onTapInputView(_:)))
         swipeLeft.direction = .Left
         swipeRight.direction = .Right
         self.imageChatInputView.addGestureRecognizer(swipeRight)
         self.imageChatInputView.addGestureRecognizer(swipeLeft)
+        self.imageChatInputView.addGestureRecognizer(tap)
         self.imageChatInputView.delegate = self
         imageChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
         imageChatInputView.inputTextField.returnKeyType = .Send
         self.view.addSubview(imageChatInputResponderTextFiled)
         self.imageChatInputResponderTextFiled.inputAccessoryView = imageChatInputView
+    }
+    
+    func onTapInputView(ges:UITapGestureRecognizer) {
+        self.hideKeyBoard()
     }
     
     func onSwipeInputView(ges:UISwipeGestureRecognizer) {

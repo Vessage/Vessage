@@ -146,19 +146,19 @@ class SNSMyCommentViewController: UIViewController {
 
 //MARK:SNSMyCommentCellDelegate
 extension SNSMyCommentViewController:SNSMyCommentCellDelegate{
-    func SNSMyCommentCellDidClickImage(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
+    func snsMyCommentCellDidClickImage(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
         if let imgV = cell.postImageView {
             imgV.slideShowFullScreen(self)
         }
     }
     
-    func SNSMyCommentCellDidClickPoster(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
+    func snsMyCommentCellDidClickPoster(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
         if let poster = comment?.pster{
             UserProfileViewController.showUserProfileViewController(self, userId: poster)
         }
     }
     
-    func SNSMyCommentCellDidClickContent(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
+    func snsMyCommentCellDidClickContent(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
         if let cmt = comment {
             showNewCommentInputView(cmt, atUserNick: comment?.psterNk)
         }

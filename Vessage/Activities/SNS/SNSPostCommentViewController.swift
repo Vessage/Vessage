@@ -241,17 +241,17 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
 //MARK:SNSPostCommentCellDelegate
 extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
     
-    func SNSPostCommentCellDidClick(sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
+    func snsPostCommentCellDidClick(sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         hideCommentInputView()
     }
     
-    func SNSPostCommentCellDidClickComment(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
+    func snsPostCommentCellDidClickComment(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         if let cmd = comment{
             showNewCommentInputView(cmd, atUserNick: cmd.psterNk)
         }
     }
     
-    func SNSPostCommentCellDidClickPostInfo(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
+    func snsPostCommentCellDidClickPostInfo(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         sender.animationMaxToMin(0.2, maxScale: 1.2) { 
             if let pster = comment?.pster{
                 UserProfileViewController.showUserProfileViewController(self, userId: pster)

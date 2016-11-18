@@ -200,6 +200,14 @@ extension ConversationViewController{
         swipeRight.direction = .Right
         self.view.addGestureRecognizer(swipeRight)
         
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
+        swipeUp.direction = .Up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
+        swipeDown.direction = .Down
+        self.view.addGestureRecognizer(swipeDown)
+        
         let panGes = UIPanGestureRecognizer(target: self, action: #selector(ConversationViewController.onPanGesture(_:)))
         panGes.requireGestureRecognizerToFail(swipeLeft)
         panGes.requireGestureRecognizerToFail(swipeRight)

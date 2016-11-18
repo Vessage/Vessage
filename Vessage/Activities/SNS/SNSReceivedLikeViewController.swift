@@ -10,9 +10,9 @@ import Foundation
 import MJRefresh
 
 @objc protocol SNSLikeCellDelegate {
-    optional func SNSLikeCellDidClickLikeInfo(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
-    optional func SNSLikeCellDidClickImage(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
-    optional func SNSLikeCellDidClickPoster(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
+    optional func snsLikeCellDidClickLikeInfo(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
+    optional func snsLikeCellDidClickImage(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
+    optional func snsLikeCellDidClickPoster(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
 }
 
 class SNSReceivedLikeCell: UITableViewCell {
@@ -53,11 +53,11 @@ class SNSReceivedLikeCell: UITableViewCell {
     
     func onTapViews(ges:UITapGestureRecognizer) {
         if ges.view == postImageView {
-            delegate?.SNSLikeCellDidClickImage?(ges.view!, cell: self, like: like)
+            delegate?.snsLikeCellDidClickImage?(ges.view!, cell: self, like: like)
         }else if ges.view == likeUserNickLabel || ges.view == userInfoLabel{
-            delegate?.SNSLikeCellDidClickPoster?(ges.view!, cell: self, like: like)
+            delegate?.snsLikeCellDidClickPoster?(ges.view!, cell: self, like: like)
         }else if ges.view == likeInfoLabel{
-            delegate?.SNSLikeCellDidClickLikeInfo?(ges.view!, cell: self, like: like)
+            delegate?.snsLikeCellDidClickLikeInfo?(ges.view!, cell: self, like: like)
         }
     }
 }
@@ -126,20 +126,20 @@ class SNSReceivedLikeViewController: UIViewController {
 
 //MARL:SNSLikeCellDelegate
 extension SNSReceivedLikeViewController:SNSLikeCellDelegate{
-    func SNSLikeCellDidClickImage(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
+    func snsLikeCellDidClickImage(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         if let imgv = sender as? UIImageView{
             imgv.slideShowFullScreen(self)
         }
     }
     
-    func SNSLikeCellDidClickPoster(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
+    func snsLikeCellDidClickPoster(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         if let userId = like?.usrId{
             UserProfileViewController.showUserProfileViewController(self, userId: userId)
         }
     }
     
-    func SNSLikeCellDidClickLikeInfo(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
-        SNSLikeCellDidClickPoster(sender, cell: cell, like: like)
+    func snsLikeCellDidClickLikeInfo(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
+        snsLikeCellDidClickPoster(sender, cell: cell, like: like)
     }
 }
 

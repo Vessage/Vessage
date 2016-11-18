@@ -47,10 +47,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private(set) var activeUsers = [VessageUser]()
     private(set) var nearUsers = [VessageUser]()
     
-    var isUserMobileValidated:Bool{
-        return !String.isNullOrWhiteSpace(myProfile?.mobile)
-    }
-    
     var isUserChatBackgroundIsSeted:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mainChatImage)
     }
@@ -577,6 +573,10 @@ class ValidateMobileResult:MsgResult{
 let defaultTempMobile = "13600000000"
 
 extension UserService{
+    
+    var isUserMobileValidated:Bool{
+        return !String.isNullOrWhiteSpace(myProfile?.mobile)
+    }
     
     var isTempMobileUser:Bool{
         return isUserMobileValidated && self.myProfile.mobile == defaultTempMobile

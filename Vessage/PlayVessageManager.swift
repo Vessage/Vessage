@@ -359,14 +359,14 @@ extension PlayVessageManager:HandleSwipeGesture,HandlePanGesture{
     }
     
     func onSwipe(direction: UISwipeGestureRecognizerDirection) -> Bool {
-        if direction == .Left {
+        switch direction {
+        case UISwipeGestureRecognizerDirection.Left,UISwipeGestureRecognizerDirection.Down:
             showNextVessage()
             return true
-        }else if direction == .Right{
+        case UISwipeGestureRecognizerDirection.Right,UISwipeGestureRecognizerDirection.Up:
             showPreviousVessage()
             return true
-        }else{
-            return false
+        default:return false
         }
     }
 }

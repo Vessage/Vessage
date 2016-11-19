@@ -370,6 +370,8 @@ extension ConversationViewController{
         if isRecording {
             self.recordVessageManager.cancelRecord()
             self.setReadingVessage()
+        }else{
+            hideKeyBoard()
         }
     }
     

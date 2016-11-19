@@ -50,6 +50,11 @@ class VessageQueue: BahamutTaskQueue {
         vsg.vessageId = Vessage.sendingVessageId
         vsg.extraInfo = extraInfoString
         vsg.isRead = true
+        vsg.sender = vessage.isGroup ? receiverId : UserSetting.userId
+        vsg.isReady = true
+        if vessage.isGroup{
+            vsg.gSender = UserSetting.userId
+        }
         vsg.ts = NSDate().totalSecondsSince1970.longLongValue * 1000
         
         queueTask.steps = taskSteps

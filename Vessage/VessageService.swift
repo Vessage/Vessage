@@ -103,18 +103,15 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func removeVessage(vessage:Vessage){
-        if !vessage.isReceivedVessage() {
-            return
+    func removeVessages(vessages:[Vessage]){
+        for vessage in vessages {
+            if !vessage.isReceivedVessage() {
+                continue
+            }
+            readVessage(vessage,refresh: false)
+            PersistentManager.sharedInstance.removeModel(vessage)
         }
-        readVessage(vessage,refresh: false)
-        PersistentManager.sharedInstance.removeModel(vessage)
         PersistentManager.sharedInstance.refreshCache(Vessage)
-        let req = SetVessageRead()
-        req.vessageId = vessage.vessageId
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
-            self.postNotificationNameWithMainAsync(VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
-        }
     }
     
     func newVessageFromServer(completion:(()->Void)? = nil){

@@ -57,6 +57,10 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     var currentVessageIndex = 0{
         didSet{
+            if currentVessageIndex > maxIndex {
+                maxIndex = currentVessageIndex
+            }
+            
             if let vsg = currentIndexVessage {
                 self.showBubbleVessage(nil, vessage: vsg, nextVessage: nil)
             }
@@ -64,11 +68,12 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
+    var maxIndex = 0
+    
+    
     var currentIndexVessage:Vessage?{
         return vessages.count > currentVessageIndex ? vessages[currentVessageIndex] : nil
     }
-    
-    private var removedVessages = [String:Vessage]()
     
     //MARK: vessages actions
     func onNewVessagePushed(a:NSNotification) {
@@ -76,9 +81,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
             if task.receiverId == self.conversation.chatterId {
                 if let vsg = task.vessage {
                     let newVsg = vsg.copyToObject(Vessage.self)
-                    if newVsg.isGroup {
-                        newVsg.gSender = newVsg.sender
-                    }
                     if vsg.isMySendingVessage() {
                         newVsg.fileId = task.filePath
                     }
@@ -98,11 +100,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     override func onVessagesReceived(vessages: [Vessage]) {
         var showingMySendedVsg = false
         if let cvsg = currentIndexVessage {
-            if cvsg.isGroup {
-                showingMySendedVsg = cvsg.gSender == UserSetting.userId
-            }else{
-                showingMySendedVsg = cvsg.isMySendingVessage()
-            }
+            showingMySendedVsg = cvsg.isMySendingVessage()
         }
         self.vessages.appendContentsOf(vessages)
         if showingMySendedVsg {
@@ -305,10 +303,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     }
     
     private func loadNextVessage(){
-        if let cv = currentIndexVessage {
-            if cv.isReceivedVessage() {
-                removedVessages.updateValue(cv, forKey: cv.vessageId)
-            }
+        if currentVessageIndex + 1 < vessages.count {
             currentVessageIndex += 1
         }else{
             self.flashTips("NO_NOT_READ_VESSAGE".localizedString())
@@ -319,12 +314,16 @@ class PlayVessageManager: ConversationViewControllerProxy {
         dispatch_async(dispatch_get_main_queue()) {
             let vService = ServiceContainer.getVessageService()
             let fService = ServiceContainer.getFileService()
-            
-            self.removedVessages.forEach { (key,value) in
-                vService.removeVessage(value)
+            var removedVessages = [Vessage]()
+            self.vessages.forIndexEach({ (i, element) in
+                if i <= self.maxIndex{
+                    removedVessages.append(element)
+                }
+            })
+            for value in removedVessages{
                 var removed = false
                 if value.typeId == Vessage.typeFaceText{
-                    return
+                    continue
                 }else if let fileId = value.fileId{
                     if value.typeId == Vessage.typeChatVideo{
                         removed = fService.removeFile(fileId, type: .Video)
@@ -336,6 +335,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
                     debugLog("Vessage No File Id:%@", value.vessageId)
                 }
             }
+            vService.removeVessages(removedVessages)
         }
     }
     

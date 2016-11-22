@@ -26,12 +26,10 @@ class PlayVessageManager: ConversationViewControllerProxy {
     //MARK: bubble view
     private var vessageBubbleView:BezierBubbleView!
     private var vessageBubbleHandler:BubbleVessageHandler!
+    private var cachedContentView:UIView?
     
     //MAKR: chat image board
-    
-    //var chatImageBoardSourceView:UIView!
     private var chatImageBoardController:ChatImageBoardController!
-    private var chatImageBoardSourceView:UIView!
     
     var selectedImageId:String?{
         return chattersBoardManager?.getChatterItem(UserSetting.userId)?.itemImage
@@ -74,6 +72,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     var currentIndexVessage:Vessage?{
         return vessages.count > currentVessageIndex ? vessages[currentVessageIndex] : nil
     }
+    
     
     //MARK: vessages actions
     func onNewVessagePushed(a:NSNotification) {
@@ -129,7 +128,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
     }
     
-    func getVGRandomVessage() -> Vessage {
+    private func getVGRandomVessage() -> Vessage {
         let v = Vessage()
         v.vessageId = Vessage.vgRandomVessageId
         v.typeId = Vessage.typeFaceText
@@ -174,13 +173,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
             topChattersBoard.clearAllChatters()
             bottomChattersBoard.addChatters(cachedTopChatters)
             chatterMoved = true
-            hideBubbleVessage()
-            dispatch_after(500, queue: dispatch_get_main_queue()) {
-                self.rootController.bottomChattersBoard.layoutIfNeeded()
-                if let vsg = self.currentIndexVessage{
-                    self.showBubbleVessage(nil, vessage: vsg, nextVessage: nil)
-                }
-            }
+            rerenderVessageViewDelay()
         }
         
         let rect = self.rootController.view.convertRect(self.rootController.imageChatInputView.sendButton.frame, fromView: self.rootController.imageChatInputView)
@@ -191,6 +184,25 @@ class PlayVessageManager: ConversationViewControllerProxy {
         self.rootController.bottomChattersBoardBottom.constant = self.rootController.view.frame.height - rect.origin.y + 10
     }
     
+    private func rerenderVessageViewDelay(){
+        hideBubbleVessage()
+        let index = currentVessageIndex
+        dispatch_after(500, queue: dispatch_get_main_queue()) {
+            if index == self.currentVessageIndex{
+                self.rootController.bottomChattersBoard.layoutIfNeeded()
+                if let vsg = self.currentIndexVessage{
+                    if let handler = self.vessageBubbleHandler{
+                        if let contentView = self.cachedContentView{
+                            self.renderVessageBubbleView(vsg, handler: handler, contentView: contentView)
+                        }
+                    }
+                }
+            }else{
+                self.vessageBubbleView?.hidden = false
+            }
+        }
+    }
+    
     override func onKeyBoardHidden() {
         self.rootController.navigationController?.setNavigationBarHidden(false, animated: true)
         self.rootController.bottomChattersBoardHeight.constant = cachedBottomChatterBoardHeight
@@ -199,13 +211,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         self.rootController.bottomChattersBoard.removeChatters(cachedTopChatters)
         self.rootController.topChattersBoard.addChatters(cachedTopChatters)
         cachedTopChatters.removeAll()
-        hideBubbleVessage()
-        dispatch_after(500, queue: dispatch_get_main_queue()) { 
-            self.rootController.bottomChattersBoard.layoutIfNeeded()
-            if let vsg = self.currentIndexVessage{
-                self.showBubbleVessage(nil, vessage: vsg, nextVessage: nil)
-            }
-        }
+        rerenderVessageViewDelay()
         chatterMoved = false
     }
     
@@ -262,6 +268,12 @@ class PlayVessageManager: ConversationViewControllerProxy {
     func onClickMgrChatImageButton(sender: UITapGestureRecognizer) {
         self.rootController?.mgrChatImagesButton.animationMaxToMin(0.1, maxScale: 1.2, completion: { 
             self.rootController?.showChatImagesMrgController(0)
+        })
+    }
+    
+    func onClickVessageTimeMachineButton(sender: UITapGestureRecognizer) {
+        self.rootController?.timemachineButton.animationMaxToMin(0.1, maxScale: 1.2, completion: {
+            self.showVessageTimeMachineList()
         })
     }
     
@@ -388,14 +400,8 @@ extension PlayVessageManager:ChattersBoardDelegate{
         if myId == uid {
             if self.rootController.userService.hasChatImages{
                 self.initChatImageBoard()
-                let rect = self.rootController.vessageViewContainer.convertRect(imageView.frame, fromView: sender)
-                self.chatImageBoardSourceView.frame = rect
-                self.chatImageBoardSourceView.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.6).CGColor
-                self.chatImageBoardSourceView.layer.borderWidth = 2
-                self.chatImageBoardSourceView.layer.cornerRadius = rect.height / 2
-                self.rootController.vessageViewContainer.addSubview(self.chatImageBoardSourceView)
                 let arrowD = sender == self.rootController.bottomChattersBoard ? UIPopoverArrowDirection.Down : .Up
-                self.presentChatImageBoard(self.chatImageBoardSourceView.bounds, sourceView: chatImageBoardSourceView,arrowDirections: arrowD)
+                self.presentChatImageBoard(imageView.bounds, sourceView: imageView,arrowDirections: arrowD)
             }else{
                 self.rootController.showNoChatImagesAlert()
             }
@@ -415,7 +421,7 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
         vessageBubbleView?.hidden = true
     }
     
-    func showBubbleVessage(oldVessage:Vessage?,vessage:Vessage,nextVessage:Vessage?) -> Bool {
+    private func showBubbleVessage(oldVessage:Vessage?,vessage:Vessage,nextVessage:Vessage?) -> Bool {
         if let oldHandler = vessageBubbleHandler as? UnloadPresentContentHandler{
             if let vsg = oldVessage{
                 oldHandler.unloadPresentContent(vsg)
@@ -425,28 +431,39 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
             oldHandler.unsetGetPlayVessageManagerDelegate()
         }
         
-        let containerMinX = CGFloat(10)
-        let containerMaxX = self.rootController.vessageViewContainer.bounds.width - 10
+        if vessageBubbleView == nil {
+            vessageBubbleView = BezierBubbleView()
+            self.rootController.vessageViewContainer.addSubview(vessageBubbleView)
+        }
         
-        let sender = vessage.getVessageRealSenderId()!
-        if let (chatterBoard,chatterImageView) = chattersBoardManager.getChatterImageViewOfChatterId(sender){
-            
-            if vessageBubbleView == nil {
-                vessageBubbleView = BezierBubbleView()
-                self.rootController.vessageViewContainer.addSubview(vessageBubbleView)
-            }
+        let handler = BubbleVessageHandlerManager.getBubbleVessageHandler(vessage)
+        vessageBubbleHandler = handler
+        
+        let contentView = handler.getContentView(vessage)
+        cachedContentView = contentView
+        
+        if let (chatterBoard,_) = renderVessageBubbleView(vessage, handler: handler,contentView: contentView){
             if let faceId = vessage.getBodyDict()["faceId"] as? String{
                 chatterBoard.setImageOfChatter(vessage.getVessageRealSenderId()!, imgId: faceId)
             }
+        }
+        
+        vessageBubbleView.setContentView(contentView)
+        handler.presentContent(oldVessage, newVessage: vessage, contentView: contentView)
+        return true
+    }
+    
+    private func renderVessageBubbleView(vessage:Vessage,handler:BubbleVessageHandler,contentView:UIView) -> (ChattersBoard,UIView)? {
+        if let (chatterBoard,chatterImageView) = chattersBoardManager.getChatterImageViewOfChatterId(vessage.getVessageRealSenderId()!){
             vessageBubbleView?.hidden = false
             vessageBubbleView.bubbleViewLayer.fillColor = (vessage.isMySendingVessage() ? myVessageBubbleColor : chatterVessageBubbleColor).CGColor
+            
+            let containerMinX = CGFloat(10)
+            let containerMaxX = self.rootController.vessageViewContainer.bounds.width - 10
+            
             let rect = self.rootController.vessageViewContainer.convertRect(chatterImageView.frame, fromView: chatterBoard)
             let rectCenterX = rect.origin.x + rect.width / 2
             
-            let handler = BubbleVessageHandlerManager.getBubbleVessageHandler(vessage)
-            
-            let contentView = handler.getContentView(vessage)
-            contentView.layoutIfNeeded()
             let contentSize = handler.getContentViewSize(vessage, maxLimitedSize: bubbleContentMaxSize,contentView: contentView)
             let containerSize = vessageBubbleView.sizeOfContentSize(contentSize, direction: .Up(startXRatio: 0))
             
@@ -483,13 +500,9 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
             vessageBubbleView.layoutIfNeeded()
             contentView.frame = CGRect(origin: CGPointZero, size: contentSize)
             contentView.setNeedsDisplay()
-            vessageBubbleView.setContentView(contentView)
-            
-            handler.presentContent(oldVessage, newVessage: vessage, contentView: contentView)
-            vessageBubbleHandler = handler
-            return true
+            return (chatterBoard,chatterImageView)
         }
-        return false
+        return nil
     }
     
     var bubbleContentMaxSize:CGSize{
@@ -528,8 +541,30 @@ extension PlayVessageManager{
         let tapMgrChatImages = UITapGestureRecognizer(target: self, action: #selector(PlayVessageManager.onClickMgrChatImageButton(_:)))
         self.rootController.mgrChatImagesButton.addGestureRecognizer(tapMgrChatImages)
         
+        let tapTimemachineButton = UITapGestureRecognizer(target: self, action: #selector(PlayVessageManager.onClickVessageTimeMachineButton(_:)))
+        self.rootController.timemachineButton.addGestureRecognizer(tapTimemachineButton)
+        
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(PlayVessageManager.onNewVessagePushed(_:)), name: VessageQueue.onPushNewVessageTask, object: nil)
         
+    }
+}
+
+//MARK: Vessage TimeMachine
+extension PlayVessageManager{
+    func showVessageTimeMachineList() {
+        let timeButton = self.rootController.timemachineButton
+        let controller = TimeMachineVessageListController.instanceOfController(self.conversation.chatterId, ts: self.vessages.first!.ts)
+        controller.modalPresentationStyle = .Popover
+        let viewFrame = self.rootController.view.bounds
+        controller.preferredContentSize = CGSizeMake(viewFrame.width * 0.6, viewFrame.height * 0.6)
+        if let ppvc = controller.popoverPresentationController{
+            ppvc.sourceView = timeButton
+            ppvc.sourceRect = timeButton.bounds
+            ppvc.permittedArrowDirections = .Any
+            ppvc.delegate = self
+            ppvc.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
+            self.rootController.presentViewController(controller, animated: true, completion: nil)
+        }
     }
 }
 
@@ -537,9 +572,6 @@ extension PlayVessageManager{
 extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentationControllerDelegate{
     
     private func initChatImageBoard(){
-        if self.chatImageBoardSourceView == nil{
-            chatImageBoardSourceView = UIView()
-        }
         if self.chatImageBoardController == nil {
             self.chatImageBoardController = ChatImageBoardController.instanceFromStoryBoard()
             self.chatImageBoardController.modalPresentationStyle = .Popover
@@ -579,7 +611,6 @@ extension PlayVessageManager:ChatImageBoardControllerDelegate,UIPopoverPresentat
     }
     
     func chatImageBoardController(dissmissController sender: ChatImageBoardController) {
-        self.chatImageBoardSourceView?.removeFromSuperview()
         self.vessageBubbleView?.hidden = false
     }
     

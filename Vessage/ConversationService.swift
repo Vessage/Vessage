@@ -29,6 +29,19 @@ class Conversation:BahamutObject
 
 extension Conversation{
     
+    func getDisappearString() -> String {
+        let minLeft = getConversationTimeUpMinutesLeft()
+        if minLeft > 24 * 60 {
+            let daysLeft = Int(minLeft / 24 / 60)
+            return String(format: "X_DAYS_DISAPPEAR".localizedString(), daysLeft)
+        }else if minLeft > 60 {
+            let hoursLeft = Int(minLeft / 60)
+            return String(format: "X_HOURS_DISAPPEAR".localizedString(), hoursLeft)
+        }else{
+            return "DISAPPEAR_IN_ONE_HOUR".localizedString()
+        }
+    }
+    
     func getLastUpdatedTime() -> NSDate {
         if lstTs <= 0 {
             lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
@@ -38,7 +51,7 @@ extension Conversation{
     }
     
     func getConversationTimeUpMinutesLeft() -> Double{
-        return ConversationMaxTimeUpMinutes - getLastUpdatedTime().totalMinutesSinceNow.doubleValue
+        return ConversationMaxTimeUpMinutes + getLastUpdatedTime().totalMinutesSinceNow.doubleValue
     }
     
     func getConversationTimeUpProgressLeft() -> Float? {

@@ -14,6 +14,7 @@ import Foundation
     optional func imageChatInputViewDidEndEditing(textField: UITextView)
     optional func imageChatInputViewChanged(textField: UITextView)
     optional func imageChatInputViewDidBeginEditing(textField: UITextView)
+    optional func imageChatInputViewDidPasteboardImageChanged(newImage:UIImage)
 }
 
 class ImageChatInputView: UIView,UITextViewDelegate {
@@ -26,6 +27,8 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     @IBOutlet weak var sendButton: UIButton!
     
     weak var delegate:ImageChatInputViewDelegate?
+    
+    private var pasteboardImageDesc:String?
     
     @IBAction func onClickSendButton(sender: AnyObject) {
         if let handler = delegate?.imageChatInputViewDidClickSend{
@@ -43,6 +46,9 @@ class ImageChatInputView: UIView,UITextViewDelegate {
     //MARK:UITextFieldDelegate
     func textViewDidBeginEditing(textView: UITextView) {
         refreshSendButtonColor()
+        if let image = UIPasteboard.generalPasteboard().image{
+            image.description
+        }
         delegate?.imageChatInputViewDidBeginEditing?(textView)
     }
     

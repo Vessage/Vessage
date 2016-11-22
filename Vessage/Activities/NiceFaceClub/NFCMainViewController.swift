@@ -261,6 +261,7 @@ extension NFCMainViewController{
                 hud?.hideAnimated(true)
                 if let d = data{
                     self.boardData = d
+                    ServiceContainer.getActivityService().clearActivityAllBadge(NFCPostManager.activityId)
                     self.newMemberButton.badgeValue = d.nMemCnt > 0 ? d.nMemCnt.friendString : nil
                     if (d.posts?.count ?? 0) > 0{
                         self.posts[NFCPost.typeNormalPost].append(d.posts)

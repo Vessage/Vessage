@@ -211,7 +211,12 @@ class ConversationListCell:ConversationListCellBase{
                 }
             }
         }
-        self.subLine = conversation.getLastUpdatedTime().toFriendlyString()
+        let now = NSDate()
+        if now.minuteOfDate > 45 && now.minuteOfDate % 3 == 0 {
+            self.subLine = conversation.getDisappearString()
+        }else{
+            self.subLine = conversation.getLastUpdatedTime().toFriendlyString()
+        }
         self.timeupProgressView?.hidden = false
         if let p = conversation.getConversationTimeUpProgressLeft(){
             self.setTimeProgress(p)

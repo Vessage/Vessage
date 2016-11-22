@@ -10,6 +10,7 @@ import Foundation
 import EVReflection
 
 class NFCPostManager {
+    static let activityId = "1002"
     static let instance:NFCPostManager = {
         let mgr = NFCPostManager()
         return mgr

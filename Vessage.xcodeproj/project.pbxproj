@@ -99,6 +99,9 @@
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
 		E75A70421C8C8FB30029F0BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70401C8C8FB30029F0BD /* AddressBook.framework */; };
 		E75A70431C8C8FB30029F0BD /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */; };
+		E75E269E1DE43AD7000D2D38 /* VessageTimeMachine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75E269C1DE43AD7000D2D38 /* VessageTimeMachine.storyboard */; };
+		E75E269F1DE43AD7000D2D38 /* VessageTimeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */; };
+		E75E26A11DE43B5C000D2D38 /* TimeMachineVessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */; };
 		E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E766D7511DA89881009A4D01 /* NFCGodRF.swift */; };
 		E7687C251DB4837700A1FD5E /* NFCPostRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7687C241DB4837700A1FD5E /* NFCPostRF.swift */; };
 		E7687C271DB4A2CC00A1FD5E /* NFCMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7687C261DB4A2CC00A1FD5E /* NFCMyCommentViewController.swift */; };
@@ -358,6 +361,9 @@
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
 		E75A70401C8C8FB30029F0BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E75A70411C8C8FB30029F0BD /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		E75E269C1DE43AD7000D2D38 /* VessageTimeMachine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VessageTimeMachine.storyboard; sourceTree = "<group>"; };
+		E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageTimeMachine.swift; sourceTree = "<group>"; };
+		E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeMachineVessageListController.swift; sourceTree = "<group>"; };
 		E766D7511DA89881009A4D01 /* NFCGodRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCGodRF.swift; sourceTree = "<group>"; };
 		E7687C241DB4837700A1FD5E /* NFCPostRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostRF.swift; sourceTree = "<group>"; };
 		E7687C261DB4A2CC00A1FD5E /* NFCMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMyCommentViewController.swift; sourceTree = "<group>"; };
@@ -981,6 +987,16 @@
 			name = Conversation;
 			sourceTree = "<group>";
 		};
+		E75E269B1DE43AD7000D2D38 /* VessageTimeMachine */ = {
+			isa = PBXGroup;
+			children = (
+				E75E269C1DE43AD7000D2D38 /* VessageTimeMachine.storyboard */,
+				E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */,
+				E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */,
+			);
+			path = VessageTimeMachine;
+			sourceTree = "<group>";
+		};
 		E78002541DC2009D00DB18E2 /* BubbleVessageHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1116,6 +1132,7 @@
 		E7EF282E1D791AFD0064231F /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E75E269B1DE43AD7000D2D38 /* VessageTimeMachine */,
 				E7886A4B1DC97D3D00368C03 /* SNS */,
 				E7EF28451D791AFD0064231F /* NiceFaceClub */,
 				E7EF283A1D791AFD0064231F /* LittlePaper */,
@@ -1298,6 +1315,7 @@
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
+				E75E269E1DE43AD7000D2D38 /* VessageTimeMachine.storyboard in Resources */,
 				E7EF285E1D791AFD0064231F /* LittlePaperMessage.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
 				E7886A6A1DC97D3D00368C03 /* SNSCommentInputView.xib in Resources */,
@@ -1448,6 +1466,7 @@
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7F2F3141D47C06D00343853 /* ChatImageMgrViewController.swift in Sources */,
 				E7886A731DC97D3D00368C03 /* SNSPostCommentViewController.swift in Sources */,
+				E75E26A11DE43B5C000D2D38 /* TimeMachineVessageListController.swift in Sources */,
 				E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
 				E7687C251DB4837700A1FD5E /* NFCPostRF.swift in Sources */,
@@ -1515,6 +1534,7 @@
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */,
 				E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */,
+				E75E269F1DE43AD7000D2D38 /* VessageTimeMachine.swift in Sources */,
 				E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */,
 				E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */,
 				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
@@ -1696,7 +1716,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vessage/Vessage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2BW6TGDJAV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage/Libs/SMSSDK/SMS_SDK",
@@ -1733,7 +1753,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vessage/Vessage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2BW6TGDJAV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vessage/Libs/SMSSDK/SMS_SDK",

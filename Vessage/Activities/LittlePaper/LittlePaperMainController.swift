@@ -55,10 +55,16 @@ class LittlePaperMainController: UIViewController {
     
     private func fetchServerData(){
         LittlePaperManager.instance.getPaperMessages { (suc) in
+            if suc{
+                ServiceContainer.getActivityService().clearActivityAllBadge(LittlePaperManager.ACTIVITY_ID)
+            }
             self.refreshPaperBoxBadge()
         }
         
         LittlePaperManager.instance.refreshPaperMessage { (updated) in
+            if updated > 0{
+                ServiceContainer.getActivityService().clearActivityAllBadge(LittlePaperManager.ACTIVITY_ID)
+            }
             self.refreshPaperBoxBadge()
         }
         

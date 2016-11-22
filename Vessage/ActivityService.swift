@@ -61,6 +61,15 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:false])
     }
     
+    func clearActivityBadge(id:String) {
+        setActivityBadge(id, badgeValue: 0)
+    }
+    
+    func clearActivityAllBadge(id:String) {
+        clearActivityBadge(id)
+        clearActivityMiniBadge(id)
+    }
+    
     func setActivityMiniBadgeShow(id:String){
         UserSetting.enableSetting("ActivityMiniBadge\(id)")
         self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:true])
@@ -69,10 +78,6 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
     func setActivityBadge(id:String,badgeValue:Int) {
         UserSetting.setUserIntValue("ActivityBadge:\(id)",value: badgeValue)
         self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityBadgeValue:badgeValue])
-    }
-    
-    func clearActivityBadge(id:String) {
-        setActivityBadge(id, badgeValue: 0)
     }
     
     func getActivityBadge(id:String) -> Int {

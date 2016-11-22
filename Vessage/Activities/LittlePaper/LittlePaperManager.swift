@@ -25,6 +25,7 @@ class LittlePaperManager {
     }
     
     static let ACTIVITY_ID = "1000"
+    
     static let TYPE_MY_SENDED = 3
     static let TYPE_MY_OPENED = 2
     static let TYPE_MY_POSTED = 1

@@ -59,6 +59,12 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     }
     
     func onServicesWillLogout(a:NSNotification) {
+        
+        VessageQueue.sharedInstance.releaseQueue()
+        BahamutTaskQueue.defaultInstance.releaseQueue()
+        VessageTimeMachine.release()
+        BubbleVessageHandlerManager.release()
+        
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
         ServiceContainer.getActivityService().removeObserver(self)
@@ -96,6 +102,13 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         let controller = instanceFromStoryBoard("Main", identifier: "MainTabBarController") as! MainTabBarController
         viewController.presentViewController(controller, animated: false) { () -> Void in
             completion()
+            
+            VessageQueue.sharedInstance.initQueue(UserSetting.userId)
+            BubbleVessageHandlerManager.loadEmbededHandlers()
+            BahamutTaskQueue.defaultInstance.initQueue(UserSetting.userId)
+            BahamutTaskQueue.defaultInstance.useSetChatImageHandlers()
+            VessageTimeMachine.initWithUserId(UserSetting.userId)
+            
             ServiceContainer.getActivityService().getActivitiesBoardData()
             ServiceContainer.getVessageService().newVessageFromServer(){
                 ServiceContainer.getAppService().trySendFirstLaunchToServer()

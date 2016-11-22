@@ -15,11 +15,19 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         self.imageChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
         let tap = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onTapInputView(_:)))
         swipeLeft.direction = .Left
         swipeRight.direction = .Right
+        swipeUp.direction = .Up
+        swipeDown.direction = .Down
+        
         self.imageChatInputView.addGestureRecognizer(swipeRight)
         self.imageChatInputView.addGestureRecognizer(swipeLeft)
+        self.imageChatInputView.addGestureRecognizer(swipeUp)
+        self.imageChatInputView.addGestureRecognizer(swipeDown)
+ 
         self.imageChatInputView.addGestureRecognizer(tap)
         self.imageChatInputView.delegate = self
         imageChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
@@ -33,10 +41,13 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     }
     
     func onSwipeInputView(ges:UISwipeGestureRecognizer) {
-        if ges.direction == .Left {
+        switch ges.direction {
+        case UISwipeGestureRecognizerDirection.Left,UISwipeGestureRecognizerDirection.Down:
             self.playVessageManager.showNextVessage()
-        }else if ges.direction == .Right{
+        case UISwipeGestureRecognizerDirection.Right,UISwipeGestureRecognizerDirection.Up:
             self.playVessageManager.showPreviousVessage()
+        default:
+            break
         }
     }
     

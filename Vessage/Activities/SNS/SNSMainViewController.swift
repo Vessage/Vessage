@@ -220,6 +220,7 @@ extension SNSMainViewController{
                 hud?.hideAnimated(true)
                 if let d = data{
                     self.boardData = d
+                    ServiceContainer.getActivityService().clearActivityAllBadge(SNSPostManager.activityId)
                     if (d.posts?.count ?? 0) > 0{
                         self.posts[SNSPost.typeNormalPost].append(d.posts)
                         self.tryShowShareAlert()

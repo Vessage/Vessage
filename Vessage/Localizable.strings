@@ -174,7 +174,7 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 //APP Motto
 "VESSAGE_MOTTO_0" = "高颜值俱乐部";
 "VESSAGE_MOTTO_1" = "想聊就聊，不聊消失";
-"VESSAGE_MOTTO_2" = "体验不一样的聊天";
+"VESSAGE_MOTTO_2" = "不一样的聊天体验";
 "VESSAGE_MOTTO_3" = "晒&秀 - 分享多彩生活";
 "VESSAGE_MOTTO_4" = "晒&秀 - 好朋友的分享圈";
 "VESSAGE_MOTTO_5" = "两周不聊，对话消失";
@@ -353,3 +353,15 @@ X_SEC_RESEND_SMS_CODE = "%d秒后可再次发送验证码";
 SEND_IMAGE = "发送图片";
 SELECT_IMG_SOURCE = "选择图片来源";
 PROCESS_IMAGE_ERROR = "处理图片错误";
+
+X_DAYS_DISAPPEAR = "%d天后消失";
+X_HOURS_DISAPPEAR = "%d小时后消失";
+DISAPPEAR_IN_ONE_HOUR = "即将消失";
+
+SEND_AN_IMAGE = "发送了一张图片";
+SEND_A_CHAT_VIDEO = "发送了一次视频对讲";
+SEND_AN_UNKNOW_VESSAGE = "发送了一条未知消息";
+SEND_A_LITTLE_VIDEO = "发送了一条小视频";
+UNKNOW_TEXT = "未知文本";
+
+NO_VESSAGES_IN_TIMEMACHINE = "没有消息记录";

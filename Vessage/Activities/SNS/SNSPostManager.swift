@@ -16,6 +16,7 @@ extension String{
 }
 
 class SNSPostManager {
+    static let activityId = "1003"
     static let instance:SNSPostManager = {
         let mgr = SNSPostManager()
         return mgr

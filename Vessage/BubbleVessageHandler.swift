@@ -86,6 +86,10 @@ class UnknowBubbleVessageHandler: NSObject,BubbleVessageHandler {
 class BubbleVessageHandlerManager {
     private static var handlerMap = [Int:BubbleVessageHandler]()
     
+    static func release(){
+        handlerMap.removeAll()
+    }
+    
     static func registHandler<T:BubbleVessageHandler>(vessageType:Int,handler:T){
         handlerMap.updateValue(handler, forKey: vessageType)
     }

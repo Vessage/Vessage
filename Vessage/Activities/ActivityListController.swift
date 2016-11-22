@@ -134,8 +134,6 @@ class ActivityListController: UITableViewController {
         }else{
             self.presentViewController(controller, animated: true, completion: nil)
         }
-        activityService.clearActivityBadge(activityInfo.activityId)
-        activityService.clearActivityMiniBadge(activityInfo.activityId)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

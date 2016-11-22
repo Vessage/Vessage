@@ -92,6 +92,7 @@ class ConversationViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var timemachineButton: UIButton!
     @IBOutlet weak var readingLineProgress: UIProgressView!
     @IBOutlet weak var progressView: UIProgressView!
     
@@ -211,6 +212,8 @@ extension ConversationViewController{
         let panGes = UIPanGestureRecognizer(target: self, action: #selector(ConversationViewController.onPanGesture(_:)))
         panGes.requireGestureRecognizerToFail(swipeLeft)
         panGes.requireGestureRecognizerToFail(swipeRight)
+        panGes.requireGestureRecognizerToFail(swipeUp)
+        panGes.requireGestureRecognizerToFail(swipeDown)
         self.view.addGestureRecognizer(panGes)
     }
     
@@ -460,7 +463,6 @@ extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
             return true
         }
     }
-    
 }
 
 //MARK: Send Vessage Status

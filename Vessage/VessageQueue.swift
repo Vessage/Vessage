@@ -22,7 +22,7 @@ class VessageQueue: BahamutTaskQueue {
         var stepHandlers = [String:BahamutTaskQueueStepHandler]()
         stepHandlers.updateValue(PostVessageHandler(), forKey: PostVessageHandler.stepKey)
         stepHandlers.updateValue(SendAliOSSFileHandler(), forKey: SendAliOSSFileHandler.stepKey)
-        stepHandlers.updateValue(FinishFileVessageHandler(), forKey: FinishFileVessageHandler.stepKey)
+        //stepHandlers.updateValue(FinishFileVessageHandler(), forKey: FinishFileVessageHandler.stepKey)
         stepHandlers.updateValue(FinishNormalVessageHandler(), forKey: FinishNormalVessageHandler.stepKey)
         useHandlers(stepHandlers)
     }
@@ -44,14 +44,14 @@ class VessageQueue: BahamutTaskQueue {
         extraInfoString = extraInfo.toMiniJsonString()
     }
     
-    func pushNewVessageTo(receiverId:String?,vessage:Vessage,taskSteps:[String],uploadFileUrl:NSURL? = nil){
+    func pushNewVessageTo(receiverId:String?,isGroup:Bool,vessage:Vessage,taskSteps:[String],uploadFileUrl:NSURL? = nil){
         let queueTask = SendVessageQueueTask()
         let vsg = vessage
         vsg.vessageId = Vessage.sendingVessageId
+        vsg.isGroup = isGroup
         vsg.extraInfo = extraInfoString
         vsg.isRead = true
         vsg.sender = vessage.isGroup ? receiverId : UserSetting.userId
-        vsg.isReady = true
         if vessage.isGroup{
             vsg.gSender = UserSetting.userId
         }

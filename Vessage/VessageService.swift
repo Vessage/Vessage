@@ -198,7 +198,7 @@ extension VessageService{
         req.fileId = vessage.fileId
         req.typeId = vessage.typeId
         req.body = vessage.body
-        req.ready = vessage.isReady ?? false
+        req.ready = true
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
             if let vrm = result.returnObject{
                 vrm.saveModel()
@@ -225,7 +225,21 @@ extension VessageService{
         MobClick.event("Vege_TotalPostVessages")
     }
     
-    func finishSendVessage(vessageId:String,fileId:String,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
+    func cancelSendVessage(vessageId:String){
+        if let m = getSendVessageResult(vessageId){
+            let req = CancelSendVessageRequest()
+            req.vessageId = m.vessageId
+            req.vessageBoxId = m.vessageBoxId
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
+                
+            })
+        }
+    }
+}
+
+//MARK: Deprecated
+extension VessageService{
+    private func finishSendVessage(vessageId:String,fileId:String,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
         if let m = getSendVessageResult(vessageId){
             let req = FinishSendVessageRequest()
             req.vessageId = m.vessageId
@@ -243,17 +257,6 @@ extension VessageService{
                     callback(finished: false, sendVessageResultModel: m)
                     self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinishError, object: self, userInfo:userInfo)
                 }
-            })
-        }
-    }
-    
-    func cancelSendVessage(vessageId:String){
-        if let m = getSendVessageResult(vessageId){
-            let req = CancelSendVessageRequest()
-            req.vessageId = m.vessageId
-            req.vessageBoxId = m.vessageBoxId
-            BahamutRFKit.sharedInstance.getBahamutClient().execute(req, callback: { (result) -> Void in
-                
             })
         }
     }

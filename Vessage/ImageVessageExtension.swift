@@ -30,11 +30,10 @@ extension ConversationViewController:UIImagePickerControllerDelegate{
                 self.setProgressSending()
                 let chatterId = self.conversation.chatterId
                 let vsg = Vessage()
-                vsg.isGroup = self.isGroupChat
                 vsg.typeId = Vessage.typeImage
                 vsg.body = self.getSendVessageBodyString([:])
                 let url = NSURL(fileURLWithPath: localPath)
-                VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
+                VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: self.isGroupChat, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
             }else{
                 self.playCrossMark("PROCESS_IMAGE_ERROR".localizedString())
             }

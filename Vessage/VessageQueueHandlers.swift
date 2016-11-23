@@ -13,9 +13,9 @@ class SendVessageTaskSteps {
     static let normalVessageSteps = [PostVessageHandler.stepKey,FinishNormalVessageHandler.stepKey]
     
     static let fileVessageSteps = [
-        PostVessageHandler.stepKey,
         SendAliOSSFileHandler.stepKey,
-        FinishFileVessageHandler.stepKey
+        PostVessageHandler.stepKey,
+        FinishNormalVessageHandler.stepKey
     ]
 }
 
@@ -89,7 +89,7 @@ class FinishNormalVessageHandler: SendVessageQueueStepHandler {
     }
  
 }
-
+/*
 class FinishFileVessageHandler: SendVessageQueueStepHandler {
     static let stepKey = "FinishFileVessage"
     
@@ -103,3 +103,4 @@ class FinishFileVessageHandler: SendVessageQueueStepHandler {
         }
     }
 }
+*/

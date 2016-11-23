@@ -93,11 +93,10 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         self.imageChatInputView.inputTextField.text = nil
         self.imageChatInputView.refreshSendButtonColor()
         let vsg = Vessage()
-        vsg.isGroup = self.conversation.isGroup
+        let isGroup = self.conversation.isGroup
         vsg.typeId = Vessage.typeFaceText        
         vsg.body = getSendVessageBodyString(["textMessage":textMessage])
         vsg.fileId = chatImage
-        vsg.isReady = true
-        VessageQueue.sharedInstance.pushNewVessageTo(self.conversation.chatterId,vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
+        VessageQueue.sharedInstance.pushNewVessageTo(self.conversation.chatterId,isGroup: isGroup, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
     }
 }

@@ -281,19 +281,18 @@ extension RecordVessageManager{
         self.rootController.setProgressSending()
         let chatterId = self.conversation.chatterId
         let vsg = Vessage()
-        vsg.isGroup = isGroupChat
         vsg.typeId = Vessage.typeChatVideo
         vsg.body = rootController.getSendVessageBodyString([:])
         #if DEBUG
             if isInSimulator() {
                 PersistentFileHelper.deleteFile(url.path!)
                 vsg.fileId = "5790435e99cc251974a42f61"
-                VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
+                VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
             }else{
-                VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
+                VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
             }
         #else
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
+            VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
         #endif
     }
 }

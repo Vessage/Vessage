@@ -100,13 +100,6 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVes
             let bodyDict = newVessage.getBodyDict()
             label.text = bodyDict["textMessage"] as? String
             ServiceContainer.getVessageService().readVessage(newVessage)
-            if bodyDict["faceId"] == nil {
-                if String.isNullOrWhiteSpace(newVessage.fileId) == false {
-                    if let uid = newVessage.getVessageRealSenderId(){
-                        playVessageManager?.setChatterImage(uid, imageId: newVessage.fileId)
-                    }
-                }
-            }
         }
     }
     

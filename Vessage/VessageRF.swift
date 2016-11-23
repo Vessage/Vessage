@@ -35,7 +35,7 @@ class Vessage: BahamutObject {
     var gSender:String! //vessage sender of group if is group vessage
     
     //MARK: local properties
-    var isReady:Bool!
+    //var isReady:Bool!
     
     func getVessageRealSenderId() -> String? {
         if isMySendingVessage() {

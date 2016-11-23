@@ -14,6 +14,7 @@ class ChatImageBoardCell: UICollectionViewCell {
         didSet{
             checkedImage.layoutIfNeeded()
             checkedImage.clipsToBounds = true
+            checkedImage.hidden = true
         }
     }
     @IBOutlet weak var chatImageView: UIImageView!{
@@ -23,11 +24,14 @@ class ChatImageBoardCell: UICollectionViewCell {
         }
     }
     @IBOutlet weak var imageTypeLabel: UILabel!
+    
+    /*
     override var selected: Bool{
         didSet{
             checkedImage.hidden = !selected
         }
     }
+ */
 }
 
 @objc protocol ChatImageBoardControllerDelegate {
@@ -116,7 +120,6 @@ class ChatImageBoardController: UIViewController,UICollectionViewDelegate,UIColl
         // Configure the cell
         let chatImage = self.chatImages[indexPath.row]
         cell.imageTypeLabel.text = chatImage.imageType
-        cell.checkedImage.hidden = !cell.selected
         fileService.setImage(cell.chatImageView, iconFileId: chatImage.imageId,defaultImage: getDefaultFace())
         #if DEBUG
             print("ChatImage:\(chatImage.imageId)")

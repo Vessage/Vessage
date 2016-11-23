@@ -453,8 +453,27 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
         return true
     }
     
+    private func prepareVessageSender(vessage:Vessage) -> (ChattersBoard,UIImageView)?{
+        var chatterBoard:ChattersBoard!
+        var chatterImageView:UIImageView!
+        if let (board,view) = chattersBoardManager.getChatterImageViewOfChatterId(vessage.getVessageRealSenderId()!){
+            chatterBoard = board
+            chatterImageView = view
+            return (chatterBoard,chatterImageView)
+        }else{
+            if let sender = vessage.getVessageRealSenderId(){
+                if !chatGroup.chatters.contains(sender) {
+                    chatGroup.chatters.append(sender)
+                }
+                onChatGroupUpdated(chatGroup)
+                return chattersBoardManager.getChatterImageViewOfChatterId(sender)
+            }
+        }
+        return nil
+    }
+    
     private func renderVessageBubbleView(vessage:Vessage,handler:BubbleVessageHandler,contentView:UIView) -> (ChattersBoard,UIView)? {
-        if let (chatterBoard,chatterImageView) = chattersBoardManager.getChatterImageViewOfChatterId(vessage.getVessageRealSenderId()!){
+        if let (chatterBoard,chatterImageView) = prepareVessageSender(vessage){
             vessageBubbleView?.hidden = false
             vessageBubbleView.bubbleViewLayer.fillColor = (vessage.isMySendingVessage() ? myVessageBubbleColor : chatterVessageBubbleColor).CGColor
             
@@ -556,13 +575,12 @@ extension PlayVessageManager{
         let controller = TimeMachineVessageListController.instanceOfController(self.conversation.chatterId, ts: self.vessages.first!.ts)
         controller.modalPresentationStyle = .Popover
         let viewFrame = self.rootController.view.bounds
-        controller.preferredContentSize = CGSizeMake(viewFrame.width * 0.6, viewFrame.height * 0.6)
+        controller.preferredContentSize = CGSizeMake(viewFrame.width * 0.6, viewFrame.height * 0.5)
         if let ppvc = controller.popoverPresentationController{
             ppvc.sourceView = timeButton
             ppvc.sourceRect = timeButton.bounds
             ppvc.permittedArrowDirections = .Any
             ppvc.delegate = self
-            ppvc.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
             self.rootController.presentViewController(controller, animated: true, completion: nil)
         }
     }

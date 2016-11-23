@@ -18,6 +18,7 @@ class TimeMachineVessageCell: UITableViewCell {
 
 //MARK:TimeMachineVessageListController
 class TimeMachineVessageListController: UIViewController {
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     var chatterId:String!
     var timeSpan:Int64 = DateHelper.UnixTimeSpanTotalMilliseconds
@@ -34,6 +35,7 @@ class TimeMachineVessageListController: UIViewController {
     
     private func updateTipsLabel() {
         noVessagesTipsLabel.hidden = items.count > 0
+        titleLabel.hidden = items.count == 0
     }
 }
 
@@ -46,23 +48,32 @@ extension TimeMachineVessageListController{
         header.stateLabel.hidden = true
         tableView.scrollEnabled = false
         tableView.mj_header = header
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
         
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    private func firstLoadData(){
         if items.count == 0 {
             tableView.delegate = self
             tableView.dataSource = self
             let item = VessageTimeMachine.instance.getVessageBefore(chatterId, ts: timeSpan)
             if item.count > 0 {
                 items.append(item)
+                let path = NSIndexPath(forRow: item.count - 1,inSection:0)
+                dispatch_after(200, queue: dispatch_get_main_queue(), handler: {
+                    self.tableView.scrollToRowAtIndexPath(path, atScrollPosition: .Bottom, animated: true)
+                })
                 updateTipsLabel()
             }else{
                 updateTipsLabel()
             }
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        firstLoadData()
     }
     
     static func instanceOfController(chatterId:String,ts:Int64) -> TimeMachineVessageListController{
@@ -78,16 +89,9 @@ extension TimeMachineVessageListController{
     func onPullTableView(sender:AnyObject) {
         if let ts = items.first?.first?.vessage?.ts {
             let item = VessageTimeMachine.instance.getVessageBefore(chatterId, ts: ts)
-            if item.count > 0 {
-                items.insert(item, atIndex: 0)
-                tableView.mj_header.endRefreshing()
-            }else{
-                tableView.mj_header.endRefreshing()
-                tableView.mj_header.state = .NoMoreData
-            }
-        }else{
-            tableView.mj_header.endRefreshing()
+            items.insert(item, atIndex: 0)
         }
+        tableView.mj_header.endRefreshing()
     }
 }
 

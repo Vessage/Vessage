@@ -211,8 +211,8 @@ class ConversationListCell:ConversationListCellBase{
                 }
             }
         }
-        let now = NSDate()
-        if now.minuteOfDate > 45 && now.minuteOfDate % 3 == 0 {
+        let minLeft = NSNumber(double:conversation.getConversationTimeUpMinutesLeft()).integerValue
+        if minLeft % 3 == 0 {
             self.subLine = conversation.getDisappearString()
         }else{
             self.subLine = conversation.getLastUpdatedTime().toFriendlyString()

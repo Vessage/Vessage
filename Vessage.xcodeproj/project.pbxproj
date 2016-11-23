@@ -94,6 +94,8 @@
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
+		E74C48EE1DE52E2400903270 /* VTMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C48EC1DE52E2400903270 /* VTMRecord.swift */; };
+		E74C48F21DE541CC00903270 /* VessageTimeMachine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E74C48F01DE541CC00903270 /* VessageTimeMachine.xcdatamodeld */; };
 		E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */; };
 		E756CBC11DB05BB00017E4A3 /* ImageVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E756CBC01DB05BB00017E4A3 /* ImageVessageExtension.swift */; };
 		E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A70351C8C09360029F0BD /* VessageRF.swift */; };
@@ -356,6 +358,8 @@
 		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
 		E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YUCIHighPassSkinSmoothing.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/YUCIHighPassSkinSmoothing/YUCIHighPassSkinSmoothing.framework"; sourceTree = "<group>"; };
 		E73CFF891D655E39002A63C6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		E74C48EC1DE52E2400903270 /* VTMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTMRecord.swift; sourceTree = "<group>"; };
+		E74C48F11DE541CC00903270 /* VessageTimeMachine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VessageTimeMachine.xcdatamodel; sourceTree = "<group>"; };
 		E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HudSpin.xcassets; sourceTree = "<group>"; };
 		E756CBC01DB05BB00017E4A3 /* ImageVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageVessageExtension.swift; sourceTree = "<group>"; };
 		E75A70351C8C09360029F0BD /* VessageRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageRF.swift; sourceTree = "<group>"; };
@@ -990,9 +994,11 @@
 		E75E269B1DE43AD7000D2D38 /* VessageTimeMachine */ = {
 			isa = PBXGroup;
 			children = (
+				E74C48EC1DE52E2400903270 /* VTMRecord.swift */,
 				E75E269C1DE43AD7000D2D38 /* VessageTimeMachine.storyboard */,
 				E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */,
 				E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */,
+				E74C48F01DE541CC00903270 /* VessageTimeMachine.xcdatamodeld */,
 			);
 			path = VessageTimeMachine;
 			sourceTree = "<group>";
@@ -1433,6 +1439,7 @@
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
 				E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
+				E74C48EE1DE52E2400903270 /* VTMRecord.swift in Sources */,
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
 				E77447081DC33096000924AB /* BubbleVessageHandlersConfig.swift in Sources */,
 				E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */,
@@ -1447,6 +1454,7 @@
 				E7687C291DB4A5CC00A1FD5E /* NFCReceivedLikeViewController.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
 				E7886A6E1DC97D3D00368C03 /* SNSMainViewCells.swift in Sources */,
+				E74C48F21DE541CC00903270 /* VessageTimeMachine.xcdatamodeld in Sources */,
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
@@ -1821,6 +1829,16 @@
 			);
 			currentVersion = E708AB901C86CF8A0071104E /* BahamutModel.xcdatamodel */;
 			path = BahamutModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E74C48F01DE541CC00903270 /* VessageTimeMachine.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E74C48F11DE541CC00903270 /* VessageTimeMachine.xcdatamodel */,
+			);
+			currentVersion = E74C48F11DE541CC00903270 /* VessageTimeMachine.xcdatamodel */;
+			path = VessageTimeMachine.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

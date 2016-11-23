@@ -29,6 +29,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     
     static let onVessageRead = "onVessageRead"
     static let onVessageRemoved = "onVessageRemoved"
+    static let onVessagesRemoved = "onVessagesRemoved"
     
     @objc static var ServiceName:String {return "Vessage Service"}
     
@@ -104,14 +105,18 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func removeVessages(vessages:[Vessage]){
+        var removed = [Vessage]()
         for vessage in vessages {
             if !vessage.isReceivedVessage() {
                 continue
             }
             readVessage(vessage,refresh: false)
+            removed.append(vessage)
             PersistentManager.sharedInstance.removeModel(vessage)
+            postNotificationName(VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
         }
         PersistentManager.sharedInstance.refreshCache(Vessage)
+        postNotificationName(VessageService.onVessagesRemoved, object: self, userInfo: [VessageServiceNotificationValues:removed])
     }
     
     func newVessageFromServer(completion:(()->Void)? = nil){

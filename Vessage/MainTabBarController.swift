@@ -62,7 +62,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         
         VessageQueue.sharedInstance.releaseQueue()
         BahamutTaskQueue.defaultInstance.releaseQueue()
-        VessageTimeMachine.release()
+        VessageTimeMachine.instance.releaseManager()
         BubbleVessageHandlerManager.release()
         
         ServiceContainer.instance.removeObserver(self)
@@ -107,7 +107,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
             BubbleVessageHandlerManager.loadEmbededHandlers()
             BahamutTaskQueue.defaultInstance.initQueue(UserSetting.userId)
             BahamutTaskQueue.defaultInstance.useSetChatImageHandlers()
-            VessageTimeMachine.initWithUserId(UserSetting.userId)
+            VessageTimeMachine.instance.initWithUserId(UserSetting.userId)
             
             ServiceContainer.getActivityService().getActivitiesBoardData()
             ServiceContainer.getVessageService().newVessageFromServer(){

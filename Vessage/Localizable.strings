@@ -365,4 +365,4 @@ SEND_A_LITTLE_VIDEO = "发送了一条小视频";
 UNKNOW_TEXT = "未知文本";
 
 NO_VESSAGES_IN_TIMEMACHINE = "没有消息记录";
-X_AT_D = "%@ @ %@";
+X_AT_D = "%@ %@";

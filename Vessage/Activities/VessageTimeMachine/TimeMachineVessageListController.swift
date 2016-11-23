@@ -30,6 +30,15 @@ class TimeMachineVessageListController: UIViewController {
             updateTipsLabel()
             tableView?.scrollEnabled = items.count > 0
             tableView?.reloadData()
+            if let item = items.first {
+                if item.count > 0 {
+                    let animated = items.count == 1
+                    let path = NSIndexPath(forRow: item.count - 1,inSection:0)
+                    dispatch_after(200, queue: dispatch_get_main_queue(), handler: {
+                        self.tableView.scrollToRowAtIndexPath(path, atScrollPosition: .Bottom, animated: animated)
+                    })
+                }
+            }
         }
     }
     
@@ -60,10 +69,6 @@ extension TimeMachineVessageListController{
             let item = VessageTimeMachine.instance.getVessageBefore(chatterId, ts: timeSpan)
             if item.count > 0 {
                 items.append(item)
-                let path = NSIndexPath(forRow: item.count - 1,inSection:0)
-                dispatch_after(200, queue: dispatch_get_main_queue(), handler: {
-                    self.tableView.scrollToRowAtIndexPath(path, atScrollPosition: .Bottom, animated: true)
-                })
                 updateTipsLabel()
             }else{
                 updateTipsLabel()

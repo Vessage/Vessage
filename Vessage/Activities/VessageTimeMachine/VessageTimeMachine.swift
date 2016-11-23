@@ -85,9 +85,12 @@ class VessageTimeMachine :NSObject{
     
     func getVessageBefore(chatter:String,ts:Int64,limit:Int = 20) -> [VessageTimeMachineItem] {
         let predict = NSPredicate(format: "chatterId = '\(chatter)' and mtime < \(ts)")
-        let resultSet = coreDb.getCells(VessageTimeMachine.recordEntityName, predicate: predict,limit: limit).map { (model) -> VTMRecord in
+        let sort = NSSortDescriptor(key: "mtime", ascending: false)
+        let resultSet = coreDb.getCells(VessageTimeMachine.recordEntityName, predicate: predict,limit: limit,sortDescriptors:[sort]).map { (model) -> VTMRecord in
             return model as! VTMRecord
-            }.map { (record) -> VessageTimeMachineItem in
+            }.sort({ (a, b) -> Bool in
+                a.mtime.longLongValue < b.mtime.longLongValue
+            }).map { (record) -> VessageTimeMachineItem in
                 let item = VessageTimeMachineItem()
                 item.chatter = record.chatterId
                 item.vessage = Vessage(json: record.modelValue)

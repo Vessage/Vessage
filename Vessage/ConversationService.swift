@@ -11,20 +11,31 @@ import Foundation
 //MARK: Conversation
 class Conversation:BahamutObject
 {
+    static let typeSingleChat = 1;
+    static let typeGroupChat = 2;
+    static let typeMultiChat = 3;
+    
     override func getObjectUniqueIdName() -> String {
         return "conversationId"
     }
     var conversationId:String!
-    var isGroup = false
     var chatterId:String!
-    var chatterMobile:String!
-    //var lastMessageTime:String!
-    
+    var type = 0
     var lstTs:Int64 = 0
-    
-    
     var pinned = false
     
+    //MARK: Deprecated
+    var isGroup = false //use type instead
+}
+
+extension Conversation{
+    var isGroupChat:Bool{
+        if type == 0 {
+            type = isGroup ? Conversation.typeGroupChat : Conversation.typeSingleChat
+            saveModel()
+        }
+        return type == Conversation.typeGroupChat
+    }
 }
 
 extension Conversation{
@@ -106,13 +117,12 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     static func isConversationWithUser(c:Conversation,user:VessageUser) -> Bool{
         let cu = VessageUser()
-        cu.mobile = c.chatterMobile
         cu.userId = c.chatterId
         return VessageUser.isTheSameUser(cu, userb: user)
     }
     
     static func isConversationWithChatGroup(c:Conversation,group:ChatGroup) -> Bool{
-        return c.isGroup && c.chatterId == group.groupId
+        return c.isGroupChat && c.chatterId == group.groupId
     }
     
     static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
@@ -122,24 +132,13 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
                 return true
             }
         }
-        if !c.isGroup {
-            if let ei = vsg.getExtraInfoObject(){
-                if ei.mobileHash != nil && ei.mobileHash == c.chatterMobile?.md5{
-                    if String.isNullOrWhiteSpace(c.chatterId){
-                        c.chatterId = vsg.sender
-                        c.saveModel()
-                    }
-                    return true
-                }
-            }
-        }
         return false
     }
     
     private func updateConversationWithVessage(vsg:Vessage) -> Int?{
         if let index = (conversations.indexOf { ConversationService.isConversationVessage($0, vsg: vsg)}){
             let conversation = conversations[index]
-            if !conversation.isGroup {
+            if !conversation.isGroupChat {
                 if conversation.chatterId == nil{
                     conversation.chatterId = vsg.sender
                 }
@@ -159,18 +158,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         let index = conversations.indexOf { (c) -> Bool in
             if let chatter = c.chatterId{
                 if chatter == chatterId{
-                    return true
-                }
-            }
-            return false
-        }
-        setConversationNewestModifiedAt(index)
-    }
-    
-    func setConversationNewestModifiedByMobile(mobile:String){
-        let index = conversations.indexOf { (c) -> Bool in
-            if let cmobile = c.chatterMobile{
-                if cmobile == mobile{
                     return true
                 }
             }
@@ -215,7 +202,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     private func addNewConversationWithGroupVessage(vsg:Vessage) -> Conversation{
         let conversation = Conversation()
         conversation.chatterId = vsg.sender
-        conversation.isGroup = true
+        conversation.type = Conversation.typeGroupChat
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
         conversation.saveModel()
@@ -250,7 +237,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getChattingNormalUserIds() -> [String] {
-        return conversations.filter{!$0.isGroup && !String.isNullOrWhiteSpace($0.chatterId)}.map{$0.chatterId}
+        return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId)}.map{$0.chatterId}
     }
     
     func removeTimeupedConversations() {
@@ -269,7 +256,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
         let conversation = Conversation()
         conversation.chatterId = group.groupId
-        conversation.isGroup = true
+        conversation.type = Conversation.typeGroupChat
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
         conversation.saveModel()
@@ -315,12 +302,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func searchConversation(keyword:String)->[Conversation]{
         let result = conversations.filter{ c in
-            
-            if let mobile = c.chatterMobile{
-                if mobile.hasBegin(keyword){
-                    return true
-                }
-            }
             return false
         }
         return result

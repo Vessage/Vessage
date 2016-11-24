@@ -180,7 +180,6 @@ class ConversationListController: UITableViewController {
         #endif
     }
     
-    //MARK: notifications
     private func tryShowConversationsTimeUpTips() {
         if UIApplication.sharedApplication().applicationState == .Active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
             if conversationService.timeupedConversations.count > 0 {
@@ -188,6 +187,9 @@ class ConversationListController: UITableViewController {
                     timeUpTipsView = UILabel()
                 }
                 let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
+                for c in conversationService.timeupedConversations{
+                    
+                }
                 conversationService.removeTimeupedConversations()
                 self.timeUpTipsView.text = msg
                 self.timeUpTipsView.sizeToFit()
@@ -200,6 +202,7 @@ class ConversationListController: UITableViewController {
         }
     }
     
+    //MARK: notifications
     func onTimerRefreshList(_:AnyObject?) {
         self.conversationService.clearTimeUpConversations()
     }

@@ -66,6 +66,7 @@ class NFCReceivedLikeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var likes = [[NFCPostLike]]()
     private var initCount = 0
+    private var userService = ServiceContainer.getUserService()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -135,7 +136,8 @@ extension NFCReceivedLikeViewController:NFCLikeCellDelegate{
     func nfcLikeCellDidClickPoster(sender: UIView, cell: NFCReceivedLikeCell, like: NFCPostLike?) {
         if String.isNullOrWhiteSpace(like?.mbId){
             if let userId = like?.usrId{
-                UserProfileViewController.showUserProfileViewController(self, userId: userId)
+                let delegate = UserProfileViewControllerDelegateOpenConversation()
+                UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate)
             }
             
         }else{
@@ -166,7 +168,12 @@ extension NFCReceivedLikeViewController:UITableViewDelegate,UITableViewDataSourc
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(NFCReceivedLikeCell.reuseId, forIndexPath: indexPath) as! NFCReceivedLikeCell
-        cell.like = likes[indexPath.section][indexPath.row]
+        let like = likes[indexPath.section][indexPath.row]
+        if let noteName = userService.getUserNotedNameIfExists(like.usrId) {
+            like.nick = noteName
+        }
+        
+        cell.like = like
         cell.delegate = self
         return cell
     }

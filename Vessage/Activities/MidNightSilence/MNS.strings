@@ -1,0 +1,15 @@
+/* 
+  MNS.strings
+  Vessage
+
+  Created by Alex Chow on 2016/11/24.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+DEFAULT_ANNC = "长夜漫漫，无心睡眠";
+OPEN_TIPS_FORMAT = "距离开放时间还有\n\n%@\n\n请凌晨00:01后再来";
+H_HOUR_M_MIN_S_SEC = "%d小时%02d分%02d秒";
+M_MIN_S_SEC = "%02d分%02d秒";
+S_SEC = "%02d秒";
+ANNC_CONTENT_LIMIT = "深夜感言需要6到140字";
+MID_NIGHT_ANNC = "深夜感言";
+MY_MID_NIGHT_ACCN = "我的深夜感言";

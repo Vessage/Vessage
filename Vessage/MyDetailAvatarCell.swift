@@ -56,7 +56,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
     //MARK: Sex Value
     
     func onTapSexImageView(a:AnyObject) {
-        UserSexValueViewController.showUserProfileViewController(self.rootController, sexValue: self.rootController.myProfile.sex){ newValue in
+        UserSexValueViewController.showSexValueViewController(self.rootController, sexValue: self.rootController.myProfile.sex){ newValue in
             let hud = self.rootController.showAnimationHud()
             ServiceContainer.getUserService().setUserSexValue(newValue){ suc in
                 hud.hideAnimated(true)

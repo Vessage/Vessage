@@ -84,7 +84,6 @@ class Vessage: BahamutObject {
 class VessageExtraInfoModel:BahamutObject{
     var accountId:String!
     var nickName:String!
-    var mobileHash:String!
 }
 
 class SendVessageResultModel:BahamutObject{

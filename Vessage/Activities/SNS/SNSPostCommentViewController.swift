@@ -63,10 +63,10 @@ class SNSPostCommentCell: UITableViewCell {
     }
     
     func updateCell() {
-        if let cmd = comment{
-            commentLabel?.text = cmd.cmt
-            postInfoLabel?.text = "By \(cmd.psterNk)"
-            if let atnick = cmd.atNick {
+        if let cmt = comment{
+            commentLabel?.text = cmt.cmt
+            postInfoLabel?.text = "By \(cmt.psterNk)"
+            if let atnick = cmt.atNick {
                 atNickLabel?.text = "@\(atnick)"
                 atNickLabel?.hidden = false
             }else{
@@ -89,6 +89,8 @@ class SNSPostCommentViewController: UIViewController {
     
     private var responseTextField = UITextField(frame:CGRectZero)
     private var commentInputView = SNSCommentInputView.instanceFromXib()
+    
+    private var userService = ServiceContainer.getUserService()
     
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -231,8 +233,13 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SNSPostCommentCell.reuseId, forIndexPath: indexPath) as! SNSPostCommentCell
-        let cmd = comments[indexPath.section][indexPath.row]
-        cell.comment = cmd
+        let cmt = comments[indexPath.section][indexPath.row]
+        
+        if let noteName = userService.getUserNotedNameIfExists(cmt.pster) {
+            cmt.psterNk = noteName
+        }
+        
+        cell.comment = cmt
         cell.delegate = self
         return cell
     }
@@ -246,15 +253,16 @@ extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
     }
     
     func snsPostCommentCellDidClickComment(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
-        if let cmd = comment{
-            showNewCommentInputView(cmd, atUserNick: cmd.psterNk)
+        if let cmt = comment{
+            showNewCommentInputView(cmt, atUserNick: cmt.psterNk)
         }
     }
     
     func snsPostCommentCellDidClickPostInfo(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         sender.animationMaxToMin(0.2, maxScale: 1.2) { 
             if let pster = comment?.pster{
-                UserProfileViewController.showUserProfileViewController(self, userId: pster)
+                let delegate = UserProfileViewControllerDelegateOpenConversation()
+                UserProfileViewController.showUserProfileViewController(self, userId: pster,delegate: delegate)
             }
         }
     }

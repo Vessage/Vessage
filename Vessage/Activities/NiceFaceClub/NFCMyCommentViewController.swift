@@ -63,7 +63,7 @@ class NFCMyCommentViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var responseTextField = UITextField(frame:CGRectZero)
     private var commentInputView = NFCCommentInputView.instanceFromXib()
-    
+    private var userService = ServiceContainer.getUserService()
     private var comments = [[NFCPostComment]]()
     private var initCount = 0
     
@@ -222,6 +222,13 @@ extension NFCMyCommentViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(NFCMyCommentCell.reuseId, forIndexPath: indexPath) as! NFCMyCommentCell
         let cmt = comments[indexPath.section][indexPath.row]
+        
+        if let mbId = NiceFaceClubManager.instance.myNiceFaceProfile?.mbId{
+            if mbId == cmt.pster{
+                cmt.psterNk = "ME".localizedString()
+            }
+        }
+        
         cell.comment = cmt
         cell.delegate = self
         return cell

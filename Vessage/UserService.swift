@@ -310,6 +310,9 @@ extension UserService{
 //MARK: User Note Name
 extension UserService{
     func getUserNotedNameIfExists(userId:String) -> String? {
+        if userId == UserSetting.userId {
+            return "ME".localizedString()
+        }
         return userNotedNames[userId] ?? getCachedUserProfile(userId)?.nickName
     }
     

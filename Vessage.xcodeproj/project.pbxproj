@@ -86,6 +86,8 @@
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
+		E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E71BFCF21DE70AA600384FCB /* Media.xcassets */; };
+		E71BFCF51DE719D600384FCB /* MNSRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BFCF41DE719D600384FCB /* MNSRF.swift */; };
 		E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */; };
 		E72D0BEC1CDE26F50036B4B2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */; };
 		E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */; };
@@ -94,6 +96,10 @@
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
+		E74109461DE694420030AD1D /* MNS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E74109451DE694420030AD1D /* MNS.storyboard */; };
+		E74109481DE694970030AD1D /* MNSMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74109471DE694970030AD1D /* MNSMainController.swift */; };
+		E741094A1DE69AA60030AD1D /* MNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E74109491DE69AA60030AD1D /* MNS.strings */; };
+		E741094B1DE6F0DB0030AD1D /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
 		E74C48EE1DE52E2400903270 /* VTMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C48EC1DE52E2400903270 /* VTMRecord.swift */; };
 		E74C48F21DE541CC00903270 /* VessageTimeMachine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E74C48F01DE541CC00903270 /* VessageTimeMachine.xcdatamodeld */; };
 		E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */; };
@@ -148,7 +154,6 @@
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
 		E7AD4DC51DA5071600A0176F /* NFCPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD4DC41DA5071600A0176F /* NFCPostManager.swift */; };
 		E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */; };
-		E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
 		E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */; };
 		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
@@ -346,6 +351,8 @@
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
 		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		E71BFCF21DE70AA600384FCB /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E71BFCF41DE719D600384FCB /* MNSRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSRF.swift; sourceTree = "<group>"; };
 		E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatCellTableViewCell.swift; sourceTree = "<group>"; };
 		E72D0BEB1CDE26F50036B4B2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDeviceTokenRF.swift; sourceTree = "<group>"; };
@@ -358,6 +365,9 @@
 		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
 		E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YUCIHighPassSkinSmoothing.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/YUCIHighPassSkinSmoothing/YUCIHighPassSkinSmoothing.framework"; sourceTree = "<group>"; };
 		E73CFF891D655E39002A63C6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		E74109451DE694420030AD1D /* MNS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MNS.storyboard; sourceTree = "<group>"; };
+		E74109471DE694970030AD1D /* MNSMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSMainController.swift; sourceTree = "<group>"; };
+		E74109491DE69AA60030AD1D /* MNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MNS.strings; sourceTree = "<group>"; };
 		E74C48EC1DE52E2400903270 /* VTMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTMRecord.swift; sourceTree = "<group>"; };
 		E74C48F11DE541CC00903270 /* VessageTimeMachine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VessageTimeMachine.xcdatamodel; sourceTree = "<group>"; };
 		E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HudSpin.xcassets; sourceTree = "<group>"; };
@@ -981,6 +991,18 @@
 			path = AEScaningEffect;
 			sourceTree = "<group>";
 		};
+		E74109441DE694350030AD1D /* MidNightSilence */ = {
+			isa = PBXGroup;
+			children = (
+				E74109451DE694420030AD1D /* MNS.storyboard */,
+				E74109471DE694970030AD1D /* MNSMainController.swift */,
+				E74109491DE69AA60030AD1D /* MNS.strings */,
+				E71BFCF21DE70AA600384FCB /* Media.xcassets */,
+				E71BFCF41DE719D600384FCB /* MNSRF.swift */,
+			);
+			path = MidNightSilence;
+			sourceTree = "<group>";
+		};
 		E75A703F1C8C5F0A0029F0BD /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1138,6 +1160,7 @@
 		E7EF282E1D791AFD0064231F /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E74109441DE694350030AD1D /* MidNightSilence */,
 				E75E269B1DE43AD7000D2D38 /* VessageTimeMachine */,
 				E7886A4B1DC97D3D00368C03 /* SNS */,
 				E7EF28451D791AFD0064231F /* NiceFaceClub */,
@@ -1338,11 +1361,14 @@
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */,
 				E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */,
+				E74109461DE694420030AD1D /* MNS.storyboard in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
+				E741094A1DE69AA60030AD1D /* MNS.strings in Resources */,
 				E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
+				E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
 				E7EF285A1D791AFD0064231F /* LittlePaper.strings in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
@@ -1422,6 +1448,7 @@
 				E7BB6EAB1DA3AEFE00D88A7C /* NFCMainViewController.swift in Sources */,
 				E75A70361C8C09360029F0BD /* VessageRF.swift in Sources */,
 				E7EF285F1D791AFD0064231F /* LittlePaperMessageListController.swift in Sources */,
+				E741094B1DE6F0DB0030AD1D /* UserProfileViewController.swift in Sources */,
 				E78739371DC0612600684320 /* BezierBubble.swift in Sources */,
 				E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */,
 				E708ACA61C87528D0071104E /* SignUpViewController.swift in Sources */,
@@ -1468,6 +1495,7 @@
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */,
+				E71BFCF51DE719D600384FCB /* MNSRF.swift in Sources */,
 				E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */,
 				E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */,
 				E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */,
@@ -1497,6 +1525,7 @@
 				E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
+				E74109481DE694970030AD1D /* MNSMainController.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */,
@@ -1556,7 +1585,6 @@
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
 				E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */,
 				E7740ED81DA74EA70022A903 /* NFCPostCommentViewController.swift in Sources */,
-				E7AEAFB21D6173EC0009B821 /* UserProfileViewController.swift in Sources */,
 				E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,
 				E708AB941C86CF8A0071104E /* PersistentBase.swift in Sources */,

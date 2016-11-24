@@ -190,7 +190,7 @@ class ConversationListCell:ConversationListCellBase{
     private func updateWithConversation(conversation:Conversation){
         
         if let chatterId = conversation.chatterId{
-            if conversation.isGroup {
+            if conversation.isGroupChat {
                 if let group = self.rootController.groupService.getChatGroup(chatterId) {
                     updateWithChatGroup(group)
                 }else{
@@ -212,7 +212,7 @@ class ConversationListCell:ConversationListCellBase{
             }
         }
         let minLeft = NSNumber(double:conversation.getConversationTimeUpMinutesLeft()).integerValue
-        if minLeft % 3 == 0 && !conversation.pinned {
+        if minLeft < Int(ConversationMaxTimeUpMinutes / 2) || (minLeft % 3 == 0 && !conversation.pinned) {
             self.subLine = conversation.getDisappearString()
         }else{
             self.subLine = conversation.getLastUpdatedTime().toFriendlyString()

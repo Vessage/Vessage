@@ -34,13 +34,9 @@ class VessageQueue: BahamutTaskQueue {
     private func refreshExtraInfoString(){
         let userService = ServiceContainer.getUserService()
         let sendNick = userService.myProfile.nickName
-        let sendMobile = userService.myProfile.mobile
         let extraInfo = VessageExtraInfoModel()
         extraInfo.nickName = sendNick
         extraInfo.accountId = UserSetting.lastLoginAccountId
-        if String.isNullOrWhiteSpace(sendMobile) == false{
-            extraInfo.mobileHash = sendMobile!.md5
-        }
         extraInfoString = extraInfo.toMiniJsonString()
     }
     

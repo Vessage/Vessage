@@ -152,7 +152,8 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
                     debugLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
                 }
             }
-        default:UMessage.didReceiveRemoteNotification(userInfo)
+        default:
+            UMessage.didReceiveRemoteNotification(userInfo)
         }
     }
     

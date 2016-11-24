@@ -63,7 +63,7 @@ class SNSMyCommentViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var responseTextField = UITextField(frame:CGRectZero)
     private var commentInputView = SNSCommentInputView.instanceFromXib()
-    
+    private var userService = ServiceContainer.getUserService()
     private var comments = [[SNSPostComment]]()
     private var initCount = 0
     
@@ -154,7 +154,8 @@ extension SNSMyCommentViewController:SNSMyCommentCellDelegate{
     
     func snsMyCommentCellDidClickPoster(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
         if let poster = comment?.pster{
-            UserProfileViewController.showUserProfileViewController(self, userId: poster)
+            let delegate = UserProfileViewControllerDelegateOpenConversation()
+            UserProfileViewController.showUserProfileViewController(self, userId: poster,delegate: delegate)
         }
     }
     
@@ -223,6 +224,11 @@ extension SNSMyCommentViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SNSMyCommentCell.reuseId, forIndexPath: indexPath) as! SNSMyCommentCell
         let cmt = comments[indexPath.section][indexPath.row]
+        
+        if let noteName = userService.getUserNotedNameIfExists(cmt.pster) {
+            cmt.psterNk = noteName
+        }
+        
         cell.comment = cmt
         cell.delegate = self
         return cell

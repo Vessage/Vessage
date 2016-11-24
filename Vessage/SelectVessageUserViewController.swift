@@ -129,7 +129,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         activeUsers = userService.activeUsers
         nearUsers = userService.nearUsers
         
-        userInfos = conversations.filter{!$0.isGroup}.map { (c) -> VessageUser in
+        userInfos = conversations.filter{!$0.isGroupChat}.map { (c) -> VessageUser in
             if let res = userService.getCachedUserProfile(c.chatterId){
                 return res
             }else{

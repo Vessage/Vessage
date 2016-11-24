@@ -17,7 +17,7 @@ class ConversationViewController: UIViewController {
     private var isNotRegistFriend = false
     
     var isGroupChat:Bool{
-        return conversation.isGroup
+        return conversation.isGroupChat
     }
     
     private(set) var outterNewVessageCount:Int = 0{
@@ -577,7 +577,7 @@ extension ConversationViewController{
         if String.isNullOrEmpty(conversation.chatterId) {
             nvc.playToast("NO_SUCH_USER".localizedString())
         }else{
-            if conversation.isGroup {
+            if conversation.isGroupChat {
                 if let group = ServiceContainer.getChatGroupService().getChatGroup(conversation.chatterId){
                     showConversationView(nvc, conversation: conversation, group: group,refreshGroup: true, initMessage: initMessage)
                 }else{

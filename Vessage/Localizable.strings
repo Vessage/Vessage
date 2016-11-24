@@ -309,6 +309,7 @@ WX_SHARE_TITLE_FORMAT = "我的VG号:%@";
 SHARE_FUN_APP = "抓到一只好玩的App";
 UNKNOW_VESSAGE_TYPE = "未知的消息类型>_<请点击这里\n升级到最新版本再查看这条消息!";
 NO_VESSAGE_TIPS = "没有消息,点击按钮\开始与Ta聊天";
+CHAT = "聊天";
 
 EXTRA_SERVICE_DISPLAY_NAME = "奇趣";
 

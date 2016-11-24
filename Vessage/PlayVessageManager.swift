@@ -132,9 +132,9 @@ class PlayVessageManager: ConversationViewControllerProxy {
         let v = Vessage()
         v.vessageId = Vessage.vgRandomVessageId
         v.typeId = Vessage.typeFaceText
-        v.isGroup = self.conversation.isGroup
+        v.isGroup = self.conversation.isGroupChat
         v.sender = self.conversation.chatterId
-        if self.conversation.isGroup {
+        if self.conversation.isGroupChat {
             let chatters = self.chattersBoardManager.chatterItems.filter{$0.chatterId != UserSetting.userId}
             if chatters.count > 0 {
                 v.gSender = chatters[random() % chatters.count].chatterId
@@ -142,7 +142,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         }
         v.ts = DateHelper.UnixTimeSpanTotalMilliseconds
         v.isRead = true
-        let randomContents = self.conversation.isGroup ? randomTextVessageContents[1] : randomTextVessageContents[0]
+        let randomContents = self.conversation.isGroupChat ? randomTextVessageContents[1] : randomTextVessageContents[0]
         let textMessage = randomContents[random() % randomContents.count]
         v.body = self.rootController.getSendVessageBodyString(["textMessage":textMessage],withBaseDict: false)
         return v

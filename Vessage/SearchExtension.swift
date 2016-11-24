@@ -185,7 +185,6 @@ extension ConversationListController:UISearchBarDelegate
             let existsUsers = conversations.map({ (c) -> VessageUser in
                 let u = VessageUser()
                 u.userId = c.chatterId
-                u.mobile = c.chatterMobile
                 return u
             })
             

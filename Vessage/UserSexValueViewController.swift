@@ -80,7 +80,7 @@ class UserSexValueViewController: UIViewController {
         })
     }
     
-    static func showUserProfileViewController(vc:UIViewController, sexValue:Int,handler:SaveSexValueHandler){
+    static func showSexValueViewController(vc:UIViewController, sexValue:Int,handler:SaveSexValueHandler){
         let controller = instanceFromStoryBoard("User", identifier: "UserSexValueViewController") as! UserSexValueViewController
         controller.originValue = sexValue
         controller.providesPresentationContextTransitionStyle = true

@@ -9,7 +9,43 @@
 import Foundation
 import LTMorphingLabel
 
+protocol UserProfileViewControllerDelegate {
+    func userProfileViewController(sender:UserProfileViewController,rightButtonTitle profile:VessageUser) -> String
+    func userProfileViewController(sender:UserProfileViewController,rightButtonClicked profile:VessageUser)
+}
+
+class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControllerDelegate{
+    
+    var initMessage:[String:AnyObject]?
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
+        if let nvc = sender.navigationController{
+            ConversationViewController.showConversationViewController(nvc, userId: profile.userId,initMessage: initMessage)
+        }
+    }
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
+        return "CHAT".localizedString()
+    }
+}
+
+private let NoteUserDelegate = UserProfileViewControllerDelegateNoteUser()
+class UserProfileViewControllerDelegateNoteUser : UserProfileViewControllerDelegate{
+    func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
+        ServiceContainer.getUserService().showNoteConversationAlert(sender, user: profile)
+    }
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
+        return "NOTE".localizedString()
+    }
+}
+
 class UserProfileViewController: UIViewController {
+    var delegate:UserProfileViewControllerDelegate?{
+        didSet{
+            updateRightButtonTitle()
+        }
+    }
     private(set) var profile:VessageUser!{
         didSet{
             ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: profile.avatar, defaultImage: getDefaultAvatar(profile.accountId ?? "0"))
@@ -30,9 +66,11 @@ class UserProfileViewController: UIViewController {
             sexImageView.hidden = false
             avatarImageView.hidden = false
             ServiceContainer.getUserService().setUserSexImageView(self.sexImageView, sexValue: profile.sex)
+            updateRightButtonTitle()
         }
     }
     
+    @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var mottoLabel: LTMorphingLabel!{
         didSet{
             mottoLabel.morphingEffect = .Pixelate
@@ -75,8 +113,8 @@ class UserProfileViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func noteName(sender: AnyObject) {
-        ServiceContainer.getUserService().showNoteConversationAlert(self, user: profile)
+    @IBAction func onClickRightButton(sender: AnyObject) {
+        delegate?.userProfileViewController(self, rightButtonClicked: profile)
     }
     
     override func viewDidLoad() {
@@ -87,6 +125,12 @@ class UserProfileViewController: UIViewController {
         bcgMaskView.hidden = true
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+        updateRightButtonTitle()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.bcgMaskView.hidden = true
@@ -95,6 +139,14 @@ class UserProfileViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.bcgMaskView.hidden = false
+    }
+    
+    private func updateRightButtonTitle() {
+        if let d = delegate {
+            if let p = profile {
+                rightButton?.setTitle(d.userProfileViewController(self, rightButtonTitle: p), forState: .Normal)
+            }
+        }
     }
     
     func onTapAlertContainer(a:UITapGestureRecognizer) {
@@ -136,15 +188,15 @@ class UserProfileViewController: UIViewController {
         #endif
     }
     
-    static func showUserProfileViewController(vc:UIViewController,userId:String){
+    static func showUserProfileViewController(vc:UIViewController,userId:String,delegate:UserProfileViewControllerDelegate = NoteUserDelegate){
         if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
-            UserProfileViewController.showUserProfileViewController(vc, userProfile: user)
+            UserProfileViewController.showUserProfileViewController(vc, userProfile: user,delegate: delegate)
         }else{
             let hud = vc.showActivityHud()
             ServiceContainer.getUserService().getUserProfile(userId, updatedCallback: { (user) in
                 hud.hideAnimated(true)
                 if let u = user{
-                    UserProfileViewController.showUserProfileViewController(vc, userProfile: u)
+                    UserProfileViewController.showUserProfileViewController(vc, userProfile: u,delegate: delegate)
                 }else{
                     vc.playCrossMark("NO_SUCH_USER".localizedString())
                 }
@@ -152,12 +204,15 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    static func showUserProfileViewController(vc:UIViewController, userProfile:VessageUser){
+    static func showUserProfileViewController(vc:UIViewController, userProfile:VessageUser,delegate:UserProfileViewControllerDelegate = NoteUserDelegate){
         let controller = instanceFromStoryBoard("User", identifier: "UserProfileViewController") as! UserProfileViewController
-        controller.providesPresentationContextTransitionStyle = true
-        controller.definesPresentationContext = true
-        controller.modalPresentationStyle = .OverCurrentContext
-        vc.presentViewController(controller, animated: true) { 
+        let nvc = UINavigationController(rootViewController: controller)
+        nvc.navigationBarHidden = true
+        nvc.providesPresentationContextTransitionStyle = true
+        nvc.definesPresentationContext = true
+        nvc.modalPresentationStyle = .OverCurrentContext
+        controller.delegate = delegate
+        vc.presentViewController(nvc, animated: true) {
             controller.profile = userProfile
             ServiceContainer.getUserService().fetchLatestUserProfile(userProfile)
         }
@@ -166,8 +221,8 @@ class UserProfileViewController: UIViewController {
 
 //MARK: Show Chatter Profile
 extension UserService{
-    func showUserProfile(vc:UIViewController,user:VessageUser) {
-        UserProfileViewController.showUserProfileViewController(vc, userProfile: user)
+    func showUserProfile(vc:UIViewController,user:VessageUser,delegate:UserProfileViewControllerDelegate = NoteUserDelegate) {
+        UserProfileViewController.showUserProfileViewController(vc, userProfile: user,delegate: delegate)
     }
     
     private func showNoteConversationAlert(vc:UIViewController,user:VessageUser){

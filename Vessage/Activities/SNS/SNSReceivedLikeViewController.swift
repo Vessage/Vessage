@@ -66,6 +66,7 @@ class SNSReceivedLikeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     private var likes = [[SNSPostLike]]()
     private var initCount = 0
+    private var userService = ServiceContainer.getUserService()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -134,7 +135,8 @@ extension SNSReceivedLikeViewController:SNSLikeCellDelegate{
     
     func snsLikeCellDidClickPoster(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         if let userId = like?.usrId{
-            UserProfileViewController.showUserProfileViewController(self, userId: userId)
+            let delegate = UserProfileViewControllerDelegateOpenConversation()
+            UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate)
         }
     }
     
@@ -161,7 +163,11 @@ extension SNSReceivedLikeViewController:UITableViewDelegate,UITableViewDataSourc
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SNSReceivedLikeCell.reuseId, forIndexPath: indexPath) as! SNSReceivedLikeCell
-        cell.like = likes[indexPath.section][indexPath.row]
+        let like = likes[indexPath.section][indexPath.row]
+        if let noteName = userService.getUserNotedNameIfExists(like.usrId) {
+            like.nick = noteName
+        }
+        cell.like = like
         cell.delegate = self
         return cell
     }

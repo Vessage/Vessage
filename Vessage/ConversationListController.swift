@@ -187,9 +187,12 @@ class ConversationListController: UITableViewController {
                     timeUpTipsView = UILabel()
                 }
                 let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
-                for c in conversationService.timeupedConversations{
-                    
-                }
+                
+                let userIds = (conversationService.timeupedConversations.filter{$0.type == Conversation.typeSingleChat && $0.chatterId != nil}).map({ (c) -> String in
+                    return c.chatterId
+                })
+                userService.deleteCachedUsers(userIds)
+                
                 conversationService.removeTimeupedConversations()
                 self.timeUpTipsView.text = msg
                 self.timeUpTipsView.sizeToFit()

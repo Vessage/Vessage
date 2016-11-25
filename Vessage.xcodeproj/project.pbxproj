@@ -108,6 +108,9 @@
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
+		E73E32D31DE87765007AC371 /* PersistentFileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */; };
+		E73E32D51DE87C19007AC371 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E32D41DE87C18007AC371 /* DateHelper.swift */; };
+		E73E32D71DE87C65007AC371 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E32D61DE87C65007AC371 /* Math.swift */; };
 		E74109461DE694420030AD1D /* MNS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E74109451DE694420030AD1D /* MNS.storyboard */; };
 		E74109481DE694970030AD1D /* MNSMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74109471DE694970030AD1D /* MNSMainController.swift */; };
 		E741094A1DE69AA60030AD1D /* MNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E74109491DE69AA60030AD1D /* MNS.strings */; };
@@ -398,6 +401,9 @@
 		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
 		E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YUCIHighPassSkinSmoothing.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/YUCIHighPassSkinSmoothing/YUCIHighPassSkinSmoothing.framework"; sourceTree = "<group>"; };
 		E73CFF891D655E39002A63C6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentFileHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/Persistents/Base/PersistentFileHelper.swift; sourceTree = "<group>"; };
+		E73E32D41DE87C18007AC371 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/DateHelper.swift; sourceTree = "<group>"; };
+		E73E32D61DE87C65007AC371 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/Math.swift; sourceTree = "<group>"; };
 		E74109451DE694420030AD1D /* MNS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MNS.storyboard; sourceTree = "<group>"; };
 		E74109471DE694970030AD1D /* MNSMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSMainController.swift; sourceTree = "<group>"; };
 		E74109491DE69AA60030AD1D /* MNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MNS.strings; sourceTree = "<group>"; };
@@ -626,8 +632,11 @@
 			isa = PBXGroup;
 			children = (
 				E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */,
+				E73E32D41DE87C18007AC371 /* DateHelper.swift */,
+				E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */,
 				E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */,
 				E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */,
+				E73E32D61DE87C65007AC371 /* Math.swift */,
 				E702FF851DE83642003F2B85 /* StringHelper.swift */,
 				E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */,
 				E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */,
@@ -1523,11 +1532,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E73E32D31DE87765007AC371 /* PersistentFileHelper.swift in Sources */,
 				E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */,
 				E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */,
 				E702FF7B1DE82E2E003F2B85 /* BezierBubble.swift in Sources */,
 				E702FF861DE83642003F2B85 /* StringHelper.swift in Sources */,
+				E73E32D51DE87C19007AC371 /* DateHelper.swift in Sources */,
 				E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */,
+				E73E32D71DE87C65007AC371 /* Math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1990,6 +2002,7 @@
 				E702FF781DE82D3D003F2B85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E708AB341C86CAA50071104E /* Build configuration list for PBXProject "Vessage" */ = {
 			isa = XCConfigurationList;

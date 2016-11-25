@@ -173,6 +173,10 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return PersistentManager.sharedInstance.getModel(VessageUser.self, idValue: userId)
     }
     
+    func deleteCachedUsers(userIds:[String]) {
+        PersistentManager.sharedInstance.removeModels(VessageUser(), idArray: userIds)
+    }
+    
     func fetchUserProfile(userId:String){
         setForeceGetUserProfileIgnoreTimeLimit()
         let req = GetUserInfoRequest()

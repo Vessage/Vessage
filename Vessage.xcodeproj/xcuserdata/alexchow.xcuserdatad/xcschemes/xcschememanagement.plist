@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>iAvatarMessage.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
 		<key>iMessageTask.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +22,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>E702FF681DE82D3D003F2B85</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E708AB381C86CAA50071104E</key>
 		<dict>
 			<key>primary</key>

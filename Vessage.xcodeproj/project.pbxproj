@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */; };
+		E702FF6A1DE82D3D003F2B85 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D518191DBD86A3007F6A5D /* Messages.framework */; };
+		E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */; };
+		E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */; };
+		E702FF721DE82D3D003F2B85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E702FF711DE82D3D003F2B85 /* Assets.xcassets */; };
+		E702FF761DE82D3D003F2B85 /* iAvatarMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E702FF7B1DE82E2E003F2B85 /* BezierBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */; };
+		E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */; };
+		E702FF7F1DE82EAD003F2B85 /* ImageUtil+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */; };
+		E702FF811DE82F0F003F2B85 /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */; };
+		E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */; };
+		E702FF861DE83642003F2B85 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF851DE83642003F2B85 /* StringHelper.swift */; };
+		E702FF881DE836BB003F2B85 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF871DE836BB003F2B85 /* String+MD5.swift */; };
 		E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */; };
 		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
 		E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ConversationViewController.swift */; };
@@ -242,6 +254,16 @@
 		E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E702FF741DE82D3D003F2B85 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E708AB311C86CAA50071104E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E702FF681DE82D3D003F2B85;
+			remoteInfo = iAvatarMessage;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		E71844611D49E8A200D3EDEF /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -249,6 +271,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				E702FF761DE82D3D003F2B85 /* iAvatarMessage.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,11 +280,21 @@
 
 /* Begin PBXFileReference section */
 		1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F7BE726A24BC27FDC3E8A87 /* Pods-Faceboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Faceboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-Faceboard/Pods-Faceboard.release.xcconfig"; sourceTree = "<group>"; };
 		A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.debug.xcconfig"; sourceTree = "<group>"; };
 		B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Faceboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
-		CC1E1CDDEB7ADF7CC49DE252 /* Pods-Faceboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Faceboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Faceboard/Pods-Faceboard.debug.xcconfig"; sourceTree = "<group>"; };
+		E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iAvatarMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		E702FF6F1DE82D3D003F2B85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E702FF711DE82D3D003F2B85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E702FF731DE82D3D003F2B85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BezierBubble.swift; path = Vessage/BezierBubble.swift; sourceTree = SOURCE_ROOT; };
+		E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageUtil.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/ImageUtil.swift; sourceTree = "<group>"; };
+		E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageUtil+Base64.swift"; sourceTree = "<group>"; };
+		E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
+		E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+RemoveChildView.swift"; path = "../../../bahamut/Bahamut/Bahamut/BahamutUIKit/UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
+		E702FF851DE83642003F2B85 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/StringHelper.swift; sourceTree = "<group>"; };
+		E702FF871DE836BB003F2B85 /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
@@ -518,6 +551,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E702FF661DE82D3D003F2B85 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E702FF6A1DE82D3D003F2B85 /* Messages.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E708AB361C86CAA50071104E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -551,8 +592,6 @@
 			children = (
 				A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */,
 				C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */,
-				CC1E1CDDEB7ADF7CC49DE252 /* Pods-Faceboard.debug.xcconfig */,
-				8F7BE726A24BC27FDC3E8A87 /* Pods-Faceboard.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -583,10 +622,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E702FF6B1DE82D3D003F2B85 /* iAvatarMessage */ = {
+			isa = PBXGroup;
+			children = (
+				E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */,
+				E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */,
+				E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */,
+				E702FF851DE83642003F2B85 /* StringHelper.swift */,
+				E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */,
+				E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */,
+				E702FF711DE82D3D003F2B85 /* Assets.xcassets */,
+				E702FF731DE82D3D003F2B85 /* Info.plist */,
+			);
+			path = iAvatarMessage;
+			sourceTree = "<group>";
+		};
 		E708AB301C86CAA50071104E = {
 			isa = PBXGroup;
 			children = (
 				E708AB3B1C86CAA50071104E /* Vessage */,
+				E702FF6B1DE82D3D003F2B85 /* iAvatarMessage */,
 				E708AB3A1C86CAA50071104E /* Products */,
 				B024D79892B85EA4D71592BB /* Frameworks */,
 				414B1B2CE9AE6E05B1B6B1C4 /* Pods */,
@@ -597,6 +652,7 @@
 			isa = PBXGroup;
 			children = (
 				E708AB391C86CAA50071104E /* Vessage.app */,
+				E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -653,6 +709,7 @@
 				E708AB6A1C86CE1D0071104E /* StringHelper.swift */,
 				E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */,
 				E78EA59B1DBB0E6000C49B9C /* Math.swift */,
+				E702FF871DE836BB003F2B85 /* String+MD5.swift */,
 			);
 			name = BahamutCommon;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon;
@@ -779,6 +836,8 @@
 				E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */,
 				E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */,
 				E708AC001C86D7B70071104E /* UserGuide.swift */,
+				E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */,
+				E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */,
 			);
 			name = BahamutUIKit;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit;
@@ -1268,6 +1327,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E702FF681DE82D3D003F2B85 /* iAvatarMessage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E702FF791DE82D3D003F2B85 /* Build configuration list for PBXNativeTarget "iAvatarMessage" */;
+			buildPhases = (
+				E702FF651DE82D3D003F2B85 /* Sources */,
+				E702FF661DE82D3D003F2B85 /* Frameworks */,
+				E702FF671DE82D3D003F2B85 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iAvatarMessage;
+			productName = iAvatarMessage;
+			productReference = E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
 		E708AB381C86CAA50071104E /* Vessage */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E708AB4B1C86CAA50071104E /* Build configuration list for PBXNativeTarget "Vessage" */;
@@ -1283,6 +1359,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E702FF751DE82D3D003F2B85 /* PBXTargetDependency */,
 			);
 			name = Vessage;
 			productName = Vessage;
@@ -1295,10 +1372,15 @@
 		E708AB311C86CAA50071104E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 0810;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Bahamut;
 				TargetAttributes = {
+					E702FF681DE82D3D003F2B85 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 2BW6TGDJAV;
+						ProvisioningStyle = Automatic;
+					};
 					E708AB381C86CAA50071104E = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 2BW6TGDJAV;
@@ -1329,11 +1411,21 @@
 			projectRoot = "";
 			targets = (
 				E708AB381C86CAA50071104E /* Vessage */,
+				E702FF681DE82D3D003F2B85 /* iAvatarMessage */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E702FF671DE82D3D003F2B85 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E702FF721DE82D3D003F2B85 /* Assets.xcassets in Resources */,
+				E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E708AB371C86CAA50071104E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1427,6 +1519,18 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E702FF651DE82D3D003F2B85 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */,
+				E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */,
+				E702FF7B1DE82E2E003F2B85 /* BezierBubble.swift in Sources */,
+				E702FF861DE83642003F2B85 /* StringHelper.swift in Sources */,
+				E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E708AB351C86CAA50071104E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1455,6 +1559,7 @@
 				E77447041DC2E015000924AB /* VideoBubbleVessageHandler.swift in Sources */,
 				E72D0BF01CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift in Sources */,
 				E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */,
+				E702FF881DE836BB003F2B85 /* String+MD5.swift in Sources */,
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
 				E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */,
 				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
@@ -1486,6 +1591,7 @@
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
 				E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */,
+				E702FF7F1DE82EAD003F2B85 /* ImageUtil+Base64.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
 				E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */,
 				E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */,
@@ -1572,6 +1678,7 @@
 				E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */,
 				E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */,
 				E75E269F1DE43AD7000D2D38 /* VessageTimeMachine.swift in Sources */,
+				E702FF811DE82F0F003F2B85 /* UIView+RemoveChildView.swift in Sources */,
 				E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */,
 				E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */,
 				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
@@ -1616,7 +1723,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E702FF751DE82D3D003F2B85 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E702FF681DE82D3D003F2B85 /* iAvatarMessage */;
+			targetProxy = E702FF741DE82D3D003F2B85 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E702FF6F1DE82D3D003F2B85 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		E708AB401C86CAA50071104E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1646,6 +1769,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E702FF771DE82D3D003F2B85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2BW6TGDJAV;
+				INFOPLIST_FILE = iAvatarMessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage.iAvatarMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		E702FF781DE82D3D003F2B85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2BW6TGDJAV;
+				INFOPLIST_FILE = iAvatarMessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage.iAvatarMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
 		E708AB491C86CAA50071104E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1819,6 +1983,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E702FF791DE82D3D003F2B85 /* Build configuration list for PBXNativeTarget "iAvatarMessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E702FF771DE82D3D003F2B85 /* Debug */,
+				E702FF781DE82D3D003F2B85 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		E708AB341C86CAA50071104E /* Build configuration list for PBXProject "Vessage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

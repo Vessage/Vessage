@@ -2,11 +2,11 @@ platform :ios, '8.0'
 use_frameworks!
 
 target "Vessage" do
-    pod 'Alamofire'#, '~> 3.4'
+    pod 'Alamofire', '~> 3'
 
     pod 'EVReflection', '~> 2'
 
-    pod 'AlamofireJsonToObjects'#, '~> 1.3.0'
+    pod 'AlamofireJsonToObjects', '~> 1'
 
     pod 'MJRefresh'
 

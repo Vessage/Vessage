@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol BezierBubbleContentContainerDelegate {
     func bezierBubbleContentContainer(onDraw rect: CGRect)
@@ -121,10 +122,10 @@ class BezierBubbleView: UIView {
             contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2, rect.size.height - spaceOfContentToView * 2 - startMarkHeight)
             contentContainer.frame.origin = CGPointMake(spaceOfContentToView, spaceOfContentToView)
         case .Left(startYRatio: _):
-            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2, rect.size.height - spaceOfContentToView * 2 - startMarkHeight)
+            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2 - startMarkHeight, rect.size.height - spaceOfContentToView * 2)
             contentContainer.frame.origin = CGPointMake(spaceOfContentToView, spaceOfContentToView)
         case .Right(startYRatio: _):
-            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2, rect.size.height - spaceOfContentToView * 2 - startMarkHeight)
+            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2 - startMarkHeight, rect.size.height - spaceOfContentToView * 2)
             contentContainer.frame.origin = CGPointMake(startMarkHeight + spaceOfContentToView, spaceOfContentToView)
         }
     }

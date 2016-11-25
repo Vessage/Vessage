@@ -17,8 +17,8 @@ PODS:
     - Vivid
 
 DEPENDENCIES:
-  - Alamofire
-  - AlamofireJsonToObjects
+  - Alamofire (~> 3)
+  - AlamofireJsonToObjects (~> 1)
   - AliyunOSSiOS
   - EVReflection (~> 2)
   - ImageSlideshow (~> 0.6)
@@ -41,6 +41,6 @@ SPEC CHECKSUMS:
   Vivid: 65d28aba89fc750fceda8172c8b233f27d0ac18b
   YUCIHighPassSkinSmoothing: 8418fd1bf605ec22b647c57745b863b352f72097
 
-PODFILE CHECKSUM: 676909192cb7b6b2963745b2aaf378bb8172ef56
+PODFILE CHECKSUM: 872e61203972ff1d89b341110ee66c592c55e7bf
 
 COCOAPODS: 1.1.1

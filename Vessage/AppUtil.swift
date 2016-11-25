@@ -199,13 +199,6 @@ extension UIViewController{
         return self.showActivityHudWithMessage(title, message: message, async: async, completionHandler: completionHandler)
     }
 }
-
-extension UIView{
-    func removeAllSubviews() {
-        self.subviews.forEach{$0.removeFromSuperview()}
-    }
-}
-
 func random() -> Int {
     return NSNumber(unsignedInt: arc4random()).integerValue
 }

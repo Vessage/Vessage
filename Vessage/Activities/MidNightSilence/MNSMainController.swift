@@ -8,6 +8,7 @@
 
 import Foundation
 import MJRefresh
+import LTMorphingLabel
 
 private extension String{
     var mnsLocalizedString:String{
@@ -22,13 +23,30 @@ class MNSPostCell: UITableViewCell {
     @IBOutlet weak var nickLabel: UILabel!
 }
 
+private let noChatConversationLeftTimeSpan:Int64 = 1 * 3600 * 1000
+
+private let openTimeInterval:NSTimeInterval = 6 * 3600
+private var todayOpenTime:NSDate{
+    let now = NSDate()
+    return DateHelper.generateDate(now.yearOfDate, month: now.monthOfDate, day: now.dayOfDate, hour: 0, minute: 1, second: 0)
+}
+
+private var todayCloseTime:NSDate{
+    let openTime = todayOpenTime
+    return openTime.addSeconds(openTimeInterval)
+}
+
 class MNSMainController: UIViewController {
     
     static let activityId = "1004"
+    static let midNightAnncRegex = "^.{6,280}$"
     
-    @IBOutlet weak var blockTipsLabel: UILabel!
+    @IBOutlet weak var tipsLabel0: LTMorphingLabel!
+    @IBOutlet weak var tipsLabel1: LTMorphingLabel!
+    
+    @IBOutlet weak var blockTipsLabel: LTMorphingLabel!
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var bcgImageView: UIImageView!
     @IBOutlet weak var myContentButton: UIBarButtonItem!{
         didSet{
             myContentButton.enabled = mainInfo != nil
@@ -36,9 +54,19 @@ class MNSMainController: UIViewController {
     }
     private var userService = ServiceContainer.getUserService()
     
+    
     private var isOpenTime:Bool{
         let now = NSDate()
-        return now.hourOfDate == 0 ? now.minuteOfDate > 1 : (now.hourOfDate > 0 && now.hourOfDate < 6)
+        return todayOpenTime.timeIntervalSince1970 <= now.timeIntervalSince1970 && now.timeIntervalSince1970 < todayCloseTime.timeIntervalSince1970
+    }
+    private var timer:NSTimer!
+    private var nextOpenTime:NSDate{
+        let now = NSDate()
+        let tdot = todayOpenTime
+        if now.timeIntervalSince1970 < tdot.timeIntervalSince1970 {
+            return todayOpenTime
+        }
+        return tdot.addDays(1)
     }
     
     private var users = [MNSUser](){
@@ -47,14 +75,24 @@ class MNSMainController: UIViewController {
         }
     }
     
-    private var timer:NSTimer!
-    
     
     private var mainInfo:MNSMainInfo!{
         didSet{
             if mainInfo == nil{
                 users.removeAll()
             }else if let u = mainInfo.acUsers{
+                #if DEBUG
+                if u.count == 0 {
+                    if let conversation = (ServiceContainer.getConversationService().conversations.filter{$0.type == Conversation.typeSingleChat}).first{
+                        let a = MNSUser()
+                        a.annc = "f111"
+                        a.aTs = DateHelper.UnixTimeSpanTotalMilliseconds
+                        a.nick = "A"
+                        a.userId = conversation.chatterId
+                        users.appendContentsOf([a,a,a])
+                    }
+                }
+                #endif
                 users.appendContentsOf(u)
             }
             myContentButton.enabled = mainInfo != nil
@@ -65,15 +103,20 @@ class MNSMainController: UIViewController {
 extension MNSMainController{
     override func viewDidLoad() {
         super.viewDidLoad()
+        tipsLabel0.morphingEffect = .Pixelate
+        tipsLabel1.morphingEffect = .Pixelate
+        blockTipsLabel.morphingEffect = .Evaporate
         tableView.allowsSelection = true
         tableView.allowsMultipleSelection = false
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
+        tableView.tableFooterView?.hidden = true
         let tableViewMJHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(MNSMainController.onPullTableViewHeader(_:)))
         tableView.mj_header = tableViewMJHeader
-        tableView.hidden = !isOpenTime
-        blockTipsLabel.hidden = isOpenTime
+        tableView.delegate = self
+        tableView.dataSource = self
+        refreshHiddenViews()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -88,6 +131,25 @@ extension MNSMainController{
         timer = nil
     }
     
+    func refreshHiddenViews() {
+        let isOpen = isOpenTime
+        tableView.hidden = !isOpen
+        bcgImageView.hidden = !isOpen
+        blockTipsLabel.hidden = isOpen
+        if !String.isNullOrEmpty(blockTipsLabel.text) && tipsLabel0.hidden != isOpen {
+            tipsLabel0.hidden = isOpen
+            tipsLabel1.hidden = isOpen
+            if tipsLabel0.hidden == false {
+                let l0 = tipsLabel0.text
+                let l1 = tipsLabel1.text
+                tipsLabel0.text = nil
+                tipsLabel1.text = nil
+                tipsLabel0.text = l0
+                tipsLabel1.text = l1
+            }
+        }
+    }
+    
     func onPullTableViewHeader(_:AnyObject?) {
         mainInfo = nil
         getMainInfoData()
@@ -98,14 +160,35 @@ extension MNSMainController{
             , completion: nil)
     }
     
+    @IBAction func onMyContentClicked(sender: AnyObject) {
+        let property = UIEditTextPropertySet()
+        property.illegalValueMessage = "ANNC_CONTENT_LIMIT".mnsLocalizedString
+        property.isOneLineValue = false
+        property.propertyValue = String.isNullOrWhiteSpace(mainInfo?.annc) ? "DEFAULT_ANNC".mnsLocalizedString : mainInfo.annc
+        property.propertyIdentifier = "ANNC_CONTENT"
+        property.propertyLabel = "EDIT_MID_NIGHT_ANNC_TITLE".mnsLocalizedString
+        property.valueRegex = MNSMainController.midNightAnncRegex
+        let controller = UIEditTextPropertyViewController.showEditPropertyViewController(self.navigationController!, propertySet: property, controllerTitle: "MY_MID_NIGHT_ACCN".mnsLocalizedString, delegate: self)
+        controller.view.backgroundColor = UIColor.darkGrayColor()
+        controller.propertyNameLabel.textColor = UIColor.lightGrayColor()
+        controller.propertyValueTextField.textColor = UIColor.lightGrayColor()
+        controller.propertyValueTextView.textColor = UIColor.lightGrayColor()
+    }
+    
     func onTimeTick(_:AnyObject?) {
-        tableView?.hidden = !isOpenTime
-        blockTipsLabel?.hidden = isOpenTime
-        if !isOpenTime {
+        let now = NSDate()
+        refreshHiddenViews()
+        if isOpenTime {
+            if users.count == 0 {
+                blockTipsLabel?.hidden = false
+                self.blockTipsLabel?.text = "NO_USER_TIPS".mnsLocalizedString
+                if now.minuteOfDate % 3 == 0 && now.secondOfDate == 0{
+                    self.getMainInfoData()
+                }
+            }
+        }else{
+            let t = nextOpenTime
             var timeString = "";
-            let now = NSDate()
-            var t = now.addDays(1)
-            t = DateHelper.generateDate(t.yearOfDate, month: t.monthOfDate, day: t.dayOfDate, hour: 0, minute: 1, second: 0)
             let interval = Int(t.timeIntervalSince1970 - now.timeIntervalSince1970)
             if interval > 3600 {
                 timeString = String(format: "H_HOUR_M_MIN_S_SEC".mnsLocalizedString, interval / 3600 , (interval % 3600) / 60, interval % 60)
@@ -114,9 +197,7 @@ extension MNSMainController{
             }else{
                 timeString = String(format: "S_SEC".mnsLocalizedString,interval)
             }
-            
-            
-            blockTipsLabel?.text = String(format: "OPEN_TIPS_FORMAT".mnsLocalizedString, timeString)
+            blockTipsLabel?.text = timeString
         }
     }
 }
@@ -143,22 +224,16 @@ extension MNSMainController:UITableViewDelegate,UITableViewDataSource{
         cell?.selected = false
         let user = users[indexPath.row]
         let delegate = UserProfileViewControllerDelegateOpenConversation()
-        UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate)
+        delegate.beforeRemoveTimeSpan = noChatConversationLeftTimeSpan
+        delegate.createActivityId = MNSMainController.activityId
+        UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate){ controller in
+            controller.accountIdHidden = true
+        }
     }
 }
 
 
 extension MNSMainController:UIEditTextPropertyViewControllerDelegate{
-    
-    @IBAction func onMyContentClicked(sender: AnyObject) {
-        let property = UIEditTextPropertySet()
-        property.illegalValueMessage = "ANNC_CONTENT_LIMIT".mnsLocalizedString
-        property.isOneLineValue = false
-        property.propertyIdentifier = "ANNC_CONTENT"
-        property.propertyLabel = "MID_NIGHT_ANNC".mnsLocalizedString
-        property.valueRegex = "?[6,140]"
-        UIEditTextPropertyViewController.showEditPropertyViewController(self.navigationController!, propertySet: property, controllerTitle: "MY_MID_NIGHT_ACCN".mnsLocalizedString, delegate: self)
-    }
     
     func editPropertySave(propertyIdentifier: String!, newValue: String!) {
         if propertyIdentifier == "ANNC_CONTENT" {
@@ -179,7 +254,7 @@ extension MNSMainController:UIEditTextPropertyViewControllerDelegate{
         }
     }
     
-    func getMainInfoData() {
+    private func getMainInfoData() {
         if isOpenTime == false || mainInfo != nil {
             return
         }
@@ -188,9 +263,22 @@ extension MNSMainController:UIEditTextPropertyViewControllerDelegate{
         req.location = ServiceContainer.getLocationService().hereShortString
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MNSMainInfo>) in
             hud.hideAnimated(true)
+            self.tableView.mj_header.endRefreshing()
             if result.isSuccess{
                 self.mainInfo = result.returnObject
+                if self.mainInfo.newer{
+                    self.showNewerAlert()
+                }
+            }else{
+                self.playCrossMark("GET_MAIN_INFO_ERROR".mnsLocalizedString, async:false, completionHandler: nil)
             }
         }
+    }
+    
+    private func showNewerAlert(){
+        let ac = UIAlertAction(title: "POST_ANNC".mnsLocalizedString, style: .Default) { (ac) in
+            self.onMyContentClicked(self.myContentButton)
+        }
+        self.showAlert("MNS".mnsLocalizedString, msg: "MNS_NEWER_MESSAGE".mnsLocalizedString, actions: [ac])
     }
 }

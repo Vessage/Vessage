@@ -66,6 +66,8 @@ class ActivityListController: UITableViewController {
     
     private(set) var activityService:ActivityService!
     
+    private var activities = [[ActivityInfo]]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let dict = [NSForegroundColorAttributeName:UIColor.themeColor]
@@ -78,6 +80,7 @@ class ActivityListController: UITableViewController {
         self.tableView.allowsMultipleSelection = false
         self.activityService.addObserver(self, selector: #selector(ActivityListController.onActivityBadgeUpdated(_:)), name: ActivityService.onEnabledActivityBadgeUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ActivityListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
+        activities.appendContentsOf(activityService.getEnabledActivities())
     }
     
     deinit{
@@ -105,7 +108,7 @@ class ActivityListController: UITableViewController {
     
     //MARK: Table View Delegate
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return activities.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,7 +117,7 @@ class ActivityListController: UITableViewController {
         }else{
             tableView.separatorStyle = .None
         }
-        return activityService.getEnabledActivities().count
+        return activities[section].count
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -126,7 +129,7 @@ class ActivityListController: UITableViewController {
     }
     
     private func openActivity(indexPath:NSIndexPath){
-        let activityInfo = activityService.getEnabledActivities()[indexPath.row]
+        let activityInfo = activities[indexPath.section][indexPath.row]
         let controller = UIViewController.instanceFromStoryBoard(activityInfo.storyBoardName, identifier: activityInfo.controllerIdentifier)
         if(activityInfo.isPushController){
             controller.hidesBottomBarWhenPushed = true
@@ -139,7 +142,7 @@ class ActivityListController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ActivityListCell.reuseId, forIndexPath: indexPath) as! ActivityListCell
         cell.rootController = self
-        cell.activityInfo = activityService.getEnabledActivities()[indexPath.row]
+        cell.activityInfo = activities[indexPath.section][indexPath.row]
         cell.setSeparatorFullWidth()
         return cell
     }

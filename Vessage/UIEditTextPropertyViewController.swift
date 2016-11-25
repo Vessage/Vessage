@@ -79,9 +79,9 @@ class UIEditTextPropertyViewController: UIViewController
     {
         if delegate != nil
         {
-            if model.valueRegex != nil
+            if let valueRegex = model.valueRegex
             {
-                if String.isNullOrEmpty(propertyValueTextField.text) || !(propertyValueTextField.text! =~ model.valueRegex)
+                if String.isNullOrEmpty(newPropertyValue) || !(newPropertyValue =~ valueRegex)
                 {
                     self.playToast( model.illegalValueMessage ?? "ILLEGLE_VALUE".localizedString())
                     return
@@ -92,13 +92,14 @@ class UIEditTextPropertyViewController: UIViewController
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    static func showEditPropertyViewController(currentNavigationController:UINavigationController,propertySet:UIEditTextPropertySet,controllerTitle:String,delegate:UIEditTextPropertyViewControllerDelegate)
+    static func showEditPropertyViewController(currentNavigationController:UINavigationController,propertySet:UIEditTextPropertySet,controllerTitle:String,delegate:UIEditTextPropertyViewControllerDelegate) -> UIEditTextPropertyViewController
     {
         let controller = instanceFromStoryBoard()
         controller.title = controllerTitle
         controller.model = propertySet
         controller.delegate = delegate
         currentNavigationController.pushViewController(controller, animated: true)
+        return controller
     }
     
     static func instanceFromStoryBoard() -> UIEditTextPropertyViewController

@@ -28,7 +28,7 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         setServiceNotReady()
     }
     
-    func getEnabledActivities() -> [ActivityInfo]{
+    func getEnabledActivities() -> [[ActivityInfo]]{
         return ActivityInfoList
     }
     

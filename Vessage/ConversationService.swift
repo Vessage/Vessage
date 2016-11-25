@@ -24,6 +24,8 @@ class Conversation:BahamutObject
     var lstTs:Int64 = 0
     var pinned = false
     
+    var acId:String?
+    
     //MARK: Deprecated
     var isGroup = false //use type instead
 }
@@ -73,6 +75,7 @@ extension Conversation{
 
 let ConversationMaxTimeUpMinutes = 14.0 * 24 * 60
 let ConversationUpdatedValue = "ConversationUpdatedValue"
+let ConversationMaxTimeUpMS = Int64(ConversationMaxTimeUpMinutes * 60 * 1000)
 
 //MARK: ServiceContainer DI
 extension ServiceContainer{
@@ -193,21 +196,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     private func createConverationWithVessage(vsg:Vessage) -> Conversation{
         if vsg.isGroup {
-            return self.addNewConversationWithGroupVessage(vsg)
+            return self.addNewConversationWithGroupVessage(vsg,beforeRemoveTs: 0,createByActivityId: nil)
         }else{
-            return self.addNewConversationWithUserId(vsg.sender)
+            return self.addNewConversationWithUserId(vsg.sender,beforeRemoveTs: 0,createByActivityId: nil)
         }
-    }
-    
-    private func addNewConversationWithGroupVessage(vsg:Vessage) -> Conversation{
-        let conversation = Conversation()
-        conversation.chatterId = vsg.sender
-        conversation.type = Conversation.typeGroupChat
-        conversation.conversationId = IdUtil.generateUniqueId()
-        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
-        conversation.saveModel()
-        conversations.append(conversation)
-        return conversation
     }
     
     private func refreshConversations(){
@@ -249,8 +241,24 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             a.lstTs > b.lstTs
         }
     }
+ 
     
-    func openConversationByGroup(group:ChatGroup) -> Conversation {
+    func existsConversationOfUserId(userId:String) -> Bool {
+        return (conversations.filter{userId == $0.chatterId ?? ""}).count > 0
+    }
+    
+    func openConversationByUserId(userId:String,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation {
+        
+        if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
+            return conversation
+        }else{
+            let conversation = addNewConversationWithUserId(userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: createByActivityId)
+            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
+            return conversation
+        }
+    }
+    
+    func openConversationByGroup(group:ChatGroup,beforeRemoveTs:Int64 = 0,createByActivityId:String? = nil) -> Conversation {
         if let conversation = (conversations.filter{group.groupId == $0.chatterId ?? ""}).first{
             return conversation
         }
@@ -258,33 +266,33 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         conversation.chatterId = group.groupId
         conversation.type = Conversation.typeGroupChat
         conversation.conversationId = IdUtil.generateUniqueId()
-        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds + beforeRemoveTs - ConversationMaxTimeUpMS
+        conversation.acId = createByActivityId
         conversation.saveModel()
         conversations.append(conversation)
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
         return conversation
     }
     
-    func existsConversationOfUserId(userId:String) -> Bool {
-        return (conversations.filter{userId == $0.chatterId ?? ""}).count > 0
+    private func addNewConversationWithGroupVessage(vsg:Vessage,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation{
+        let conversation = Conversation()
+        conversation.chatterId = vsg.sender
+        conversation.type = Conversation.typeGroupChat
+        conversation.conversationId = IdUtil.generateUniqueId()
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds + beforeRemoveTs - ConversationMaxTimeUpMS
+        conversation.acId = createByActivityId
+        conversation.saveModel()
+        conversations.append(conversation)
+        return conversation
     }
     
-    func openConversationByUserId(userId:String) -> Conversation {
-        
-        if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
-            return conversation
-        }else{
-            let conversation = addNewConversationWithUserId(userId)
-            self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
-            return conversation
-        }
-    }
-    
-    private func addNewConversationWithUserId(userId:String) -> Conversation {
+    private func addNewConversationWithUserId(userId:String,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation {
         let conversation = Conversation()
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.chatterId = userId
-        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
+        conversation.type = Conversation.typeSingleChat
+        conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds + beforeRemoveTs - ConversationMaxTimeUpMS
+        conversation.acId = createByActivityId
         conversation.saveModel()
         conversations.append(conversation)
         return conversation

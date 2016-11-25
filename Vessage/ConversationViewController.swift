@@ -315,7 +315,8 @@ extension ConversationViewController{
     private func showChatterProfile(){
         if let c = defaultOtherChatterId{
             if let user = userService.getCachedUserProfile(c) {
-                userService.showUserProfile(self, user: user)
+                let controller = userService.showUserProfile(self, user: user)
+                controller.accountIdHidden = !String.isNullOrWhiteSpace(conversation?.acId)
                 return
             }
         }
@@ -562,14 +563,13 @@ extension ConversationViewController{
 //MARK: Show ConversationViewController Extension
 extension ConversationViewController{
     
-    static func showConversationViewController(nvc:UINavigationController,userId: String,initMessage:[String:AnyObject]? = nil) {
+    static func showConversationViewController(nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = 0,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
         if userId == UserSetting.userId {
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
         }else{
-            let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId)
-            ConversationViewController.showConversationViewController(nvc, conversation: conversation,initMessage: initMessage)
+            let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: createByActivityId)
+            ConversationViewController.showConversationViewController(nvc, conversation: conversation, initMessage: initMessage)
         }
-        
     }
     
     static func showConversationViewController(nvc:UINavigationController,conversation:Conversation,initMessage:[String:AnyObject]? = nil)

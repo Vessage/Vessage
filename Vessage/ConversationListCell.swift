@@ -212,7 +212,7 @@ class ConversationListCell:ConversationListCellBase{
             }
         }
         let minLeft = NSNumber(double:conversation.getConversationTimeUpMinutesLeft()).integerValue
-        if minLeft < Int(ConversationMaxTimeUpMinutes / 2) || (minLeft % 3 == 0 && !conversation.pinned) {
+        if !conversation.pinned && (minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 == 0) {
             self.subLine = conversation.getDisappearString()
         }else{
             self.subLine = conversation.getLastUpdatedTime().toFriendlyString()

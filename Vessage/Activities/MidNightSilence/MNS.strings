@@ -5,11 +5,16 @@
   Created by Alex Chow on 2016/11/24.
   Copyright © 2016年 Bahamut. All rights reserved.
 */
+MNS = "夜深人静";
 DEFAULT_ANNC = "长夜漫漫，无心睡眠";
-OPEN_TIPS_FORMAT = "距离开放时间还有\n\n%@\n\n请凌晨00:01后再来";
 H_HOUR_M_MIN_S_SEC = "%d小时%02d分%02d秒";
 M_MIN_S_SEC = "%02d分%02d秒";
 S_SEC = "%02d秒";
 ANNC_CONTENT_LIMIT = "深夜感言需要6到140字";
 MID_NIGHT_ANNC = "深夜感言";
-MY_MID_NIGHT_ACCN = "我的深夜感言";
+EDIT_MID_NIGHT_ANNC_TITLE = "深夜感言(你的故事、感触、心情...)";
+MY_MID_NIGHT_ACCN = "更新深夜感言";
+GET_MAIN_INFO_ERROR = "刷新失败，请下拉页面重试";
+MNS_NEWER_MESSAGE = "这里是一个让夜猫子聊天的地方，发表你的深夜感言，找夜猫子一起聊天、讲故事!";
+POST_ANNC = "发表感言";
+NO_USER_TIPS = "暂时还没有夜猫子上线";

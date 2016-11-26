@@ -25,3 +25,6 @@ target "Vessage" do
     #pod 'KDCircularProgress'
 end
 
+target "iAvatarMessage" do
+    pod "ImagePickerSheetController", "~> 0.9.1"
+end

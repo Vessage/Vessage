@@ -1,0 +1,13 @@
+/* 
+  Locolized.strings
+  Vessage
+
+  Created by Alex Chow on 2016/11/26.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+SELECT_IMAGE_SOURCE_TITLE = "选择头像来源";
+PREPARE_DATA_ERROR = "准备数据出错";
+READ_AVATAR_IMAGE_ERROR = "读取图片数据错误";
+CONFIRM = "确定";
+CANCEL = "取消";
+AVATAR_UPDATED = "头像已更新";

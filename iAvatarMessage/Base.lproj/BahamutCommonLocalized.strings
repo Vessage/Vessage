@@ -1,0 +1,15 @@
+/* 
+  BahamutCommonLocalized.strings
+  Sharelink
+
+  Created by AlexChow on 16/1/25.
+  Copyright © 2016年 GStudio. All rights reserved.
+*/
+JUST_NOW = "New";
+X_MINUTES_AGO = "%@ minutes ago";
+X_HOURS_AGO = "%@ hours ago";
+X_DAYS_AGO = "%@ days ago";
+
+TAKE_NEW_PHOTO = "拍照";
+SELECT_PHOTO = "从相册中选择";
+CANCEL = "取消";

@@ -62,6 +62,7 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
     }
     vc.playToast("PEOPLE_NO_MOBILE".localizedString())
 }
+
 extension String
 {
     func localizedString() -> String{
@@ -145,18 +146,6 @@ extension String{
     }
 }
 
-func intToBadgeString(value:Int!) -> String?{
-    if value == nil {
-        return nil
-    }
-    if value <= 0 {
-        return nil
-    }
-    if value > 99 {
-        return "99+"
-    }
-    return "\(value)"
-}
 
 func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!,autoHide:Bool = true){
     badgeLabel?.text = intToBadgeString(value)
@@ -166,10 +155,6 @@ func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!,autoHide:Bool = true){
         badgeLabel?.text = badgeLabel?.text ?? "0"
     }
     badgeLabel?.animationMaxToMin()
-}
-
-func isInSimulator() -> Bool{
-    return TARGET_IPHONE_SIMULATOR == Int32("1")
 }
 
 let hudSpinImageArray:[UIImage] = {
@@ -216,60 +201,6 @@ extension UITableViewCell{
         self.preservesSuperviewLayoutMargins = false
         self.separatorInset = UIEdgeInsetsZero
         self.layoutMargins = UIEdgeInsetsZero
-    }
-}
-
-extension Int64{
-    var friendString:String{
-        if self >= 1000 {
-            return "\(self / 1000)k"
-        }
-        return "\(self)"
-    }
-}
-
-extension Int32{
-    var friendString:String{
-        if self >= 1000 {
-            return "\(self / 1000)k"
-        }
-        return "\(self)"
-    }
-}
-
-extension Int{
-    var friendString:String{
-        if self >= 1000 {
-            return "\(self / 1000)k"
-        }
-        return "\(self)"
-    }
-}
-
-extension UIImagePickerController{
-    static func showUIImagePickerAlert(viewController:UIViewController,title:String!,message:String!,allowsEditing:Bool = false) -> UIImagePickerController{
-        let imagePicker = UIImagePickerController()
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
-        let camera = UIAlertAction(title: "TAKE_NEW_PHOTO".localizedString(), style: .Default) { _ in
-            imagePicker.sourceType = .Camera
-            imagePicker.allowsEditing = allowsEditing
-            viewController.presentViewController(imagePicker, animated: true, completion: nil)
-        }
-        camera.setValue(UIImage(named: "avartar_camera")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
-        if !isInSimulator() {
-            alert.addAction(camera)
-        }
-        
-        let album = UIAlertAction(title:"SELECT_PHOTO".localizedString(), style: .Default) { _ in
-            imagePicker.sourceType = .PhotoLibrary
-            imagePicker.allowsEditing = allowsEditing
-            viewController.presentViewController(imagePicker, animated: true, completion: nil)
-        }
-        album.setValue(UIImage(named: "avartar_select")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
-        alert.addAction(album)
-        alert.addAction(UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel){ _ in})
-        viewController.showAlert(alert)
-        return imagePicker
     }
 }
 

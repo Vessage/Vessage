@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "chat_image_mgr.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "avartar_camera.png",
       "scale" : "2x"
     },
     {

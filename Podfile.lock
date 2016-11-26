@@ -5,6 +5,7 @@ PODS:
     - EVReflection
   - AliyunOSSiOS (2.5.3)
   - EVReflection (2.46.0)
+  - ImagePickerSheetController (0.9.1)
   - ImageSlideshow (0.6):
     - ImageSlideshow/Core (= 0.6)
   - ImageSlideshow/Core (0.6)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - AlamofireJsonToObjects (~> 1)
   - AliyunOSSiOS
   - EVReflection (~> 2)
+  - ImagePickerSheetController (~> 0.9.1)
   - ImageSlideshow (~> 0.6)
   - LTMorphingLabel
   - MBProgressHUD
@@ -33,6 +35,7 @@ SPEC CHECKSUMS:
   AlamofireJsonToObjects: e5155c1c58493c44d7ebe56bbb1aa65d95e82c68
   AliyunOSSiOS: 80e7617a5f4b5af50888a8946f6a744726032972
   EVReflection: 17b377f0dd86a0f6ceccab574d0e22962a2f107e
+  ImagePickerSheetController: 3c58c9fee6dcf36485222358a021f6b734f997ba
   ImageSlideshow: 06bfd96b5e56264d2d9d38262b73e32034b85288
   LTMorphingLabel: 2777d8d9cb699125f48dfcd95d78bd3d77c87ade
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -41,6 +44,6 @@ SPEC CHECKSUMS:
   Vivid: 65d28aba89fc750fceda8172c8b233f27d0ac18b
   YUCIHighPassSkinSmoothing: 8418fd1bf605ec22b647c57745b863b352f72097
 
-PODFILE CHECKSUM: 872e61203972ff1d89b341110ee66c592c55e7bf
+PODFILE CHECKSUM: a90b8603c9be1571692f5235b6e67df0a2f17c6a
 
 COCOAPODS: 1.1.1

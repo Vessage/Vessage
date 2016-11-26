@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */; };
+		8C560C274B386CAA919605C8 /* Pods_iAvatarMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA84BED95476A7BC42FA505 /* Pods_iAvatarMessage.framework */; };
 		E702FF6A1DE82D3D003F2B85 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D518191DBD86A3007F6A5D /* Messages.framework */; };
 		E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */; };
 		E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */; };
@@ -193,6 +194,20 @@
 		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
 		E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */; };
 		E7D5182E1DBDA686007F6A5D /* FaceTextBubbleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D5182D1DBDA686007F6A5D /* FaceTextBubbleConfig.swift */; };
+		E7D7C42F1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */; };
+		E7D7C4311DE913D000D962D4 /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4301DE913D000D962D4 /* UIImagePicker+SourceAlert.swift */; };
+		E7D7C4331DE915A200D962D4 /* BahamutCommonLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */; };
+		E7D7C4351DE915C800D962D4 /* BahamutCommonLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4341DE915C800D962D4 /* BahamutCommonLocalized.swift */; };
+		E7D7C4381DE9169000D962D4 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4371DE9169000D962D4 /* CommonExtension.swift */; };
+		E7D7C43A1DE916A700D962D4 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4391DE916A700D962D4 /* CommonExtension.swift */; };
+		E7D7C44B1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4461DE91A3D00D962D4 /* BahamutCommonLocalized.strings */; };
+		E7D7C44C1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4491DE91A3D00D962D4 /* BahamutCommonLocalized.strings */; };
+		E7D7C44F1DE91A9600D962D4 /* Locolized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4511DE91A9600D962D4 /* Locolized.strings */; };
+		E7D7C4541DE91C5200D962D4 /* Integer+FriendlyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */; };
+		E7D7C4561DE924D000D962D4 /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4551DE924D000D962D4 /* BahamutCommon.xcassets */; };
+		E7D7C45A1DE925D900D962D4 /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */; };
+		E7D7C45C1DE935E100D962D4 /* AvatarMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C45B1DE935E100D962D4 /* AvatarMessageContentView.swift */; };
+		E7D7C45E1DE97B2900D962D4 /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */; };
 		E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */; };
 		E7DDCEFB1DBFA4BC00E61A56 /* ChattersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DDCEFA1DBFA4BC00E61A56 /* ChattersBoard.swift */; };
 		E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */; };
@@ -283,7 +298,9 @@
 
 /* Begin PBXFileReference section */
 		1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		72258C8A2163FF70EFC32F4D /* Pods-iAvatarMessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAvatarMessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAvatarMessage/Pods-iAvatarMessage.release.xcconfig"; sourceTree = "<group>"; };
 		A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.debug.xcconfig"; sourceTree = "<group>"; };
+		B38C41DD9A8963B20266F798 /* Pods-iAvatarMessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAvatarMessage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAvatarMessage/Pods-iAvatarMessage.debug.xcconfig"; sourceTree = "<group>"; };
 		B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Faceboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
 		E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iAvatarMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -488,6 +505,21 @@
 		E7D518191DBD86A3007F6A5D /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FaceTextChatBubbles.xcassets; sourceTree = "<group>"; };
 		E7D5182D1DBDA686007F6A5D /* FaceTextBubbleConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextBubbleConfig.swift; sourceTree = "<group>"; };
+		E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
+		E7D7C4301DE913D000D962D4 /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImagePicker+SourceAlert.swift"; path = "../../../bahamut/Bahamut/Bahamut/BahamutUIKit/UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
+		E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCommonLocalized.swift; sourceTree = "<group>"; };
+		E7D7C4341DE915C800D962D4 /* BahamutCommonLocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BahamutCommonLocalized.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/BahamutCommonLocalized.swift; sourceTree = "<group>"; };
+		E7D7C4371DE9169000D962D4 /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtension.swift; sourceTree = "<group>"; };
+		E7D7C4391DE916A700D962D4 /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonExtension.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/CommonExtension.swift; sourceTree = "<group>"; };
+		E7D7C4471DE91A3D00D962D4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = BahamutCommonLocalized.strings; sourceTree = "<group>"; };
+		E7D7C44A1DE91A3D00D962D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = BahamutCommonLocalized.strings; sourceTree = "<group>"; };
+		E7D7C4501DE91A9600D962D4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Locolized.strings"; sourceTree = "<group>"; };
+		E7D7C4521DE91A9A00D962D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Locolized.strings; sourceTree = "<group>"; };
+		E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Integer+FriendlyString.swift"; sourceTree = "<group>"; };
+		E7D7C4551DE924D000D962D4 /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BahamutCommon.xcassets; sourceTree = "<group>"; };
+		E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = BahamutCommon.xcassets; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutCommon.xcassets; sourceTree = "<group>"; };
+		E7D7C45B1DE935E100D962D4 /* AvatarMessageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarMessageContentView.swift; sourceTree = "<group>"; };
+		E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIAnimationHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/UIAnimationHelper.swift; sourceTree = "<group>"; };
 		E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBackgroundPickerController.swift; sourceTree = "<group>"; };
 		E7DDCEFA1DBFA4BC00E61A56 /* ChattersBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattersBoard.swift; sourceTree = "<group>"; };
 		E7DDCEFE1DBFDE4700E61A56 /* BezierChatBubble.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = BezierChatBubble.playground; sourceTree = "<group>"; };
@@ -554,6 +586,7 @@
 		E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueueProtocol.swift; sourceTree = "<group>"; };
 		E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetChatImagesTask.swift; sourceTree = "<group>"; };
 		E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchExtension.swift; sourceTree = "<group>"; };
+		FFA84BED95476A7BC42FA505 /* Pods_iAvatarMessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAvatarMessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -562,6 +595,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E702FF6A1DE82D3D003F2B85 /* Messages.framework in Frameworks */,
+				8C560C274B386CAA919605C8 /* Pods_iAvatarMessage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +632,8 @@
 			children = (
 				A3DC120E219841B6E3929694 /* Pods-Vessage.debug.xcconfig */,
 				C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */,
+				B38C41DD9A8963B20266F798 /* Pods-iAvatarMessage.debug.xcconfig */,
+				72258C8A2163FF70EFC32F4D /* Pods-iAvatarMessage.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -624,6 +660,7 @@
 				1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */,
 				B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */,
 				E7D518191DBD86A3007F6A5D /* Messages.framework */,
+				FFA84BED95476A7BC42FA505 /* Pods_iAvatarMessage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -631,17 +668,14 @@
 		E702FF6B1DE82D3D003F2B85 /* iAvatarMessage */ = {
 			isa = PBXGroup;
 			children = (
-				E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */,
-				E73E32D41DE87C18007AC371 /* DateHelper.swift */,
-				E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */,
-				E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */,
+				E7D7C4361DE915CF00D962D4 /* Arch */,
 				E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */,
-				E73E32D61DE87C65007AC371 /* Math.swift */,
-				E702FF851DE83642003F2B85 /* StringHelper.swift */,
 				E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */,
+				E7D7C45B1DE935E100D962D4 /* AvatarMessageContentView.swift */,
 				E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */,
 				E702FF711DE82D3D003F2B85 /* Assets.xcassets */,
 				E702FF731DE82D3D003F2B85 /* Info.plist */,
+				E7D7C4511DE91A9600D962D4 /* Locolized.strings */,
 			);
 			path = iAvatarMessage;
 			sourceTree = "<group>";
@@ -719,6 +753,8 @@
 				E708AB5F1C86CE1D0071104E /* BahamutCommonLocalized.strings */,
 				E78EA59B1DBB0E6000C49B9C /* Math.swift */,
 				E702FF871DE836BB003F2B85 /* String+MD5.swift */,
+				E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */,
+				E7D7C4371DE9169000D962D4 /* CommonExtension.swift */,
 			);
 			name = BahamutCommon;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon;
@@ -847,6 +883,9 @@
 				E708AC001C86D7B70071104E /* UserGuide.swift */,
 				E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */,
 				E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */,
+				E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */,
+				E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */,
+				E7D7C4551DE924D000D962D4 /* BahamutCommon.xcassets */,
 			);
 			name = BahamutUIKit;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit;
@@ -1169,6 +1208,42 @@
 			path = Message;
 			sourceTree = "<group>";
 		};
+		E7D7C4361DE915CF00D962D4 /* Arch */ = {
+			isa = PBXGroup;
+			children = (
+				E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */,
+				E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */,
+				E7D7C4451DE91A3D00D962D4 /* zh-Hans.lproj */,
+				E7D7C4481DE91A3D00D962D4 /* en.lproj */,
+				E7D7C4391DE916A700D962D4 /* CommonExtension.swift */,
+				E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */,
+				E7D7C4341DE915C800D962D4 /* BahamutCommonLocalized.swift */,
+				E73E32D41DE87C18007AC371 /* DateHelper.swift */,
+				E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */,
+				E7D7C4301DE913D000D962D4 /* UIImagePicker+SourceAlert.swift */,
+				E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */,
+				E73E32D61DE87C65007AC371 /* Math.swift */,
+				E702FF851DE83642003F2B85 /* StringHelper.swift */,
+			);
+			name = Arch;
+			sourceTree = "<group>";
+		};
+		E7D7C4451DE91A3D00D962D4 /* zh-Hans.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				E7D7C4461DE91A3D00D962D4 /* BahamutCommonLocalized.strings */,
+			);
+			path = "zh-Hans.lproj";
+			sourceTree = "<group>";
+		};
+		E7D7C4481DE91A3D00D962D4 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				E7D7C4491DE91A3D00D962D4 /* BahamutCommonLocalized.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
 		E7DDCEF91DBFA4AA00E61A56 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1340,9 +1415,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E702FF791DE82D3D003F2B85 /* Build configuration list for PBXNativeTarget "iAvatarMessage" */;
 			buildPhases = (
+				B4B3B3360577A9E6A30DBC7D /* [CP] Check Pods Manifest.lock */,
 				E702FF651DE82D3D003F2B85 /* Sources */,
 				E702FF661DE82D3D003F2B85 /* Frameworks */,
 				E702FF671DE82D3D003F2B85 /* Resources */,
+				C575ACF28ED1C6A03128C8D1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1430,8 +1507,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7D7C44C1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */,
+				E7D7C44F1DE91A9600D962D4 /* Locolized.strings in Resources */,
+				E7D7C44B1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */,
 				E702FF721DE82D3D003F2B85 /* Assets.xcassets in Resources */,
 				E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */,
+				E7D7C45A1DE925D900D962D4 /* BahamutCommon.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1444,6 +1525,7 @@
 				E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
+				E7D7C4561DE924D000D962D4 /* BahamutCommon.xcassets in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E75E269E1DE43AD7000D2D38 /* VessageTimeMachine.storyboard in Resources */,
 				E7EF285E1D791AFD0064231F /* LittlePaperMessage.storyboard in Resources */,
@@ -1525,6 +1607,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Vessage/Pods-Vessage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B4B3B3360577A9E6A30DBC7D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C575ACF28ED1C6A03128C8D1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAvatarMessage/Pods-iAvatarMessage-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1535,11 +1647,16 @@
 				E73E32D31DE87765007AC371 /* PersistentFileHelper.swift in Sources */,
 				E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */,
 				E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */,
+				E7D7C4351DE915C800D962D4 /* BahamutCommonLocalized.swift in Sources */,
 				E702FF7B1DE82E2E003F2B85 /* BezierBubble.swift in Sources */,
 				E702FF861DE83642003F2B85 /* StringHelper.swift in Sources */,
+				E7D7C43A1DE916A700D962D4 /* CommonExtension.swift in Sources */,
+				E7D7C4311DE913D000D962D4 /* UIImagePicker+SourceAlert.swift in Sources */,
 				E73E32D51DE87C19007AC371 /* DateHelper.swift in Sources */,
 				E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */,
 				E73E32D71DE87C65007AC371 /* Math.swift in Sources */,
+				E7D7C45C1DE935E100D962D4 /* AvatarMessageContentView.swift in Sources */,
+				E7D7C45E1DE97B2900D962D4 /* UIAnimationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1641,11 +1758,13 @@
 				E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */,
 				E7886A751DC97D3D00368C03 /* SNSPostRF.swift in Sources */,
 				E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */,
+				E7D7C4381DE9169000D962D4 /* CommonExtension.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
 				E74109481DE694970030AD1D /* MNSMainController.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
+				E7D7C4541DE91C5200D962D4 /* Integer+FriendlyString.swift in Sources */,
 				E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */,
 				E7AD4DC51DA5071600A0176F /* NFCPostManager.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
@@ -1656,6 +1775,7 @@
 				E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
+				E7D7C42F1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift in Sources */,
 				E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */,
@@ -1679,6 +1799,7 @@
 				E7886A691DC97D3D00368C03 /* SNSCommentInputView.swift in Sources */,
 				E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
+				E7D7C4331DE915A200D962D4 /* BahamutCommonLocalized.swift in Sources */,
 				E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */,
 				E7740EE31DA764C30022A903 /* NFCCommentInputView.swift in Sources */,
 				E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */,
@@ -1778,11 +1899,37 @@
 			name = BahamutCommonLocalized.strings;
 			sourceTree = "<group>";
 		};
+		E7D7C4461DE91A3D00D962D4 /* BahamutCommonLocalized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7D7C4471DE91A3D00D962D4 /* zh-Hans */,
+			);
+			name = BahamutCommonLocalized.strings;
+			sourceTree = "<group>";
+		};
+		E7D7C4491DE91A3D00D962D4 /* BahamutCommonLocalized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7D7C44A1DE91A3D00D962D4 /* en */,
+			);
+			name = BahamutCommonLocalized.strings;
+			sourceTree = "<group>";
+		};
+		E7D7C4511DE91A9600D962D4 /* Locolized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7D7C4501DE91A9600D962D4 /* zh-Hans */,
+				E7D7C4521DE91A9A00D962D4 /* Base */,
+			);
+			name = Locolized.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E702FF771DE82D3D003F2B85 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B38C41DD9A8963B20266F798 /* Pods-iAvatarMessage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1804,6 +1951,7 @@
 		};
 		E702FF781DE82D3D003F2B85 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72258C8A2163FF70EFC32F4D /* Pods-iAvatarMessage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;

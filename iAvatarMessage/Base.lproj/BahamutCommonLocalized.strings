@@ -10,6 +10,6 @@ X_MINUTES_AGO = "%@ minutes ago";
 X_HOURS_AGO = "%@ hours ago";
 X_DAYS_AGO = "%@ days ago";
 
-TAKE_NEW_PHOTO = "拍照";
-SELECT_PHOTO = "从相册中选择";
-CANCEL = "取消";
+TAKE_NEW_PHOTO = "Camera";
+SELECT_PHOTO = "Album";
+CANCEL = "Cancel";

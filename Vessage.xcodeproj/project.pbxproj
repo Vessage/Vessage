@@ -142,6 +142,8 @@
 		E77447041DC2E015000924AB /* VideoBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */; };
 		E77447061DC2E49E000924AB /* ImageBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */; };
 		E77447081DC33096000924AB /* BubbleVessageHandlersConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */; };
+		E77951F21DEB3D9800EE7736 /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E77951F01DEB3D9800EE7736 /* BahamutCommon.xcassets */; };
+		E77951F31DEB3D9800EE7736 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77951F11DEB3D9800EE7736 /* ImageUtil.swift */; };
 		E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */; };
 		E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */; };
 		E78739371DC0612600684320 /* BezierBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78739361DC0612600684320 /* BezierBubble.swift */; };
@@ -450,6 +452,8 @@
 		E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandlersConfig.swift; sourceTree = "<group>"; };
+		E77951F01DEB3D9800EE7736 /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = BahamutCommon.xcassets; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutCommon.xcassets; sourceTree = "<group>"; };
+		E77951F11DEB3D9800EE7736 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageUtil.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/ImageUtil.swift; sourceTree = "<group>"; };
 		E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewCells.swift; sourceTree = "<group>"; };
 		E78739361DC0612600684320 /* BezierBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierBubble.swift; sourceTree = "<group>"; };
@@ -1212,6 +1216,8 @@
 			isa = PBXGroup;
 			children = (
 				E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */,
+				E77951F01DEB3D9800EE7736 /* BahamutCommon.xcassets */,
+				E77951F11DEB3D9800EE7736 /* ImageUtil.swift */,
 				E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */,
 				E7D7C4451DE91A3D00D962D4 /* zh-Hans.lproj */,
 				E7D7C4481DE91A3D00D962D4 /* en.lproj */,
@@ -1511,6 +1517,7 @@
 				E7D7C44F1DE91A9600D962D4 /* Locolized.strings in Resources */,
 				E7D7C44B1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */,
 				E702FF721DE82D3D003F2B85 /* Assets.xcassets in Resources */,
+				E77951F21DEB3D9800EE7736 /* BahamutCommon.xcassets in Resources */,
 				E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */,
 				E7D7C45A1DE925D900D962D4 /* BahamutCommon.xcassets in Resources */,
 			);
@@ -1645,6 +1652,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E73E32D31DE87765007AC371 /* PersistentFileHelper.swift in Sources */,
+				E77951F31DEB3D9800EE7736 /* ImageUtil.swift in Sources */,
 				E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */,
 				E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */,
 				E7D7C4351DE915C800D962D4 /* BahamutCommonLocalized.swift in Sources */,
@@ -1939,7 +1947,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2BW6TGDJAV;
 				INFOPLIST_FILE = iAvatarMessage/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage.iAvatarMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1961,7 +1969,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2BW6TGDJAV;
 				INFOPLIST_FILE = iAvatarMessage/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage.iAvatarMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";

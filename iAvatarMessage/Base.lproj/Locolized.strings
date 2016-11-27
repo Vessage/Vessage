@@ -5,7 +5,7 @@
   Created by Alex Chow on 2016/11/26.
   Copyright © 2016年 Bahamut. All rights reserved.
 */
-SELECT_IMAGE_SOURCE_TITLE = "Select Avatar Image Source";
+SELECT_IMAGE_SOURCE_TITLE = "Select Avatar Image";
 PREPARE_DATA_ERROR = "Prepare Data Failure";
 READ_AVATAR_IMAGE_ERROR = "Read Avatar Image Error";
 CONFIRM = "OK";

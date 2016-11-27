@@ -13,7 +13,7 @@
         <!--Messages View Controller-->
         <scene sceneID="7MM-of-jgj">
             <objects>
-                <viewController id="ObA-dk-sSI" customClass="MessagesViewController" customModule="iAvatarMessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ObA-dk-sSI" customClass="MessagesViewController" customModule="MessagesExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qkL-Od-lgU"/>
                         <viewControllerLayoutGuide type="bottom" id="n38-gi-rB5"/>
@@ -23,9 +23,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uRg-iS-8cH">
-                                <rect key="frame" x="40" y="365" width="240" height="100"/>
+                                <rect key="frame" x="40" y="348" width="240" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="orQ-pf-i94">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face" translatesAutoresizingMaskIntoConstraints="NO" id="orQ-pf-i94">
                                         <rect key="frame" x="96" y="26" width="48" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="1QH-BN-lH8"/>
@@ -55,23 +55,11 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHf-NG-wQC">
-                                <rect key="frame" x="16" y="30" width="288" height="443"/>
-                                <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="64" minValue="64" maxValue="128" translatesAutoresizingMaskIntoConstraints="NO" id="OFk-0e-n5a">
-                                        <rect key="frame" x="-2" y="408" width="292" height="31"/>
-                                        <connections>
-                                            <action selector="onAvatarSizeValueChanged:" destination="ObA-dk-sSI" eventType="valueChanged" id="RB5-rh-ym4"/>
-                                        </connections>
-                                    </slider>
-                                </subviews>
+                                <rect key="frame" x="16" y="30" width="288" height="412"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="OFk-0e-n5a" secondAttribute="trailing" id="oKG-6k-xgV"/>
-                                    <constraint firstItem="OFk-0e-n5a" firstAttribute="leading" secondItem="EHf-NG-wQC" secondAttribute="leading" id="u4e-Qo-8HB"/>
-                                </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYW-hw-Me2">
-                                <rect key="frame" x="104" y="384" width="112" height="36"/>
+                                <rect key="frame" x="104" y="392" width="112" height="36"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Messages" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNQ-Ti-zCs">
                                         <rect key="frame" x="10" y="6" width="92" height="24"/>
@@ -94,15 +82,21 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r36-Vq-gAd">
-                                <rect key="frame" x="16" y="480" width="288" height="48"/>
+                                <rect key="frame" x="16" y="448" width="288" height="80"/>
                                 <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="64" minValue="64" maxValue="128" translatesAutoresizingMaskIntoConstraints="NO" id="OFk-0e-n5a">
+                                        <rect key="frame" x="-2" y="5" width="292" height="31"/>
+                                        <connections>
+                                            <action selector="onAvatarSizeValueChanged:" destination="ObA-dk-sSI" eventType="valueChanged" id="RB5-rh-ym4"/>
+                                        </connections>
+                                    </slider>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDg-DN-oaO">
-                                        <rect key="frame" x="0.0" y="6" width="36" height="36"/>
+                                        <rect key="frame" x="0.0" y="38" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="Pyf-5C-FfS"/>
                                             <constraint firstAttribute="width" constant="36" id="X1b-eZ-45q"/>
                                         </constraints>
-                                        <state key="normal" image="chat_image_mgr"/>
+                                        <state key="normal" image="face"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="18"/>
@@ -113,7 +107,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Avatar Message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1SH-gA-i8p">
-                                        <rect key="frame" x="42" y="9" width="204" height="30"/>
+                                        <rect key="frame" x="42" y="41" width="204" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -122,7 +116,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLz-dc-Vep">
-                                        <rect key="frame" x="252" y="6" width="36" height="36"/>
+                                        <rect key="frame" x="252" y="38" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="8Cq-ca-Ru1"/>
                                             <constraint firstAttribute="height" constant="36" id="oAZ-l0-04W"/>
@@ -133,29 +127,31 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="yLz-dc-Vep" firstAttribute="centerY" secondItem="eDg-DN-oaO" secondAttribute="centerY" id="3IS-oP-N9a"/>
                                     <constraint firstAttribute="trailing" secondItem="yLz-dc-Vep" secondAttribute="trailing" id="5uI-kX-rzZ"/>
-                                    <constraint firstAttribute="height" constant="48" id="ERN-ho-CZw"/>
+                                    <constraint firstAttribute="height" constant="80" id="ERN-ho-CZw"/>
                                     <constraint firstItem="eDg-DN-oaO" firstAttribute="leading" secondItem="r36-Vq-gAd" secondAttribute="leading" id="FmS-yE-xmG"/>
-                                    <constraint firstItem="1SH-gA-i8p" firstAttribute="centerY" secondItem="r36-Vq-gAd" secondAttribute="centerY" id="Og1-Ub-bM7"/>
+                                    <constraint firstItem="OFk-0e-n5a" firstAttribute="leading" secondItem="r36-Vq-gAd" secondAttribute="leading" id="JuX-Ob-FAs"/>
+                                    <constraint firstAttribute="bottom" secondItem="eDg-DN-oaO" secondAttribute="bottom" constant="6" id="OGy-dS-RWj"/>
+                                    <constraint firstItem="eDg-DN-oaO" firstAttribute="top" secondItem="OFk-0e-n5a" secondAttribute="bottom" constant="3" id="bP3-Ox-Kjw"/>
                                     <constraint firstItem="yLz-dc-Vep" firstAttribute="leading" secondItem="1SH-gA-i8p" secondAttribute="trailing" constant="6" id="eAH-Lc-c9W"/>
-                                    <constraint firstItem="eDg-DN-oaO" firstAttribute="centerY" secondItem="r36-Vq-gAd" secondAttribute="centerY" id="kNQ-YS-UAQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="OFk-0e-n5a" secondAttribute="trailing" id="mLS-4w-am0"/>
                                     <constraint firstItem="1SH-gA-i8p" firstAttribute="leading" secondItem="eDg-DN-oaO" secondAttribute="trailing" constant="6" id="q73-iu-fVz"/>
-                                    <constraint firstItem="yLz-dc-Vep" firstAttribute="centerY" secondItem="r36-Vq-gAd" secondAttribute="centerY" id="zN0-ND-qyS"/>
+                                    <constraint firstItem="1SH-gA-i8p" firstAttribute="centerY" secondItem="eDg-DN-oaO" secondAttribute="centerY" id="yua-kk-r57"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="cYW-hw-Me2" secondAttribute="bottom" constant="60" id="7FT-ct-arf"/>
+                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="cYW-hw-Me2" secondAttribute="bottom" constant="20" id="7FT-ct-arf"/>
                             <constraint firstItem="cYW-hw-Me2" firstAttribute="centerX" secondItem="zMn-AG-sqS" secondAttribute="centerX" id="8qG-NS-YjP"/>
-                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="uRg-iS-8cH" secondAttribute="bottom" constant="15" id="FkC-wj-80h"/>
+                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="uRg-iS-8cH" secondAttribute="bottom" id="FkC-wj-80h"/>
                             <constraint firstItem="n38-gi-rB5" firstAttribute="top" secondItem="r36-Vq-gAd" secondAttribute="bottom" id="NAO-j2-ptl"/>
                             <constraint firstItem="cYW-hw-Me2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zMn-AG-sqS" secondAttribute="leadingMargin" constant="10" id="OXh-bW-iex"/>
-                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="EHf-NG-wQC" secondAttribute="bottom" constant="7" id="W7m-LD-Tip"/>
+                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="EHf-NG-wQC" secondAttribute="bottom" constant="6" id="W7m-LD-Tip"/>
                             <constraint firstItem="uRg-iS-8cH" firstAttribute="centerX" secondItem="zMn-AG-sqS" secondAttribute="centerX" id="Xba-xh-QpF"/>
-                            <constraint firstItem="r36-Vq-gAd" firstAttribute="top" secondItem="OFk-0e-n5a" secondAttribute="bottom" constant="12" id="ZMX-7L-p89"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="cYW-hw-Me2" secondAttribute="trailing" constant="10" id="bjh-xr-haN"/>
                             <constraint firstItem="r36-Vq-gAd" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leadingMargin" id="cN5-5h-KCy"/>
                             <constraint firstItem="EHf-NG-wQC" firstAttribute="top" secondItem="qkL-Od-lgU" secondAttribute="bottom" constant="10" id="stx-bq-Y3g"/>
@@ -167,7 +163,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="528"/>
                     <connections>
+                        <outlet property="avatarButton" destination="eDg-DN-oaO" id="Kw8-WT-qrC"/>
                         <outlet property="avatarSizeSlider" destination="OFk-0e-n5a" id="lxR-Yq-Af3"/>
+                        <outlet property="bottom" destination="NAO-j2-ptl" id="rj0-OS-cqj"/>
                         <outlet property="compactTipsView" destination="uRg-iS-8cH" id="2oK-ff-aXd"/>
                         <outlet property="flashMessageLabel" destination="LNQ-Ti-zCs" id="iYC-ca-KQI"/>
                         <outlet property="inputTextField" destination="1SH-gA-i8p" id="PrS-q6-gxE"/>
@@ -181,8 +179,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chat_image_mgr" width="128" height="128"/>
-        <image name="default_avatar" width="144" height="144"/>
+        <image name="face" width="256" height="256"/>
         <image name="send" width="256" height="256"/>
     </resources>
 </document>

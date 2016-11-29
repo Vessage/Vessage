@@ -57,10 +57,6 @@ class AvatarMessageContentContainer: UIView {
         }
         super.touchesMoved(touches, withEvent: event)
     }
-    
-    
-    
-    
 }
 
 //Horizontal Bubble
@@ -88,11 +84,12 @@ extension AvatarMessageContentContainer{
             avatarImageView.frame.origin.x = 0
             avatarImageView.frame.origin.y = 0
             
-            bubbleView.frame.origin.x = avatarImageView.frame.origin.x + avatarImageView.frame.width + 6
-            bubbleView.frame.origin.y = 0
             
             let bubbleViewSize = bubbleView.sizeOfContentSize(contentSize, direction: .Right(startYRatio: 0.5))
             bubbleView.frame.size = bubbleViewSize
+
+            bubbleView.frame.origin.x = avatarImageView.frame.origin.x + avatarImageView.frame.width + 6
+            bubbleView.frame.origin.y = avatarSize > bubbleViewSize.height ? (avatarSize - bubbleViewSize.height) / 2 : 0
             
             setBubbleMarkPoint()
             
@@ -104,7 +101,12 @@ extension AvatarMessageContentContainer{
     }
     
     private func setBubbleMarkPoint(){
-        let midPoint = (self.avatarImageView.frame.origin.y + self.avatarImageView.frame.height / 2 - bubbleView.frame.origin.y) / (bubbleView.frame.size.height)
+        var midPoint:CGFloat = 0
+        if self.bubbleView.frame.height < self.avatarSize{
+            midPoint = 0.5
+        }else{
+            midPoint = (self.avatarImageView.frame.origin.y + self.avatarImageView.frame.height / 2 - bubbleView.frame.origin.y) / (bubbleView.frame.size.height)
+        }
         self.bubbleView.bubbleDirection = .Right(startYRatio: Float(midPoint))
     }
     

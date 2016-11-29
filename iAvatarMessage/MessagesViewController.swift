@@ -17,6 +17,46 @@ extension String
     }
 }
 
+private let contentMinHeight:CGFloat = 32
+
+private let contentTextSizeMin:Float = Float(UIFont.systemFontSize())
+private let contentTextSizeMax:Float = Float(UIFont.systemFontSize()) + 10
+
+private let avatarSizeMin:Float = 64
+private let avatarSizeMax:Float = 128
+
+private let whiteColor = UIColor.whiteColor()
+
+private let contentColorSet = [
+    (bubble:UIColor.lightGrayColor(),text:whiteColor),
+    (bubble:UIColor.blueColor(),text:whiteColor),
+    (bubble:UIColor.greenColor(),text:whiteColor),
+    (bubble:UIColor.darkGrayColor(),text:whiteColor),
+    (bubble:UIColor.blackColor(),text:whiteColor),
+    
+    (bubble:UIColor(hexString: "#f1fafa"),text:UIColor.darkGrayColor()),
+    (bubble:UIColor(hexString: "#e8ffe8"),text:UIColor.darkGrayColor()),
+    (bubble:UIColor(hexString: "#e8e8ff"),text:UIColor.blackColor()),
+    (bubble:UIColor(hexString: "#8080c0"),text:UIColor.yellowColor()),
+    (bubble:UIColor(hexString: "#e8d098"),text:UIColor.blueColor()),
+    
+    (bubble:UIColor(hexString: "#efefda"),text:UIColor.redColor()),
+    (bubble:UIColor(hexString: "#f2fld7"),text:UIColor.redColor()),
+    
+    (bubble:UIColor(hexString: "#336699"),text:whiteColor),
+    (bubble:UIColor(hexString: "#6699cc"),text:whiteColor),
+    (bubble:UIColor(hexString: "#66cccc"),text:whiteColor),
+    (bubble:UIColor(hexString: "#b45b3e"),text:whiteColor),
+    (bubble:UIColor(hexString: "#479ac7"),text:whiteColor),
+    (bubble:UIColor(hexString: "#00b271"),text:whiteColor),
+    
+    (bubble:UIColor(hexString: "#fbfbea"),text:UIColor.blackColor()),
+    (bubble:UIColor(hexString: "#d5f3f4"),text:UIColor.blackColor()),
+    (bubble:UIColor(hexString: "#d7fff0"),text:UIColor.blackColor()),
+    (bubble:UIColor(hexString: "#f0dad2"),text:UIColor.blackColor()),
+    (bubble:UIColor(hexString: "#ddf3ff"),text:UIColor.blackColor()),
+]
+
 //MARK:MessagesViewController
 class MessagesViewController: MSMessagesAppViewController {
     
@@ -30,32 +70,100 @@ class MessagesViewController: MSMessagesAppViewController {
         return NSURL(fileURLWithPath: cacheDir).URLByAppendingPathComponent("iavartar_tmp_sticker.png")!
     }()
     
-    @IBOutlet weak var avatarSizeSlider: UISlider!
+    private enum SliderMode:Int {
+        case
+        AvatarSize = 0,
+        TextSize = 1,
+        BubbleColor = 2
+    }
+    private let sliderModeCount = 3
+    
+    private var sliderMode = SliderMode.AvatarSize{
+        didSet{
+            if bottomSlider != nil && oldValue != sliderMode {
+                updateSlider()
+                updateSliderValue()
+            }
+        }
+    }
+    
+    @IBOutlet weak var sliderButton: UIButton!
+    @IBOutlet weak var bottomSlider: UISlider!
     @IBOutlet weak var compactTipsView: UIView!
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     
     @IBOutlet weak var messageContent: UIView!
     @IBOutlet weak var flashMessageLabel: UILabel!
-    var contentContainer:AvatarMessageContentContainer!
-    var textMessageLabel:UILabel!
     
-    @IBOutlet weak var avatarButton: UIButton!
-    private var bubbleView:BezierBubbleView!{
-        didSet{
-            bubbleView.bubbleViewLayer.fillColor = UIColor.lightGrayColor().CGColor
+    private var contentContainer:AvatarMessageContentContainer!
+    private var textMessageLabel:UILabel!
+    
+    private var messageContentColorIndex:Int{
+        get{
+            return NSUserDefaults.standardUserDefaults().integerForKey("messageContentColorIndex")
+        }
+        set{
+            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "messageContentColorIndex")
         }
     }
     
+    private var avatarSize:Float{
+        get{
+            
+            let size = NSUserDefaults.standardUserDefaults().floatForKey("avatarSize")
+            if size < avatarSizeMin {
+                return avatarSizeMin
+            }
+            if size > avatarSizeMax {
+                return avatarSizeMax
+            }
+            return size
+        }
+        set{
+            NSUserDefaults.standardUserDefaults().setFloat(newValue, forKey: "avatarSize")
+        }
+    }
+    
+    private var textSize:Float{
+        get{
+            let size = NSUserDefaults.standardUserDefaults().floatForKey("textSize")
+            if size < contentTextSizeMin {
+                return contentTextSizeMin
+            }
+            if size > contentTextSizeMax {
+                return contentTextSizeMax
+            }
+            return size
+        }
+        set{
+            NSUserDefaults.standardUserDefaults().setFloat(newValue, forKey: "textSize")
+        }
+    }
+    
+    private var messageContentColor:(bubble:UIColor,text:UIColor){
+        let index = messageContentColorIndex
+        if index >= 0 && index < contentColorSet.count{
+            return contentColorSet[index]
+        }
+        return contentColorSet[0]
+    }
+    
+    @IBOutlet weak var avatarButton: UIButton!
+    
     @IBOutlet weak var bottom: NSLayoutConstraint!
     
-    @IBAction func onAvatarSizeValueChanged(sender: AnyObject) {
-        contentContainer.avatarSize = CGFloat(avatarSizeSlider.value)
+    @IBAction func onSliderValueChanged(sender: AnyObject) {
+        updateSliderValue()
         refreshViews()
     }
     
     @IBAction func onClickAvatarButton(sender: AnyObject) {
         showImagePickerForAvatar()
+    }
+    
+    @IBAction func onClickSliderChangeButton(sender: AnyObject) {
+        sliderMode = SliderMode(rawValue: (sliderMode.rawValue + 1) % sliderModeCount)!
     }
     
     @IBAction func onClickSend(sender: AnyObject) {
@@ -77,8 +185,6 @@ class MessagesViewController: MSMessagesAppViewController {
                 }
             
         }
-        
-        
     }
     
     @IBAction func onTextMessageChanged(sender: AnyObject) {
@@ -98,10 +204,12 @@ class MessagesViewController: MSMessagesAppViewController {
         if String.isNullOrEmpty(inputTextField.text){
             messageContent.hidden = true
             sendButton.enabled = false
-            avatarSizeSlider.hidden = true
+            bottomSlider.hidden = true
+            sliderButton.hidden = true
         }else{
             compactTipsView.hidden = true
-            avatarSizeSlider.hidden = false
+            bottomSlider.hidden = false
+            sliderButton.hidden = false
             textMessageLabel?.text = inputTextField.text
             sendButton.enabled = true
             contentContainer.drawRect(self.messageContent.bounds)
@@ -116,12 +224,11 @@ class MessagesViewController: MSMessagesAppViewController {
         textMessageLabel.textAlignment = .Left
         textMessageLabel.numberOfLines = 0
         textMessageLabel.font = UIFont.systemFontOfSize(20)
-        textMessageLabel.textColor = UIColor.whiteColor()
         
         self.contentContainer = AvatarMessageContentContainer(frame: CGRectZero)
         self.contentContainer.delegate = self
         
-        self.avatarSizeSlider.setValue(Float(contentContainer.avatarSize), animated: true)
+        self.bottomSlider.setValue(Float(contentContainer.avatarSize), animated: true)
         
         self.messageContent.addSubview(contentContainer)
         
@@ -139,6 +246,13 @@ class MessagesViewController: MSMessagesAppViewController {
         }else{
             updateAvatar(UIImage(named: "face")!)
         }
+        updateSlider()
+        updateSliderValue()
+        
+        contentContainer.avatarSize = CGFloat(avatarSize)
+        textMessageLabel.font = textMessageLabel.font.fontWithSize(CGFloat(textSize))
+        updateBubbleColors()
+        
         refreshViews()
     }
     
@@ -173,6 +287,69 @@ class MessagesViewController: MSMessagesAppViewController {
     }
 }
 
+//MARK: Slider Mode
+extension MessagesViewController{
+    
+    private func updateBubbleColors() -> (bubble:UIColor,text:UIColor){
+        let colorTuple = messageContentColor
+        textMessageLabel.textColor = colorTuple.text
+        contentContainer.bubbleView.bubbleViewLayer.fillColor = colorTuple.bubble.CGColor
+        return colorTuple
+    }
+    
+    private func updateSliderValue(){
+        switch sliderMode {
+        case .AvatarSize:
+            let ats = bottomSlider.value
+            avatarSize = ats
+            contentContainer.avatarSize = CGFloat(ats)
+            bottomSlider.minimumTrackTintColor = nil
+            bottomSlider.maximumTrackTintColor = nil
+            bottomSlider.thumbTintColor = nil
+        case .TextSize:
+            let ts = bottomSlider.value
+            textSize = ts
+            textMessageLabel.font = textMessageLabel.font.fontWithSize(CGFloat(ts))
+            bottomSlider.minimumTrackTintColor = nil
+            bottomSlider.maximumTrackTintColor = nil
+            bottomSlider.thumbTintColor = nil
+        case .BubbleColor:
+            let index =  Int(bottomSlider.value)
+            messageContentColorIndex = index
+            let colorTuple = updateBubbleColors()
+            bottomSlider.thumbTintColor = colorTuple.bubble
+            if index > 0 && index < contentColorSet.count{
+                let leftColor = contentColorSet[index - 1]
+                bottomSlider.minimumTrackTintColor = leftColor.bubble
+            }
+            if index < contentColorSet.count - 1 && index > 0{
+                let rightColor = contentColorSet[index + 1]
+                bottomSlider.maximumTrackTintColor = rightColor.bubble
+            }
+        }
+    }
+    
+    private func updateSlider(){
+        switch sliderMode {
+        case .AvatarSize:
+            bottomSlider.minimumValue = avatarSizeMin
+            bottomSlider.maximumValue = avatarSizeMax
+            bottomSlider.setValue(avatarSize, animated: true)
+            sliderButton.setImage(UIImage(named: "avatar_size_btn")!, forState: .Normal)
+        case .TextSize:
+            bottomSlider.minimumValue = contentTextSizeMin
+            bottomSlider.maximumValue = contentTextSizeMax
+            bottomSlider.setValue(textSize, animated: true)
+            sliderButton.setImage(UIImage(named: "text_size_btn")!, forState: .Normal)
+        case .BubbleColor:
+            bottomSlider.minimumValue = 0
+            bottomSlider.maximumValue = Float(contentColorSet.count - 1)
+            bottomSlider.setValue(Float(messageContentColorIndex), animated: true)
+            sliderButton.setImage(UIImage(named: "bubble_color_btn")!, forState: .Normal)
+        }
+    }
+}
+
 //MARK: Update Avatar Message Content
 extension MessagesViewController:AvatarMessageContentContainerDelegate{
     
@@ -201,8 +378,8 @@ extension MessagesViewController:AvatarMessageContentContainerDelegate{
                 label.textAlignment = .Left
             }
  */
-            if contentSize.height < contentContainer.avatarSize {
-                contentSize.height = contentContainer.avatarSize
+            if contentSize.height < contentMinHeight {
+                contentSize.height = contentMinHeight
                 label.textAlignment = .Center
             }else{
                 label.textAlignment = .Left
@@ -242,27 +419,25 @@ extension MessagesViewController{
 import ImagePickerSheetController
 extension MessagesViewController{
     func showImagePickerForAvatar() {
-        let controller = ImagePickerSheetController.init(mediaType: .Image)
+        let controller = ImagePickerSheetController(mediaType: .Image)
         controller.maximumSelection = 1
         
-        controller.addAction(ImagePickerAction(title: "SELECT_IMAGE_SOURCE_TITLE".localizedString(), secondaryTitle: "CONFIRM".localizedString(), handler: { _ in
-            
-            }, secondaryHandler: { _, numberOfPhotos in
-                if numberOfPhotos > 0{
-                    if let asset = controller.selectedImageAssets.first{
-                        PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(120, 128), contentMode: .AspectFill, options: nil, resultHandler: { (image, userInfo) in
-                            if let img = image{
-                                self.setAvatar(img)
-                            }else{
-                                self.flashTips("READ_AVATAR_IMAGE_ERROR".localizedString())
-                            }
-                        })
-                    }
+        func selectImage(action:ImagePickerAction, numberOfPhotos:Int){
+            if numberOfPhotos > 0{
+                if let asset = controller.selectedImageAssets.first{
+                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(120, 128), contentMode: .AspectFill, options: nil, resultHandler: { (image, userInfo) in
+                        if let img = image{
+                            self.setAvatar(img)
+                        }else{
+                            self.flashTips("READ_AVATAR_IMAGE_ERROR".localizedString())
+                        }
+                    })
                 }
-        }))
+            }
+        }
         
+        controller.addAction(ImagePickerAction(title: "SELECT_IMAGE_SOURCE_TITLE".localizedString(), secondaryTitle: "CONFIRM".localizedString(), handler: { _ in}, secondaryHandler: selectImage))
         controller.addAction(ImagePickerAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { _ in
-            
         }))
         
         self.presentViewController(controller, animated: true, completion: nil)

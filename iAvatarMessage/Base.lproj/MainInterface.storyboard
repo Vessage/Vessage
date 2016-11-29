@@ -84,10 +84,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r36-Vq-gAd">
                                 <rect key="frame" x="16" y="448" width="288" height="80"/>
                                 <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="64" minValue="64" maxValue="128" translatesAutoresizingMaskIntoConstraints="NO" id="OFk-0e-n5a">
-                                        <rect key="frame" x="-2" y="5" width="292" height="31"/>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="64" maxValue="128" translatesAutoresizingMaskIntoConstraints="NO" id="OFk-0e-n5a">
+                                        <rect key="frame" x="42" y="-2" width="248" height="31"/>
                                         <connections>
-                                            <action selector="onAvatarSizeValueChanged:" destination="ObA-dk-sSI" eventType="valueChanged" id="RB5-rh-ym4"/>
+                                            <action selector="onSliderValueChanged:" destination="ObA-dk-sSI" eventType="valueChanged" id="RB5-rh-ym4"/>
                                         </connections>
                                     </slider>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDg-DN-oaO">
@@ -126,19 +126,30 @@
                                             <action selector="onClickSend:" destination="ObA-dk-sSI" eventType="touchUpInside" id="xx0-kc-cCA"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CD0-tN-fIE">
+                                        <rect key="frame" x="0.0" y="-5" width="36" height="36"/>
+                                        <state key="normal" image="avatar_size_btn"/>
+                                        <connections>
+                                            <action selector="onClickSliderChangeButton:" destination="ObA-dk-sSI" eventType="touchUpInside" id="dGm-Zf-cyM"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="yLz-dc-Vep" firstAttribute="centerY" secondItem="eDg-DN-oaO" secondAttribute="centerY" id="3IS-oP-N9a"/>
                                     <constraint firstAttribute="trailing" secondItem="yLz-dc-Vep" secondAttribute="trailing" id="5uI-kX-rzZ"/>
                                     <constraint firstAttribute="height" constant="80" id="ERN-ho-CZw"/>
+                                    <constraint firstItem="CD0-tN-fIE" firstAttribute="width" secondItem="eDg-DN-oaO" secondAttribute="width" id="Ffu-Si-A2o"/>
                                     <constraint firstItem="eDg-DN-oaO" firstAttribute="leading" secondItem="r36-Vq-gAd" secondAttribute="leading" id="FmS-yE-xmG"/>
-                                    <constraint firstItem="OFk-0e-n5a" firstAttribute="leading" secondItem="r36-Vq-gAd" secondAttribute="leading" id="JuX-Ob-FAs"/>
                                     <constraint firstAttribute="bottom" secondItem="eDg-DN-oaO" secondAttribute="bottom" constant="6" id="OGy-dS-RWj"/>
-                                    <constraint firstItem="eDg-DN-oaO" firstAttribute="top" secondItem="OFk-0e-n5a" secondAttribute="bottom" constant="3" id="bP3-Ox-Kjw"/>
+                                    <constraint firstItem="CD0-tN-fIE" firstAttribute="leading" secondItem="r36-Vq-gAd" secondAttribute="leading" id="RVU-ow-3gL"/>
+                                    <constraint firstItem="CD0-tN-fIE" firstAttribute="height" secondItem="eDg-DN-oaO" secondAttribute="height" id="SM2-zS-dJb"/>
+                                    <constraint firstItem="OFk-0e-n5a" firstAttribute="leading" secondItem="CD0-tN-fIE" secondAttribute="trailing" constant="8" symbolic="YES" id="Tew-sc-9jg"/>
+                                    <constraint firstItem="eDg-DN-oaO" firstAttribute="top" secondItem="OFk-0e-n5a" secondAttribute="bottom" constant="10" id="bP3-Ox-Kjw"/>
                                     <constraint firstItem="yLz-dc-Vep" firstAttribute="leading" secondItem="1SH-gA-i8p" secondAttribute="trailing" constant="6" id="eAH-Lc-c9W"/>
                                     <constraint firstAttribute="trailing" secondItem="OFk-0e-n5a" secondAttribute="trailing" id="mLS-4w-am0"/>
                                     <constraint firstItem="1SH-gA-i8p" firstAttribute="leading" secondItem="eDg-DN-oaO" secondAttribute="trailing" constant="6" id="q73-iu-fVz"/>
+                                    <constraint firstItem="CD0-tN-fIE" firstAttribute="centerY" secondItem="OFk-0e-n5a" secondAttribute="centerY" id="wla-vo-QhO"/>
                                     <constraint firstItem="1SH-gA-i8p" firstAttribute="centerY" secondItem="eDg-DN-oaO" secondAttribute="centerY" id="yua-kk-r57"/>
                                 </constraints>
                             </view>
@@ -164,13 +175,14 @@
                     <size key="freeformSize" width="320" height="528"/>
                     <connections>
                         <outlet property="avatarButton" destination="eDg-DN-oaO" id="Kw8-WT-qrC"/>
-                        <outlet property="avatarSizeSlider" destination="OFk-0e-n5a" id="lxR-Yq-Af3"/>
                         <outlet property="bottom" destination="NAO-j2-ptl" id="rj0-OS-cqj"/>
+                        <outlet property="bottomSlider" destination="OFk-0e-n5a" id="lxR-Yq-Af3"/>
                         <outlet property="compactTipsView" destination="uRg-iS-8cH" id="2oK-ff-aXd"/>
                         <outlet property="flashMessageLabel" destination="LNQ-Ti-zCs" id="iYC-ca-KQI"/>
                         <outlet property="inputTextField" destination="1SH-gA-i8p" id="PrS-q6-gxE"/>
                         <outlet property="messageContent" destination="EHf-NG-wQC" id="6ss-cp-hx5"/>
                         <outlet property="sendButton" destination="yLz-dc-Vep" id="9wc-W1-5N7"/>
+                        <outlet property="sliderButton" destination="CD0-tN-fIE" id="7gK-oS-fcs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -179,6 +191,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="avatar_size_btn" width="128" height="128"/>
         <image name="face" width="256" height="256"/>
         <image name="send" width="256" height="256"/>
     </resources>

@@ -18,6 +18,7 @@ extension String
 }
 
 private let contentMinHeight:CGFloat = 32
+private let contentMinWidth:CGFloat = 48
 
 private let contentTextSizeMin:Float = Float(UIFont.systemFontSize())
 private let contentTextSizeMax:Float = Float(UIFont.systemFontSize()) + 10
@@ -378,8 +379,13 @@ extension MessagesViewController:AvatarMessageContentContainerDelegate{
                 label.textAlignment = .Left
             }
  */
-            if contentSize.height < contentMinHeight {
-                contentSize.height = contentMinHeight
+            if contentSize.height < contentMinHeight || contentSize.width < contentMinWidth {
+                if contentSize.height < contentMinHeight{
+                    contentSize.height = contentMinHeight
+                }
+                if contentSize.width < contentMinWidth {
+                    contentSize.width = contentMinWidth
+                }
                 label.textAlignment = .Center
             }else{
                 label.textAlignment = .Left
@@ -525,10 +531,14 @@ extension MessagesViewController{
         refreshViews()
         if presentationStyle == .Compact {
             bottom?.constant = 0
-            self.inputTextField?.superview?.layoutIfNeeded()
-            self.view.layoutIfNeeded()
-            self.view.layoutSubviews()
+        }else if presentationStyle == .Expanded{
+            if self.inputTextField != nil && String.isNullOrEmpty(self.inputTextField.text) {
+                self.inputTextField.becomeFirstResponder()
+            }
         }
+        self.inputTextField?.superview?.layoutIfNeeded()
+        self.view.layoutIfNeeded()
+        self.view.layoutSubviews()
         // Use this method to finalize any behaviors associated with the change in presentation style.
     }
 }

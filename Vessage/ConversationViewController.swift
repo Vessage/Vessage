@@ -563,7 +563,7 @@ extension ConversationViewController{
 //MARK: Show ConversationViewController Extension
 extension ConversationViewController{
     
-    static func showConversationViewController(nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = 0,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
+    static func showConversationViewController(nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
         if userId == UserSetting.userId {
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
         }else{

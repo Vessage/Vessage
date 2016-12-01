@@ -88,10 +88,18 @@ class MessagesViewController: MSMessagesAppViewController {
         }
     }
     
+    @IBOutlet weak var inputTextView: BahamutTextView!{
+        didSet{
+            inputTextView.clipsToBounds = true
+            inputTextView.layer.borderWidth = 0.6
+            inputTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
+            inputTextView.layer.cornerRadius = 6
+            inputTextView.placeHolder = "INPUT_VIEW_PLACE_HOLDER".localizedString()
+        }
+    }
     @IBOutlet weak var sliderButton: UIButton!
     @IBOutlet weak var bottomSlider: UISlider!
     @IBOutlet weak var compactTipsView: UIView!
-    @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     
     @IBOutlet weak var messageContent: UIView!
@@ -99,6 +107,15 @@ class MessagesViewController: MSMessagesAppViewController {
     
     private var contentContainer:AvatarMessageContentContainer!
     private var textMessageLabel:UILabel!
+    
+    private var inputText:String?{
+        get{
+            return inputTextView?.text
+        }
+        set{
+            inputTextView?.text = newValue
+        }
+    }
     
     private var messageContentColorIndex:Int{
         get{
@@ -188,10 +205,6 @@ class MessagesViewController: MSMessagesAppViewController {
         }
     }
     
-    @IBAction func onTextMessageChanged(sender: AnyObject) {
-        refreshViews()
-    }
-    
     private func refreshViews(){
         messageContent.layoutIfNeeded()
         contentContainer.frame = self.messageContent.bounds
@@ -202,7 +215,7 @@ class MessagesViewController: MSMessagesAppViewController {
             bottomView.userInteractionEnabled = presentationStyle == .Expanded
         }
         sendButton.userInteractionEnabled = true
-        if String.isNullOrEmpty(inputTextField.text){
+        if String.isNullOrEmpty(inputText){
             messageContent.hidden = true
             sendButton.enabled = false
             bottomSlider.hidden = true
@@ -211,7 +224,7 @@ class MessagesViewController: MSMessagesAppViewController {
             compactTipsView.hidden = true
             bottomSlider.hidden = false
             sliderButton.hidden = false
-            textMessageLabel?.text = inputTextField.text
+            textMessageLabel?.text = inputText
             sendButton.enabled = true
             contentContainer.drawRect(self.messageContent.bounds)
         }
@@ -221,6 +234,7 @@ class MessagesViewController: MSMessagesAppViewController {
         super.viewDidLoad()
         hideFlashTips()
         self.view.backgroundColor = UIColor.clearColor()
+        inputTextView.delegate = self
         textMessageLabel = UILabel()
         textMessageLabel.textAlignment = .Left
         textMessageLabel.numberOfLines = 0
@@ -469,6 +483,22 @@ extension MessagesViewController{
     }
 }
 
+//MARK: Input Text View Delegate
+extension MessagesViewController:UITextViewDelegate{
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            onClickSend(textView)
+            return false
+        }
+        return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        refreshViews()
+    }
+}
+
+//MARK: Keyboard
 extension MessagesViewController{
     func onKeyBoardShown(a:NSNotification) {
         if let value = a.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue{
@@ -510,7 +540,7 @@ extension MessagesViewController{
     
     override func didStartSendingMessage(message: MSMessage, conversation: MSConversation) {
         // Called when the user taps the send button.
-        self.inputTextField.text = nil
+        self.inputText = nil
         self.refreshViews()
     }
     
@@ -532,11 +562,11 @@ extension MessagesViewController{
         if presentationStyle == .Compact {
             bottom?.constant = 0
         }else if presentationStyle == .Expanded{
-            if self.inputTextField != nil && String.isNullOrEmpty(self.inputTextField.text) {
-                self.inputTextField.becomeFirstResponder()
+            if String.isNullOrEmpty(self.inputText) {
+                self.inputTextView?.becomeFirstResponder()
             }
         }
-        self.inputTextField?.superview?.layoutIfNeeded()
+        self.inputTextView?.superview?.layoutIfNeeded()
         self.view.layoutIfNeeded()
         self.view.layoutSubviews()
         // Use this method to finalize any behaviors associated with the change in presentation style.

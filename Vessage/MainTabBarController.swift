@@ -76,12 +76,19 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         if self.selectedIndex == 1 {
             return
         }
+        var newBadge = 0
         if let count = a.userInfo?[UpdatedActivitiesBadgeValue] as? Int{
-            if let ac = activityBadge{
-                activityBadge = ac + count
-            }else{
-                activityBadge = count
-            }
+            newBadge = count
+        }
+        
+        if (a.userInfo?[UpdatedActivityMiniBadgeValue] as? Bool) ?? false {
+            newBadge += 1
+        }
+        
+        if let ac = activityBadge{
+            activityBadge = ac + newBadge
+        }else{
+            activityBadge = newBadge
         }
     }
     

@@ -11,3 +11,4 @@ READ_AVATAR_IMAGE_ERROR = "读取图片数据错误";
 CONFIRM = "确定";
 CANCEL = "取消";
 AVATAR_UPDATED = "头像已更新";
+INPUT_VIEW_PLACE_HOLDER = "Avatar Message";

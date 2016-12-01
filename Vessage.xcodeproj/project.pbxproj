@@ -10,16 +10,9 @@
 		2DECA4C96E888226FE967A1D /* Pods_Vessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5AFB5E27DB3E354DBE6463 /* Pods_Vessage.framework */; };
 		8C560C274B386CAA919605C8 /* Pods_iAvatarMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA84BED95476A7BC42FA505 /* Pods_iAvatarMessage.framework */; };
 		E702FF6A1DE82D3D003F2B85 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D518191DBD86A3007F6A5D /* Messages.framework */; };
-		E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */; };
-		E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */; };
 		E702FF721DE82D3D003F2B85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E702FF711DE82D3D003F2B85 /* Assets.xcassets */; };
 		E702FF761DE82D3D003F2B85 /* iAvatarMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E702FF7B1DE82E2E003F2B85 /* BezierBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */; };
-		E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */; };
-		E702FF7F1DE82EAD003F2B85 /* ImageUtil+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */; };
 		E702FF811DE82F0F003F2B85 /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */; };
-		E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */; };
-		E702FF861DE83642003F2B85 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF851DE83642003F2B85 /* StringHelper.swift */; };
 		E702FF881DE836BB003F2B85 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF871DE836BB003F2B85 /* String+MD5.swift */; };
 		E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */; };
 		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
@@ -60,7 +53,6 @@
 		E708AC021C86D7B70071104E /* ControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF61C86D7B70071104E /* ControllerExtension.swift */; };
 		E708AC031C86D7B70071104E /* HSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF81C86D7B70071104E /* HSL.swift */; };
 		E708AC041C86D7B70071104E /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABF91C86D7B70071104E /* UIColor.swift */; };
-		E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFA1C86D7B70071104E /* ImageUtil.swift */; };
 		E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */; };
 		E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */; };
 		E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFD1C86D7B70071104E /* ToastHelper.swift */; };
@@ -109,9 +101,6 @@
 		E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F65FB1CE0878B0094BA10 /* UserCollectionViewController.swift */; };
 		E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7C91CE4E5ED005EF7BB /* ActivityService.swift */; };
 		E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73CF7CC1CE4E9D9005EF7BB /* ActivitiesRF.swift */; };
-		E73E32D31DE87765007AC371 /* PersistentFileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */; };
-		E73E32D51DE87C19007AC371 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E32D41DE87C18007AC371 /* DateHelper.swift */; };
-		E73E32D71DE87C65007AC371 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E73E32D61DE87C65007AC371 /* Math.swift */; };
 		E74109461DE694420030AD1D /* MNS.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E74109451DE694420030AD1D /* MNS.storyboard */; };
 		E74109481DE694970030AD1D /* MNSMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74109471DE694970030AD1D /* MNSMainController.swift */; };
 		E741094A1DE69AA60030AD1D /* MNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E74109491DE69AA60030AD1D /* MNS.strings */; };
@@ -142,8 +131,7 @@
 		E77447041DC2E015000924AB /* VideoBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */; };
 		E77447061DC2E49E000924AB /* ImageBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */; };
 		E77447081DC33096000924AB /* BubbleVessageHandlersConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */; };
-		E77951F21DEB3D9800EE7736 /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E77951F01DEB3D9800EE7736 /* BahamutCommon.xcassets */; };
-		E77951F31DEB3D9800EE7736 /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77951F11DEB3D9800EE7736 /* ImageUtil.swift */; };
+		E77A93681DF076DC00511C4B /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77A93671DF076DC00511C4B /* BahamutTextView.swift */; };
 		E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */; };
 		E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */; };
 		E78739371DC0612600684320 /* BezierBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78739361DC0612600684320 /* BezierBubble.swift */; };
@@ -197,19 +185,11 @@
 		E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */; };
 		E7D5182E1DBDA686007F6A5D /* FaceTextBubbleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D5182D1DBDA686007F6A5D /* FaceTextBubbleConfig.swift */; };
 		E7D7C42F1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */; };
-		E7D7C4311DE913D000D962D4 /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4301DE913D000D962D4 /* UIImagePicker+SourceAlert.swift */; };
 		E7D7C4331DE915A200D962D4 /* BahamutCommonLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */; };
-		E7D7C4351DE915C800D962D4 /* BahamutCommonLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4341DE915C800D962D4 /* BahamutCommonLocalized.swift */; };
 		E7D7C4381DE9169000D962D4 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4371DE9169000D962D4 /* CommonExtension.swift */; };
-		E7D7C43A1DE916A700D962D4 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4391DE916A700D962D4 /* CommonExtension.swift */; };
-		E7D7C44B1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4461DE91A3D00D962D4 /* BahamutCommonLocalized.strings */; };
-		E7D7C44C1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4491DE91A3D00D962D4 /* BahamutCommonLocalized.strings */; };
 		E7D7C44F1DE91A9600D962D4 /* Locolized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4511DE91A9600D962D4 /* Locolized.strings */; };
 		E7D7C4541DE91C5200D962D4 /* Integer+FriendlyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */; };
 		E7D7C4561DE924D000D962D4 /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4551DE924D000D962D4 /* BahamutCommon.xcassets */; };
-		E7D7C45A1DE925D900D962D4 /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */; };
-		E7D7C45C1DE935E100D962D4 /* AvatarMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C45B1DE935E100D962D4 /* AvatarMessageContentView.swift */; };
-		E7D7C45E1DE97B2900D962D4 /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */; };
 		E7DC795F1C9D5E0A00682055 /* ChatBackgroundPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */; };
 		E7DDCEFB1DBFA4BC00E61A56 /* ChattersBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DDCEFA1DBFA4BC00E61A56 /* ChattersBoard.swift */; };
 		E7E237D11C9950CE008FF893 /* ConversationListContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E237D01C9950CE008FF893 /* ConversationListContactCell.swift */; };
@@ -267,6 +247,30 @@
 		E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */; };
 		E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */; };
 		E7F532EA1D3A1F26008078DE /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F532E91D3A1F26008078DE /* GroupNameCell.swift */; };
+		E7F6DC861DF00967007EC49A /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DC851DF00967007EC49A /* ImageUtil.swift */; };
+		E7F6DC881DF00984007EC49A /* ImageUtil+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DC871DF00984007EC49A /* ImageUtil+Base64.swift */; };
+		E7F6DCA01DF00B07007EC49A /* BezierBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DC9F1DF00B07007EC49A /* BezierBubble.swift */; };
+		E7F6DCAA1DF00B82007EC49A /* AvatarMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCA91DF00B82007EC49A /* AvatarMessageContentView.swift */; };
+		E7F6DCB11DF00BFB007EC49A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7F6DCAF1DF00BFB007EC49A /* MainInterface.storyboard */; };
+		E7F6DCDD1DF00CC2007EC49A /* ArrayUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCBF1DF00CC2007EC49A /* ArrayUtil.swift */; };
+		E7F6DCDE1DF00CC2007EC49A /* BahamutCommonLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCC11DF00CC2007EC49A /* BahamutCommonLocalized.swift */; };
+		E7F6DCE11DF00CC2007EC49A /* BahamutCommonLocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7F6DCC41DF00CC2007EC49A /* BahamutCommonLocalized.strings */; };
+		E7F6DCE31DF00CC2007EC49A /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCC91DF00CC2007EC49A /* CommonExtension.swift */; };
+		E7F6DCE41DF00CC2007EC49A /* CommonValueCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCCA1DF00CC2007EC49A /* CommonValueCast.swift */; };
+		E7F6DCE51DF00CC2007EC49A /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCCB1DF00CC2007EC49A /* DateHelper.swift */; };
+		E7F6DCE71DF00CC2007EC49A /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCCE1DF00CC2007EC49A /* Math.swift */; };
+		E7F6DCE81DF00CC2007EC49A /* RegexUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCCF1DF00CC2007EC49A /* RegexUtil.swift */; };
+		E7F6DCEA1DF00CC2007EC49A /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCD11DF00CC2007EC49A /* StringHelper.swift */; };
+		E7F6DD071DF00CD7007EC49A /* BahamutCommon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7F6DCF21DF00CD7007EC49A /* BahamutCommon.xcassets */; };
+		E7F6DD0C1DF00CD7007EC49A /* HSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCF91DF00CD7007EC49A /* HSL.swift */; };
+		E7F6DD0D1DF00CD7007EC49A /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCFA1DF00CD7007EC49A /* UIColor.swift */; };
+		E7F6DD0F1DF00CD7007EC49A /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCFC1DF00CD7007EC49A /* ImageUtil.swift */; };
+		E7F6DD101DF00CD7007EC49A /* Integer+FriendlyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCFD1DF00CD7007EC49A /* Integer+FriendlyString.swift */; };
+		E7F6DD131DF00CD7007EC49A /* SystemSoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD001DF00CD7007EC49A /* SystemSoundHelper.swift */; };
+		E7F6DD151DF00CD7007EC49A /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD021DF00CD7007EC49A /* UIAnimationHelper.swift */; };
+		E7F6DD171DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */; };
+		E7F6DD181DF00CD7007EC49A /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */; };
+		E7F6DD1B1DF00D89007EC49A /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */; };
 		E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */; };
 		E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */; };
 		E7F6F0821D69AB84001CD190 /* BahamutTaskQueueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */; };
@@ -306,16 +310,9 @@
 		B63D59160C603D64F2399EFB /* Pods_Faceboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Faceboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7529D2CF8091B257CBEDE /* Pods-Vessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vessage.release.xcconfig"; path = "Pods/Target Support Files/Pods-Vessage/Pods-Vessage.release.xcconfig"; sourceTree = "<group>"; };
 		E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iAvatarMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
-		E702FF6F1DE82D3D003F2B85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E702FF711DE82D3D003F2B85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E702FF731DE82D3D003F2B85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BezierBubble.swift; path = Vessage/BezierBubble.swift; sourceTree = SOURCE_ROOT; };
-		E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageUtil.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/ImageUtil.swift; sourceTree = "<group>"; };
-		E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageUtil+Base64.swift"; sourceTree = "<group>"; };
 		E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
-		E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+RemoveChildView.swift"; path = "../../../bahamut/Bahamut/Bahamut/BahamutUIKit/UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
-		E702FF851DE83642003F2B85 /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/StringHelper.swift; sourceTree = "<group>"; };
 		E702FF871DE836BB003F2B85 /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -366,7 +363,6 @@
 		E708ABF61C86D7B70071104E /* ControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerExtension.swift; sourceTree = "<group>"; };
 		E708ABF81C86D7B70071104E /* HSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSL.swift; sourceTree = "<group>"; };
 		E708ABF91C86D7B70071104E /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		E708ABFA1C86D7B70071104E /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAdjustHelper.swift; sourceTree = "<group>"; };
 		E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSoundHelper.swift; sourceTree = "<group>"; };
 		E708ABFD1C86D7B70071104E /* ToastHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastHelper.swift; sourceTree = "<group>"; };
@@ -420,9 +416,6 @@
 		E73CFF821D654E71002A63C6 /* Pods_Vessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Vessage.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/Pods_Vessage.framework"; sourceTree = "<group>"; };
 		E73CFF841D654E7D002A63C6 /* YUCIHighPassSkinSmoothing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YUCIHighPassSkinSmoothing.framework; path = "../../../Library/Developer/Xcode/DerivedData/Vessage-ewkqxoovgcebsmeupprsigfzldoa/Build/Products/Debug-iphonesimulator/YUCIHighPassSkinSmoothing/YUCIHighPassSkinSmoothing.framework"; sourceTree = "<group>"; };
 		E73CFF891D655E39002A63C6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentFileHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/Persistents/Base/PersistentFileHelper.swift; sourceTree = "<group>"; };
-		E73E32D41DE87C18007AC371 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/DateHelper.swift; sourceTree = "<group>"; };
-		E73E32D61DE87C65007AC371 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Math.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/Math.swift; sourceTree = "<group>"; };
 		E74109451DE694420030AD1D /* MNS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MNS.storyboard; sourceTree = "<group>"; };
 		E74109471DE694970030AD1D /* MNSMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSMainController.swift; sourceTree = "<group>"; };
 		E74109491DE69AA60030AD1D /* MNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MNS.strings; sourceTree = "<group>"; };
@@ -452,8 +445,7 @@
 		E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandlersConfig.swift; sourceTree = "<group>"; };
-		E77951F01DEB3D9800EE7736 /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = BahamutCommon.xcassets; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutCommon.xcassets; sourceTree = "<group>"; };
-		E77951F11DEB3D9800EE7736 /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageUtil.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/ImageUtil.swift; sourceTree = "<group>"; };
+		E77A93671DF076DC00511C4B /* BahamutTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BahamutTextView.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutTextView.swift; sourceTree = "<group>"; };
 		E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewCells.swift; sourceTree = "<group>"; };
 		E78739361DC0612600684320 /* BezierBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BezierBubble.swift; sourceTree = "<group>"; };
@@ -510,20 +502,12 @@
 		E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FaceTextChatBubbles.xcassets; sourceTree = "<group>"; };
 		E7D5182D1DBDA686007F6A5D /* FaceTextBubbleConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextBubbleConfig.swift; sourceTree = "<group>"; };
 		E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
-		E7D7C4301DE913D000D962D4 /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImagePicker+SourceAlert.swift"; path = "../../../bahamut/Bahamut/Bahamut/BahamutUIKit/UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
 		E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCommonLocalized.swift; sourceTree = "<group>"; };
-		E7D7C4341DE915C800D962D4 /* BahamutCommonLocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BahamutCommonLocalized.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/BahamutCommonLocalized.swift; sourceTree = "<group>"; };
 		E7D7C4371DE9169000D962D4 /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtension.swift; sourceTree = "<group>"; };
-		E7D7C4391DE916A700D962D4 /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonExtension.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon/CommonExtension.swift; sourceTree = "<group>"; };
-		E7D7C4471DE91A3D00D962D4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = BahamutCommonLocalized.strings; sourceTree = "<group>"; };
-		E7D7C44A1DE91A3D00D962D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = BahamutCommonLocalized.strings; sourceTree = "<group>"; };
 		E7D7C4501DE91A9600D962D4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Locolized.strings"; sourceTree = "<group>"; };
 		E7D7C4521DE91A9A00D962D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Locolized.strings; sourceTree = "<group>"; };
 		E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Integer+FriendlyString.swift"; sourceTree = "<group>"; };
 		E7D7C4551DE924D000D962D4 /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BahamutCommon.xcassets; sourceTree = "<group>"; };
-		E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = BahamutCommon.xcassets; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutCommon.xcassets; sourceTree = "<group>"; };
-		E7D7C45B1DE935E100D962D4 /* AvatarMessageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarMessageContentView.swift; sourceTree = "<group>"; };
-		E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIAnimationHelper.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/UIAnimationHelper.swift; sourceTree = "<group>"; };
 		E7DC795E1C9D5E0A00682055 /* ChatBackgroundPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBackgroundPickerController.swift; sourceTree = "<group>"; };
 		E7DDCEFA1DBFA4BC00E61A56 /* ChattersBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChattersBoard.swift; sourceTree = "<group>"; };
 		E7DDCEFE1DBFDE4700E61A56 /* BezierChatBubble.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = BezierChatBubble.playground; sourceTree = "<group>"; };
@@ -585,6 +569,32 @@
 		E7F532E41D3A1E8A008078DE /* ChatGroupProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupProfileViewController.swift; sourceTree = "<group>"; };
 		E7F532E71D3A1EEB008078DE /* GroupUsersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupUsersCell.swift; sourceTree = "<group>"; };
 		E7F532E91D3A1F26008078DE /* GroupNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
+		E7F6DC851DF00967007EC49A /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
+		E7F6DC871DF00984007EC49A /* ImageUtil+Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageUtil+Base64.swift"; sourceTree = "<group>"; };
+		E7F6DC9F1DF00B07007EC49A /* BezierBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BezierBubble.swift; path = Vessage/BezierBubble.swift; sourceTree = SOURCE_ROOT; };
+		E7F6DCA91DF00B82007EC49A /* AvatarMessageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarMessageContentView.swift; sourceTree = "<group>"; };
+		E7F6DCB01DF00BFB007EC49A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E7F6DCBF1DF00CC2007EC49A /* ArrayUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayUtil.swift; sourceTree = "<group>"; };
+		E7F6DCC11DF00CC2007EC49A /* BahamutCommonLocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCommonLocalized.swift; sourceTree = "<group>"; };
+		E7F6DCC51DF00CC2007EC49A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/BahamutCommonLocalized.strings; sourceTree = "<group>"; };
+		E7F6DCC91DF00CC2007EC49A /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtension.swift; sourceTree = "<group>"; };
+		E7F6DCCA1DF00CC2007EC49A /* CommonValueCast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonValueCast.swift; sourceTree = "<group>"; };
+		E7F6DCCB1DF00CC2007EC49A /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		E7F6DCCC1DF00CC2007EC49A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BahamutCommonLocalized.strings; sourceTree = "<group>"; };
+		E7F6DCCE1DF00CC2007EC49A /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		E7F6DCCF1DF00CC2007EC49A /* RegexUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexUtil.swift; sourceTree = "<group>"; };
+		E7F6DCD11DF00CC2007EC49A /* StringHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
+		E7F6DCD21DF00CC2007EC49A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/BahamutCommonLocalized.strings"; sourceTree = "<group>"; };
+		E7F6DCF21DF00CD7007EC49A /* BahamutCommon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BahamutCommon.xcassets; sourceTree = "<group>"; };
+		E7F6DCF91DF00CD7007EC49A /* HSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSL.swift; sourceTree = "<group>"; };
+		E7F6DCFA1DF00CD7007EC49A /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		E7F6DCFC1DF00CD7007EC49A /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
+		E7F6DCFD1DF00CD7007EC49A /* Integer+FriendlyString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Integer+FriendlyString.swift"; sourceTree = "<group>"; };
+		E7F6DD001DF00CD7007EC49A /* SystemSoundHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSoundHelper.swift; sourceTree = "<group>"; };
+		E7F6DD021DF00CD7007EC49A /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
+		E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
+		E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
+		E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzeImageSDK.swift; sourceTree = "<group>"; };
 		E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
 		E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueueProtocol.swift; sourceTree = "<group>"; };
@@ -673,13 +683,14 @@
 			isa = PBXGroup;
 			children = (
 				E7D7C4361DE915CF00D962D4 /* Arch */,
-				E702FF6C1DE82D3D003F2B85 /* MessagesViewController.swift */,
-				E702FF7A1DE82E2E003F2B85 /* BezierBubble.swift */,
-				E7D7C45B1DE935E100D962D4 /* AvatarMessageContentView.swift */,
-				E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */,
+				E7F6DC9F1DF00B07007EC49A /* BezierBubble.swift */,
+				E7F6DCAF1DF00BFB007EC49A /* MainInterface.storyboard */,
+				E7F6DCA91DF00B82007EC49A /* AvatarMessageContentView.swift */,
+				E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */,
 				E702FF711DE82D3D003F2B85 /* Assets.xcassets */,
 				E702FF731DE82D3D003F2B85 /* Info.plist */,
 				E7D7C4511DE91A9600D962D4 /* Locolized.strings */,
+				E77A93671DF076DC00511C4B /* BahamutTextView.swift */,
 			);
 			path = iAvatarMessage;
 			sourceTree = "<group>";
@@ -873,19 +884,19 @@
 		E708ABF41C86D7B70071104E /* BahamutUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				E7F6DC851DF00967007EC49A /* ImageUtil.swift */,
 				E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */,
 				E708ABF71C86D7B70071104E /* DynamicColor */,
 				E7E237D21C998AEB008FF893 /* BahamutFilmView */,
 				E708ABF51C86D7B70071104E /* ColorUtil.swift */,
+				E7F6DC871DF00984007EC49A /* ImageUtil+Base64.swift */,
 				E708ABF61C86D7B70071104E /* ControllerExtension.swift */,
-				E708ABFA1C86D7B70071104E /* ImageUtil.swift */,
 				E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */,
 				E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */,
 				E708ABFD1C86D7B70071104E /* ToastHelper.swift */,
 				E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */,
 				E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */,
 				E708AC001C86D7B70071104E /* UserGuide.swift */,
-				E702FF7E1DE82EAD003F2B85 /* ImageUtil+Base64.swift */,
 				E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */,
 				E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */,
 				E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */,
@@ -1215,39 +1226,10 @@
 		E7D7C4361DE915CF00D962D4 /* Arch */ = {
 			isa = PBXGroup;
 			children = (
-				E7D7C45D1DE97B2900D962D4 /* UIAnimationHelper.swift */,
-				E77951F01DEB3D9800EE7736 /* BahamutCommon.xcassets */,
-				E77951F11DEB3D9800EE7736 /* ImageUtil.swift */,
-				E7D7C4591DE925D900D962D4 /* BahamutCommon.xcassets */,
-				E7D7C4451DE91A3D00D962D4 /* zh-Hans.lproj */,
-				E7D7C4481DE91A3D00D962D4 /* en.lproj */,
-				E7D7C4391DE916A700D962D4 /* CommonExtension.swift */,
-				E702FF831DE82F29003F2B85 /* UIView+RemoveChildView.swift */,
-				E7D7C4341DE915C800D962D4 /* BahamutCommonLocalized.swift */,
-				E73E32D41DE87C18007AC371 /* DateHelper.swift */,
-				E73E32D21DE87765007AC371 /* PersistentFileHelper.swift */,
-				E7D7C4301DE913D000D962D4 /* UIImagePicker+SourceAlert.swift */,
-				E702FF7C1DE82E5C003F2B85 /* ImageUtil.swift */,
-				E73E32D61DE87C65007AC371 /* Math.swift */,
-				E702FF851DE83642003F2B85 /* StringHelper.swift */,
+				E7F6DCF11DF00CD7007EC49A /* BahamutUIKit */,
+				E7F6DCBE1DF00CC2007EC49A /* BahamutCommon */,
 			);
 			name = Arch;
-			sourceTree = "<group>";
-		};
-		E7D7C4451DE91A3D00D962D4 /* zh-Hans.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				E7D7C4461DE91A3D00D962D4 /* BahamutCommonLocalized.strings */,
-			);
-			path = "zh-Hans.lproj";
-			sourceTree = "<group>";
-		};
-		E7D7C4481DE91A3D00D962D4 /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				E7D7C4491DE91A3D00D962D4 /* BahamutCommonLocalized.strings */,
-			);
-			path = en.lproj;
 			sourceTree = "<group>";
 		};
 		E7DDCEF91DBFA4AA00E61A56 /* Views */ = {
@@ -1405,6 +1387,48 @@
 			name = GroupChatProfile;
 			sourceTree = "<group>";
 		};
+		E7F6DCBE1DF00CC2007EC49A /* BahamutCommon */ = {
+			isa = PBXGroup;
+			children = (
+				E7F6DCBF1DF00CC2007EC49A /* ArrayUtil.swift */,
+				E7F6DCC11DF00CC2007EC49A /* BahamutCommonLocalized.swift */,
+				E7F6DCC41DF00CC2007EC49A /* BahamutCommonLocalized.strings */,
+				E7F6DCC91DF00CC2007EC49A /* CommonExtension.swift */,
+				E7F6DCCA1DF00CC2007EC49A /* CommonValueCast.swift */,
+				E7F6DCCB1DF00CC2007EC49A /* DateHelper.swift */,
+				E7F6DCCE1DF00CC2007EC49A /* Math.swift */,
+				E7F6DCCF1DF00CC2007EC49A /* RegexUtil.swift */,
+				E7F6DCD11DF00CC2007EC49A /* StringHelper.swift */,
+			);
+			name = BahamutCommon;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutCommon;
+			sourceTree = "<group>";
+		};
+		E7F6DCF11DF00CD7007EC49A /* BahamutUIKit */ = {
+			isa = PBXGroup;
+			children = (
+				E7F6DCF21DF00CD7007EC49A /* BahamutCommon.xcassets */,
+				E7F6DCF81DF00CD7007EC49A /* DynamicColor */,
+				E7F6DCFC1DF00CD7007EC49A /* ImageUtil.swift */,
+				E7F6DCFD1DF00CD7007EC49A /* Integer+FriendlyString.swift */,
+				E7F6DD001DF00CD7007EC49A /* SystemSoundHelper.swift */,
+				E7F6DD021DF00CD7007EC49A /* UIAnimationHelper.swift */,
+				E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */,
+				E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */,
+			);
+			name = BahamutUIKit;
+			path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit;
+			sourceTree = "<group>";
+		};
+		E7F6DCF81DF00CD7007EC49A /* DynamicColor */ = {
+			isa = PBXGroup;
+			children = (
+				E7F6DCF91DF00CD7007EC49A /* HSL.swift */,
+				E7F6DCFA1DF00CD7007EC49A /* UIColor.swift */,
+			);
+			path = DynamicColor;
+			sourceTree = "<group>";
+		};
 		E7F6F07E1D69AB72001CD190 /* Queue */ = {
 			isa = PBXGroup;
 			children = (
@@ -1471,6 +1495,7 @@
 					E702FF681DE82D3D003F2B85 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 2BW6TGDJAV;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
 					E708AB381C86CAA50071104E = {
@@ -1513,13 +1538,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7D7C44C1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */,
+				E7F6DCE11DF00CC2007EC49A /* BahamutCommonLocalized.strings in Resources */,
+				E7F6DCB11DF00BFB007EC49A /* MainInterface.storyboard in Resources */,
 				E7D7C44F1DE91A9600D962D4 /* Locolized.strings in Resources */,
-				E7D7C44B1DE91A3D00D962D4 /* BahamutCommonLocalized.strings in Resources */,
 				E702FF721DE82D3D003F2B85 /* Assets.xcassets in Resources */,
-				E77951F21DEB3D9800EE7736 /* BahamutCommon.xcassets in Resources */,
-				E702FF701DE82D3D003F2B85 /* MainInterface.storyboard in Resources */,
-				E7D7C45A1DE925D900D962D4 /* BahamutCommon.xcassets in Resources */,
+				E7F6DD071DF00CD7007EC49A /* BahamutCommon.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1651,20 +1674,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E73E32D31DE87765007AC371 /* PersistentFileHelper.swift in Sources */,
-				E77951F31DEB3D9800EE7736 /* ImageUtil.swift in Sources */,
-				E702FF841DE82F29003F2B85 /* UIView+RemoveChildView.swift in Sources */,
-				E702FF7D1DE82E5C003F2B85 /* ImageUtil.swift in Sources */,
-				E7D7C4351DE915C800D962D4 /* BahamutCommonLocalized.swift in Sources */,
-				E702FF7B1DE82E2E003F2B85 /* BezierBubble.swift in Sources */,
-				E702FF861DE83642003F2B85 /* StringHelper.swift in Sources */,
-				E7D7C43A1DE916A700D962D4 /* CommonExtension.swift in Sources */,
-				E7D7C4311DE913D000D962D4 /* UIImagePicker+SourceAlert.swift in Sources */,
-				E73E32D51DE87C19007AC371 /* DateHelper.swift in Sources */,
-				E702FF6D1DE82D3D003F2B85 /* MessagesViewController.swift in Sources */,
-				E73E32D71DE87C65007AC371 /* Math.swift in Sources */,
-				E7D7C45C1DE935E100D962D4 /* AvatarMessageContentView.swift in Sources */,
-				E7D7C45E1DE97B2900D962D4 /* UIAnimationHelper.swift in Sources */,
+				E7F6DCA01DF00B07007EC49A /* BezierBubble.swift in Sources */,
+				E7F6DCE71DF00CC2007EC49A /* Math.swift in Sources */,
+				E7F6DD0F1DF00CD7007EC49A /* ImageUtil.swift in Sources */,
+				E7F6DD1B1DF00D89007EC49A /* MessagesViewController.swift in Sources */,
+				E7F6DD101DF00CD7007EC49A /* Integer+FriendlyString.swift in Sources */,
+				E7F6DCEA1DF00CC2007EC49A /* StringHelper.swift in Sources */,
+				E7F6DCAA1DF00B82007EC49A /* AvatarMessageContentView.swift in Sources */,
+				E7F6DD181DF00CD7007EC49A /* UIView+RemoveChildView.swift in Sources */,
+				E7F6DD0D1DF00CD7007EC49A /* UIColor.swift in Sources */,
+				E7F6DD171DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift in Sources */,
+				E7F6DD131DF00CD7007EC49A /* SystemSoundHelper.swift in Sources */,
+				E7F6DCDE1DF00CC2007EC49A /* BahamutCommonLocalized.swift in Sources */,
+				E7F6DCE41DF00CC2007EC49A /* CommonValueCast.swift in Sources */,
+				E7F6DCE81DF00CC2007EC49A /* RegexUtil.swift in Sources */,
+				E77A93681DF076DC00511C4B /* BahamutTextView.swift in Sources */,
+				E7F6DD151DF00CD7007EC49A /* UIAnimationHelper.swift in Sources */,
+				E7F6DCE31DF00CC2007EC49A /* CommonExtension.swift in Sources */,
+				E7F6DD0C1DF00CD7007EC49A /* HSL.swift in Sources */,
+				E7F6DCE51DF00CC2007EC49A /* DateHelper.swift in Sources */,
+				E7F6DCDD1DF00CC2007EC49A /* ArrayUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1728,7 +1757,6 @@
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
 				E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */,
-				E702FF7F1DE82EAD003F2B85 /* ImageUtil+Base64.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
 				E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */,
 				E708AC781C86EC160071104E /* UploadAliOSSExtension.swift in Sources */,
@@ -1760,6 +1788,7 @@
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E7D5182E1DBDA686007F6A5D /* FaceTextBubbleConfig.swift in Sources */,
+				E7F6DC861DF00967007EC49A /* ImageUtil.swift in Sources */,
 				E7886A6C1DC97D3D00368C03 /* SNSGodRF.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7EF28621D791AFD0064231F /* PaperMessageDetailViewController.swift in Sources */,
@@ -1771,6 +1800,7 @@
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
 				E74109481DE694970030AD1D /* MNSMainController.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,
+				E7F6DC881DF00984007EC49A /* ImageUtil+Base64.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E7D7C4541DE91C5200D962D4 /* Integer+FriendlyString.swift in Sources */,
 				E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */,
@@ -1844,7 +1874,6 @@
 				E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */,
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
 				E7EF286F1D7943930064231F /* NFCShareAlert.swift in Sources */,
-				E708AC051C86D7B70071104E /* ImageUtil.swift in Sources */,
 				E708ABA51C86CF8A0071104E /* ModelExtension.swift in Sources */,
 				E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */,
 				E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */,
@@ -1873,14 +1902,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E702FF6E1DE82D3D003F2B85 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E702FF6F1DE82D3D003F2B85 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
 		E708AB401C86CAA50071104E /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1907,22 +1928,6 @@
 			name = BahamutCommonLocalized.strings;
 			sourceTree = "<group>";
 		};
-		E7D7C4461DE91A3D00D962D4 /* BahamutCommonLocalized.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E7D7C4471DE91A3D00D962D4 /* zh-Hans */,
-			);
-			name = BahamutCommonLocalized.strings;
-			sourceTree = "<group>";
-		};
-		E7D7C4491DE91A3D00D962D4 /* BahamutCommonLocalized.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E7D7C44A1DE91A3D00D962D4 /* en */,
-			);
-			name = BahamutCommonLocalized.strings;
-			sourceTree = "<group>";
-		};
 		E7D7C4511DE91A9600D962D4 /* Locolized.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1930,6 +1935,24 @@
 				E7D7C4521DE91A9A00D962D4 /* Base */,
 			);
 			name = Locolized.strings;
+			sourceTree = "<group>";
+		};
+		E7F6DCAF1DF00BFB007EC49A /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7F6DCB01DF00BFB007EC49A /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		E7F6DCC41DF00CC2007EC49A /* BahamutCommonLocalized.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E7F6DCC51DF00CC2007EC49A /* Base */,
+				E7F6DCCC1DF00CC2007EC49A /* en */,
+				E7F6DCD21DF00CC2007EC49A /* zh-Hans */,
+			);
+			name = BahamutCommonLocalized.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1941,6 +1964,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1953,6 +1977,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
@@ -1963,6 +1988,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

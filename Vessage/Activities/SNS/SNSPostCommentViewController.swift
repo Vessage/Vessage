@@ -171,6 +171,7 @@ class SNSPostCommentViewController: UIViewController {
                     self.tableView?.mj_footer?.endRefreshingWithNoMoreData()
                 }
             }
+            callback?()
         }
     }
     

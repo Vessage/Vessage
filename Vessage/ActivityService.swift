@@ -43,6 +43,7 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
                         let badge = self.getActivityBadge(ac.id) + ac.badge
                         self.setActivityBadge(ac.id, badgeValue: badge)
                         if ac.miniBadge{
+                            totalBadge += 1
                             self.setActivityMiniBadgeShow(ac.id)
                         }
                     }

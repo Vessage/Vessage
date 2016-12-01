@@ -11,3 +11,4 @@ READ_AVATAR_IMAGE_ERROR = "Read Avatar Image Error";
 CONFIRM = "OK";
 CANCEL = "Cancel";
 AVATAR_UPDATED = "Avatar Updated";
+INPUT_VIEW_PLACE_HOLDER = "Avatar Message";

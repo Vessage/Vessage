@@ -106,15 +106,13 @@
                                             <action selector="onClickAvatarButton:" destination="ObA-dk-sSI" eventType="touchUpInside" id="haH-Ug-FfZ"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Avatar Message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1SH-gA-i8p">
-                                        <rect key="frame" x="42" y="41" width="204" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="onTextMessageChanged:" destination="ObA-dk-sSI" eventType="editingChanged" id="AfK-Kb-JqL"/>
-                                        </connections>
-                                    </textField>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eJF-Ux-Py7" customClass="BahamutTextView" customModule="iAvatarMessage" customModuleProvider="target">
+                                        <rect key="frame" x="42" y="38" width="204" height="36"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="continue"/>
+                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLz-dc-Vep">
                                         <rect key="frame" x="252" y="38" width="36" height="36"/>
                                         <constraints>
@@ -138,7 +136,9 @@
                                 <constraints>
                                     <constraint firstItem="yLz-dc-Vep" firstAttribute="centerY" secondItem="eDg-DN-oaO" secondAttribute="centerY" id="3IS-oP-N9a"/>
                                     <constraint firstAttribute="trailing" secondItem="yLz-dc-Vep" secondAttribute="trailing" id="5uI-kX-rzZ"/>
+                                    <constraint firstItem="eJF-Ux-Py7" firstAttribute="height" secondItem="yLz-dc-Vep" secondAttribute="height" id="Bpk-f4-zf4"/>
                                     <constraint firstAttribute="height" constant="80" id="ERN-ho-CZw"/>
+                                    <constraint firstItem="eJF-Ux-Py7" firstAttribute="centerY" secondItem="yLz-dc-Vep" secondAttribute="centerY" id="Ekg-7C-Z8K"/>
                                     <constraint firstItem="CD0-tN-fIE" firstAttribute="width" secondItem="eDg-DN-oaO" secondAttribute="width" id="Ffu-Si-A2o"/>
                                     <constraint firstItem="eDg-DN-oaO" firstAttribute="leading" secondItem="r36-Vq-gAd" secondAttribute="leading" id="FmS-yE-xmG"/>
                                     <constraint firstAttribute="bottom" secondItem="eDg-DN-oaO" secondAttribute="bottom" constant="6" id="OGy-dS-RWj"/>
@@ -146,11 +146,10 @@
                                     <constraint firstItem="CD0-tN-fIE" firstAttribute="height" secondItem="eDg-DN-oaO" secondAttribute="height" id="SM2-zS-dJb"/>
                                     <constraint firstItem="OFk-0e-n5a" firstAttribute="leading" secondItem="CD0-tN-fIE" secondAttribute="trailing" constant="8" symbolic="YES" id="Tew-sc-9jg"/>
                                     <constraint firstItem="eDg-DN-oaO" firstAttribute="top" secondItem="OFk-0e-n5a" secondAttribute="bottom" constant="10" id="bP3-Ox-Kjw"/>
-                                    <constraint firstItem="yLz-dc-Vep" firstAttribute="leading" secondItem="1SH-gA-i8p" secondAttribute="trailing" constant="6" id="eAH-Lc-c9W"/>
+                                    <constraint firstItem="yLz-dc-Vep" firstAttribute="leading" secondItem="eJF-Ux-Py7" secondAttribute="trailing" constant="6" id="htm-QZ-cuL"/>
                                     <constraint firstAttribute="trailing" secondItem="OFk-0e-n5a" secondAttribute="trailing" id="mLS-4w-am0"/>
-                                    <constraint firstItem="1SH-gA-i8p" firstAttribute="leading" secondItem="eDg-DN-oaO" secondAttribute="trailing" constant="6" id="q73-iu-fVz"/>
+                                    <constraint firstItem="eJF-Ux-Py7" firstAttribute="leading" secondItem="eDg-DN-oaO" secondAttribute="trailing" constant="6" id="mfC-GY-TrO"/>
                                     <constraint firstItem="CD0-tN-fIE" firstAttribute="centerY" secondItem="OFk-0e-n5a" secondAttribute="centerY" id="wla-vo-QhO"/>
-                                    <constraint firstItem="1SH-gA-i8p" firstAttribute="centerY" secondItem="eDg-DN-oaO" secondAttribute="centerY" id="yua-kk-r57"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -179,7 +178,7 @@
                         <outlet property="bottomSlider" destination="OFk-0e-n5a" id="lxR-Yq-Af3"/>
                         <outlet property="compactTipsView" destination="uRg-iS-8cH" id="2oK-ff-aXd"/>
                         <outlet property="flashMessageLabel" destination="LNQ-Ti-zCs" id="iYC-ca-KQI"/>
-                        <outlet property="inputTextField" destination="1SH-gA-i8p" id="PrS-q6-gxE"/>
+                        <outlet property="inputTextView" destination="eJF-Ux-Py7" id="HzS-p3-xwj"/>
                         <outlet property="messageContent" destination="EHf-NG-wQC" id="6ss-cp-hx5"/>
                         <outlet property="sendButton" destination="yLz-dc-Vep" id="9wc-W1-5N7"/>
                         <outlet property="sliderButton" destination="CD0-tN-fIE" id="7gK-oS-fcs"/>

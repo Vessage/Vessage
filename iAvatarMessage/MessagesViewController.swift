@@ -235,6 +235,7 @@ class MessagesViewController: MSMessagesAppViewController {
         hideFlashTips()
         self.view.backgroundColor = UIColor.clearColor()
         inputTextView.delegate = self
+        inputTextView.returnKeyType = .Send
         textMessageLabel = UILabel()
         textMessageLabel.textAlignment = .Left
         textMessageLabel.numberOfLines = 0

@@ -196,9 +196,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     private func createConverationWithVessage(vsg:Vessage) -> Conversation{
         if vsg.isGroup {
-            return self.addNewConversationWithGroupVessage(vsg,beforeRemoveTs: 0,createByActivityId: nil)
+            return self.addNewConversationWithGroupVessage(vsg,beforeRemoveTs: ConversationMaxTimeUpMS,createByActivityId: nil)
         }else{
-            return self.addNewConversationWithUserId(vsg.sender,beforeRemoveTs: 0,createByActivityId: nil)
+            return self.addNewConversationWithUserId(vsg.sender,beforeRemoveTs: ConversationMaxTimeUpMS,createByActivityId: nil)
         }
     }
     
@@ -247,7 +247,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return (conversations.filter{userId == $0.chatterId ?? ""}).count > 0
     }
     
-    func openConversationByUserId(userId:String,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation {
+    func openConversationByUserId(userId:String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil) -> Conversation {
         
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
             return conversation
@@ -258,7 +258,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func openConversationByGroup(group:ChatGroup,beforeRemoveTs:Int64 = 0,createByActivityId:String? = nil) -> Conversation {
+    func openConversationByGroup(group:ChatGroup,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil) -> Conversation {
         if let conversation = (conversations.filter{group.groupId == $0.chatterId ?? ""}).first{
             return conversation
         }

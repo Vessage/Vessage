@@ -13,7 +13,7 @@
         <!--Messages View Controller-->
         <scene sceneID="7MM-of-jgj">
             <objects>
-                <viewController id="ObA-dk-sSI" customClass="MessagesViewController" customModule="iAvatarMessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ObA-dk-sSI" customClass="MessagesViewController" customModule="MessagesExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qkL-Od-lgU"/>
                         <viewControllerLayoutGuide type="bottom" id="n38-gi-rB5"/>
@@ -106,12 +106,12 @@
                                             <action selector="onClickAvatarButton:" destination="ObA-dk-sSI" eventType="touchUpInside" id="haH-Ug-FfZ"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eJF-Ux-Py7" customClass="BahamutTextView" customModule="iAvatarMessage" customModuleProvider="target">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eJF-Ux-Py7" customClass="BahamutTextView" customModule="MessagesExtension" customModuleProvider="target">
                                         <rect key="frame" x="42" y="38" width="204" height="36"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="continue"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLz-dc-Vep">
                                         <rect key="frame" x="252" y="38" width="36" height="36"/>
@@ -192,7 +192,7 @@
     <resources>
         <image name="avatar_size_btn" width="128" height="128"/>
         <image name="face" width="256" height="256"/>
-        <image name="main_icon" width="144" height="144"/>
+        <image name="main_icon" width="256" height="256"/>
         <image name="send" width="256" height="256"/>
     </resources>
 </document>

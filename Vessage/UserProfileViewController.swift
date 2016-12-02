@@ -18,7 +18,7 @@ class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControl
     
     var initMessage:[String:AnyObject]?
     
-    var beforeRemoveTimeSpan:Int64 = 0
+    var beforeRemoveTimeSpan:Int64 = ConversationMaxTimeUpMS
     
     var createActivityId:String? = nil
     

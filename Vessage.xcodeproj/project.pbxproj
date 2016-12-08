@@ -86,7 +86,7 @@
 		E70CD4DE1D371665003779B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DD1D371665003779B5 /* Security.framework */; };
 		E70CD4E01D371682003779B5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DF1D371682003779B5 /* CoreTelephony.framework */; };
 		E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70EE83A1D17A33B0078B171 /* LocationService.swift */; };
-		E718444B1D498CDC00D3EDEF /* ImageChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */; };
+		E718444B1D498CDC00D3EDEF /* TextChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */; };
 		E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */; };
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
@@ -155,6 +155,7 @@
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC6E1D4DCDE100306A69 /* AppService.swift */; };
+		E7ACCF5C1DF90A8A00A8ACFB /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */; };
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
@@ -164,7 +165,7 @@
 		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
 		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
-		E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */; };
+		E7BB1F5B1D476CAF00324FFD /* TextChatInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */; };
 		E7BB6EAB1DA3AEFE00D88A7C /* NFCMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BB6EAA1DA3AEFE00D88A7C /* NFCMainViewController.swift */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
@@ -204,6 +205,8 @@
 		E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */; };
 		E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */; };
 		E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */; };
+		E7ECF3D41DF8680900DAC7BE /* RecordVessageVideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ECF3D31DF8680900DAC7BE /* RecordVessageVideoController.swift */; };
+		E7ECF3D61DF86D3A00DAC7BE /* RecordVideoVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ECF3D51DF86D3A00DAC7BE /* RecordVideoVessageExtension.swift */; };
 		E7ED38FD1C912F8E002126F4 /* ProgressTaskWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */; };
 		E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF282F1D791AFD0064231F /* ActivityConfig.swift */; };
 		E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EF28301D791AFD0064231F /* ActivityListController.swift */; };
@@ -396,7 +399,7 @@
 		E70CD4DD1D371665003779B5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E70CD4DF1D371682003779B5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		E70EE83A1D17A33B0078B171 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageChatInputView.swift; sourceTree = "<group>"; };
+		E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextChatInputView.swift; sourceTree = "<group>"; };
 		E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVessageExpandableHeader.swift; sourceTree = "<group>"; };
 		E71886731C9FBBCA0028B016 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
@@ -470,6 +473,7 @@
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E7ABAC6E1D4DCDE100306A69 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
+		E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTextView.swift; sourceTree = "<group>"; };
 		E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageEventHandler.swift; sourceTree = "<group>"; };
 		E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueProtocal.swift; sourceTree = "<group>"; };
 		E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueHandlers.swift; sourceTree = "<group>"; };
@@ -480,7 +484,7 @@
 		E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailAvatarCell.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
 		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
-		E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageChatInputView.xib; sourceTree = "<group>"; };
+		E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextChatInputView.xib; sourceTree = "<group>"; };
 		E7BB6EAA1DA3AEFE00D88A7C /* NFCMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewController.swift; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -523,6 +527,8 @@
 		E7EB9A3E1C880282002F96FB /* ValidateMobileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateMobileViewController.swift; sourceTree = "<group>"; };
 		E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatImageBoardController.storyboard; sourceTree = "<group>"; };
 		E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageBoardController.swift; sourceTree = "<group>"; };
+		E7ECF3D31DF8680900DAC7BE /* RecordVessageVideoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageVideoController.swift; sourceTree = "<group>"; };
+		E7ECF3D51DF86D3A00DAC7BE /* RecordVideoVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVideoVessageExtension.swift; sourceTree = "<group>"; };
 		E7ED38FC1C912F8E002126F4 /* ProgressTaskWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTaskWatcher.swift; sourceTree = "<group>"; };
 		E7EF282F1D791AFD0064231F /* ActivityConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityConfig.swift; sourceTree = "<group>"; };
 		E7EF28301D791AFD0064231F /* ActivityListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityListController.swift; sourceTree = "<group>"; };
@@ -889,6 +895,7 @@
 				E708ABF71C86D7B70071104E /* DynamicColor */,
 				E7E237D21C998AEB008FF893 /* BahamutFilmView */,
 				E708ABF51C86D7B70071104E /* ColorUtil.swift */,
+				E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */,
 				E7F6DC871DF00984007EC49A /* ImageUtil+Base64.swift */,
 				E708ABF61C86D7B70071104E /* ControllerExtension.swift */,
 				E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */,
@@ -999,7 +1006,7 @@
 				E7E937791D16DAB0001484F4 /* SelectVessageExpandableHeader.xib */,
 				E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */,
 				E7F532E11D3A0DEC008078DE /* Conversation.storyboard */,
-				E7BB1F5A1D476CAF00324FFD /* ImageChatInputView.xib */,
+				E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */,
 				E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */,
 			);
 			name = UI;
@@ -1088,7 +1095,7 @@
 				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
 				E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */,
 				E79C24D91D445057006754F1 /* FaceTextImageView.swift */,
-				E718444A1D498CDC00D3EDEF /* ImageChatInputView.swift */,
+				E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */,
 				E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */,
 				E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */,
 			);
@@ -1261,6 +1268,15 @@
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutCmd;
 			sourceTree = "<group>";
 		};
+		E7ECF3D21DF867DD00DAC7BE /* RecordVideo */ = {
+			isa = PBXGroup;
+			children = (
+				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
+				E7ECF3D31DF8680900DAC7BE /* RecordVessageVideoController.swift */,
+			);
+			name = RecordVideo;
+			sourceTree = "<group>";
+		};
 		E7ED38FB1C912F8E002126F4 /* BahamutTask */ = {
 			isa = PBXGroup;
 			children = (
@@ -1274,6 +1290,7 @@
 		E7EDE4901CFD1F970001983F /* ConversationView */ = {
 			isa = PBXGroup;
 			children = (
+				E7ECF3D21DF867DD00DAC7BE /* RecordVideo */,
 				E78002541DC2009D00DB18E2 /* BubbleVessageHandler */,
 				E7DDCEF91DBFA4AA00E61A56 /* Views */,
 				E7ACEB791D4C217000009C5B /* VessageEventHandler */,
@@ -1281,9 +1298,9 @@
 				E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */,
 				E708AB3E1C86CAA50071104E /* ConversationViewController.swift */,
 				E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */,
-				E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */,
 				E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */,
 				E756CBC01DB05BB00017E4A3 /* ImageVessageExtension.swift */,
+				E7ECF3D51DF86D3A00DAC7BE /* RecordVideoVessageExtension.swift */,
 			);
 			name = ConversationView;
 			sourceTree = "<group>";
@@ -1565,7 +1582,7 @@
 				E7886A811DC9DE9700368C03 /* Media.xcassets in Resources */,
 				E7F22C581C9BF19800CD38D1 /* country.plist in Resources */,
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
-				E7BB1F5B1D476CAF00324FFD /* ImageChatInputView.xib in Resources */,
+				E7BB1F5B1D476CAF00324FFD /* TextChatInputView.xib in Resources */,
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
 				E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
@@ -1706,6 +1723,7 @@
 				E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */,
 				E7EF285D1D791AFD0064231F /* LittlePaperManager.swift in Sources */,
 				E708AC961C872DBC0071104E /* AccountService.swift in Sources */,
+				E7ECF3D41DF8680900DAC7BE /* RecordVessageVideoController.swift in Sources */,
 				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
 				E79917541D60D9CF002C42C2 /* ChatImageManageCell.swift in Sources */,
 				E7886A741DC97D3D00368C03 /* SNSPostManager.swift in Sources */,
@@ -1734,6 +1752,7 @@
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
 				E7CC54E51D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */,
+				E7ACCF5C1DF90A8A00A8ACFB /* BahamutTextView.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
 				E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
@@ -1870,7 +1889,8 @@
 				E7CC54E21D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift in Sources */,
 				E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
-				E718444B1D498CDC00D3EDEF /* ImageChatInputView.swift in Sources */,
+				E718444B1D498CDC00D3EDEF /* TextChatInputView.swift in Sources */,
+				E7ECF3D61DF86D3A00DAC7BE /* RecordVideoVessageExtension.swift in Sources */,
 				E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */,
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,
 				E7EF286F1D7943930064231F /* NFCShareAlert.swift in Sources */,

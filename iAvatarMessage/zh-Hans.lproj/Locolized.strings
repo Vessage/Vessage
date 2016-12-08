@@ -12,3 +12,5 @@ CONFIRM = "确定";
 CANCEL = "取消";
 AVATAR_UPDATED = "头像已更新";
 INPUT_VIEW_PLACE_HOLDER = "Avatar Message";
+UPGRADE_TO_V_PRO_TITLE = "升级到无广告版？";
+UPGRADE_TO_V_PRO_MSG = "iAvatar Pro没有广告";

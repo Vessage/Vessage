@@ -34,9 +34,6 @@ class PlayVessageManager: ConversationViewControllerProxy {
     var selectedImageId:String?{
         return chattersBoardManager?.getChatterItem(UserSetting.userId)?.itemImage
     }
-
-    //MARK: flash tips properties
-    private var flashTipsView:UILabel!
     
     //MARK: Vessages Properties
     private var vessages = [Vessage](){
@@ -176,7 +173,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
             rerenderVessageViewDelay()
         }
         
-        let rect = self.rootController.view.convertRect(self.rootController.imageChatInputView.sendButton.frame, fromView: self.rootController.imageChatInputView)
+        let rect = self.rootController.view.convertRect(self.rootController.textChatInputView.sendButton.frame, fromView: self.rootController.textChatInputView)
         let chatterNum = CGFloat(bottomChattersBoard.chattersItems.count)
         let newHeight = bottomChattersBoard.chatterImageHeightOfNum(chatterNum, boardSize: bottomChattersBoard.frame.size) + 10
         self.rootController.topChattersBoardHeight.constant = 0
@@ -231,37 +228,37 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     //MARK: actions
     func onClickChatVideoButton(sender: UITapGestureRecognizer) {
-        
         self.rootController.view.userInteractionEnabled = false
         self.rootController.sendVideoChatButton.animationMaxToMin(0.1, maxScale: 1.2) {
-            if self.rootController.outChatGroup {
-                self.rootController.playToast("NOT_IN_CHAT_GROUP".localizedString())
-            }else if self.rootController.isReadingVessages {
-                if self.rootController.needSetChatBackgroundAndShow() {
-                    self.rootController.view.userInteractionEnabled = true
-                    return
-                }
-                self.rootController.startRecording()
-            }
             self.rootController.view.userInteractionEnabled = true
+            if self.rootController.outChatGroup {
+                self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
+            }else if !self.rootController.needSetChatBackgroundAndShow() {
+                self.rootController.startRecordVideoVessage()
+            }
+            
         }
     }
     
     func onClickFaceTextButton(sender: UITapGestureRecognizer) {
         self.rootController?.sendFaceTextButton.animationMaxToMin(0.1, maxScale: 1.2) {
-            self.rootController.tryShowImageChatInputView()
+            if self.rootController.outChatGroup{
+                self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
+            }else{
+                self.rootController.tryShowTextChatInputView()
+            }
         }
     }
     
     func onClickImageButton(sender: UITapGestureRecognizer) {
         self.rootController.view.userInteractionEnabled = false
         self.rootController.sendImageButton.animationMaxToMin(0.1, maxScale: 1.2) {
+            self.rootController.view.userInteractionEnabled = true
             if self.rootController.outChatGroup {
-                self.rootController.playToast("NOT_IN_CHAT_GROUP".localizedString())
-            }else if self.rootController.isReadingVessages {
+                self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
+            }else {
                 self.rootController.showSendImageAlert()
             }
-            self.rootController.view.userInteractionEnabled = true
         }
     }
     
@@ -456,18 +453,16 @@ extension PlayVessageManager:GetPlayVessageManagerDelegate{
     private func prepareVessageSender(vessage:Vessage) -> (ChattersBoard,UIImageView)?{
         var chatterBoard:ChattersBoard!
         var chatterImageView:UIImageView!
-        if let (board,view) = chattersBoardManager.getChatterImageViewOfChatterId(vessage.getVessageRealSenderId()!){
+        if let sender = vessage.getVessageRealSenderId(),let (board,view) = chattersBoardManager.getChatterImageViewOfChatterId(sender){
             chatterBoard = board
             chatterImageView = view
             return (chatterBoard,chatterImageView)
-        }else{
-            if let sender = vessage.getVessageRealSenderId(){
-                if !chatGroup.chatters.contains(sender) {
-                    chatGroup.chatters.append(sender)
-                }
-                onChatGroupUpdated(chatGroup)
-                return chattersBoardManager.getChatterImageViewOfChatterId(sender)
+        }else if let sender = vessage.getVessageRealSenderId(){
+            if !chatGroup.chatters.contains(sender) {
+                chatGroup.chatters.append(sender)
             }
+            onChatGroupUpdated(chatGroup)
+            return chattersBoardManager.getChatterImageViewOfChatterId(sender)
         }
         return nil
     }
@@ -695,35 +690,6 @@ extension PlayVessageManager{
     
     override func onGroupChatterUpdated(chatter: VessageUser) {
         chattersBoardManager.updateChatter(chatter)
-    }
-
-}
-
-//MARK: Flash Tips
-extension PlayVessageManager{
-
-    func flashTips(msg:String) {
-        if flashTipsView == nil {
-            flashTipsView = UILabel()
-            flashTipsView.clipsToBounds = true
-            flashTipsView.layer.cornerRadius = 6
-            flashTipsView.textColor = UIColor.orangeColor()
-            flashTipsView.textAlignment = .Center
-            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
-        }
-        self.flashTipsView.text = msg
-        self.flashTipsView.sizeToFit()
-        let bottomChattersBoard = self.rootController.bottomChattersBoard
-        let topChattersBoard = self.rootController.topChattersBoard
-        let topChattersBoardBottomY = topChattersBoard.frame.origin.y + topChattersBoard.frame.height
-        
-        let centerY = topChattersBoardBottomY + (bottomChattersBoard.frame.origin.y - topChattersBoardBottomY) / 2
-        let center = CGPointMake(self.rootController.vessageViewContainer.frame.width / 2,centerY)
-        self.flashTipsView.center = center
-        self.rootController.view.addSubview(self.flashTipsView)
-        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.4, autoStop: true, stopAfterMs: 1600){
-            self.flashTipsView.removeFromSuperview()
-        }
     }
 
 }

@@ -10,7 +10,7 @@ import Foundation
 import MBProgressHUD
 
 //MARK: RecordVessageManager
-class RecordVessageManager: ConversationViewControllerProxy {
+class RecordVessageManager : RecordVessageVideoControllerProxyBase {
     
     //MARK: Properties
     private var camera:VessageCamera!
@@ -31,8 +31,7 @@ class RecordVessageManager: ConversationViewControllerProxy {
             }
             if recordingTime == maxRecordTime{
                 userClickSend = false
-                rootController.setReadingVessage()
-                sendVessage()
+                prepareRecordedVideo()
             }
         }
     }
@@ -42,13 +41,12 @@ class RecordVessageManager: ConversationViewControllerProxy {
 //MARK: Manager Life Circle
 extension RecordVessageManager{
     
-    override func onSwitchToManager() {
+    func onSwitchToManager() {
         groupAvatarManager.renderImageViews()
         groupAvatarManager.refreshFaces()
-        super.onSwitchToManager()
     }
     
-    override func initManager(controller: ConversationViewController) {
+    override func initManager(controller: RecordVessageVideoController) {
         super.initManager(controller)
         self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
         initCamera()
@@ -68,7 +66,7 @@ extension RecordVessageManager{
         camera.initCamera(rootController,previewView: self.previewRectView)
     }
     
-    override func onReleaseManager() {
+    func onReleaseManager() {
         self.recordingTimer.invalidate()
         ServiceContainer.getVessageService().removeObserver(self)
         camera.cancelRecord()
@@ -76,7 +74,6 @@ extension RecordVessageManager{
         camera = nil
         groupAvatarManager?.releaseManager()
         groupAvatarManager = nil
-        super.onReleaseManager()
     }
 }
 
@@ -198,18 +195,14 @@ class GroupChatAvatarManager:NSObject {
 }
 
 extension RecordVessageManager{
-    override func onInitGroup(chatGroup:ChatGroup){
-        onChatGroupUpdated(chatGroup)
-    }
 
-    
-    override func onChatGroupUpdated(chatGroup: ChatGroup) {
+    func onChatGroupUpdated(chatGroup: ChatGroup) {
         
         var userFaceIds = [String:String?]()
         for userId in chatGroup.chatters {
             if userId == UserSetting.userId {
                 continue
-            }else if let user = self.rootController.userService.getCachedUserProfile(userId){
+            }else if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
                 userFaceIds.updateValue(user.mainChatImage, forKey: userId)
             }else{
                 userFaceIds.updateValue(nil, forKey: userId)
@@ -217,8 +210,8 @@ extension RecordVessageManager{
         }
         if isGroupChat {
             noSmileFaceTipsLabel.hidden = true
-        }else{
-            noSmileFaceTipsLabel.hidden = userFaceIds.keys.contains(conversation.chatterId)
+        }else if let chatter = chatterId{
+            noSmileFaceTipsLabel.hidden = userFaceIds.keys.contains(chatter)
         }
         groupAvatarManager.setFaces(userFaceIds)
     }
@@ -228,22 +221,20 @@ extension RecordVessageManager{
 extension RecordVessageManager{
     func onClickCancelRecordButton(_:UITapGestureRecognizer) {
         self.cancelRecord()
-        self.rootController.setReadingVessage()
-    }
-    
-    func onClickSendRecord(_:UITapGestureRecognizer) {
-        self.rootController.setReadingVessage()
-        self.sendVessage()
-    }
-    
-    func sendVessage() {
-        if recording {
-            prepareSendRecord()
+        self.rootController.dismissViewControllerAnimated(true) { 
+            self.delegate?.recordVessageVideoControllerCanceled(self.rootController)
         }
     }
     
-    private func prepareSendRecord()
+    func onClickSendRecord(_:UITapGestureRecognizer) {
+        prepareRecordedVideo()
+    }
+    
+    private func prepareRecordedVideo()
     {
+        if !recording {
+            return
+        }
         self.rootController.sendRecordButton.userInteractionEnabled = false
         #if DEBUG
             if isInSimulator(){
@@ -258,48 +249,18 @@ extension RecordVessageManager{
             camera.saveRecordedVideo()
         #endif
     }
-    
-    private func confirmSend(url:NSURL){
-        #if DEBUG
-            let size = PersistentFileHelper.fileSizeOf(url.path!)
-            print("\(size/1024)kb")
-        #endif
-        if userClickSend {
-            pushNewVessageToQueue(url)
-        }else{
-            let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
-                self.pushNewVessageToQueue(url)
-            }
-            let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
-                MobClick.event("Vege_CancelSendVessage")
-            }
-            self.rootController.showAlert("CONFIRM_SEND_VESSAGE_TITLE".localizedString(), msg: nil, actions: [okAction,cancelAction])
-        }
-    }
-    
-    private func pushNewVessageToQueue(url:NSURL){
-        self.rootController.setProgressSending()
-        let chatterId = self.conversation.chatterId
-        let vsg = Vessage()
-        vsg.typeId = Vessage.typeChatVideo
-        vsg.body = rootController.getSendVessageBodyString([:])
-        #if DEBUG
-            if isInSimulator() {
-                PersistentFileHelper.deleteFile(url.path!)
-                vsg.fileId = "5790435e99cc251974a42f61"
-                VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
-            }else{
-                VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
-            }
-        #else
-            VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: isGroupChat, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
-        #endif
-    }
 }
 
 //MARK: Camera And Record
 extension RecordVessageManager:VessageCameraDelegate{
-    func startRecord()
+
+    func openCamera() {
+        if !camera.cameraRunning {
+            camera.openCamera()
+        }
+    }
+    
+    private func startRecord()
     {
         MobClick.event("Vege_RecordVessage")
         #if DEBUG
@@ -320,9 +281,6 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     private func startRealCameraRecord(){
-        if !camera.cameraRunning {
-            camera.openCamera()
-        }
         
         if self.camera.cameraInited{
             self.userClickSend = true
@@ -336,9 +294,6 @@ extension RecordVessageManager:VessageCameraDelegate{
         }else{
             self.rootController.playToast("CAMERA_NOT_INITED".localizedString())
         }
-        
-        
-        
     }
     
     func cancelRecord() {
@@ -366,6 +321,7 @@ extension RecordVessageManager:VessageCameraDelegate{
     }
     
     func vessageCameraReady() {
+        startRecord()
     }
     
     func vessageCameraSessionClosed() {
@@ -376,16 +332,22 @@ extension RecordVessageManager:VessageCameraDelegate{
         let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
         if PersistentFileHelper.moveFile(video.path!, destinationPath: newFilePath)
         {
-            confirmSend(NSURL(fileURLWithPath: newFilePath))
+            self.rootController.dismissViewControllerAnimated(true){
+                self.delegate?.recordVessageVideoController(NSURL(fileURLWithPath: newFilePath), isTimeUp: !self.userClickSend, controller: self.rootController)
+            }
         }else
         {
-            self.rootController.showAlert("SAVE_VIDEO_FAILED".localizedString(), msg: "")
+            self.rootController.dismissViewControllerAnimated(true, completion: { 
+                self.delegate?.recordVessageVideoControllerSaveVideoError(self.rootController)
+            })
         }
     }
     
     func vessageCameraSaveVideoError(saveVideoError msg: String?) {
         self.rootController.sendRecordButton.userInteractionEnabled = true
-        self.rootController.playToast("SAVE_VIDEO_FAILED".localizedString())
+        self.rootController.dismissViewControllerAnimated(true, completion: {
+            self.delegate?.recordVessageVideoControllerSaveVideoError(self.rootController)
+        })
     }
 
     func recordingFlashing(_:AnyObject?){

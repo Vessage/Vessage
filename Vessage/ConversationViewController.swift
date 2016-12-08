@@ -44,8 +44,9 @@ class ConversationViewController: UIViewController {
         didSet{
             if let cg = chatGroup {
                 outChatGroup = !chatGroup.chatters.contains(UserSetting.userId)
-                recordVessageManager?.onChatGroupUpdated(cg)
-                playVessageManager?.onChatGroupUpdated(cg)
+                if !outChatGroup {
+                    playVessageManager?.onChatGroupUpdated(cg)
+                }
             }else{
                 outChatGroup = false
             }
@@ -61,7 +62,8 @@ class ConversationViewController: UIViewController {
     }
     
     private(set) var playVessageManager:PlayVessageManager!
-    private(set) var recordVessageManager:RecordVessageManager!
+    
+    
     
     var currentManager:ConversationViewControllerProxy!
     
@@ -70,11 +72,6 @@ class ConversationViewController: UIViewController {
     let fileService = ServiceContainer.getService(FileService)
     let vessageService = ServiceContainer.getVessageService()
     let chatGroupService = ServiceContainer.getChatGroupService()
-    
-    private(set) var isRecording:Bool = false
-    var isReadingVessages:Bool{
-        return !isRecording
-    }
     
     @IBOutlet weak var topChattersBoardHeight: NSLayoutConstraint!
     @IBOutlet weak var topChattersBoard: ChattersBoard!
@@ -96,37 +93,13 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var readingLineProgress: UIProgressView!
     @IBOutlet weak var progressView: UIProgressView!
     
-    @IBOutlet weak var recordViewContainer: UIView!
     @IBOutlet weak var vessageViewContainer: UIView!
     
-    //MARK: Record Views
-    @IBOutlet weak var sendRecordButton: UIButton!
-    @IBOutlet weak var cancelRecordButton: UIButton!
     
-    @IBOutlet weak var previewRectView: UIView!{
-        didSet{
-            previewRectView.backgroundColor = UIColor.clearColor()
-        }
-    }
-    
-    @IBOutlet weak var recordingProgress: KDCircularProgress!{
-        didSet{
-            recordingProgress.layoutIfNeeded()
-            recordingProgress.hidden = true
-        }
-    }
-    
-    @IBOutlet weak var recordingFlashView: UIView!{
-        didSet{
-            recordingFlashView.layoutIfNeeded()
-            recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
-            recordingFlashView.hidden = true
-        }
-    }
-    
-    @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
-    @IBOutlet weak var groupFaceContainer: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
+    
+    //MARK: flash tips properties
+    private var flashTipsView:UILabel!
     
     private var baseVessageBodyDict:[String:AnyObject]{
         var dict = [String:AnyObject]()
@@ -147,8 +120,8 @@ class ConversationViewController: UIViewController {
         return String(data: json, encoding: NSUTF8StringEncoding)
     }
     
-    var imageChatInputView:ImageChatInputView!
-    var imageChatInputResponderTextFiled:UITextField!
+    var textChatInputView:TextChatInputView!
+    var textChatInputResponderTextFiled:UITextField!
     
     private var initMessage:[String:AnyObject]!
     
@@ -180,15 +153,13 @@ extension ConversationViewController{
         initChatImageButton()
         playVessageManager = PlayVessageManager()
         playVessageManager.initManager(self)
-        recordVessageManager = RecordVessageManager()
-        recordVessageManager.initManager(self)
+        
         addObservers()
         if let group = self.chatGroup{
-            recordVessageManager.onInitGroup(group)
             playVessageManager.onInitGroup(group)
         }
         
-        setReadingVessage()
+        playVessageManager.onSwitchToManager()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
         outterNewVessageCount = 0
@@ -231,7 +202,6 @@ extension ConversationViewController{
         super.viewDidAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
-        showBottomBar()
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
         handleInitMessage()
         playVessageManager.loadVessages()
@@ -239,8 +209,8 @@ extension ConversationViewController{
     
     private func handleInitMessage(){
         if let t = initMessage?["input_text"] as? String{
-            if tryShowImageChatInputView(){
-                imageChatInputView.inputTextField.insertText(t)
+            if tryShowTextChatInputView(){
+                textChatInputView.inputTextField.insertText(t)
             }
         }
         initMessage = nil
@@ -257,10 +227,8 @@ extension ConversationViewController{
     
     private func releaseController(){
         self.removeObservers()
-        self.recordVessageManager.onReleaseManager()
         self.playVessageManager.onReleaseManager()
         self.playVessageManager = nil
-        self.recordVessageManager = nil
         self.conversation = nil
         self.chatGroup = nil
     }
@@ -296,10 +264,8 @@ extension ConversationViewController{
     
     func clickRightBarItem(sender: AnyObject) {
         if outChatGroup {
-            self.playToast("NOT_IN_CHAT_GROUP".localizedString())
-            return
-        }
-        if isGroupChat {
+            self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
+        }else if isGroupChat {
             showChatGroupProfile()
         }else{
             showChatterProfile()
@@ -323,33 +289,6 @@ extension ConversationViewController{
         self.playToast("USER_DATA_NOT_READY_RETRY".localizedString())
     }
     
-    func startRecording() {
-        isRecording = true
-        navigationController?.navigationBarHidden = true
-        vessageViewContainer.hidden = true
-        recordViewContainer.hidden = false
-        
-        recordViewContainer.alpha = 0.3
-        UIView.beginAnimations("RecordViewContainer", context: nil)
-        UIView.setAnimationDuration(0.3)
-        recordViewContainer.alpha = 1
-        UIView.commitAnimations()
- 
-        recordVessageManager.onSwitchToManager()
-        recordVessageManager.startRecord()
-    }
-    
-    func setReadingVessage() {
-        isRecording = false
-        recordViewContainer.hidden = true
-        vessageViewContainer.hidden = false
-        navigationController?.navigationBarHidden = false
-        playVessageManager.onSwitchToManager()
-    }
-    
-    private func showBottomBar(){
-        
-    }
 }
 
 //MARK: Observer & Notifications
@@ -359,6 +298,7 @@ extension ConversationViewController{
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessagesReveiced(_:)), name: VessageService.onNewVessagesReceived, object: nil)
+        
         chatGroupService.addObserver(self, selector: #selector(ConversationViewController.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
         addSendVessageObservers()
     }
@@ -371,12 +311,7 @@ extension ConversationViewController{
     }
     
     func onAppResignActive(_:AnyObject?) {
-        if isRecording {
-            self.recordVessageManager.cancelRecord()
-            self.setReadingVessage()
-        }else{
-            hideKeyBoard()
-        }
+        hideKeyBoard()
     }
     
     func onUserNoteNameUpdated(a:NSNotification) {
@@ -385,6 +320,14 @@ extension ConversationViewController{
                 if let note = a.userInfo?[UserNoteNameUpdatedValue] as? String{
                     self.controllerTitle = note
                 }
+            }
+        }
+    }
+    
+    func onQuitChatGroup(a:NSNotification) {
+        if let group = a.userInfo?[kChatGroupValue] as? ChatGroup{
+            if isGroupChat && group.groupId == self.chatGroup.groupId {
+                outChatGroup = true
             }
         }
     }
@@ -402,7 +345,6 @@ extension ConversationViewController{
             if let chatterids = self.chatGroup?.chatters{
                 if chatterids.contains(chatter.userId) {
                     playVessageManager.onGroupChatterUpdated(chatter)
-                    recordVessageManager.onGroupChatterUpdated(chatter)
                 }
             }
         }
@@ -423,7 +365,6 @@ extension ConversationViewController{
         }
         if received.count > 0 {
             self.playVessageManager.onVessagesReceived(received)
-            self.recordVessageManager.onVessagesReceived(received)
         }
         outterNewVessageCount += otherConversationVessageCount
     }
@@ -439,7 +380,7 @@ extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
     func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
         sender.dismissViewControllerAnimated(true){
             let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-                self.startRecording()
+                self.startRecordVideoVessage()
             })
             self.showAlert("CHAT_BCG_SETED_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
         }
@@ -447,7 +388,7 @@ extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
     
     func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
         let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-            self.startRecording()
+            self.startRecordVideoVessage()
         })
         self.showAlert("CHAT_BCG_NOT_SET_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
     }
@@ -645,6 +586,42 @@ extension ConversationViewController{
     }
 
 }
+
+//MARK: Flash Tips
+extension ConversationViewController{
+    
+    func flashTips(msg:String) {
+        if flashTipsView == nil {
+            flashTipsView = UILabel()
+            flashTipsView.clipsToBounds = true
+            flashTipsView.textColor = UIColor.orangeColor()
+            flashTipsView.textAlignment = .Center
+            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
+        }
+        self.flashTipsView.text = msg
+        self.flashTipsView.sizeToFit()
+        self.flashTipsView.layoutIfNeeded()
+        
+        self.flashTipsView.frame.size.height += 10
+        self.flashTipsView.frame.size.width += 16
+        
+        flashTipsView.layer.cornerRadius = self.flashTipsView.frame.height / 2
+        
+        let bottomChattersBoard = self.bottomChattersBoard
+        let topChattersBoard = self.topChattersBoard
+        let topChattersBoardBottomY = topChattersBoard.frame.origin.y + topChattersBoard.frame.height
+        
+        let centerY = topChattersBoardBottomY + (bottomChattersBoard.frame.origin.y - topChattersBoardBottomY) / 2
+        let center = CGPointMake(self.vessageViewContainer.frame.width / 2,centerY)
+        self.flashTipsView.center = center
+        self.view.addSubview(self.flashTipsView)
+        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.4, autoStop: true, stopAfterMs: 1600){
+            self.flashTipsView.removeFromSuperview()
+        }
+    }
+    
+}
+
 
 //MARK: animations
 extension ConversationViewController{

@@ -91,6 +91,7 @@ LOAD_IMG_ERROR = "加载图片失败";
 
 MSG_IS_TOO_LONG = "超过限制的长度了";
 
+RECORD_VIDEO = "录制视频";
 SENDING_FILM = "视频发送中";
 NO_FILM_SELECTED = "需要录制或者选择一个视频!";
 SEND_FILM_SUC = "上传视频成功!";
@@ -229,6 +230,11 @@ CLICK_NEXT_MESSAGE_TIPS = "跳过的消息将会被删除且不能恢复，确�
 
 CAMERA_NOT_INITED = "相机没有初始化";
 
+NEED_RECORD_PERMISSION = "需要相机和麦克风权限";
+NEED_RECORD_PERMISSION_TIPS = "请在 设置-VG聊天\n开启相机和麦克风权限";
+
+GO_SETTING = "设置";
+
 CHANGE_CHAT_BCG = "聊天表情背景";
 BIND_MOBILE = "手机";
 NOT_SET = "未设置";
@@ -270,13 +276,12 @@ REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开VG的短信权限";
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta吧?";
 NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧!\n%@";
 
-CONTACTS = "手机通讯录";
+SEL_CONTACTS_ITEM = "新建联系人聊天";
+
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
 REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到VG的应用选项并开启通讯录权限，然后再打开App";
-OPEN_A_CONTACT_CONVERSATION = "与手机好友聊天";
-NEW_CONVERSATION = "开始对讲";
 
 NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
 UNLOADED_USER = "佚名";
@@ -331,7 +336,7 @@ GROUP_NAME_EDIT_ERROR = "修改群组名出错";
 USER_ALREADY_IN_GROUP = "该好友已经在群组里了";
 ADD_USER_TO_GROUP_SUCCESS = "好友已加入群聊";
 ADD_USER_TO_GROUP_ERROR = "拉好友入群出错";
-NOT_IN_CHAT_GROUP = "已退出群聊...";
+NOT_IN_CHAT_GROUP = "你已退出群聊...";
 EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组?";
 YOU_EXITED_GROUP_CHAT = "你已退出群组";
 EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
@@ -367,3 +372,8 @@ UNKNOW_TEXT = "未知文本";
 
 NO_VESSAGES_IN_TIMEMACHINE = "没有消息记录";
 X_AT_D = "%@ %@";
+
+TEXT_MESSAGE_HOLDER = "发送文字消息";
+
+SEARCH_FRIENDS = "查找好友";
+SEARCH_FRIENDS_HOLODER = "请输入好友的VG号或手机";

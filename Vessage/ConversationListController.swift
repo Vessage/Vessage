@@ -44,6 +44,7 @@ class ConversationListController: UITableViewController {
             }
             self.navigationItem.leftBarButtonItem?.enabled = !isSearching
             self.navigationItem.rightBarButtonItem?.enabled = !isSearching
+            self.searchBar.placeholder = ( isSearching ? "SEARCH_FRIENDS_HOLODER":"SEARCH_FRIENDS").localizedString()
         }
     }
     
@@ -341,11 +342,7 @@ class ConversationListController: UITableViewController {
         }else if indexPath.section == ConversationListController.newConversationSection{
             if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCellWithIdentifier(ConversationListContactCell.reuseId, forIndexPath: indexPath) as! ConversationListContactCell
-                if conversationService.conversations.count > 0{
-                    cell.titleLabel.text = "CONTACTS".localizedString()
-                }else{
-                    cell.titleLabel.text = "OPEN_A_CONTACT_CONVERSATION".localizedString()
-                }
+                cell.titleLabel.text = "SEL_CONTACTS_ITEM".localizedString()
                 cell.rootController = self
                 return cell
             }else{

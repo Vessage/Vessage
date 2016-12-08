@@ -9,10 +9,10 @@
 import Foundation
 
 //MARK: Face Text Vessage
-extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresentationControllerDelegate {
+extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresentationControllerDelegate {
     func initChatImageButton() {
-        self.imageChatInputView = ImageChatInputView.instanceFromXib()
-        self.imageChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        self.textChatInputView = TextChatInputView.instanceFromXib()
+        self.textChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
@@ -23,17 +23,17 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         swipeUp.direction = .Up
         swipeDown.direction = .Down
         
-        self.imageChatInputView.addGestureRecognizer(swipeRight)
-        self.imageChatInputView.addGestureRecognizer(swipeLeft)
-        self.imageChatInputView.addGestureRecognizer(swipeUp)
-        self.imageChatInputView.addGestureRecognizer(swipeDown)
+        self.textChatInputView.addGestureRecognizer(swipeRight)
+        self.textChatInputView.addGestureRecognizer(swipeLeft)
+        self.textChatInputView.addGestureRecognizer(swipeUp)
+        self.textChatInputView.addGestureRecognizer(swipeDown)
  
-        self.imageChatInputView.addGestureRecognizer(tap)
-        self.imageChatInputView.delegate = self
-        imageChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
-        imageChatInputView.inputTextField.returnKeyType = .Send
-        self.view.addSubview(imageChatInputResponderTextFiled)
-        self.imageChatInputResponderTextFiled.inputAccessoryView = imageChatInputView
+        self.textChatInputView.addGestureRecognizer(tap)
+        self.textChatInputView.delegate = self
+        textChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
+        textChatInputView.inputTextField.returnKeyType = .Send
+        self.view.addSubview(textChatInputResponderTextFiled)
+        self.textChatInputResponderTextFiled.inputAccessoryView = textChatInputView
     }
     
     func onTapInputView(ges:UITapGestureRecognizer) {
@@ -51,31 +51,31 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
         }
     }
     
-    //MARK: ImageChatInputViewDelegate
-    func imageChatInputViewDidBeginEditing(textField: UITextView) {
-        imageChatInputViewChanged(textField)
+    //MARK: TextChatInputViewDelegate
+    func textChatInputViewDidBeginEditing(textField: UITextView) {
+        textChatInputViewChanged(textField)
     }
     
-    func imageChatInputViewChanged(textField: UITextView) {
+    func textChatInputViewChanged(textField: UITextView) {
 
     }
     
-    func imageChatInputViewDidEndEditing(textField: UITextView) {
-        imageChatInputResponderTextFiled.resignFirstResponder()
+    func textChatInputViewDidEndEditing(textField: UITextView) {
+        textChatInputResponderTextFiled.resignFirstResponder()
     }
     
-    func imageChatInputViewDidClickSend(sender: AnyObject?, textField: UITextView) {
+    func textChatInputViewDidClickSend(sender: AnyObject?, textField: UITextView) {
         sendImageChatVessage()
     }
     
-    func imageChatInputViewDidClickChatImage(sender: AnyObject?) {
+    func textChatInputViewDidClickChatImage(sender: AnyObject?) {
         self.showChatImagesMrgController(1)
     }
     
     //MARK: actions
-    func tryShowImageChatInputView() -> Bool{
-        self.imageChatInputResponderTextFiled.becomeFirstResponder()
-        self.imageChatInputView.inputTextField.becomeFirstResponder()
+    func tryShowTextChatInputView() -> Bool{
+        self.textChatInputResponderTextFiled.becomeFirstResponder()
+        self.textChatInputView.inputTextField.becomeFirstResponder()
         return true
     }
     
@@ -89,9 +89,9 @@ extension ConversationViewController:ImageChatInputViewDelegate,UIPopoverPresent
     private func sendImageChatVessage() {
         let chatImage = self.playVessageManager.selectedImageId
         self.setProgressSending()
-        let textMessage = self.imageChatInputView.inputTextField.text
-        self.imageChatInputView.inputTextField.text = nil
-        self.imageChatInputView.refreshSendButtonColor()
+        let textMessage = self.textChatInputView.inputTextField.text
+        self.textChatInputView.inputTextField.text = nil
+        self.textChatInputView.refreshSendButtonColor()
         let vsg = Vessage()
         let isGroup = self.conversation.isGroupChat
         vsg.typeId = Vessage.typeFaceText        

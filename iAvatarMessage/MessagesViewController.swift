@@ -21,7 +21,7 @@ private let contentMinHeight:CGFloat = 32
 private let contentMinWidth:CGFloat = 48
 
 private let contentTextSizeMin:Float = Float(UIFont.systemFontSize())
-private let contentTextSizeMax:Float = Float(UIFont.systemFontSize()) + 10
+private let contentTextSizeMax:Float = Float(UIFont.systemFontSize()) + 30
 
 private let avatarSizeMin:Float = 64
 private let avatarSizeMax:Float = 128
@@ -108,7 +108,7 @@ class MessagesViewController: MSMessagesAppViewController {
     private var contentContainer:AvatarMessageContentContainer!
     private var textMessageLabel:UILabel!
     
-    private var inputText:String?{
+    var inputText:String?{
         get{
             return inputTextView?.text
         }
@@ -220,6 +220,11 @@ class MessagesViewController: MSMessagesAppViewController {
             sendButton.enabled = false
             bottomSlider.hidden = true
             sliderButton.hidden = true
+            #if VERSION_LITE
+                if presentationStyle == .Expanded {
+                    showGDTBanner()
+                }
+            #endif
         }else{
             compactTipsView.hidden = true
             bottomSlider.hidden = false
@@ -227,6 +232,9 @@ class MessagesViewController: MSMessagesAppViewController {
             textMessageLabel?.text = inputText
             sendButton.enabled = true
             contentContainer.drawRect(self.messageContent.bounds)
+            #if VERSION_LITE
+                hideGDTBanner()
+            #endif
         }
     }
     
@@ -269,6 +277,10 @@ class MessagesViewController: MSMessagesAppViewController {
         textMessageLabel.font = textMessageLabel.font.fontWithSize(CGFloat(textSize))
         updateBubbleColors()
         
+        #if VERSION_LITE
+            initGDTMobAd()
+        #endif
+        
         refreshViews()
     }
     
@@ -281,15 +293,20 @@ class MessagesViewController: MSMessagesAppViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessagesViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessagesViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(MessagesViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         requestPresentationStyle(.Expanded)
         refreshViews()
+        #if VERSION_LITE
+            onGDTViewWillAppear()
+        #endif
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        #if VERSION_LITE
+            onGDTViewWillDisappear()
+        #endif
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -385,15 +402,7 @@ extension MessagesViewController:AvatarMessageContentContainerDelegate{
     func avatarMessageContentViewContentSize(container: AvatarMessageContentContainer, containerWidth: CGFloat,contentView:UIView) -> CGSize {
         if let label = contentView as? UILabel{
             var contentSize = textMessageLabel.sizeThatFits(CGSizeMake(containerWidth - 2 * 6 - 10, UIScreen.mainScreen().bounds.height))
-            
-            /*
-            if contentSize.width < contentContainer.avatarSize {
-                contentSize.width = contentContainer.avatarSize
-                label.textAlignment = .Center
-            }else{
-                label.textAlignment = .Left
-            }
- */
+
             if contentSize.height < contentMinHeight || contentSize.width < contentMinWidth {
                 if contentSize.height < contentMinHeight{
                     contentSize.height = contentMinHeight
@@ -504,11 +513,15 @@ extension MessagesViewController{
     func onKeyBoardShown(a:NSNotification) {
         if let value = a.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue{
             bottom?.constant = value.CGRectValue().height
+            self.view.updateConstraints()
+            self.view.layoutIfNeeded()
         }
     }
     
     func onKeyboardHidden(a:NSNotification) {
         bottom?.constant = 0
+        self.view.updateConstraints()
+        self.view.layoutIfNeeded()
     }
 }
 

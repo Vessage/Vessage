@@ -13,18 +13,3 @@ class GroupUserCollectionCell: UICollectionViewCell {
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var nick: UILabel!
 }
-//
-//class GroupUsersCell: ChatGroupProfileCellBase,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-//    static let reuseId = "GroupUsersCell"
-//    
-//    @IBOutlet weak var collectionHeightConstraints: NSLayoutConstraint!
-//    
-//    @IBOutlet weak var collectionView: UICollectionView!{
-//        didSet{
-//            collectionView.delegate = self
-//            collectionView.dataSource = self
-//        }
-//    }
-//    
-//    
-//}

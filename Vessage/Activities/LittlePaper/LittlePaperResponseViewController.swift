@@ -10,6 +10,9 @@ import UIKit
 
 class LittlePaperResponseCell: UITableViewCell {
     static let reuseId = "LittlePaperResponseCell"
+    
+    var response:LittlePaperReadResponse!
+    
     @IBOutlet weak var headLine: UILabel!
     @IBOutlet weak var subLine: UILabel!
 }
@@ -72,6 +75,7 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
         let cell = tableView.dequeueReusableCellWithIdentifier(LittlePaperResponseCell.reuseId, forIndexPath: indexPath) as! LittlePaperResponseCell
 
         let info = LittlePaperManager.instance.readPaperResponses[indexPath.row]
+        cell.response = info
         cell.headLine.text = String(format: "PAPER_SEND_TO_X".littlePaperString, info.paperReceiver)
         if info.type == LittlePaperReadResponse.TYPE_ASK_SENDER{
             cell.subLine.text = String(format: "X_ASK_OPEN_PAPER".littlePaperString, info.askerNick ?? "")
@@ -85,13 +89,14 @@ class LittlePaperResponseViewController: UIViewController,UITableViewDelegate,UI
     }
  
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)as! LittlePaperResponseCell
         cell?.selected = false
-        let info = LittlePaperManager.instance.readPaperResponses[indexPath.row]
-        if info.type == LittlePaperReadResponse.TYPE_ASK_SENDER{
-            self.showAskSenderAlert(info,indexPath: indexPath)
-        }else{
-            self.showReturnAskerAlert(info,indexPath:indexPath)
+        if let info = cell.response{            
+            if info.type == LittlePaperReadResponse.TYPE_ASK_SENDER{
+                self.showAskSenderAlert(info,indexPath: indexPath)
+            }else{
+                self.showReturnAskerAlert(info,indexPath:indexPath)
+            }
         }
     }
     

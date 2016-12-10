@@ -11,6 +11,13 @@ import Foundation
 class TextFullScreen: UIViewController {
     private var scrollView:UIScrollView!
     private var textLabel:UILabel!
+    private var dateTimeLabel:UILabel!
+    
+    var date:NSDate?{
+        didSet{
+            updateDateTimeLabel()
+        }
+    }
     
     var text:String!{
         didSet{
@@ -28,6 +35,9 @@ class TextFullScreen: UIViewController {
         self.textLabel = UILabel()
         self.textLabel.numberOfLines = 0
         self.scrollView.addSubview(textLabel)
+        self.dateTimeLabel = UILabel()
+        self.dateTimeLabel.textColor = UIColor.lightGrayColor()
+        self.view.addSubview(dateTimeLabel)
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TextFullScreen.onTap(_:))))
     }
     
@@ -51,12 +61,24 @@ class TextFullScreen: UIViewController {
         }
         
         textLabel.frame = CGRect(origin: CGPointZero, size: size)
+        dateTimeLabel.font = UIFont.systemFontOfSize(18)
+        
+    }
+    
+    func updateDateTimeLabel() {
+        dateTimeLabel.text = date?.toFriendlyString()
+        dateTimeLabel.sizeToFit()
+        dateTimeLabel.frame.origin.x = self.view.frame.width - 10 - dateTimeLabel.frame.width
+        dateTimeLabel.frame.origin.y = self.view.frame.height - 6 - dateTimeLabel.frame.height
     }
 }
 
 class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessageManagerDelegate {
     
     private var getPlayVessageManagerDelegate:GetPlayVessageManagerDelegate?
+    
+    private var vessage:Vessage?
+    
     private var playVessageManager:PlayVessageManager?{
         return getPlayVessageManagerDelegate?.getPlayVessageManager()
     }
@@ -99,6 +121,7 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVes
         if let label = contentView as? UILabel {
             let bodyDict = newVessage.getBodyDict()
             label.text = bodyDict["textMessage"] as? String
+            self.vessage = newVessage
             ServiceContainer.getVessageService().readVessage(newVessage)
         }
     }
@@ -108,6 +131,7 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVes
             let c = TextFullScreen()
             playVessageManager?.rootController.presentViewController(c, animated: true, completion: {
                 c.text = label.text
+                c.date = self.vessage?.getSendTime()
             })
         }
     }

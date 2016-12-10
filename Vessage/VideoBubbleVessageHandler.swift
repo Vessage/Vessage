@@ -12,6 +12,7 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
     let defaultHeight:CGFloat = 240
     
     private var videoPlayer:BahamutFilmView!
+    private var dateTimeLabel:UILabel!
     private var presentingVessage:Vessage!
     
     func getContentView(vessage: Vessage) -> UIView {
@@ -22,10 +23,23 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
             videoPlayer.isMute = false
             videoPlayer.showTimeLine = false
             videoPlayer.delegate = self
+            dateTimeLabel = UILabel()
+            dateTimeLabel.textColor = UIColor.whiteColor()
+            dateTimeLabel.font = UIFont.systemFontOfSize(12)
+            videoPlayer.addSubview(dateTimeLabel)
         }
         return videoPlayer
     }
     
+    func updateDateLabel(date:NSDate) {
+        dateTimeLabel.text = date.toFriendlyString()
+        dateTimeLabel.sizeToFit()
+        if let spv = dateTimeLabel.superview{
+            dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
+            dateTimeLabel.frame.origin.y = spv.frame.height - 2 - dateTimeLabel.frame.height
+            spv.bringSubviewToFront(dateTimeLabel)
+        }
+    }
     
     func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
         if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height >= defaultHeight {
@@ -48,6 +62,9 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
             }
             UIView.transitionWithView(videoPlayer, duration: 0.3, options: .TransitionCrossDissolve, animations: nil){ flag in
                 videoPlayer.filePath = newVessage.fileId
+            }
+            if let d = newVessage.getSendTime(){
+                updateDateLabel(d)
             }
         }
     }

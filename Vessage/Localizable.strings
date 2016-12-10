@@ -341,7 +341,7 @@ EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组?";
 YOU_EXITED_GROUP_CHAT = "你已退出群组";
 EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
 "GROUP_CHAT_AT_LEASE_2_PEOPLE" = "至少选择两个好友哦~";
-NO_SUCH_GROUP = "群组不存在";
+NO_SUCH_GROUP = "群组不存在，或你已退出该群组";
 
 //MARK: Face Text Chat
 U_MUST_SET_CHAT_IMAGES = "发大头贴消息前请设置好你的大头贴~";

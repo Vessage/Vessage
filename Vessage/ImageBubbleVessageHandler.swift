@@ -12,8 +12,10 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
     
     class ImageVessageContainer: UIView {
         private var imageView:UIImageView
+        private var dateTimeLabel:UILabel
         private var loadingIndicator:UIActivityIndicatorView
         override init(frame: CGRect) {
+            self.dateTimeLabel = UILabel()
             self.imageView = UIImageView()
             self.loadingIndicator = UIActivityIndicatorView()
             self.loadingIndicator.hidesWhenStopped = true
@@ -24,6 +26,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
             super.init(frame: frame)
             self.addSubview(imageView)
             self.addSubview(loadingIndicator)
+            self.addSubview(dateTimeLabel)
         }
         
         override func drawRect(rect: CGRect) {
@@ -32,6 +35,15 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
             let x = (rect.width - 20) / 2
             let y = (rect.height - 20) / 2
             self.loadingIndicator.frame = CGRectMake(x, y, 20, 20)
+            updateDateLabel()
+        }
+        
+        private func updateDateLabel() {
+            dateTimeLabel.sizeToFit()
+            if let spv = dateTimeLabel.superview{
+                dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
+                dateTimeLabel.frame.origin.y = spv.frame.height - 2 - dateTimeLabel.frame.height
+            }
         }
         
         convenience init() {
@@ -108,13 +120,15 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
     
     private func refreshImage(contentView:ImageVessageContainer){
         if let vsg = self.vessage{
+            contentView.dateTimeLabel.text = vsg.getSendTime()?.toFriendlyString()
+            contentView.dateTimeLabel.layoutIfNeeded()
             if vsg.isMySendingVessage() {
                 contentView.imageView.image = UIImage(contentsOfFile: vsg.fileId)
                 imageLoaded = true
             }else{
                 imageLoaded = false
                 contentView.loadingIndicator.startAnimating()
-                ServiceContainer.getFileService().setImage(contentView.imageView, iconFileId: vessage.fileId,defaultImage: UIImage(named: "recording_bcg_0")!){ suc in
+                ServiceContainer.getFileService().setImage(contentView.imageView, iconFileId: vessage.fileId,defaultImage: UIImage(named: "recording_bcg_2")!){ suc in
                     if self.vessage.vessageId == vsg.vessageId{
                         self.imageLoaded = suc
                         contentView.loadingIndicator.stopAnimating()

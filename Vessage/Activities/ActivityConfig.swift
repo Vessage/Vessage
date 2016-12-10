@@ -33,7 +33,7 @@ let ActivityInfoList = [
     ],
     [
         //ActivityInfo(activityId: "1001", "一起帮帮忙", "littlePaperIcon", "HelpTogether", "HelpTogetherMainController", true),
-        ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false),
+        //ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false),
         ActivityInfo(activityId: "1004", "夜深人静", "mns_icon", "MNS", "MNSMainNavigationController", false)
     ]
 ]

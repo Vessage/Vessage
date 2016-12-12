@@ -208,7 +208,7 @@ extension NFCPostCell{
     }
     
     @IBAction func onClickNewComment(sender: AnyObject) {
-        NFCPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post)
+        NFCPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post).delegate = self
     }
     
     @IBAction func onClickChat(sender: AnyObject) {
@@ -261,6 +261,15 @@ extension NFCPostCell{
         }
     }
     
+}
+
+//MARK: NFCCommentViewControllerDelegate
+extension NFCPostCell:NFCCommentViewControllerDelegate{
+    func nfcCommentController(sender: NFCPostCommentViewController, didPostNewComment newComment: NFCPostComment, post: NFCPost) {
+        if post.pid == self.post.pid {
+            self.commentTipsLabel.text = post.cmtCnt.friendString
+        }
+    }
 }
 
 //MARK: God Methods

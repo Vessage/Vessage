@@ -106,9 +106,10 @@ class NFCPostManager {
         }
     }
     
-    func newPost(imageId:String,callback:(post:NFCPost?)->Void) {
+    func newPost(imageId:String,body:String?,callback:(post:NFCPost?)->Void) {
         let req = NFCPostNewRequest()
         req.image = imageId
+        req.body = body
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<NFCPost>) in
             callback(post: result.returnObject)
         }

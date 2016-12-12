@@ -170,6 +170,14 @@ class NFCPostNewRequest: BahamutRFRequestBase {
             paramenters.updateValue(image, forKey: "image")
         }
     }
+    
+    var body:String!{
+        didSet{
+            if !String.isNullOrEmpty(body) {
+                paramenters.updateValue(body, forKey: "body")
+            }
+        }
+    }
 }
 
 class NFCLikePostRequest: BahamutRFRequestBase {

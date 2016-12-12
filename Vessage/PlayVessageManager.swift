@@ -148,7 +148,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
     //MARK: keyboard
     var cachedBottomChatterBoardHeight:CGFloat!
     var cachedBottomChatterBoardBottom:CGFloat!
-    var cachedTopChatterBoardHeigt:CGFloat!
+    var cachedTopChatterBoardHeight:CGFloat!
     
     var cachedTopChatters = [ChattersBoardItem]()
     var chatterMoved = false
@@ -161,7 +161,7 @@ class PlayVessageManager: ConversationViewControllerProxy {
         if cachedBottomChatterBoardHeight == nil {
             cachedBottomChatterBoardHeight = self.rootController.bottomChattersBoardHeight.constant
             cachedBottomChatterBoardBottom = self.rootController.bottomChattersBoardBottom.constant
-            cachedTopChatterBoardHeigt = self.rootController.topChattersBoardHeight.constant
+            cachedTopChatterBoardHeight = self.rootController.topChattersBoardHeight.constant
         }
         
         if chatterMoved == false {
@@ -202,14 +202,16 @@ class PlayVessageManager: ConversationViewControllerProxy {
     
     override func onKeyBoardHidden() {
         self.rootController.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.rootController.bottomChattersBoardHeight.constant = cachedBottomChatterBoardHeight
-        self.rootController.bottomChattersBoardBottom.constant = cachedBottomChatterBoardBottom
-        self.rootController.topChattersBoardHeight.constant = cachedTopChatterBoardHeigt
-        self.rootController.bottomChattersBoard.removeChatters(cachedTopChatters)
-        self.rootController.topChattersBoard.addChatters(cachedTopChatters)
-        cachedTopChatters.removeAll()
-        rerenderVessageViewDelay()
-        chatterMoved = false
+        if let _ = cachedTopChatterBoardHeight,let _ = cachedBottomChatterBoardBottom,let _ = cachedBottomChatterBoardHeight {
+            self.rootController.bottomChattersBoardHeight.constant = cachedBottomChatterBoardHeight
+            self.rootController.bottomChattersBoardBottom.constant = cachedBottomChatterBoardBottom
+            self.rootController.topChattersBoardHeight.constant = cachedTopChatterBoardHeight
+            self.rootController.bottomChattersBoard.removeChatters(cachedTopChatters)
+            self.rootController.topChattersBoard.addChatters(cachedTopChatters)
+            cachedTopChatters.removeAll()
+            rerenderVessageViewDelay()
+            chatterMoved = false
+        }
     }
     
     //MARK: Notifications

@@ -16,6 +16,10 @@ import MBProgressHUD
     optional func snsPostCommentCellDidClickPostInfo(sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
 }
 
+protocol SNSCommentViewControllerDelegate {
+    func snsCommentController(sender:SNSPostCommentViewController, didPostNewComment newComment:SNSPostComment,post:SNSPost)
+}
+
 class SNSPostCommentCell: UITableViewCell {
     
     static let reuseId = "SNSPostCommentCell"
@@ -78,6 +82,7 @@ class SNSPostCommentCell: UITableViewCell {
 }
 
 class SNSPostCommentViewController: UIViewController {
+    var delegate:SNSCommentViewControllerDelegate?
     
     private var post:SNSPost!
     
@@ -207,6 +212,7 @@ extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
                     
                     self.post.cmtCnt += 1
                     self.comments.append([ncomment])
+                    self.delegate?.snsCommentController(self, didPostNewComment: ncomment,post: self.post)
                     self.playCheckMark()
                 }else{
                     self.playCrossMark(msg)

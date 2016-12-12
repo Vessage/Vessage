@@ -235,7 +235,7 @@ extension MNSMainController:UITableViewDelegate,UITableViewDataSource{
 
 extension MNSMainController:UIEditTextPropertyViewControllerDelegate{
     
-    func editPropertySave(propertyIdentifier: String!, newValue: String!) {
+    func editPropertySave(sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
         if propertyIdentifier == "ANNC_CONTENT" {
             if !String.isNullOrWhiteSpace(newValue) {
                 let hud = self.showActivityHud()

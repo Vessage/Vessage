@@ -9,9 +9,9 @@
 import UIKit
 
 
-@objc protocol UIEditTextPropertyViewControllerDelegate
+protocol UIEditTextPropertyViewControllerDelegate
 {
-    func editPropertySave(propertyIdentifier:String!,newValue:String!)
+    func editPropertySave(sender:UIEditTextPropertyViewController,propertyIdentifier:String!,newValue:String!,userInfo:[String:AnyObject?]?)
 }
 
 class UIEditTextPropertySet
@@ -23,6 +23,9 @@ class UIEditTextPropertySet
     var propertyValue:String!
     var propertyLabel:String!
     var propertyIdentifier:String!
+    
+    var userInfo:[String:AnyObject?]?
+    
 }
 
 class UIEditTextPropertyViewController: UIViewController
@@ -39,13 +42,18 @@ class UIEditTextPropertyViewController: UIViewController
     @IBOutlet weak var propertyNameLabel: UILabel!
     
     var model:UIEditTextPropertySet!
-    weak var delegate:UIEditTextPropertyViewControllerDelegate!
+    var delegate:UIEditTextPropertyViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
         updateTextValueView()
         propertyNameLabel.text = model?.propertyLabel
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     private func updateTextValueView()
@@ -77,18 +85,15 @@ class UIEditTextPropertyViewController: UIViewController
     
     @IBAction func save(sender: AnyObject)
     {
-        if delegate != nil
+        if let valueRegex = model.valueRegex
         {
-            if let valueRegex = model.valueRegex
+            if String.isNullOrEmpty(newPropertyValue) || !(newPropertyValue =~ valueRegex)
             {
-                if String.isNullOrEmpty(newPropertyValue) || !(newPropertyValue =~ valueRegex)
-                {
-                    self.playToast( model.illegalValueMessage ?? "ILLEGLE_VALUE".localizedString())
-                    return
-                }
+                self.playToast( model.illegalValueMessage ?? "ILLEGLE_VALUE".localizedString())
+                return
             }
-            delegate!.editPropertySave(model.propertyIdentifier,newValue: newPropertyValue)
         }
+        delegate?.editPropertySave(self,propertyIdentifier: model.propertyIdentifier,newValue: newPropertyValue,userInfo: model.userInfo)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -97,8 +102,8 @@ class UIEditTextPropertyViewController: UIViewController
         let controller = instanceFromStoryBoard()
         controller.title = controllerTitle
         controller.model = propertySet
-        controller.delegate = delegate
         currentNavigationController.pushViewController(controller, animated: true)
+        controller.delegate = delegate
         return controller
     }
     

@@ -237,35 +237,31 @@ class UserProfileViewController: UIViewController {
 }
 
 //MARK: Show Chatter Profile
+extension UserService:UIEditTextPropertyViewControllerDelegate{
+    func editPropertySave(sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
+        if let userid = userInfo?["userid"] as? String,let newNoteName = newValue{
+            setUserNoteName(userid, noteName: newNoteName)
+        }
+    }
+}
+
 extension UserService{
     func showUserProfile(vc:UIViewController,user:VessageUser,delegate:UserProfileViewControllerDelegate = NoteUserDelegate) -> UserProfileViewController {
         return UserProfileViewController.showUserProfileViewController(vc, userProfile: user,delegate: delegate)
     }
     
     private func showNoteConversationAlert(vc:UIViewController,user:VessageUser){
-        let title = "NOTE_CONVERSATION_A_NAME".localizedString()
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
-            textfield.placeholder = "CONVERSATION_NAME".localizedString()
-            textfield.borderStyle = .None
-            textfield.text = ServiceContainer.getUserService().getUserNotedName(user.userId)
-        })
+        let property = UIEditTextPropertySet()
+        property.illegalValueMessage = "NEW_NOTE_NAME_CANT_NULL".localizedString()
+        property.isOneLineValue = true
+        property.propertyValue = ServiceContainer.getUserService().getUserNotedNameIfExists(user.userId) ?? user.nickName ?? user.accountId!
         
-        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
-            let newNoteName = alertController.textFields?[0].text ?? ""
-            if String.isNullOrEmpty(newNoteName)
-            {
-                vc.playToast("NEW_NOTE_NAME_CANT_NULL".localizedString())
-            }else{
-                if String.isNullOrWhiteSpace(user.userId) == false{
-                    ServiceContainer.getUserService().setUserNoteName(user.userId, noteName: newNoteName)
-                }
-                vc.playCheckMark("SAVE_NOTE_NAME_SUC".localizedString())
-            }
-        })
-        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
-        alertController.addAction(no)
-        alertController.addAction(yes)
-        vc.showAlert(alertController)
+        property.propertyIdentifier = "NOTE_USER_NAME"
+        
+        property.propertyLabel = "CONVERSATION_NAME".localizedString()
+        property.valueRegex = "^.{1,20}$"
+        property.userInfo = ["userid":user.userId]
+        let title = String(format: "NOTE_X_NAME".localizedString(),user.nickName ?? user.accountId ?? property.propertyValue)
+        UIEditTextPropertyViewController.showEditPropertyViewController(vc.navigationController!, propertySet: property, controllerTitle: title, delegate: self)
     }
 }

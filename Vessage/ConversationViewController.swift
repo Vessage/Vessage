@@ -205,6 +205,7 @@ extension ConversationViewController{
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
         handleInitMessage()
         playVessageManager.loadVessages()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     private func handleInitMessage(){

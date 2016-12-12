@@ -181,7 +181,7 @@ extension SNSPostCell{
     }
     
     @IBAction func onClickNewComment(sender: AnyObject) {
-        SNSPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post)
+        SNSPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post).delegate = self
     }
     
     @IBAction func onClickChat(sender: AnyObject) {
@@ -189,11 +189,6 @@ extension SNSPostCell{
         v.animationMaxToMin(0.1, maxScale: 1.2) {
             ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: self.post.usrId)
         }
-    }
-    
-    
-    @IBAction func onClickCardButton(sender: AnyObject) {
-        
     }
     
     @IBAction func onClickLike(sender: AnyObject) {
@@ -216,6 +211,15 @@ extension SNSPostCell{
         }
     }
     
+}
+
+//MARK: SNSCommentViewControllerDelegate
+extension SNSPostCell:SNSCommentViewControllerDelegate{
+    func snsCommentController(sender: SNSPostCommentViewController, didPostNewComment newComment: SNSPostComment, post: SNSPost) {
+        if post.pid == self.post.pid {
+            self.commentTipsLabel.text = post.cmtCnt.friendString
+        }
+    }
 }
 
 //MARK: God Methods

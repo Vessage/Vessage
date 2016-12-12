@@ -16,6 +16,10 @@ import MBProgressHUD
     optional func nfcPostCommentCellDidClickPostInfo(sender:UILabel,cell:NFCPostCommentCell,comment:NFCPostComment?)
 }
 
+protocol NFCCommentViewControllerDelegate {
+    func nfcCommentController(sender:NFCPostCommentViewController, didPostNewComment newComment:NFCPostComment,post:NFCPost)
+}
+
 class NFCPostCommentCell: UITableViewCell {
     
     static let reuseId = "NFCPostCommentCell"
@@ -78,7 +82,7 @@ class NFCPostCommentCell: UITableViewCell {
 }
 
 class NFCPostCommentViewController: UIViewController {
-    
+    var delegate:NFCCommentViewControllerDelegate?
     private var post:NFCPost!
     private var userService = ServiceContainer.getUserService()
     private var comments = [[NFCPostComment]](){
@@ -210,6 +214,7 @@ extension NFCPostCommentViewController:NFCCommentInputViewDelegate{
                     
                     self.post.cmtCnt += 1
                     self.comments.append([ncomment])
+                    self.delegate?.nfcCommentController(self, didPostNewComment: ncomment,post: self.post)
                     self.playCheckMark()
                 }else{
                     self.playCrossMark(msg)

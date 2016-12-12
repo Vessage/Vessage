@@ -16,6 +16,8 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
         private var loadingIndicator:UIActivityIndicatorView
         override init(frame: CGRect) {
             self.dateTimeLabel = UILabel()
+            self.dateTimeLabel.textColor = UIColor.whiteColor()
+            self.dateTimeLabel.font = UIFont.systemFontOfSize(10)
             self.imageView = UIImageView()
             self.loadingIndicator = UIActivityIndicatorView()
             self.loadingIndicator.hidesWhenStopped = true
@@ -35,7 +37,10 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
             let x = (rect.width - 20) / 2
             let y = (rect.height - 20) / 2
             self.loadingIndicator.frame = CGRectMake(x, y, 20, 20)
-            updateDateLabel()
+            if let spv = dateTimeLabel.superview{
+                dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
+                dateTimeLabel.frame.origin.y = spv.frame.height - 2 - dateTimeLabel.frame.height
+            }
         }
         
         private func updateDateLabel() {
@@ -122,6 +127,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
         if let vsg = self.vessage{
             contentView.dateTimeLabel.text = vsg.getSendTime()?.toFriendlyString()
             contentView.dateTimeLabel.layoutIfNeeded()
+            contentView.updateDateLabel()
             if vsg.isMySendingVessage() {
                 contentView.imageView.image = UIImage(contentsOfFile: vsg.fileId)
                 imageLoaded = true

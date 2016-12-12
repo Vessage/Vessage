@@ -174,9 +174,8 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
     }
     
     //MARK: Edit Property Delegate
-    func editPropertySave(propertyIdentifier: String!, newValue: String!)
-    {
-        
+    
+    func editPropertySave(sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
         switch propertyIdentifier {
         case "motto":modifyMotto(newValue)
         case "nickname":modifyNick(newValue)

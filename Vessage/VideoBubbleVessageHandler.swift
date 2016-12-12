@@ -25,7 +25,7 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
             videoPlayer.delegate = self
             dateTimeLabel = UILabel()
             dateTimeLabel.textColor = UIColor.whiteColor()
-            dateTimeLabel.font = UIFont.systemFontOfSize(12)
+            dateTimeLabel.font = UIFont.systemFontOfSize(10)
             videoPlayer.addSubview(dateTimeLabel)
         }
         return videoPlayer

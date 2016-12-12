@@ -190,6 +190,14 @@ class SNSPostNewRequest: BahamutRFRequestBase {
             paramenters.updateValue(nick, forKey: "nick")
         }
     }
+    
+    var body:String!{
+        didSet{
+            if !String.isNullOrEmpty(body) {
+                paramenters.updateValue(body, forKey: "body")
+            }
+        }
+    }
 }
 
 class SNSLikePostRequest: BahamutRFRequestBase {
@@ -210,7 +218,6 @@ class SNSLikePostRequest: BahamutRFRequestBase {
             paramenters.updateValue(nick, forKey: "nick")
         }
     }
-    
     
 }
 

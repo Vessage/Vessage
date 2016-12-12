@@ -186,6 +186,7 @@ extension SNSMainViewController{
         postingAnimationImageView.layer.addAnimation(animation2, forKey: "postingScale")
         self.postingAnimationImageView.hidden = false
         UIAnimationHelper.playAnimation(self.postingAnimationImageView, animation: animation, key: "movePostingImg") {
+            self.postingAnimationImageView.image = nil
             self.postingAnimationImageView.hidden = true
             self.postingAnimationImageView.removeFromSuperview()
         }
@@ -366,11 +367,12 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell?.selected = false
-        if indexPath.section != 0 {
-            if let post = postOfIndexPath(indexPath){
-                SNSPostCommentViewController.showPostCommentViewController(self.navigationController!, post: post)
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SNSPostCell{
+            cell.selected = false
+            if indexPath.section != 0 {
+                if let post = postOfIndexPath(indexPath){
+                    SNSPostCommentViewController.showPostCommentViewController(self.navigationController!, post: post).delegate = cell
+                }
             }
         }
     }
@@ -446,7 +448,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let tmpPost = (posting.filter{$0.pid == taskIdentifier}).first{
-            SNSPostManager.instance.newPost(tmpPost.img, callback: { (post) in
+            SNSPostManager.instance.newPost(tmpPost.img,body: nil, callback: { (post) in
                 if let p = post{
                     self.playCheckMark(){
                         self.posting.removeElement{$0.pid == tmpPost.pid}

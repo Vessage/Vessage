@@ -57,7 +57,7 @@ class ShareHelper:NSNotificationCenter{
         req.bText = false
         req.message = msg
         req.scene = Int32(type)
-        
+        MobClick.event("Vege_ShareWX")
         WXApi.sendReq(req)
     }
     

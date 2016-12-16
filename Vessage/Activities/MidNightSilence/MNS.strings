@@ -18,3 +18,7 @@ GET_MAIN_INFO_ERROR = "刷新失败，请下拉页面重试";
 MNS_NEWER_MESSAGE = "这里是一个让夜猫子聊天的地方，发表你的深夜感言，找夜猫子一起聊天、讲故事!";
 POST_ANNC = "发表感言";
 NO_USER_TIPS = "暂时还没有夜猫子上线";
+OPEN_NOTIFY = "开放后提醒我";
+CLOSE_NOTIFY = "关闭夜深人静提醒";
+NOTIFY_ALERT_TITLE = "夜深人静";
+NOTIFY_ALERT_BODY = "嘿，夜猫子🐱，奇趣-夜深人静已经开放啦";

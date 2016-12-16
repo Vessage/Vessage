@@ -52,8 +52,9 @@ class MNSMainController: UIViewController {
             myContentButton.enabled = mainInfo != nil
         }
     }
-    private var userService = ServiceContainer.getUserService()
+    @IBOutlet weak var notificationButton: UIButton!
     
+    private var userService = ServiceContainer.getUserService()
     
     private var isOpenTime:Bool{
         let now = NSDate()
@@ -69,12 +70,26 @@ class MNSMainController: UIViewController {
         return tdot.addDays(1)
     }
     
+    static private let mnsNotificationName = "MNSNotify"
+    
+    private var notificationScheduled:Bool{
+        if let notifications = UIApplication.sharedApplication().scheduledLocalNotifications{
+            for item in notifications {
+                if let name = item.userInfo?["name"] as? String {
+                    if name == MNSMainController.mnsNotificationName {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
     private var users = [MNSUser](){
         didSet{
             tableView?.reloadData()
         }
     }
-    
     
     private var mainInfo:MNSMainInfo!{
         didSet{
@@ -106,6 +121,7 @@ extension MNSMainController{
         tipsLabel0.morphingEffect = .Pixelate
         tipsLabel1.morphingEffect = .Pixelate
         blockTipsLabel.morphingEffect = .Evaporate
+        notificationButton.hidden = true
         tableView.allowsSelection = true
         tableView.allowsMultipleSelection = false
         tableView.estimatedRowHeight = tableView.rowHeight
@@ -136,7 +152,9 @@ extension MNSMainController{
         tableView.hidden = !isOpen
         bcgImageView.hidden = !isOpen
         blockTipsLabel.hidden = isOpen
+        notificationButton.setTitle((notificationScheduled ? "CLOSE_NOTIFY" : "OPEN_NOTIFY").mnsLocalizedString, forState: .Normal)
         if !String.isNullOrEmpty(blockTipsLabel.text) && tipsLabel0.hidden != isOpen {
+            notificationButton.hidden = isOpen
             tipsLabel0.hidden = isOpen
             tipsLabel1.hidden = isOpen
             if tipsLabel0.hidden == false {
@@ -153,6 +171,34 @@ extension MNSMainController{
     func onPullTableViewHeader(_:AnyObject?) {
         mainInfo = nil
         getMainInfoData()
+    }
+    
+    @IBAction func onClickNotificationButton(sender: AnyObject) {
+        if notificationScheduled {
+            UIApplication.sharedApplication().scheduledLocalNotifications?.removeElement({ (item) -> Bool in
+                if let name = item.userInfo?["name"] as? String {
+                    if name == MNSMainController.mnsNotificationName {
+                        return true
+                    }
+                }
+                return false
+            })
+        }else{
+            let notification = UILocalNotification()
+            if #available(iOS 8.2, *) {
+                notification.alertTitle = "NOTIFY_ALERT_TITLE".mnsLocalizedString
+            } else {
+                // Fallback on earlier versions
+            }
+            notification.alertBody = "NOTIFY_ALERT_BODY".mnsLocalizedString
+            notification.applicationIconBadgeNumber = 1
+            notification.userInfo = ["name":MNSMainController.mnsNotificationName]
+            notification.soundName = UILocalNotificationDefaultSoundName
+            notification.fireDate = todayOpenTime
+            notification.timeZone = NSTimeZone.defaultTimeZone()
+            notification.repeatInterval = .Day
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
     }
     
     @IBAction func onBackItemClicked(sender: AnyObject) {

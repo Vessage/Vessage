@@ -137,6 +137,7 @@ class ActivityListController: UITableViewController {
         }else{
             self.presentViewController(controller, animated: true, completion: nil)
         }
+        MobClick.event("Vege_OpenActivity_\(activityInfo.activityId)")
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

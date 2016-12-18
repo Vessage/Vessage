@@ -34,15 +34,39 @@ class TextFullScreen: UIViewController {
         self.view.addSubview(scrollView)
         self.textLabel = UILabel()
         self.textLabel.numberOfLines = 0
+        
         self.scrollView.addSubview(textLabel)
         self.dateTimeLabel = UILabel()
         self.dateTimeLabel.textColor = UIColor.lightGrayColor()
         self.view.addSubview(dateTimeLabel)
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TextFullScreen.onTap(_:))))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TextFullScreen.onTap(_:)))
+        self.view.addGestureRecognizer(tap)
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(TextFullScreen.longPress(_:)))
+        self.view.addGestureRecognizer(longPress)
+        
     }
     
-    func onTap(_:UITapGestureRecognizer) {
+    func onTap(ges:UIGestureRecognizer) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func longPress(ges:UILongPressGestureRecognizer) {
+        if ges.state == .Began {
+            showCopyTextAlert()
+        }
+    }
+    
+    private func showCopyTextAlert() {
+        let alert = UIAlertController.create(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let copyContent = UIAlertAction(title: "COPY_CONTENT".localizedString(), style: .Default) { (ac) in
+            UIPasteboard.generalPasteboard().string = self.textLabel.text
+            self.showAlert(nil, msg: "TEXT_COPIED".localizedString())
+        }
+        let cancel = ALERT_ACTION_CANCEL
+        alert.addAction(copyContent)
+        alert.addAction(cancel)
+        self.showAlert(alert)
     }
     
     override func viewDidAppear(animated: Bool) {

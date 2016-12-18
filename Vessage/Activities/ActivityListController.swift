@@ -36,7 +36,8 @@ class ActivityListCell: UITableViewCell {
     @IBOutlet weak var miniBadgeView: UIView!{
         didSet{
             miniBadgeView.clipsToBounds = true
-            miniBadgeView.layer.cornerRadius = 3
+            miniBadgeView.layoutIfNeeded()
+            miniBadgeView.layer.cornerRadius = miniBadgeView.frame.height / 2
             miniBadgeView.hidden = !showMiniBadge
         }
     }

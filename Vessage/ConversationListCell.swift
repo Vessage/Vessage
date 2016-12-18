@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import LTMorphingLabel
 
 //MARK: ConversationListCellBase
 class ConversationListCellBase:UITableViewCell{
@@ -87,7 +88,11 @@ class ConversationListCell:ConversationListCellBase{
         }
     }
     @IBOutlet weak var headLineLabel: UILabel!
-    @IBOutlet weak var subLineLabel: UILabel!
+    @IBOutlet weak var subLineLabel: LTMorphingLabel!{
+        didSet{
+            subLineLabel.morphingEffect = .Pixelate
+        }
+    }
     
     var conversationListCellHandler:ConversationListCellHandler!
     
@@ -148,21 +153,37 @@ class ConversationListCell:ConversationListCellBase{
             if let imgView = self.avatarView{
                 if String.isNullOrEmpty(self.avatar) {
                     imgView.image = getDefaultAvatar(defaultAvatarId)
-                }else{
-                    ServiceContainer.getFileService().setImage(imgView, iconFileId: avatar)
+                }else if let fileId = avatar{
+                    if fileId != oldValue {
+                        imgView.image = getDefaultAvatar(defaultAvatarId)
+                        ServiceContainer.getFileService().getImage(iconFileId: fileId, callback: { (image) in
+                            if fileId == self.avatar && image != nil {
+                                self.avatarView?.image = image
+                            }
+                        })
+                    }
                 }
             }
         }
     }
+    
     private var headLine:String!{
         didSet{
             self.headLineLabel?.text = headLine
         }
     }
+    
     private var subLine:String!{
         didSet{
             self.subLineLabel?.text = subLine
         }
+    }
+    
+    func layoutSubline() {
+        subLineLabel.morphingEnabled = true
+        let text = subLineLabel.text
+        subLineLabel.text = nil
+        subLineLabel.text = text
     }
 
     private var badgeValue:Int = 0 {
@@ -212,7 +233,7 @@ class ConversationListCell:ConversationListCellBase{
             }
         }
         let minLeft = NSNumber(double:conversation.getConversationTimeUpMinutesLeft()).integerValue
-        if !conversation.pinned && (minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 == 0) {
+        if !conversation.pinned && (minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 != 0) {
             self.subLine = conversation.getDisappearString()
         }else{
             self.subLine = conversation.getLastUpdatedTime().toFriendlyString()

@@ -135,7 +135,7 @@ class SNSPostCell: UITableViewCell {
 extension SNSPostCell{
     
     @IBAction func onClickMore(sender: AnyObject) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController.create(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         if isSelfPost {
             let ac = UIAlertAction(title: "DELETE_POST".SNSString, style: .Default, handler: { (ac) in

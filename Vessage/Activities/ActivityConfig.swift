@@ -28,12 +28,15 @@ class ActivityInfo{
 
 let ActivityInfoList = [
     [
-        ActivityInfo(activityId: "1003", "晒&秀", "sns_icon", "SNS", "SNSMainViewController", true),
-        ActivityInfo(activityId: "1002", "高颜值俱乐部", "NiceFaceClubIcon", "NiceFaceClub", "NFCMainViewController", true)
+        ActivityInfo(activityId: "1003", "SNS".SNSString, "sns_icon", "SNS", "SNSMainViewController", true),
+        ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "NiceFaceClubIcon", "NiceFaceClub", "NFCMainViewController", true)
     ],
     [
         //ActivityInfo(activityId: "1001", "一起帮帮忙", "littlePaperIcon", "HelpTogether", "HelpTogetherMainController", true),
         //ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false),
-        ActivityInfo(activityId: "1004", "夜深人静", "mns_icon", "MNS", "MNSMainNavigationController", false)
+        ActivityInfo(activityId: "1004", "MNS".mnsLocalizedString, "mns_icon", "MNS", "MNSMainNavigationController", false)
+    ],
+    [
+        ActivityInfo(activityId: "1005", "TIM_AC_TITLE".TIMString, "tim_icon", "TextImageMaker", "TIMStartNavViewController", false)
     ]
 ]

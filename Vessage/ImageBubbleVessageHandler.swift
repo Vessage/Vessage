@@ -134,7 +134,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
             }else{
                 imageLoaded = false
                 contentView.loadingIndicator.startAnimating()
-                ServiceContainer.getFileService().setImage(contentView.imageView, iconFileId: vessage.fileId,defaultImage: UIImage(named: "recording_bcg_2")!){ suc in
+                ServiceContainer.getFileService().setImage(contentView.imageView, iconFileId: vessage.fileId,defaultImage: UIImage(named: "vg_default_bcg_2")!){ suc in
                     if self.vessage.vessageId == vsg.vessageId{
                         self.imageLoaded = suc
                         contentView.loadingIndicator.stopAnimating()

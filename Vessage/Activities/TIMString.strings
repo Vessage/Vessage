@@ -1,0 +1,10 @@
+/* 
+  TIMString.strings
+  Vessage
+
+  Created by Alex Chow on 2016/12/18.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+TIM_AC_TITLE = "制作文字图片";
+SHARE_TEXT_PLACE_HOLDER = "写下你分享的文字(140字以内)";
+DEFAULT_SHARE_TEXT = "VG聊天";

@@ -126,7 +126,7 @@ class NFCMemberCardAlert:UIViewController{
         
         if actions.count > 0 {
             actions.append(ALERT_ACTION_CANCEL)
-            let alertController = UIAlertController(title: nickLabel.text, message: nil, preferredStyle: .ActionSheet)
+            let alertController = UIAlertController.create(title: nickLabel.text, message: nil, preferredStyle: .ActionSheet)
             actions.forEach{alertController.addAction($0)}
             self.showAlert(alertController)
         }

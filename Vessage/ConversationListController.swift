@@ -37,7 +37,7 @@ class ConversationListController: UITableViewController {
             }
             if searchBar != nil{
                 searchBar.text = nil
-                searchBar.showsCancelButton = isSearching
+                searchBar.setShowsCancelButton(isSearching, animated: true)
                 if isSearching == false{
                     searchBar.endEditing(false)
                 }
@@ -133,13 +133,21 @@ class ConversationListController: UITableViewController {
     }
     
     private func initMJRefreshHeader() {
+        let mjHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(ConversationListController.refreshNewUsers(_:)))
+        mjHeader.setTitle("REFRESH_NEAR_USER_PULLING".localizedString(), forState: .Pulling)
+        mjHeader.setTitle("REFRESH_NEAR_USER_REFRESHING".localizedString(), forState: .Refreshing)
+        mjHeader.setTitle("REFRESH_NEAR_USER_IDLE".localizedString(), forState: .Idle)
+        mjHeader.setTitle("REFRESH_NEAR_USER_WILL_REFRESH".localizedString(), forState: .WillRefresh)
+        mjHeader.arrowView.hidden = true
+/*
         let mjHeader = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(ConversationListController.refreshNewUsers(_:)))
-        mjHeader.lastUpdatedTimeLabel.hidden = true
         mjHeader.stateLabel.hidden = true
         mjHeader.setImages(hudSpinImageArray, forState: .Refreshing)
-        mjHeader.setImages(nil, forState: .Idle)
         mjHeader.setImages(hudSpinImageArray, forState: .Pulling)
         mjHeader.setImages(hudSpinImageArray, forState: .WillRefresh)
+        mjHeader.setImages(nil, forState: .Idle)
+ */
+        mjHeader.lastUpdatedTimeLabel.hidden = true
         self.tableView.mj_header = mjHeader
     }
     
@@ -208,7 +216,9 @@ class ConversationListController: UITableViewController {
     
     //MARK: notifications
     func onTimerRefreshList(_:AnyObject?) {
-        self.conversationService.clearTimeUpConversations()
+        if tableViewEndDecelerating {
+            self.conversationService.clearTimeUpConversations()
+        }
     }
     
     func onServicesWillLogout(a:NSNotification) {
@@ -274,22 +284,6 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    //MARK: handle click list cell
-    func handleSearchResult(cell:ConversationListCell){
-        isSearching = false
-        if let result = cell.originModel as? SearchResultModel{
-            MobClick.event("Vege_OpenSearchResultConversation")
-            if let c = result.conversation{
-                ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
-            }else if let u = result.user{
-                ConversationViewController.showConversationViewController(self.navigationController!, userId : u.userId)
-            }else if let mobile = result.mobile{
-                MobClick.event("Vege_OpenSearchResultMobileConversation")
-                openConversationWithMobile(mobile, noteName: result.mobile ?? result.keyword)
-            }
-        }
-    }
-    
     func handleConversationListCellItem(cell:ConversationListCell){
         if let conversation = cell.originModel as? Conversation{
             MobClick.event("Vege_OpenConversation")
@@ -327,6 +321,7 @@ class ConversationListController: UITableViewController {
     
     private func searchingTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
         let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
+        lc.subLineLabel.morphingEnabled = tableViewEndDecelerating
         let sr = searchResult[indexPath.row]
         lc.rootController = self
         lc.conversationListCellHandler = handleSearchResult
@@ -352,12 +347,23 @@ class ConversationListController: UITableViewController {
             }
         }else{
             let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
+            lc.subLineLabel.morphingEnabled = tableViewEndDecelerating
             let conversation = conversationService.conversations[indexPath.row]
             lc.rootController = self
             lc.conversationListCellHandler = handleConversationListCellItem
             lc.originModel = conversation
             return lc
         }
+    }
+    
+    private var tableViewEndDecelerating = true
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        tableViewEndDecelerating = false
+    }
+    
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        tableViewEndDecelerating = true
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -434,5 +440,44 @@ class ConversationListController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
+    }
+}
+
+//MARK: handle click list cell
+extension ConversationListController:UserProfileViewControllerDismissedDelegate{
+    
+    func userProfileViewControllerDismissed(sender: UserProfileViewController) {
+        MainTabBarController.instance?.tabBar.hidden = false
+    }
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
+        if let userId = profile.userId{
+            sender.dismissViewControllerAnimated(true, completion: {
+                MainTabBarController.instance?.tabBar.hidden = false
+                ConversationViewController.showConversationViewController(self.navigationController!, userId : userId)
+            })
+        }
+    }
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
+        return "CHAT".localizedString()
+    }
+    
+    func handleSearchResult(cell:ConversationListCell){
+        isSearching = false
+        if let result = cell.originModel as? SearchResultModel{
+            MobClick.event("Vege_OpenSearchResultConversation")
+            if let c = result.conversation{
+                ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
+            }else if let u = result.user{
+                UserProfileViewController.showUserProfileViewController(self, userId: u.userId, delegate: self){ profileVC in
+                    MainTabBarController.instance?.tabBar.hidden = true
+                    profileVC.accountIdHidden = true
+                }
+            }else if let mobile = result.mobile{
+                MobClick.event("Vege_OpenSearchResultMobileConversation")
+                openConversationWithMobile(mobile, noteName: result.mobile ?? result.keyword)
+            }
+        }
     }
 }

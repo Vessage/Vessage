@@ -186,7 +186,7 @@ extension UIViewController{
 }
 
 func getRandomConversationBackground() -> UIImage {
-    return UIImage(named: "recording_bcg_\(random() % 5)") ?? UIImage(named: "recording_bcg_0")!
+    return UIImage(named: "vg_default_bcg_\(random() % 5)") ?? UIImage(named: "vg_default_bcg_0")!
 }
 
 extension EVObject{

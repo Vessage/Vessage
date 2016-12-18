@@ -33,10 +33,13 @@ class ShareHelper:NSNotificationCenter{
             let userInfo = [kShareHelperShareType:type]
             if resp.errCode == WXSuccess.rawValue{
                 self.postNotificationName(ShareHelper.onShareSuccess, object: self, userInfo: userInfo)
+                MobClick.event("ShareApp_ShareWXSuc")
             }else if resp.errCode == WXErrCodeUserCancel.rawValue{
                 self.postNotificationName(ShareHelper.onShareFail, object: self, userInfo: userInfo)
+                MobClick.event("ShareApp_ShareWXCancel")
             }else{
                 self.postNotificationName(ShareHelper.onShareFail, object: self, userInfo: userInfo)
+                MobClick.event("ShareApp_ShareWXErr")
             }
         }
     }
@@ -57,13 +60,13 @@ class ShareHelper:NSNotificationCenter{
         req.bText = false
         req.message = msg
         req.scene = Int32(type)
-        MobClick.event("Vege_ShareWX")
+        MobClick.event("ShareApp_ShareWX")
         WXApi.sendReq(req)
     }
     
     func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString()){
         
-        let alert = UIAlertController(title: title, message: alertMsg, preferredStyle: .ActionSheet)
+        let alert = UIAlertController.create(title: title, message: alertMsg, preferredStyle: .ActionSheet)
 
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
             self.sendTellFriendWX(WXSceneSession.rawValue,textMsg: message)
@@ -86,13 +89,12 @@ class ShareHelper:NSNotificationCenter{
         smsAction.setValue(UIImage(named: "share_sms")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(smsAction)
         alert.addAction(ALERT_ACTION_CANCEL)
-        
-        
+        MobClick.event("ShareApp_ShowShareAlert")
         vc.showAlert(alert)
     }
     
     func showTellTextMsgToFriendsAlert(vc:UIViewController,content:String,smsReceiver:String? = nil){
-        let alert = UIAlertController(title: "TELL_FRIENDS".localizedString(), message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController.create(title: "TELL_FRIENDS".localizedString(), message: nil, preferredStyle: .ActionSheet)
         let wxAction = UIAlertAction(title: "WECHAT_SESSION".localizedString(), style: .Default) { (ac) in
             self.sendTellFriendWX(WXSceneSession.rawValue, textMsg: content)
         }
@@ -112,6 +114,7 @@ class ShareHelper:NSNotificationCenter{
         smsAction.setValue(UIImage(named: "share_sms")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(smsAction)
         alert.addAction(ALERT_ACTION_CANCEL)
+        MobClick.event("ShareApp_ShowShareAlert")
         vc.showAlert(alert)
     }
 }
@@ -124,14 +127,14 @@ extension UIViewController:MFMessageComposeViewControllerDelegate,UINavigationCo
             case MessageComposeResult.Cancelled:
                 self.playCrossMark("CANCEL".localizedString())
                 ShareHelper.instance.postNotificationName(ShareHelper.onShareCancel, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
-                MobClick.event("Vege_CancelSendNotifySMS")
+                MobClick.event("ShareApp_CancelSendNotifySMS")
             case MessageComposeResult.Failed:
                 self.playCrossMark("FAIL".localizedString())
                 ShareHelper.instance.postNotificationName(ShareHelper.onShareFail, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
             case MessageComposeResult.Sent:
                 self.playCheckMark("SUCCESS".localizedString())
                 ShareHelper.instance.postNotificationName(ShareHelper.onShareSuccess, object: ShareHelper.instance, userInfo: [kShareHelperShareType:ShareHelperShareType.SMS.rawValue])
-                MobClick.event("Vege_UserSendSMSToFriend")
+                MobClick.event("ShareApp_UserSendSMSToFriend")
             }
         }
     }
@@ -144,7 +147,7 @@ extension UIViewController:MFMessageComposeViewControllerDelegate,UINavigationCo
             controller.delegate = self
             controller.messageComposeDelegate = self
             self.presentViewController(controller, animated: true, completion: { () -> Void in
-                MobClick.event("Vege_OpenSendNotifySMS")
+                MobClick.event("ShareApp_OpenSendNotifySMS")
             })
         }else{
             self.showAlert("REQUIRE_SMS_FUNCTION_TITLE".localizedString(), msg: "REQUIRE_SMS_FUNCTION_MSG".localizedString())

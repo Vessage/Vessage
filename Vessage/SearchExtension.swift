@@ -121,7 +121,7 @@ extension ConversationListController:UISearchBarDelegate
         
         var nearActiveUsers = [VessageUser]()
         
-        var nearUsers = userService.nearUsers.getRandomSubArray(3)
+        var nearUsers = userService.nearUsers.getRandomSubArray(6)
         var activeUsers = userService.activeUsers.getRandomSubArray(3)
         nearUsers.forEach{ n in
             let contain = activeUsers.contains{ a in
@@ -163,8 +163,10 @@ extension ConversationListController:UISearchBarDelegate
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        if String.isNullOrWhiteSpace(searchBar.text){
-            isSearching = false
+        dispatch_async(dispatch_get_main_queue()) {             
+            if let cancelButton = searchBar.valueForKey("cancelButton") as? UIButton{
+                cancelButton.enabled = true
+            }
         }
     }
     

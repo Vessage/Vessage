@@ -14,6 +14,10 @@ protocol UserProfileViewControllerDelegate {
     func userProfileViewController(sender:UserProfileViewController,rightButtonClicked profile:VessageUser)
 }
 
+protocol UserProfileViewControllerDismissedDelegate:UserProfileViewControllerDelegate {
+    func userProfileViewControllerDismissed(sender:UserProfileViewController)
+}
+
 class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControllerDelegate{
     
     var initMessage:[String:AnyObject]?
@@ -122,9 +126,14 @@ class UserProfileViewController: UIViewController {
             nameLabel.text = nil
         }
     }
+    
     @IBAction func back(sender: AnyObject) {
         ServiceContainer.getUserService().removeObserver(self)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true){
+            if let handler = self.delegate as? UserProfileViewControllerDismissedDelegate {
+                handler.userProfileViewControllerDismissed(self)
+            }
+        }
     }
     
     @IBAction func onClickRightButton(sender: AnyObject) {

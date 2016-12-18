@@ -10,7 +10,7 @@ import Foundation
 import MJRefresh
 import LTMorphingLabel
 
-private extension String{
+extension String{
     var mnsLocalizedString:String{
         return LocalizedString(self, tableName: "MNS", bundle: NSBundle.mainBundle())
     }
@@ -183,6 +183,7 @@ extension MNSMainController{
                 }
                 return false
             })
+            MobClick.event("MNS_CloseNotify")
         }else{
             let notification = UILocalNotification()
             if #available(iOS 8.2, *) {
@@ -197,6 +198,7 @@ extension MNSMainController{
             notification.fireDate = todayOpenTime
             notification.timeZone = NSTimeZone.defaultTimeZone()
             notification.repeatInterval = .Day
+            MobClick.event("MNS_OpenNotify")
             UIApplication.sharedApplication().scheduleLocalNotification(notification)
         }
     }

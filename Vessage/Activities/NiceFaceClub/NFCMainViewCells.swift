@@ -155,7 +155,7 @@ class NFCPostCell: UITableViewCell {
 extension NFCPostCell{
     
     @IBAction func onClickMore(sender: AnyObject) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController.create(title: nil, message: nil, preferredStyle: .ActionSheet)
         var isPoster = false
         
         if let mbId = NiceFaceClubManager.instance.myNiceFaceProfile.mbId {

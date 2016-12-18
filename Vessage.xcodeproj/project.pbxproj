@@ -161,6 +161,14 @@
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
 		E7AD4DC51DA5071600A0176F /* NFCPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD4DC41DA5071600A0176F /* NFCPostManager.swift */; };
 		E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */; };
+		E7B139CB1E061B4800F3D8C9 /* TextImageMaker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B139CA1E061B4800F3D8C9 /* TextImageMaker.storyboard */; };
+		E7B139CD1E061C1F00F3D8C9 /* TIMStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B139CC1E061C1F00F3D8C9 /* TIMStartViewController.swift */; };
+		E7B139CF1E06213600F3D8C9 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7B139CE1E06213600F3D8C9 /* Media.xcassets */; };
+		E7B139D11E0626BF00F3D8C9 /* TIMString.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7B139D01E0626BF00F3D8C9 /* TIMString.strings */; };
+		E7B139D31E06273A00F3D8C9 /* TIMSharePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B139D21E06273A00F3D8C9 /* TIMSharePreviewViewController.swift */; };
+		E7B139D51E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B139D41E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift */; };
+		E7B139D71E06C96500F3D8C9 /* SelectFontViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B139D61E06C96500F3D8C9 /* SelectFontViewController.storyboard */; };
+		E7B139D91E06C99600F3D8C9 /* SelectFontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B139D81E06C99600F3D8C9 /* SelectFontViewController.swift */; };
 		E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */; };
 		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4B1CFD1FD7002A755E /* PlayVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */; };
@@ -470,6 +478,14 @@
 		E7AD4DC41DA5071600A0176F /* NFCPostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostManager.swift; sourceTree = "<group>"; };
 		E7AE41C51D4AD96F005A25D6 /* FaceTextVessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextVessageExtension.swift; sourceTree = "<group>"; };
 		E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		E7B139CA1E061B4800F3D8C9 /* TextImageMaker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = TextImageMaker.storyboard; path = TextImageMaker/TextImageMaker.storyboard; sourceTree = "<group>"; };
+		E7B139CC1E061C1F00F3D8C9 /* TIMStartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TIMStartViewController.swift; path = TextImageMaker/TIMStartViewController.swift; sourceTree = "<group>"; };
+		E7B139CE1E06213600F3D8C9 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E7B139D01E0626BF00F3D8C9 /* TIMString.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = TIMString.strings; sourceTree = "<group>"; };
+		E7B139D21E06273A00F3D8C9 /* TIMSharePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIMSharePreviewViewController.swift; sourceTree = "<group>"; };
+		E7B139D41E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TIMShareAndSaveViewController.swift; sourceTree = "<group>"; };
+		E7B139D61E06C96500F3D8C9 /* SelectFontViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SelectFontViewController.storyboard; sourceTree = "<group>"; };
+		E7B139D81E06C99600F3D8C9 /* SelectFontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFontViewController.swift; sourceTree = "<group>"; };
 		E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSexValueViewController.swift; sourceTree = "<group>"; };
 		E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailAvatarCell.swift; sourceTree = "<group>"; };
 		E7B33A4A1CFD1FD7002A755E /* PlayVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVessageManager.swift; sourceTree = "<group>"; };
@@ -988,6 +1004,7 @@
 				E7F532E11D3A0DEC008078DE /* Conversation.storyboard */,
 				E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */,
 				E7EC2EE01D4A56F400823C31 /* ChatImageBoardController.storyboard */,
+				E7B139D61E06C96500F3D8C9 /* SelectFontViewController.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1020,6 +1037,7 @@
 				E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */,
 				E7F2166C1CFBD7E300447DA9 /* ShareHelper.swift */,
 				E7F2C34E1C8D4B3D00F919AE /* VessageCamera.swift */,
+				E7B139D81E06C99600F3D8C9 /* SelectFontViewController.swift */,
 			);
 			name = AppMain;
 			sourceTree = "<group>";
@@ -1184,6 +1202,19 @@
 			name = SendVessageQueue;
 			sourceTree = "<group>";
 		};
+		E7B139C91E061B2100F3D8C9 /* TextImageMaker */ = {
+			isa = PBXGroup;
+			children = (
+				E7B139CA1E061B4800F3D8C9 /* TextImageMaker.storyboard */,
+				E7B139CC1E061C1F00F3D8C9 /* TIMStartViewController.swift */,
+				E7B139CE1E06213600F3D8C9 /* Media.xcassets */,
+				E7B139D01E0626BF00F3D8C9 /* TIMString.strings */,
+				E7B139D21E06273A00F3D8C9 /* TIMSharePreviewViewController.swift */,
+				E7B139D41E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift */,
+			);
+			name = TextImageMaker;
+			sourceTree = "<group>";
+		};
 		E7C387EF1C982F510096AF85 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1288,6 +1319,7 @@
 		E7EF282E1D791AFD0064231F /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E7B139C91E061B2100F3D8C9 /* TextImageMaker */,
 				E74109441DE694350030AD1D /* MidNightSilence */,
 				E75E269B1DE43AD7000D2D38 /* VessageTimeMachine */,
 				E7886A4B1DC97D3D00368C03 /* SNS */,
@@ -1533,11 +1565,13 @@
 				E7886A791DC97D3D00368C03 /* SNS.storyboard in Resources */,
 				E7EF28681D791AFD0064231F /* NiceFaceClub.strings in Resources */,
 				E7F532E21D3A0DEC008078DE /* Conversation.storyboard in Resources */,
+				E7B139CB1E061B4800F3D8C9 /* TextImageMaker.storyboard in Resources */,
 				E708ACA01C8752010071104E /* AccountSign.storyboard in Resources */,
 				E7D7C4561DE924D000D962D4 /* BahamutCommon.xcassets in Resources */,
 				E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */,
 				E75E269E1DE43AD7000D2D38 /* VessageTimeMachine.storyboard in Resources */,
 				E708AB6E1C86CE1D0071104E /* BahamutCommonLocalized.strings in Resources */,
+				E7B139D71E06C96500F3D8C9 /* SelectFontViewController.storyboard in Resources */,
 				E7886A6A1DC97D3D00368C03 /* SNSCommentInputView.xib in Resources */,
 				E7EC2EE11D4A56F400823C31 /* ChatImageBoardController.storyboard in Resources */,
 				E7886A811DC9DE9700368C03 /* Media.xcassets in Resources */,
@@ -1558,6 +1592,8 @@
 				E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
+				E7B139D11E0626BF00F3D8C9 /* TIMString.strings in Resources */,
+				E7B139CF1E06213600F3D8C9 /* Media.xcassets in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
@@ -1788,6 +1824,7 @@
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
 				E7D7C42F1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift in Sources */,
+				E7B139D31E06273A00F3D8C9 /* TIMSharePreviewViewController.swift in Sources */,
 				E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */,
 				E708AC9A1C872F030071104E /* UserSetting.swift in Sources */,
 				E73CF7CA1CE4E5ED005EF7BB /* ActivityService.swift in Sources */,
@@ -1804,9 +1841,11 @@
 				E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */,
 				E708ABDE1C86D37D0071104E /* BahamutRFClient.swift in Sources */,
 				E708AC031C86D7B70071104E /* HSL.swift in Sources */,
+				E7B139D51E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift in Sources */,
 				E7DDCEFB1DBFA4BC00E61A56 /* ChattersBoard.swift in Sources */,
 				E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */,
 				E7886A691DC97D3D00368C03 /* SNSCommentInputView.swift in Sources */,
+				E7B139D91E06C99600F3D8C9 /* SelectFontViewController.swift in Sources */,
 				E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E7D7C4331DE915A200D962D4 /* BahamutCommonLocalized.swift in Sources */,
@@ -1819,6 +1858,7 @@
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
 				E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */,
+				E7B139CD1E061C1F00F3D8C9 /* TIMStartViewController.swift in Sources */,
 				E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */,
 				E75E269F1DE43AD7000D2D38 /* VessageTimeMachine.swift in Sources */,
 				E702FF811DE82F0F003F2B85 /* UIView+RemoveChildView.swift in Sources */,

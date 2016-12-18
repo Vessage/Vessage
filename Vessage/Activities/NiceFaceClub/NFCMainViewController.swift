@@ -167,7 +167,7 @@ extension NFCMainViewController{
         let userSettig = UIAlertAction(title: "UPDATE_MEMBER_PROFILE".niceFaceClubString, style: .Default) { (ac) in
             UserSettingViewController.showUserSettingViewController(self.navigationController!)
         }
-        let alert = UIAlertController(title: "MEMBER_PROFILE".niceFaceClubString, message: nil, preferredStyle: .ActionSheet)
+        let alert = UIAlertController.create(title: "MEMBER_PROFILE".niceFaceClubString, message: nil, preferredStyle: .ActionSheet)
         alert.addAction(modifyNiceFace)
         alert.addAction(userSettig)
         alert.addAction(memberCard)

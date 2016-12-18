@@ -11,6 +11,8 @@ import Foundation
 //MARK:MainTabBarController
 class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     
+    private(set) static var instance:MainTabBarController?
+    
     var conversationBadge:Int!{
         didSet{
             if let value = conversationBadge {
@@ -41,6 +43,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
+        self.modalTransitionStyle = .CrossDissolve
         conversationBadge = UserSetting.getUserIntValue("ConversationListBadge")
         activityBadge = UserSetting.getUserIntValue("ActivityListBadge")
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(MainTabBarController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
@@ -48,7 +51,6 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.instance.addObserver(self, selector: #selector(MainTabBarController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         tabBar.tintColor = UIColor.themeColor
     }
-    
     
     deinit{
         self.viewControllers = nil
@@ -68,7 +70,9 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
         ServiceContainer.instance.removeObserver(self)
         ServiceContainer.getVessageService().removeObserver(self)
         ServiceContainer.getActivityService().removeObserver(self)
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(false){
+            MainTabBarController.instance = nil
+        }
         ServiceContainer.getUserService().removeUserDeviceTokenFromServer(VessageSetting.deviceToken)
     }
     
@@ -108,6 +112,7 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
     static func showMainController(viewController:UIViewController,completion:()->Void){
         let controller = instanceFromStoryBoard("Main", identifier: "MainTabBarController") as! MainTabBarController
         viewController.presentViewController(controller, animated: false) { () -> Void in
+            MainTabBarController.instance = controller
             completion()
             
             VessageQueue.sharedInstance.initQueue(UserSetting.userId)

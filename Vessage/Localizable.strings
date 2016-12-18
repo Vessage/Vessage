@@ -100,6 +100,15 @@ SENDING_FILE = "文件传送中";
 SEND_FILE_SUC = "传送文件成功";
 SEND_FILE_FAILED = "传送文件错误";
 
+//MARK: SelectFontViewController
+DOWNLOADING = "正在下载...%@";
+NOT_DOWNLOAD = "未下载";
+DOWNLOAD_ERR = "下载出错";
+DOWNLOAD_FONT_X = "是否下载字体 %@?";
+DOWNLOAD_FONT_X_SIZE_MSG = "字体大小 %@\n只需下载一次，并与其他应用共享";
+FONT_IS_NOT_READY = "选中的字体还没准备好...";
+PLEASE_SELECT_A_FONT = "请选择一个字体";
+
 //SignInViewController
 REFRESHING = "刷新中";
 
@@ -361,8 +370,8 @@ SEND_IMAGE = "发送图片";
 SELECT_IMG_SOURCE = "选择图片来源";
 PROCESS_IMAGE_ERROR = "处理图片错误";
 
-X_DAYS_DISAPPEAR = "%d天后消失";
-X_HOURS_DISAPPEAR = "%d小时后消失";
+X_DAYS_DISAPPEAR = "%d天后不聊消失";
+X_HOURS_DISAPPEAR = "%d小时后不聊消失";
 DISAPPEAR_IN_ONE_HOUR = "即将消失";
 
 SEND_AN_IMAGE = "发送了一张图片";
@@ -377,4 +386,13 @@ X_AT_D = "%@ %@";
 TEXT_MESSAGE_HOLDER = "发送文字消息";
 
 SEARCH_FRIENDS = "查找好友";
-SEARCH_FRIENDS_HOLODER = "请输入好友的VG号或手机";
+SEARCH_FRIENDS_HOLODER = "请输入要查找的VG号或手机";
+
+REFRESH_NEAR_USER_PULLING = "看看附近有谁?";
+REFRESH_NEAR_USER_REFRESHING = "正在环顾四周...";
+REFRESH_NEAR_USER_WILL_REFRESH = "看看附近有谁?";
+REFRESH_NEAR_USER_IDLE = "";
+
+COPY_CONTENT = "复制内容";
+TEXT_COPIED = "文本已经复制到剪切板";
+

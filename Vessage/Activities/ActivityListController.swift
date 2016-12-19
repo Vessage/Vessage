@@ -138,6 +138,9 @@ class ActivityListController: UITableViewController {
         }else{
             self.presentViewController(controller, animated: true, completion: nil)
         }
+        if activityInfo.autoClearBadge {
+            ServiceContainer.getActivityService().clearActivityAllBadge(activityInfo.activityId)
+        }
         MobClick.event("Vege_OpenActivity_\(activityInfo.activityId)")
     }
     

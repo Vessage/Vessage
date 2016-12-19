@@ -53,7 +53,20 @@ class TIMShareAndSaveViewController: UIViewController {
     }
     
     @IBAction func onClickDone(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        var finish = false
+        for f in finished {
+            if f {
+                finish = true
+            }
+        }
+        if finish {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }else{
+            let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            self.showAlert(nil, msg: "IMAGE_NOT_SAVED_OR_SHARED".TIMString, actions: [ok,ALERT_ACTION_CANCEL])
+        }
     }
     
     @IBAction func shareToSNS(sender: AnyObject) {
@@ -128,7 +141,7 @@ extension TIMShareAndSaveViewController{
         let req = SendMessageToWXReq()
         req.bText = false
         req.message = msg
-        req.scene = Int32(WXSceneSession.rawValue)
+        req.scene = Int32(WXSceneTimeline.rawValue)
         MobClick.event("TIM_ShareWX")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TIMShareAndSaveViewController.onWXShareResponse(_:)), name: OnWXShareResponse, object: nil)
         WXApi.sendReq(req)

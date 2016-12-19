@@ -503,7 +503,7 @@ extension SNSMainViewController{
             let msgFormat = "SHARE_IMAGE_FROM_OUTTER_FROM_X".SNSString
             let msg = String(format: msgFormat, String.isNullOrWhiteSpace(sourceName) ? "UNKNOW_SOURCE".SNSString : sourceName)
             let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
-            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+            let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
                 self.sendNewPost(img)
             })
             alert.addAction(ok)

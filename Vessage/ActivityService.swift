@@ -12,6 +12,11 @@ let UpdatedActivityIdValue = "UpdatedActivityIdValue"
 let UpdatedActivityBadgeValue = "UpdatedActivityBadgeValue"
 let UpdatedActivityMiniBadgeValue = "UpdatedActivityMiniBadgeValue"
 let UpdatedActivitiesBadgeValue = "UpdatedActivitiesBadgeValue"
+
+private let AppVersionActivityBadgeKey = "AppVersionActivityBadgeKey"
+private let SetActivityMiniBadgeAtAppVersion = ["1005"]
+private let IncActivityBadgeAtAppVersion = ["1005"]
+
 class ActivityService: NSNotificationCenter, ServiceProtocol
 {
     static let onEnabledActivitiesBadgeUpdated = "onEnabledActivitiesBadgeUpdated"
@@ -21,6 +26,23 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
     
     @objc func userLoginInit(userId:String)
     {
+        let buildVersion = UserSetting.getUserIntValue(AppVersionActivityBadgeKey)
+        if buildVersion < VessageConfig.buildVersion {
+            var setted = false
+            for acId in SetActivityMiniBadgeAtAppVersion {
+                UserSetting.enableSetting("ActivityMiniBadge\(acId)")
+                setted = true
+            }
+            for acId in IncActivityBadgeAtAppVersion {
+                UserSetting.setUserIntValue("ActivityBadge:\(acId)",value: getActivityBadge(acId))
+                setted = true
+            }
+            UserSetting.setUserIntValue(AppVersionActivityBadgeKey, value: VessageConfig.buildVersion)
+            if setted {
+                let badge = UserSetting.getUserIntValue("ActivityListBadge")
+                UserSetting.setUserIntValue("ActivityListBadge", value: badge + 1)
+            }
+        }
         setServiceReady()
     }
     

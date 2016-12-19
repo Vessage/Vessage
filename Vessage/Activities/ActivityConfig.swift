@@ -29,7 +29,7 @@ class ActivityInfo{
 let ActivityInfoList = [
     [
         ActivityInfo(activityId: "1003", "SNS".SNSString, "sns_icon", "SNS", "SNSMainViewController", true),
-        ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "NiceFaceClubIcon", "NiceFaceClub", "NFCMainViewController", true)
+        ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "nfc_icon", "NiceFaceClub", "NFCMainViewController", true)
     ],
     [
         //ActivityInfo(activityId: "1001", "一起帮帮忙", "littlePaperIcon", "HelpTogether", "HelpTogetherMainController", true),

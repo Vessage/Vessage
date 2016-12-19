@@ -40,7 +40,7 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
     private(set) var here:CLLocation!{
         get{
             #if DEBUG
-                if isInSimulator() {
+                if _here == nil && isInSimulator() {
                     return CLLocation(latitude: 23.1, longitude: 113.3)
                 }
             #endif

@@ -133,6 +133,7 @@ extension MNSMainController{
         tableView.delegate = self
         tableView.dataSource = self
         refreshHiddenViews()
+        ServiceContainer.getActivityService().clearActivityAllBadge(MNSMainController.activityId)
     }
     
     override func viewWillAppear(animated: Bool) {

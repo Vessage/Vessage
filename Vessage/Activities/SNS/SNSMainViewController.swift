@@ -15,6 +15,12 @@ import MBProgressHUD
 class SNSMainViewController: UIViewController {
     let SNSLikeCountBaseLimit = 10
     let postPageCount = 20
+    
+    var newImageFromOutterSource:UIImage?
+    var newImageOutterSourceName:String?
+    var postNewImageDelegate:SNSPostNewImageDelegate?
+    
+    
     @IBOutlet weak var newPostButton: UIButton!
     @IBOutlet weak var myPostsButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
@@ -23,6 +29,7 @@ class SNSMainViewController: UIViewController {
             tableView.tableFooterView = UIView()
         }
     }
+    
     private var postingAnimationImageView:UIImageView!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
@@ -224,12 +231,16 @@ extension SNSMainViewController{
                     ServiceContainer.getActivityService().clearActivityAllBadge(SNSPostManager.activityId)
                     if (d.posts?.count ?? 0) > 0{
                         self.posts[SNSPost.typeNormalPost].append(d.posts)
-                        self.tryShowShareAlert()
                     }else{
                         self.flashTipsLabel("NO_POSTS".SNSString)
                     }
-                    if d.newer {
+                    
+                    if self.newImageFromOutterSource != nil{
+                        self.postOutterImage()
+                    }else if d.newer {
                         self.showNewerAlert()
+                    }else if (d.posts?.count ?? 0) > 0{
+                        self.tryShowShareAlert()
                     }
                 }else{
                     self.playCrossMark("REFRESH_ERROR".SNSString)
@@ -410,13 +421,22 @@ extension SNSMainViewController:SNSMainInfoCellDelegate{
 extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
         picker.dismissViewControllerAnimated(true) {
-            let imageForSend = image.scaleToWidthOf(600, quality: 0.8)
-            
-            let fService = ServiceContainer.getService(FileService)
-            let imageData = UIImageJPEGRepresentation(imageForSend,1)
+            let imageForSend = image.scaleToWidthOf(600, quality: 1)
+            self.sendNewPost(imageForSend)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func sendNewPost(imageForSend:UIImage) {
+        let fService = ServiceContainer.getService(FileService)
+        if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
+            debugPrint("ImageSize:\(imageData.length / 1024)KB")
             let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
             
-            if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
+            if PersistentFileHelper.storeFile(imageData, filePath: localPath)
             {
                 let hud = self.showActivityHud()
                 fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in
@@ -432,18 +452,16 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                             self.playPostingIndicatorAnimation(imageForSend)
                         })
                     }else{
-                        self.playToast("POST_NEW_ERROR".SNSString)
+                        self.playCrossMark("POST_NEW_ERROR".SNSString)
                     }
                 })
             }else
             {
-                self.playToast("POST_NEW_ERROR".SNSString)
+                self.playCrossMark("POST_NEW_ERROR".SNSString)
             }
+        }else{
+            self.playCrossMark("POST_NEW_ERROR".SNSString)
         }
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
@@ -455,6 +473,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                         self.posts[SNSPost.typeNormalPost].insert([p], atIndex: 0)
                         self.tableView?.setContentOffset(CGPointZero, animated: true)
                         self.tableView?.reloadData()
+                        self.postNewImageDelegate?.snsMainViewController(self, onImagePosted:post?.img ?? tmpPost.img)
                     }
                 }else{
                     self.playCrossMark("POST_NEW_ERROR".SNSString)
@@ -469,3 +488,36 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     }
 }
 
+//MARK: Post New Image From Outter Source
+protocol SNSPostNewImageDelegate {
+    func snsMainViewController(sender:SNSMainViewController, onImagePosted imageId:String!)
+}
+
+extension SNSMainViewController{
+    
+    func postOutterImage() {
+        if let img = newImageFromOutterSource,let sourceName = newImageOutterSourceName {
+            newImageFromOutterSource = nil
+            newImageOutterSourceName = nil
+            let title = "SHARE_IMAGE_FROM_OUTTER".SNSString
+            let msgFormat = "SHARE_IMAGE_FROM_OUTTER_FROM_X".SNSString
+            let msg = String(format: msgFormat, String.isNullOrWhiteSpace(sourceName) ? "UNKNOW_SOURCE".SNSString : sourceName)
+            let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
+            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                self.sendNewPost(img)
+            })
+            alert.addAction(ok)
+            alert.addAction(ALERT_ACTION_CANCEL)
+            self.showAlert(alert)
+        }
+    }
+    
+    static func showSNSMainViewControllerWithNewPostImage(nvc:UINavigationController,image:UIImage,sourceName:String,postNewImageDelegate:SNSPostNewImageDelegate? = nil) -> SNSMainViewController {
+        let controller = instanceFromStoryBoard("SNS", identifier: "SNSMainViewController") as! SNSMainViewController
+        controller.newImageFromOutterSource = image
+        controller.newImageOutterSourceName = sourceName
+        controller.postNewImageDelegate = postNewImageDelegate
+        nvc.pushViewController(controller, animated: true)
+        return controller
+    }
+}

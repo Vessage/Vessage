@@ -42,3 +42,7 @@ NEWER_ALERT_TITLE = "欢迎使用晒&秀";
 NEWER_ALERT_MSG = "\n晒&秀是让你和常聊天的好友分享照片的地方。没时间解释了，赶紧去晒一张照片吧？";
 NEWER_ALERT_YES = "马上晒照片";
 NEWER_ALERT_NO = "等会再晒";
+
+SHARE_IMAGE_FROM_OUTTER = "分享来自外部的图片？";
+SHARE_IMAGE_FROM_OUTTER_FROM_X = "%@";
+UNKNOW_SOURCE = "未知来源";

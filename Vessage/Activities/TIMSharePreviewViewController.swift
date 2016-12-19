@@ -10,6 +10,7 @@ import UIKit
 
 class TIMSharePreviewViewController: UIViewController {
 
+    private static var font:UIFont?
     @IBOutlet weak var fontSizeSlider: UISlider!
     @IBOutlet weak var bcgCollectionView: UICollectionView!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -20,6 +21,9 @@ class TIMSharePreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let f =  TIMSharePreviewViewController.font{
+            shareTextContentLabel.font = f
+        }
         bcgCollectionView.allowsMultipleSelection = false
         bcgCollectionView.allowsSelection = true
     }
@@ -51,11 +55,18 @@ class TIMSharePreviewViewController: UIViewController {
             shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(fontSize.floatValue))
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let controller = segue.destinationViewController as? TIMShareAndSaveViewController{
+            controller.image = shareTextContentLabel.superview?.viewToImage()
+        }
+    }
 }
 
 extension TIMSharePreviewViewController:SelectFontViewControllerDelegate{
     func selectFontViewController(ender: SelectFontViewController, onSelectedFont font: UIFont) {
         let fontSize = self.shareTextContentLabel.font.pointSize
+        TIMSharePreviewViewController.font = font
         self.shareTextContentLabel.font = font.fontWithSize(fontSize)
     }
 }

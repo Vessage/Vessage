@@ -8,6 +8,68 @@
 
 import UIKit
 
+//MARK: Font
+private let fontConfigList = [
+    ["name":"DFWaWaSC-W5","display":"娃娃体","size":"17MB"],
+    
+    ["name":"STKaitiSC-Regular","display":"楷体","size":"106MB"],
+    ["name":"STKaitiSC-Bold","display":"楷体-粗","size":"106MB"],
+    ["name":"STKaitiSC-Black","display":"楷体-黑体","size":"106MB"],
+    
+    ["name":"STXingkaiSC-Light","display":"行楷-细","size":"88MB"],
+    ["name":"STXingkaiSC-Bold","display":"行楷-粗","size":"88MB"],
+    
+    ["name":"ChalkboardSE-Regular","display":"Chalkboard SE","size":"520KB"],
+    ["name":"BradleyHandITCTT-Bold","display":"Bradley Hand Bold","size":"592KB"],
+    
+]
+
+private var downloadedFonts = [String:String]()
+private let downloadedFontMapKey = "DownloadedFontMapKey"
+
+private func addDownloadedFont(fontName:String,fontUrl:NSURL){
+    if let path = fontUrl.path{
+        downloadedFonts.updateValue(path, forKey: fontName)
+        NSUserDefaults.standardUserDefaults().setObject(downloadedFonts, forKey: downloadedFontMapKey)
+    }
+}
+
+private func unloadDownloadedFontMap(){
+    downloadedFonts.removeAll()
+}
+
+private func loadDownloadedFontMap(){
+    if let map = NSUserDefaults.standardUserDefaults().dictionaryForKey(downloadedFontMapKey){
+        for (name,item) in map {
+            if let fontUrl = item as? String{
+                downloadedFonts.updateValue(fontUrl, forKey: name)
+            }
+        }
+    }
+}
+
+private func getFontByName(fontName:String) -> UIFont?{
+    var aFont = UIFont(name: fontName, size: 12.0)
+    
+    if aFont == nil {
+        if let fontUrl = downloadedFonts[fontName]{
+            let url = NSURL.fileURLWithPath(fontUrl)
+            CTFontManagerRegisterFontsForURL(url, .Process, nil)
+            aFont = UIFont(name: fontName, size: 12.0)
+        }
+    }
+    
+    // If the font is already download
+    if let font = aFont {
+        if (font.fontName.compare(fontName) == .OrderedSame ||
+            font.familyName.compare(fontName) == .OrderedSame) {
+            return aFont
+        }
+    }
+    return nil;
+}
+
+//MARK:FontItemCell
 class FontItemCell: UITableViewCell {
     
     static let reuseId = "FontItemCell"
@@ -36,13 +98,6 @@ class SelectFontViewController: UIViewController {
     
     @IBOutlet weak var doneBarItem: UIBarButtonItem!
     
-    var fontConfigList = [
-        ["name":"DFWaWaSC-W5","display":"娃娃体","size":"17MB"],
-        ["name":"STKaitiSC-Bold","display":"楷体-粗","size":"106MB"],
-        ["name":"STXingkaiSC-Light","display":"行楷-细","size":"88MB"],
-        ["name":"ChalkboardSE-Regular","display":"Chalkboard SE","size":"520KB"]
-    ]
-    
     @IBAction func onDoneClick(sender: AnyObject) {
         if let index = self.tableView.indexPathForSelectedRow{
             if let cell = tableView.cellForRowAtIndexPath(index) as? FontItemCell {
@@ -59,6 +114,7 @@ class SelectFontViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
@@ -67,6 +123,12 @@ class SelectFontViewController: UIViewController {
         self.tableView.allowsMultipleSelection = false
         self.tableView.allowsSelection = true
         self.tableView.tableFooterView?.backgroundColor = UIColor.whiteColor()
+        loadDownloadedFontMap()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        unloadDownloadedFontMap()
     }
 }
 
@@ -121,19 +183,13 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
 extension FontItemCell{
     
     private func setFontNameIfExists(fontName:String) -> Bool{
-        let aFont = UIFont(name: fontName, size: 18)
-        
-        // If the font is already download
-        if let font = aFont {
-            if (font.fontName.compare(fontName) == .OrderedSame ||
-                font.familyName.compare(fontName) == .OrderedSame) {
-                self.fontDemoLabel.font = UIFont(name: fontName, size: 18)
-                self.fontIsReady = true
-                return true
-            }
+        if let font = getFontByName(fontName) {
+            self.fontDemoLabel.font = font.fontWithSize(18.0)
+            self.fontIsReady = true
+            return true
+        }else{
+            return false
         }
-        self.fontIsReady = false
-        return false
     }
     
     private func asynchronousSetFontsName() {
@@ -184,8 +240,10 @@ extension FontItemCell{
                             }
                             // Log the font URL in the console
                             let font = CTFontCreateWithName(fontName, 0.0, nil)
-                            let fontURL = CTFontCopyAttribute(font, kCTFontURLAttribute) as! NSURL
-                            debugPrint(fontURL)
+                            if let fontURL = CTFontCopyAttribute(font, kCTFontURLAttribute) as? NSURL{
+                                addDownloadedFont(fontName, fontUrl: fontURL)
+                                debugPrint(fontURL)
+                            }
                         }
                     }
                 })

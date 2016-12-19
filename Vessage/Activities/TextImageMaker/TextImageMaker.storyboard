@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--分享文字-->
+        <!--分享内容-->
         <scene sceneID="Sed-Pd-OO0">
             <objects>
                 <viewController storyboardIdentifier="TIMStartViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6vu-PX-RnX" customClass="TIMStartViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                             <constraint firstItem="JEa-qe-lmt" firstAttribute="trailing" secondItem="TWh-jB-Ja5" secondAttribute="trailingMargin" id="tje-r6-wYZ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="分享文字" id="qQB-Ld-sma">
+                    <navigationItem key="navigationItem" title="分享内容" id="qQB-Ld-sma">
                         <barButtonItem key="backBarButtonItem" title="返回" id="8Tn-18-MZT"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="x3d-1c-qvZ">
                             <connections>
@@ -75,17 +75,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ljx-Dv-8qK">
-                                <rect key="frame" x="166" y="74" width="43" height="43"/>
+                                <rect key="frame" x="36" y="74" width="303" height="303"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Fl-6x-8TS">
-                                        <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vg_default_bcg_0" translatesAutoresizingMaskIntoConstraints="NO" id="3Fl-6x-8TS">
+                                        <rect key="frame" x="0.0" y="0.0" width="303" height="303"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvP-VQ-0yu">
-                                        <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="303" height="303"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VG" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpg-nq-YeP">
-                                        <rect key="frame" x="10" y="10" width="23" height="23"/>
+                                        <rect key="frame" x="10" y="10" width="283" height="283"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.792156862745098" green="0.792156862745098" blue="0.792156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -109,7 +109,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vEK-vj-tPi">
-                                <rect key="frame" x="26" y="115" width="333" height="72"/>
+                                <rect key="frame" x="26" y="375" width="333" height="72"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="Zy9-sx-SjB"/>
@@ -146,13 +146,13 @@
                                 </cells>
                             </collectionView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="16" minValue="16" maxValue="48" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-gA-qJj">
-                                <rect key="frame" x="66" y="213" width="295" height="31"/>
+                                <rect key="frame" x="66" y="473" width="295" height="31"/>
                                 <connections>
                                     <action selector="onSliderValueChanged:" destination="EsZ-97-RiY" eventType="valueChanged" id="jiQ-iv-v1f"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQ3-fa-haS">
-                                <rect key="frame" x="26" y="210" width="36" height="36"/>
+                                <rect key="frame" x="26" y="470" width="36" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="36" id="69f-e1-nq0"/>
                                     <constraint firstAttribute="height" constant="36" id="ZqZ-WT-YtA"/>
@@ -286,6 +286,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="分享&amp;保存" id="Re5-7f-BD7">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="jvh-2W-Gqw"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="tVv-zz-4l0">
                             <connections>
                                 <action selector="onClickDone:" destination="Ioe-Hc-pKy" id="h1S-Yu-Z9F"/>
@@ -293,6 +294,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="imageView" destination="P3u-os-72w" id="owj-TE-JvW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Xg-CW-nGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -325,5 +329,6 @@
         <image name="tim_font" width="128" height="128"/>
         <image name="tim_save" width="128" height="128"/>
         <image name="tim_wechat_moment" width="60" height="60"/>
+        <image name="vg_default_bcg_0" width="800" height="800"/>
     </resources>
 </document>

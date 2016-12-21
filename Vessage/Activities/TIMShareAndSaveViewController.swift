@@ -11,7 +11,9 @@ import AssetsLibrary
 
 class TIMShareAndSaveViewController: UIViewController {
 
-    private var finished = [Bool](count: 3, repeatedValue: false)
+    private var finished = [Bool](count: 4, repeatedValue: false)
+    private var postedFileId:String?
+    
     @IBOutlet weak var imageView: UIImageView!
     private var vgMaskLabel:UILabel!{
         didSet{
@@ -69,8 +71,43 @@ class TIMShareAndSaveViewController: UIViewController {
         }
     }
     
-    @IBAction func shareToSNS(sender: AnyObject) {
+    deinit {
+        debugLog("Deinited:\(self.description)")
+    }
+}
+
+extension TIMShareAndSaveViewController:NFCPostNewImageDelegate{
+    
+    @IBAction func shareToNFC(sender: AnyObject) {
         if !finished[0] {
+            if let img = image{
+                shareImageToNFC(img)
+            }
+        }else{
+            self.showAlert(nil, msg: "IMAGE_SHARED_ONCE".TIMString)
+        }
+    }
+    
+    func shareImageToNFC(image:UIImage) {
+        if String.isNullOrWhiteSpace(self.postedFileId) == false {
+            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, sourceName: "TIM".TIMString,delegate: self)
+        }else{
+            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,delegate: self)
+        }
+    }
+    
+    func nfcMainViewController(sender: NFCMainViewController, onImagePosted imageId: String!) {
+        if imageId != nil {
+            finished[0] = true
+            self.postedFileId = imageId
+        }
+    }
+}
+
+extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
+    
+    @IBAction func shareToSNS(sender: AnyObject) {
+        if !finished[1] {
             if let img = image{
                 shareImageToSNS(img)
             }
@@ -78,9 +115,27 @@ class TIMShareAndSaveViewController: UIViewController {
             self.showAlert(nil, msg: "IMAGE_SHARED_ONCE".TIMString)
         }
     }
+    
+    func shareImageToSNS(image:UIImage) {
+        if String.isNullOrWhiteSpace(self.postedFileId) == false {
+            SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, sourceName: "TIM".TIMString,delegate: self)
+        }else{
+            SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,delegate: self)
+        }
+    }
+    
+    func snsMainViewController(sender: SNSMainViewController, onImagePosted imageId: String!) {
+        if imageId != nil {
+            finished[1] = true
+            self.postedFileId = imageId
+        }
+    }
+}
 
+extension TIMShareAndSaveViewController{
+    
     @IBAction func shareToWXSession(sender: AnyObject) {
-        if !finished[1] {
+        if !finished[2] {
             if let img = getOutterAppImage(){
                 shareImageToWxSession(img)
             }else{
@@ -91,47 +146,7 @@ class TIMShareAndSaveViewController: UIViewController {
         }
     }
     
-    @IBAction func saveImage(sender: AnyObject) {
-        if !finished[2] {
-            if let img = getOutterAppImage(){
-                let seltor = #selector(TIMShareAndSaveViewController.didFinishSavingWithError(_:didFinishSavingWithError:contextInfo:))
-                UIImageWriteToSavedPhotosAlbum(img, self, seltor, nil)
-            }else{
-                self.showAlert(nil, msg: "SAVE_IMAGE_ERROR".TIMString)
-            }
-        }else{
-            self.showAlert(nil, msg: "IMAGE_SAVED_ONCE".TIMString)
-        }
-        
-    }
     
-    func didFinishSavingWithError(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
-        if error == nil{
-            self.playCheckMark()
-            finished[2] = true
-        }else{
-            self.showAlert(nil, msg: "SAVE_IMAGE_ERROR".TIMString)
-        }
-    }
-    
-    deinit {
-        debugLog("Deinited:\(self.description)")
-    }
-}
-
-extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
-    func shareImageToSNS(image:UIImage) {
-        SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,postNewImageDelegate: self)
-    }
-    
-    func snsMainViewController(sender: SNSMainViewController, onImagePosted imageId: String!) {
-        if imageId != nil {
-            finished[0] = true
-        }
-    }
-}
-
-extension TIMShareAndSaveViewController{
     func shareImageToWxSession(image:UIImage) {
         let msg = WXMediaMessage()
         let ext = WXImageObject()
@@ -158,6 +173,33 @@ extension TIMShareAndSaveViewController{
             }else{
                 playCrossMark("FAILED".localizedString(), async: false, completionHandler: nil)
             }
+        }
+    }
+}
+
+extension TIMShareAndSaveViewController{
+    
+    
+    @IBAction func saveImage(sender: AnyObject) {
+        if !finished[3] {
+            if let img = getOutterAppImage(){
+                let seltor = #selector(TIMShareAndSaveViewController.didFinishSavingWithError(_:didFinishSavingWithError:contextInfo:))
+                UIImageWriteToSavedPhotosAlbum(img, self, seltor, nil)
+            }else{
+                self.showAlert(nil, msg: "SAVE_IMAGE_ERROR".TIMString)
+            }
+        }else{
+            self.showAlert(nil, msg: "IMAGE_SAVED_ONCE".TIMString)
+        }
+        
+    }
+    
+    func didFinishSavingWithError(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+        if error == nil{
+            self.playCheckMark()
+            finished[3] = true
+        }else{
+            self.showAlert(nil, msg: "SAVE_IMAGE_ERROR".TIMString)
         }
     }
 }

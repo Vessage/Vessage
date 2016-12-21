@@ -15,6 +15,13 @@ import MBProgressHUD
 class NFCMainViewController: UIViewController {
     let nfcLikeCountBaseLimit = 10
     let postPageCount = 20
+    
+    private(set) var newImageFromOutterSource:UIImage?
+    private(set) var newImageIdFromOutterSource:String?
+    private(set) var newImageOutterSourceName:String?
+    private(set) var postNewImageDelegate:NFCPostNewImageDelegate?
+
+    
     @IBOutlet weak var newMemberButton: UIButton!
     @IBOutlet weak var homeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!{
@@ -238,10 +245,13 @@ extension NFCMainViewController{
         
         postingAnimationImageView.layer.addAnimation(animation2, forKey: "postingScale")
         self.postingAnimationImageView.hidden = false
+        self.postingAnimationImageView?.superview?.bringSubviewToFront(self.postingAnimationImageView)
         UIAnimationHelper.playAnimation(self.postingAnimationImageView, animation: animation, key: "movePostingImg") {
-            self.postingAnimationImageView.image = nil
-            self.postingAnimationImageView.hidden = true
-            self.postingAnimationImageView.removeFromSuperview()
+            self.postingAnimationImageView?.frame.size = CGSizeZero
+            self.postingAnimationImageView?.superview?.sendSubviewToBack(self.postingAnimationImageView)
+            self.postingAnimationImageView?.image = nil
+            self.postingAnimationImageView?.hidden = true
+            self.postingAnimationImageView?.removeFromSuperview()
         }
     }
 }
@@ -341,6 +351,9 @@ extension NFCMainViewController{
         }else{
             self.switchListType(self.listType)
             self.showViews()
+            if profile.isValidateMember() {
+                tryPostOutterImage()
+            }
         }
     }
     
@@ -363,7 +376,12 @@ extension NFCMainViewController{
         
         alert.onAnonymousHandler = { alert in
             self.anonymousMode()
-            alert.dismissViewControllerAnimated(true, completion: nil)
+            alert.dismissViewControllerAnimated(true){
+                if self.hasOutterNewImage{
+                    self.showAlert("NFC".localizedString(), msg: "ANONYMOUS_CANT_POST_OUTTER_IMAGE".niceFaceClubString)
+                    self.clearOutterNewImage()
+                }
+            }
             
         }
         alert.onCloseHandler = { alert in
@@ -509,13 +527,25 @@ extension NFCMainViewController:NFCMainInfoCellDelegate{
 extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
         picker.dismissViewControllerAnimated(true) {
-            let imageForSend = image.scaleToWidthOf(600, quality: 0.8)
-            
-            let fService = ServiceContainer.getService(FileService)
-            let imageData = UIImageJPEGRepresentation(imageForSend,1)
+            if min(image.size.width, image.size.height) > 600{
+                let imageForSend = image.size.width < image.size.height ? image.scaleToWidthOf(600) : image.scaleToHeightOf(600)
+                self.sendNewPost(imageForSend)
+            }else{
+                self.sendNewPost(image)
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func sendNewPost(imageForSend:UIImage){
+        let fService = ServiceContainer.getService(FileService)
+        if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
             let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
             
-            if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
+            if PersistentFileHelper.storeFile(imageData, filePath: localPath)
             {
                 let hud = self.showActivityHud()
                 fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in
@@ -538,27 +568,30 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
             {
                 self.playToast("POST_NEW_ERROR".niceFaceClubString)
             }
+        }else{
+            self.playToast("POST_NEW_ERROR".niceFaceClubString)
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
+    private func pushNewPost(tmpPost:NFCPost){
+        NFCPostManager.instance.newPost(tmpPost.img,body: nil, callback: { (post) in
+            if let p = post{
+                self.playCheckMark(){
+                    self.posting.removeElement{$0.pid == tmpPost.pid}
+                    self.posts[NFCPost.typeNormalPost].insert([p], atIndex: 0)
+                    self.tableView?.setContentOffset(CGPointZero, animated: true)
+                    self.tableView?.reloadData()
+                    self.postNewImageDelegate?.nfcMainViewController(self, onImagePosted: p.img)
+                }
+            }else{
+                self.playCrossMark("POST_NEW_ERROR".niceFaceClubString)
+            }
+        })
     }
     
     func taskCompleted(taskIdentifier: String, result: AnyObject!) {
         if let tmpPost = (posting.filter{$0.pid == taskIdentifier}).first{
-            NFCPostManager.instance.newPost(tmpPost.img,body: nil, callback: { (post) in
-                if let p = post{
-                    self.playCheckMark(){
-                        self.posting.removeElement{$0.pid == tmpPost.pid}
-                        self.posts[NFCPost.typeNormalPost].insert([p], atIndex: 0)
-                        self.tableView?.setContentOffset(CGPointZero, animated: true)
-                        self.tableView?.reloadData()
-                    }
-                }else{
-                    self.playCrossMark("POST_NEW_ERROR".niceFaceClubString)
-                }
-            })
+            pushNewPost(tmpPost)
         }
     }
     
@@ -568,3 +601,78 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     }
 }
 
+//MARK: Post New Image From Outter Source
+protocol NFCPostNewImageDelegate {
+    func nfcMainViewController(sender:NFCMainViewController, onImagePosted imageId:String!)
+}
+
+extension NFCMainViewController{
+    
+    var hasOutterNewImage:Bool{
+        return newImageFromOutterSource != nil || String.isNullOrWhiteSpace(newImageIdFromOutterSource) == false
+    }
+    
+    private func clearOutterNewImage(){
+        newImageIdFromOutterSource = nil
+        newImageFromOutterSource = nil
+        newImageOutterSourceName = nil
+    }
+    
+    func tryPostOutterImage() -> Bool{
+        
+        if hasOutterNewImage == false {
+            return false
+        }
+        
+        let sourceId = newImageIdFromOutterSource
+        let sourceImage = newImageFromOutterSource
+        let sourceName = String.isNullOrWhiteSpace(self.newImageOutterSourceName) ? "UNKNOW_SOURCE".niceFaceClubString : newImageOutterSourceName!
+        
+        clearOutterNewImage()
+        
+        let title = "SHARE_IMAGE_FROM_OUTTER".niceFaceClubString
+        let msgFormat = "SHARE_IMAGE_FROM_OUTTER_FROM_X".niceFaceClubString
+        let msg = String(format: msgFormat, sourceName)
+        let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
+        let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+            if let img = sourceImage{
+                self.sendNewPost(img)
+            }else if String.isNullOrWhiteSpace(sourceId) == false{
+                let tmpPost = NFCPost()
+                tmpPost.cmtCnt = 0
+                tmpPost.img = sourceId
+                tmpPost.pid = IdUtil.generateUniqueId()
+                self.posting.insert(tmpPost, atIndex: 0)
+                self.pushNewPost(tmpPost)
+            }
+        })
+        alert.addAction(ok)
+        alert.addAction(ALERT_ACTION_CANCEL)
+        self.showAlert(alert)
+        
+        return true
+    }
+    
+    static func instanceFromStoryBoard() -> NFCMainViewController{
+        return instanceFromStoryBoard("NiceFaceClub", identifier: "NFCMainViewController") as! NFCMainViewController
+    }
+    
+    static func showNFCMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String,sourceName:String,delegate:NFCPostNewImageDelegate? = nil) -> NFCMainViewController {
+        let controller = instanceFromStoryBoard()
+        controller.newImageIdFromOutterSource = imageId
+        return showNFCMainViewController(nvc, controller: controller, sourceName: sourceName, postNewImageDelegate: delegate)
+    }
+    
+    static func showNFCMainViewControllerWithNewPostImage(nvc:UINavigationController,image:UIImage,sourceName:String,delegate:NFCPostNewImageDelegate? = nil) -> NFCMainViewController {
+        let controller = instanceFromStoryBoard()
+        controller.newImageFromOutterSource = image
+        return showNFCMainViewController(nvc, controller: controller, sourceName: sourceName, postNewImageDelegate: delegate)
+    }
+    
+    static private func showNFCMainViewController(nvc:UINavigationController,controller:NFCMainViewController,sourceName:String,postNewImageDelegate:NFCPostNewImageDelegate?) -> NFCMainViewController{
+        controller.newImageOutterSourceName = sourceName
+        controller.postNewImageDelegate = postNewImageDelegate
+        nvc.pushViewController(controller, animated: true)
+        return controller
+    }
+}

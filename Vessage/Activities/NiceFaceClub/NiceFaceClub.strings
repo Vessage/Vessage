@@ -99,3 +99,8 @@ DELETE_POST = "删除该照片";
 REPORT_POST = "举报该照片";
 SURE_DELETE_POST = "删除照片后不可恢复，确定删除该照片？";
 SURE_REPORT_POST = "如果频繁恶意举报，你的账户将会被拉黑，确定举报该照片？";
+
+SHARE_IMAGE_FROM_OUTTER = "分享来自外部的图片？";
+SHARE_IMAGE_FROM_OUTTER_FROM_X = "图片来源:%@";
+UNKNOW_SOURCE = "未知来源";
+ANONYMOUS_CANT_POST_OUTTER_IMAGE = "只有俱乐部正式会员才能分享图片";

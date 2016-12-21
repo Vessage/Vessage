@@ -12,12 +12,25 @@ import UIKit
 private let fontConfigList = [
     ["name":"DFWaWaSC-W5","display":"娃娃体","size":"17MB"],
     
-    ["name":"STKaitiSC-Regular","display":"楷体","size":"106MB"],
-    ["name":"STKaitiSC-Bold","display":"楷体-粗","size":"106MB"],
-    ["name":"STKaitiSC-Black","display":"楷体-黑体","size":"106MB"],
+    ["name":"STKaitiSC-Regular","display":"楷体-简","size":"106MB"],
+    ["name":"STKaitiSC-Bold","display":"楷体-简-粗","size":"106MB"],
+    ["name":"STKaitiSC-Black","display":"楷体-简-黑体","size":"106MB"],
+    ["name":"STKaitiTC-Regular","display":"楷体-繁","size":"106MB"],
+    ["name":"STKaitiTC-Bold","display":"楷体-繁-粗","size":"106MB"],
+    ["name":"STKaitiTC-Black","display":"楷体-繁-黑体","size":"106MB"],
     
-    ["name":"STXingkaiSC-Light","display":"行楷-细","size":"88MB"],
-    ["name":"STXingkaiSC-Bold","display":"行楷-粗","size":"88MB"],
+    ["name":"STXingkaiSC-Light","display":"行楷-简-细","size":"88MB"],
+    ["name":"STXingkaiSC-Bold","display":"行楷-简-粗","size":"88MB"],
+    ["name":"STXingkaiTC-Light","display":"行楷-繁-细","size":"88MB"],
+    ["name":"STXingkaiTC-Bold","display":"行楷-繁-粗","size":"88MB"],
+    
+    ["name":"MLingWaiMedium-SC","display":"凌慧体-简-中黑","size":"24MB"],
+    ["name":"MLingWaiMedium-TC","display":"凌慧体-繁-中黑","size":"24MB"],
+    
+    ["name":"HanziPenSC-W3","display":"翩翩体-简","size":"72MB"],
+    ["name":"HanziPenSC-W5","display":"翩翩体-简-粗","size":"72MB"],
+    ["name":"HanziPenTC-W3","display":"翩翩体-繁","size":"72MB"],
+    ["name":"HanziPenTC-W5","display":"翩翩体-繁-粗","size":"72MB"],
     
     ["name":"ChalkboardSE-Regular","display":"Chalkboard SE","size":"520KB"],
     ["name":"BradleyHandITCTT-Bold","display":"Bradley Hand Bold","size":"592KB"],

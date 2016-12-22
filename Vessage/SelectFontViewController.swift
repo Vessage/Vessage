@@ -52,12 +52,39 @@ private func unloadDownloadedFontMap(){
 }
 
 private func loadDownloadedFontMap(){
-    if let map = NSUserDefaults.standardUserDefaults().dictionaryForKey(downloadedFontMapKey){
+    if let map = readCachedFontMap(){
         for (name,item) in map {
             if let fontUrl = item as? String{
                 downloadedFonts.updateValue(fontUrl, forKey: name)
             }
         }
+    }
+}
+
+private func readCachedFontMap()->[String:AnyObject?]?{
+    return NSUserDefaults.standardUserDefaults().dictionaryForKey(downloadedFontMapKey)
+}
+
+extension UIFont{
+    static func loadFontWith(fontName:String) -> UIFont?{
+        var aFont = UIFont(name: fontName, size: 12.0)
+        
+        if aFont == nil {
+            if let fontUrl = readCachedFontMap()?[fontName] as? String{
+                let url = NSURL.fileURLWithPath(fontUrl)
+                CTFontManagerRegisterFontsForURL(url, .Process, nil)
+                aFont = UIFont(name: fontName, size: 12.0)
+            }
+        }
+        
+        // If the font is already download
+        if let font = aFont {
+            if (font.fontName.compare(fontName) == .OrderedSame ||
+                font.familyName.compare(fontName) == .OrderedSame) {
+                return aFont
+            }
+        }
+        return nil;
     }
 }
 
@@ -130,13 +157,18 @@ class SelectFontViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDownloadedFontMap()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
         self.tableView.allowsMultipleSelection = false
         self.tableView.allowsSelection = true
         self.tableView.tableFooterView?.backgroundColor = UIColor.whiteColor()
-        loadDownloadedFontMap()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView?.reloadData()
     }
     
     override func viewDidDisappear(animated: Bool) {

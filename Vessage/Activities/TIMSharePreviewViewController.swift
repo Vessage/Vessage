@@ -23,6 +23,8 @@ class TIMSharePreviewViewController: UIViewController {
         super.viewDidLoad()
         if let f =  TIMSharePreviewViewController.font{
             shareTextContentLabel.font = f
+        }else if let fontName = UserSetting.getUserValue(cachedFontKey) as? String,let font = UIFont.loadFontWith(fontName) {
+            shareTextContentLabel.font = font
         }
         bcgCollectionView.allowsMultipleSelection = false
         bcgCollectionView.allowsSelection = true
@@ -43,6 +45,11 @@ class TIMSharePreviewViewController: UIViewController {
         shareTextContentLabel.text = shareTextContent
         bcgCollectionView.delegate = self
         bcgCollectionView.dataSource = self
+        
+        if let fontSize = UserSetting.getUserNumberValue(cachedFontSizeKey){
+            fontSizeSlider.setValue(fontSize.floatValue, animated: true)
+            shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(fontSize.floatValue))
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -50,10 +57,6 @@ class TIMSharePreviewViewController: UIViewController {
         let index = UserSetting.getUserIntValue(selectedStyleIndexKey)
         bcgCollectionView.selectItemAtIndexPath(NSIndexPath.init(forRow: index, inSection: 0), animated: true, scrollPosition: .CenteredHorizontally)
         setStyle(index)
-        if let fontSize = UserSetting.getUserNumberValue(cachedFontSizeKey){
-            fontSizeSlider.setValue(fontSize.floatValue, animated: true)
-            shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(fontSize.floatValue))
-        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -67,12 +70,14 @@ extension TIMSharePreviewViewController:SelectFontViewControllerDelegate{
     func selectFontViewController(ender: SelectFontViewController, onSelectedFont font: UIFont) {
         let fontSize = self.shareTextContentLabel.font.pointSize
         TIMSharePreviewViewController.font = font
+        UserSetting.setUserValue(cachedFontKey, value: font.fontName)
         self.shareTextContentLabel.font = font.fontWithSize(fontSize)
     }
 }
 
 private let selectedStyleIndexKey = "TIMselectedStyleKey"
 private let cachedFontSizeKey = "TIMFontSizeKey"
+private let cachedFontKey = "TIMFontKey"
 
 private let TIMDefaultStyles = [
     ["bcg":"tim_bcg_0","textColor":"#8D75FF","font":""],

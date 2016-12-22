@@ -151,6 +151,9 @@ class UserProfileViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        var attr = [String:AnyObject]()
+        attr.updateValue(UIColor.themeColor, forKey: NSForegroundColorAttributeName)
+        self.navigationController?.navigationBar.titleTextAttributes = attr
         updateRightButtonTitle()
     }
     
@@ -232,13 +235,13 @@ class UserProfileViewController: UIViewController {
     static func showUserProfileViewController(vc:UIViewController, userProfile:VessageUser,delegate:UserProfileViewControllerDelegate = NoteUserDelegate) -> UserProfileViewController{
         let controller = instanceFromStoryBoard("User", identifier: "UserProfileViewController") as! UserProfileViewController
         let nvc = UINavigationController(rootViewController: controller)
-        nvc.navigationBarHidden = true
         nvc.providesPresentationContextTransitionStyle = true
         nvc.definesPresentationContext = true
         nvc.modalPresentationStyle = .OverCurrentContext
         controller.delegate = delegate
         vc.presentViewController(nvc, animated: true) {
             controller.profile = userProfile
+            ServiceContainer.getUserService().setForeceGetUserProfileIgnoreTimeLimit()
             ServiceContainer.getUserService().fetchLatestUserProfile(userProfile)
         }
         return controller

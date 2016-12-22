@@ -47,8 +47,10 @@ class TIMSharePreviewViewController: UIViewController {
         bcgCollectionView.dataSource = self
         
         if let fontSize = UserSetting.getUserNumberValue(cachedFontSizeKey){
+            if fontSize.floatValue > fontSizeSlider.minimumValue {
+                shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(fontSize.floatValue))
+            }
             fontSizeSlider.setValue(fontSize.floatValue, animated: true)
-            shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(fontSize.floatValue))
         }
     }
     

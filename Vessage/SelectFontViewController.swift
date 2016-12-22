@@ -61,7 +61,7 @@ private func loadDownloadedFontMap(){
     }
 }
 
-private func readCachedFontMap()->[String:AnyObject?]?{
+private func readCachedFontMap()->[String:AnyObject]?{
     return NSUserDefaults.standardUserDefaults().dictionaryForKey(downloadedFontMapKey)
 }
 
@@ -70,7 +70,13 @@ extension UIFont{
         var aFont = UIFont(name: fontName, size: 12.0)
         
         if aFont == nil {
-            if let fontUrl = readCachedFontMap()?[fontName] as? String{
+            var map:[String:AnyObject]?  = downloadedFonts
+            if map == nil || map?.count == 0{
+                if let cachedMap = readCachedFontMap(){
+                    map = cachedMap
+                }
+            }
+            if let fontUrl = map?[fontName] as? String{
                 let url = NSURL.fileURLWithPath(fontUrl)
                 CTFontManagerRegisterFontsForURL(url, .Process, nil)
                 aFont = UIFont(name: fontName, size: 12.0)
@@ -86,27 +92,6 @@ extension UIFont{
         }
         return nil;
     }
-}
-
-private func getFontByName(fontName:String) -> UIFont?{
-    var aFont = UIFont(name: fontName, size: 12.0)
-    
-    if aFont == nil {
-        if let fontUrl = downloadedFonts[fontName]{
-            let url = NSURL.fileURLWithPath(fontUrl)
-            CTFontManagerRegisterFontsForURL(url, .Process, nil)
-            aFont = UIFont(name: fontName, size: 12.0)
-        }
-    }
-    
-    // If the font is already download
-    if let font = aFont {
-        if (font.fontName.compare(fontName) == .OrderedSame ||
-            font.familyName.compare(fontName) == .OrderedSame) {
-            return aFont
-        }
-    }
-    return nil;
 }
 
 //MARK:FontItemCell
@@ -228,11 +213,13 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
 extension FontItemCell{
     
     private func setFontNameIfExists(fontName:String) -> Bool{
-        if let font = getFontByName(fontName) {
+        if let font = UIFont.loadFontWith(fontName) {
             self.fontDemoLabel.font = font.fontWithSize(18.0)
             self.fontIsReady = true
             return true
         }else{
+            self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
+            self.fontIsReady = false
             return false
         }
     }

@@ -156,6 +156,11 @@
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E79F4AAE1E07631F008B99EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E79F4AAD1E07631F008B99EE /* CFNetwork.framework */; };
 		E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC6E1D4DCDE100306A69 /* AppService.swift */; };
+		E7AC07051E0EC13900AB6770 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7AC07001E0EC13900AB6770 /* Media.xcassets */; };
+		E7AC07061E0EC13900AB6770 /* MYQ.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7AC07011E0EC13900AB6770 /* MYQ.storyboard */; };
+		E7AC07071E0EC13900AB6770 /* MYQ.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7AC07021E0EC13900AB6770 /* MYQ.strings */; };
+		E7AC07081E0EC13900AB6770 /* MYQMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC07031E0EC13900AB6770 /* MYQMainController.swift */; };
+		E7AC07091E0EC13900AB6770 /* MYQRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC07041E0EC13900AB6770 /* MYQRF.swift */; };
 		E7ACCF5C1DF90A8A00A8ACFB /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */; };
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
@@ -473,6 +478,11 @@
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
 		E79F4AAD1E07631F008B99EE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E7ABAC6E1D4DCDE100306A69 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
+		E7AC07001E0EC13900AB6770 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		E7AC07011E0EC13900AB6770 /* MYQ.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MYQ.storyboard; sourceTree = "<group>"; };
+		E7AC07021E0EC13900AB6770 /* MYQ.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MYQ.strings; sourceTree = "<group>"; };
+		E7AC07031E0EC13900AB6770 /* MYQMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYQMainController.swift; sourceTree = "<group>"; };
+		E7AC07041E0EC13900AB6770 /* MYQRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYQRF.swift; sourceTree = "<group>"; };
 		E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTextView.swift; sourceTree = "<group>"; };
 		E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageEventHandler.swift; sourceTree = "<group>"; };
 		E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueueProtocal.swift; sourceTree = "<group>"; };
@@ -1188,6 +1198,18 @@
 			path = SNS;
 			sourceTree = "<group>";
 		};
+		E7AC06FF1E0EC13900AB6770 /* MyQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				E7AC07001E0EC13900AB6770 /* Media.xcassets */,
+				E7AC07011E0EC13900AB6770 /* MYQ.storyboard */,
+				E7AC07021E0EC13900AB6770 /* MYQ.strings */,
+				E7AC07031E0EC13900AB6770 /* MYQMainController.swift */,
+				E7AC07041E0EC13900AB6770 /* MYQRF.swift */,
+			);
+			path = MyQuestion;
+			sourceTree = "<group>";
+		};
 		E7ACEB791D4C217000009C5B /* VessageEventHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -1323,6 +1345,7 @@
 		E7EF282E1D791AFD0064231F /* Activities */ = {
 			isa = PBXGroup;
 			children = (
+				E7AC06FF1E0EC13900AB6770 /* MyQuestion */,
 				E7B139C91E061B2100F3D8C9 /* TextImageMaker */,
 				E74109441DE694350030AD1D /* MidNightSilence */,
 				E75E269B1DE43AD7000D2D38 /* VessageTimeMachine */,
@@ -1585,18 +1608,21 @@
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
 				E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
+				E7AC07061E0EC13900AB6770 /* MYQ.storyboard in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */,
 				E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */,
 				E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */,
 				E7EF28641D791AFD0064231F /* Assets.xcassets in Resources */,
 				E74109461DE694420030AD1D /* MNS.storyboard in Resources */,
+				E7AC07051E0EC13900AB6770 /* Media.xcassets in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E741094A1DE69AA60030AD1D /* MNS.strings in Resources */,
 				E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7B139D11E0626BF00F3D8C9 /* TIMString.strings in Resources */,
+				E7AC07071E0EC13900AB6770 /* MYQ.strings in Resources */,
 				E7B139CF1E06213600F3D8C9 /* Media.xcassets in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */,
@@ -1799,6 +1825,7 @@
 				E7CC54E41D7A6CF200BDE82E /* MessageExtension.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7EC2EE41D4A5AD700823C31 /* ChatImageBoardController.swift in Sources */,
+				E7AC07081E0EC13900AB6770 /* MYQMainController.swift in Sources */,
 				E7886A721DC97D3D00368C03 /* SNSMyCommentViewController.swift in Sources */,
 				E708AC841C86EC6E0071104E /* ServicesConfig.swift in Sources */,
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
@@ -1838,6 +1865,7 @@
 				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
 				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,
+				E7AC07091E0EC13900AB6770 /* MYQRF.swift in Sources */,
 				E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */,
 				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
 				E756CBC11DB05BB00017E4A3 /* ImageVessageExtension.swift in Sources */,

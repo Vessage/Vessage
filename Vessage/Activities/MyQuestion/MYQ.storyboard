@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--夜深人静-->
+        <!--每人一个问题-->
         <scene sceneID="3SK-xS-5DK">
             <objects>
-                <viewController storyboardIdentifier="MNSMainController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kpU-U1-zGf" customClass="MNSMainController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MYQMainController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kpU-U1-zGf" customClass="MYQMainController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UYF-61-2Qp"/>
                         <viewControllerLayoutGuide type="bottom" id="5n7-na-Uyc"/>
@@ -22,12 +22,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mns_bcg" translatesAutoresizingMaskIntoConstraints="NO" id="qec-Vo-FbP">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qec-Vo-FbP">
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AGP-r7-aIf">
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.22767469618055555" alpha="0.90301262842465757" colorSpace="calibratedWhite"/>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="79" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rcg-4B-qdf">
                                 <rect key="frame" x="5" y="74" width="365" height="593"/>
@@ -35,7 +34,7 @@
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MNSPostCell" rowHeight="79" id="z75-gz-X3G" customClass="MNSPostCell" customModule="Vessage" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MYQPostCell" rowHeight="79" id="z75-gz-X3G" customClass="MYQPostCell" customModule="Vessage" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="365" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z75-gz-X3G" id="yc0-RY-WhW">
@@ -44,7 +43,6 @@
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P66-5f-v8t">
                                                     <rect key="frame" x="5" y="3" width="355" height="73"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.29682148972191785" colorSpace="calibratedWhite"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <integer key="value" value="10"/>
@@ -54,17 +52,16 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nick" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHT-ta-Q90">
                                                     <rect key="frame" x="8" y="11" width="349" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.097990128960000006" green="0.64398422" blue="0.98106676339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="长夜漫漫，无心睡眠" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSR-hc-hAH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="为什么我们要问问题？" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSR-hc-hAH">
                                                     <rect key="frame" x="8" y="41" width="349" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="leadingMargin" secondItem="LSR-hc-hAH" secondAttribute="leading" id="1Os-FM-vec"/>
                                                 <constraint firstItem="P66-5f-v8t" firstAttribute="centerY" secondItem="yc0-RY-WhW" secondAttribute="centerY" id="3fH-cX-aQN"/>
@@ -79,7 +76,6 @@
                                                 <constraint firstItem="fHT-ta-Q90" firstAttribute="top" secondItem="yc0-RY-WhW" secondAttribute="topMargin" constant="3" id="jDw-fs-b3o"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="contentLabel" destination="LSR-hc-hAH" id="DrM-x9-yfo"/>
                                             <outlet property="nickLabel" destination="fHT-ta-Q90" id="VH9-zv-Xod"/>
@@ -87,59 +83,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="距离开放时间还有" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2UP-Nz-fXT" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="114.5" y="283" width="147" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KqU-hE-p4b" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="188" y="334" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每天凌晨00:01开放" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmN-Jz-BHg" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="110.5" y="364" width="156" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8XW-3V-3g1">
-                                <rect key="frame" x="112" y="413" width="153" height="30"/>
-                                <state key="normal" title="夜深人静开放时通知我">
-                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="onClickNotificationButton:" destination="kpU-U1-zGf" eventType="touchUpInside" id="WoW-gm-kiH"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="KqU-hE-p4b" firstAttribute="top" secondItem="2UP-Nz-fXT" secondAttribute="bottom" constant="30" id="0WJ-e4-d0N"/>
                             <constraint firstItem="qec-Vo-FbP" firstAttribute="height" secondItem="do1-KA-Y5W" secondAttribute="height" id="2zZ-VZ-141"/>
-                            <constraint firstItem="KqU-hE-p4b" firstAttribute="centerY" secondItem="do1-KA-Y5W" secondAttribute="centerY" id="6TW-ep-A23"/>
                             <constraint firstItem="qec-Vo-FbP" firstAttribute="width" secondItem="do1-KA-Y5W" secondAttribute="width" id="7J6-EF-goK"/>
                             <constraint firstItem="Rcg-4B-qdf" firstAttribute="width" secondItem="do1-KA-Y5W" secondAttribute="width" constant="-10" id="CcI-YD-zLM"/>
                             <constraint firstItem="Rcg-4B-qdf" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="CxU-f4-Ym0"/>
                             <constraint firstItem="qec-Vo-FbP" firstAttribute="centerY" secondItem="do1-KA-Y5W" secondAttribute="centerY" id="Ey0-XG-Ga5"/>
-                            <constraint firstItem="8XW-3V-3g1" firstAttribute="centerX" secondItem="DmN-Jz-BHg" secondAttribute="centerX" id="H2h-RC-28r"/>
                             <constraint firstItem="AGP-r7-aIf" firstAttribute="width" secondItem="do1-KA-Y5W" secondAttribute="width" id="KtE-Xu-WTe"/>
                             <constraint firstItem="5n7-na-Uyc" firstAttribute="top" secondItem="Rcg-4B-qdf" secondAttribute="bottom" id="QSL-qp-6Go"/>
                             <constraint firstItem="AGP-r7-aIf" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="Qhw-f0-uTZ"/>
                             <constraint firstItem="AGP-r7-aIf" firstAttribute="centerY" secondItem="do1-KA-Y5W" secondAttribute="centerY" id="S4o-bm-fHh"/>
-                            <constraint firstItem="DmN-Jz-BHg" firstAttribute="top" secondItem="KqU-hE-p4b" secondAttribute="bottom" constant="30" id="abo-kN-75h"/>
                             <constraint firstItem="AGP-r7-aIf" firstAttribute="height" secondItem="do1-KA-Y5W" secondAttribute="height" id="cKg-KR-XHC"/>
                             <constraint firstItem="qec-Vo-FbP" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="fEm-mI-OuM"/>
-                            <constraint firstItem="8XW-3V-3g1" firstAttribute="top" secondItem="DmN-Jz-BHg" secondAttribute="bottom" constant="28" id="ifj-B6-rwX"/>
                             <constraint firstItem="Rcg-4B-qdf" firstAttribute="top" secondItem="UYF-61-2Qp" secondAttribute="bottom" constant="10" id="moZ-WW-pzJ"/>
-                            <constraint firstItem="DmN-Jz-BHg" firstAttribute="centerX" secondItem="KqU-hE-p4b" secondAttribute="centerX" id="o8w-sr-aOG"/>
-                            <constraint firstItem="KqU-hE-p4b" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="teM-pc-d7a"/>
-                            <constraint firstItem="2UP-Nz-fXT" firstAttribute="centerX" secondItem="KqU-hE-p4b" secondAttribute="centerX" id="weC-ds-gnE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="夜深人静" id="d8t-XA-6rI">
+                    <navigationItem key="navigationItem" title="每人一个问题" id="d8t-XA-6rI">
                         <barButtonItem key="backBarButtonItem" title="返回" id="1N4-QZ-D9p"/>
                         <barButtonItem key="leftBarButtonItem" title="离开" id="vg2-oT-GDm">
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -147,22 +108,17 @@
                                 <action selector="onBackItemClicked:" destination="kpU-U1-zGf" id="6Wj-UV-2T9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="深夜感言" id="cWV-zj-eBw">
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <barButtonItem key="rightBarButtonItem" title="我的问题" id="cWV-zj-eBw">
+                            <color key="tintColor" red="0.99046260119999996" green="0.49464845660000001" blue="0.64631777999999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="onMyContentClicked:" destination="kpU-U1-zGf" id="Pi8-NJ-P2H"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="bcgImageView" destination="qec-Vo-FbP" id="AJ8-Qb-sYI"/>
-                        <outlet property="blockTipsLabel" destination="KqU-hE-p4b" id="EZJ-Ko-R4N"/>
                         <outlet property="myContentButton" destination="cWV-zj-eBw" id="21H-Oa-lhs"/>
-                        <outlet property="notificationButton" destination="8XW-3V-3g1" id="LbW-F8-rB5"/>
                         <outlet property="tableView" destination="Rcg-4B-qdf" id="3Ej-mn-pJl"/>
-                        <outlet property="tipsLabel0" destination="2UP-Nz-fXT" id="gDZ-EZ-tMS"/>
-                        <outlet property="tipsLabel1" destination="DmN-Jz-BHg" id="dGn-Vg-r94"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Tg-gN-VTN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -172,14 +128,13 @@
         <!--Navigation Controller-->
         <scene sceneID="O7F-kc-04J">
             <objects>
-                <navigationController storyboardIdentifier="MNSMainNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sfq-KE-6qE" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MYQMainNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sfq-KE-6qE" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="g7B-uq-Jwg">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="g7B-uq-Jwg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.2276746962" alpha="0.6679152397" colorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.99046260119999996" green="0.49464845660000001" blue="0.64631777999999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -192,7 +147,4 @@
             <point key="canvasLocation" x="549.60000000000002" y="-103.89805097451276"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="mns_bcg" width="1920" height="1080"/>
-    </resources>
 </document>

@@ -152,11 +152,6 @@ extension SNSMainViewController{
     }
     
     @IBAction func onClickNewPostButton(sender: AnyObject) {
-        if let img = UIImage(named: "tim_bcg_3"){
-            self.playPostingIndicatorAnimation(img)
-            return
-        }
-        
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
             let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "SNS".SNSString, message: "POST_NEW_SHARE".SNSString)

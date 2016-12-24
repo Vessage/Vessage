@@ -215,9 +215,10 @@ extension MNSMainController{
         property.isOneLineValue = false
         property.propertyValue = String.isNullOrWhiteSpace(mainInfo?.annc) ? "DEFAULT_ANNC".mnsLocalizedString : mainInfo.annc
         property.propertyIdentifier = "ANNC_CONTENT"
+        property.valueTextViewHolder = "ANNC_HOLDER".mnsLocalizedString
         property.propertyLabel = "EDIT_MID_NIGHT_ANNC_TITLE".mnsLocalizedString
         property.valueRegex = MNSMainController.midNightAnncRegex
-        let controller = UIEditTextPropertyViewController.showEditPropertyViewController(self.navigationController!, propertySet: property, controllerTitle: "MY_MID_NIGHT_ACCN".mnsLocalizedString, delegate: self)
+        let controller = UIEditTextPropertyViewController.showEditPropertyViewController(self.navigationController!, propertySet: property, controllerTitle: "UPDATE_MY_MID_NIGHT_ANNC".mnsLocalizedString, delegate: self)
         controller.view.backgroundColor = UIColor.darkGrayColor()
         controller.propertyNameLabel.textColor = UIColor.lightGrayColor()
         controller.propertyValueTextField.textColor = UIColor.lightGrayColor()

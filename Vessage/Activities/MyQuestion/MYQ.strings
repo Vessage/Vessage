@@ -1,0 +1,17 @@
+/* 
+  MYQ.strings
+  Vessage
+
+  Created by Alex Chow on 2016/12/25.
+  Copyright © 2016年 Bahamut. All rights reserved.
+*/
+MYQ = "我有一个问题";
+MYQ_AC_TITLE = "每人一个问题";
+QUES_CONTENT_LIMIT = "问题需要6到140字，以问号结束。";
+MY_QUESTION = "我的问题";
+EDIT_MY_QUESTION_TITLE = "我来问一个问题:";
+UPDATE_MY_QUESTION = "更新我的问题";
+MY_QUESTION_HOLDER = "如：为什么要问问题？";
+GET_MAIN_INFO_ERROR = "刷新失败，请下拉重试";
+MYQ_NEWER_MESSAGE = "这里是一个随便问问题的地方，只要是一个问题都可以问，总有一个人能回答你的问题的😏";
+POST_QUESTION = "问一个问题";

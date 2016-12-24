@@ -17,6 +17,8 @@ protocol UIEditTextPropertyViewControllerDelegate
 class UIEditTextPropertySet
 {
     var isOneLineValue:Bool = true
+    var valueTextViewHolder:String?
+    
     var valueRegex:String!
     var illegalValueMessage:String!
     
@@ -31,8 +33,9 @@ class UIEditTextPropertySet
 class UIEditTextPropertyViewController: UIViewController
 {
 
-    @IBOutlet weak var propertyValueTextView: UITextView!{
+    @IBOutlet weak var propertyValueTextView: BahamutTextView!{
         didSet{
+            propertyValueTextView.backgroundColor = UIColor.clearColor()
             propertyValueTextView.layer.cornerRadius = 7
             propertyValueTextView.layer.borderWidth = 1
             propertyValueTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -62,6 +65,7 @@ class UIEditTextPropertyViewController: UIViewController
         propertyValueTextView.text = model?.propertyValue
         propertyValueTextView.hidden = model.isOneLineValue
         propertyValueTextField.hidden = !model.isOneLineValue
+        propertyValueTextView.placeHolder = model?.valueTextViewHolder
     }
     
     private var newPropertyValue:String!{

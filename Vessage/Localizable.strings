@@ -201,7 +201,7 @@ SET_CHAT_BCG_SUCCESS = "设置成功";
 
 OPEN_NEW_CHAT_WITH_MOBILE = "开始新的对话";
 
-CANT_CHAT_WITH_YOURSELF = "不能和自己对话哦>_<";
+CANT_CHAT_WITH_YOURSELF = "不能和自己对话>_<";
 
 CHOOSE_PHONE_NO = "选择手机号";
 PEOPLE_NO_MOBILE = "没有手机号";
@@ -219,9 +219,9 @@ NO_SUCH_CONVERSATION = "没有找到该对话";
 NO_SUCH_USER = "找不到该用户>_<!";
 
 NEED_SET_CHAT_BCG_TITLE = "设置对讲表情";
-NEED_SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友哦~";
+NEED_SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友~";
 
-SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友哦~";
+SET_CHAT_BCG_MSG = "大头贴会在视频对讲时展示给好友~";
 
 UNKNOW_USER = "佚名";
 NO_NOT_READ_VESSAGE = "还没有收到消息~";
@@ -293,7 +293,7 @@ REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到VG的应用选项并开启通讯录权限，然后再打开App";
 
-NO_HUMEN_FACES_DETECTED = "没有露脸哦~~";
+NO_HUMEN_FACES_DETECTED = "请露脸~~";
 UNLOADED_USER = "佚名";
 ACTIVE_USERS = "广场";
 INVITE_FRIENDS_TO_CONVERSATION = "邀请更多小伙伴来玩VG聊天吧~";
@@ -350,12 +350,12 @@ NOT_IN_CHAT_GROUP = "你已退出群聊...";
 EXIT_GROUP_CHAT_ASK_TITLE = "确定退出群组?";
 YOU_EXITED_GROUP_CHAT = "你已退出群组";
 EXITING_GROUP_CHAT_ERROR = "退出群组出现错误，请稍后再试";
-"GROUP_CHAT_AT_LEASE_2_PEOPLE" = "至少选择两个好友哦~";
+"GROUP_CHAT_AT_LEASE_2_PEOPLE" = "至少选择两个好友~";
 NO_SUCH_GROUP = "群组不存在，或你已退出该群组";
 
 //MARK: Face Text Chat
 U_MUST_SET_CHAT_IMAGES = "发大头贴消息前请设置好你的大头贴~";
-NO_CHAT_IMAGES = "还没有设置聊天大头贴哦~";
+NO_CHAT_IMAGES = "还没有设置聊天大头贴~";
 V_CHAT_IMG = "视频大头贴";
 NOT_SET = "未设置";
 FACE_TEXT_CHAT_IMGS = "常用大头贴聊天表情";
@@ -385,7 +385,7 @@ X_AT_D = "%@ %@";
 
 TEXT_MESSAGE_HOLDER = "发送文字消息";
 
-SEARCH_FRIENDS = "查找好友";
+SEARCH_FRIENDS = "查找好友、附近的人";
 SEARCH_FRIENDS_HOLODER = "请输入要查找的VG号或手机";
 
 REFRESH_NEAR_USER_PULLING = "看看附近有谁?";

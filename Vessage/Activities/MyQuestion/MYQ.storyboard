@@ -97,7 +97,6 @@
                     <navigationItem key="navigationItem" title="你问我答" id="d8t-XA-6rI">
                         <barButtonItem key="backBarButtonItem" title="返回" id="1N4-QZ-D9p"/>
                         <barButtonItem key="leftBarButtonItem" title="离开" id="vg2-oT-GDm">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onBackItemClicked:" destination="kpU-U1-zGf" id="6Wj-UV-2T9"/>
                             </connections>
@@ -126,9 +125,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="g7B-uq-Jwg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

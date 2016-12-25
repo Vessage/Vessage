@@ -5,15 +5,15 @@
   Created by Alex Chow on 2016/12/25.
   Copyright © 2016年 Bahamut. All rights reserved.
 */
-MYQ = "我有一个问题";
-MYQ_AC_TITLE = "我有一个问题";
+MYQ = "你问我答";
+MYQ_AC_TITLE = "你问我答";
 QUES_CONTENT_LIMIT = "问题需要6到140字，以问号结束。";
 MY_QUESTION = "我的问题";
 EDIT_MY_QUESTION_TITLE = "我要问(删除原问题请留空):";
-UPDATE_MY_QUESTION = "更新我的问题";
+UPDATE_MY_QUESTION = "我要问问题";
 MY_QUESTION_HOLDER = "如:这是什么鬼?谁有空和我聊天?有哪些好玩的宠物?";
 GET_MAIN_INFO_ERROR = "刷新失败，请下拉重试";
-MYQ_NEWER_MESSAGE = "这里是一个随便问问题的地方，你问Ta答，总有一个人能给你满意答案❤️";
+MYQ_NEWER_MESSAGE = "这里是一个随便问问题的地方，你问Ta答，总有一个人能给你满意答案。一个好问题也许就是一段关系的开始❤️";
 POST_QUESTION = "问一个问题";
 MYQ_HELLO = "我来回答你的问题，";
 LET_ME_ANSWER = "我来回答";

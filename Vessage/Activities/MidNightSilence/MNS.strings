@@ -7,6 +7,7 @@
 */
 MNS = "夜深人静";
 DEFAULT_ANNC = "长夜漫漫，无心睡眠";
+MNS_HELLO = "长夜漫漫，无心睡眠";
 H_HOUR_M_MIN_S_SEC = "%d小时%02d分%02d秒";
 M_MIN_S_SEC = "%02d分%02d秒";
 S_SEC = "%02d秒";

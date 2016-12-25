@@ -20,6 +20,7 @@ class UIEditTextPropertySet
     var valueTextViewHolder:String?
     
     var valueRegex:String!
+    var valueNullable:Bool = false
     var illegalValueMessage:String!
     
     var propertyValue:String!
@@ -61,8 +62,11 @@ class UIEditTextPropertyViewController: UIViewController
     
     private func updateTextValueView()
     {
-        propertyValueTextField.text = model?.propertyValue
-        propertyValueTextView.text = model?.propertyValue
+        if model.isOneLineValue {
+            propertyValueTextField.text = model?.propertyValue
+        }else{
+            propertyValueTextView.text = model?.propertyValue
+        }
         propertyValueTextView.hidden = model.isOneLineValue
         propertyValueTextField.hidden = !model.isOneLineValue
         propertyValueTextView.placeHolder = model?.valueTextViewHolder
@@ -89,14 +93,22 @@ class UIEditTextPropertyViewController: UIViewController
     
     @IBAction func save(sender: AnyObject)
     {
-        if let valueRegex = model.valueRegex
+        
+        if String.isNullOrEmpty(newPropertyValue) {
+            if !model.valueNullable {
+                self.playToast( "CANT_NULL".localizedString())
+                return
+            }
+        }else if let valueRegex = model.valueRegex
         {
-            if String.isNullOrEmpty(newPropertyValue) || !(newPropertyValue =~ valueRegex)
+            if !(newPropertyValue =~ valueRegex)
             {
                 self.playToast( model.illegalValueMessage ?? "ILLEGLE_VALUE".localizedString())
                 return
             }
         }
+        
+        
         delegate?.editPropertySave(self,propertyIdentifier: model.propertyIdentifier,newValue: newPropertyValue,userInfo: model.userInfo)
         self.navigationController?.popViewControllerAnimated(true)
     }

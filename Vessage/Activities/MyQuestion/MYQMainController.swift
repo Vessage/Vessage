@@ -28,10 +28,9 @@ private let noChatConversationLeftTimeSpan:Int64 = 1 * 3600 * 1000
 class MYQMainController: UIViewController {
     
     static let activityId = "1006"
-    static let questionPattern = "^(.{6,160}[?？❓])|.{0}$"
+    static let questionPattern = "^.{6,160}[?？❓]$"
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var bcgImageView: UIImageView!
     @IBOutlet weak var myContentButton: UIBarButtonItem!{
         didSet{
             myContentButton.enabled = mainInfo != nil
@@ -42,7 +41,7 @@ class MYQMainController: UIViewController {
     
     static private let MYQNotificationName = "MYQNotify"
     
-    private var users = [MYQInfo](){
+    private var userQuestions = [MYQInfo](){
         didSet{
             tableView?.reloadData()
         }
@@ -50,22 +49,9 @@ class MYQMainController: UIViewController {
     
     private var mainInfo:MYQMainInfo!{
         didSet{
-            if mainInfo == nil{
-                users.removeAll()
-            }else if let u = mainInfo.usrQues{
-                #if DEBUG
-                if u.count == 0 {
-                    if let conversation = (ServiceContainer.getConversationService().conversations.filter{$0.type == Conversation.typeSingleChat}).first{
-                        let a = MYQInfo()
-                        a.ques = "f111"
-                        a.aTs = DateHelper.UnixTimeSpanTotalMilliseconds
-                        a.nick = "A"
-                        a.userId = conversation.chatterId
-                        users.appendContentsOf([a,a,a])
-                    }
-                }
-                #endif
-                users.appendContentsOf(u)
+            userQuestions.removeAll()
+            if let u = mainInfo?.usrQues{
+                userQuestions.appendContentsOf(u)
             }
             myContentButton.enabled = mainInfo != nil
         }
@@ -112,6 +98,7 @@ extension MYQMainController{
         property.illegalValueMessage = "QUES_CONTENT_LIMIT".MYQLocalizedString
         property.isOneLineValue = false
         property.propertyValue = mainInfo.ques
+        property.valueNullable = true
         property.propertyIdentifier = "QUES_CONTENT"
         property.valueTextViewHolder = "MY_QUESTION_HOLDER".MYQLocalizedString
         property.propertyLabel = "EDIT_MY_QUESTION_TITLE".MYQLocalizedString
@@ -127,24 +114,30 @@ extension MYQMainController:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return userQuestions.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(MYQPostCell.resuseId, forIndexPath: indexPath) as! MYQPostCell
-        let user = users[indexPath.row]
-        cell.contentLabel.text = user.ques
-        cell.nickLabel.text = userService.getUserNotedNameIfExists(user.userId) ?? user.nick
+        let ques = userQuestions[indexPath.row]
+        cell.contentLabel.text = ques.ques
+        cell.nickLabel.text = userService.getUserNotedNameIfExists(ques.userId) ?? ques.nick
         return  cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell?.selected = false
-        let user = users[indexPath.row]
+        let user = userQuestions[indexPath.row]
+        if user.userId == UserSetting.userId {
+            onMyContentClicked(self.myContentButton)
+            return
+        }
         let delegate = UserProfileViewControllerDelegateOpenConversation()
         delegate.beforeRemoveTimeSpan = noChatConversationLeftTimeSpan
+        delegate.initMessage = ["input_text":"MYQ_HELLO".MYQLocalizedString]
         delegate.createActivityId = MYQMainController.activityId
+        delegate.operateTitle = "LET_ME_ANSWER".MYQLocalizedString
         UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate){ controller in
             controller.accountIdHidden = true
         }
@@ -156,18 +149,30 @@ extension MYQMainController:UIEditTextPropertyViewControllerDelegate{
     
     func editPropertySave(sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
         if propertyIdentifier == "QUES_CONTENT" {
-            if !String.isNullOrWhiteSpace(newValue) {
-                let hud = self.showActivityHud()
-                let req = UpdateMYQuestionRequest()
-                req.question = newValue
-                BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MYQMainInfo>) in
-                    hud.hideAnimated(true)
-                    if result.isSuccess{
-                        self.mainInfo.ques = newValue
-                        self.playCheckMark()
-                    }else{
-                        self.playCrossMark()
+            let hud = self.showActivityHud()
+            let req = UpdateMYQuestionRequest()
+            req.question = newValue
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MYQMainInfo>) in
+                hud.hideAnimated(true)
+                if result.isSuccess{
+                    let myUserId = UserSetting.userId!
+                    self.mainInfo.usrQues?.removeElement{myUserId == $0.userId}
+                    self.mainInfo.ques = newValue
+                    if !String.isNullOrEmpty(newValue){
+                        let myQuestion = MYQInfo()
+                        myQuestion.aTs = DateHelper.UnixTimeSpanTotalMilliseconds
+                        myQuestion.avatar = self.userService.myProfile.avatar
+                        myQuestion.nick = "ME".localizedString()
+                        myQuestion.ques = newValue
+                        myQuestion.userId = UserSetting.userId
+                        if self.mainInfo.usrQues == nil{
+                            self.mainInfo.usrQues = []
+                        }
+                        self.mainInfo.usrQues.insert(myQuestion, atIndex: 0)
                     }
+                    self.playCheckMark()
+                }else{
+                    self.playCrossMark()
                 }
             }
         }

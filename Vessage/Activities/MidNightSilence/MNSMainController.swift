@@ -93,9 +93,8 @@ class MNSMainController: UIViewController {
     
     private var mainInfo:MNSMainInfo!{
         didSet{
-            if mainInfo == nil{
-                users.removeAll()
-            }else if let u = mainInfo.acUsers{
+            users.removeAll()
+            if let u = mainInfo?.acUsers{
                 #if DEBUG
                 if u.count == 0 {
                     if let conversation = (ServiceContainer.getConversationService().conversations.filter{$0.type == Conversation.typeSingleChat}).first{
@@ -213,6 +212,7 @@ extension MNSMainController{
         let property = UIEditTextPropertySet()
         property.illegalValueMessage = "ANNC_CONTENT_LIMIT".mnsLocalizedString
         property.isOneLineValue = false
+        property.valueNullable = true
         property.propertyValue = String.isNullOrWhiteSpace(mainInfo?.annc) ? "DEFAULT_ANNC".mnsLocalizedString : mainInfo.annc
         property.propertyIdentifier = "ANNC_CONTENT"
         property.valueTextViewHolder = "ANNC_HOLDER".mnsLocalizedString
@@ -287,18 +287,16 @@ extension MNSMainController:UIEditTextPropertyViewControllerDelegate{
     
     func editPropertySave(sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
         if propertyIdentifier == "ANNC_CONTENT" {
-            if !String.isNullOrWhiteSpace(newValue) {
-                let hud = self.showActivityHud()
-                let req = UpdateMNSAnnounceRequest()
-                req.midNightAnnounce = newValue
-                BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MNSMainInfo>) in
-                    hud.hideAnimated(true)
-                    if result.isSuccess{
-                        self.mainInfo.annc = newValue
-                        self.playCheckMark()
-                    }else{
-                        self.playCrossMark()
-                    }
+            let hud = self.showActivityHud()
+            let req = UpdateMNSAnnounceRequest()
+            req.midNightAnnounce = newValue
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MNSMainInfo>) in
+                hud.hideAnimated(true)
+                if result.isSuccess{
+                    self.mainInfo.annc = newValue
+                    self.playCheckMark()
+                }else{
+                    self.playCrossMark()
                 }
             }
         }

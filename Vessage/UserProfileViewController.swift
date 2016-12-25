@@ -20,6 +20,9 @@ protocol UserProfileViewControllerDismissedDelegate:UserProfileViewControllerDel
 
 class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControllerDelegate{
     
+    var operateTitle:String?
+    
+    
     var initMessage:[String:AnyObject]?
     
     var beforeRemoveTimeSpan:Int64 = ConversationMaxTimeUpMS
@@ -34,7 +37,7 @@ class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControl
     }
     
     func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
-        return "CHAT".localizedString()
+        return operateTitle ?? "CHAT".localizedString()
     }
 }
 

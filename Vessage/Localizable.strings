@@ -87,6 +87,7 @@ CHICAGO_VALIDATE_FAILED = "服务器验证错误!";
 CONNECT_ERROR_TAP_RETRY = "网络错误，点我重试!";
 
 ILLEGLE_VALUE = "非法数据";
+CANT_NULL = "不能为空";
 LOAD_IMG_ERROR = "加载图片失败";
 
 MSG_IS_TOO_LONG = "超过限制的长度了";

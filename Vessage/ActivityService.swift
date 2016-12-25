@@ -34,7 +34,7 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
                 setted = true
             }
             for acId in IncActivityBadgeAtAppVersion {
-                UserSetting.setUserIntValue("ActivityBadge:\(acId)",value: getActivityBadge(acId))
+                UserSetting.setUserIntValue("ActivityBadge:\(acId)",value: getActivityBadge(acId) + 1)
                 setted = true
             }
             UserSetting.setUserIntValue(AppVersionActivityBadgeKey, value: VessageConfig.buildVersion)

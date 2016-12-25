@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--每人一个问题-->
+        <!--你问我答-->
         <scene sceneID="3SK-xS-5DK">
             <objects>
                 <viewController storyboardIdentifier="MYQMainController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kpU-U1-zGf" customClass="MYQMainController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,13 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qec-Vo-FbP">
-                                <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AGP-r7-aIf">
-                                <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
-                            </view>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="79" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rcg-4B-qdf">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="79" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rcg-4B-qdf">
                                 <rect key="frame" x="5" y="74" width="365" height="593"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -49,30 +43,38 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nick" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHT-ta-Q90">
-                                                    <rect key="frame" x="8" y="11" width="349" height="22"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" red="0.097990128960000006" green="0.64398422" blue="0.98106676339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="为什么我们要问问题？" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSR-hc-hAH">
                                                     <rect key="frame" x="8" y="41" width="349" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nick" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHT-ta-Q90">
+                                                    <rect key="frame" x="8" y="11" width="36" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" red="0.097990128960000006" green="0.64398422" blue="0.98106676339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="问了一个问题：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrt-Jh-BXA">
+                                                    <rect key="frame" x="46" y="11.5" width="311" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.097990128960000006" green="0.64398422" blue="0.98106676339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="leadingMargin" secondItem="LSR-hc-hAH" secondAttribute="leading" id="1Os-FM-vec"/>
                                                 <constraint firstItem="P66-5f-v8t" firstAttribute="centerY" secondItem="yc0-RY-WhW" secondAttribute="centerY" id="3fH-cX-aQN"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="fHT-ta-Q90" secondAttribute="trailing" id="8Hv-Za-KeR"/>
                                                 <constraint firstItem="fHT-ta-Q90" firstAttribute="leading" secondItem="yc0-RY-WhW" secondAttribute="leadingMargin" id="CF3-Kz-Mno"/>
                                                 <constraint firstItem="P66-5f-v8t" firstAttribute="height" secondItem="yc0-RY-WhW" secondAttribute="height" constant="-6" id="M9o-kT-j41"/>
+                                                <constraint firstItem="qrt-Jh-BXA" firstAttribute="centerY" secondItem="fHT-ta-Q90" secondAttribute="centerY" id="N7B-kl-sZV"/>
                                                 <constraint firstItem="P66-5f-v8t" firstAttribute="centerX" secondItem="yc0-RY-WhW" secondAttribute="centerX" id="Orf-Z5-kKP"/>
                                                 <constraint firstItem="LSR-hc-hAH" firstAttribute="top" secondItem="fHT-ta-Q90" secondAttribute="bottom" constant="8" symbolic="YES" id="P6S-FI-mS8"/>
+                                                <constraint firstItem="qrt-Jh-BXA" firstAttribute="leading" secondItem="fHT-ta-Q90" secondAttribute="trailing" constant="2" id="Pu7-d7-3YK"/>
                                                 <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="LSR-hc-hAH" secondAttribute="bottom" constant="3" id="UtD-OV-rzs"/>
                                                 <constraint firstItem="P66-5f-v8t" firstAttribute="width" secondItem="yc0-RY-WhW" secondAttribute="width" constant="-10" id="YIC-Ps-qsZ"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="LSR-hc-hAH" secondAttribute="trailing" id="crs-6v-moF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qrt-Jh-BXA" secondAttribute="trailing" id="dbb-6h-J3P"/>
                                                 <constraint firstItem="fHT-ta-Q90" firstAttribute="top" secondItem="yc0-RY-WhW" secondAttribute="topMargin" constant="3" id="jDw-fs-b3o"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -86,37 +88,28 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qec-Vo-FbP" firstAttribute="height" secondItem="do1-KA-Y5W" secondAttribute="height" id="2zZ-VZ-141"/>
-                            <constraint firstItem="qec-Vo-FbP" firstAttribute="width" secondItem="do1-KA-Y5W" secondAttribute="width" id="7J6-EF-goK"/>
                             <constraint firstItem="Rcg-4B-qdf" firstAttribute="width" secondItem="do1-KA-Y5W" secondAttribute="width" constant="-10" id="CcI-YD-zLM"/>
                             <constraint firstItem="Rcg-4B-qdf" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="CxU-f4-Ym0"/>
-                            <constraint firstItem="qec-Vo-FbP" firstAttribute="centerY" secondItem="do1-KA-Y5W" secondAttribute="centerY" id="Ey0-XG-Ga5"/>
-                            <constraint firstItem="AGP-r7-aIf" firstAttribute="width" secondItem="do1-KA-Y5W" secondAttribute="width" id="KtE-Xu-WTe"/>
                             <constraint firstItem="5n7-na-Uyc" firstAttribute="top" secondItem="Rcg-4B-qdf" secondAttribute="bottom" id="QSL-qp-6Go"/>
-                            <constraint firstItem="AGP-r7-aIf" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="Qhw-f0-uTZ"/>
-                            <constraint firstItem="AGP-r7-aIf" firstAttribute="centerY" secondItem="do1-KA-Y5W" secondAttribute="centerY" id="S4o-bm-fHh"/>
-                            <constraint firstItem="AGP-r7-aIf" firstAttribute="height" secondItem="do1-KA-Y5W" secondAttribute="height" id="cKg-KR-XHC"/>
-                            <constraint firstItem="qec-Vo-FbP" firstAttribute="centerX" secondItem="do1-KA-Y5W" secondAttribute="centerX" id="fEm-mI-OuM"/>
                             <constraint firstItem="Rcg-4B-qdf" firstAttribute="top" secondItem="UYF-61-2Qp" secondAttribute="bottom" constant="10" id="moZ-WW-pzJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="每人一个问题" id="d8t-XA-6rI">
+                    <navigationItem key="navigationItem" title="你问我答" id="d8t-XA-6rI">
                         <barButtonItem key="backBarButtonItem" title="返回" id="1N4-QZ-D9p"/>
                         <barButtonItem key="leftBarButtonItem" title="离开" id="vg2-oT-GDm">
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="onBackItemClicked:" destination="kpU-U1-zGf" id="6Wj-UV-2T9"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="我的问题" id="cWV-zj-eBw">
-                            <color key="tintColor" red="0.99046260119999996" green="0.49464845660000001" blue="0.64631777999999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="rightBarButtonItem" title="我要问" id="cWV-zj-eBw">
+                            <color key="tintColor" red="1" green="0.3803921569" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="onMyContentClicked:" destination="kpU-U1-zGf" id="Pi8-NJ-P2H"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bcgImageView" destination="qec-Vo-FbP" id="AJ8-Qb-sYI"/>
                         <outlet property="myContentButton" destination="cWV-zj-eBw" id="21H-Oa-lhs"/>
                         <outlet property="tableView" destination="Rcg-4B-qdf" id="3Ej-mn-pJl"/>
                     </connections>
@@ -130,11 +123,11 @@
             <objects>
                 <navigationController storyboardIdentifier="MYQMainNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sfq-KE-6qE" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="g7B-uq-Jwg">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="g7B-uq-Jwg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.99046260119999996" green="0.49464845660000001" blue="0.64631777999999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>

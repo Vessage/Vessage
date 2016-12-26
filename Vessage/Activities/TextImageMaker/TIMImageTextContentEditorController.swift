@@ -65,7 +65,7 @@ class TIMImageTextContentEditorController: UIViewController {
     }
     
     static func showEditor(nvc:UINavigationController,model:TIMImageTextContentEditorModel,delegate:TIMImageTextContentEditorControllerDelegate)->TIMImageTextContentEditorController{
-        let controller = instanceFromStoryBoard("TextImageMaker", identifier: "TIMImageTextContentEditorController") as! TIMImageTextContentEditorController
+        let controller = instanceFromStoryBoard("TIMContentEditorController", identifier: "TIMImageTextContentEditorController") as! TIMImageTextContentEditorController
         controller.delegate = delegate
         nvc.pushViewController(controller, animated: true)
         controller.propertyModel = model

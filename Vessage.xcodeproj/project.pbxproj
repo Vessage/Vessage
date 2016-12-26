@@ -133,6 +133,7 @@
 		E77447081DC33096000924AB /* BubbleVessageHandlersConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */; };
 		E775DFB11E10F67C00ADB4C1 /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */; };
 		E775DFB31E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E775DFB21E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift */; };
+		E775DFB51E110C6B00ADB4C1 /* TIMContentEditorController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E775DFB41E110C6B00ADB4C1 /* TIMContentEditorController.storyboard */; };
 		E77A93681DF076DC00511C4B /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77A93671DF076DC00511C4B /* BahamutTextView.swift */; };
 		E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */; };
 		E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */; };
@@ -454,6 +455,7 @@
 		E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandlersConfig.swift; sourceTree = "<group>"; };
 		E775DFB21E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TIMImageTextContentEditorController.swift; path = TextImageMaker/TIMImageTextContentEditorController.swift; sourceTree = "<group>"; };
+		E775DFB41E110C6B00ADB4C1 /* TIMContentEditorController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TIMContentEditorController.storyboard; sourceTree = "<group>"; };
 		E77A93671DF076DC00511C4B /* BahamutTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BahamutTextView.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutTextView.swift; sourceTree = "<group>"; };
 		E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewCells.swift; sourceTree = "<group>"; };
@@ -1240,6 +1242,7 @@
 				E7B139D21E06273A00F3D8C9 /* TIMSharePreviewViewController.swift */,
 				E7B139D41E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift */,
 				E775DFB21E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift */,
+				E775DFB41E110C6B00ADB4C1 /* TIMContentEditorController.storyboard */,
 			);
 			name = TextImageMaker;
 			sourceTree = "<group>";
@@ -1629,6 +1632,7 @@
 				E7B139CF1E06213600F3D8C9 /* Media.xcassets in Resources */,
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */,
+				E775DFB51E110C6B00ADB4C1 /* TIMContentEditorController.storyboard in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);

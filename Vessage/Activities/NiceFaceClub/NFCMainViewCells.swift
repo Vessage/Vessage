@@ -9,6 +9,7 @@
 import Foundation
 import MJRefresh
 import LTMorphingLabel
+import EVReflection
 
 @objc protocol NFCMainInfoCellDelegate {
     optional func nfcMainInfoCellDidClickNewComment(sender:UIView,cell:NFCMainInfoCell)
@@ -99,7 +100,13 @@ class NFCPostCell: UITableViewCell {
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
                 commentTipsLabel.text = self.post.cmtCnt.friendString
                 memberCardButton.hidden = chatButton.hidden
-                textContentLabel.text = nil
+                textContentLabel?.text = nil
+                if let json = self.post?.body{
+                    let dict = EVReflection.dictionaryFromJson(json)
+                    if let txt = dict["txt"] as? String{
+                        textContentLabel?.text = txt
+                    }
+                }
             }
         }
     }

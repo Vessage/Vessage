@@ -9,6 +9,7 @@
 import Foundation
 import MJRefresh
 import LTMorphingLabel
+import EVReflection
 
 @objc protocol SNSMainInfoCellDelegate {
     optional func snsMainInfoCellDidClickNewComment(sender:UIView,cell:SNSMainInfoCell)
@@ -85,7 +86,13 @@ class SNSPostCell: UITableViewCell {
                 chatButton.hidden = isSelfPost ? true : !SNSPostManager.instance.likedInCached(post.pid)
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
                 commentTipsLabel.text = self.post.cmtCnt.friendString
-                textContentLabel.text = nil
+                textContentLabel?.text = nil
+                if let json = self.post?.body{
+                    let dict = EVReflection.dictionaryFromJson(json)
+                    if let txt = dict["txt"] as? String{
+                        textContentLabel?.text = txt
+                    }
+                }
             }
         }
     }

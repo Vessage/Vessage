@@ -10,6 +10,7 @@ import Foundation
 import MJRefresh
 import LTMorphingLabel
 import MBProgressHUD
+import EVReflection
 
 //MARK: SNSMainViewController
 class SNSMainViewController: UIViewController {
@@ -420,15 +421,49 @@ extension SNSMainViewController:SNSMainInfoCellDelegate{
     }
 }
 
+//MARK: TIMImageTextContentEditorControllerDelegate
+extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
+    private func generateTimEditorModel(image:UIImage,imageId:String? = nil) -> TIMImageTextContentEditorModel{
+        let model = TIMImageTextContentEditorModel()
+        model.image = image
+        model.editorTitle = "POST_NEW_SHARE".SNSString
+        model.placeHolder = "TEXT_CONTENT_PLACE_HOLDER".SNSString
+        if String.isNullOrWhiteSpace(imageId) == false {
+            model.userInfo = ["imageId":imageId!]
+        }
+        return model
+    }
+    
+    func imageTextContentEditor(sender: TIMImageTextContentEditorController, newTextContent: String?, model: TIMImageTextContentEditorModel?) {
+        if let imageId = model?.userInfo?["imageId"] as? String{
+            let tmpPost = SNSPost()
+            tmpPost.cmtCnt = 0
+            tmpPost.img = imageId
+            
+            if String.isNullOrWhiteSpace(newTextContent) == false{
+                tmpPost.body = EVObject(dictionary: ["txt":newTextContent!]).toMiniJsonString()
+            }
+            
+            tmpPost.pid = IdUtil.generateUniqueId()
+            self.posting.insert(tmpPost, atIndex: 0)
+            self.pushNewPost(tmpPost)
+        }else if let img = model?.image{
+            self.sendNewPost(img,textContent:newTextContent)
+        }
+    }
+}
+
 //MARK: UIImagePickerControllerDelegate
 extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
         picker.dismissViewControllerAnimated(true) {
             if min(image.size.width, image.size.height) > 600{
                 let imageForSend = image.size.width < image.size.height ? image.scaleToWidthOf(600) : image.scaleToHeightOf(600)
-                self.sendNewPost(imageForSend)
+                let model = self.generateTimEditorModel(imageForSend)
+                TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
             }else{
-                self.sendNewPost(image)
+                let model = self.generateTimEditorModel(image)
+                TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
             }
         }
     }
@@ -437,7 +472,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    private func sendNewPost(imageForSend:UIImage) {
+    private func sendNewPost(imageForSend:UIImage,textContent:String?) {
         let fService = ServiceContainer.getService(FileService)
         if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
             debugPrint("ImageSize:\(imageData.length / 1024)KB")
@@ -454,6 +489,11 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                         let post = SNSPost()
                         post.img = fk.fileId
                         post.pid = taskId
+                        
+                        if String.isNullOrWhiteSpace(textContent) == false{
+                            post.body = EVObject(dictionary: ["txt":textContent!]).toMiniJsonString()
+                        }
+                        
                         self.posting.insert(post, atIndex: 0)
                         dispatch_async(dispatch_get_main_queue(), {
                             self.playPostingIndicatorAnimation(imageForSend)
@@ -472,7 +512,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     }
     
     func pushNewPost(tmpPost:SNSPost) {
-        SNSPostManager.instance.newPost(tmpPost.img,body: nil, callback: { (post) in
+        SNSPostManager.instance.newPost(tmpPost.img,body: tmpPost.body, callback: { (post) in
             if let p = post{
                 self.playCheckMark(){
                     self.posting.removeElement{$0.pid == tmpPost.pid}
@@ -533,16 +573,8 @@ extension SNSMainViewController{
         let msg = String(format: msgFormat, sourceName)
         let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
         let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
-            if let img = sourceImage{
-                self.sendNewPost(img)
-            }else if String.isNullOrWhiteSpace(sourceId) == false{
-                let tmpPost = SNSPost()
-                tmpPost.cmtCnt = 0
-                tmpPost.img = sourceId
-                tmpPost.pid = IdUtil.generateUniqueId()
-                self.posting.insert(tmpPost, atIndex: 0)
-                self.pushNewPost(tmpPost)
-            }
+            let model = self.generateTimEditorModel(sourceImage!, imageId: sourceId)
+            TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
         })
         alert.addAction(ok)
         alert.addAction(ALERT_ACTION_CANCEL)
@@ -555,17 +587,12 @@ extension SNSMainViewController{
         return instanceFromStoryBoard("SNS", identifier: "SNSMainViewController") as! SNSMainViewController
     }
     
-    static func showSNSMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController {
+    static func showSNSMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String? = nil,image:UIImage? = nil,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController {
         let controller = instanceFromStoryBoard()
         controller.newImageIdFromOutterSource = imageId
-        return showSNSMainViewController(nvc, controller: controller,sourceName: sourceName,delegate: delegate)
-        
-    }
-    
-    static func showSNSMainViewControllerWithNewPostImage(nvc:UINavigationController,image:UIImage,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController {
-        let controller = instanceFromStoryBoard()
         controller.newImageFromOutterSource = image
         return showSNSMainViewController(nvc, controller: controller,sourceName: sourceName,delegate: delegate)
+        
     }
     
     private static func showSNSMainViewController(nvc:UINavigationController,controller:SNSMainViewController,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController{

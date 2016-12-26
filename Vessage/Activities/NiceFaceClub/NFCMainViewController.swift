@@ -10,6 +10,7 @@ import Foundation
 import MJRefresh
 import LTMorphingLabel
 import MBProgressHUD
+import EVReflection
 
 //MARK: NFCMainViewController
 class NFCMainViewController: UIViewController {
@@ -529,9 +530,11 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         picker.dismissViewControllerAnimated(true) {
             if min(image.size.width, image.size.height) > 600{
                 let imageForSend = image.size.width < image.size.height ? image.scaleToWidthOf(600) : image.scaleToHeightOf(600)
-                self.sendNewPost(imageForSend)
+                let model = self.generateTimEditorModel(imageForSend)
+                TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
             }else{
-                self.sendNewPost(image)
+                let model = self.generateTimEditorModel(image)
+                TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
             }
         }
     }
@@ -540,7 +543,7 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    private func sendNewPost(imageForSend:UIImage){
+    private func sendNewPost(imageForSend:UIImage,textContent:String?){
         let fService = ServiceContainer.getService(FileService)
         if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
             let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
@@ -556,6 +559,11 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                         let post = NFCPost()
                         post.img = fk.fileId
                         post.pid = taskId
+                        
+                        if String.isNullOrWhiteSpace(textContent) == false{
+                            post.body = EVObject(dictionary: ["txt":textContent!]).toMiniJsonString()
+                        }
+                        
                         self.posting.insert(post, atIndex: 0)
                         dispatch_async(dispatch_get_main_queue(), {
                             self.playPostingIndicatorAnimation(imageForSend)
@@ -574,7 +582,7 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     }
     
     private func pushNewPost(tmpPost:NFCPost){
-        NFCPostManager.instance.newPost(tmpPost.img,body: nil, callback: { (post) in
+        NFCPostManager.instance.newPost(tmpPost.img,body: tmpPost.body, callback: { (post) in
             if let p = post{
                 self.playCheckMark(){
                     self.posting.removeElement{$0.pid == tmpPost.pid}
@@ -600,6 +608,39 @@ extension NFCMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         self.playCrossMark("POST_NEW_ERROR".localizedString())
     }
 }
+
+//MARK: TIMImageTextContentEditorControllerDelegate
+extension NFCMainViewController:TIMImageTextContentEditorControllerDelegate{
+    private func generateTimEditorModel(image:UIImage,imageId:String? = nil) -> TIMImageTextContentEditorModel{
+        let model = TIMImageTextContentEditorModel()
+        model.image = image
+        model.editorTitle = "POST_NEW_SHARE".niceFaceClubString
+        model.placeHolder = "TEXT_CONTENT_PLACE_HOLDER".niceFaceClubString
+        if String.isNullOrWhiteSpace(imageId) == false {
+            model.userInfo = ["imageId":imageId!]
+        }
+        return model
+    }
+    
+    func imageTextContentEditor(sender: TIMImageTextContentEditorController, newTextContent: String?, model: TIMImageTextContentEditorModel?) {
+        if let imageId = model?.userInfo?["imageId"] as? String{
+            let tmpPost = NFCPost()
+            tmpPost.cmtCnt = 0
+            tmpPost.img = imageId
+            
+            if String.isNullOrWhiteSpace(newTextContent) == false{
+                tmpPost.body = EVObject(dictionary: ["txt":newTextContent!]).toMiniJsonString()
+            }
+            
+            tmpPost.pid = IdUtil.generateUniqueId()
+            self.posting.insert(tmpPost, atIndex: 0)
+            self.pushNewPost(tmpPost)
+        }else if let img = model?.image{
+            self.sendNewPost(img,textContent:newTextContent)
+        }
+    }
+}
+
 
 //MARK: Post New Image From Outter Source
 protocol NFCPostNewImageDelegate {
@@ -635,16 +676,8 @@ extension NFCMainViewController{
         let msg = String(format: msgFormat, sourceName)
         let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
         let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
-            if let img = sourceImage{
-                self.sendNewPost(img)
-            }else if String.isNullOrWhiteSpace(sourceId) == false{
-                let tmpPost = NFCPost()
-                tmpPost.cmtCnt = 0
-                tmpPost.img = sourceId
-                tmpPost.pid = IdUtil.generateUniqueId()
-                self.posting.insert(tmpPost, atIndex: 0)
-                self.pushNewPost(tmpPost)
-            }
+            let model = self.generateTimEditorModel(sourceImage!, imageId: sourceId)
+            TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
         })
         alert.addAction(ok)
         alert.addAction(ALERT_ACTION_CANCEL)
@@ -657,14 +690,9 @@ extension NFCMainViewController{
         return instanceFromStoryBoard("NiceFaceClub", identifier: "NFCMainViewController") as! NFCMainViewController
     }
     
-    static func showNFCMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String,sourceName:String,delegate:NFCPostNewImageDelegate? = nil) -> NFCMainViewController {
+    static func showNFCMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String? = nil,image:UIImage? = nil,sourceName:String,delegate:NFCPostNewImageDelegate? = nil) -> NFCMainViewController {
         let controller = instanceFromStoryBoard()
         controller.newImageIdFromOutterSource = imageId
-        return showNFCMainViewController(nvc, controller: controller, sourceName: sourceName, postNewImageDelegate: delegate)
-    }
-    
-    static func showNFCMainViewControllerWithNewPostImage(nvc:UINavigationController,image:UIImage,sourceName:String,delegate:NFCPostNewImageDelegate? = nil) -> NFCMainViewController {
-        let controller = instanceFromStoryBoard()
         controller.newImageFromOutterSource = image
         return showNFCMainViewController(nvc, controller: controller, sourceName: sourceName, postNewImageDelegate: delegate)
     }

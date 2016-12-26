@@ -131,6 +131,8 @@
 		E77447041DC2E015000924AB /* VideoBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */; };
 		E77447061DC2E49E000924AB /* ImageBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */; };
 		E77447081DC33096000924AB /* BubbleVessageHandlersConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */; };
+		E775DFB11E10F67C00ADB4C1 /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */; };
+		E775DFB31E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E775DFB21E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift */; };
 		E77A93681DF076DC00511C4B /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77A93671DF076DC00511C4B /* BahamutTextView.swift */; };
 		E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */; };
 		E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */; };
@@ -161,7 +163,6 @@
 		E7AC07071E0EC13900AB6770 /* MYQ.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7AC07021E0EC13900AB6770 /* MYQ.strings */; };
 		E7AC07081E0EC13900AB6770 /* MYQMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC07031E0EC13900AB6770 /* MYQMainController.swift */; };
 		E7AC07091E0EC13900AB6770 /* MYQRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AC07041E0EC13900AB6770 /* MYQRF.swift */; };
-		E7ACCF5C1DF90A8A00A8ACFB /* BahamutTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACCF5B1DF90A8A00A8ACFB /* BahamutTextView.swift */; };
 		E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ACEB7A1D4C218400009C5B /* VessageEventHandler.swift */; };
 		E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24871D4CAD0300F266D8 /* VessageQueueProtocal.swift */; };
 		E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AD24891D4CAD3200F266D8 /* VessageQueueHandlers.swift */; };
@@ -452,6 +453,7 @@
 		E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandlersConfig.swift; sourceTree = "<group>"; };
+		E775DFB21E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TIMImageTextContentEditorController.swift; path = TextImageMaker/TIMImageTextContentEditorController.swift; sourceTree = "<group>"; };
 		E77A93671DF076DC00511C4B /* BahamutTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BahamutTextView.swift; path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit/BahamutTextView.swift; sourceTree = "<group>"; };
 		E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E78690561DAA9062007A28A7 /* NFCMainViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewCells.swift; sourceTree = "<group>"; };
@@ -1237,6 +1239,7 @@
 				E7B139D01E0626BF00F3D8C9 /* TIMString.strings */,
 				E7B139D21E06273A00F3D8C9 /* TIMSharePreviewViewController.swift */,
 				E7B139D41E0631AA00F3D8C9 /* TIMShareAndSaveViewController.swift */,
+				E775DFB21E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift */,
 			);
 			name = TextImageMaker;
 			sourceTree = "<group>";
@@ -1775,7 +1778,6 @@
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
 				E7CC54E51D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7AE41C61D4AD96F005A25D6 /* FaceTextVessageExtension.swift in Sources */,
-				E7ACCF5C1DF90A8A00A8ACFB /* BahamutTextView.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
 				E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
@@ -1831,6 +1833,7 @@
 				E708ABF01C86D3DB0071104E /* File.swift in Sources */,
 				E7D5182E1DBDA686007F6A5D /* FaceTextBubbleConfig.swift in Sources */,
 				E7F6DC861DF00967007EC49A /* ImageUtil.swift in Sources */,
+				E775DFB11E10F67C00ADB4C1 /* BahamutTextView.swift in Sources */,
 				E7886A6C1DC97D3D00368C03 /* SNSGodRF.swift in Sources */,
 				E708AC981C872DFC0071104E /* VessageConfig.swift in Sources */,
 				E7F1B1B71D4DB40D00EBE078 /* AppRF.swift in Sources */,
@@ -1915,6 +1918,7 @@
 				E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
 				E718444B1D498CDC00D3EDEF /* TextChatInputView.swift in Sources */,
+				E775DFB31E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift in Sources */,
 				E7ECF3D61DF86D3A00DAC7BE /* RecordVideoVessageExtension.swift in Sources */,
 				E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */,
 				E7EB9A311C87EEFF002F96FB /* UserRF.swift in Sources */,

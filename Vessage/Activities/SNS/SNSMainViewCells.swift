@@ -59,6 +59,7 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var textContentLabel: UILabel!
     @IBOutlet weak var likeMarkImage: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeTipsLabel: UILabel!
@@ -84,6 +85,7 @@ class SNSPostCell: UITableViewCell {
                 chatButton.hidden = isSelfPost ? true : !SNSPostManager.instance.likedInCached(post.pid)
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
                 commentTipsLabel.text = self.post.cmtCnt.friendString
+                textContentLabel.text = nil
             }
         }
     }

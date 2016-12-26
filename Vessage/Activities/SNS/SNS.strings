@@ -46,3 +46,4 @@ NEWER_ALERT_NO = "等会再晒";
 SHARE_IMAGE_FROM_OUTTER = "分享来自外部的图片？";
 SHARE_IMAGE_FROM_OUTTER_FROM_X = "图片来源:%@";
 UNKNOW_SOURCE = "未知来源";
+TEXT_CONTENT_PLACE_HOLDER = "在这里写下你要说的话";

@@ -82,14 +82,15 @@ private let cachedFontSizeKey = "TIMFontSizeKey"
 private let cachedFontKey = "TIMFontKey"
 
 private let TIMDefaultStyles = [
-    ["bcg":"tim_bcg_0","textColor":"#8D75FF","font":""],
-    ["bcg":"tim_bcg_1","textColor":"#DE67FF","font":""],
-    ["bcg":"tim_bcg_2","textColor":"#4C4C4C","font":""],
-    ["bcg":"tim_bcg_3","textColor":"#ffffff","font":""],
-    ["bcg":"tim_bcg_4","textColor":"#02C1FA","font":""],
-    ["bcg":"tim_bcg_5","textColor":"#CACACA","font":""],
-    ["bcg":"tim_bcg_6","textColor":"#ffffff","font":""],
-    ["bcg":"tim_bcg_7","textColor":"#ffffff","font":""],
+    ["bcg":"tim_bcg_0","textColor":"#8D75FF"],
+    ["bcg":"tim_bcg_1","textColor":"#DE67FF"],
+    ["bcg":"tim_bcg_2","textColor":"#4C4C4C"],
+    ["bcg":"tim_bcg_3","textColor":"#ffffff"],
+    ["bcg":"tim_bcg_4","textColor":"#02C1FA"],
+    ["bcg":"tim_bcg_5","textColor":"#CACACA"],
+    ["bcg":"tim_bcg_6","textColor":"#ffffff"],
+    ["bcg":"tim_bcg_7","textColor":"#ffffff"],
+    ["bcg":"tim_bcg_8","textColor":"#000000"],
 ]
 
 extension TIMSharePreviewViewController:UICollectionViewDelegate,UICollectionViewDataSource{
@@ -127,15 +128,19 @@ extension TIMSharePreviewViewController:UICollectionViewDelegate,UICollectionVie
 
 class TIMBackgroundItemCell: UICollectionViewCell {
     static let reuseId = "TIMBackgroundItemCell"
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!{
+        didSet{
+            selected = false
+        }
+    }
     override var selected: Bool{
         didSet{
             if selected {
                 imageView?.layer.borderColor = UIColor.orangeColor().CGColor
                 imageView?.layer.borderWidth = 1
             }else{
-                imageView?.layer.borderColor = nil
-                imageView?.layer.borderWidth = 0
+                imageView?.layer.borderColor = UIColor.lightGrayColor().CGColor
+                imageView?.layer.borderWidth = 0.5
             }
         }
     }

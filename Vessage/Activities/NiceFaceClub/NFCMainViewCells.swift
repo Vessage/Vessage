@@ -71,6 +71,7 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var textContentLabel: UILabel!
     @IBOutlet weak var memberCardButton: UIButton!
     @IBOutlet weak var likeMarkImage: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
@@ -98,6 +99,7 @@ class NFCPostCell: UITableViewCell {
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
                 commentTipsLabel.text = self.post.cmtCnt.friendString
                 memberCardButton.hidden = chatButton.hidden
+                textContentLabel.text = nil
             }
         }
     }

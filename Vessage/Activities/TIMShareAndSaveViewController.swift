@@ -90,7 +90,7 @@ extension TIMShareAndSaveViewController:NFCPostNewImageDelegate{
     
     func shareImageToNFC(image:UIImage) {
         if String.isNullOrWhiteSpace(self.postedFileId) == false {
-            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, sourceName: "TIM".TIMString,delegate: self)
+            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, image: image, sourceName: "TIM".TIMString,delegate: self)
         }else{
             NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,delegate: self)
         }
@@ -118,7 +118,7 @@ extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
     
     func shareImageToSNS(image:UIImage) {
         if String.isNullOrWhiteSpace(self.postedFileId) == false {
-            SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, sourceName: "TIM".TIMString,delegate: self)
+            SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!,image: image, sourceName: "TIM".TIMString,delegate: self)
         }else{
             SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,delegate: self)
         }

@@ -37,6 +37,8 @@ class NFCPost: BahamutObject {
     var cmtCnt:Int = 0 //Comment Count
     
     var upTs:Int64 = 0 //Update Timespan
+    
+    var body:String?
 }
 
 extension NFCPost{
@@ -171,10 +173,10 @@ class NFCPostNewRequest: BahamutRFRequestBase {
         }
     }
     
-    var body:String!{
+    var body:String?{
         didSet{
-            if !String.isNullOrEmpty(body) {
-                paramenters.updateValue(body, forKey: "body")
+            if let b = body{
+                paramenters.updateValue(b, forKey: "body")
             }
         }
     }

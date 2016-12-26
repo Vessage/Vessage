@@ -196,6 +196,12 @@ extension EVObject{
     }
 }
 
+extension EVReflection{
+    static func toMiniJsonString(theObject:NSObject)->String{
+        return EVReflection.toJsonString(theObject).split("\n").map{$0.trim()}.joinWithSeparator(" ")
+    }
+}
+
 extension UITableViewCell{
     func setSeparatorFullWidth() {
         self.preservesSuperviewLayoutMargins = false

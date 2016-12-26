@@ -491,7 +491,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                         post.pid = taskId
                         
                         if String.isNullOrWhiteSpace(textContent) == false{
-                            post.body = EVObject(dictionary: ["txt":textContent!]).toMiniJsonString()
+                            post.body = "{\"txt\":\"\(textContent!)\"}"
                         }
                         
                         self.posting.insert(post, atIndex: 0)

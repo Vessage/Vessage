@@ -161,9 +161,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5l-tS-hMl">
-                                                    <rect key="frame" x="8" y="373" width="359" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <rect key="frame" x="8" y="377" width="359" height="5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PR5-Zb-oSJ">
@@ -263,14 +263,14 @@
                                                 <constraint firstItem="9Nc-zo-aKH" firstAttribute="centerX" secondItem="rvM-Ik-LSf" secondAttribute="centerX" id="9O2-in-JDN"/>
                                                 <constraint firstItem="M5l-tS-hMl" firstAttribute="centerX" secondItem="9Nc-zo-aKH" secondAttribute="centerX" id="CES-g5-day"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="0Gc-5N-SP9" secondAttribute="bottom" id="Je4-sG-JhJ"/>
-                                                <constraint firstItem="PR5-Zb-oSJ" firstAttribute="top" secondItem="M5l-tS-hMl" secondAttribute="bottom" constant="10" id="NCX-xI-Tfd"/>
+                                                <constraint firstItem="PR5-Zb-oSJ" firstAttribute="top" secondItem="M5l-tS-hMl" secondAttribute="bottom" constant="18" id="NCX-xI-Tfd"/>
                                                 <constraint firstItem="0Gc-5N-SP9" firstAttribute="centerX" secondItem="rvM-Ik-LSf" secondAttribute="centerX" id="QiB-yi-suR"/>
                                                 <constraint firstItem="9Nc-zo-aKH" firstAttribute="width" secondItem="rvM-Ik-LSf" secondAttribute="width" constant="-16" id="aoG-SG-YUn"/>
                                                 <constraint firstItem="OgI-17-rjM" firstAttribute="trailing" secondItem="9Nc-zo-aKH" secondAttribute="trailing" constant="-6" id="bQa-vg-X0V"/>
                                                 <constraint firstItem="9Nc-zo-aKH" firstAttribute="top" secondItem="rvM-Ik-LSf" secondAttribute="topMargin" id="d06-KK-bZ1"/>
                                                 <constraint firstItem="PR5-Zb-oSJ" firstAttribute="width" secondItem="rvM-Ik-LSf" secondAttribute="width" id="dvg-99-prf"/>
                                                 <constraint firstItem="7IR-hN-hKS" firstAttribute="leading" secondItem="9Nc-zo-aKH" secondAttribute="leading" id="gIu-xX-RJ3"/>
-                                                <constraint firstItem="M5l-tS-hMl" firstAttribute="top" secondItem="9Nc-zo-aKH" secondAttribute="bottom" constant="6" id="hcf-6D-wKj"/>
+                                                <constraint firstItem="M5l-tS-hMl" firstAttribute="top" secondItem="9Nc-zo-aKH" secondAttribute="bottom" constant="10" id="hcf-6D-wKj"/>
                                                 <constraint firstItem="PR5-Zb-oSJ" firstAttribute="centerX" secondItem="9Nc-zo-aKH" secondAttribute="centerX" id="oRF-gc-4hW"/>
                                                 <constraint firstItem="0Gc-5N-SP9" firstAttribute="top" secondItem="PR5-Zb-oSJ" secondAttribute="bottom" constant="6" id="qkf-6J-qAc"/>
                                                 <constraint firstItem="nva-jy-5LJ" firstAttribute="trailing" secondItem="9Nc-zo-aKH" secondAttribute="trailing" constant="-6" id="rmR-tU-4Fs"/>

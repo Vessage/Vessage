@@ -40,29 +40,12 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func configureBahamutCmd()
     {
         BahamutCmd.signBahamutCmdSchema("vessage")
-        #if DEBUG
-            print("---------------------------------------------------------")
-            print("Supported Bahamut Cmd:\n")
-            print("showInviteFriendsAlert" + "\n" + BahamutCmd.generateBahamutCmdUrl("showInviteFriendsAlert") + "\n")
-            print("showSetupChatImagesController" + "\n" + BahamutCmd.generateBahamutCmdUrl("showSetupChatImagesController") + "\n")
-            print("showSetupChatBackgroundController" + "\n" + BahamutCmd.generateBahamutCmdUrl("showSetupChatBackgroundController") + "\n")
-            
-            print("playNextButtonAnimation" + "\n" + BahamutCmd.generateBahamutCmdUrl("playNextButtonAnimation") + "\n")
-            print("playFaceTextButtonAnimation" + "\n" + BahamutCmd.generateBahamutCmdUrl("playFaceTextButtonAnimation") + "\n")
-            print("playVideoChatButtonAnimation" + "\n" + BahamutCmd.generateBahamutCmdUrl("playVideoChatButtonAnimation") + "\n")
-            
-            print("maxVideoPlayer" + "\n" + BahamutCmd.generateBahamutCmdUrl("maxVideoPlayer") + "\n")
-            print("minVideoPlayer" + "\n" + BahamutCmd.generateBahamutCmdUrl("minVideoPlayer") + "\n")
-            
-            print("showUserGuide" + "\n" + BahamutCmd.generateBahamutCmdUrl("showUserGuide") + "\n")
-            
-            print("---------------------------------------------------------")
-        #endif
     }
     
     private func configureAliOSSManager()
     {
         AliOSSManager.sharedInstance.initManager(VessageConfig.bahamutConfig.aliOssAccessKey, aliOssSecretKey: VessageConfig.bahamutConfig.aliOssSecretKey)
+        AliOSSManager.sharedInstance.openSSL = true
     }
     
     private func configContryAndLang()

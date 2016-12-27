@@ -23,6 +23,21 @@ extension ServiceContainer{
     }
 }
 
+private func transformHttpUrlToBahamutHttpsUrl(url:String) -> String {
+    
+    return url
+    /*
+    var host = url
+    if host.lowercaseString.hasPrefix("http://") {
+        var url = host.stringByReplacingOccurrencesOfString("http://", withString: "https#//", options: .CaseInsensitiveSearch, range: nil)
+        url = url.stringByReplacingOccurrencesOfString(":", withString: "/", options: .CaseInsensitiveSearch, range: nil)
+        url = url.stringByReplacingOccurrencesOfString("https#//", withString: "https://", options: .CaseInsensitiveSearch, range: nil)
+        host = url
+    }
+    return host
+ */
+}
+
 //MARK: AccountService
 class AccountService: ServiceProtocol
 {
@@ -36,9 +51,14 @@ class AccountService: ServiceProtocol
             print("userId=\(userId)")
             print("userToken=\(UserSetting.token)")
         #endif
+        
+        
+        
         BahamutRFKit.sharedInstance.resetUser(userId,token:UserSetting.token)
-        BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:VessageSetting.apiServerUrl)
-        BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:VessageSetting.fileApiServer)
+        
+        BahamutRFKit.sharedInstance.reuseApiServer(userId, token:UserSetting.token,appApiServer:transformHttpUrlToBahamutHttpsUrl(VessageSetting.apiServerUrl))
+        BahamutRFKit.sharedInstance.reuseFileApiServer(userId, token:UserSetting.token,fileApiServer:transformHttpUrlToBahamutHttpsUrl(VessageSetting.fileApiServer))
+        
         BahamutRFKit.sharedInstance.startClients()
         self.setServiceReady()
     }

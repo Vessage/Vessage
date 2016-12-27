@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class VessageAppDelegate: UIResponder, UIApplicationDelegate {
@@ -63,7 +64,9 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func configureBahamutRFKit()
     {
         BahamutRFKit.appkey = VessageConfig.appKey
-        BahamutRFKit.setRFKitAppVersion(VessageConfig.appVersion)
+        BahamutRFKit.appVersion = VessageConfig.appVersion
+        BahamutRFKit.appVersionCode = VessageConfig.buildVersion
+        BahamutRFKit.platform = "ios"
     }
     
     private func configureVessageConfig()

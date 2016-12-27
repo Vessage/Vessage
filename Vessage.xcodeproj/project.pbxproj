@@ -91,6 +91,8 @@
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
 		E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */; };
 		E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */; };
+		E71BD33F1E1240980099902C /* BahamutAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BD33E1E1240980099902C /* BahamutAPIClient.swift */; };
+		E71BD3421E1245CD0099902C /* BahamutAuthRFExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BD3411E1245CD0099902C /* BahamutAuthRFExtension.swift */; };
 		E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E71BFCF21DE70AA600384FCB /* Media.xcassets */; };
 		E71BFCF51DE719D600384FCB /* MNSRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BFCF41DE719D600384FCB /* MNSRF.swift */; };
 		E71DF77C1D39117700311855 /* GroupChatCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */; };
@@ -411,6 +413,8 @@
 		E71886761C9FEF820028B016 /* DeveloperPanel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeveloperPanel.storyboard; sourceTree = "<group>"; };
 		E71886781C9FEFA90028B016 /* DeveloperMainPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperMainPanelController.swift; sourceTree = "<group>"; };
 		E718867C1C9FFD840028B016 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		E71BD33E1E1240980099902C /* BahamutAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutAPIClient.swift; sourceTree = "<group>"; };
+		E71BD3411E1245CD0099902C /* BahamutAuthRFExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutAuthRFExtension.swift; sourceTree = "<group>"; };
 		E71BFCF21DE70AA600384FCB /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		E71BFCF41DE719D600384FCB /* MNSRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSRF.swift; sourceTree = "<group>"; };
 		E71DF77B1D39117700311855 /* GroupChatCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatCellTableViewCell.swift; sourceTree = "<group>"; };
@@ -859,6 +863,7 @@
 		E708ABD71C86D37D0071104E /* BahamutRFKit */ = {
 			isa = PBXGroup;
 			children = (
+				E71BD3401E1245B40099902C /* API */,
 				E708ABDA1C86D37D0071104E /* Base */,
 				E708ABEA1C86D3DB0071104E /* File */,
 				E708ABD81C86D37D0071104E /* BahamutRFKit.h */,
@@ -1125,6 +1130,15 @@
 				E718867C1C9FFD840028B016 /* UMessage.h */,
 			);
 			path = UMessageSdk;
+			sourceTree = "<group>";
+		};
+		E71BD3401E1245B40099902C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E71BD33E1E1240980099902C /* BahamutAPIClient.swift */,
+				E71BD3411E1245CD0099902C /* BahamutAuthRFExtension.swift */,
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 		E72E257F1D6B2FFD00DA6E5C /* AEScaningEffect */ = {
@@ -1803,6 +1817,7 @@
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,
 				E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */,
 				E708AC811C86EC160071104E /* ServiceContainer.swift in Sources */,
+				E71BD33F1E1240980099902C /* BahamutAPIClient.swift in Sources */,
 				E78690571DAA9062007A28A7 /* NFCMainViewCells.swift in Sources */,
 				E708ABA31C86CF8A0071104E /* BahamutModel.xcdatamodeld in Sources */,
 				E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */,
@@ -1845,6 +1860,7 @@
 				E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */,
 				E7D7C4381DE9169000D962D4 /* CommonExtension.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
+				E71BD3421E1245CD0099902C /* BahamutAuthRFExtension.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,
 				E74109481DE694970030AD1D /* MNSMainController.swift in Sources */,
 				E708AC7C1C86EC160071104E /* FileService.swift in Sources */,

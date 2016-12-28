@@ -322,11 +322,16 @@ extension UserSettingViewController:ValidateMobileViewControllerDelegate{
     //MARK: bind mobile
     func bindMobile(_:UITapGestureRecognizer)
     {
-        ValidateMobileViewController.showValidateMobileViewController(self,delegate: self)
+        let controller = ValidateMobileViewController.showValidateMobileViewController(self,delegate: self)
+        controller.exitButton?.setTitle("CANCEL".localizedString(), forState: .Normal)
     }
     
     func validateMobileCancel(sender: ValidateMobileViewController) {
-        
+        sender.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func validateMobileIsTryBindExistsUser(sender: ValidateMobileViewController) -> Bool {
+        return false
     }
     
     func validateMobile(sender: ValidateMobileViewController, suc: Bool) {

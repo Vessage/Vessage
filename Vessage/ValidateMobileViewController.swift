@@ -13,6 +13,7 @@ protocol ValidateMobileViewControllerDelegate {
     optional func validateMobile(sender:ValidateMobileViewController,suc:Bool)
     optional func validateMobile(sender:ValidateMobileViewController,rebindedNewUserId:String)
     optional func validateMobileCancel(sender:ValidateMobileViewController)
+    optional func validateMobileIsTryBindExistsUser(sender:ValidateMobileViewController) -> Bool
 }
 
 //MARK: ValidateMobileViewController
@@ -24,7 +25,7 @@ class ValidateMobileViewController: UIViewController,UITextFieldDelegate {
     }
     private var smsCodeSendedDate:NSDate!
     weak var delegate:ValidateMobileViewControllerDelegate?
-    private var exitButtonHandler:(()->Void)?
+    @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var validateButton: UIButton!
     @IBOutlet weak var smsCodeTextFiled: UITextField!{
         didSet{
@@ -137,7 +138,8 @@ class ValidateMobileViewController: UIViewController,UITextFieldDelegate {
     
     private func validateMobile(phoneNo:String,zone:String,code:String){
         let hud = self.showAnimationHud()
-        ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code, callback: { (suc,newUserId) -> Void in
+        let tryBindExistsUser = delegate?.validateMobileIsTryBindExistsUser?(self) ?? false
+        ServiceContainer.getUserService().validateMobile(VessageConfig.bahamutConfig.smsSDKAppkey,mobile: phoneNo, zone: zone, code: code,bindExistsAccount: tryBindExistsUser, callback: { (suc,newUserId) -> Void in
             hud.hideAsync(false)
             if let newId = newUserId{
                 self.dismissViewControllerAnimated(true){
@@ -159,12 +161,13 @@ class ValidateMobileViewController: UIViewController,UITextFieldDelegate {
         self.delegate?.validateMobileCancel?(self)
     }
     
-    static func showValidateMobileViewController(vc:UIViewController,delegate:ValidateMobileViewControllerDelegate?)
+    static func showValidateMobileViewController(vc:UIViewController,delegate:ValidateMobileViewControllerDelegate?) -> ValidateMobileViewController
     {
         let controller = instanceFromStoryBoard("AccountSign", identifier: "ValidateMobileViewController") as! ValidateMobileViewController
         controller.delegate = delegate
         vc.presentViewController(controller, animated: true) { () -> Void in
             
         }
+        return controller
     }
 }

@@ -257,6 +257,26 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             
         }
     }
+    
+    func matchUserProfilesByMobiles(mobiles:[String],callback:(([MobileMatchedUser]?)->Void)?) {
+        if mobiles.count == 0 {
+            callback?([])
+        }else{
+            let req = MatchUsersWithMobileRequest()
+            req.mobiles = mobiles
+            BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[MobileMatchedUser]>) -> Void in
+                if result.isSuccess{
+                    if let users = result.returnObject{
+                        users.saveBahamutObjectModels()
+                        callback?(users)
+                    }
+                }else{
+                    callback?(nil)
+                }
+            }
+            
+        }
+    }
 }
 
 //MARK: Fetch Special Users
@@ -609,13 +629,14 @@ extension UserService{
         
     }
     
-    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,callback:(suc:Bool,newUserId:String?)->Void){
+    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,bindExistsAccount:Bool,callback:(suc:Bool,newUserId:String?)->Void){
         UserSetting.disableSetting("USE_TMP_MOBILE")
         let req = ValidateMobileVSMSRequest()
         req.smsAppkey = smsAppkey
         req.mobile = mobile
         req.zoneCode = zone
         req.code = code
+        req.bindExistsAccount = bindExistsAccount
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ValidateMobileResult>) -> Void in
             if result.isSuccess{
                 

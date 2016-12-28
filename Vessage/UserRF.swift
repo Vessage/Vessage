@@ -104,6 +104,33 @@ class GetUsersProfileRequest: BahamutRFRequestBase {
     }
 }
 
+class MobileMatchedUser: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "usrId"
+    }
+    
+    var usrId:String!
+    var mobile:String!
+    var nick:String!
+    var avatar:String!
+}
+
+class MatchUsersWithMobileRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .GET
+        self.api = "/VessageUsers/MatchMobileProfiles"
+    }
+    
+    var mobiles:[String]!{
+        didSet{
+            if let us = mobiles {
+                self.paramenters["mobiles"] = us.joinWithSeparator(",")
+            }
+        }
+    }
+}
+
 class GetNearUsersInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
@@ -201,6 +228,15 @@ class ValidateMobileVSMSRequest: BahamutRFRequestBase{
             self.paramenters["smsAppkey"] = smsAppkey
         }
     }
+    
+    var bindExistsAccount:Bool!{
+        didSet{
+            if let b = bindExistsAccount{
+                self.paramenters["bindExistsAccount"] = "\(b)"
+            }
+        }
+    }
+    
 }
 
 class ChangeAvatarRequest: BahamutRFRequestBase {

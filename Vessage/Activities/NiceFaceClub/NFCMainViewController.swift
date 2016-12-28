@@ -410,6 +410,11 @@ extension NFCMainViewController{
         }
         self.tipsLabel.text = msg
         self.tipsLabel.sizeToFit()
+        
+        self.tipsLabel.layoutIfNeeded()
+        self.tipsLabel.frame.size.height += 10
+        self.tipsLabel.frame.size.width += 16
+        
         let x = self.view.frame.width / 2
         let y = self.tableView.frame.origin.y + self.tableView.frame.height - 16
         self.tipsLabel.center = CGPointMake(x, y)
@@ -471,6 +476,14 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let c = cell as? NFCPostCell {
             c.updateImage()
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        cell?.selected = false
+        if let nfcCell = cell as? NFCPostCell{
+            nfcCell.onClickNewComment(nfcCell)
         }
     }
     

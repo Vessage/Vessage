@@ -55,15 +55,7 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    private var timeUpTipsView:UILabel!{
-        didSet{
-            timeUpTipsView.clipsToBounds = true
-            timeUpTipsView.layer.cornerRadius = 6
-            timeUpTipsView.textColor = UIColor.orangeColor()
-            timeUpTipsView.textAlignment = .Center
-            timeUpTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
-        }
-    }
+    private var flashTipsView:UILabel!
     
     //MARK:Debug Get Data
     #if DEBUG
@@ -192,9 +184,7 @@ class ConversationListController: UITableViewController {
     private func tryShowConversationsTimeUpTips() {
         if UIApplication.sharedApplication().applicationState == .Active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
             if conversationService.timeupedConversations.count > 0 {
-                if timeUpTipsView == nil {
-                    timeUpTipsView = UILabel()
-                }
+                
                 let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
                 
                 let userIds = (conversationService.timeupedConversations.filter{$0.type == Conversation.typeSingleChat && $0.chatterId != nil}).map({ (c) -> String in
@@ -203,13 +193,9 @@ class ConversationListController: UITableViewController {
                 userService.deleteCachedUsers(userIds)
                 
                 conversationService.removeTimeupedConversations()
-                self.timeUpTipsView.text = msg
-                self.timeUpTipsView.sizeToFit()
-                self.timeUpTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
-                self.view.addSubview(self.timeUpTipsView)
-                UIAnimationHelper.flashView(self.timeUpTipsView, duration: 0.3, autoStop: true, stopAfterMs: 3800){
-                    self.timeUpTipsView.removeFromSuperview()
-                }
+                
+                flashTips(msg)
+                
             }
         }
     }
@@ -480,4 +466,34 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
             }
         }
     }
+}
+
+//MARK: Flash Tips
+extension ConversationListController{
+    
+    func flashTips(msg:String) {
+        
+        if flashTipsView == nil {
+            flashTipsView = UILabel()
+            flashTipsView.clipsToBounds = true
+            flashTipsView.textColor = UIColor.orangeColor()
+            flashTipsView.textAlignment = .Center
+            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
+        }
+        
+        self.flashTipsView.text = msg
+        self.flashTipsView.sizeToFit()
+        
+        self.flashTipsView.layoutIfNeeded()
+        
+        self.flashTipsView.frame.size.height += 10
+        self.flashTipsView.frame.size.width += 16
+        
+        self.flashTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
+        self.view.addSubview(self.flashTipsView)
+        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.3, autoStop: true, stopAfterMs: 3800){
+            self.flashTipsView.removeFromSuperview()
+        }
+    }
+    
 }

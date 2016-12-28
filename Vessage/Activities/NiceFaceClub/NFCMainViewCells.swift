@@ -75,13 +75,21 @@ class NFCPostCell: UITableViewCell {
     @IBOutlet weak var textContentLabel: UILabel!
     @IBOutlet weak var memberCardButton: UIButton!
     @IBOutlet weak var likeMarkImage: UIImageView!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var avatarImageView: UIImageView!{
+        didSet{
+            avatarImageView?.layoutIfNeeded()
+            avatarImageView?.layer.cornerRadius = avatarImageView.frame.height / 2
+        }
+    }
+    @IBOutlet weak var postInfoLabel: UILabel!
     @IBOutlet weak var likeTipsLabel: UILabel!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var newCommentButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
+            imageContentView.layer.borderWidth = 0.6
+            imageContentView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageContentView.userInteractionEnabled = true
             imageContentView.clipsToBounds = true
             imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(NFCPostCell.onTapImage(_:))))
@@ -93,8 +101,8 @@ class NFCPostCell: UITableViewCell {
     var post:NFCPost!{
         didSet{
             if post != nil {
-                let dateString = "\(post.getPostDateFriendString())\nBy \(post.pster) @NFC"
-                dateLabel?.text = dateString
+                let postInfo = "\(post.pster)\n\(post.getPostDateFriendString())"
+                postInfoLabel?.text = postInfo
                 self.likeTipsLabel?.text = self.post.lc.friendString
                 chatButton.hidden = isSelfPost ? true : !NFCPostManager.instance.likedInCached(post.pid)
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
@@ -125,14 +133,24 @@ class NFCPostCell: UITableViewCell {
     }
     
     func updateImage() {
-        imageContentView.image = nil
+        
+        let defaultAvatar = UIImage(named:"chat_image_mgr")
+        if let avatar = post?.avatar{
+            ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: avatar,defaultImage: defaultAvatar)
+        }else{
+            avatarImageView.image = defaultAvatar
+        }
+        
+        let defaultBcg = UIImage(named:"nfc_post_img_bcg")
         imageContentView.contentMode = .Center
         if let img = post?.img {
-            ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: UIImage(named:"nfc_post_img_bcg")){ suc in
+            ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: defaultBcg){ suc in
                 if suc{
                     self.imageContentView.contentMode = .ScaleAspectFill
                 }
             }
+        }else{
+            imageContentView.image = defaultBcg
         }
         
     }

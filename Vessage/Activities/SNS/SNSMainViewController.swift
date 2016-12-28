@@ -22,6 +22,9 @@ class SNSMainViewController: UIViewController {
     private(set) var newImageOutterSourceName:String?
     private(set) var postNewImageDelegate:SNSPostNewImageDelegate?
     
+    let userService = ServiceContainer.getUserService()
+    
+    
     
     @IBOutlet weak var newPostButton: UIButton!
     @IBOutlet weak var myPostsButton: UIButton!
@@ -313,6 +316,11 @@ extension SNSMainViewController{
         }
         self.tipsLabel.text = msg
         self.tipsLabel.sizeToFit()
+        
+        self.tipsLabel.layoutIfNeeded()
+        self.tipsLabel.frame.size.height += 10
+        self.tipsLabel.frame.size.width += 16
+        
         let x = self.view.frame.width / 2
         let y = self.tableView.frame.origin.y + self.tableView.frame.height - 16
         self.tipsLabel.center = CGPointMake(x, y)
@@ -354,7 +362,7 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
                 cell.announcementLabel.text = "MY_SNS_POST_WALL_ANC".SNSString
             default:
                 let format = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_SNS_ANC".SNSString : self.boardData!.annc
-                cell.announcementLabel.text = String(format: format, ServiceContainer.getUserService().myProfile.nickName)
+                cell.announcementLabel.text = String(format: format, userService.myProfile.nickName)
             }
             return cell
         }

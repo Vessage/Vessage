@@ -39,6 +39,8 @@ class NFCPost: BahamutObject {
     var upTs:Int64 = 0 //Update Timespan
     
     var body:String?
+    
+    var avatar:String!
 }
 
 extension NFCPost{
@@ -68,6 +70,8 @@ class NFCPostComment: EVObject {
     var atNick:String! //@UserNick
     var postId:String! //NFC Post Id
     var img:String! //NFC post image
+    var avatar:String! //Poster Avatar
+    
 }
 
 extension NFCPostComment{

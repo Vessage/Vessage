@@ -60,9 +60,15 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var avatarImageView: UIImageView!{
+        didSet{
+            avatarImageView?.layoutIfNeeded()
+            avatarImageView?.layer.cornerRadius = avatarImageView.frame.height / 2
+        }
+    }
     @IBOutlet weak var textContentLabel: UILabel!
     @IBOutlet weak var likeMarkImage: UIImageView!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var postInfoLabel: UILabel!
     @IBOutlet weak var likeTipsLabel: UILabel!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var newCommentButton: UIButton!
@@ -80,8 +86,9 @@ class SNSPostCell: UITableViewCell {
     var post:SNSPost!{
         didSet{
             if post != nil {
-                let dateString = "\(post.getPostDateFriendString())\nBy \(post.pster) @SNS"
-                dateLabel?.text = dateString
+                let nick = rootController?.userService.getUserNotedNameIfExists(post.usrId) ?? post.pster ?? "UNKNOW_NAME".localizedString()
+                let postInfo = "\(nick)\n\(post.getPostDateFriendString())"
+                postInfoLabel?.text = postInfo
                 self.likeTipsLabel?.text = self.post.lc.friendString
                 chatButton.hidden = isSelfPost ? true : !SNSPostManager.instance.likedInCached(post.pid)
                 newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
@@ -108,14 +115,24 @@ class SNSPostCell: UITableViewCell {
     }
     
     func updateImage() {
-        imageContentView.image = nil
+        
+        if let usrId = self.post.usrId,let user = rootController?.userService.getCachedUserProfile(usrId){
+            let defaultAvatar = user.accountId != nil ? getDefaultAvatar(user.accountId) : UIImage(named:"chat_image_mgr")
+            ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: user.avatar,defaultImage: defaultAvatar)
+        }else{
+            avatarImageView.image = UIImage(named:"chat_image_mgr")
+        }
+        
+        let defaultBcg = UIImage(named:"nfc_post_img_bcg")
         imageContentView.contentMode = .Center
         if let img = post?.img {
-            ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: UIImage(named:"SNS_post_img_bcg")){ suc in
+            ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: defaultBcg){ suc in
                 if suc{
                     self.imageContentView.contentMode = .ScaleAspectFill
                 }
             }
+        }else{
+            imageContentView.image = defaultBcg
         }
         
     }

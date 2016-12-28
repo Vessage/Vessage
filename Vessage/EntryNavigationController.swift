@@ -191,6 +191,10 @@ extension EntryNavigationController{
         
     }
     
+    func validateMobileIsTryBindExistsUser(sender: ValidateMobileViewController) -> Bool {
+        return true
+    }
+    
     func validateMobile(sender: ValidateMobileViewController, suc: Bool) {
         
     }

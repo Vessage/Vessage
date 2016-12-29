@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--通讯录好友-->
+        <scene sceneID="1n1-ub-kob">
+            <objects>
+                <viewController storyboardIdentifier="MatchContactUserViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fsu-6l-jlF" customClass="MatchContactUserViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nNp-JV-JRT"/>
+                        <viewControllerLayoutGuide type="bottom" id="0wx-ID-Pkq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="w5w-wB-V8p">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" placeholder="搜索和你常联系的好友名称" translatesAutoresizingMaskIntoConstraints="NO" id="1Mx-Zb-4Yk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bo9-G8-SpJ">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MatchContactUserCell" rowHeight="64" id="l8L-ib-lpe" customClass="MatchContactUserCell" customModule="Vessage" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l8L-ib-lpe" id="CV6-8g-dhh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aTe-DU-EwH">
+                                                    <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="48" id="ifw-dC-Zta"/>
+                                                        <constraint firstAttribute="height" constant="48" id="wTq-0k-9xb"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nick" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYu-Ut-EU0">
+                                                    <rect key="frame" x="64" y="8" width="34" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TqY-Pu-n5h">
+                                                    <rect key="frame" x="306" y="17" width="47" height="30"/>
+                                                    <state key="normal" title="邀请Ta"/>
+                                                    <connections>
+                                                        <action selector="onClickInviteButton:" destination="l8L-ib-lpe" eventType="touchUpInside" id="ZzQ-Ve-a7P"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check_blue" translatesAutoresizingMaskIntoConstraints="NO" id="sFx-p2-KBT">
+                                                    <rect key="frame" x="343" y="20" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="NJd-RI-WKg"/>
+                                                        <constraint firstAttribute="width" constant="24" id="qG6-2f-FV4"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VG:10000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXS-qh-Aqn">
+                                                    <rect key="frame" x="64" y="35" width="77" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cYu-Ut-EU0" firstAttribute="leading" secondItem="aTe-DU-EwH" secondAttribute="trailing" constant="8" id="59j-o3-msn"/>
+                                                <constraint firstItem="aTe-DU-EwH" firstAttribute="centerY" secondItem="CV6-8g-dhh" secondAttribute="centerY" id="5Fk-fa-Rs8"/>
+                                                <constraint firstItem="xXS-qh-Aqn" firstAttribute="bottom" secondItem="aTe-DU-EwH" secondAttribute="bottom" id="EIi-Hz-0Kb"/>
+                                                <constraint firstItem="sFx-p2-KBT" firstAttribute="centerY" secondItem="CV6-8g-dhh" secondAttribute="centerY" id="KAh-LV-cnH"/>
+                                                <constraint firstItem="TqY-Pu-n5h" firstAttribute="centerY" secondItem="CV6-8g-dhh" secondAttribute="centerY" id="N1q-5s-bgw"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="TqY-Pu-n5h" secondAttribute="trailing" constant="14" id="SAX-Es-uad"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="sFx-p2-KBT" secondAttribute="trailing" id="YOg-wr-WrB"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="aTe-DU-EwH" secondAttribute="leading" id="hZS-8i-kaO"/>
+                                                <constraint firstItem="xXS-qh-Aqn" firstAttribute="leading" secondItem="aTe-DU-EwH" secondAttribute="trailing" constant="8" id="lXu-c0-bCd"/>
+                                                <constraint firstItem="cYu-Ut-EU0" firstAttribute="top" secondItem="aTe-DU-EwH" secondAttribute="top" id="zUw-jk-6kO"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="VGInfoLabel" destination="xXS-qh-Aqn" id="Tct-1W-zvb"/>
+                                            <outlet property="avatar" destination="aTe-DU-EwH" id="8E9-Rx-x94"/>
+                                            <outlet property="checkedImage" destination="sFx-p2-KBT" id="dHi-s4-W5M"/>
+                                            <outlet property="inviteButton" destination="TqY-Pu-n5h" id="QRi-AZ-cNn"/>
+                                            <outlet property="nick" destination="cYu-Ut-EU0" id="5rz-Ng-ML3"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bo9-G8-SpJ" firstAttribute="top" secondItem="1Mx-Zb-4Yk" secondAttribute="bottom" id="2AS-fo-f9U"/>
+                            <constraint firstItem="1Mx-Zb-4Yk" firstAttribute="top" secondItem="nNp-JV-JRT" secondAttribute="bottom" id="ESV-gz-8YQ"/>
+                            <constraint firstItem="bo9-G8-SpJ" firstAttribute="bottom" secondItem="0wx-ID-Pkq" secondAttribute="top" id="lEl-3A-PNj"/>
+                            <constraint firstItem="bo9-G8-SpJ" firstAttribute="leading" secondItem="1Mx-Zb-4Yk" secondAttribute="leading" id="mF0-BK-FR2"/>
+                            <constraint firstItem="bo9-G8-SpJ" firstAttribute="trailing" secondItem="1Mx-Zb-4Yk" secondAttribute="trailing" id="opz-xE-97y"/>
+                            <constraint firstAttribute="trailing" secondItem="1Mx-Zb-4Yk" secondAttribute="trailing" id="rSI-bx-Uho"/>
+                            <constraint firstItem="1Mx-Zb-4Yk" firstAttribute="leading" secondItem="w5w-wB-V8p" secondAttribute="leading" id="sI3-hT-euK"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="通讯录好友" id="Yyp-An-Mg6">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="fM5-fr-TzU"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="searchBar" destination="1Mx-Zb-4Yk" id="GtT-dP-QiQ"/>
+                        <outlet property="searchDisplayController" destination="QdY-Si-bAR" id="K0e-9m-bgb"/>
+                        <outlet property="tableView" destination="bo9-G8-SpJ" id="KHD-VN-P7i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4gl-fB-Pz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="QdY-Si-bAR">
+                    <connections>
+                        <outlet property="delegate" destination="Fsu-6l-jlF" id="1CW-9r-AOm"/>
+                        <outlet property="searchContentsController" destination="Fsu-6l-jlF" id="fKq-XV-fU9"/>
+                        <outlet property="searchResultsDataSource" destination="Fsu-6l-jlF" id="6YO-Jl-WSy"/>
+                        <outlet property="searchResultsDelegate" destination="Fsu-6l-jlF" id="Yau-qb-UHn"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="415" y="394"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="check_blue" width="16" height="16"/>
+    </resources>
+</document>

@@ -117,10 +117,10 @@ class SNSPostCell: UITableViewCell {
     func updateImage() {
         
         if let usrId = self.post.usrId,let user = rootController?.userService.getCachedUserProfile(usrId){
-            let defaultAvatar = user.accountId != nil ? getDefaultAvatar(user.accountId) : UIImage(named:"chat_image_mgr")
+            let defaultAvatar = user.accountId != nil ? getDefaultAvatar(user.accountId) : UIImage(named:"vg_smile")
             ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: user.avatar,defaultImage: defaultAvatar)
         }else{
-            avatarImageView.image = UIImage(named:"chat_image_mgr")
+            avatarImageView.image = UIImage(named:"vg_smile")
         }
         
         let defaultBcg = UIImage(named:"nfc_post_img_bcg")

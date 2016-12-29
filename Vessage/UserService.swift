@@ -267,7 +267,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[MobileMatchedUser]>) -> Void in
                 if result.isSuccess{
                     if let users = result.returnObject{
-                        users.saveBahamutObjectModels()
                         callback?(users)
                     }
                 }else{

@@ -134,7 +134,7 @@ class NFCPostCell: UITableViewCell {
     
     func updateImage() {
         
-        let defaultAvatar = UIImage(named:"chat_image_mgr")
+        let defaultAvatar = UIImage(named:"vg_smile")
         if let avatar = post?.avatar{
             ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: avatar,defaultImage: defaultAvatar)
         }else{

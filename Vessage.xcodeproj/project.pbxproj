@@ -124,7 +124,6 @@
 		E76A1C801D3547F100957400 /* ConversationViewControllerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */; };
 		E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */; };
 		E76DF58E1D1A6A4F006BF1A0 /* NavigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */; };
-		E77020F31E140BE00089CB49 /* MatchContactUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77020F21E140BE00089CB49 /* MatchContactUserViewController.swift */; };
 		E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7711B0C1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld */; };
 		E7740ED61DA7373E0022A903 /* NFCMemberCardAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740ED51DA7373E0022A903 /* NFCMemberCardAlert.swift */; };
 		E7740ED81DA74EA70022A903 /* NFCPostCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */; };
@@ -450,7 +449,6 @@
 		E76A1C7F1D3547F100957400 /* ConversationViewControllerProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerProxy.swift; sourceTree = "<group>"; };
 		E76DF58A1D1A69D8006BF1A0 /* NavigationBarTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavigationBarTitle.xib; sourceTree = "<group>"; };
 		E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarTitle.swift; sourceTree = "<group>"; };
-		E77020F21E140BE00089CB49 /* MatchContactUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchContactUserViewController.swift; sourceTree = "<group>"; };
 		E7711B0D1D7B2349009D9DCD /* BahamutMessage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BahamutMessage.xcdatamodel; sourceTree = "<group>"; };
 		E7740ED51DA7373E0022A903 /* NFCMemberCardAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMemberCardAlert.swift; sourceTree = "<group>"; };
 		E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostCommentViewController.swift; sourceTree = "<group>"; };
@@ -1108,7 +1106,6 @@
 				E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */,
 				E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */,
 				E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */,
-				E77020F21E140BE00089CB49 /* MatchContactUserViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1876,7 +1873,6 @@
 				E7886A751DC97D3D00368C03 /* SNSPostRF.swift in Sources */,
 				E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */,
 				E7D7C4381DE9169000D962D4 /* CommonExtension.swift in Sources */,
-				E77020F31E140BE00089CB49 /* MatchContactUserViewController.swift in Sources */,
 				E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */,
 				E71BD3421E1245CD0099902C /* BahamutAuthRFExtension.swift in Sources */,
 				E7F532E81D3A1EEB008078DE /* GroupUsersCell.swift in Sources */,

@@ -108,7 +108,7 @@ class MobileMatchedUser: BahamutObject {
     override func getObjectUniqueIdName() -> String {
         return "usrId"
     }
-    
+    var account:String!
     var usrId:String!
     var mobile:String!
     var nick:String!

@@ -159,7 +159,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="关于" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjB-SY-DCT">
-                                                    <rect key="frame" x="170" y="11.5" width="35" height="20.5"/>
+                                                    <rect key="frame" x="170" y="11" width="35" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -179,7 +179,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清理缓存" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngp-qx-YZy">
-                                                    <rect key="frame" x="153" y="11.5" width="69.5" height="20.5"/>
+                                                    <rect key="frame" x="153" y="11" width="70" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -199,7 +199,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退出账号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXD-kp-N6h">
-                                                    <rect key="frame" x="153" y="11.5" width="69.5" height="20.5"/>
+                                                    <rect key="frame" x="153" y="11" width="70" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -313,7 +313,7 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatImageCell" rowHeight="419" id="lLL-ze-UID">
-                                        <rect key="frame" x="0.0" y="28" width="303" height="419"/>
+                                        <rect key="frame" x="0.0" y="28" width="303" height="421"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLL-ze-UID" id="4au-5z-EIX">
                                             <rect key="frame" x="0.0" y="0.0" width="303" height="418"/>
@@ -634,115 +634,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbM-cL-CLR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-556" y="472"/>
-        </scene>
-        <!--通讯录好友-->
-        <scene sceneID="A6d-7f-qZ5">
-            <objects>
-                <viewController storyboardIdentifier="MatchContactUserViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lXU-oo-jRY" customClass="MatchContactUserViewController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bnz-Pd-UvI"/>
-                        <viewControllerLayoutGuide type="bottom" id="LZt-BK-wxM"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9vY-cL-asg">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <searchBar contentMode="redraw" placeholder="搜索和你常联系的好友名称" translatesAutoresizingMaskIntoConstraints="NO" id="Umy-he-xaI">
-                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Er4-l0-NYK">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MatchContactUserCell" rowHeight="56" id="2F6-HU-Z1o" customClass="MatchContactUserCell" customModule="Vessage" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="56"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2F6-HU-Z1o" id="grx-VV-lJf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kFU-2D-QZW">
-                                                    <rect key="frame" x="8" y="9" width="38" height="38"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="38" id="7kz-pd-ocK"/>
-                                                        <constraint firstAttribute="height" constant="38" id="h5F-5T-mp5"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nick" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHh-Eg-a8U">
-                                                    <rect key="frame" x="54" y="18" width="34" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvV-CY-j0c">
-                                                    <rect key="frame" x="306" y="13" width="47" height="30"/>
-                                                    <state key="normal" title="邀请Ta"/>
-                                                    <connections>
-                                                        <action selector="onClickInviteButton:" destination="2F6-HU-Z1o" eventType="touchUpInside" id="myh-tE-4Gm"/>
-                                                    </connections>
-                                                </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check_blue" translatesAutoresizingMaskIntoConstraints="NO" id="4UB-hu-T5i">
-                                                    <rect key="frame" x="343" y="16" width="24" height="24"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="24" id="ZvH-WT-JYp"/>
-                                                        <constraint firstAttribute="height" constant="24" id="pqw-wi-ypC"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="4UB-hu-T5i" secondAttribute="trailing" id="B1t-PM-y5e"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="rvV-CY-j0c" secondAttribute="trailing" constant="14" id="Cps-kV-rNG"/>
-                                                <constraint firstItem="kFU-2D-QZW" firstAttribute="centerY" secondItem="grx-VV-lJf" secondAttribute="centerY" id="FdG-IX-ccr"/>
-                                                <constraint firstAttribute="leadingMargin" secondItem="kFU-2D-QZW" secondAttribute="leading" id="S3q-oa-y8r"/>
-                                                <constraint firstItem="eHh-Eg-a8U" firstAttribute="centerY" secondItem="kFU-2D-QZW" secondAttribute="centerY" id="VaR-jG-giW"/>
-                                                <constraint firstItem="rvV-CY-j0c" firstAttribute="centerY" secondItem="grx-VV-lJf" secondAttribute="centerY" id="dp5-25-BuV"/>
-                                                <constraint firstItem="eHh-Eg-a8U" firstAttribute="leading" secondItem="kFU-2D-QZW" secondAttribute="trailing" constant="8" id="h2I-Nl-MNi"/>
-                                                <constraint firstItem="4UB-hu-T5i" firstAttribute="centerY" secondItem="grx-VV-lJf" secondAttribute="centerY" id="mMu-TL-hrn"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="avatar" destination="kFU-2D-QZW" id="BZe-Rx-ZGS"/>
-                                            <outlet property="checkedImage" destination="4UB-hu-T5i" id="418-Tx-xYX"/>
-                                            <outlet property="inviteButton" destination="rvV-CY-j0c" id="Ntz-S5-LiE"/>
-                                            <outlet property="nick" destination="eHh-Eg-a8U" id="4rX-gG-VLI"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Umy-he-xaI" firstAttribute="leading" secondItem="9vY-cL-asg" secondAttribute="leading" id="0GB-be-o8W"/>
-                            <constraint firstItem="Er4-l0-NYK" firstAttribute="trailing" secondItem="Umy-he-xaI" secondAttribute="trailing" id="5ED-iH-FZD"/>
-                            <constraint firstAttribute="trailing" secondItem="Umy-he-xaI" secondAttribute="trailing" id="6tX-tQ-fRT"/>
-                            <constraint firstItem="Umy-he-xaI" firstAttribute="top" secondItem="bnz-Pd-UvI" secondAttribute="bottom" id="QwV-2S-Nvg"/>
-                            <constraint firstItem="Er4-l0-NYK" firstAttribute="bottom" secondItem="LZt-BK-wxM" secondAttribute="top" id="pdO-Tv-tXW"/>
-                            <constraint firstItem="Er4-l0-NYK" firstAttribute="top" secondItem="Umy-he-xaI" secondAttribute="bottom" id="tSP-ar-6b4"/>
-                            <constraint firstItem="Er4-l0-NYK" firstAttribute="leading" secondItem="Umy-he-xaI" secondAttribute="leading" id="v0E-f9-HWx"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="通讯录好友" id="5pY-wH-XM6">
-                        <barButtonItem key="backBarButtonItem" title="返回" id="nnf-q9-2r2"/>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <connections>
-                        <outlet property="searchBar" destination="Umy-he-xaI" id="TUW-ib-W12"/>
-                        <outlet property="searchDisplayController" destination="aPY-CU-tER" id="yCE-jC-5us"/>
-                        <outlet property="tableView" destination="Er4-l0-NYK" id="6RG-jU-6ET"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="71v-3q-lNh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="aPY-CU-tER">
-                    <connections>
-                        <outlet property="delegate" destination="lXU-oo-jRY" id="J55-NH-CVR"/>
-                        <outlet property="searchContentsController" destination="lXU-oo-jRY" id="RsE-c5-txT"/>
-                        <outlet property="searchResultsDataSource" destination="lXU-oo-jRY" id="gnT-sK-dGW"/>
-                        <outlet property="searchResultsDelegate" destination="lXU-oo-jRY" id="tPv-s1-ck9"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="-1335.2" y="1294.9025487256372"/>
         </scene>
         <!--User Profile View Controller-->
         <scene sceneID="APY-DP-fJm">

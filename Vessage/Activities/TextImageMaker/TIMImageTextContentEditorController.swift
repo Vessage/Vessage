@@ -49,6 +49,16 @@ class TIMImageTextContentEditorController: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        imageView?.userInteractionEnabled = true
+        imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapImageView(_:))))
+    }
+    
+    func onTapImageView(ges:UITapGestureRecognizer) {
+        self.imageView?.slideShowFullScreen(self)
+    }
+    
     @IBAction func done(sender: AnyObject) {
         let newValue = self.textView?.text
         let model = self.propertyModel

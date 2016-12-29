@@ -31,6 +31,8 @@ class TIMShareAndSaveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageView?.userInteractionEnabled = true
+        imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMShareAndSaveViewController.onTapImageView(_:))))
         imageView?.image = image
     }
     
@@ -52,6 +54,10 @@ class TIMShareAndSaveViewController: UIViewController {
         }
         vgMaskLabel.removeFromSuperview()
         return nil
+    }
+    
+    func onTapImageView(ges:UITapGestureRecognizer) {
+        self.imageView?.slideShowFullScreen(self)
     }
     
     @IBAction func onClickDone(sender: AnyObject) {

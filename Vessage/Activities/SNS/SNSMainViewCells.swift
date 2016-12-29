@@ -85,22 +85,7 @@ class SNSPostCell: UITableViewCell {
     weak var rootController:SNSMainViewController?
     var post:SNSPost!{
         didSet{
-            if post != nil {
-                let nick = rootController?.userService.getUserNotedNameIfExists(post.usrId) ?? post.pster ?? "UNKNOW_NAME".localizedString()
-                let postInfo = "\(nick)\n\(post.getPostDateFriendString())"
-                postInfoLabel?.text = postInfo
-                self.likeTipsLabel?.text = self.post.lc.friendString
-                chatButton.hidden = isSelfPost ? true : !SNSPostManager.instance.likedInCached(post.pid)
-                newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
-                commentTipsLabel.text = self.post.cmtCnt.friendString
-                textContentLabel?.text = nil
-                if let json = self.post?.body{
-                    let dict = EVReflection.dictionaryFromJson(json)
-                    if let txt = dict["txt"] as? String{
-                        textContentLabel?.text = txt
-                    }
-                }
-            }
+            
         }
     }
     
@@ -114,7 +99,27 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
-    func updateImage() {
+    func updateCell() {
+        if post != nil {
+            let nick = rootController?.userService.getUserNotedNameIfExists(post.usrId) ?? post.pster ?? "UNKNOW_NAME".localizedString()
+            let postInfo = "\(nick)\n\(post.getPostDateFriendString())"
+            postInfoLabel?.text = postInfo
+            self.likeTipsLabel?.text = self.post.lc.friendString
+            chatButton.hidden = isSelfPost ? true : !SNSPostManager.instance.likedInCached(post.pid)
+            newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
+            commentTipsLabel.text = self.post.cmtCnt.friendString
+            textContentLabel?.text = nil
+            if let json = self.post?.body{
+                let dict = EVReflection.dictionaryFromJson(json)
+                if let txt = dict["txt"] as? String{
+                    textContentLabel?.text = txt
+                }
+            }
+            updateImage()
+        }
+    }
+    
+    private func updateImage() {
         
         if let usrId = self.post.usrId,let user = rootController?.userService.getCachedUserProfile(usrId){
             let defaultAvatar = user.accountId != nil ? getDefaultAvatar(user.accountId) : UIImage(named:"vg_smile")

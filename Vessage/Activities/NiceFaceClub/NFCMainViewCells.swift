@@ -98,26 +98,7 @@ class NFCPostCell: UITableViewCell {
     @IBOutlet weak var commentTipsLabel: UILabel!
     
     weak var rootController:NFCMainViewController?
-    var post:NFCPost!{
-        didSet{
-            if post != nil {
-                let postInfo = "\(post.pster)\n\(post.getPostDateFriendString())"
-                postInfoLabel?.text = postInfo
-                self.likeTipsLabel?.text = self.post.lc.friendString
-                chatButton.hidden = isSelfPost ? true : !NFCPostManager.instance.likedInCached(post.pid)
-                newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
-                commentTipsLabel.text = self.post.cmtCnt.friendString
-                memberCardButton.hidden = chatButton.hidden
-                textContentLabel?.text = nil
-                if let json = self.post?.body{
-                    let dict = EVReflection.dictionaryFromJson(json)
-                    if let txt = dict["txt"] as? String{
-                        textContentLabel?.text = txt
-                    }
-                }
-            }
-        }
-    }
+    var post:NFCPost!
     
     private var isSelfPost:Bool{
         if let selfMbId = self.rootController?.profile?.mbId {
@@ -132,7 +113,27 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
-    func updateImage() {
+    func updateCell() {
+        if post != nil {
+            let postInfo = "\(post.pster)\n\(post.getPostDateFriendString())"
+            postInfoLabel?.text = postInfo
+            self.likeTipsLabel?.text = self.post.lc.friendString
+            chatButton.hidden = isSelfPost ? true : !NFCPostManager.instance.likedInCached(post.pid)
+            newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
+            commentTipsLabel.text = self.post.cmtCnt.friendString
+            memberCardButton.hidden = chatButton.hidden
+            textContentLabel?.text = nil
+            if let json = self.post?.body{
+                let dict = EVReflection.dictionaryFromJson(json)
+                if let txt = dict["txt"] as? String{
+                    textContentLabel?.text = txt
+                }
+            }
+            updateImage()
+        }
+    }
+    
+    private func updateImage() {
         
         let defaultAvatar = UIImage(named:"vg_smile")
         if let avatar = post?.avatar{

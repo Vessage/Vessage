@@ -89,7 +89,6 @@ class NFCMainViewController: UIViewController {
         didSet{
             tipsLabel.text = nil
             tipsLabel.clipsToBounds = true
-            tipsLabel.layer.cornerRadius = 8
             tipsLabel.textColor = UIColor.orangeColor()
             tipsLabel.textAlignment = .Center
             tipsLabel.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
@@ -414,6 +413,8 @@ extension NFCMainViewController{
         self.tipsLabel.layoutIfNeeded()
         self.tipsLabel.frame.size.height += 10
         self.tipsLabel.frame.size.width += 16
+        
+        self.tipsLabel.layer.cornerRadius = tipsLabel.frame.height / 2
         
         let x = self.view.frame.width / 2
         let y = self.tableView.frame.origin.y + self.tableView.frame.height - 16

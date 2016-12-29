@@ -616,7 +616,7 @@ extension ConversationViewController{
         let center = CGPointMake(self.vessageViewContainer.frame.width / 2,centerY)
         self.flashTipsView.center = center
         self.view.addSubview(self.flashTipsView)
-        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.4, autoStop: true, stopAfterMs: 1600){
+        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.6, autoStop: true, stopAfterMs: 1800){
             self.flashTipsView.removeFromSuperview()
         }
     }

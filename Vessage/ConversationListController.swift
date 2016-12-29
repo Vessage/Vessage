@@ -489,9 +489,11 @@ extension ConversationListController{
         self.flashTipsView.frame.size.height += 10
         self.flashTipsView.frame.size.width += 16
         
+        self.flashTipsView.layer.cornerRadius = self.flashTipsView.frame.height / 2
+        
         self.flashTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
         self.view.addSubview(self.flashTipsView)
-        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.3, autoStop: true, stopAfterMs: 3800){
+        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.6, autoStop: true, stopAfterMs: 3600){
             self.flashTipsView.removeFromSuperview()
         }
     }

@@ -1508,7 +1508,6 @@
 				E702FF661DE82D3D003F2B85 /* Frameworks */,
 				E702FF671DE82D3D003F2B85 /* Resources */,
 				C575ACF28ED1C6A03128C8D1 /* [CP] Copy Pods Resources */,
-				E71BD3471E1268BE0099902C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1730,19 +1729,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAvatarMessage/Pods-iAvatarMessage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		E71BD3471E1268BE0099902C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "EMBEDDED_EXTENSION_PLUGIN_PATH=\"$TARGET_BUILD_DIR/$PLUGINS_FOLDER_PATH/iAvatarMessage.appex/Frameworks\"\nif [[ -d \"$EMBEDDED_EXTENSION_PLUGIN_PATH\" ]]; then\nrm -fr \"$EMBEDDED_EXTENSION_PLUGIN_PATH\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

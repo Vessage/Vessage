@@ -21,10 +21,28 @@ class TIMSharePreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let fontSize = UserSetting.getUserNumberValue(cachedFontSizeKey)?.floatValue ?? 17.0
+        let cgFontSize = CGFloat(fontSize)
         if let f =  TIMSharePreviewViewController.font{
             shareTextContentLabel.font = f
-        }else if let fontName = UserSetting.getUserValue(cachedFontKey) as? String,let font = UIFont.loadFontWith(fontName) {
-            shareTextContentLabel.font = font
+        }else if let fontName = UserSetting.getUserValue(cachedFontKey) as? String {
+            if let font = UIFont(name: fontName, size:cgFontSize){
+                shareTextContentLabel.font = font
+            }else{
+                let descs = createFontDescWithFontName(fontName)
+                CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil, { (state, progressDict) -> Bool in
+                    switch state{
+                    case .WillBeginDownloading:
+                        return false
+                    case .DidFinish:
+                        if let newFont = UIFont(name: fontName, size: self.shareTextContentLabel?.font?.pointSize ?? cgFontSize){
+                            self.shareTextContentLabel?.font = newFont
+                        }
+                    default:break
+                    }
+                    return true
+                })
+            }
         }
         bcgCollectionView.allowsMultipleSelection = false
         bcgCollectionView.allowsSelection = true

@@ -24,7 +24,21 @@ class SNSMainViewController: UIViewController {
     
     let userService = ServiceContainer.getUserService()
     
+    private var originBottomViewHeightConstant:CGFloat!
+    @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!{
+        didSet{
+            if originBottomViewHeightConstant == nil {
+                originBottomViewHeightConstant = bottomViewHeight.constant
+            }
+        }
+    }
     
+    var bottomViewsHidden = false{
+        didSet{
+            homeButton?.superview?.superview?.superview?.hidden = bottomViewsHidden
+            bottomViewHeight?.constant = bottomViewsHidden ? 0 : originBottomViewHeightConstant
+        }
+    }
     
     @IBOutlet weak var newPostButton: UIButton!
     @IBOutlet weak var myPostsButton: UIButton!
@@ -63,7 +77,6 @@ class SNSMainViewController: UIViewController {
                     self.tableView?.reloadData()
                 })
             }
-            
         }
     }
     
@@ -110,7 +123,7 @@ extension SNSMainViewController{
         tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjHeaderRefresh(_:)))
         tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjFooterRefresh(_:)))
         tableView?.mj_footer.automaticallyHidden = true
-        homeButton.superview?.superview?.superview?.hidden = true
+        bottomViewsHidden = true
         MobClick.event("SNS_Login")
     }
     
@@ -211,7 +224,7 @@ extension SNSMainViewController{
     
     private func showViews(){
         self.tableView.hidden = false
-        homeButton.superview?.superview?.superview?.hidden = false
+        bottomViewsHidden = false
     }
     
     private func showNewerAlert(){

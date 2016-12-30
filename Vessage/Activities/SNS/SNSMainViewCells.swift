@@ -75,6 +75,8 @@ class SNSPostCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
+            imageContentView.layer.borderWidth = 0.6
+            imageContentView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageContentView.userInteractionEnabled = true
             imageContentView.clipsToBounds = true
             imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))

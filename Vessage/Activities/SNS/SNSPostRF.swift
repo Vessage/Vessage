@@ -174,6 +174,21 @@ class GetMySNSPostRequest: GetSNSValuesRequestBase {
     }
 }
 
+class GetUserSNSPostRequest: GetSNSValuesRequestBase {
+    override init() {
+        super.init()
+        self.api = "/SNS/UserPosts"
+        self.method = .GET
+    }
+    
+    var userId:String!{
+        didSet{
+            paramenters.updateValue(userId, forKey: "userId")
+        }
+    }
+    
+}
+
 class SNSPostNewRequest: BahamutRFRequestBase {
     override init() {
         super.init()

@@ -72,6 +72,7 @@ INIT_USER_DATA_ERROR = "获取用户数据失败，请重新登录!";
 UNKNOW_ERROR = "发生未知错误";
 UNKNOW_TIME = "消失的时间";
 PRIVACY = "隐私政策";
+DEFAULT = "默认";
 
 //System
 SETTING = "Setting";

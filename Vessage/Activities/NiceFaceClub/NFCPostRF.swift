@@ -164,6 +164,21 @@ class GetMyNFCPostRequest: GetNFCValuesRequestBase {
     }
 }
 
+class GetUserNFCPostRequest: GetNFCValuesRequestBase {
+    override init() {
+        super.init()
+        self.api = "/NiceFaceClub/MemberPosts"
+        self.method = .GET
+    }
+    
+    var memberId:String!{
+        didSet{
+            paramenters.updateValue(memberId, forKey: "memberId")
+        }
+    }
+    
+}
+
 class NFCPostNewRequest: BahamutRFRequestBase {
     override init() {
         super.init()

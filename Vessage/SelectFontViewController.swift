@@ -10,6 +10,7 @@ import UIKit
 
 //MARK: Font
 private let fontConfigList = [
+    
     ["name":"DFWaWaSC-W5","display":"娃娃体","size":"17MB"],
     
     ["name":"STKaitiSC-Regular","display":"楷体-简","size":"106MB"],
@@ -37,60 +38,38 @@ private let fontConfigList = [
     
 ]
 
-private var downloadedFonts = [String:String]()
-private let downloadedFontMapKey = "DownloadedFontMapKey"
-
-private func addDownloadedFont(fontName:String,fontUrl:NSURL){
-    if let path = fontUrl.path{
-        downloadedFonts.updateValue(path, forKey: fontName)
-        NSUserDefaults.standardUserDefaults().setObject(downloadedFonts, forKey: downloadedFontMapKey)
-    }
-}
-
-private func unloadDownloadedFontMap(){
-    downloadedFonts.removeAll()
-}
-
-private func loadDownloadedFontMap(){
-    if let map = readCachedFontMap(){
-        for (name,item) in map {
-            if let fontUrl = item as? String{
-                downloadedFonts.updateValue(fontUrl, forKey: name)
-            }
-        }
-    }
-}
-
-private func readCachedFontMap()->[String:AnyObject]?{
-    return NSUserDefaults.standardUserDefaults().dictionaryForKey(downloadedFontMapKey)
-}
-
 extension UIFont{
-    static func loadFontWith(fontName:String) -> UIFont?{
-        var aFont = UIFont(name: fontName, size: 12.0)
-        
-        if aFont == nil {
-            var map:[String:AnyObject]?  = downloadedFonts
-            if map == nil || map?.count == 0{
-                if let cachedMap = readCachedFontMap(){
-                    map = cachedMap
-                }
-            }
-            if let fontUrl = map?[fontName] as? String{
-                let url = NSURL.fileURLWithPath(fontUrl)
-                CTFontManagerRegisterFontsForURL(url, .Process, nil)
-                aFont = UIFont(name: fontName, size: 12.0)
-            }
-        }
-        
-        // If the font is already download
-        if let font = aFont {
+    private static func loadFontWith(fontName:String,size:CGFloat = 12.0) -> UIFont?{
+        if let font = UIFont(name: fontName, size: size) {
             if (font.fontName.compare(fontName) == .OrderedSame ||
                 font.familyName.compare(fontName) == .OrderedSame) {
-                return aFont
+                return font
             }
         }
         return nil;
+    }
+}
+
+func createFontDescWithFontName(fontName:String) -> NSMutableArray{
+    // Creat a dictionary with the font's PostScript name.
+    let attrs = NSDictionary(object: fontName, forKey: kCTFontNameAttribute as String)
+    // Creat a new font descriptor reference from the attributtes dictionary
+    let desc = CTFontDescriptorCreateWithAttributes(attrs as CFDictionaryRef)
+    
+    var descs = NSMutableArray()
+    descs = NSMutableArray(capacity: 0)
+    descs.addObject(desc)
+    return descs
+}
+
+private func matchFont(fontName:String,handler:CTFontDescriptorProgressHandler? = nil) -> Bool {
+    let descs = createFontDescWithFontName(fontName)
+    return CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil) {
+        (state: CTFontDescriptorMatchingState, progressParameter: CFDictionary) -> Bool in
+        if let callback = handler{
+            return callback(state, progressParameter)
+        }
+        return true
     }
 }
 
@@ -98,6 +77,7 @@ extension UIFont{
 class FontItemCell: UITableViewCell {
     
     static let reuseId = "FontItemCell"
+    var isSystemDefaultFont = false
     var fontDict:[String:String]?
     var fontIsReady = false{
         didSet{
@@ -142,7 +122,6 @@ class SelectFontViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDownloadedFontMap()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
@@ -155,11 +134,6 @@ class SelectFontViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tableView?.reloadData()
     }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        unloadDownloadedFontMap()
-    }
 }
 
 extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
@@ -168,19 +142,21 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fontConfigList.count
+        return fontConfigList.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(FontItemCell.reuseId, forIndexPath: indexPath) as! FontItemCell
-        let info = fontConfigList[indexPath.row]
-        cell.fontDict = info
-        cell.fontDemoLabel.text = info["display"]
+        if indexPath.row == 0 {
+            cell.isSystemDefaultFont = true
+        }else{
+            cell.isSystemDefaultFont = false
+            let info = fontConfigList[indexPath.row - 1]
+            cell.fontDict = info
+        }
         cell.checkedImage.hidden = true
         cell.setSeparatorFullWidth()
-        if let fontName = info["name"]{
-            cell.setFontNameIfExists(fontName)
-        }
+        cell.setFontNameIfExists()
         return cell
     }
     
@@ -188,8 +164,8 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? FontItemCell{
             if cell.fontIsReady{
                 cell.checkedImage.hidden = false
-            }else{
-                let info = fontConfigList[indexPath.row]
+            }else if indexPath.row > 0{
+                let info = fontConfigList[indexPath.row - 1]
                 let title = String(format: "DOWNLOAD_FONT_X".localizedString(),info["display"]!)
                 let msg = String(format: "DOWNLOAD_FONT_X_SIZE_MSG".localizedString(),info["size"]!)
                 let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
@@ -212,69 +188,57 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
 
 extension FontItemCell{
     
-    private func setFontNameIfExists(fontName:String) -> Bool{
-        if let font = UIFont.loadFontWith(fontName) {
-            self.fontDemoLabel.font = font.fontWithSize(18.0)
+    private func setFontNameIfExists() -> Bool{
+        if isSystemDefaultFont {
+            self.fontDemoLabel.text = "DEFAULT".localizedString()
+            self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
             self.fontIsReady = true
             return true
-        }else{
-            self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
-            self.fontIsReady = false
-            return false
         }
+        
+        self.fontDemoLabel.text = fontDict?["display"]
+        if let fontName = fontDict?["name"]{
+            if let font = UIFont.loadFontWith(fontName) {
+                self.fontDemoLabel.font = font.fontWithSize(18.0)
+                self.fontIsReady = true
+                return true
+            }else{
+                self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
+                self.fontIsReady = false
+                self.asynchronousSetFontsName(false)
+                return false
+            }
+        }
+        return false
     }
     
-    private func asynchronousSetFontsName() {
+    private func asynchronousSetFontsName(autoDownload:Bool = true) {
         
         if self.fontDict == nil || self.fontDict?["name"] == nil{
             return
         }
         let fontName = self.fontDict!["name"]!
         
-        // Creat a dictionary with the font's PostScript name.
-        let attrs = NSDictionary(object: fontName, forKey: kCTFontNameAttribute as String)
-        // Creat a new font descriptor reference from the attributtes dictionary
-        let desc = CTFontDescriptorCreateWithAttributes(attrs as CFDictionaryRef)
-        
-        var descs = NSMutableArray()
-        descs = NSMutableArray(capacity: 0)
-        descs.addObject(desc)
-        
-        CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil) {
-            (state: CTFontDescriptorMatchingState, progressParameter: CFDictionary) -> Bool in
-            
+        matchFont(fontName) { (state, progressParameter) -> Bool in
             let parameter = progressParameter as NSDictionary
             let progressValue = parameter.objectForKey(kCTFontDescriptorMatchingPercentage)?.doubleValue
             
             switch state {
             case .DidBegin:
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if let name = self.fontDict?["name"]{
-                        if fontName == name{
-                            self.statusLabel.text = String(format: "DOWNLOADING".localizedString(), "")
-                            self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
-                        }
-                    }
-                    debugPrint("Begin Matching")
-                })
+                debugPrint("Begin Matching")
                 
             case .DidFinish:
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
+                    // display the sample text for the newly downloaded font
                     if let name = self.fontDict?["name"]{
                         if fontName == name{
-                            // display the sample text for the newly downloaded font
-                            self.statusLabel.text = nil
-                            self.fontDemoLabel.font = UIFont(name: fontName, size: 18)
-                            self.fontIsReady = true
-                            if self.selected{
-                                self.checkedImage?.hidden = false
-                            }
-                            // Log the font URL in the console
-                            let font = CTFontCreateWithName(fontName, 0.0, nil)
-                            if let fontURL = CTFontCopyAttribute(font, kCTFontURLAttribute) as? NSURL{
-                                addDownloadedFont(fontName, fontUrl: fontURL)
-                                debugPrint(fontURL)
+                            if let font = UIFont(name: fontName, size: 18){
+                                self.statusLabel.text = nil
+                                self.fontDemoLabel.font = font
+                                self.fontIsReady = true
+                                if self.selected{
+                                    self.checkedImage?.hidden = false
+                                }
                             }
                         }
                     }
@@ -282,17 +246,13 @@ extension FontItemCell{
                 
                 
             case .WillBeginDownloading:
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    debugPrint("Begin Downloading")
-                })
-                
+                if !autoDownload{
+                    return false
+                }
+                self.statusLabel.text = String(format: "DOWNLOADING".localizedString(), "")
+                debugPrint("Begin Downloading")
             case .DidFinishDownloading:
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    debugPrint("Finish Downloading")
-                })
-                
-                
+                debugPrint("Finish Downloading")
             case .Downloading:
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if let name = self.fontDict?["name"]{
@@ -305,12 +265,15 @@ extension FontItemCell{
                 })
                 
             case .DidFailWithError:
-                if let name = self.fontDict?["name"]{
-                    if fontName == name{
-                        // display the sample text for the newly downloaded font
-                        self.statusLabel.text = "DOWNLOAD_ERR".localizedString()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if let name = self.fontDict?["name"]{
+                        if fontName == name{
+                            // display the sample text for the newly downloaded font
+                            self.statusLabel.text = "DOWNLOAD_ERR".localizedString()
+                        }
                     }
-                }
+                })
+                
             default:
                 break
             }

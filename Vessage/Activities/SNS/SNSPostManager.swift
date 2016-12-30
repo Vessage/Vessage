@@ -71,6 +71,18 @@ class SNSPostManager {
         req.cnt = pageCount
         req.ts = startTimeSpan
         
+        getSNSPosts(req, callback: callback)
+    }
+    
+    func getSingleUserPost(userId:String,startTimeSpan:Int64,pageCount:Int,callback:(posts:[SNSPost])->Void) {
+        let req = GetUserSNSPostRequest()
+        req.cnt = pageCount
+        req.ts = startTimeSpan
+        req.userId = userId
+        getSNSPosts(req, callback: callback)
+    }
+    
+    func getSNSPosts(req:GetSNSValuesRequestBase,callback:(posts:[SNSPost])->Void) {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[SNSPost]>) in
             if let ps = result.returnObject{
                 callback(posts: ps)

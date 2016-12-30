@@ -65,6 +65,18 @@ class NFCPostManager {
         req.cnt = pageCount
         req.ts = startTimeSpan
         
+        getNFCPosts(req, callback: callback)
+    }
+    
+    func getSingleMemberPost(memberId:String,startTimeSpan:Int64,pageCount:Int,callback:(posts:[NFCPost])->Void) {
+        let req = GetUserNFCPostRequest()
+        req.cnt = pageCount
+        req.ts = startTimeSpan
+        req.memberId = memberId
+        getNFCPosts(req, callback: callback)
+    }
+    
+    func getNFCPosts(req:GetNFCValuesRequestBase,callback:(posts:[NFCPost])->Void) {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[NFCPost]>) in
             if let ps = result.returnObject{
                 callback(posts: ps)

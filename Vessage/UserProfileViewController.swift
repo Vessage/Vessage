@@ -83,7 +83,7 @@ class UserProfileViewController: UIViewController {
             }
             self.accountIdLabel.hidden = accountIdHidden
             mottoLabel.text = profile.motto ?? "DEFAULT_VGER_MOTTO".localizedString()
-            sexImageView.hidden = false
+            sexImageView.superview?.hidden = false
             avatarImageView.hidden = false
             ServiceContainer.getUserService().setUserSexImageView(self.sexImageView, sexValue: profile.sex)
             updateRightButtonTitle()
@@ -98,11 +98,8 @@ class UserProfileViewController: UIViewController {
     }
     @IBOutlet weak var bcgMaskView: UIView!
     
-    @IBOutlet weak var sexImageView: UIImageView!{
-        didSet{
-            sexImageView.hidden = true
-        }
-    }
+    @IBOutlet weak var sexImageView: UIImageView!
+    
     @IBOutlet weak var avatarImageView: UIImageView!{
         didSet{
             avatarImageView.layer.borderWidth = 0.6
@@ -143,12 +140,19 @@ class UserProfileViewController: UIViewController {
         delegate?.userProfileViewController(self, rightButtonClicked: profile)
     }
     
+    @IBAction func onClickSns(sender: AnyObject) {
+        if let nvc = self.navigationController,let userId = self.profile?.userId{
+            SNSMainViewController.showUserSNSPostViewController(nvc, userId: userId,nick: ServiceContainer.getUserService().getUserNotedName(userId))
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserProfileViewController.onTapView(_:))))
         ServiceContainer.getUserService().addObserver(self, selector: #selector(UserProfileViewController.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
         ServiceContainer.getUserService().addObserver(self, selector: #selector(UserProfileViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         bcgMaskView.hidden = true
+        sexImageView.superview?.hidden = true
     }
     
     override func viewWillAppear(animated: Bool) {

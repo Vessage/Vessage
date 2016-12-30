@@ -17,10 +17,19 @@ class SNSMainViewController: UIViewController {
     let SNSLikeCountBaseLimit = 10
     let postPageCount = 20
     
+    //MARK: Share Outter Source Content
     private(set) var newImageIdFromOutterSource:String?
     private(set) var newImageFromOutterSource:UIImage?
     private(set) var newImageOutterSourceName:String?
     private(set) var postNewImageDelegate:SNSPostNewImageDelegate?
+    
+    //MARK: Specific User's SNS Posts
+    var isUserPageMode:Bool{
+        return String.isNullOrWhiteSpace(specificUserId) == false
+    }
+    
+    private(set) var specificUserId:String?
+    private(set) var specificUserNick:String?
     
     let userService = ServiceContainer.getUserService()
     
@@ -52,7 +61,7 @@ class SNSMainViewController: UIViewController {
     private var postingAnimationImageView:UIImageView!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
-    private var posts:[[[SNSPost]]] = [[[SNSPost]](),[[SNSPost]]()]
+    private var posts:[[[SNSPost]]] = [[[SNSPost]](),[[SNSPost]](),[[SNSPost]]()]
     
     private var posting = [SNSPost](){
         didSet{
@@ -139,6 +148,7 @@ extension SNSMainViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         start()
     }
 }
@@ -293,7 +303,11 @@ extension SNSMainViewController{
     }
     
     func switchListType(type:Int) {
-        self.title = type == SNSPost.typeMyPost ? "MY_SNS_POST_WALL".SNSString : "SNS".SNSString
+        if isUserPageMode {
+            self.title = String(format: "X_SNS_POST_WALL".SNSString, specificUserNick ?? "UNKNOW_NAME".localizedString())
+        }else{
+            self.title = type == SNSPost.typeMyPost ? "MY_SNS_POST_WALL".SNSString : "SNS".SNSString
+        }
         homeButton?.enabled = type != SNSPost.typeNormalPost
         myPostsButton?.enabled = type != SNSPost.typeMyPost
         self.listType = type
@@ -306,9 +320,15 @@ extension SNSMainViewController{
 extension SNSMainViewController{
     
     private func start(){
+        if isUserPageMode {
+            self.switchListType(SNSPost.typeSingleUserPost)
+            self.tableView.hidden = false
+            self.bottomViewsHidden = true
+        }else{
+            self.switchListType(SNSPost.typeNormalPost)
+            self.showViews()
+        }
         
-        self.switchListType(SNSPost.typeNormalPost)
-        self.showViews()
     }
     
     private func tryShowShareAlert(){
@@ -337,7 +357,7 @@ extension SNSMainViewController{
         self.tipsLabel.layer.cornerRadius = tipsLabel.frame.height / 2
         
         let x = self.view.frame.width / 2
-        let y = self.tableView.frame.origin.y + self.tableView.frame.height - 16
+        let y = self.tableView.frame.origin.y + self.tableView.frame.height - 32
         self.tipsLabel.center = CGPointMake(x, y)
         self.view.addSubview(self.tipsLabel)
         UIAnimationHelper.flashView(self.tipsLabel, duration: 0.6, autoStop: true, stopAfterMs: 3600){
@@ -354,14 +374,14 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            return isUserPageMode ? 0 : 1
         }
         return posts[listType][section - 1].count
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 10
+            return isUserPageMode ? 0 : 10
         }
         return 0
     }
@@ -608,6 +628,14 @@ extension SNSMainViewController{
     
     static private func instanceFromStoryBoard() -> SNSMainViewController{
         return instanceFromStoryBoard("SNS", identifier: "SNSMainViewController") as! SNSMainViewController
+    }
+    
+    static func showUserSNSPostViewController(nvc:UINavigationController,userId:String,nick:String) -> SNSMainViewController{
+        let controller = instanceFromStoryBoard()
+        controller.specificUserId = userId
+        controller.specificUserNick = nick
+        nvc.pushViewController(controller, animated: true)
+        return controller
     }
     
     static func showSNSMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String? = nil,image:UIImage? = nil,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController {

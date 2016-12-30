@@ -59,20 +59,14 @@ class NFCPostManager {
             req = GetMyNFCPostRequest()
         }else if type == NFCPost.typeNewMemberPost {
             req = GetNFCNewMemberPostRequest()
+        }else if type == NFCPost.typeSingleMemberPost {
+            req = GetNFCSingleMemberPostRequest()
         }else{
             req = GetNFCPostReqeust()
         }
         req.cnt = pageCount
         req.ts = startTimeSpan
         
-        getNFCPosts(req, callback: callback)
-    }
-    
-    func getSingleMemberPost(memberId:String,startTimeSpan:Int64,pageCount:Int,callback:(posts:[NFCPost])->Void) {
-        let req = GetUserNFCPostRequest()
-        req.cnt = pageCount
-        req.ts = startTimeSpan
-        req.memberId = memberId
         getNFCPosts(req, callback: callback)
     }
     

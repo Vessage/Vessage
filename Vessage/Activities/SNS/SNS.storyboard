@@ -311,7 +311,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y3X-yr-KHt">
-                                            <rect key="frame" x="0.0" y="0.0" width="167" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="166.5" height="56"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mep-VN-MMZ">
                                                     <rect key="frame" x="59" y="11" width="50" height="34"/>
@@ -337,10 +337,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WgT-tg-7eq">
-                                            <rect key="frame" x="209" y="0.0" width="166" height="56"/>
+                                            <rect key="frame" x="208.5" y="0.0" width="166.5" height="56"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xup-mM-sy9">
-                                                    <rect key="frame" x="46" y="11" width="74" height="34"/>
+                                                    <rect key="frame" x="46.5" y="11" width="74" height="34"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <state key="normal" title="我的照片">
                                                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -363,7 +363,7 @@
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcC-Xu-Mvd">
-                                            <rect key="frame" x="167" y="7" width="42" height="42"/>
+                                            <rect key="frame" x="166.5" y="7" width="42" height="42"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="42" id="OvD-RN-hgf"/>
                                                 <constraint firstAttribute="width" constant="42" id="crh-Fz-uS2"/>

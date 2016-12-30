@@ -132,6 +132,7 @@ extension NFCMainViewController{
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         if self.profile != nil {
             start()
         }else{
@@ -417,7 +418,7 @@ extension NFCMainViewController{
         self.tipsLabel.layer.cornerRadius = tipsLabel.frame.height / 2
         
         let x = self.view.frame.width / 2
-        let y = self.tableView.frame.origin.y + self.tableView.frame.height - 16
+        let y = self.tableView.frame.origin.y + self.tableView.frame.height - 32
         self.tipsLabel.center = CGPointMake(x, y)
         self.view.addSubview(self.tipsLabel)
         UIAnimationHelper.flashView(self.tipsLabel, duration: 0.6, autoStop: true, stopAfterMs: 3600){

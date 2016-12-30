@@ -14,6 +14,7 @@ class SNSPost: BahamutObject {
     
     static let typeNormalPost = 0
     static let typeMyPost = 1
+    static let typeSingleUserPost = 2
     
     override func getObjectUniqueIdName() -> String {
         return "pid"

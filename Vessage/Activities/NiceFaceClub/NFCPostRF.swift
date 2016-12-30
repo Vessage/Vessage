@@ -15,6 +15,7 @@ class NFCPost: BahamutObject {
     static let typeNormalPost = 0
     static let typeNewMemberPost = 1
     static let typeMyPost = 2
+    static let typeSingleMemberPost = 3
     
     override func getObjectUniqueIdName() -> String {
         return "pid"
@@ -164,7 +165,7 @@ class GetMyNFCPostRequest: GetNFCValuesRequestBase {
     }
 }
 
-class GetUserNFCPostRequest: GetNFCValuesRequestBase {
+class GetNFCSingleMemberPostRequest: GetNFCValuesRequestBase {
     override init() {
         super.init()
         self.api = "/NiceFaceClub/MemberPosts"

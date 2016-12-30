@@ -313,7 +313,7 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatImageCell" rowHeight="419" id="lLL-ze-UID">
-                                        <rect key="frame" x="0.0" y="28" width="303" height="420"/>
+                                        <rect key="frame" x="0.0" y="28" width="303" height="419"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLL-ze-UID" id="4au-5z-EIX">
                                             <rect key="frame" x="0.0" y="0.0" width="303" height="418"/>

@@ -145,7 +145,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="16" minValue="16" maxValue="48" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-gA-qJj">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="18" minValue="10" maxValue="64" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-gA-qJj">
                                 <rect key="frame" x="66" y="473" width="295" height="31"/>
                                 <connections>
                                     <action selector="onSliderValueChanged:" destination="EsZ-97-RiY" eventType="valueChanged" id="jiQ-iv-v1f"/>

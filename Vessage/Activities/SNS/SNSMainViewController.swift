@@ -279,7 +279,7 @@ extension SNSMainViewController{
                 self.tableView?.reloadData()
             })
         }else{
-            SNSPostManager.instance.getSNSPosts(listType,startTimeSpan: ts, pageCount: postPageCount, callback: { (posts) in
+            SNSPostManager.instance.getSNSPosts(listType,startTimeSpan: ts, pageCount: postPageCount,specificUserId: specificUserId, callback: { (posts) in
                 hud?.hideAnimated(true)
                 if posts.count > 0{
                     self.posts[self.listType].append(posts)

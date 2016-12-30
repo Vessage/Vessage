@@ -60,13 +60,15 @@ class SNSPostManager {
         getSNSPosts(SNSPost.typeNormalPost, startTimeSpan: startTimeSpan, pageCount: pageCount, callback: callback)
     }
     
-    func getSNSPosts(type:Int,startTimeSpan:Int64,pageCount:Int,callback:(posts:[SNSPost])->Void) {
+    func getSNSPosts(type:Int,startTimeSpan:Int64,pageCount:Int,specificUserId:String? = nil,callback:(posts:[SNSPost])->Void) {
 
         let req:GetSNSValuesRequestBase!
         if type == SNSPost.typeMyPost {
             req = GetMySNSPostRequest()
         }else if type == SNSPost.typeSingleUserPost{
-            req = GetUserSNSPostRequest()
+            let r = GetUserSNSPostRequest()
+            r.userId = specificUserId
+            req = r
         }else{
             req = GetSNSPostReqeust()
         }

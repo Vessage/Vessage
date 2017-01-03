@@ -18,7 +18,7 @@ class TIMShareAndSaveViewController: UIViewController {
     private var vgMaskLabel:UILabel!{
         didSet{
             vgMaskLabel.text = "VG聊天"
-            vgMaskLabel.font = UIFont.systemFontOfSize(11)
+            vgMaskLabel.font = UIFont(name: "ChalkboardSE-Regular",size: 10) ?? UIFont.systemFontOfSize(10)
             vgMaskLabel.textColor = UIColor.lightTextColor()
         }
     }

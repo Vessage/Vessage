@@ -288,7 +288,7 @@ REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开VG的短信权限";
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta吧?";
 NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧!\n%@";
 
-SEL_CONTACTS_ITEM = "新建联系人聊天";
+SEL_CONTACTS_ITEM = "新建手机好友聊天";
 
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
 REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";
@@ -398,3 +398,4 @@ REFRESH_NEAR_USER_IDLE = "";
 COPY_CONTENT = "复制内容";
 TEXT_COPIED = "文本已经复制到剪切板";
 
+INVITE_MOBILE_FRIEND_MSG = "我在玩VG聊天，发条消息给你，收到请回复";

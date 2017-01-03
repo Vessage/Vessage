@@ -358,6 +358,15 @@ class RegistMobileUserRequest: BahamutRFRequestBase {
             self.paramenters["mobile"] = mobile
         }
     }
+    
+    var inviteMessage:String!{
+        didSet{
+            if let msg = inviteMessage{
+                self.paramenters["inviteMsg"] = msg
+            }
+        }
+    }
+    
 }
 
 class RegistNewVessageUserRequest: BahamutRFRequestBase{

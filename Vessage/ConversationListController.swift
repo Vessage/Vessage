@@ -262,7 +262,8 @@ class ConversationListController: UITableViewController {
             self.userService.registNewUserByMobile(mobile, noteName: noteName ?? mobile, updatedCallback: { (user) in
                 hud.hideAnimated(true)
                 if let u = user{
-                    ConversationViewController.showConversationViewController(self.navigationController!, userId: u.userId)
+                    let delegate = UserProfileViewControllerDelegateOpenConversation()
+                    UserProfileViewController.showUserProfileViewController(self, userProfile: u, delegate: delegate)
                 }else{
                     self.showAlert("OPEN_MOBILE_CONVERSATION_FAIL".localizedString(), msg: mobile)
                 }

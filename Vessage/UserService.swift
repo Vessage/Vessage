@@ -111,6 +111,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     func registNewUserByMobile(mobile:String,noteName:String,updatedCallback:(user:VessageUser?)->Void) {
         let req = RegistMobileUserRequest()
         req.mobile = mobile
+        //req.inviteMessage = "INVITE_MOBILE_FRIEND_MSG".localizedString()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
             if result.isFailure{
                 updatedCallback(user: nil)

@@ -79,6 +79,8 @@ class NFCPostCell: UITableViewCell {
         didSet{
             avatarImageView?.layoutIfNeeded()
             avatarImageView?.layer.cornerRadius = avatarImageView.frame.height / 2
+            avatarImageView?.layer.borderWidth = 0.2
+            avatarImageView?.layer.borderColor = UIColor.lightGrayColor().CGColor
         }
     }
     @IBOutlet weak var postInfoLabel: UILabel!

@@ -111,6 +111,10 @@ class SNSMainViewController: UIViewController {
         }
     }
     
+    @IBAction func tellFriends(sender: AnyObject) {
+        self.shareSNS()
+    }
+    
     deinit {
         SNSPostManager.instance.releaseManager();
         debugLog("Deinited:\(self.description)")
@@ -413,7 +417,7 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let c = cell as? SNSPostCell {
-            c.updateCell()
+            c.updateImage()
         }
     }
     

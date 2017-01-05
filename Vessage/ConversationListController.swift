@@ -242,8 +242,10 @@ class ConversationListController: UITableViewController {
         UserSettingViewController.showUserSettingViewController(self.navigationController!,basicMode: false)
     }
     
-    @IBAction func tellFriends(sender: AnyObject) {
-        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+    @IBAction func onClickQA(sender: AnyObject) {
+        if let nvc = self.navigationController{
+            SimpleBrowser.openUrl(nvc, url: "http://bahamut.cn/VGQA.html", title: "Q&A")
+        }
     }
     
     private func removeConversation(conversationId:String,message:String?){

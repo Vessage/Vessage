@@ -89,7 +89,7 @@ class SNSPostCell: UITableViewCell {
     weak var rootController:SNSMainViewController?
     var post:SNSPost!{
         didSet{
-            
+            updateCell()
         }
     }
     
@@ -103,7 +103,7 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
-    func updateCell() {
+    private func updateCell() {
         if post != nil {
             let nick = rootController?.userService.getUserNotedNameIfExists(post.usrId) ?? post.pster ?? "UNKNOW_NAME".localizedString()
             let postInfo = "\(nick)\n\(post.getPostDateFriendString())"
@@ -119,11 +119,10 @@ class SNSPostCell: UITableViewCell {
                     textContentLabel?.text = txt
                 }
             }
-            updateImage()
         }
     }
     
-    private func updateImage() {
+    func updateImage() {
         
         if let usrId = self.post.usrId,let user = rootController?.userService.getCachedUserProfile(usrId){
             let defaultAvatar = user.accountId != nil ? getDefaultAvatar(user.accountId) : UIImage(named:"vg_smile")

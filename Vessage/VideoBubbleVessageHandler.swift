@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
+class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate,BahamutFilmViewDelegate {
     let defaultWidth:CGFloat = 180
     let defaultHeight:CGFloat = 240
     
@@ -31,8 +31,12 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
         return videoPlayer
     }
     
-    func updateDateLabel(date:NSDate) {
+    private func updateDateLabel(date:NSDate) {
         dateTimeLabel.text = date.toFriendlyString()
+        refreshDateLabel()
+    }
+    
+    private func refreshDateLabel(){
         dateTimeLabel.sizeToFit()
         if let spv = dateTimeLabel.superview{
             dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
@@ -67,6 +71,10 @@ class VideoBubbleVessageHandler: BubbleVessageHandler,PlayerDelegate {
                 updateDateLabel(d)
             }
         }
+    }
+    
+    func bahamutFilmViewOnDraw(sender: BahamutFilmView, rect: CGRect) {
+        refreshDateLabel()
     }
     
     //MARK: Player Delegate

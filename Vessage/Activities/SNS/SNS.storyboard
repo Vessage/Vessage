@@ -413,6 +413,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="晒&amp;秀" id="ldz-4V-b9U">
                         <barButtonItem key="backBarButtonItem" title="返回" id="oRa-J9-5bR"/>
+                        <barButtonItem key="rightBarButtonItem" image="share" id="4kJ-YT-pjw">
+                            <color key="tintColor" red="0.0" green="0.6780607863" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="tellFriends:" destination="agZ-w7-omg" id="Xi2-Si-1Fi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -771,5 +777,6 @@
         <image name="nfc_new_comment" width="128" height="128"/>
         <image name="nfc_new_comment_l" width="128" height="128"/>
         <image name="nfc_plus" width="96" height="96"/>
+        <image name="share" width="16" height="16"/>
     </resources>
 </document>

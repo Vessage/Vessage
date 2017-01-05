@@ -477,7 +477,7 @@ extension NFCMainViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let c = cell as? NFCPostCell {
-            c.updateCell()
+            c.updateImage()
         }
     }
     

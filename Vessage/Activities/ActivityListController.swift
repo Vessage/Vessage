@@ -90,6 +90,10 @@ class ActivityListController: UITableViewController {
         #endif
     }
     
+    @IBAction func tellFriends(sender: AnyObject) {
+        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+    }
+    
     func onServicesWillLogout(a:NSNotification) {
         ServiceContainer.instance.removeObserver(self)
         self.activityService.removeObserver(self)

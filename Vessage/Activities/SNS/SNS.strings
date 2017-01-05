@@ -13,8 +13,8 @@ EXIT = "退出";
 OO = "哦";
 GO_CHAT = "进入聊天";
 
-SHARE_SNS_MSG = "我在VG晒&秀分享照片，你也快来吧！";
-SHARE_SNS_ALERT_MSG = "告诉常联系的朋友加入属于你们自己的分享圈！";
+SHARE_SNS_MSG = "我在晒&秀分享照片，只有聊得来的好友才能互相看的分享圈";
+SHARE_SNS_ALERT_MSG = "聊得来的好友才能互相看的分享圈！";
 
 REFRESH_ERROR = "刷新数据出错";
 NO_POSTS = "没有刷到更多动态了";

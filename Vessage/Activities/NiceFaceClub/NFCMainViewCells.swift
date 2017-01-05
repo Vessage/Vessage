@@ -100,7 +100,11 @@ class NFCPostCell: UITableViewCell {
     @IBOutlet weak var commentTipsLabel: UILabel!
     
     weak var rootController:NFCMainViewController?
-    var post:NFCPost!
+    var post:NFCPost!{
+        didSet{
+            updateCell()
+        }
+    }
     
     private var isSelfPost:Bool{
         if let selfMbId = self.rootController?.profile?.mbId {
@@ -115,7 +119,7 @@ class NFCPostCell: UITableViewCell {
         }
     }
     
-    func updateCell() {
+    private func updateCell() {
         if post != nil {
             let postInfo = "\(post.pster)\n\(post.getPostDateFriendString())"
             postInfoLabel?.text = postInfo
@@ -131,11 +135,10 @@ class NFCPostCell: UITableViewCell {
                     textContentLabel?.text = txt
                 }
             }
-            updateImage()
         }
     }
     
-    private func updateImage() {
+    func updateImage() {
         
         let defaultAvatar = UIImage(named:"vg_smile")
         if let avatar = post?.avatar{

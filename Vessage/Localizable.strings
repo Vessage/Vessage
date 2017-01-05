@@ -309,16 +309,14 @@ CONVERSATION_USERS = "正在对话的好友";
 VSG_READED = "已读";
 VSG_UNREADED = "未读";
 
-TELL_FRIENDS = "邀请Ta";
-TELL_FRIENDS_ALERT_MSG = "和你体验新的聊天方式";
-TELL_FRIENDS_IV = "邀请好朋友";
-TELL_FRIENDS_ALERT_MSG_IV = "邀请你的好朋友来VG聊天";
+TELL_FRIENDS = "告诉好友";
+TELL_FRIENDS_ALERT_MSG = "邀请几个常联系好友一起玩更有意思";
+
 WECHAT_SESSION = "微信好友";
 SMS = "短信";
 WECHAT_TIMELINE = "朋友圈";
-TELL_FRIEND_MESSAGE = "我在玩VG聊天，一起来玩吧~";
-WELCOME_ALERT_MSG = "和手机上的好友一起玩吧~";
-WELCOME_ALERT_TITLE = "VG聊天";
+TELL_FRIEND_MESSAGE = "我发现一个适合好朋友聊天分享的秘密花园，一起来玩吧！";
+
 OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "向未注册的手机号发出消息，好友用手机注册后可以收到你的消息~";
 GROUP_CHAT = "一起聊天吧";

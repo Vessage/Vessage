@@ -686,17 +686,8 @@ extension NFCMainViewController{
         
         clearOutterNewImage()
         
-        let title = "SHARE_IMAGE_FROM_OUTTER".niceFaceClubString
-        let msgFormat = "SHARE_IMAGE_FROM_OUTTER_FROM_X".niceFaceClubString
-        let msg = String(format: msgFormat, sourceName)
-        let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
-        let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
-            let model = self.generateTimEditorModel(sourceImage!, imageId: sourceId)
-            TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
-        })
-        alert.addAction(ok)
-        alert.addAction(ALERT_ACTION_CANCEL)
-        self.showAlert(alert)
+        let model = self.generateTimEditorModel(sourceImage!, imageId: sourceId)
+        TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
         
         return true
     }

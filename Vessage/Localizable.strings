@@ -184,13 +184,14 @@ OLD_NEW_PSW_SAME = "新旧密码相同";
 USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //APP Motto
-"VESSAGE_MOTTO_0" = "高颜值俱乐部";
-"VESSAGE_MOTTO_1" = "想聊就聊，不聊消失";
+"VESSAGE_MOTTO_0" = "让时间重塑朋友圈";
+"VESSAGE_MOTTO_1" = "让时间重塑朋友圈";
 "VESSAGE_MOTTO_2" = "不一样的聊天体验";
 "VESSAGE_MOTTO_3" = "晒&秀 - 分享多彩生活";
-"VESSAGE_MOTTO_4" = "晒&秀 - 好朋友的分享圈";
-"VESSAGE_MOTTO_5" = "和最聊得来的好友玩的社交应用";
-"VESSAGE_MOTTO_6" = "两周不聊,自动消失";
+"VESSAGE_MOTTO_4" = "晒&秀 - 分享多彩生活";
+"VESSAGE_MOTTO_5" = "不聊消失，不打扰";
+"VESSAGE_MOTTO_6" = "不聊消失，不打扰";
+"VESSAGE_MOTTO_7" = "不聊消失，不打扰";
 
 //Vege
 APP_NAME = "VG";

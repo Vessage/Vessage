@@ -35,7 +35,7 @@ class SelectVessageUserListCell: UITableViewCell {
             if let u = user{
                 nickLabel.text = ServiceContainer.getUserService().getUserNotedNameIfExists(u.userId) ?? u.nickName
                 if String.isNullOrEmpty(u.avatar) {
-                    avatarImage.image = getDefaultAvatar(u.accountId ?? "0")
+                    avatarImage.image = getDefaultAvatar(u.accountId ?? "0",sex: u.sex)
                 }else{
                     ServiceContainer.getFileService().setImage(avatarImage, iconFileId: user.avatar)
                 }

@@ -67,7 +67,8 @@ class UserProfileViewController: UIViewController {
     
     private(set) var profile:VessageUser!{
         didSet{
-            ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: profile.avatar, defaultImage: getDefaultAvatar(profile.accountId ?? "0"))
+            let img = getDefaultAvatar(profile.accountId ?? "0",sex:profile.sex)
+            ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: profile.avatar, defaultImage: img)
             if let aId = profile.accountId {
                 self.accountIdLabel.text = String(format: "USER_ACCOUNT_FORMAT".localizedString(),aId)
                 var name = profile.nickName

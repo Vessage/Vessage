@@ -13,7 +13,7 @@ class UserCollectionViewCell: UICollectionViewCell {
         didSet{
             nickLabel.text = user.nickName
             if String.isNullOrEmpty(user.avatar) {
-                avatarImage.image = getDefaultAvatar(user.accountId ?? "0")
+                avatarImage.image = getDefaultAvatar(user.accountId ?? "0",sex: user.sex)
             }else{
                 ServiceContainer.getFileService().setImage(avatarImage, iconFileId: user.avatar)
             }

@@ -257,7 +257,7 @@
                                                 </view>
                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gc-5N-SP9">
                                                     <rect key="frame" x="0.0" y="502" width="375" height="10"/>
-                                                    <color key="backgroundColor" white="0.33333333329999998" alpha="0.079623287670000001" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="0.2373983305" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="dLq-rL-dL6"/>
                                                     </constraints>

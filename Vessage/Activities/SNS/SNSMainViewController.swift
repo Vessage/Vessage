@@ -609,7 +609,6 @@ extension SNSMainViewController{
             return false
         }
         
-        let sourceName = String.isNullOrWhiteSpace(self.newImageOutterSourceName) ? "UNKNOW_SOURCE".SNSString : newImageOutterSourceName!
         let sourceId = newImageIdFromOutterSource
         let sourceImage = newImageFromOutterSource
         

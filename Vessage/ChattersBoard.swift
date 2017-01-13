@@ -221,7 +221,8 @@ class ChattersBoard: UIView {
             if let imgid = element.itemImage{
                 self.updateImage(imgv, imgId: imgid)
             }else{
-                self.updateImage(imgv, img: getDefaultAvatar(element.chatter.accountId ?? "0"))
+                let img = getDefaultAvatar(element.chatter.accountId ?? "0",sex: element.chatter.sex)
+                self.updateImage(imgv, img: img)
             }
             let indicator = (imgv.subviews.filter{$0 is UIActivityIndicatorView}).first as? UIActivityIndicatorView
             indicator?.center = CGPointMake(itemWidthHeight / 2, itemWidthHeight / 2)

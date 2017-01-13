@@ -481,7 +481,7 @@ extension ConversationListController{
             flashTipsView.clipsToBounds = true
             flashTipsView.textColor = UIColor.orangeColor()
             flashTipsView.textAlignment = .Center
-            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
+            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.8)
         }
         
         self.flashTipsView.text = msg

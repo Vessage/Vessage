@@ -148,14 +148,15 @@ class ConversationListCell:ConversationListCellBase{
     }
     
     private var defaultAvatarId = "0"
+    private var sex = 0
     private var avatar:String!{
         didSet{
             if let imgView = self.avatarView{
                 if String.isNullOrEmpty(self.avatar) {
-                    imgView.image = getDefaultAvatar(defaultAvatarId)
+                    imgView.image = getDefaultAvatar(defaultAvatarId,sex: sex)
                 }else if let fileId = avatar{
                     if fileId != oldValue {
-                        imgView.image = getDefaultAvatar(defaultAvatarId)
+                        imgView.image = getDefaultAvatar(defaultAvatarId,sex: sex)
                         ServiceContainer.getFileService().getImage(iconFileId: fileId, callback: { (image) in
                             if fileId == self.avatar && image != nil {
                                 self.avatarView?.image = image
@@ -277,6 +278,7 @@ class ConversationListCell:ConversationListCellBase{
         let msg = String(format: "OPEN_NEW_CHAT_WITH_MOBILE".localizedString(), mobile)
         self.subLine = msg
         self.avatar = nil
+        self.sex = 0
         self.badgeValue = 0
     }
     
@@ -284,6 +286,7 @@ class ConversationListCell:ConversationListCellBase{
         if let aId = user.accountId {
             self.defaultAvatarId = aId
         }
+        self.sex = user.sex
         self.avatar = user.avatar
     }
     

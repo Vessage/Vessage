@@ -682,7 +682,6 @@ extension NFCMainViewController{
         
         let sourceId = newImageIdFromOutterSource
         let sourceImage = newImageFromOutterSource
-        let sourceName = String.isNullOrWhiteSpace(self.newImageOutterSourceName) ? "UNKNOW_SOURCE".niceFaceClubString : newImageOutterSourceName!
         
         clearOutterNewImage()
         

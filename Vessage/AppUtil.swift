@@ -76,9 +76,17 @@ func getDefaultFace() -> UIImage {
     return UIImage(named: "default_face")!
 }
 
-func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId) -> UIImage {
+func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId,sex:Int = 0) -> UIImage {
+    
     if let id = Int(accountId){
-        let index = id % 7
+        var index = 0
+        if(sex > 0){
+            index = 2 + id % 2
+        }else if(sex < 0){
+            index = 4 + id % 3
+        }else{
+            index = id % 7
+        }
         return UIImage(named: "default_avatar_\(index)") ?? UIImage(named: "defaultAvatar")!
     }
     return UIImage(named: "defaultAvatar")!

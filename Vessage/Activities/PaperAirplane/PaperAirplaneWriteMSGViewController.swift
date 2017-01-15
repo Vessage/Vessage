@@ -68,6 +68,7 @@ extension PaperAirplaneWriteMSGViewController{
         let controller = instanceFromStoryBoard("PaperAirplane", identifier: "PaperAirplaneWriteMSGViewController") as! PaperAirplaneWriteMSGViewController
         controller.airplane = plane
         controller.delegate = delegate
+        controller.title = "WRITE_NOTE_AND_FLY".PaperAirplaneString
         nvc.pushViewController(controller, animated: true)
     }
 }

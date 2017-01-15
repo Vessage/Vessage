@@ -138,21 +138,21 @@
                                 <rect key="frame" x="16" y="617" width="107.5" height="30"/>
                                 <state key="normal" title="折纸飞机"/>
                                 <connections>
-                                    <segue destination="TMV-MP-ci2" kind="showDetail" id="Y3k-hP-y5J"/>
+                                    <segue destination="TMV-MP-ci2" kind="show" id="Y3k-hP-y5J"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Byi-xx-xic">
                                 <rect key="frame" x="133.5" y="617" width="107.5" height="30"/>
                                 <state key="normal" title="捉纸飞机"/>
                                 <connections>
-                                    <segue destination="1DZ-dJ-ehN" kind="showDetail" id="JzU-Yg-z9q"/>
+                                    <segue destination="1DZ-dJ-ehN" kind="show" id="JzU-Yg-z9q"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mie-Fa-hhF">
                                 <rect key="frame" x="251" y="617" width="108" height="30"/>
                                 <state key="normal" title="飞机盒子"/>
                                 <connections>
-                                    <segue destination="j6B-E0-uhA" kind="showDetail" id="KT9-Dj-ZCA"/>
+                                    <segue destination="j6B-E0-uhA" kind="show" id="KT9-Dj-ZCA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -171,7 +171,13 @@
                             <constraint firstItem="Byi-xx-xic" firstAttribute="centerY" secondItem="054-0X-4Kh" secondAttribute="centerY" id="rDA-9l-gm4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="纸飞机" id="3AF-Ln-hAe"/>
+                    <navigationItem key="navigationItem" title="纸飞机" id="3AF-Ln-hAe">
+                        <barButtonItem key="leftBarButtonItem" title="离开" id="ce8-9w-H23">
+                            <connections>
+                                <action selector="leave:" destination="RP5-VA-lHx" id="Af1-pr-1ug"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fj5-pj-kvF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -328,7 +334,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Bbu-AH-V2T">
             <objects>
-                <navigationController storyboardIdentifier="PaperAirplaneStartNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MDU-sM-JoN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PaperAirplaneStartNavController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MDU-sM-JoN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LBD-sp-7ty">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

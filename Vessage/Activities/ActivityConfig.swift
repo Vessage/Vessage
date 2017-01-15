@@ -38,7 +38,7 @@ let ActivityInfoList = [
         //ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false,false),
         ActivityInfo(activityId: "1004", "MNS".mnsLocalizedString, "mns_icon", "MNS", "MNSMainNavigationController", false,false),
         ActivityInfo(activityId: "1006", "MYQ_AC_TITLE".MYQLocalizedString, "myq_icon", "MYQ", "MYQMainNavigationController", false,false),
-        ActivityInfo(activityId: "1007", "MYQ_AC_TITLE".MYQLocalizedString, "myq_icon", "PaperAirplane", "PaperAirplaneStartNavController", false,false)
+        ActivityInfo(activityId: "1007", "PAP_AC_TITLE".PaperAirplaneString, "pap_icon", "PaperAirplane", "PaperAirplaneStartNavController", false,false)
         
     ],
     [

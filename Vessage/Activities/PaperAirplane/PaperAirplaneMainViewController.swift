@@ -14,7 +14,7 @@ extension String{
     }
 }
 
-let PaperAirplaneActivityId = "1005"
+let PaperAirplaneActivityId = "1007"
 
 class PaperAirplaneMainViewController: UIViewController {
 
@@ -27,4 +27,7 @@ class PaperAirplaneMainViewController: UIViewController {
         
     }
 
+    @IBAction func leave(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

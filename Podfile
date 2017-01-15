@@ -18,7 +18,7 @@ target "Vessage" do
 
     pod 'YUCIHighPassSkinSmoothing'
 
-    pod 'LTMorphingLabel'
+    pod 'LTMorphingLabel', '~> 0.3.0'
     
     pod 'ImageSlideshow', '~> 0.6'
     

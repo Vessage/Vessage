@@ -9,8 +9,8 @@
 import Foundation
 
 private let randomTextVessageContents = [
-    ["?_?","??????","有事想和我聊聊？","...什么事？","......","☺️"],
-    ["。。。","！！！！"]
+    ["。。。","......","☺️"],
+    ["。。。","......"]
 ]
 
 //MARK: PlayVessageManager

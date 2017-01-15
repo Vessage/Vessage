@@ -14,7 +14,7 @@ let UpdatedActivityMiniBadgeValue = "UpdatedActivityMiniBadgeValue"
 let UpdatedActivitiesBadgeValue = "UpdatedActivitiesBadgeValue"
 
 private let AppVersionActivityBadgeKey = "AppVersionActivityBadgeKey"
-private let SetActivityMiniBadgeAtAppVersion = ["1005","1006"]
+private let SetActivityMiniBadgeAtAppVersion:[String] = []
 private let IncActivityBadgeAtAppVersion:[String] = []
 
 class ActivityService: NSNotificationCenter, ServiceProtocol

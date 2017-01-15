@@ -245,6 +245,13 @@ extension UIImageView{
     }
 }
 
+extension UITableView{
+    func autoRowHeight() {
+        self.estimatedRowHeight = self.rowHeight
+        self.rowHeight = UITableViewAutomaticDimension
+    }
+}
+
 extension FullScreenSlideshowViewController{
     func enableTapViewCloseController(hideCloseButton:Bool = true) {
         if hideCloseButton {

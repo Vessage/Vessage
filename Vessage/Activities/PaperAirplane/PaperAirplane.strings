@@ -1,0 +1,9 @@
+/* 
+  PaperAirplane.strings
+  Vessage
+
+  Created by Alex Chow on 2017/1/13.
+  Copyright © 2017年 Bahamut. All rights reserved.
+*/
+WRITE_YOUR_MSG_HINT = "在纸飞机留下你的留言吧";
+X_POST_A_PLANE = "机长%@折的纸飞机";

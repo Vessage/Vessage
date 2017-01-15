@@ -65,6 +65,13 @@ class UserProfileViewController: UIViewController {
         }
     }
     
+    var snsButtonEnable:Bool = true{
+        didSet{
+            snsButton?.enabled = snsButtonEnable
+        }
+    }
+    
+    
     private(set) var profile:VessageUser!{
         didSet{
             let img = getDefaultAvatar(profile.accountId ?? "0",sex:profile.sex)
@@ -99,6 +106,7 @@ class UserProfileViewController: UIViewController {
     }
     @IBOutlet weak var bcgMaskView: UIView!
     
+    @IBOutlet weak var snsButton: UIButton!
     @IBOutlet weak var sexImageView: UIImageView!
     
     @IBOutlet weak var avatarImageView: UIImageView!{

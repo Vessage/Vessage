@@ -15,6 +15,15 @@ class PaperAirplaneCatchViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    @IBAction func cancelAndBack(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -22,6 +31,11 @@ class PaperAirplaneCatchViewController: UIViewController {
     }
     
 
+    static func showCatchView(vc:UIViewController){
+        let controller = instanceFromStoryBoard("PaperAirplane", identifier: "PaperAirplaneCatchViewController")
+        vc.presentViewController(controller, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

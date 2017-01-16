@@ -50,6 +50,8 @@ class PaperAirplaneDetailViewController: UIViewController {
         tableView.autoRowHeight()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
+        tableView.tableFooterView?.backgroundColor = UIColor.whiteColor()
     }
     
     @IBAction func flyOut(sender: AnyObject) {

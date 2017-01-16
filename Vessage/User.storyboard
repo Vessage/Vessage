@@ -313,10 +313,10 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatImageCell" rowHeight="419" id="lLL-ze-UID">
-                                        <rect key="frame" x="0.0" y="28" width="360" height="419"/>
+                                        <rect key="frame" x="0.0" y="28" width="303" height="419"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lLL-ze-UID" id="4au-5z-EIX">
-                                            <rect key="frame" x="0.0" y="0.0" width="360" height="418"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="303" height="418"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
@@ -654,7 +654,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8a-SD-6zt">
                                 <rect key="frame" x="67.5" y="163.5" width="240" height="320"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar_4" translatesAutoresizingMaskIntoConstraints="NO" id="321-dj-l42">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar_4" translatesAutoresizingMaskIntoConstraints="NO" id="321-dj-l42">
                                         <rect key="frame" x="72" y="42" width="96" height="96"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="96" id="dYH-AC-hjx"/>

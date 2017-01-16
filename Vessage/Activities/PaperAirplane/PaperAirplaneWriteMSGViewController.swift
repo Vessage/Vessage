@@ -25,6 +25,11 @@ class PaperAirplaneWriteMSGViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     @IBAction func flyAirplane(sender: AnyObject) {
         if airplane == nil {
             postNewAirplane()

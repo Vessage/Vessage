@@ -112,6 +112,7 @@
 		E74109481DE694970030AD1D /* MNSMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74109471DE694970030AD1D /* MNSMainController.swift */; };
 		E741094A1DE69AA60030AD1D /* MNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E74109491DE69AA60030AD1D /* MNS.strings */; };
 		E741094B1DE6F0DB0030AD1D /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
+		E74237EF1E2C6DAB0084DEF2 /* FlashTipsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74237EE1E2C6DAB0084DEF2 /* FlashTipsLabel.swift */; };
 		E74C48EE1DE52E2400903270 /* VTMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C48EC1DE52E2400903270 /* VTMRecord.swift */; };
 		E74C48F21DE541CC00903270 /* VessageTimeMachine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E74C48F01DE541CC00903270 /* VessageTimeMachine.xcdatamodeld */; };
 		E7560B2F1DDAC2F4007AA496 /* HudSpin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */; };
@@ -446,6 +447,7 @@
 		E74109451DE694420030AD1D /* MNS.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MNS.storyboard; sourceTree = "<group>"; };
 		E74109471DE694970030AD1D /* MNSMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSMainController.swift; sourceTree = "<group>"; };
 		E74109491DE69AA60030AD1D /* MNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MNS.strings; sourceTree = "<group>"; };
+		E74237EE1E2C6DAB0084DEF2 /* FlashTipsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashTipsLabel.swift; sourceTree = "<group>"; };
 		E74C48EC1DE52E2400903270 /* VTMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTMRecord.swift; sourceTree = "<group>"; };
 		E74C48F11DE541CC00903270 /* VessageTimeMachine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VessageTimeMachine.xcdatamodel; sourceTree = "<group>"; };
 		E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HudSpin.xcassets; sourceTree = "<group>"; };
@@ -1137,6 +1139,7 @@
 				E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */,
 				E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */,
 				E7EC2EE31D4A5AD700823C31 /* ChatImageBoardController.swift */,
+				E74237EE1E2C6DAB0084DEF2 /* FlashTipsLabel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1851,6 +1854,7 @@
 				E7740ED61DA7373E0022A903 /* NFCMemberCardAlert.swift in Sources */,
 				E7687C291DB4A5CC00A1FD5E /* NFCReceivedLikeViewController.swift in Sources */,
 				E708ABEF1C86D3DB0071104E /* BahamutFire.swift in Sources */,
+				E74237EF1E2C6DAB0084DEF2 /* FlashTipsLabel.swift in Sources */,
 				E7886A6E1DC97D3D00368C03 /* SNSMainViewCells.swift in Sources */,
 				E74C48F21DE541CC00903270 /* VessageTimeMachine.xcdatamodeld in Sources */,
 				E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */,

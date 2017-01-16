@@ -55,7 +55,9 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    private var flashTipsView:UILabel!
+    private var flashTipsView:FlashTipsLabel = {
+       return FlashTipsLabel()
+    }()
     
     //MARK:Debug Get Data
     #if DEBUG
@@ -475,30 +477,7 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
 extension ConversationListController{
     
     func flashTips(msg:String) {
-        
-        if flashTipsView == nil {
-            flashTipsView = UILabel()
-            flashTipsView.clipsToBounds = true
-            flashTipsView.textColor = UIColor.orangeColor()
-            flashTipsView.textAlignment = .Center
-            flashTipsView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.8)
-        }
-        
-        self.flashTipsView.text = msg
-        self.flashTipsView.sizeToFit()
-        
-        self.flashTipsView.layoutIfNeeded()
-        
-        self.flashTipsView.frame.size.height += 10
-        self.flashTipsView.frame.size.width += 16
-        
-        self.flashTipsView.layer.cornerRadius = self.flashTipsView.frame.height / 2
-        
-        self.flashTipsView.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160)
-        self.view.addSubview(self.flashTipsView)
-        UIAnimationHelper.flashView(self.flashTipsView, duration: 0.6, autoStop: true, stopAfterMs: 3600){
-            self.flashTipsView.removeFromSuperview()
-        }
+        self.flashTipsView.flashTips(self.view, msg: msg, center: CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160))
     }
     
 }

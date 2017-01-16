@@ -20,16 +20,23 @@ class PaperAirplaneBoxViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    private var tipsLabel:FlashTipsLabel = {
+        return FlashTipsLabel()
+    }()
+    
     var planes:[[PaperAirplane]]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
+        tableView.tableFooterView?.backgroundColor = UIColor.whiteColor()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         if planes == nil || planes.count == 0{
             planes = [[PaperAirplane]]()
             refreshMyPlanes()
@@ -45,8 +52,10 @@ class PaperAirplaneBoxViewController: UIViewController {
                 if arr.count > 0{
                     self.planes.append(arr)
                     self.tableView.reloadData()
+                    return
                 }
             }
+            self.tipsLabel.flashTips(self.view, msg: "NO_PLANES_IN_BOX".PaperAirplaneString, center: nil)
         }
     }
 

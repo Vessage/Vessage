@@ -85,15 +85,9 @@ class NFCMainViewController: UIViewController {
         }
     }
     
-    private var tipsLabel:UILabel!{
-        didSet{
-            tipsLabel.text = nil
-            tipsLabel.clipsToBounds = true
-            tipsLabel.textColor = UIColor.orangeColor()
-            tipsLabel.textAlignment = .Center
-            tipsLabel.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
-        }
-    }
+    private var tipsLabel:FlashTipsLabel = {
+       return FlashTipsLabel()
+    }()
     
     deinit {
         NFCPostManager.instance.releaseManager();
@@ -404,26 +398,10 @@ extension NFCMainViewController{
 
 extension NFCMainViewController{
     private func flashTipsLabel(msg:String){
-        
-        if tipsLabel == nil {
-            tipsLabel = UILabel()
-        }
-        self.tipsLabel.text = msg
-        self.tipsLabel.sizeToFit()
-        
-        self.tipsLabel.layoutIfNeeded()
-        self.tipsLabel.frame.size.height += 10
-        self.tipsLabel.frame.size.width += 16
-        
-        self.tipsLabel.layer.cornerRadius = tipsLabel.frame.height / 2
-        
         let x = self.view.frame.width / 2
         let y = self.tableView.frame.origin.y + self.tableView.frame.height - 32
-        self.tipsLabel.center = CGPointMake(x, y)
-        self.view.addSubview(self.tipsLabel)
-        UIAnimationHelper.flashView(self.tipsLabel, duration: 0.6, autoStop: true, stopAfterMs: 3600){
-            self.tipsLabel.removeFromSuperview()
-        }
+        let center = CGPointMake(x, y)
+        tipsLabel.flashTips(self.view, msg: msg, center: center)
     }
 }
 

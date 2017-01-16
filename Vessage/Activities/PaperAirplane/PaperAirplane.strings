@@ -6,6 +6,7 @@
   Copyright © 2017年 Bahamut. All rights reserved.
 */
 PAP_AC_TITLE = "纸飞机";
-WRITE_YOUR_MSG_HINT = "在纸飞机留下你的留言吧";
+WRITE_YOUR_MSG_HINT = "在纸飞机写下你的留言吧";
 X_POST_A_PLANE = "机长%@折的纸飞机";
 WRITE_NOTE_AND_FLY = "写下你的留言并飞出去";
+NO_PLANES_IN_BOX = "还没有纸飞机";

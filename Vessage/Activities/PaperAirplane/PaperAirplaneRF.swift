@@ -15,7 +15,7 @@ class PaperAirplaneMessage: EVObject{
     var avatar:String!
     var msg:String!
     var ts:Int64 = 0
-    var loc:String!
+    var loc:[Double]!
     
 }
 
@@ -46,6 +46,12 @@ class NewPaperAirplaneRequest: BahamutRFRequestBase {
     var msg:String!{
         didSet{
             paramenters.updateValue(msg, forKey: "msg")
+        }
+    }
+    
+    var location:String!{
+        didSet{
+            paramenters.updateValue(msg, forKey: "location")
         }
     }
 }

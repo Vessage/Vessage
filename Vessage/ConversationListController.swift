@@ -168,7 +168,6 @@ class ConversationListController: UITableViewController {
         
         ServiceContainer.instance.addObserver(self, selector: #selector(ConversationListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
         
-        VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationListController.onVessageSended(_:)), name: VessageQueue.onTaskFinished, object: nil)
     }
     
     private func releaseController(){
@@ -211,12 +210,6 @@ class ConversationListController: UITableViewController {
     
     func onServicesWillLogout(a:NSNotification) {
         releaseController()
-    }
-    
-    func onVessageSended(a:NSNotification) {
-        if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
-            conversationService.setConversationNewestModified(task.receiverId)
-        }
     }
     
     func onConversationListUpdated(a:NSNotification){
@@ -435,6 +428,9 @@ class ConversationListController: UITableViewController {
 }
 
 //MARK: handle click list cell
+private let defaultNearActiveConversationBeforeRemoveTs:Int64 = 1000 * 60 * 60
+private var openConversationBeforeRemoveTs:Int64 = ConversationMaxTimeUpMS
+
 extension ConversationListController:UserProfileViewControllerDismissedDelegate{
     
     func userProfileViewControllerDismissed(sender: UserProfileViewController) {
@@ -443,9 +439,12 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
     
     func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
         if let userId = profile.userId{
+            let beforeRemoveTs = openConversationBeforeRemoveTs
+            openConversationBeforeRemoveTs = ConversationMaxTimeUpMS
+            
             sender.dismissViewControllerAnimated(true, completion: {
                 MainTabBarController.instance?.tabBar.hidden = false
-                ConversationViewController.showConversationViewController(self.navigationController!, userId : userId)
+                ConversationViewController.showConversationViewController(self.navigationController!, userId : userId,beforeRemoveTs: beforeRemoveTs)
             })
         }
     }
@@ -461,6 +460,13 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
             if let c = result.conversation{
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
             }else if let u = result.user{
+                
+                if result.type == .userActive ||
+                    result.type == .userActiveNear ||
+                    result.type == .userNear{
+                    openConversationBeforeRemoveTs = defaultNearActiveConversationBeforeRemoveTs
+                }
+                
                 UserProfileViewController.showUserProfileViewController(self, userId: u.userId, delegate: self){ profileVC in
                     MainTabBarController.instance?.tabBar.hidden = true
                     profileVC.accountIdHidden = true

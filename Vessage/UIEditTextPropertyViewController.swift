@@ -69,6 +69,7 @@ class UIEditTextPropertyViewController: UIViewController
         }
         propertyValueTextView.hidden = model.isOneLineValue
         propertyValueTextField.hidden = !model.isOneLineValue
+        propertyValueTextField.placeholder = model?.valueTextViewHolder
         propertyValueTextView.placeHolder = model?.valueTextViewHolder
     }
     

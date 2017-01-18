@@ -53,6 +53,10 @@ class SignUpViewController: UIViewController {
     }
 
     //MARK: actions
+    @IBAction func whatsVG(sender: AnyObject) {
+        SimpleBrowser.openUrl(self, url: "http://bahamut.cn/whatsvg.html", title: "WHATS_VG".localizedString())
+    }
+    
     @IBAction func signUp(sender: AnyObject) {
         self.hideKeyBoard()
         if checkRegistValid()

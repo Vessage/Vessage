@@ -15,11 +15,6 @@ class SearchResultModel{
         case undefine,userNormal, userActive,userNear,userActiveNear,conversation,mobile
     }
     
-    static let typeUserNormal = 0
-    static let typeUserActive = 1
-    static let typeUserNear = 2
-    static let typeConversation = 10
-    static let typeMobile = 20
     init(keyword:String,user:VessageUser,userType:Type = .userNormal){
         self.conversation = nil
         self.keyword = keyword
@@ -52,7 +47,10 @@ class SearchResultModel{
 
 
 //MARK: ConversationListController extension UISearchBarDelegate
-let searchAccountIdLimitedPerMinute = 3
+private let searchAccountIdLimitedPerMinute = 3
+private let nearUserLimit = 8
+private let activeUserLimit = 8
+
 extension ConversationListController:UISearchBarDelegate
 {
     
@@ -121,8 +119,9 @@ extension ConversationListController:UISearchBarDelegate
         
         var nearActiveUsers = [VessageUser]()
         
-        var nearUsers = userService.nearUsers.getRandomSubArray(6)
-        var activeUsers = userService.activeUsers.getRandomSubArray(3)
+        var nearUsers = userService.nearUsers.getRandomSubArray(nearUserLimit)
+        var activeUsers = userService.activeUsers.getRandomSubArray(activeUserLimit)
+        
         nearUsers.forEach{ n in
             let contain = activeUsers.contains{ a in
                 a.userId == n.userId

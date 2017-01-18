@@ -86,7 +86,6 @@
 		E70CD4DE1D371665003779B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DD1D371665003779B5 /* Security.framework */; };
 		E70CD4E01D371682003779B5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E70CD4DF1D371682003779B5 /* CoreTelephony.framework */; };
 		E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70EE83A1D17A33B0078B171 /* LocationService.swift */; };
-		E710FD381E2B25ED00D262A3 /* PaperAirplane.strings in Resources */ = {isa = PBXBuildFile; fileRef = E710FD371E2B25ED00D262A3 /* PaperAirplane.strings */; };
 		E718444B1D498CDC00D3EDEF /* TextChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */; };
 		E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */; };
 		E71886741C9FBBCA0028B016 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E71886731C9FBBCA0028B016 /* Camera.storyboard */; };
@@ -189,13 +188,6 @@
 		E7BB6EAB1DA3AEFE00D88A7C /* NFCMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BB6EAA1DA3AEFE00D88A7C /* NFCMainViewController.swift */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
-		E7C12AE91E28FD68007DD742 /* PaperAirplane.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7C12AE81E28FD68007DD742 /* PaperAirplane.storyboard */; };
-		E7C12AEB1E28FD7B007DD742 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7C12AEA1E28FD7B007DD742 /* Media.xcassets */; };
-		E7C12AED1E28FDBD007DD742 /* PaperAirplaneMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12AEC1E28FDBD007DD742 /* PaperAirplaneMainViewController.swift */; };
-		E7C12AEF1E28FE0C007DD742 /* PaperAirplaneDefailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12AEE1E28FE0C007DD742 /* PaperAirplaneDefailViewController.swift */; };
-		E7C12AF11E290425007DD742 /* PaperAirplaneWriteMSGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12AF01E290425007DD742 /* PaperAirplaneWriteMSGViewController.swift */; };
-		E7C12AF51E290470007DD742 /* PaperAirplaneCatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12AF41E290470007DD742 /* PaperAirplaneCatchViewController.swift */; };
-		E7C12AF71E2904BD007DD742 /* PaperAirplaneBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C12AF61E2904BD007DD742 /* PaperAirplaneBoxViewController.swift */; };
 		E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C387F01C982F640096AF85 /* ConversationListCell.swift */; };
 		E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */; };
 		E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */; };
@@ -210,7 +202,6 @@
 		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
 		E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */; };
 		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
-		E7D3303C1E29C81C00076EC8 /* PaperAirplaneRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D3303B1E29C81C00076EC8 /* PaperAirplaneRF.swift */; };
 		E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */; };
 		E7D5182E1DBDA686007F6A5D /* FaceTextBubbleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D5182D1DBDA686007F6A5D /* FaceTextBubbleConfig.swift */; };
 		E7D7C42F1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */; };
@@ -417,7 +408,6 @@
 		E70CD4DD1D371665003779B5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E70CD4DF1D371682003779B5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		E70EE83A1D17A33B0078B171 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		E710FD371E2B25ED00D262A3 /* PaperAirplane.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = PaperAirplane.strings; sourceTree = "<group>"; };
 		E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextChatInputView.swift; sourceTree = "<group>"; };
 		E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectVessageExpandableHeader.swift; sourceTree = "<group>"; };
 		E71886731C9FBBCA0028B016 /* Camera.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
@@ -526,13 +516,6 @@
 		E7BB6EAA1DA3AEFE00D88A7C /* NFCMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMainViewController.swift; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		E7C12AE81E28FD68007DD742 /* PaperAirplane.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PaperAirplane.storyboard; sourceTree = "<group>"; };
-		E7C12AEA1E28FD7B007DD742 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		E7C12AEC1E28FDBD007DD742 /* PaperAirplaneMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperAirplaneMainViewController.swift; sourceTree = "<group>"; };
-		E7C12AEE1E28FE0C007DD742 /* PaperAirplaneDefailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperAirplaneDefailViewController.swift; sourceTree = "<group>"; };
-		E7C12AF01E290425007DD742 /* PaperAirplaneWriteMSGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperAirplaneWriteMSGViewController.swift; sourceTree = "<group>"; };
-		E7C12AF41E290470007DD742 /* PaperAirplaneCatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperAirplaneCatchViewController.swift; sourceTree = "<group>"; };
-		E7C12AF61E2904BD007DD742 /* PaperAirplaneBoxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperAirplaneBoxViewController.swift; sourceTree = "<group>"; };
 		E7C387F01C982F640096AF85 /* ConversationListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		E7C752D91D11092E00AC3439 /* BahamutObjectSortable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutObjectSortable.swift; sourceTree = "<group>"; };
 		E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AvartarAndFace.xcassets; sourceTree = "<group>"; };
@@ -547,7 +530,6 @@
 		E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEditTextPropertyViewController.swift; sourceTree = "<group>"; };
 		E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		E7D3303B1E29C81C00076EC8 /* PaperAirplaneRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaperAirplaneRF.swift; sourceTree = "<group>"; };
 		E7D518191DBD86A3007F6A5D /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FaceTextChatBubbles.xcassets; sourceTree = "<group>"; };
 		E7D5182D1DBDA686007F6A5D /* FaceTextBubbleConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextBubbleConfig.swift; sourceTree = "<group>"; };
@@ -1282,22 +1264,6 @@
 			name = TextImageMaker;
 			sourceTree = "<group>";
 		};
-		E7C12AE71E28FD68007DD742 /* PaperAirplane */ = {
-			isa = PBXGroup;
-			children = (
-				E710FD371E2B25ED00D262A3 /* PaperAirplane.strings */,
-				E7C12AE81E28FD68007DD742 /* PaperAirplane.storyboard */,
-				E7C12AEA1E28FD7B007DD742 /* Media.xcassets */,
-				E7C12AF41E290470007DD742 /* PaperAirplaneCatchViewController.swift */,
-				E7C12AEC1E28FDBD007DD742 /* PaperAirplaneMainViewController.swift */,
-				E7C12AEE1E28FE0C007DD742 /* PaperAirplaneDefailViewController.swift */,
-				E7C12AF01E290425007DD742 /* PaperAirplaneWriteMSGViewController.swift */,
-				E7C12AF61E2904BD007DD742 /* PaperAirplaneBoxViewController.swift */,
-				E7D3303B1E29C81C00076EC8 /* PaperAirplaneRF.swift */,
-			);
-			path = PaperAirplane;
-			sourceTree = "<group>";
-		};
 		E7C387EF1C982F510096AF85 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1402,7 +1368,6 @@
 		E7EF282E1D791AFD0064231F /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				E7C12AE71E28FD68007DD742 /* PaperAirplane */,
 				E7AC06FF1E0EC13900AB6770 /* MyQuestion */,
 				E7B139C91E061B2100F3D8C9 /* TextImageMaker */,
 				E74109441DE694350030AD1D /* MidNightSilence */,
@@ -1667,7 +1632,6 @@
 				E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E7AC07061E0EC13900AB6770 /* MYQ.storyboard in Resources */,
-				E7C12AEB1E28FD7B007DD742 /* Media.xcassets in Resources */,
 				E77363521E1F654900C25D10 /* Media.xcassets in Resources */,
 				E708AB441C86CAA50071104E /* Assets.xcassets in Resources */,
 				E7EF28671D791AFD0064231F /* NiceFaceClub.storyboard in Resources */,
@@ -1679,7 +1643,6 @@
 				E7AC07051E0EC13900AB6770 /* Media.xcassets in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E741094A1DE69AA60030AD1D /* MNS.strings in Resources */,
-				E710FD381E2B25ED00D262A3 /* PaperAirplane.strings in Resources */,
 				E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
@@ -1687,7 +1650,6 @@
 				E71886771C9FEF820028B016 /* DeveloperPanel.storyboard in Resources */,
 				E71BFCF31DE70AA600384FCB /* Media.xcassets in Resources */,
 				E724E0831E20F6D300D5D511 /* TIMContentEditorController.storyboard in Resources */,
-				E7C12AE91E28FD68007DD742 /* PaperAirplane.storyboard in Resources */,
 				E76DF58B1D1A69D8006BF1A0 /* NavigationBarTitle.xib in Resources */,
 				E708AB421C86CAA50071104E /* Main.storyboard in Resources */,
 			);
@@ -1868,7 +1830,6 @@
 				E7F2C34F1C8D4B3D00F919AE /* VessageCamera.swift in Sources */,
 				E708AC7B1C86EC160071104E /* DownloadExtension.swift in Sources */,
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
-				E7C12AF71E2904BD007DD742 /* PaperAirplaneBoxViewController.swift in Sources */,
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
 				E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */,
@@ -1919,7 +1880,6 @@
 				E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */,
 				E708AC791C86EC160071104E /* FetchBahamutFireExtension.swift in Sources */,
 				E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */,
-				E7C12AED1E28FDBD007DD742 /* PaperAirplaneMainViewController.swift in Sources */,
 				E7AD248A1D4CAD3200F266D8 /* VessageQueueHandlers.swift in Sources */,
 				E708AB9B1C86CF8A0071104E /* FileMgrEntities.swift in Sources */,
 				E7EB9A3C1C87F783002F96FB /* BahamutCmd.swift in Sources */,
@@ -1931,10 +1891,8 @@
 				E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */,
 				E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */,
 				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
-				E7C12AF11E290425007DD742 /* PaperAirplaneWriteMSGViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
 				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,
-				E7C12AF51E290470007DD742 /* PaperAirplaneCatchViewController.swift in Sources */,
 				E7AC07091E0EC13900AB6770 /* MYQRF.swift in Sources */,
 				E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */,
 				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
@@ -1947,7 +1905,6 @@
 				E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */,
 				E7886A691DC97D3D00368C03 /* SNSCommentInputView.swift in Sources */,
 				E7B139D91E06C99600F3D8C9 /* SelectFontViewController.swift in Sources */,
-				E7C12AEF1E28FE0C007DD742 /* PaperAirplaneDefailViewController.swift in Sources */,
 				E7ACEB7B1D4C218400009C5B /* VessageEventHandler.swift in Sources */,
 				E708AB711C86CE1D0071104E /* DateHelper.swift in Sources */,
 				E7D7C4331DE915A200D962D4 /* BahamutCommonLocalized.swift in Sources */,
@@ -1966,7 +1923,6 @@
 				E702FF811DE82F0F003F2B85 /* UIView+RemoveChildView.swift in Sources */,
 				E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */,
 				E70EE83B1D17A33B0078B171 /* LocationService.swift in Sources */,
-				E7D3303C1E29C81C00076EC8 /* PaperAirplaneRF.swift in Sources */,
 				E708AC9E1C87503F0071104E /* EntryNavigationController.swift in Sources */,
 				E7C752DA1D11092E00AC3439 /* BahamutObjectSortable.swift in Sources */,
 				E72F65FC1CE0878B0094BA10 /* SelectVessageUserViewController.swift in Sources */,

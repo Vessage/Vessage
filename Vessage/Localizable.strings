@@ -188,14 +188,18 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 "VESSAGE_MOTTO_1" = "让时间重塑朋友圈";
 "VESSAGE_MOTTO_2" = "不一样的聊天体验";
 "VESSAGE_MOTTO_3" = "晒&秀 - 分享多彩生活";
-"VESSAGE_MOTTO_4" = "晒&秀 - 分享多彩生活";
+"VESSAGE_MOTTO_4" = "晒&秀 - 找回分享的乐趣";
 "VESSAGE_MOTTO_5" = "不聊消失，不打扰";
 "VESSAGE_MOTTO_6" = "不聊消失，不打扰";
-"VESSAGE_MOTTO_7" = "不聊消失，不打扰";
+"VESSAGE_MOTTO_7" = "没有好友关系，释放社交压力";
 
 //Vege
 APP_NAME = "VG";
+WHATS_VG = "VG是什么?";
 DEFAULT_VGER_MOTTO = "和我聊天吧！";
+DEFAULT_SELF_MOTTO = "点这里设置个性签名";
+VGER_MOTTO_HOLDER = "签名就是第一印象";
+NICK_HOLDER = "好的昵称可让好友一眼就认出你";
 CHATTER_INFO = "用户";
 MOBILE_USER = "手机用户";
 USER_ACCOUNT_FORMAT = "VG号:%@";

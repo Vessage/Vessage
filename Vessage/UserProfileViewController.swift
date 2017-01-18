@@ -22,13 +22,11 @@ class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControl
     
     var operateTitle:String?
     
-    
     var initMessage:[String:AnyObject]?
     
     var beforeRemoveTimeSpan:Int64 = ConversationMaxTimeUpMS
     
     var createActivityId:String? = nil
-    
     
     func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
         if let nvc = sender.navigationController{

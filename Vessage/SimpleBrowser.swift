@@ -66,12 +66,15 @@ class SimpleBrowser: UIViewController,UIWebViewDelegate
     
     //"SimpleBrowser"
     
-    static func openUrl(currentViewController:UINavigationController,url:String,title:String?) -> SimpleBrowser
+    static func openUrl(currentViewController:UIViewController,url:String,title:String?) -> SimpleBrowser
     {
         let controller = SimpleBrowser()
+        let navController = UINavigationController(rootViewController: controller)
+        
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            let navController = UINavigationController(rootViewController: controller)
-            navController.navigationBar.barStyle = currentViewController.navigationBar.barStyle
+            if let cnvc = currentViewController as? UINavigationController{
+                navController.navigationBar.barStyle = cnvc.navigationBar.barStyle
+            }
             controller.title = title
             currentViewController.presentViewController(navController, animated: true, completion: {
                 controller.url = url;

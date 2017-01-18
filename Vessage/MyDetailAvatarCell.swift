@@ -132,6 +132,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         propertySet.propertyLabel = "MOTTO".localizedString()
         propertySet.propertyValue = rootController.myProfile.motto
         propertySet.isOneLineValue = false
+        propertySet.valueTextViewHolder = "VGER_MOTTO_HOLDER".localizedString()
         UIEditTextPropertyViewController.showEditPropertyViewController(self.rootController.navigationController!, propertySet:propertySet, controllerTitle: propertySet.propertyLabel, delegate: self)
     }
     
@@ -156,6 +157,7 @@ class MyDetailAvatarCell:UITableViewCell,UIEditTextPropertyViewControllerDelegat
         propertySet.propertyIdentifier = "nickname"
         propertySet.propertyLabel = "NICK".localizedString()
         propertySet.propertyValue = rootController.myProfile.nickName
+        propertySet.valueTextViewHolder = "NICK_HOLDER".localizedString()
         UIEditTextPropertyViewController.showEditPropertyViewController(self.rootController.navigationController!, propertySet:propertySet, controllerTitle: propertySet.propertyLabel, delegate: self)
     }
     

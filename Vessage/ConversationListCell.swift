@@ -115,9 +115,11 @@ class ConversationListCell:ConversationListCellBase{
         didSet{
             pinMark?.hidden = true
             timeupProgressView?.hidden = true
+            subLineLabel?.morphingEnabled = true
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
             }else if let searchResult = originModel as? SearchResultModel{
+                subLineLabel?.morphingEnabled = false
                 switch searchResult.type {
                 case .userActiveNear:
                     updateWithUser(searchResult.user)

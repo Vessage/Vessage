@@ -50,9 +50,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yd8-PL-l6b">
-                                <rect key="frame" x="150.5" y="613" width="74" height="34"/>
+                                <rect key="frame" x="141.5" y="613" width="92" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="没有账号">
+                                <state key="normal" title="注册新账号">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -156,14 +156,14 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5J4-Ma-210">
-                                <rect key="frame" x="150.5" y="613" width="74" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5f-UQ-3p6">
+                                <rect key="frame" x="197.5" y="613" width="161.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="已有账号">
+                                <state key="normal" title="VG是什么？">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="showSignIn:" destination="ifR-cW-1ax" eventType="touchUpInside" id="UFh-0a-a1X"/>
+                                    <action selector="whatsVG:" destination="ifR-cW-1ax" eventType="touchUpInside" id="OhK-eO-dg9"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7tD-5g-aDl">
@@ -175,32 +175,46 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5J4-Ma-210">
+                                <rect key="frame" x="16" y="613" width="161.5" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="登录账号">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="showSignIn:" destination="ifR-cW-1ax" eventType="touchUpInside" id="UFh-0a-a1X"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.49287248859999999" green="0.86567961910000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="5J4-Ma-210" secondAttribute="bottom" constant="20" symbolic="YES" id="099-Xl-iWK"/>
+                            <constraint firstItem="n5f-UQ-3p6" firstAttribute="width" secondItem="5J4-Ma-210" secondAttribute="width" id="1Fn-X1-0Qc"/>
                             <constraint firstItem="40J-7n-SkL" firstAttribute="top" secondItem="d33-PO-7xZ" secondAttribute="bottom" constant="16" id="1Zg-U2-C0N"/>
                             <constraint firstItem="1H0-d1-16j" firstAttribute="top" secondItem="aS6-Mh-7OT" secondAttribute="bottom" constant="8" symbolic="YES" id="6Hu-I8-fhj"/>
                             <constraint firstItem="aS6-Mh-7OT" firstAttribute="trailing" secondItem="F1a-pm-84x" secondAttribute="trailingMargin" id="7fG-dm-o50"/>
                             <constraint firstItem="sWb-YJ-RrT" firstAttribute="top" secondItem="1H0-d1-16j" secondAttribute="bottom" constant="23" id="Il3-Cp-uyF"/>
                             <constraint firstItem="d33-PO-7xZ" firstAttribute="centerX" secondItem="F1a-pm-84x" secondAttribute="centerX" id="LkO-L4-vDN"/>
                             <constraint firstItem="aS6-Mh-7OT" firstAttribute="centerY" secondItem="F1a-pm-84x" secondAttribute="centerY" multiplier="3:4" id="ODY-a3-MHj"/>
+                            <constraint firstItem="5J4-Ma-210" firstAttribute="centerY" secondItem="n5f-UQ-3p6" secondAttribute="centerY" id="RHT-Bz-KQ8"/>
                             <constraint firstItem="1H0-d1-16j" firstAttribute="leading" secondItem="aS6-Mh-7OT" secondAttribute="leading" id="WHx-KI-U52"/>
                             <constraint firstItem="40J-7n-SkL" firstAttribute="centerX" secondItem="aS6-Mh-7OT" secondAttribute="centerX" id="Yys-d7-wLF"/>
+                            <constraint firstItem="5J4-Ma-210" firstAttribute="leading" secondItem="F1a-pm-84x" secondAttribute="leadingMargin" id="ZNf-Be-cXd"/>
                             <constraint firstItem="7tD-5g-aDl" firstAttribute="centerY" secondItem="sWb-YJ-RrT" secondAttribute="centerY" id="ZtL-B4-Gpt"/>
+                            <constraint firstItem="n5f-UQ-3p6" firstAttribute="leading" secondItem="5J4-Ma-210" secondAttribute="trailing" constant="20" id="aB5-Ai-eRl"/>
                             <constraint firstItem="5J4-Ma-210" firstAttribute="top" secondItem="sWb-YJ-RrT" secondAttribute="bottom" constant="76" id="aNU-sK-EBr"/>
                             <constraint firstItem="7tD-5g-aDl" firstAttribute="centerX" secondItem="sWb-YJ-RrT" secondAttribute="centerX" id="bOh-N6-pPC"/>
                             <constraint firstItem="sWb-YJ-RrT" firstAttribute="centerX" secondItem="F1a-pm-84x" secondAttribute="centerX" id="d7z-Qz-BmE"/>
                             <constraint firstItem="1H0-d1-16j" firstAttribute="trailing" secondItem="aS6-Mh-7OT" secondAttribute="trailing" id="daT-yZ-VdD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="n5f-UQ-3p6" secondAttribute="trailing" id="n85-td-zRX"/>
                             <constraint firstItem="d33-PO-7xZ" firstAttribute="centerY" secondItem="F1a-pm-84x" secondAttribute="centerY" multiplier="3:7" id="oCS-6X-5xg"/>
                             <constraint firstItem="aS6-Mh-7OT" firstAttribute="top" secondItem="40J-7n-SkL" secondAttribute="bottom" constant="20" id="q4W-mF-kml"/>
-                            <constraint firstItem="5J4-Ma-210" firstAttribute="centerX" secondItem="F1a-pm-84x" secondAttribute="centerX" id="qzj-BR-8ow"/>
                             <constraint firstItem="aS6-Mh-7OT" firstAttribute="leading" secondItem="F1a-pm-84x" secondAttribute="leadingMargin" id="wdb-na-73t"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="aNU-sK-EBr"/>
                                 <exclude reference="oCS-6X-5xg"/>
+                                <exclude reference="aNU-sK-EBr"/>
                             </mask>
                         </variation>
                     </view>

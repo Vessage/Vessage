@@ -284,7 +284,7 @@ extension UserService{
         
         property.propertyIdentifier = "NOTE_USER_NAME"
         
-        property.propertyLabel = "CONVERSATION_NAME".localizedString()
+        property.valueTextViewHolder = "CONVERSATION_NAME".localizedString()
         property.valueRegex = "^.{1,20}$"
         property.userInfo = ["userid":user.userId]
         let title = String(format: "NOTE_X_NAME".localizedString(),user.nickName ?? user.accountId ?? property.propertyValue)

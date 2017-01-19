@@ -220,7 +220,6 @@ extension MNSMainController{
         property.valueRegex = MNSMainController.midNightAnncRegex
         let controller = UIEditTextPropertyViewController.showEditPropertyViewController(self.navigationController!, propertySet: property, controllerTitle: "UPDATE_MY_MID_NIGHT_ANNC".mnsLocalizedString, delegate: self)
         controller.view.backgroundColor = UIColor.darkGrayColor()
-        controller.propertyNameLabel.textColor = UIColor.lightGrayColor()
         controller.propertyValueTextField.textColor = UIColor.lightGrayColor()
         controller.propertyValueTextView.textColor = UIColor.lightGrayColor()
     }

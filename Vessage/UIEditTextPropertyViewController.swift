@@ -43,7 +43,6 @@ class UIEditTextPropertyViewController: UIViewController
         }
     }
     @IBOutlet weak var propertyValueTextField: UITextField!
-    @IBOutlet weak var propertyNameLabel: UILabel!
     
     var model:UIEditTextPropertySet!
     var delegate:UIEditTextPropertyViewControllerDelegate?
@@ -52,7 +51,7 @@ class UIEditTextPropertyViewController: UIViewController
         super.viewDidLoad()
         self.hidesBottomBarWhenPushed = true
         updateTextValueView()
-        propertyNameLabel.text = model?.propertyLabel
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -67,6 +66,7 @@ class UIEditTextPropertyViewController: UIViewController
         }else{
             propertyValueTextView.text = model?.propertyValue
         }
+        
         propertyValueTextView.hidden = model.isOneLineValue
         propertyValueTextField.hidden = !model.isOneLineValue
         propertyValueTextField.placeholder = model?.valueTextViewHolder

@@ -24,18 +24,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7xo-mY-Wlp">
-                                <rect key="frame" x="130" y="70.5" width="229" height="30"/>
+                                <rect key="frame" x="16" y="71" width="343" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Property Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdo-fQ-PTU">
-                                <rect key="frame" x="6" y="74" width="116" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Property Text Value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nk5-Bf-jD5" customClass="BahamutTextView" customModule="Vessage">
-                                <rect key="frame" x="6" y="102.5" width="353" height="128"/>
+                                <rect key="frame" x="6" y="72" width="353" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="v7b-tF-iAI"/>
                                 </constraints>
@@ -46,13 +40,11 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="nk5-Bf-jD5" firstAttribute="trailing" secondItem="7xo-mY-Wlp" secondAttribute="trailing" id="0rM-49-E0z"/>
-                            <constraint firstItem="7xo-mY-Wlp" firstAttribute="leading" secondItem="pdo-fQ-PTU" secondAttribute="trailing" constant="8" symbolic="YES" id="0u7-Gt-elA"/>
-                            <constraint firstItem="7xo-mY-Wlp" firstAttribute="baseline" secondItem="pdo-fQ-PTU" secondAttribute="baseline" id="0wX-91-tew"/>
-                            <constraint firstItem="nk5-Bf-jD5" firstAttribute="top" secondItem="pdo-fQ-PTU" secondAttribute="bottom" constant="8" symbolic="YES" id="EiZ-bQ-8Me"/>
-                            <constraint firstItem="nk5-Bf-jD5" firstAttribute="leading" secondItem="pdo-fQ-PTU" secondAttribute="leading" id="QpE-Q1-ShP"/>
-                            <constraint firstItem="pdo-fQ-PTU" firstAttribute="top" secondItem="z2n-cf-pIK" secondAttribute="bottom" constant="10" id="dDB-cn-4M0"/>
+                            <constraint firstItem="7xo-mY-Wlp" firstAttribute="top" secondItem="z2n-cf-pIK" secondAttribute="bottom" constant="7" id="JVh-dN-EHj"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="7xo-mY-Wlp" secondAttribute="leading" id="TyI-BW-x5Q"/>
+                            <constraint firstItem="nk5-Bf-jD5" firstAttribute="leading" secondItem="51c-sN-QF4" secondAttribute="leadingMargin" constant="-10" id="dUR-uA-J8B"/>
+                            <constraint firstItem="nk5-Bf-jD5" firstAttribute="top" secondItem="z2n-cf-pIK" secondAttribute="bottom" constant="8" symbolic="YES" id="lKx-vn-xk8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7xo-mY-Wlp" secondAttribute="trailing" id="pDj-Gs-EP0"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="pdo-fQ-PTU" secondAttribute="leading" constant="10" id="yHB-PG-SDd"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
@@ -69,14 +61,13 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="propertyNameLabel" destination="pdo-fQ-PTU" id="fMZ-hD-rLs"/>
                         <outlet property="propertyValueTextField" destination="7xo-mY-Wlp" id="FGK-d2-Yn1"/>
                         <outlet property="propertyValueTextView" destination="nk5-Bf-jD5" id="9Kp-RS-geg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JXz-r0-Crz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="660" y="2036"/>
+            <point key="canvasLocation" x="660" y="2035.2323838080961"/>
         </scene>
         <!--About-->
         <scene sceneID="YBi-jJ-XUp">

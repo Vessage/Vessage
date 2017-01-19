@@ -10,16 +10,17 @@ import UIKit
 
 let maxGroupChatUserCount = 6
 
-class ConversationListGroupChatCell: ConversationListCellBase,SelectVessageUserViewControllerDelegate {
-    static let reuseId = "ConversationListGroupChatCell"
+class ConversationListGroupChatCellDelegate: NSObject,ConversationTitleCellDelegate,SelectVessageUserViewControllerDelegate {
+    private var rootController:ConversationListController!
     
-    override func onCellClicked() {
-        let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.rootController.navigationController!)
-        controller.delegate = self
-        controller.allowsMultipleSelection = true
-        controller.showNearUsers = false
-        controller.showActiveUsers = false
-        controller.title = "SELECT_GROUP_CHAT_PEOPLE".localizedString()
+    func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+        self.rootController = controller
+        let svuvc = SelectVessageUserViewController.showSelectVessageUserViewController(controller.navigationController!)
+        svuvc.delegate = self
+        svuvc.allowsMultipleSelection = true
+        svuvc.showNearUsers = false
+        svuvc.showActiveUsers = false
+        svuvc.title = "SELECT_GROUP_CHAT_PEOPLE".localizedString()
     }
     
     func canSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {

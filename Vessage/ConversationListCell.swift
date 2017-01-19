@@ -20,9 +20,6 @@ class ConversationListCellBase:UITableViewCell{
     
     deinit{
         rootController = nil
-        #if DEBUG
-            print("Deinited:ConversationListCellBase")
-        #endif
     }
 }
 

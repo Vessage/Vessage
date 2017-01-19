@@ -12,11 +12,12 @@ import AddressBookUI
 let SHOW_OPEN_MOBILE_CONVERSATION_KEY = "SHOW_OPEN_MOBILE_CONVERSATION_KEY"
 
 //MARK: ConversationListContactCell
-class ConversationListContactCell:ConversationListCellBase,ABPeoplePickerNavigationControllerDelegate{
-    static let reuseId = "ConversationListContactCell"
+class ConversationListContactCellDelegate:NSObject,ConversationTitleCellDelegate,ABPeoplePickerNavigationControllerDelegate{
     
-    @IBOutlet weak var titleLabel: UILabel!
-    override func onCellClicked() {
+    private var rootController:ConversationListController!
+    
+    func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+        self.rootController = controller
         if !tryShowTips() {
             showContact()
         }

@@ -11,9 +11,10 @@ import Foundation
 //MARK: Conversation
 class Conversation:BahamutObject
 {
-    static let typeSingleChat = 1;
-    static let typeGroupChat = 2;
-    static let typeMultiChat = 3;
+    static let typeSelfChat = -1
+    static let typeSingleChat = 1
+    static let typeGroupChat = 2
+    static let typeMultiChat = 3
     
     override func getObjectUniqueIdName() -> String {
         return "conversationId"

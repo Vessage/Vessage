@@ -42,7 +42,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YE7-6d-8ZT" id="qhQ-0l-EBc">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ce-4C-H7P">
@@ -147,11 +147,11 @@
                             </scopeButtonTitles>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListContactCell" rowHeight="64" id="BFQ-pW-Avf" customClass="ConversationListContactCell" customModule="Vessage" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationTitleCell" rowHeight="64" id="BFQ-pW-Avf" customClass="ConversationTitleCell" customModule="Vessage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFQ-pW-Avf" id="QCi-aS-PcC">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="l5d-k1-rfq">
@@ -197,64 +197,16 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="titleLabel" destination="aHF-ve-t4x" id="yxG-3p-pgV"/>
+                                    <outlet property="iconImageView" destination="IBS-1L-o8S" id="Kgy-qj-BDD"/>
+                                    <outlet property="nextMark" destination="l5d-k1-rfq" id="gwS-WZ-8if"/>
+                                    <outlet property="titleLabel" destination="aHF-ve-t4x" id="6Xc-Oq-wMz"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListGroupChatCell" rowHeight="67" id="eqc-1n-Tx6" customClass="ConversationListGroupChatCell" customModule="Vessage" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatImageManageCell" rowHeight="67" id="McZ-Aw-ZfF" customClass="ChatImageManageCell" customModule="Vessage" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="136" width="375" height="67"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqc-1n-Tx6" id="Dzp-rL-num">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新建小群组" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fE3-aP-UTo">
-                                            <rect key="frame" x="64" y="23" width="87" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="pep-dO-8sA">
-                                            <rect key="frame" x="335" y="17" width="32" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="32" id="XxD-1M-6o1"/>
-                                                <constraint firstAttribute="width" constant="32" id="nrQ-oJ-aC6"/>
-                                            </constraints>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_chat" translatesAutoresizingMaskIntoConstraints="NO" id="dSY-LO-hOV">
-                                            <rect key="frame" x="8" y="9" width="48" height="48"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="48" id="i96-A4-QX5"/>
-                                                <constraint firstAttribute="height" constant="48" id="za1-30-0p7"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="6"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="dSY-LO-hOV" firstAttribute="centerY" secondItem="Dzp-rL-num" secondAttribute="centerY" id="6p6-gd-lir"/>
-                                        <constraint firstItem="dSY-LO-hOV" firstAttribute="leading" secondItem="Dzp-rL-num" secondAttribute="leadingMargin" id="8P6-Bb-lPV"/>
-                                        <constraint firstItem="fE3-aP-UTo" firstAttribute="leading" secondItem="Dzp-rL-num" secondAttribute="leadingMargin" id="DHA-Ab-AU1"/>
-                                        <constraint firstItem="fE3-aP-UTo" firstAttribute="leading" secondItem="dSY-LO-hOV" secondAttribute="trailing" constant="8" id="OVv-t7-1n4"/>
-                                        <constraint firstItem="fE3-aP-UTo" firstAttribute="centerY" secondItem="Dzp-rL-num" secondAttribute="centerY" id="Twq-7L-Dxb"/>
-                                        <constraint firstItem="pep-dO-8sA" firstAttribute="centerY" secondItem="Dzp-rL-num" secondAttribute="centerY" id="Wbw-55-ace"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="pep-dO-8sA" secondAttribute="trailing" id="x7o-nq-e7x"/>
-                                    </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="DHA-Ab-AU1"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ChatImageManageCell" rowHeight="67" id="McZ-Aw-ZfF" customClass="ChatImageManageCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="203" width="375" height="67"/>
-                                <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="McZ-Aw-ZfF" id="RjB-WW-LK2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="67"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的聊天大头贴" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-T2-sni">
@@ -301,10 +253,10 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ConversationListCell" rowHeight="60" id="Szw-pL-qT1" customClass="ConversationListCell" customModule="Vessage" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="270" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="203" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Szw-pL-qT1" id="eWr-qG-EjH">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="03z-SN-R3E">
@@ -444,7 +396,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uc2-5c-1Wb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140" y="1927"/>
+            <point key="canvasLocation" x="1140" y="1926.3868065967017"/>
         </scene>
         <!--Entry Navigation Controller-->
         <scene sceneID="TUa-vT-9qI">
@@ -505,7 +457,6 @@
         <image name="conversation" width="24" height="24"/>
         <image name="defaultAvatar" width="128" height="128"/>
         <image name="favorite" width="24" height="24"/>
-        <image name="group_chat" width="120" height="120"/>
         <image name="next" width="72" height="72"/>
         <image name="question" width="16" height="16"/>
         <image name="settings" width="21" height="21"/>

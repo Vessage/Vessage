@@ -293,7 +293,10 @@ REQUIRE_SMS_FUNCTION_MSG = "请在系统设置打开VG的短信权限";
 SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta吧?";
 NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧!\n%@";
 
+CHAT_WITH_SELF = "与自己聊天";
 SEL_CONTACTS_ITEM = "新建手机好友聊天";
+NEW_CHAT_GROUP = "新建小群组";
+MANAGE_MY_CHAT_IMAGES = "我的聊天大头贴";
 
 REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
 REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";

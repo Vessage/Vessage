@@ -13,6 +13,15 @@ import EVReflection
 
 class SetupNiceFaceViewController: UIViewController {
 
+    static let imageWidth:CGFloat = 480
+    static let imageQuality:CGFloat = 0.6
+    static func saveImage(image:UIImage) -> String?{
+        let img = image.scaleToWidthOf(imageWidth)
+        let imageData = UIImageJPEGRepresentation(img, imageQuality)
+        let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
+        return PersistentFileHelper.storeFile(imageData!, filePath: localPath) ? localPath : nil
+    }
+    
     @IBOutlet weak var faceScoreViewMask: UIView!{
         didSet{
             faceScoreViewMask.layoutIfNeeded()
@@ -41,8 +50,8 @@ class SetupNiceFaceViewController: UIViewController {
     private var takedImage:UIImage?{
         didSet{
             if let chatImage = takedImage {
-                let img = chatImage.scaleToWidthOf(ChatBackgroundPickerController.chatImageWidth)
-                self.imageData = UIImageJPEGRepresentation(img, ChatBackgroundPickerController.chatImageQuality)
+                let img = chatImage.scaleToWidthOf(SetupNiceFaceViewController.imageWidth)
+                self.imageData = UIImageJPEGRepresentation(img, SetupNiceFaceViewController.imageQuality)
             }else{
                 takedImageView?.image = nil
                 takedImageView?.removeFromSuperview()
@@ -256,7 +265,7 @@ extension SetupNiceFaceViewController{
     private func pushSetNiceFaceUploadTask(){
         
         hud = showActivityHud()
-        if let filePath = ChatBackgroundPickerController.saveChatImage(takedImage!){
+        if let filePath = SetupNiceFaceViewController.saveImage(takedImage!){
             let task = SetChatImagesTask()
             task.filePath = filePath
             task.imageType = nil

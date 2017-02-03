@@ -88,6 +88,12 @@ class BezierBubbleView: UIView {
         return contentContainer.subviews.first
     }
     
+    func removeContentView() -> UIView? {
+        let view = contentContainer.subviews.first
+        contentContainer.removeAllSubviews()
+        return view
+    }
+    
     func sizeOfContentSize(contentSize:CGSize,direction:BezierBubbleDirection) -> CGSize {
         switch self.bubbleDirection {
         case .Down(startXRatio: _),.Up(startXRatio: _):

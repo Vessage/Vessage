@@ -11,7 +11,7 @@ let ImageVessageImageWidth:CGFloat = 600
 let ImageVessageImageQuality:CGFloat = 0.8
 
 //MARK: Send Image Vessage Extension
-extension ConversationViewController:UIImagePickerControllerDelegate{
+extension ConversationViewController:UIImagePickerControllerDelegate,ChatSendContentConfirmControllerDelegate{
     
     func initSendImage() {
         let tapSendImage = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onClickImageButton(_:)))
@@ -40,7 +40,15 @@ extension ConversationViewController:UIImagePickerControllerDelegate{
     {
         picker.dismissViewControllerAnimated(true)
         {
-            let image = image.scaleToWidthOf(ImageVessageImageWidth, quality: ImageVessageImageQuality)
+            ChatSendContentConfirmController.showConfirmView(self, contentImage: image, delegate: self)
+            
+        }
+    }
+    
+    //MARK:ChatSendContentConfirmControllerDelegate
+    func chatSendContentConfirmControllerSend(sender: ChatSendContentConfirmController, contentImage: UIImage?) {
+        if let cimg = contentImage{
+            let image = cimg.scaleToWidthOf(ImageVessageImageWidth, quality: ImageVessageImageQuality)
             let localPath = PersistentManager.sharedInstance.createTmpFileName(.Image)
             let imageData = UIImageJPEGRepresentation(image,1)
             if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
@@ -56,5 +64,9 @@ extension ConversationViewController:UIImagePickerControllerDelegate{
                 self.playCrossMark("PROCESS_IMAGE_ERROR".localizedString())
             }
         }
+    }
+    
+    func chatSendContentConfirmControllerCancel(sender: ChatSendContentConfirmController) {
+        
     }
 }

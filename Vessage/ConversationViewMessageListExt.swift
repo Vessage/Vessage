@@ -10,6 +10,7 @@ import Foundation
 
 
 class ConversationMessageListCellBase: UITableViewCell {
+    func initCell() {}
     func presentVessage(controller:ConversationViewController,vessage:Vessage) {}
     func setContentView(controller:ConversationViewController,vessage:Vessage) {}
 }
@@ -41,6 +42,11 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
     
     var avatarImageView:UIImageView?{
         return nil
+    }
+    
+    override func initCell() {
+        super.initCell()
+        bubbleView.removeContentView()
     }
     
     var contentContainerView:UIView?{
@@ -138,10 +144,18 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
 }
 
 class ConversationMessageListLeftCell: ConversationMessageListCell {
+    
     static let reusedId = "ConversationMessageListLeftCell"
+    
+    static let bubbleColor = UIColor.whiteColor().adjustedHueColor(0.8)
     
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var avatarImgView: UIImageView!
+    
+    override func initCell() {
+        super.initCell()
+        bubbleView.bubbleViewLayer.fillColor = ConversationMessageListLeftCell.bubbleColor.CGColor
+    }
     
     override var isLeftCell: Bool{
         return true
@@ -158,8 +172,15 @@ class ConversationMessageListLeftCell: ConversationMessageListCell {
 class ConversationMessageListRightCell: ConversationMessageListCell {
     static let reusedId = "ConversationMessageListRightCell"
     
+    static let bubbleColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
+    
     @IBOutlet weak var avatarImgView: UIImageView!
     @IBOutlet weak var contentContainer: UIView!
+    
+    override func initCell() {
+        super.initCell()
+        bubbleView.bubbleViewLayer.fillColor = ConversationMessageListRightCell.bubbleColor.CGColor
+    }
     
     override var avatarImageView: UIImageView?{
         return avatarImgView
@@ -202,6 +223,7 @@ extension ConversationViewController:UITableViewDelegate,UITableViewDataSource{
             reuseId = ConversationMessageListLeftCell.reusedId
         }
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseId, forIndexPath: indexPath) as! ConversationMessageListCellBase
+        cell.initCell()
         cell.setContentView(self, vessage: vsg)
         return cell
     }
@@ -224,11 +246,18 @@ extension ConversationViewController{
         if !String.isNullOrWhiteSpace(self.conversation.chatterId) {
             let vsgs = vessageService.getNotReadVessages(self.conversation.chatterId)
             if vsgs.count > 0 {
+                let startVsg = generateTipsVessage(vsgs.first!.getSendTime().toLocalDateTimeSimpleString())
+                self.vessages.append(startVsg)
                 self.vessages.appendContentsOf(vsgs)
             }else if conversation.type == Conversation.typeSingleChat{
                 let nick = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
                 let dateString = NSDate().toLocalDateTimeSimpleString()
                 let msg = String(format: "CHAT_WITH_X_AT_D".localizedString(), nick,dateString)
+                let startVsg = generateTipsVessage(msg)
+                self.vessages.append(startVsg)
+            }else if conversation.type == Conversation.typeGroupChat{
+                let nick = chatGroup.groupName
+                let msg = String(format: "CHAT_WITH_GROUP_X_AT_D".localizedString(), nick)
                 let startVsg = generateTipsVessage(msg)
                 self.vessages.append(startVsg)
             }

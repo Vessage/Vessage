@@ -108,30 +108,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         return user
     }
     
-    func registNewUserByMobile(mobile:String,noteName:String,updatedCallback:(user:VessageUser?)->Void) {
-        let req = RegistMobileUserRequest()
-        req.mobile = mobile
-        //req.inviteMessage = "INVITE_MOBILE_FRIEND_MSG".localizedString()
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
-            if result.isFailure{
-                updatedCallback(user: nil)
-            }else if let user = result.returnObject{
-                #if DEBUG
-                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
-                #endif
-                user.nickName = noteName
-                user.lastUpdatedTime = NSDate()
-                user.saveModel()
-                self.setUserNoteName(user.userId, noteName: noteName)
-                PersistentManager.sharedInstance.saveAll()
-                updatedCallback(user: user)
-                self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
-            }else{
-                updatedCallback(user: nil)
-            }
-        }
-    }
-    
     func getCachedUserByMobile(mobile:String) -> VessageUser? {
         let mobileHash = mobile.md5
         return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.mobile) && (mobile == $0.mobile || mobileHash == $0.mobile)}.first
@@ -139,12 +115,16 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     
     func getUserProfileByMobile(mobile:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
         let result:VessageUser? = getCachedUserByMobile(mobile)
+        fetchUserProfileByMobile(mobile, lastUpdatedTime: result?.lastUpdatedTime,updatedCallback: updatedCallback)
+        return result
+    }
+    
+    func fetchUserProfileByMobile(mobile:String,lastUpdatedTime:NSDate?,updatedCallback:(user:VessageUser?)->Void){
         let req = GetUserInfoByMobileRequest()
         req.mobile = mobile
-        getUserProfileByReq(result?.lastUpdatedTime, req: req){ user in
+        getUserProfileByReq(lastUpdatedTime, req: req){ user in
             updatedCallback(user: user)
         }
-        return result
     }
     
     func getCachedUserByAccountId(accountId:String) -> VessageUser? {
@@ -658,6 +638,33 @@ extension UserService{
                 }
             }else{
                 callback(suc: false,newUserId: nil)
+            }
+        }
+    }
+}
+
+//MARK: Deprecated
+extension UserService{
+    private func registNewUserByMobile(mobile:String,noteName:String,updatedCallback:(user:VessageUser?)->Void) {
+        let req = RegistMobileUserRequest()
+        req.mobile = mobile
+        //req.inviteMessage = "INVITE_MOBILE_FRIEND_MSG".localizedString()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
+            if result.isFailure{
+                updatedCallback(user: nil)
+            }else if let user = result.returnObject{
+                #if DEBUG
+                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
+                #endif
+                user.nickName = noteName
+                user.lastUpdatedTime = NSDate()
+                user.saveModel()
+                self.setUserNoteName(user.userId, noteName: noteName)
+                PersistentManager.sharedInstance.saveAll()
+                updatedCallback(user: user)
+                self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
+            }else{
+                updatedCallback(user: nil)
             }
         }
     }

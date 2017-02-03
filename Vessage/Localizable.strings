@@ -218,7 +218,8 @@ CONTINUE_SETUP_MOBILE = "继续设置";
 CANCEL_SETUP_MOBILE_TITLE = "确定跳过设置手机号？";
 CANCEL_SETUP_MOBILE_MSG = "跳过后将接收不到朋友通过手机号发送给你的消息，建议继续设置";
 
-OPEN_MOBILE_CONVERSATION_FAIL = "打开对话出错，请检查网络>_<";
+NO_USER_OF_MOBILE = "没有找到绑定该手机的用户";
+MOBILE_X_INVITE_JOIN_VG = "%@\n你可以邀请该好友加入VG";
 
 ASK_REMOVE_CONVERSATION_TITLE = "确定移除对话?";
 NO_SUCH_CONVERSATION = "没有找到该对话";
@@ -294,7 +295,7 @@ SEND_NOTIFY_SMS_TO_FRIEND = "对方还没玩VG，先发送一条消息通知Ta�
 NOTIFY_SMS_FORMAT = "我发送了一条视频消息给你，赶快下载VG查看吧!\n%@";
 
 CHAT_WITH_SELF = "与自己聊天";
-SEL_CONTACTS_ITEM = "新建手机好友聊天";
+SEL_CONTACTS_ITEM = "查找手机联系人";
 NEW_CHAT_GROUP = "新建小群组";
 MANAGE_MY_CHAT_IMAGES = "我的聊天大头贴";
 
@@ -404,5 +405,8 @@ REFRESH_NEAR_USER_IDLE = "";
 COPY_CONTENT = "复制内容";
 TEXT_COPIED = "文本已经复制到剪切板";
 
+
+INVITE = "邀请";
 INVITE_MOBILE_FRIEND_MSG = "我在玩VG聊天，发条消息给你，收到请回复";
 CHAT_WITH_X_AT_D = "正在与 %@ 聊天\n本次对话开始于%@";
+CHAT_WITH_GROUP_X_AT_D = "已经进入群组\n%@";

@@ -256,13 +256,19 @@ class ConversationListController: UITableViewController {
             ConversationViewController.showConversationViewController(self.navigationController!, userId: user.userId)
         }else{
             let hud = self.showAnimationHud()
-            self.userService.registNewUserByMobile(mobile, noteName: noteName ?? mobile, updatedCallback: { (user) in
+            self.userService.fetchUserProfileByMobile(mobile, lastUpdatedTime: nil, updatedCallback: { (user) in
                 hud.hideAnimated(true)
                 if let u = user{
                     let delegate = UserProfileViewControllerDelegateOpenConversation()
                     UserProfileViewController.showUserProfileViewController(self, userProfile: u, delegate: delegate)
                 }else{
-                    self.showAlert("OPEN_MOBILE_CONVERSATION_FAIL".localizedString(), msg: mobile)
+                    let title = "NO_USER_OF_MOBILE".localizedString()
+                    let msg = String(format: "MOBILE_X_INVITE_JOIN_VG".localizedString(), mobile)
+                    let invite = UIAlertAction(title: "INVITE".localizedString(), style: .Default, handler: { (ac) in
+                        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+                    })
+                    
+                    self.showAlert(title, msg: msg,actions: [ALERT_ACTION_CANCEL,invite])
                 }
             })
         }

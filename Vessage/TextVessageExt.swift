@@ -50,7 +50,7 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
     }
     
     func textChatInputViewDidClickChatImage(sender: AnyObject?) {
-        self.showChatImagesMrgController(1)
+        //self.showChatImagesMrgController(1)
     }
     
     //MARK: actions
@@ -71,12 +71,14 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
         return true
     }
     
+    /*
     func showNoChatImagesAlert(){
         let ok = UIAlertAction(title: "OK".localizedString(), style: .Default) { (ac) in
             self.showChatImagesMrgController(1)
         }
         self.showAlert("NO_CHAT_IMAGES".localizedString(), msg: "U_MUST_SET_CHAT_IMAGES".localizedString(), actions: [ok])
     }
+ */
     
     private func sendImageChatVessage() {
         self.setProgressSending()

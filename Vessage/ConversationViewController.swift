@@ -335,43 +335,6 @@ extension ConversationViewController{
     }
 }
 
-//MARK: Set Chat Backgroud
-extension ConversationViewController:ChatBackgroundPickerControllerDelegate{
-    
-    func showChatImagesMrgController(index:Int){
-        ChatImageMgrViewController.showChatImageMgrVeiwController(self,defaultIndex: index)
-    }
-    
-    func chatBackgroundPickerSetedImage(sender: ChatBackgroundPickerController) {
-        sender.dismissViewControllerAnimated(true){
-            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-                self.startRecordVideoVessage()
-            })
-            self.showAlert("CHAT_BCG_SETED_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
-        }
-    }
-    
-    func chatBackgroundPickerSetImageCancel(sender: ChatBackgroundPickerController) {
-        let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-            self.startRecordVideoVessage()
-        })
-        self.showAlert("CHAT_BCG_NOT_SET_TITLE".localizedString(), msg: "CHAT_BCG_SETED_MSG".localizedString(), actions: [ok])
-    }
-    
-    func needSetChatBackgroundAndShow() -> Bool{
-        if !needSetChatImageIfNotExists || userService.isUserChatBackgroundIsSeted{
-            return false
-        }else{
-            needSetChatImageIfNotExists = false
-            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
-                ChatImageMgrViewController.showChatImageMgrVeiwController(self, defaultIndex: 0)
-            })
-            self.showAlert("NEED_SET_CHAT_BCG_TITLE".localizedString(), msg: "NEED_SET_CHAT_BCG_MSG".localizedString(), actions: [ok])
-            return true
-        }
-    }
-}
-
 //MARK: Send Vessage Status
 extension ConversationViewController{
     

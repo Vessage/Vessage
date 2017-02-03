@@ -559,7 +559,7 @@
         <!--Chat Send Content Confirm Controller-->
         <scene sceneID="nWJ-Ha-YUU">
             <objects>
-                <viewController storyboardIdentifier="ChatSendContentConfirmController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jin-Go-oLa" customClass="ChatSendContentConfirmController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatSendContentConfirmController" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jin-Go-oLa" customClass="ChatSendContentConfirmController" customModule="Vessage" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j79-FH-Rbi"/>
                         <viewControllerLayoutGuide type="bottom" id="LnL-c8-KLX"/>
@@ -588,6 +588,9 @@
                                         <state key="normal" title="发送">
                                             <color key="titleColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onSendClick:" destination="Jin-Go-oLa" eventType="touchUpInside" id="hto-He-tvY"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iAO-uY-thz">
                                         <rect key="frame" x="0.0" y="280" width="120" height="34"/>
@@ -595,6 +598,9 @@
                                         <state key="normal" title="取消">
                                             <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="onCancelClick:" destination="Jin-Go-oLa" eventType="touchUpInside" id="Eb3-Lt-Yvr"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PnI-S6-nrx">
                                         <rect key="frame" x="120" y="271" width="1" height="49"/>
@@ -628,24 +634,34 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lbv-3j-VYd">
+                                <rect key="frame" x="96" y="178" width="128" height="160"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="BNx-GW-5vI"/>
+                                    <constraint firstAttribute="width" constant="128" id="fFs-RR-hEk"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="centerX" secondItem="Sl7-S6-vMY" secondAttribute="centerX" id="4BU-hA-n8O"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="centerY" secondItem="Sl7-S6-vMY" secondAttribute="centerY" id="52z-Bq-FAN"/>
+                            <constraint firstItem="lbv-3j-VYd" firstAttribute="centerX" secondItem="LXb-se-PvY" secondAttribute="centerX" id="BMm-73-QV6"/>
                             <constraint firstItem="LXb-se-PvY" firstAttribute="centerX" secondItem="Sl7-S6-vMY" secondAttribute="centerX" id="C3u-4O-3ls"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="width" secondItem="Sl7-S6-vMY" secondAttribute="width" id="Loa-6N-NgR"/>
                             <constraint firstItem="LXb-se-PvY" firstAttribute="centerY" secondItem="Sl7-S6-vMY" secondAttribute="centerY" constant="-10" id="OKZ-Tb-No5"/>
+                            <constraint firstItem="lbv-3j-VYd" firstAttribute="centerY" secondItem="LXb-se-PvY" secondAttribute="centerY" constant="-16" id="Yw2-iQ-TvU"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="height" secondItem="Sl7-S6-vMY" secondAttribute="height" id="aiw-f6-Efz"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bcgMaskView" destination="vlL-sj-ihC" id="Oeb-7t-J3h"/>
+                        <outlet property="bcgMaskView" destination="vlL-sj-ihC" id="6Gw-Jk-809"/>
+                        <outlet property="contentView" destination="lbv-3j-VYd" id="nTb-CI-bWk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d1F-NY-r5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-276" y="1963"/>
+            <point key="canvasLocation" x="-277.5" y="1962.6760563380283"/>
         </scene>
     </scenes>
     <resources>

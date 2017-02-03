@@ -217,17 +217,24 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
                 let user = userService.getCachedUserByMobile(mobile)
                 if user == nil{
                     let hud = self.showAnimationHud()
-                    userService.registNewUserByMobile(mobile, noteName: title, updatedCallback: { (mUser) in
+                    userService.fetchUserProfileByMobile(mobile, lastUpdatedTime: nil, updatedCallback: { (mUser) in
                         hud.hideAnimated(true)
-                        if mUser != nil{
-                            self.userInfos.insert(mUser!, atIndex: 0)
+                        if let u = mUser{
+                            self.userInfos.insert(u, atIndex: 0)
                             let indexPath = NSIndexPath(forRow: 0,inSection: self.SECTION_CONTACT_USER)
                             self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
                             self.tableView(self.tableView, didSelectRowAtIndexPath: indexPath)
                         }else{
-                            self.playToast("NO_SUCH_USER".localizedString())
+                            let title = "NO_USER_OF_MOBILE".localizedString()
+                            let msg = String(format: "MOBILE_X_INVITE_JOIN_VG".localizedString(), mobile)
+                            let invite = UIAlertAction(title: "INVITE".localizedString(), style: .Default, handler: { (ac) in
+                                ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+                            })
+                            
+                            self.showAlert(title, msg: msg,actions: [ALERT_ACTION_CANCEL,invite])
                         }
                     })
+                    
                 }else{
                     var indexPath = NSIndexPath(forRow: 0,inSection: self.SECTION_CONTACT_USER)
                     if let index = self.userInfos.indexOf({ (u) -> Bool in

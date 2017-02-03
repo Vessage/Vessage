@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class ChatImageManageCellDelegate:ConversationTitleCellDelegate{
     
     static let instance:ChatImageManageCellDelegate = {
@@ -14,8 +15,10 @@ class ChatImageManageCellDelegate:ConversationTitleCellDelegate{
     }()
     
     func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+        /*
         if let c = controller{
             ChatImageMgrViewController.showChatImageMgrVeiwController(c)
         }
+ */
     }
 }

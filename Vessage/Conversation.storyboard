@@ -635,10 +635,10 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lbv-3j-VYd">
-                                <rect key="frame" x="96" y="178" width="128" height="160"/>
+                                <rect key="frame" x="80" y="151" width="160" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="BNx-GW-5vI"/>
-                                    <constraint firstAttribute="width" constant="128" id="fFs-RR-hEk"/>
+                                    <constraint firstAttribute="height" constant="200" id="BNx-GW-5vI"/>
+                                    <constraint firstAttribute="width" constant="160" id="fFs-RR-hEk"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -650,7 +650,7 @@
                             <constraint firstItem="LXb-se-PvY" firstAttribute="centerX" secondItem="Sl7-S6-vMY" secondAttribute="centerX" id="C3u-4O-3ls"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="width" secondItem="Sl7-S6-vMY" secondAttribute="width" id="Loa-6N-NgR"/>
                             <constraint firstItem="LXb-se-PvY" firstAttribute="centerY" secondItem="Sl7-S6-vMY" secondAttribute="centerY" constant="-10" id="OKZ-Tb-No5"/>
-                            <constraint firstItem="lbv-3j-VYd" firstAttribute="centerY" secondItem="LXb-se-PvY" secondAttribute="centerY" constant="-16" id="Yw2-iQ-TvU"/>
+                            <constraint firstItem="lbv-3j-VYd" firstAttribute="centerY" secondItem="LXb-se-PvY" secondAttribute="centerY" constant="-23" id="Yw2-iQ-TvU"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="height" secondItem="Sl7-S6-vMY" secondAttribute="height" id="aiw-f6-Efz"/>
                         </constraints>
                     </view>

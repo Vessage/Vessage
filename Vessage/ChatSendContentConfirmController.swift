@@ -41,6 +41,16 @@ class ChatSendContentConfirmController: UIViewController {
         self.bcgMaskView.hidden = true
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.bcgMaskView.hidden = false
@@ -62,7 +72,13 @@ class ChatSendContentConfirmController: UIViewController {
         let controller = instanceFromStoryBoard("Conversation", identifier: "ChatSendContentConfirmController") as! ChatSendContentConfirmController
         controller.delegate = delegate
         controller.contentImage = contentImage
-        vc.presentViewController(controller, animated: true, completion: nil)
+        
+        let nvc = UINavigationController(rootViewController: controller)
+        nvc.providesPresentationContextTransitionStyle = true
+        nvc.definesPresentationContext = true
+        nvc.modalPresentationStyle = .OverCurrentContext
+        
+        vc.presentViewController(nvc, animated: true, completion: nil)
         return controller
     }
 }

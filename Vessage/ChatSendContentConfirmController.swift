@@ -17,6 +17,7 @@ class ChatSendContentConfirmController: UIViewController {
     @IBOutlet weak var bcgMaskView: UIView!
     @IBOutlet weak var contentView: UIImageView!{
         didSet{
+            contentView.clipsToBounds = true
             contentView.contentMode = .ScaleAspectFill
             contentView.image = contentImage
         }

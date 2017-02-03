@@ -8,12 +8,17 @@
 
 import Foundation
 
-class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessageManagerDelegate,UnloadPresentContentHandler {
+class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
     
     class ImageVessageContainer: UIView {
+        private var imageLoaded = false
+        weak private var vessage:Vessage!
+        weak private var vc:UIViewController?
+        
         private var imageView:UIImageView
         private var dateTimeLabel:UILabel
         private var loadingIndicator:UIActivityIndicatorView
+        
         override init(frame: CGRect) {
             self.dateTimeLabel = UILabel()
             self.dateTimeLabel.textColor = UIColor.whiteColor()
@@ -29,6 +34,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
             self.addSubview(imageView)
             self.addSubview(loadingIndicator)
             self.addSubview(dateTimeLabel)
+            self.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(ImageVessageContainer.onTapImage(_:))))
         }
         
         override func drawRect(rect: CGRect) {
@@ -43,12 +49,54 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
             }
         }
         
+        func initVessageContentView(vc:UIViewController,vessage:Vessage) {
+            self.vc = vc
+            self.vessage = vessage
+            self.imageLoaded = false
+        }
+        
         private func updateDateLabel() {
             dateTimeLabel.sizeToFit()
             if let spv = dateTimeLabel.superview{
                 dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
                 dateTimeLabel.frame.origin.y = spv.frame.height - 2 - dateTimeLabel.frame.height
             }
+        }
+        
+        func onTapImage(ges:UITapGestureRecognizer) {
+            if let controller = self.vc {
+                if imageLoaded {
+                    imageView.slideShowFullScreen(controller)
+                }else{
+                    refreshImage()
+                }
+            }
+        }
+        
+        private func refreshImage(){
+            if let vsg = self.vessage{
+                self.dateTimeLabel.text = vsg.getSendTime()?.toFriendlyString()
+                self.dateTimeLabel.layoutIfNeeded()
+                self.updateDateLabel()
+                if vsg.isMySendingVessage() {
+                    self.imageView.image = UIImage(contentsOfFile: vsg.fileId)
+                    imageLoaded = true
+                }else{
+                    imageLoaded = false
+                    self.loadingIndicator.startAnimating()
+                    ServiceContainer.getFileService().setImage(self.imageView, iconFileId: vessage.fileId,defaultImage: UIImage(named: "vg_default_bcg_2")!){ suc in
+                        if self.vessage.vessageId == vsg.vessageId{
+                            self.imageLoaded = suc
+                            self.loadingIndicator.stopAnimating()
+                            if suc{
+                                ServiceContainer.getVessageService().readVessage(vsg)
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
         }
         
         convenience init() {
@@ -60,15 +108,12 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
         }
     }
     
-    private var imageLoaded = false
+    static let defaultSize = CGSizeMake(128, 168)
     
-    private var vessage:Vessage!
-    
-    let defaultWidth:CGFloat = 180
-    let defaultHeight:CGFloat = 240
-    
-    
-    func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize, contentView: UIView) -> CGSize {
+    func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize, contentView: UIView) -> CGSize {
+        let defaultWidth = ImageBubbleVessageHandler.defaultSize.width
+        let defaultHeight = ImageBubbleVessageHandler.defaultSize.height
+        
         if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height >= defaultHeight {
             return CGSize(width: defaultWidth, height: defaultHeight)
         }else if maxLimitedSize.height > maxLimitedSize.width {
@@ -79,73 +124,15 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessag
         return CGSizeZero
     }
     
-    func getContentView(vessage: Vessage) -> UIView {
+    func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
         let container = ImageVessageContainer()
-        container.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(ImageBubbleVessageHandler.onTapImage(_:))))
+        container.initVessageContentView(vc, vessage: vessage)
         return container
     }
     
-    func presentContent(oldVessage: Vessage?, newVessage: Vessage, contentView: UIView) {
-        self.vessage = newVessage
+    func presentContent(vc:UIViewController, vessage: Vessage, contentView: UIView) {
         if let c = contentView as? ImageVessageContainer{
-            refreshImage(c)
+            c.refreshImage()
         }
-    }
-    
-    func unloadPresentContent(vessage: Vessage) {
-        self.vessage = nil
-    }
-    
-    private var playVessageManager:PlayVessageManager?{
-        return getPlayVessageManagerDelegate?.getPlayVessageManager()
-    }
-    
-    private var getPlayVessageManagerDelegate:GetPlayVessageManagerDelegate?
-    
-    func setGetPlayVessageManagerDelegate(delegate: GetPlayVessageManagerDelegate) {
-        self.getPlayVessageManagerDelegate = delegate
-    }
-    
-    func unsetGetPlayVessageManagerDelegate() {
-        self.getPlayVessageManagerDelegate = nil
-    }
-    
-    func onTapImage(ges:UITapGestureRecognizer) {
-        if let c = ges.view as? ImageVessageContainer {
-            if let controller = self.playVessageManager?.rootController{
-                if imageLoaded {
-                    c.imageView.slideShowFullScreen(controller)
-                }else{
-                    refreshImage(c)
-                }
-            }
-            
-        }
-    }
-    
-    private func refreshImage(contentView:ImageVessageContainer){
-        if let vsg = self.vessage{
-            contentView.dateTimeLabel.text = vsg.getSendTime()?.toFriendlyString()
-            contentView.dateTimeLabel.layoutIfNeeded()
-            contentView.updateDateLabel()
-            if vsg.isMySendingVessage() {
-                contentView.imageView.image = UIImage(contentsOfFile: vsg.fileId)
-                imageLoaded = true
-            }else{
-                imageLoaded = false
-                contentView.loadingIndicator.startAnimating()
-                ServiceContainer.getFileService().setImage(contentView.imageView, iconFileId: vessage.fileId,defaultImage: UIImage(named: "vg_default_bcg_2")!){ suc in
-                    if self.vessage.vessageId == vsg.vessageId{
-                        self.imageLoaded = suc
-                        contentView.loadingIndicator.stopAnimating()
-                        if suc{
-                            ServiceContainer.getVessageService().readVessage(vsg)
-                        }
-                    }
-                }
-            }
-            
-        }
-        
     }
 }

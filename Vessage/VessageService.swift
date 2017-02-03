@@ -34,6 +34,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     @objc static var ServiceName:String {return "Vessage Service"}
     
     private var notReadVessageCountMap = [String:Int]()
+    private var receivedCheckMap = [String:Int]()
     private var vsgCntLock = NSRecursiveLock()
     
     @objc func appStartInit(appName: String) {
@@ -42,6 +43,7 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     
     @objc func userLoginInit(userId: String) {
         dispatch_async(dispatch_get_main_queue()) {
+            self.receivedCheckMap.removeAll()
             self.initNotReadVessageCountMap()
             self.setServiceReady()
         }
@@ -120,24 +122,47 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func newVessageFromServer(completion:(()->Void)? = nil){
+        
+        //prepare received vessages check map
+        let keySet = receivedCheckMap.keys.map{$0}
+        keySet.forEach { (key) in
+            let x = receivedCheckMap[key]
+            if x == 1{
+                receivedCheckMap.removeValueForKey(key)
+            }else{
+                receivedCheckMap[key] = 1
+            }
+        }
+        
+        
         let req = GetNewVessagesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Vessage]>) -> Void in
+            var newVessages = [Vessage]()
             if let vsgs = result.returnObject{
                 if vsgs.count > 0{
                     vsgs.saveBahamutObjectModels()
                     PersistentManager.sharedInstance.saveAll()
                     PersistentManager.sharedInstance.refreshCache(Vessage)
                     vsgs.forEach({ (vsg) in
-                        self.vsgCntLock.lock()
-                        if let cnt = self.notReadVessageCountMap[vsg.sender]{
-                            self.notReadVessageCountMap[vsg.sender] = cnt + 1
-                        }else{
-                            self.notReadVessageCountMap[vsg.sender] = 1
+                        
+                        let unexists = self.receivedCheckMap[vsg.vessageId] == nil
+                        self.receivedCheckMap[vsg.vessageId] = 0
+                        
+                        if unexists{
+                            newVessages.append(vsg)
+                            self.vsgCntLock.lock()
+                            if let cnt = self.notReadVessageCountMap[vsg.sender]{
+                                self.notReadVessageCountMap[vsg.sender] = cnt + 1
+                            }else{
+                                self.notReadVessageCountMap[vsg.sender] = 1
+                            }
+                            self.vsgCntLock.unlock()
+                            self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         }
-                        self.vsgCntLock.unlock()
-                        self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
+                        
+                        
                     })
-                    self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:vsgs])
+                    self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
                     self.notifyVessageGot()
                     SystemSoundHelper.playSound(1003)
                 }

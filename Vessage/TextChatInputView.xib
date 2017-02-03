@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TextChatInputView" customModule="Vessage" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="641" height="172"/>
+            <rect key="frame" x="0.0" y="0.0" width="641" height="54"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-ep-SS3">
-                    <rect key="frame" x="0.0" y="124" width="641" height="48"/>
+                    <rect key="frame" x="0.0" y="6" width="641" height="48"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="G5A-XG-2dF"/>
                     </constraints>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TIF-Cs-PHJ" customClass="BahamutTextView" customModule="Vessage" customModuleProvider="target">
-                    <rect key="frame" x="6" y="129" width="568" height="38"/>
+                    <rect key="frame" x="6" y="11" width="568" height="38"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -41,7 +41,7 @@
                     </userDefinedRuntimeAttributes>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aj9-YQ-lO8">
-                    <rect key="frame" x="580" y="131" width="53" height="34"/>
+                    <rect key="frame" x="580" y="13" width="53" height="34"/>
                     <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <inset key="contentEdgeInsets" minX="8" minY="6" maxX="8" maxY="6"/>
@@ -62,6 +62,7 @@
             <constraints>
                 <constraint firstItem="TIF-Cs-PHJ" firstAttribute="centerY" secondItem="qlD-ep-SS3" secondAttribute="centerY" id="10P-n4-iSE"/>
                 <constraint firstItem="Aj9-YQ-lO8" firstAttribute="leading" secondItem="TIF-Cs-PHJ" secondAttribute="trailing" constant="6" id="4WZ-Mf-Txu"/>
+                <constraint firstItem="qlD-ep-SS3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="IV3-5p-LXB"/>
                 <constraint firstItem="TIF-Cs-PHJ" firstAttribute="leading" secondItem="qlD-ep-SS3" secondAttribute="leading" constant="6" id="T5j-uj-OGW"/>
                 <constraint firstAttribute="bottom" secondItem="qlD-ep-SS3" secondAttribute="bottom" id="bIg-hH-Rj3"/>
                 <constraint firstItem="Aj9-YQ-lO8" firstAttribute="centerY" secondItem="qlD-ep-SS3" secondAttribute="centerY" id="dDf-a9-zlp"/>
@@ -76,7 +77,7 @@
                 <outlet property="inputTextField" destination="TIF-Cs-PHJ" id="9lm-U5-00f"/>
                 <outlet property="sendButton" destination="Aj9-YQ-lO8" id="en7-hP-wqX"/>
             </connections>
-            <point key="canvasLocation" x="256" y="239"/>
+            <point key="canvasLocation" x="255.5" y="298"/>
         </view>
     </objects>
 </document>

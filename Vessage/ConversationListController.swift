@@ -354,6 +354,9 @@ class ConversationListController: UITableViewController {
             lc.rootController = self
             lc.conversationListCellHandler = handleConversationListCellItem
             lc.originModel = conversation
+            if conversationService.conversations.count > 10 {
+                lc.subLineLabel.morphingEnabled = false
+            }
             return lc
         }
     }

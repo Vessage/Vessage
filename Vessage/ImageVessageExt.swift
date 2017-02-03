@@ -12,6 +12,24 @@ let ImageVessageImageQuality:CGFloat = 0.8
 
 //MARK: Send Image Vessage Extension
 extension ConversationViewController:UIImagePickerControllerDelegate{
+    
+    func initSendImage() {
+        let tapSendImage = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onClickImageButton(_:)))
+        self.sendImageButton.addGestureRecognizer(tapSendImage)
+    }
+    
+    func onClickImageButton(sender: UITapGestureRecognizer) {
+        self.view.userInteractionEnabled = false
+        self.sendImageButton.animationMaxToMin(0.1, maxScale: 1.2) {
+            self.view.userInteractionEnabled = true
+            if self.outChatGroup {
+                self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
+            }else {
+                self.showSendImageAlert()
+            }
+        }
+    }
+    
     func showSendImageAlert() {
         let alert = UIImagePickerController.showUIImagePickerAlert(self, title: "SEND_IMAGE".localizedString(), message: "SELECT_IMG_SOURCE".localizedString())
         alert.delegate = self

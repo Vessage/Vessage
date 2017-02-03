@@ -18,6 +18,7 @@ class Vessage: BahamutObject {
     static let typeFaceText = 1
     static let typeImage = 2
     static let typeLittleVideo = 3
+    static let typeTips = 4
     
     override func getObjectUniqueIdName() -> String {
         return "vessageId"

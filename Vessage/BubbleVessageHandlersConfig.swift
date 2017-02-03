@@ -12,5 +12,6 @@ extension BubbleVessageHandlerManager{
         registHandler(Vessage.typeImage, handler: ImageBubbleVessageHandler())
         registHandler(Vessage.typeFaceText, handler: FaceTextBubbleVessageHandler())
         registHandler(Vessage.typeChatVideo, handler: VideoBubbleVessageHandler())
+        registHandler(Vessage.typeTips, handler: TipsBubbleVessageHandler())
     }
 }

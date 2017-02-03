@@ -405,3 +405,4 @@ COPY_CONTENT = "复制内容";
 TEXT_COPIED = "文本已经复制到剪切板";
 
 INVITE_MOBILE_FRIEND_MSG = "我在玩VG聊天，发条消息给你，收到请回复";
+CHAT_WITH_X_AT_D = "正在与 %@ 聊天\n本次对话开始于%@";

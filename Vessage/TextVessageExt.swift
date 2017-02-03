@@ -12,23 +12,15 @@ import Foundation
 extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresentationControllerDelegate {
     func initChatImageButton() {
         self.textChatInputView = TextChatInputView.instanceFromXib()
-        self.textChatInputView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipeInputView(_:)))
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onTapInputView(_:)))
-        swipeLeft.direction = .Left
-        swipeRight.direction = .Right
-        swipeUp.direction = .Up
-        swipeDown.direction = .Down
+        self.textChatInputView.layoutIfNeeded()
+        self.textChatInputView.frame.origin = CGPointZero
         
-        self.textChatInputView.addGestureRecognizer(swipeRight)
-        self.textChatInputView.addGestureRecognizer(swipeLeft)
-        self.textChatInputView.addGestureRecognizer(swipeUp)
-        self.textChatInputView.addGestureRecognizer(swipeDown)
- 
-        self.textChatInputView.addGestureRecognizer(tap)
+        
+        let tapFaceText = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onClickFaceTextButton(_:)))
+        self.sendFaceTextButton.addGestureRecognizer(tapFaceText)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onTapInputView(_:)))
+        self.messageList.addGestureRecognizer(tap)
+        
         self.textChatInputView.delegate = self
         textChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
         textChatInputView.inputTextField.returnKeyType = .Send
@@ -38,17 +30,6 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
     
     func onTapInputView(ges:UITapGestureRecognizer) {
         self.hideKeyBoard()
-    }
-    
-    func onSwipeInputView(ges:UISwipeGestureRecognizer) {
-        switch ges.direction {
-        case UISwipeGestureRecognizerDirection.Left,UISwipeGestureRecognizerDirection.Down:
-            self.playVessageManager.showNextVessage()
-        case UISwipeGestureRecognizerDirection.Right,UISwipeGestureRecognizerDirection.Up:
-            self.playVessageManager.showPreviousVessage()
-        default:
-            break
-        }
     }
     
     //MARK: TextChatInputViewDelegate
@@ -73,6 +54,17 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
     }
     
     //MARK: actions
+    
+    func onClickFaceTextButton(sender: UITapGestureRecognizer) {
+        self.sendFaceTextButton.animationMaxToMin(0.1, maxScale: 1.2) {
+            if self.outChatGroup{
+                self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
+            }else{
+                self.tryShowTextChatInputView()
+            }
+        }
+    }
+    
     func tryShowTextChatInputView() -> Bool{
         self.textChatInputResponderTextFiled.becomeFirstResponder()
         self.textChatInputView.inputTextField.becomeFirstResponder()
@@ -87,16 +79,14 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
     }
     
     private func sendImageChatVessage() {
-        let chatImage = self.playVessageManager.selectedImageId
         self.setProgressSending()
         let textMessage = self.textChatInputView.inputTextField.text
         self.textChatInputView.inputTextField.text = nil
         self.textChatInputView.refreshSendButtonColor()
         let vsg = Vessage()
         let isGroup = self.conversation.isGroupChat
-        vsg.typeId = Vessage.typeFaceText        
+        vsg.typeId = Vessage.typeFaceText
         vsg.body = getSendVessageBodyString(["textMessage":textMessage])
-        vsg.fileId = chatImage
         VessageQueue.sharedInstance.pushNewVessageTo(self.conversation.chatterId,isGroup: isGroup, vessage: vsg,taskSteps: SendVessageTaskSteps.normalVessageSteps)
     }
 }

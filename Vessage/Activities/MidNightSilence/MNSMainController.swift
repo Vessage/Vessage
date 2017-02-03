@@ -25,10 +25,10 @@ class MNSPostCell: UITableViewCell {
 
 private let noChatConversationLeftTimeSpan:Int64 = 1 * 3600 * 1000
 
-private let openTimeInterval:NSTimeInterval = 6 * 3600
+private let openTimeInterval:NSTimeInterval = 7.5 * 3600
 private var todayOpenTime:NSDate{
     let now = NSDate()
-    return DateHelper.generateDate(now.yearOfDate, month: now.monthOfDate, day: now.dayOfDate, hour: 0, minute: 1, second: 0)
+    return DateHelper.generateDate(now.yearOfDate, month: now.monthOfDate, day: now.dayOfDate, hour: 22, minute: 30, second: 0)
 }
 
 private var todayCloseTime:NSDate{

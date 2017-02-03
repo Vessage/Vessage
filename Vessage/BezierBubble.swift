@@ -46,8 +46,8 @@ class BezierBubbleView: UIView {
         contentContainer = ContentContainer()
         contentContainer.backgroundColor = UIColor.clearColor()
         super.init(frame: frame)
+        self.clipsToBounds = false
         self.addSubview(contentContainer)
-        contentContainer.clipsToBounds = true
         bubbleViewLayer = CAShapeLayer()
         self.backgroundColor = UIColor.clearColor()
         self.bubbleViewLayer.backgroundColor = UIColor.clearColor().CGColor
@@ -84,6 +84,10 @@ class BezierBubbleView: UIView {
         }
     }
     
+    func getContentView() -> UIView? {
+        return contentContainer.subviews.first
+    }
+    
     func sizeOfContentSize(contentSize:CGSize,direction:BezierBubbleDirection) -> CGSize {
         switch self.bubbleDirection {
         case .Down(startXRatio: _),.Up(startXRatio: _):
@@ -93,10 +97,23 @@ class BezierBubbleView: UIView {
         }
     }
     
+    func maxContentSizeOf(maxBubbleViewSize:CGSize) -> CGSize {
+        switch self.bubbleDirection {
+        case .Down(startXRatio: _):
+            return CGSizeMake(maxBubbleViewSize.width - spaceOfContentToView * 2, maxBubbleViewSize.height - spaceOfContentToView * 2 - startMarkHeight)
+        case .Up(startXRatio: _):
+            return CGSizeMake(maxBubbleViewSize.width - spaceOfContentToView * 2, maxBubbleViewSize.height - spaceOfContentToView * 2 - startMarkHeight)
+        case .Left(startYRatio: _):
+            return CGSizeMake(maxBubbleViewSize.width - spaceOfContentToView * 2 - startMarkHeight, maxBubbleViewSize.height - spaceOfContentToView * 2)
+        case .Right(startYRatio: _):
+            return CGSizeMake(maxBubbleViewSize.width - spaceOfContentToView * 2 - startMarkHeight, maxBubbleViewSize.height - spaceOfContentToView * 2)
+        }
+    }
+    
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         drawBubble(rect)
-        drawcontentContainer(rect)
+        drawContentContainer(rect)
     }
     
     private func drawBubble(rect:CGRect){
@@ -113,19 +130,16 @@ class BezierBubbleView: UIView {
         self.bubbleViewLayer.backgroundColor = UIColor.clearColor().CGColor
     }
     
-    private func drawcontentContainer(rect:CGRect){
+    private func drawContentContainer(rect:CGRect){
+        contentContainer.frame.size = maxContentSizeOf(rect.size)
         switch self.bubbleDirection {
         case .Down(startXRatio: _):
-            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2, rect.size.height - spaceOfContentToView * 2 - startMarkHeight)
             contentContainer.frame.origin = CGPointMake(spaceOfContentToView, startMarkHeight + spaceOfContentToView)
         case .Up(startXRatio: _):
-            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2, rect.size.height - spaceOfContentToView * 2 - startMarkHeight)
             contentContainer.frame.origin = CGPointMake(spaceOfContentToView, spaceOfContentToView)
         case .Left(startYRatio: _):
-            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2 - startMarkHeight, rect.size.height - spaceOfContentToView * 2)
             contentContainer.frame.origin = CGPointMake(spaceOfContentToView, spaceOfContentToView)
         case .Right(startYRatio: _):
-            contentContainer.frame.size = CGSizeMake(rect.size.width - spaceOfContentToView * 2 - startMarkHeight, rect.size.height - spaceOfContentToView * 2)
             contentContainer.frame.origin = CGPointMake(startMarkHeight + spaceOfContentToView, spaceOfContentToView)
         }
     }

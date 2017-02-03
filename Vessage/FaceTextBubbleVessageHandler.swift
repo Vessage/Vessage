@@ -25,7 +25,6 @@ class TextFullScreen: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modalTransitionStyle = .CrossDissolve
@@ -97,30 +96,38 @@ class TextFullScreen: UIViewController {
     }
 }
 
-class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVessageManagerDelegate {
+class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler {
     
-    private var getPlayVessageManagerDelegate:GetPlayVessageManagerDelegate?
-    
-    private var vessage:Vessage?
-    
-    private var playVessageManager:PlayVessageManager?{
-        return getPlayVessageManagerDelegate?.getPlayVessageManager()
+    class VessageContentLabel: UILabel {
+        weak var vc:UIViewController!
+        weak var vessage:Vessage!
+        
+        func initLabel(vc:UIViewController,vessage: Vessage){
+            self.vc = vc
+            self.vessage = vessage
+            self.numberOfLines = 0
+            self.userInteractionEnabled = true
+            let ges = UITapGestureRecognizer(target: self, action: #selector(VessageContentLabel.onTapTextLabel(_:)))
+            self.addGestureRecognizer(ges)
+            self.textAlignment = .Center
+        }
+        
+        func onTapTextLabel(ges:UITapGestureRecognizer) {
+            if let label = ges.view as? UILabel,let controller = self.vc{
+                let c = TextFullScreen()
+                controller.presentViewController(c, animated: true, completion: {
+                    c.text = label.text
+                    c.date = self.vessage?.getSendTime()
+                })
+            }
+        }
     }
     
-    func setGetPlayVessageManagerDelegate(delegate: GetPlayVessageManagerDelegate) {
-        self.getPlayVessageManagerDelegate = delegate
-    }
-    
-    func unsetGetPlayVessageManagerDelegate() {
-        self.getPlayVessageManagerDelegate = nil
-    }
-    
-    func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
+    func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
         if let label = contentView as? UILabel{
             label.text = vessage.getBodyDict()["textMessage"] as? String
             
-            let mSize = CGSize(width: maxLimitedSize.width * CGFloat(0.8), height: maxLimitedSize.height)
-            var size = label.sizeThatFits(mSize)
+            var size = label.sizeThatFits(maxLimitedSize)
             if size.width < 48 {
                 size.width = 48
                 label.textAlignment = .Center
@@ -132,31 +139,20 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler,RequestPlayVes
         return CGSizeZero
     }
     
-    func getContentView(vessage: Vessage) -> UIView {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.userInteractionEnabled = true
-        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(FaceTextBubbleVessageHandler.onTapTextLabel(_:))))
-        label.textAlignment = .Center
+    func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
+        let label = VessageContentLabel()
+        label.initLabel(vc, vessage: vessage)
         return label
     }
     
-    func presentContent(oldVessage: Vessage?, newVessage: Vessage,contentView:UIView) {
+    func presentContent(vc:UIViewController, vessage: Vessage,contentView:UIView) {
         if let label = contentView as? UILabel {
-            let bodyDict = newVessage.getBodyDict()
-            label.text = bodyDict["textMessage"] as? String
-            self.vessage = newVessage
-            ServiceContainer.getVessageService().readVessage(newVessage)
+            let bodyDict = vessage.getBodyDict()
+            let msg = bodyDict["textMessage"] as? String
+            label.text = msg
+            ServiceContainer.getVessageService().readVessage(vessage)
         }
     }
     
-    func onTapTextLabel(ges:UITapGestureRecognizer) {
-        if let label = ges.view as? UILabel{
-            let c = TextFullScreen()
-            playVessageManager?.rootController.presentViewController(c, animated: true, completion: {
-                c.text = label.text
-                c.date = self.vessage?.getSendTime()
-            })
-        }
-    }
+    
 }

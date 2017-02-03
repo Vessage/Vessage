@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+#if OLDVERSION
 private let randomTextVessageContents = [
     ["。。。","......","☺️"],
     ["。。。","......"]
@@ -695,3 +695,5 @@ extension PlayVessageManager{
     }
 
 }
+
+#endif

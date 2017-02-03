@@ -56,7 +56,7 @@ class ConversationViewControllerProxy: NSObject {
     }
     
     func onSwitchToManager() {
-        self.rootController.currentManager = self
+        //self.rootController.currentManager = self
     }
     
     func flashTips(msg:String) {

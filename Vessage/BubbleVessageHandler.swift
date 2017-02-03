@@ -9,68 +9,66 @@
 import Foundation
 
 protocol BubbleVessageHandler {
-    func getContentViewSize(vessage:Vessage,maxLimitedSize:CGSize,contentView:UIView) -> CGSize
-    func getContentView(vessage:Vessage) -> UIView
-    func presentContent(oldVessage:Vessage?,newVessage:Vessage,contentView:UIView)
+    func getContentViewSize(vc:UIViewController,vessage:Vessage,maxLimitedSize:CGSize,contentView:UIView) -> CGSize
+    func getContentView(vc:UIViewController,vessage:Vessage) -> UIView
+    func presentContent(vc:UIViewController,vessage:Vessage,contentView:UIView)
 }
 
-protocol PreparePresentContentHandler:BubbleVessageHandler {
-    func preparePresentContent(vessage:Vessage)
-}
-
-protocol UnloadPresentContentHandler:BubbleVessageHandler {
-    func unloadPresentContent(vessage:Vessage)
-}
-
-private let NoBubbleVessageHandlerInstance:NoBubbleVessageHandler = NoBubbleVessageHandler()
-private let UnknowBubbleVessageHandlerInstance:UnknowBubbleVessageHandler = UnknowBubbleVessageHandler()
-class NoBubbleVessageHandler:NSObject, BubbleVessageHandler {
+class TipsBubbleVessageHandler:NSObject, BubbleVessageHandler {
     
-    func presentContent(oldVessage: Vessage?, newVessage: Vessage, contentView: UIView) {
-        if let label = contentView as? UILabel{
-            label.text = "NO_VESSAGE_TIPS".localizedString()
+    func getVessageTipsMessage(vessage:Vessage) -> String {
+        let dict = vessage.getBodyDict()
+        if let locMsg = dict["locMsg"] as? String{
+            return locMsg
+        }else if let msg = dict["msg"] as? String{
+            return msg
+        }else{
+            return ""
         }
     }
     
-    func getContentView(vessage: Vessage) -> UIView {
-        let noVessageLabel = UILabel()
-        noVessageLabel.textAlignment = .Center
-        noVessageLabel.numberOfLines = 0
-        return noVessageLabel
+    func presentContent(vc:UIViewController, vessage: Vessage, contentView: UIView) {
+        
     }
     
-    func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
+    func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
+        let label = UILabel()
+        label.textAlignment = .Center
+        label.numberOfLines = 0
+        return label
+    }
+    
+    func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
         if let label = contentView as? UILabel {
-            label.text = "NO_VESSAGE_TIPS".localizedString()
+            label.text = getVessageTipsMessage(vessage)
             return label.sizeThatFits(maxLimitedSize)
         }
         return CGSizeZero
     }
 }
 
-class UnknowBubbleVessageHandler: NSObject,BubbleVessageHandler {
+private let NoBubbleVessageHandlerInstance:NoBubbleVessageHandler = NoBubbleVessageHandler()
+private let UnknowBubbleVessageHandlerInstance:UnknowBubbleVessageHandler = UnknowBubbleVessageHandler()
+
+class NoBubbleVessageHandler:TipsBubbleVessageHandler {
+    override func getVessageTipsMessage(vessage: Vessage) -> String {
+        return "NO_VESSAGE_TIPS".localizedString()
+    }
+}
+
+class UnknowBubbleVessageHandler:TipsBubbleVessageHandler {
     
-    func presentContent(oldVessage: Vessage?, newVessage: Vessage, contentView: UIView) {
-        if let label = contentView as? UILabel{
-            label.text = "UNKNOW_VESSAGE_TYPE".localizedString()
-        }
+    override func getVessageTipsMessage(vessage: Vessage) -> String {
+        return "UNKNOW_VESSAGE_TYPE".localizedString()
     }
     
-    func getContentView(vessage: Vessage) -> UIView {
+    override func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
         let label = UILabel()
         label.textAlignment = .Center
         label.numberOfLines = 0
         label.userInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UnknowBubbleVessageHandler.onTapContentView(_:))))
         return label
-    }
-    
-    func getContentViewSize(vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
-        if let label = contentView as? UILabel {
-            label.text = "UNKNOW_VESSAGE_TYPE".localizedString()
-            return label.sizeThatFits(maxLimitedSize)
-        }
-        return CGSizeZero
     }
     
     func onTapContentView(_:UITapGestureRecognizer) -> Void {

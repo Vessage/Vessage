@@ -42,10 +42,10 @@ class ConversationViewController: UIViewController {
     
     private(set) var chatGroup:ChatGroup!{
         didSet{
-            if let cg = chatGroup {
+            if let _ = chatGroup {
                 outChatGroup = !chatGroup.chatters.contains(UserSetting.userId)
                 if !outChatGroup {
-                    playVessageManager?.onChatGroupUpdated(cg)
+                    refreshUserDict()
                 }
             }else{
                 outChatGroup = false
@@ -60,42 +60,24 @@ class ConversationViewController: UIViewController {
             self.navigationItem.title = controllerTitle
         }
     }
-    
-    private(set) var playVessageManager:PlayVessageManager!
-    
-    
-    
-    var currentManager:ConversationViewControllerProxy!
-    
     let conversationService = ServiceContainer.getConversationService()
     let userService = ServiceContainer.getUserService()
     let fileService = ServiceContainer.getService(FileService)
     let vessageService = ServiceContainer.getVessageService()
     let chatGroupService = ServiceContainer.getChatGroupService()
     
-    @IBOutlet weak var topChattersBoardHeight: NSLayoutConstraint!
-    @IBOutlet weak var topChattersBoard: ChattersBoard!
-    @IBOutlet weak var bottomChattersBoardBottom: NSLayoutConstraint!
-    @IBOutlet weak var bottomChattersBoardHeight: NSLayoutConstraint!
-    @IBOutlet weak var bottomChattersBoard: ChattersBoard!
+    var vessages = [Vessage]()
+    var userDict = [String:VessageUser]()
+    
+    var timeMachineListController:TimeMachineVessageListController?
+    
+    @IBOutlet weak var messageList: UITableView!
+    
     @IBOutlet weak var sendImageButton: UIButton!
     @IBOutlet weak var sendFaceTextButton: UIButton!
-    @IBOutlet weak var sendVideoChatButton: UIButton!
-    @IBOutlet weak var mgrChatImagesButton: UIButton!{
-        didSet{
-            mgrChatImagesButton.layoutIfNeeded()
-            mgrChatImagesButton.clipsToBounds = true
-            mgrChatImagesButton.layer.cornerRadius = mgrChatImagesButton.frame.height / 2
-        }
-    }
-    
     @IBOutlet weak var timemachineButton: UIButton!
-    @IBOutlet weak var readingLineProgress: UIProgressView!
     @IBOutlet weak var progressView: UIProgressView!
-    
     @IBOutlet weak var vessageViewContainer: UIView!
-    
-    
     @IBOutlet weak var backgroundImage: UIImageView!
     
     //MARK: flash tips properties
@@ -104,10 +86,7 @@ class ConversationViewController: UIViewController {
     }()
     
     private var baseVessageBodyDict:[String:AnyObject]{
-        var dict = [String:AnyObject]()
-        if let selectedFaceId = playVessageManager.selectedImageId {
-            dict.updateValue(selectedFaceId, forKey: "faceId")
-        }
+        let dict = [String:AnyObject]()
         return dict
     }
     
@@ -137,12 +116,16 @@ class ConversationViewController: UIViewController {
 
 extension ConversationViewController{
     func onKeyBoardShown(a:NSNotification) {
-        currentManager?.onKeyBoardShown()
+        let rect = self.view.convertRect(self.textChatInputView.sendButton.frame, fromView: self.textChatInputView)
+        
+        let constant = self.view.frame.height - rect.origin.y - self.textChatInputView.frame.height + 10
+        self.vessageViewContainer.constraints.filter{$0.identifier == "messageListBottom"}.first?.constant = constant
+        self.messageList.updateConstraintsIfNeeded()
     }
     
     func onKeyboardHidden(a:NSNotification) {
         self.hideKeyBoard()
-        currentManager?.onKeyBoardHidden()
+        self.vessageViewContainer.constraints.filter{$0.identifier == "messageListBottom"}.first?.constant = 0
     }
 }
 
@@ -153,41 +136,15 @@ extension ConversationViewController{
         super.viewDidLoad()
         self.backgroundImage.image = getRandomConversationBackground()
         initChatImageButton()
-        playVessageManager = PlayVessageManager()
-        playVessageManager.initManager(self)
+        initSendImage()
+        initTimeMachine()
+        initMessageList()
         
         addObservers()
-        if let group = self.chatGroup{
-            playVessageManager.onInitGroup(group)
-        }
-        
-        playVessageManager.onSwitchToManager()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
         outterNewVessageCount = 0
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
-        swipeLeft.direction = .Left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
-        swipeRight.direction = .Right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
-        swipeUp.direction = .Up
-        self.view.addGestureRecognizer(swipeUp)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ConversationViewController.onSwipe(_:)))
-        swipeDown.direction = .Down
-        self.view.addGestureRecognizer(swipeDown)
-        
-        let panGes = UIPanGestureRecognizer(target: self, action: #selector(ConversationViewController.onPanGesture(_:)))
-        panGes.requireGestureRecognizerToFail(swipeLeft)
-        panGes.requireGestureRecognizerToFail(swipeRight)
-        panGes.requireGestureRecognizerToFail(swipeUp)
-        panGes.requireGestureRecognizerToFail(swipeDown)
-        self.view.addGestureRecognizer(panGes)
+        resetTitle()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -206,7 +163,7 @@ extension ConversationViewController{
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
         handleInitMessage()
-        playVessageManager.loadVessages()
+        messageListLoadMessages()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -230,10 +187,10 @@ extension ConversationViewController{
     
     private func releaseController(){
         self.removeObservers()
-        self.playVessageManager.onReleaseManager()
-        self.playVessageManager = nil
         self.conversation = nil
         self.chatGroup = nil
+        self.timeMachineListController = nil
+        removeReadedVessages()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -244,25 +201,8 @@ extension ConversationViewController{
 //MARK: Actions
 extension ConversationViewController{
     
-    func onPanGesture(a:UIPanGestureRecognizer) {
-        if let handler = currentManager as? HandlePanGesture {
-            let v = a.velocityInView(self.view)
-            handler.onPan(v)
-        }
-    }
-    
-    func onSwipe(a:UISwipeGestureRecognizer) {
-        if let handler = currentManager as? HandleSwipeGesture{
-            handler.onSwipe(a.direction)
-        }
-    }
-    
     func onBackItemClick(sender:AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    func onLongPressMiddleButton(sender:UILongPressGestureRecognizer) {
-        
     }
     
     func clickRightBarItem(sender: AnyObject) {
@@ -339,6 +279,7 @@ extension ConversationViewController{
         if let group = a.userInfo?[kChatGroupValue] as? ChatGroup{
             if isGroupChat && group.groupId == self.chatGroup.groupId {
                 self.chatGroup = group
+                resetTitle()
             }
         }
     }
@@ -347,7 +288,7 @@ extension ConversationViewController{
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
             if let chatterids = self.chatGroup?.chatters{
                 if chatterids.contains(chatter.userId) {
-                    playVessageManager.onGroupChatterUpdated(chatter)
+                    self.userDict[chatter.userId] = chatter
                 }
             }
         }
@@ -367,9 +308,30 @@ extension ConversationViewController{
             })
         }
         if received.count > 0 {
-            self.playVessageManager.onVessagesReceived(received)
+            messagesListPushReceivedMessages(received)
         }
         outterNewVessageCount += otherConversationVessageCount
+    }
+}
+
+
+extension ConversationViewController{
+    func refreshUserDict() {
+        var noReadyUsers = [String]()
+        let chatters = self.chatGroup.chatters.map { (userId) -> VessageUser in
+            if let u = self.userService.getCachedUserProfile(userId){
+                return u
+            }else{
+                noReadyUsers.append(userId)
+                let u = VessageUser()
+                u.userId = userId
+                return u
+            }
+        }
+        for u in chatters {
+            userDict[u.userId] = u
+        }
+        userService.fetchUserProfilesByUserIds(noReadyUsers, callback: nil)
     }
 }
 
@@ -417,10 +379,27 @@ extension ConversationViewController{
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onVessageSending(_:)), name: VessageQueue.onTaskProgress, object: nil)
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onVessageSendError(_:)), name: VessageQueue.onTaskStepError, object: nil)
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onVessageSended(_:)), name: VessageQueue.onTaskFinished, object: nil)
+        
+        VessageQueue.sharedInstance.addObserver(self, selector: #selector(ConversationViewController.onNewVessagePushed(_:)), name: VessageQueue.onPushNewVessageTask, object: nil)
     }
     
     func removeSendVessageObservers() {
         VessageQueue.sharedInstance.removeObserver(self)
+    }
+    
+    func onNewVessagePushed(a:NSNotification) {
+        if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
+            if task.receiverId == self.conversation.chatterId {
+                if let vsg = task.vessage {
+                    let newVsg = vsg.copyToObject(Vessage.self)
+                    if vsg.isMySendingVessage() {
+                        newVsg.fileId = task.filePath
+                    }
+                    messagesListPushReceivedMessages([newVsg])
+                }
+            }
+            
+        }
     }
     
     func onVessageSending(a:NSNotification){
@@ -473,7 +452,7 @@ extension ConversationViewController{
         }
     }
     
-    func resetTitle(_:AnyObject?) {
+    func resetTitle(_:AnyObject? = nil) {
         if let con = self.conversation {
             self.progressView.hidden = true
             if isGroupChat {
@@ -594,14 +573,7 @@ extension ConversationViewController{
 extension ConversationViewController{
     
     func flashTips(msg:String) {
-        
-        let bottomChattersBoard = self.bottomChattersBoard
-        let topChattersBoard = self.topChattersBoard
-        let topChattersBoardBottomY = topChattersBoard.frame.origin.y + topChattersBoard.frame.height
-        
-        let centerY = topChattersBoardBottomY + (bottomChattersBoard.frame.origin.y - topChattersBoardBottomY) / 2
-        let center = CGPointMake(self.vessageViewContainer.frame.width / 2,centerY)
-        
+        let center = CGPointMake(self.vessageViewContainer.frame.width / 2,self.vessageViewContainer.frame.height / 2)
         self.flashTipsView.flashTips(self.view, msg: msg, center: center)
     }
     
@@ -611,10 +583,6 @@ extension ConversationViewController{
 //MARK: animations
 extension ConversationViewController{
     
-    func playVideoChatButtonAnimation() {
-        UIAnimationHelper.flashView(sendVideoChatButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
-    }
-    
     func playFaceTextButtonAnimation() {
         UIAnimationHelper.flashView(sendFaceTextButton, duration: 0.3, autoStop: true, stopAfterMs: 3000)
     }
@@ -623,14 +591,6 @@ extension ConversationViewController{
 //MARK:HandleBahamutCmdDelegate
 extension ConversationViewController:HandleBahamutCmdDelegate{
     func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
-        switch method {
-        case "showInviteFriendsAlert":ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
-        case "showSetupChatImagesController":showChatImagesMrgController(1)
-        case "showSetupChatBackgroundController":showChatImagesMrgController(0)
-        case "playFaceTextButtonAnimation":playFaceTextButtonAnimation()
-        case "playVideoChatButtonAnimation":playVideoChatButtonAnimation()
-        default:
-            break
-        }
+        
     }
 }

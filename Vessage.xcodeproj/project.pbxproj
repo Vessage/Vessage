@@ -161,7 +161,6 @@
 		E78EA59C1DBB0E6000C49B9C /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EA59B1DBB0E6000C49B9C /* Math.swift */; };
 		E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */; };
 		E79917541D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79917531D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift */; };
-		E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79C24D91D445057006754F1 /* FaceTextImageView.swift */; };
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
 		E79F4AAE1E07631F008B99EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E79F4AAD1E07631F008B99EE /* CFNetwork.framework */; };
@@ -482,7 +481,6 @@
 		E78EA59B1DBB0E6000C49B9C /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBrowser.swift; sourceTree = "<group>"; };
 		E79917531D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageManageCellDelegate.swift; sourceTree = "<group>"; };
-		E79C24D91D445057006754F1 /* FaceTextImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextImageView.swift; sourceTree = "<group>"; };
 		E79CAB731D9DEC3500FB0F6D /* Vessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vessage.entitlements; sourceTree = "<group>"; };
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
 		E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatGroupService.swift; sourceTree = "<group>"; };
@@ -1105,7 +1103,6 @@
 			children = (
 				E708ACAA1C87536D0071104E /* LaunchScreen.swift */,
 				E76DF58D1D1A6A4F006BF1A0 /* NavigationBarTitle.swift */,
-				E79C24D91D445057006754F1 /* FaceTextImageView.swift */,
 				E718444A1D498CDC00D3EDEF /* TextChatInputView.swift */,
 				E718444C1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift */,
 				E74237EE1E2C6DAB0084DEF2 /* FlashTipsLabel.swift */,
@@ -1910,7 +1907,6 @@
 				E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */,
 				E732CC451E42D51C00BE101F /* ConversationViewMessageListExt.swift in Sources */,
 				E71886791C9FEFA90028B016 /* DeveloperMainPanelController.swift in Sources */,
-				E79C24DA1D445057006754F1 /* FaceTextImageView.swift in Sources */,
 				E7740ED81DA74EA70022A903 /* NFCPostCommentViewController.swift in Sources */,
 				E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */,
 				E708AC011C86D7B70071104E /* ColorUtil.swift in Sources */,

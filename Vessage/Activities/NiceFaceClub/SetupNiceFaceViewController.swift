@@ -10,6 +10,7 @@ import UIKit
 import MBProgressHUD
 import Alamofire
 import EVReflection
+import CoreImage
 
 class SetupNiceFaceViewController: UIViewController {
 

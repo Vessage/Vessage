@@ -61,6 +61,7 @@ class ChatSendContentConfirmController: UIViewController {
         let controller = instanceFromStoryBoard("Conversation", identifier: "ChatSendContentConfirmController") as! ChatSendContentConfirmController
         controller.delegate = delegate
         controller.contentImage = contentImage
+        vc.presentViewController(controller, animated: true, completion: nil)
         return controller
     }
 }

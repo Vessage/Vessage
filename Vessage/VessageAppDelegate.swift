@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 @UIApplicationMain
-class VessageAppDelegate: UIResponder, UIApplicationDelegate {
+class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     
@@ -93,12 +93,21 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
     private func configureUMessage(launchOptions: [NSObject: AnyObject]?)
     {
         if let options = launchOptions{
-            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: options)
+            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: options,httpsenable: true)
         }else{
-            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: [NSObject: AnyObject]())
+            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: [NSObject: AnyObject](),httpsenable: true)
         }
         UMessage.registerForRemoteNotifications()
         UMessage.setAutoAlert(true)
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.currentNotificationCenter()
+            center.delegate = self
+            center.requestAuthorizationWithOptions([UNAuthorizationOptions.Alert,UNAuthorizationOptions.Badge,UNAuthorizationOptions.Sound,UNAuthorizationOptions.CarPlay]) { (granted, err) in
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        
     }
     
     //MARK: App Delegate
@@ -123,21 +132,58 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    @available(iOS 10.0, *)
+    func userNotificationCenter(center: UNUserNotificationCenter, didReceiveNotificationResponse response: UNNotificationResponse, withCompletionHandler completionHandler: () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        if let trigger = response.notification.request.trigger {
+            if trigger.isKindOfClass(UNPushNotificationTrigger){
+                //应用处于后台时的远程推送接受
+                //必须加这句代码
+                UMessage.didReceiveRemoteNotification(userInfo)
+            }else{
+                //应用处于前台时的本地推送接受
+                completionHandler()
+            }
+        }
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        if let trigger = notification.request.trigger {
+            if trigger.isKindOfClass(UNPushNotificationTrigger){
+                //应用处于后台时的远程推送接受
+                //必须加这句代码
+                handleActiveNotificatino(userInfo)
+            }else{
+                //应用处于前台时的本地推送接受
+                completionHandler([.Alert,.Badge,.Sound])
+            }
+        }
+        
+    }
+    
+    private func handleActiveNotificatino(userInfo: [NSObject : AnyObject]){
+        if let customCmd = userInfo["custom"] as? String{
+            if ServiceContainer.isAllServiceReady{
+                switch customCmd {
+                case "NewVessageNotify":ServiceContainer.getVessageService().newVessageFromServer()
+                case "ActivityUpdatedNotify":ServiceContainer.getActivityService().getActivitiesBoardData()
+                default:debugLog("Unknow Custom Notification:%@", customCmd)
+                }
+            }else{
+                debugLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
+            }
+        }
+    }
+    
+    
+    //handle iOS9- Notification
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         
         switch UIApplication.sharedApplication().applicationState {
         case .Active:
-            if let customCmd = userInfo["custom"] as? String{
-                if ServiceContainer.isAllServiceReady{
-                    switch customCmd {
-                    case "NewVessageNotify":ServiceContainer.getVessageService().newVessageFromServer()
-                    case "ActivityUpdatedNotify":ServiceContainer.getActivityService().getActivitiesBoardData()
-                    default:debugLog("Unknow Custom Notification:%@", customCmd)
-                    }
-                }else{
-                    debugLog("Services Not Ready,Received Custom Cmd:%@", customCmd)
-                }
-            }
+            handleActiveNotificatino(userInfo)
         default:
             UMessage.didReceiveRemoteNotification(userInfo)
         }

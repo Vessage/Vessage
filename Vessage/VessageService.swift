@@ -134,12 +134,14 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
             }
         }
         
-        
         let req = GetNewVessagesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[Vessage]>) -> Void in
             var newVessages = [Vessage]()
-            if let vsgs = result.returnObject{
+            if var vsgs = result.returnObject{
                 if vsgs.count > 0{
+                    vsgs.sortInPlace({ (a, b) -> Bool in
+                        a.ts < b.ts
+                    })
                     vsgs.saveBahamutObjectModels()
                     PersistentManager.sharedInstance.saveAll()
                     PersistentManager.sharedInstance.refreshCache(Vessage)
@@ -159,8 +161,6 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                             self.vsgCntLock.unlock()
                             self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         }
-                        
-                        
                     })
                     self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
                     self.notifyVessageGot()
@@ -193,7 +193,9 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getNotReadVessages(chatterId:String) -> [Vessage]{
-        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }.sort({ (a, b) -> Bool in
+            a.ts < b.ts
+        })
     }
     
     

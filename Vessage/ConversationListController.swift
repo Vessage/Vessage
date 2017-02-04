@@ -22,7 +22,6 @@ class ConversationListController: UITableViewController {
         return 4
     }
     
-    
     let conversationService = ServiceContainer.getConversationService()
     let vessageService = ServiceContainer.getVessageService()
     let userService = ServiceContainer.getUserService()
@@ -51,6 +50,7 @@ class ConversationListController: UITableViewController {
             }
             self.navigationItem.leftBarButtonItem?.enabled = !isSearching
             self.navigationItem.rightBarButtonItem?.enabled = !isSearching
+            MainTabBarController.instance?.tabBar.hidden = isSearching
             self.searchBar.placeholder = ( isSearching ? "SEARCH_FRIENDS_HOLODER":"SEARCH_FRIENDS").localizedString()
         }
     }
@@ -120,6 +120,8 @@ class ConversationListController: UITableViewController {
         
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.intervalTimeTaskPerMinute, object: nil)
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.onAppBecomeActive, object: nil)
+        
+        setNavigationBadges()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -127,11 +129,11 @@ class ConversationListController: UITableViewController {
         ServiceContainer.getAppService().removeObserver(self)
     }
     
+    #if DEBUG
     deinit{
-        #if DEBUG
-            print("Deinited:\(self.description)")
-        #endif
+        print("Deinited:\(self.description)")
     }
+    #endif
     
     private func initMJRefreshHeader() {
         let mjHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(ConversationListController.refreshNewUsers(_:)))
@@ -180,6 +182,12 @@ class ConversationListController: UITableViewController {
         #if DEBUG
             ConversationListController.autoRefreshData = false
         #endif
+    }
+    
+    private func setNavigationBadges() {
+        let appService = ServiceContainer.getAppService()
+        appService.appQABadge ? navigationItem.leftBarButtonItem?.showMiniBadge() : navigationItem.leftBarButtonItem?.hideMiniBadge()
+        appService.settingBadge ? navigationItem.rightBarButtonItem?.showMiniBadge() : navigationItem.rightBarButtonItem?.hideMiniBadge()
     }
     
     private func tryShowConversationsTimeUpTips() {
@@ -234,11 +242,13 @@ class ConversationListController: UITableViewController {
     
     //MARK: actions
     @IBAction func showUserSetting(sender: AnyObject) {
+        ServiceContainer.getAppService().settingBadge = false
         UserSettingViewController.showUserSettingViewController(self.navigationController!,basicMode: false)
     }
     
     @IBAction func onClickQA(sender: AnyObject) {
         if let nvc = self.navigationController{
+            ServiceContainer.getAppService().appQABadge = false
             SimpleBrowser.openUrl(nvc, url: "http://bahamut.cn/VGQA.html", title: "Q&A")
         }
     }
@@ -437,6 +447,7 @@ class ConversationListController: UITableViewController {
                         acPin = UITableViewRowAction(style: .Default, title: "PIN".localizedString(), handler: { (ac, indexPath) in
                             
                             if self.conversationService.pinConversation(conversation){
+                                SystemSoundHelper.keyTink()
                                 tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
                             }else{
                                 self.playToast(String(format: "MAX_PIN_X_LIMITED".localizedString(), "\(ConversationService.conversationMaxPinNumber)"))

@@ -64,7 +64,7 @@ class ConversationListCell:ConversationListCellBase{
     
     @IBOutlet weak var pinMark: UIView!{
         didSet{
-            pinMark.hidden = true
+            pinMark.hidden = false
             pinMark.layoutIfNeeded()
             pinMark.clipsToBounds = true
             pinMark.layer.cornerRadius = pinMark.frame.height / 2
@@ -113,10 +113,10 @@ class ConversationListCell:ConversationListCellBase{
         didSet{
             timeupProgressView?.hidden = true
             subLineLabel?.morphingEnabled = true
+            pinMark?.hidden = true
             if let conversation = originModel as? Conversation{
                 updateWithConversation(conversation)
             }else if let searchResult = originModel as? SearchResultModel{
-                pinMark?.hidden = true
                 subLineLabel?.morphingEnabled = false
                 switch searchResult.type {
                 case .userActiveNear:
@@ -246,15 +246,7 @@ class ConversationListCell:ConversationListCellBase{
         if conversation.pinned {
             self.setTimeProgress(1)
         }
-        if let pm = pinMark{
-            let pmHidden = pm.hidden
-            pinMark?.hidden = !conversation.pinned
-            if pmHidden == false && conversation.pinned {
-                UIAnimationHelper.flashView(pm, duration: 0.3, autoStop: true, stopAfterMs: 1500){
-                    SystemSoundHelper.keyTink()
-                }
-            }
-        }
+        pinMark?.hidden = !conversation.pinned
         
     }
     

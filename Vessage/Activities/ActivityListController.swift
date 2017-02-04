@@ -84,13 +84,29 @@ class ActivityListController: UITableViewController {
         activities.appendContentsOf(activityService.getEnabledActivities())
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        setNavigationBadges()
+    }
+    
     deinit{
         #if DEBUG
             print("Deinited:\(self.description)")
         #endif
     }
     
+    private func setNavigationBadges() {
+        let appService = ServiceContainer.getAppService()
+        if appService.inviteBadge {
+            navigationItem.rightBarButtonItem?.showMiniBadge()
+        }else{
+            navigationItem.rightBarButtonItem?.hideMiniBadge()
+        }
+    }
+    
     @IBAction func tellFriends(sender: AnyObject) {
+        ServiceContainer.getAppService().inviteBadge = false
+        setNavigationBadges()
         ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
     }
     

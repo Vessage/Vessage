@@ -197,7 +197,7 @@ class UserProfileViewController: UIViewController {
     }
     
     func onTapView(a:UITapGestureRecognizer) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        back(a)
     }
     
     func onUserNoteNameUpdated(a:NSNotification) {

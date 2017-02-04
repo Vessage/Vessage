@@ -28,6 +28,11 @@ class AppService: NSNotificationCenter,ServiceProtocol
     static let onAppWillEnterForeground = "onAppWillEnterForeground"
     
     @objc static var ServiceName:String{return "App Service"}
+    
+    var appQABadge:Bool = false
+    var inviteBadge:Bool = false
+    var settingBadge:Bool = false
+    
     private var intervalTaskTimer:NSTimer?
     
     @objc func appStartInit(appName: String) {
@@ -49,6 +54,10 @@ class AppService: NSNotificationCenter,ServiceProtocol
     func trySendFirstLaunchToServer() {
         let buildVersion = UserSetting.getUserIntValue(NotifiedFirstLuanchBuildKey)
         if buildVersion < VessageConfig.buildVersion {
+            appQABadge = true
+            inviteBadge = true
+            settingBadge = true
+            
             let req = AppFirstLaunchRequest()
             req.buildVersion = VessageConfig.buildVersion
             req.oldBuildVersion = buildVersion

@@ -173,6 +173,22 @@ let hudSpinImageArray:[UIImage] = {
     return spins
 }()
 
+extension UIBarButtonItem{
+    func showMiniBadge(){
+        badgeMinSize = 8
+        badgeOriginX = 26
+        badgeOriginY = 2
+        badge.clipsToBounds = true
+        badgeValue = " "
+        badge.frame.size = CGSizeMake(8, 8)
+        badge.layer.cornerRadius = 4
+    }
+    
+    func hideMiniBadge() {
+        badgeValue = nil
+    }
+}
+
 extension UIViewController{
     
     func showAnimationHud(title:String! = "",message:String! = "",async:Bool = true,completionHandler: HudHiddenCompletedHandler! = nil) -> MBProgressHUD {

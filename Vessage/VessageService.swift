@@ -162,9 +162,11 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                             self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         }
                     })
-                    self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
                     self.notifyVessageGot()
-                    SystemSoundHelper.playSound(1003)
+                    if newVessages.count > 0{
+                        self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
+                        SystemSoundHelper.playSound(1003)
+                    }
                 }
             }
             completion?()

@@ -185,13 +185,13 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //APP Motto
 "VESSAGE_MOTTO_0" = "让时间重塑朋友圈";
-"VESSAGE_MOTTO_1" = "让时间重塑朋友圈";
-"VESSAGE_MOTTO_2" = "不一样的聊天体验";
+"VESSAGE_MOTTO_1" = "在此只与聊得来的人分享";
+"VESSAGE_MOTTO_2" = "无好友关系，只关注聊得来的人";
 "VESSAGE_MOTTO_3" = "晒&秀 - 分享多彩生活";
 "VESSAGE_MOTTO_4" = "晒&秀 - 找回分享的乐趣";
-"VESSAGE_MOTTO_5" = "不聊消失，不打扰";
-"VESSAGE_MOTTO_6" = "不聊消失，不打扰";
-"VESSAGE_MOTTO_7" = "没有好友关系，释放社交压力";
+"VESSAGE_MOTTO_5" = "不聊消失，生活本没有分组与屏蔽";
+"VESSAGE_MOTTO_6" = "不聊消失，释放加好友的压力";
+"VESSAGE_MOTTO_7" = "聊得来的人就是最好的听众";
 
 //Vege
 APP_NAME = "VG";
@@ -216,7 +216,7 @@ PEOPLE_NO_MOBILE = "没有手机号";
 IGNORE_SETUP_MOBILE = "跳过设置";
 CONTINUE_SETUP_MOBILE = "继续设置";
 CANCEL_SETUP_MOBILE_TITLE = "确定跳过设置手机号？";
-CANCEL_SETUP_MOBILE_MSG = "跳过后将接收不到朋友通过手机号发送给你的消息，建议继续设置";
+CANCEL_SETUP_MOBILE_MSG = "跳过后将接收不到朋友已经通过手机号发送给你的消息，建议继续设置";
 
 NO_USER_OF_MOBILE = "没有找到绑定该手机的用户";
 MOBILE_X_INVITE_JOIN_VG = "%@\n你可以邀请该好友加入VG";

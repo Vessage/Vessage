@@ -28,12 +28,19 @@ class ActivityInfo{
     private(set) var autoClearBadge = false
 }
 
+let SetActivityMiniBadgeAtAppVersion:[String] = ["1004"]
+let IncActivityBadgeAtAppVersion:[String] = []
+
+let VGActivityNearActivityId = "100"
+
 let ActivityInfoList = [
     [
         ActivityInfo(activityId: "1003", "SNS".SNSString, "sns_icon", "SNS", "SNSMainViewController", true,false),
-        ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false)
     ],
     [
+        //ActivityInfo(activityId: VGActivityNearActivityId, "Near Active People", "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false),
+        
+        ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false),
         //ActivityInfo(activityId: "1001", "一起帮帮忙", "littlePaperIcon", "HelpTogether", "HelpTogetherMainController", true,false),
         //ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false,false),
         ActivityInfo(activityId: "1004", "MNS".mnsLocalizedString, "mns_icon", "MNS", "MNSMainNavigationController", false,false),

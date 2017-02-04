@@ -575,6 +575,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXb-se-PvY">
                                 <rect key="frame" x="40" y="114" width="240" height="320"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发送图片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRl-lP-RyL">
+                                        <rect key="frame" x="85.5" y="10" width="69.5" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lbx-sW-dlV">
                                         <rect key="frame" x="0.0" y="270" width="240" height="1"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -612,8 +618,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="GRl-lP-RyL" firstAttribute="top" secondItem="LXb-se-PvY" secondAttribute="top" constant="10" id="1Uz-hl-6Jx"/>
                                     <constraint firstItem="lbx-sW-dlV" firstAttribute="top" secondItem="iAO-uY-thz" secondAttribute="top" constant="-10" id="1oF-cx-3NL"/>
                                     <constraint firstAttribute="bottom" secondItem="iAO-uY-thz" secondAttribute="bottom" constant="6" id="6PG-Z0-fXF"/>
+                                    <constraint firstItem="GRl-lP-RyL" firstAttribute="centerX" secondItem="LXb-se-PvY" secondAttribute="centerX" id="B2X-Sl-Pgb"/>
                                     <constraint firstItem="PnI-S6-nrx" firstAttribute="centerX" secondItem="lbx-sW-dlV" secondAttribute="centerX" id="OPK-H4-xlC"/>
                                     <constraint firstItem="xVT-za-Gi8" firstAttribute="height" secondItem="iAO-uY-thz" secondAttribute="height" id="Pho-kn-XG1"/>
                                     <constraint firstAttribute="height" constant="320" id="Qrq-Pc-it2"/>
@@ -635,7 +643,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lbv-3j-VYd">
-                                <rect key="frame" x="80" y="151" width="160" height="200"/>
+                                <rect key="frame" x="80" y="164" width="160" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="BNx-GW-5vI"/>
                                     <constraint firstAttribute="width" constant="160" id="fFs-RR-hEk"/>
@@ -650,7 +658,7 @@
                             <constraint firstItem="LXb-se-PvY" firstAttribute="centerX" secondItem="Sl7-S6-vMY" secondAttribute="centerX" id="C3u-4O-3ls"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="width" secondItem="Sl7-S6-vMY" secondAttribute="width" id="Loa-6N-NgR"/>
                             <constraint firstItem="LXb-se-PvY" firstAttribute="centerY" secondItem="Sl7-S6-vMY" secondAttribute="centerY" constant="-10" id="OKZ-Tb-No5"/>
-                            <constraint firstItem="lbv-3j-VYd" firstAttribute="centerY" secondItem="LXb-se-PvY" secondAttribute="centerY" constant="-23" id="Yw2-iQ-TvU"/>
+                            <constraint firstItem="lbv-3j-VYd" firstAttribute="centerY" secondItem="LXb-se-PvY" secondAttribute="centerY" constant="-10" id="Yw2-iQ-TvU"/>
                             <constraint firstItem="vlL-sj-ihC" firstAttribute="height" secondItem="Sl7-S6-vMY" secondAttribute="height" id="aiw-f6-Efz"/>
                         </constraints>
                     </view>

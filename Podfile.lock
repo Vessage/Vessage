@@ -12,7 +12,7 @@ PODS:
   - LTMorphingLabel (0.3.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - UMengAnalytics (4.1.10)
+  - UMengAnalytics (4.2.4)
   - Vivid (0.8)
   - YUCIHighPassSkinSmoothing (1.4):
     - Vivid
@@ -40,10 +40,10 @@ SPEC CHECKSUMS:
   LTMorphingLabel: 2777d8d9cb699125f48dfcd95d78bd3d77c87ade
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  UMengAnalytics: 40585031b7eb085534c68a951b394731e7166257
+  UMengAnalytics: ef8d45f94c0e5771dc364cf6a5731d9d3b101da2
   Vivid: 65d28aba89fc750fceda8172c8b233f27d0ac18b
   YUCIHighPassSkinSmoothing: 8418fd1bf605ec22b647c57745b863b352f72097
 
 PODFILE CHECKSUM: 60bcf000b396540fa4efdde2bea002a439ce43d4
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.2.0

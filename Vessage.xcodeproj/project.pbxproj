@@ -124,6 +124,7 @@
 		E75E269F1DE43AD7000D2D38 /* VessageTimeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */; };
 		E75E26A11DE43B5C000D2D38 /* TimeMachineVessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */; };
 		E766D7521DA89881009A4D01 /* NFCGodRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E766D7511DA89881009A4D01 /* NFCGodRF.swift */; };
+		E7682B771E455C85007FDB4B /* ViewPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7682B761E455C85007FDB4B /* ViewPool.swift */; };
 		E7687C251DB4837700A1FD5E /* NFCPostRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7687C241DB4837700A1FD5E /* NFCPostRF.swift */; };
 		E7687C271DB4A2CC00A1FD5E /* NFCMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7687C261DB4A2CC00A1FD5E /* NFCMyCommentViewController.swift */; };
 		E7687C291DB4A5CC00A1FD5E /* NFCReceivedLikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7687C281DB4A5CC00A1FD5E /* NFCReceivedLikeViewController.swift */; };
@@ -135,7 +136,7 @@
 		E7740ED81DA74EA70022A903 /* NFCPostCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */; };
 		E7740EE11DA764880022A903 /* NFCCommentInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7740ED91DA75C8E0022A903 /* NFCCommentInputView.xib */; };
 		E7740EE31DA764C30022A903 /* NFCCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7740EDB1DA75D990022A903 /* NFCCommentInputView.swift */; };
-		E77447021DC2CB7E000924AB /* FaceTextBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447011DC2CB7E000924AB /* FaceTextBubbleVessageHandler.swift */; };
+		E77447021DC2CB7E000924AB /* TextBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447011DC2CB7E000924AB /* TextBubbleVessageHandler.swift */; };
 		E77447041DC2E015000924AB /* VideoBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */; };
 		E77447061DC2E49E000924AB /* ImageBubbleVessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */; };
 		E77447081DC33096000924AB /* BubbleVessageHandlersConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */; };
@@ -445,6 +446,7 @@
 		E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageTimeMachine.swift; sourceTree = "<group>"; };
 		E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeMachineVessageListController.swift; sourceTree = "<group>"; };
 		E766D7511DA89881009A4D01 /* NFCGodRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCGodRF.swift; sourceTree = "<group>"; };
+		E7682B761E455C85007FDB4B /* ViewPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPool.swift; sourceTree = "<group>"; };
 		E7687C241DB4837700A1FD5E /* NFCPostRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostRF.swift; sourceTree = "<group>"; };
 		E7687C261DB4A2CC00A1FD5E /* NFCMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCMyCommentViewController.swift; sourceTree = "<group>"; };
 		E7687C281DB4A5CC00A1FD5E /* NFCReceivedLikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCReceivedLikeViewController.swift; sourceTree = "<group>"; };
@@ -456,7 +458,7 @@
 		E7740ED71DA74EA70022A903 /* NFCPostCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCPostCommentViewController.swift; sourceTree = "<group>"; };
 		E7740ED91DA75C8E0022A903 /* NFCCommentInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NFCCommentInputView.xib; sourceTree = "<group>"; };
 		E7740EDB1DA75D990022A903 /* NFCCommentInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCCommentInputView.swift; sourceTree = "<group>"; };
-		E77447011DC2CB7E000924AB /* FaceTextBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceTextBubbleVessageHandler.swift; sourceTree = "<group>"; };
+		E77447011DC2CB7E000924AB /* TextBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageBubbleVessageHandler.swift; sourceTree = "<group>"; };
 		E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleVessageHandlersConfig.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 				E7F22C271C9BE57800CD38D1 /* Libs */,
 				E708ACA91C8752BF0071104E /* ArchBase */,
 				E708AC0C1C86DEC40071104E /* Assets */,
+				E708ACA11C8752090071104E /* UI */,
 				E708ACA21C8752300071104E /* Source */,
 				E708AB4E1C86CB470071104E /* SupportFiles */,
 			);
@@ -940,7 +943,6 @@
 				E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */,
 				E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
-				E708ACA11C8752090071104E /* UI */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -1175,7 +1177,7 @@
 			isa = PBXGroup;
 			children = (
 				E78002551DC200F200DB18E2 /* BubbleVessageHandler.swift */,
-				E77447011DC2CB7E000924AB /* FaceTextBubbleVessageHandler.swift */,
+				E77447011DC2CB7E000924AB /* TextBubbleVessageHandler.swift */,
 				E77447031DC2E015000924AB /* VideoBubbleVessageHandler.swift */,
 				E77447051DC2E49E000924AB /* ImageBubbleVessageHandler.swift */,
 				E77447071DC33096000924AB /* BubbleVessageHandlersConfig.swift */,
@@ -1338,6 +1340,7 @@
 				E732CC421E42D2DE00BE101F /* ConversationViewTimeMachineExt.swift */,
 				E732CC441E42D51C00BE101F /* ConversationViewMessageListExt.swift */,
 				E7A36C7E1E44CA0B00054CD0 /* ChatSendContentConfirmController.swift */,
+				E7682B761E455C85007FDB4B /* ViewPool.swift */,
 			);
 			name = ConversationView;
 			sourceTree = "<group>";
@@ -1809,6 +1812,7 @@
 				E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */,
 				E71BFCF51DE719D600384FCB /* MNSRF.swift in Sources */,
 				E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */,
+				E7682B771E455C85007FDB4B /* ViewPool.swift in Sources */,
 				E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */,
 				E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
@@ -1925,7 +1929,7 @@
 				E708ABDD1C86D37D0071104E /* BahamutRFKit.swift in Sources */,
 				E708AB721C86CE1D0071104E /* IDUtil.swift in Sources */,
 				E708AC801C86EC160071104E /* UtilFileServiceExtension.swift in Sources */,
-				E77447021DC2CB7E000924AB /* FaceTextBubbleVessageHandler.swift in Sources */,
+				E77447021DC2CB7E000924AB /* TextBubbleVessageHandler.swift in Sources */,
 				E708AC821C86EC160071104E /* ServiceProtocol.swift in Sources */,
 				E7F532E51D3A1E8A008078DE /* ChatGroupProfileViewController.swift in Sources */,
 				E7F6F0821D69AB84001CD190 /* BahamutTaskQueueProtocol.swift in Sources */,

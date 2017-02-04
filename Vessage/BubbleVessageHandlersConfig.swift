@@ -10,7 +10,7 @@ import Foundation
 extension BubbleVessageHandlerManager{
     static func loadEmbededHandlers(){
         registHandler(Vessage.typeImage, handler: ImageBubbleVessageHandler())
-        registHandler(Vessage.typeFaceText, handler: FaceTextBubbleVessageHandler())
+        registHandler(Vessage.typeFaceText, handler: TextBubbleVessageHandler())
         registHandler(Vessage.typeChatVideo, handler: VideoBubbleVessageHandler())
         registHandler(Vessage.typeTips, handler: TipsBubbleVessageHandler())
     }

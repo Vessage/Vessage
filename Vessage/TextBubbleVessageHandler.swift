@@ -1,5 +1,5 @@
 //
-//  FaceTextBubbleVessageHandler.swift
+//  TextBubbleVessageHandler.swift
 //  Vessage
 //
 //  Created by Alex Chow on 2016/10/28.
@@ -96,7 +96,11 @@ class TextFullScreen: UIViewController {
     }
 }
 
-class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler {
+class TextBubbleVessageHandler: NSObject,BubbleVessageHandler {
+    
+    static let viewPool:ViewPool<VessageContentLabel> = {
+        return ViewPool<VessageContentLabel>()
+    }()
     
     class VessageContentLabel: UILabel {
         weak var vc:UIViewController!
@@ -110,6 +114,15 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler {
             let ges = UITapGestureRecognizer(target: self, action: #selector(VessageContentLabel.onTapTextLabel(_:)))
             self.addGestureRecognizer(ges)
             self.textAlignment = .Center
+        }
+        
+        override func removeFromSuperview() {
+            text = nil
+            vc = nil
+            vessage = nil
+            setNeedsLayout()
+            layoutIfNeeded()
+            super.removeFromSuperview()
         }
         
         func onTapTextLabel(ges:UITapGestureRecognizer) {
@@ -140,9 +153,16 @@ class FaceTextBubbleVessageHandler: NSObject,BubbleVessageHandler {
     }
     
     func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
-        let label = VessageContentLabel()
-        label.initLabel(vc, vessage: vessage)
-        return label
+        if let label = TextBubbleVessageHandler.viewPool.getFreeView() {
+            label.initLabel(vc, vessage: vessage)
+            return label
+        }else{
+            let label = VessageContentLabel()
+            label.initLabel(vc, vessage: vessage)
+            TextBubbleVessageHandler.viewPool.pushNewPooledView(label)
+            return label
+        }
+        
     }
     
     func presentContent(vc:UIViewController, vessage: Vessage,contentView:UIView) {

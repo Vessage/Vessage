@@ -8,6 +8,9 @@
 
 import Foundation
 class VideoBubbleVessageHandler: BubbleVessageHandler {
+    static let viewPool:ViewPool<VessageContentVideoPlayer> = {
+        return ViewPool<VessageContentVideoPlayer>()
+    }()
     
     static let defaultSize = CGSizeMake(168, 226)
     
@@ -24,6 +27,12 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
             dateTimeLabel.textColor = UIColor.whiteColor()
             dateTimeLabel.font = UIFont.systemFontOfSize(10)
             self.addSubview(dateTimeLabel)
+        }
+        
+        override func removeFromSuperview() {
+            super.removeFromSuperview()
+            vessage = nil
+            filePath = nil
         }
         
         private func updateDateLabel(date:NSDate) {
@@ -64,9 +73,15 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
     }
     
     func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
-        let view = VessageContentVideoPlayer()
-        view.initVessageContentPlayer(vc, vessage: vessage)
-        return view
+        if let view = VideoBubbleVessageHandler.viewPool.getFreeView() {
+            view.initVessageContentPlayer(vc, vessage: vessage)
+            return view
+        }else{
+            let view = VessageContentVideoPlayer()
+            view.initVessageContentPlayer(vc, vessage: vessage)
+            VideoBubbleVessageHandler.viewPool.pushNewPooledView(view)
+            return view
+        }
     }
     
     func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {

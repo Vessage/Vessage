@@ -9,7 +9,9 @@
 import Foundation
 
 class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
-    
+    static let viewPool:ViewPool<ImageVessageContainer> = {
+        return ViewPool<ImageVessageContainer>()
+    }()
     class ImageVessageContainer: UIView {
         private var imageLoaded = false
         weak private var vessage:Vessage!
@@ -35,6 +37,15 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
             self.addSubview(loadingIndicator)
             self.addSubview(dateTimeLabel)
             self.addGestureRecognizer(UITapGestureRecognizer(target: self,action: #selector(ImageVessageContainer.onTapImage(_:))))
+        }
+        
+        override func removeFromSuperview() {
+            super.removeFromSuperview()
+            vc = nil
+            vessage = nil
+            imageView.image = nil
+            dateTimeLabel.text = nil
+            loadingIndicator.stopAnimating()
         }
         
         override func drawRect(rect: CGRect) {
@@ -125,9 +136,15 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
     }
     
     func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
-        let container = ImageVessageContainer()
-        container.initVessageContentView(vc, vessage: vessage)
-        return container
+        if let view = ImageBubbleVessageHandler.viewPool.getFreeView() {
+            view.initVessageContentView(vc, vessage: vessage)
+            return view
+        }else{
+            let view = ImageVessageContainer()
+            view.initVessageContentView(vc, vessage: vessage)
+            ImageBubbleVessageHandler.viewPool.pushNewPooledView(view)
+            return view
+        }
     }
     
     func presentContent(vc:UIViewController, vessage: Vessage, contentView: UIView) {

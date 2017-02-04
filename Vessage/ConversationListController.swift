@@ -429,6 +429,7 @@ class ConversationListController: UITableViewController {
                     if conversation.pinned {
                         acPin = UITableViewRowAction(style: .Default, title: "UNPIN".localizedString(), handler: { (ac, indexPath) in
                             if self.conversationService.unpinConversation(conversation){
+                                SystemSoundHelper.keyTock()
                                 tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
                             }
                         })
@@ -458,6 +459,7 @@ class ConversationListController: UITableViewController {
 //MARK: handle click list cell
 private let defaultNearActiveConversationBeforeRemoveTs:Int64 = 1000 * 60 * 60
 private var openConversationBeforeRemoveTs:Int64 = ConversationMaxTimeUpMS
+private var openConversationActivityId:String? = nil
 
 extension ConversationListController:UserProfileViewControllerDismissedDelegate{
     
@@ -469,10 +471,11 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
         if let userId = profile.userId{
             let beforeRemoveTs = openConversationBeforeRemoveTs
             openConversationBeforeRemoveTs = ConversationMaxTimeUpMS
-            
+            let acId = openConversationActivityId
+            openConversationActivityId = nil
             sender.dismissViewControllerAnimated(true, completion: {
                 MainTabBarController.instance?.tabBar.hidden = false
-                ConversationViewController.showConversationViewController(self.navigationController!, userId : userId,beforeRemoveTs: beforeRemoveTs)
+                ConversationViewController.showConversationViewController(self.navigationController!, userId : userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: acId)
             })
         }
     }
@@ -492,6 +495,7 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
                 if result.type == .userActive ||
                     result.type == .userActiveNear ||
                     result.type == .userNear{
+                    openConversationActivityId = VGActivityNearActivityId
                     openConversationBeforeRemoveTs = defaultNearActiveConversationBeforeRemoveTs
                 }
                 

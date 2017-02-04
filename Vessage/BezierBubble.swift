@@ -76,12 +76,8 @@ class BezierBubbleView: UIView {
     private let spaceOfContentToView:CGFloat = 6
     
     func setContentView(contentView:UIView) {
-        if contentContainer.subviews.contains(contentView) {
-            return
-        }else{
-            self.contentContainer.removeAllSubviews()
-            contentContainer.addSubview(contentView)
-        }
+        self.contentContainer.removeAllSubviews()
+        contentContainer.addSubview(contentView)
     }
     
     func getContentView() -> UIView? {

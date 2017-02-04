@@ -20,6 +20,9 @@ class ChatSendContentConfirmController: UIViewController {
             contentView.clipsToBounds = true
             contentView.contentMode = .ScaleAspectFill
             contentView.image = contentImage
+            let tapContentView = UITapGestureRecognizer(target: self, action: #selector(ChatSendContentConfirmController.onTapContentView(_:)))
+            contentView.addGestureRecognizer(tapContentView)
+            contentView.userInteractionEnabled = true
         }
     }
     
@@ -60,6 +63,10 @@ class ChatSendContentConfirmController: UIViewController {
         self.dismissViewControllerAnimated(true) {
             self.delegate?.chatSendContentConfirmControllerCancel(self)
         }
+    }
+    
+    func onTapContentView(ges:UITapGestureRecognizer) {
+        contentView.slideShowFullScreen(self)
     }
     
     @IBAction func onSendClick(sender: AnyObject) {

@@ -376,24 +376,13 @@ extension SetupNiceFaceViewController:UIImagePickerControllerDelegate{
         
         picker.dismissViewControllerAnimated(true)
         {
-            if let imgData = UIImageJPEGRepresentation(image, 1.0){
-                if let img = CIImage(data: imgData){
-                    let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy:CIDetectorAccuracyHigh])!
-                    let faces = faceDetector.featuresInImage(img)
-                    self.hud?.hideAnimated(true)
-                    if faces.count > 0{
-                        self.camera.pauseCaptureSession()
-                        self.initImageView()
-                        self.takedImageView.image = image
-                        self.view.addSubview(self.takedImageView)
-                        self.view.exchangeSubviewAtIndex(self.view.subviews.count - 1, withSubviewAtIndex: 1)
-                        self.takedImage = image
-                        return
-                    }
-                }
-            }
             self.hud?.hideAnimated(true)
-            self.playToast("NO_HUMEN_FACES_DETECTED".localizedString())
+            self.camera.pauseCaptureSession()
+            self.initImageView()
+            self.takedImageView.image = image
+            self.view.addSubview(self.takedImageView)
+            self.view.exchangeSubviewAtIndex(self.view.subviews.count - 1, withSubviewAtIndex: 1)
+            self.takedImage = image
         }
     }
 }

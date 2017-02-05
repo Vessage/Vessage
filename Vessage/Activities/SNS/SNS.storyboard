@@ -180,10 +180,10 @@
                                                     <rect key="frame" x="0.0" y="460" width="375" height="36"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ogu-5v-6lv">
-                                                            <rect key="frame" x="329" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="341" y="6" width="24" height="24"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="36" id="W8F-Is-IAS"/>
-                                                                <constraint firstAttribute="width" constant="36" id="dQr-9z-cc9"/>
+                                                                <constraint firstAttribute="height" constant="24" id="W8F-Is-IAS"/>
+                                                                <constraint firstAttribute="width" constant="24" id="dQr-9z-cc9"/>
                                                             </constraints>
                                                             <state key="normal" title="Button" image="nfc_like"/>
                                                             <connections>
@@ -191,14 +191,14 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Fk-aA-zgR">
-                                                            <rect key="frame" x="283" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="305" y="6" width="24" height="24"/>
                                                             <state key="normal" image="nfc_new_comment_l"/>
                                                             <connections>
                                                                 <action selector="onClickNewComment:" destination="XBb-Bi-aLc" eventType="touchUpInside" id="4WZ-Sj-dAF"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYe-hw-Ygy">
-                                                            <rect key="frame" x="237" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="269" y="6" width="24" height="24"/>
                                                             <state key="normal" image="nfc_chat"/>
                                                             <connections>
                                                                 <action selector="onClickChat:" destination="XBb-Bi-aLc" eventType="touchUpInside" id="3ch-nH-lVH"/>
@@ -233,7 +233,7 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="9Fk-aA-zgR" firstAttribute="leading" secondItem="oYe-hw-Ygy" secondAttribute="trailing" constant="10" id="0dj-uy-0ME"/>
+                                                        <constraint firstItem="9Fk-aA-zgR" firstAttribute="leading" secondItem="oYe-hw-Ygy" secondAttribute="trailing" constant="12" id="0dj-uy-0ME"/>
                                                         <constraint firstItem="2ud-Y9-7Hu" firstAttribute="leading" secondItem="xHQ-Ib-ebs" secondAttribute="trailing" constant="8" id="319-Oy-XEO"/>
                                                         <constraint firstItem="oYe-hw-Ygy" firstAttribute="height" secondItem="9Fk-aA-zgR" secondAttribute="height" id="3aQ-0H-hRi"/>
                                                         <constraint firstItem="oYe-hw-Ygy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lQv-Pa-TDW" secondAttribute="trailing" constant="2" id="6hk-Dh-4Dy"/>
@@ -247,7 +247,7 @@
                                                         <constraint firstItem="oYe-hw-Ygy" firstAttribute="width" secondItem="9Fk-aA-zgR" secondAttribute="width" id="cgD-1H-vz0"/>
                                                         <constraint firstAttribute="height" constant="36" id="hWo-zC-fya"/>
                                                         <constraint firstItem="lQv-Pa-TDW" firstAttribute="centerY" secondItem="Ogu-5v-6lv" secondAttribute="centerY" id="ihG-h1-9fF"/>
-                                                        <constraint firstItem="Ogu-5v-6lv" firstAttribute="leading" secondItem="9Fk-aA-zgR" secondAttribute="trailing" constant="10" id="jJ4-E8-KoH"/>
+                                                        <constraint firstItem="Ogu-5v-6lv" firstAttribute="leading" secondItem="9Fk-aA-zgR" secondAttribute="trailing" constant="12" id="jJ4-E8-KoH"/>
                                                         <constraint firstItem="Ogu-5v-6lv" firstAttribute="centerY" secondItem="PR5-Zb-oSJ" secondAttribute="centerY" id="sDk-ra-8Y1"/>
                                                         <constraint firstItem="2ud-Y9-7Hu" firstAttribute="centerY" secondItem="xHQ-Ib-ebs" secondAttribute="centerY" id="uHW-ez-ihk"/>
                                                         <constraint firstItem="9Fk-aA-zgR" firstAttribute="width" secondItem="Ogu-5v-6lv" secondAttribute="width" id="uWv-Xs-OxF"/>

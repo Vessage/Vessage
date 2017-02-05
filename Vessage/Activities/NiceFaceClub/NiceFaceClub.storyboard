@@ -394,10 +394,10 @@
                                                     <rect key="frame" x="0.0" y="468" width="375" height="36"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S5e-AY-GPk">
-                                                            <rect key="frame" x="329" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="341" y="6" width="24" height="24"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="36" id="0tR-tO-XP2"/>
-                                                                <constraint firstAttribute="height" constant="36" id="255-NI-f0W"/>
+                                                                <constraint firstAttribute="width" constant="24" id="0tR-tO-XP2"/>
+                                                                <constraint firstAttribute="height" constant="24" id="255-NI-f0W"/>
                                                             </constraints>
                                                             <state key="normal" title="Button" image="nfc_like"/>
                                                             <connections>
@@ -405,21 +405,21 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3Q-xk-MGv">
-                                                            <rect key="frame" x="283" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="305" y="6" width="24" height="24"/>
                                                             <state key="normal" image="nfc_new_comment_l"/>
                                                             <connections>
                                                                 <action selector="onClickNewComment:" destination="nrq-gL-vuh" eventType="touchUpInside" id="gsZ-b8-EMz"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VH4-a1-J7h">
-                                                            <rect key="frame" x="237" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="269" y="6" width="24" height="24"/>
                                                             <state key="normal" image="nfc_id_card_btn"/>
                                                             <connections>
                                                                 <action selector="onClickCardButton:" destination="nrq-gL-vuh" eventType="touchUpInside" id="Ha9-bo-bED"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fsT-Aa-aXD">
-                                                            <rect key="frame" x="191" y="0.0" width="36" height="36"/>
+                                                            <rect key="frame" x="233" y="6" width="24" height="24"/>
                                                             <state key="normal" image="nfc_chat"/>
                                                             <connections>
                                                                 <action selector="onClickChat:" destination="nrq-gL-vuh" eventType="touchUpInside" id="xeo-4k-XNo"/>
@@ -455,10 +455,10 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="VaJ-AK-Rhv" firstAttribute="leading" secondItem="FrY-bU-gec" secondAttribute="trailing" constant="2" id="1s2-qf-lHP"/>
-                                                        <constraint firstItem="VH4-a1-J7h" firstAttribute="leading" secondItem="fsT-Aa-aXD" secondAttribute="trailing" constant="10" id="47j-zj-xCm"/>
+                                                        <constraint firstItem="VH4-a1-J7h" firstAttribute="leading" secondItem="fsT-Aa-aXD" secondAttribute="trailing" constant="12" id="47j-zj-xCm"/>
                                                         <constraint firstItem="LJJ-0Y-1WM" firstAttribute="centerY" secondItem="gwU-Oa-P4M" secondAttribute="centerY" id="7dr-Wi-yRD"/>
                                                         <constraint firstItem="VaJ-AK-Rhv" firstAttribute="centerY" secondItem="FrY-bU-gec" secondAttribute="centerY" id="AKz-uv-LvA"/>
-                                                        <constraint firstItem="n3Q-xk-MGv" firstAttribute="leading" secondItem="VH4-a1-J7h" secondAttribute="trailing" constant="10" id="DaR-a0-xbE"/>
+                                                        <constraint firstItem="n3Q-xk-MGv" firstAttribute="leading" secondItem="VH4-a1-J7h" secondAttribute="trailing" constant="12" id="DaR-a0-xbE"/>
                                                         <constraint firstItem="fsT-Aa-aXD" firstAttribute="width" secondItem="VH4-a1-J7h" secondAttribute="width" id="JhN-R2-dj1"/>
                                                         <constraint firstItem="fsT-Aa-aXD" firstAttribute="centerY" secondItem="VH4-a1-J7h" secondAttribute="centerY" id="Jlq-qY-TmI"/>
                                                         <constraint firstItem="VH4-a1-J7h" firstAttribute="centerY" secondItem="n3Q-xk-MGv" secondAttribute="centerY" id="M0B-eE-yJm"/>
@@ -474,7 +474,7 @@
                                                         <constraint firstItem="LJJ-0Y-1WM" firstAttribute="leading" secondItem="gwU-Oa-P4M" secondAttribute="trailing" constant="2" id="d5u-EJ-vZ5"/>
                                                         <constraint firstItem="fsT-Aa-aXD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LJJ-0Y-1WM" secondAttribute="trailing" constant="2" id="gfT-Hq-BqA"/>
                                                         <constraint firstAttribute="height" constant="36" id="pZT-P6-frv"/>
-                                                        <constraint firstItem="S5e-AY-GPk" firstAttribute="leading" secondItem="n3Q-xk-MGv" secondAttribute="trailing" constant="10" id="ttv-dK-peV"/>
+                                                        <constraint firstItem="S5e-AY-GPk" firstAttribute="leading" secondItem="n3Q-xk-MGv" secondAttribute="trailing" constant="12" id="ttv-dK-peV"/>
                                                         <constraint firstItem="gwU-Oa-P4M" firstAttribute="leading" secondItem="VaJ-AK-Rhv" secondAttribute="trailing" constant="8" id="wSj-lq-Qu5"/>
                                                         <constraint firstItem="n3Q-xk-MGv" firstAttribute="width" secondItem="S5e-AY-GPk" secondAttribute="width" id="xcz-Lt-RxJ"/>
                                                         <constraint firstItem="FrY-bU-gec" firstAttribute="centerY" secondItem="xA3-1S-0Oj" secondAttribute="centerY" id="xdw-Bw-6kS"/>

@@ -109,8 +109,8 @@ class SNSPostCell: UITableViewCell {
             let postInfo = "\(nick)\n\(post.getPostDateFriendString())"
             postInfoLabel?.text = postInfo
             self.likeTipsLabel?.text = self.post.lc.friendString
-            chatButton.hidden = isSelfPost ? true : !SNSPostManager.instance.likedInCached(post.pid)
-            newCommentButton.hidden = isSelfPost ? false : chatButton.hidden
+            chatButton.hidden = isSelfPost
+            newCommentButton.hidden = false
             commentTipsLabel.text = self.post.cmtCnt.friendString
             textContentLabel?.text = nil
             if let json = self.post?.body{
@@ -150,14 +150,6 @@ class SNSPostCell: UITableViewCell {
         likeTipsLabel.text = "+1"
         likeTipsLabel.animationMaxToMin(0.2, maxScale: 1.6) {
             self.likeTipsLabel?.text = self.post.lc.friendString
-            if !self.isSelfPost{
-                self.chatButton.hidden = false
-                self.chatButton.animationMaxToMin(0.1, maxScale: 1.3){
-                    self.newCommentButton.hidden = false
-                    self.newCommentButton.animationMaxToMin(0.1, maxScale: 1.3){
-                    }
-                }
-            }
         }
     }
     
@@ -215,7 +207,10 @@ extension SNSPostCell{
     }
     
     @IBAction func onClickNewComment(sender: AnyObject) {
-        SNSPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post).delegate = self
+        let v = sender as! UIView
+        v.animationMaxToMin(0.1, maxScale: 1.2) {
+            SNSPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post).delegate = self
+        }
     }
     
     @IBAction func onClickChat(sender: AnyObject) {

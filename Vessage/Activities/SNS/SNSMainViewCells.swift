@@ -77,7 +77,7 @@ class SNSPostCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
-            imageContentView.layer.borderWidth = 0.6
+            imageContentView.layer.borderWidth = 0.3
             imageContentView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageContentView.userInteractionEnabled = true
             imageContentView.clipsToBounds = true

@@ -124,8 +124,8 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
     func newVessageFromServer(completion:(()->Void)? = nil){
         
         //prepare received vessages check map
-        let keySet = receivedCheckMap.keys.map{$0}
-        keySet.forEach { (key) in
+        let keySet = receivedCheckMap.keys.map{$0}.reverse()
+        for key in keySet {
             let x = receivedCheckMap[key]
             if x == 1{
                 receivedCheckMap.removeValueForKey(key)
@@ -139,34 +139,35 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
             var newVessages = [Vessage]()
             if var vsgs = result.returnObject{
                 if vsgs.count > 0{
+                    self.vsgCntLock.lock()
                     vsgs.sortInPlace({ (a, b) -> Bool in
                         a.ts < b.ts
                     })
                     vsgs.saveBahamutObjectModels()
                     PersistentManager.sharedInstance.saveAll()
                     PersistentManager.sharedInstance.refreshCache(Vessage)
-                    vsgs.forEach({ (vsg) in
+                    for vsg in vsgs{
+                        let key = "\(vsg.vessageId)_\(vsg.sender)_\(vsg.ts)".md5
                         
-                        let unexists = self.receivedCheckMap[vsg.vessageId] == nil
-                        self.receivedCheckMap[vsg.vessageId] = 0
-                        
-                        if unexists{
+                        if !self.receivedCheckMap.keys.contains(key){
                             newVessages.append(vsg)
-                            self.vsgCntLock.lock()
                             if let cnt = self.notReadVessageCountMap[vsg.sender]{
                                 self.notReadVessageCountMap[vsg.sender] = cnt + 1
                             }else{
                                 self.notReadVessageCountMap[vsg.sender] = 1
                             }
-                            self.vsgCntLock.unlock()
+                            
                             self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         }
-                    })
+                        self.receivedCheckMap[key] = 0
+                    }
+                    
                     self.notifyVessageGot()
                     if newVessages.count > 0{
                         self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
                         SystemSoundHelper.playSound(1003)
                     }
+                    self.vsgCntLock.unlock()
                 }
             }
             completion?()

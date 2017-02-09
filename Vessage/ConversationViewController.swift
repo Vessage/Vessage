@@ -407,7 +407,7 @@ extension ConversationViewController{
         if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
                 self.controllerTitle = "VESSAGE_SENDED".localizedString()
-                NSTimer.scheduledTimerWithTimeInterval(2.3, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)
+                NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)
                 if isNotRegistFriend{
                     self.showSendTellFriendAlert()
                 }

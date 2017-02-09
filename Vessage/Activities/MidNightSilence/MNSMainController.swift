@@ -58,6 +58,11 @@ class MNSMainController: UIViewController {
     
     private var isOpenTime:Bool{
         let now = NSDate()
+        let previousOpenTime = todayOpenTime.addDays(-1)
+        let previousEndTime = previousOpenTime.addSeconds(openTimeInterval)
+        if previousOpenTime.timeIntervalSince1970 <= now.timeIntervalSince1970 && now.timeIntervalSince1970 < previousEndTime.timeIntervalSince1970 {
+            return true
+        }
         return todayOpenTime.timeIntervalSince1970 <= now.timeIntervalSince1970 && now.timeIntervalSince1970 < todayCloseTime.timeIntervalSince1970
     }
     private var timer:NSTimer!

@@ -132,7 +132,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
         if let chatterId = c.chatterId{
             if vsg.sender == chatterId{
-                c.lstTs = vsg.ts
+                if vsg.ts > c.lstTs {
+                    c.lstTs = vsg.ts
+                }
                 return true
             }
         }

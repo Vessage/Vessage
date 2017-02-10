@@ -119,7 +119,25 @@ class SNSPostCell: UITableViewCell {
                     textContentLabel?.text = txt
                 }
             }
+            measureImageContent()
         }
+    }
+    
+    private func measureImageContent() {
+        let hiddenImageContent = post?.img == nil
+        self.imageContentView?.hidden = hiddenImageContent
+        
+        if let constraints = self.imageContentView?.constraints {
+            for constraint in constraints {
+                if constraint.identifier == "imageHeight" {
+                    constraint.active = hiddenImageContent
+                }
+                if constraint.identifier == "imageWHRatio" {
+                    constraint.active = !hiddenImageContent
+                }
+            }
+        }
+        
     }
     
     func updateImage() {
@@ -131,18 +149,17 @@ class SNSPostCell: UITableViewCell {
             avatarImageView.image = UIImage(named:"vg_smile")
         }
         
-        let defaultBcg = UIImage(named:"nfc_post_img_bcg")
         imageContentView.contentMode = .Center
         if let img = post?.img {
+            let defaultBcg = UIImage(named:"nfc_post_img_bcg")
             ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: defaultBcg){ suc in
                 if suc{
                     self.imageContentView.contentMode = .ScaleAspectFill
                 }
             }
         }else{
-            imageContentView.image = defaultBcg
+            imageContentView.image = nil
         }
-        
     }
     
     func playLikeAnimation() {

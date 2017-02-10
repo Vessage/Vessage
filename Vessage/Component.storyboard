@@ -29,9 +29,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Property Text Value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nk5-Bf-jD5" customClass="BahamutTextView" customModule="Vessage">
-                                <rect key="frame" x="6" y="72" width="353" height="128"/>
+                                <rect key="frame" x="6" y="72" width="353" height="136"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="v7b-tF-iAI"/>
+                                    <constraint firstAttribute="height" constant="136" id="v7b-tF-iAI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

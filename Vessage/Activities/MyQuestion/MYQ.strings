@@ -7,11 +7,11 @@
 */
 MYQ = "你问我答";
 MYQ_AC_TITLE = "你问我答";
-QUES_CONTENT_LIMIT = "问题需要6到140字，以问号结束。";
+QUES_CONTENT_LIMIT = "问题需要6到140字，无换行，以问号结束。";
 MY_QUESTION = "我的问题";
 EDIT_MY_QUESTION_TITLE = "我要问(删除原问题请留空):";
 UPDATE_MY_QUESTION = "我要问问题";
-MY_QUESTION_HOLDER = "如:\n这是什么鬼?\n谁有空和我聊天?\n有哪些好玩的宠物?\nps:删除原问题请留空";
+MY_QUESTION_HOLDER = "问题需要以问号结束，如:\n我有故事，你想听吗?\n我有空，你有故事吗?\n拉个小群聊讨论xxx，谁要来?\n去xx旅游，是一种怎样的体验？\n\nps:删除原问题请留空";
 GET_MAIN_INFO_ERROR = "刷新失败，请下拉重试";
 MYQ_NEWER_MESSAGE = "这里是一个随便问问题的地方，你问Ta答，总有一个人能给你满意答案。一个好问题也许就是一段关系的开始❤️";
 POST_QUESTION = "问一个问题";

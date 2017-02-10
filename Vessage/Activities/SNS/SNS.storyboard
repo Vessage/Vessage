@@ -127,14 +127,15 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5l-tS-hMl">
                                                     <rect key="frame" x="6" y="58" width="363" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Nc-zo-aKH">
                                                     <rect key="frame" x="0.0" y="84" width="375" height="375"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="9Nc-zo-aKH" secondAttribute="height" multiplier="1:1" id="jh7-6Z-zir"/>
+                                                        <constraint firstAttribute="height" priority="750" identifier="imageHeight" id="Jfp-jv-2eW"/>
+                                                        <constraint firstAttribute="width" secondItem="9Nc-zo-aKH" secondAttribute="height" multiplier="1:1" identifier="imageWHRatio" id="jh7-6Z-zir"/>
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7IR-hN-hKS">
@@ -185,48 +186,48 @@
                                                                 <constraint firstAttribute="height" constant="24" id="W8F-Is-IAS"/>
                                                                 <constraint firstAttribute="width" constant="24" id="dQr-9z-cc9"/>
                                                             </constraints>
-                                                            <state key="normal" title="Button" image="nfc_like"/>
+                                                            <state key="normal" title="Button" image="sns_like_btn"/>
                                                             <connections>
                                                                 <action selector="onClickLike:" destination="XBb-Bi-aLc" eventType="touchUpInside" id="GXm-Vu-R5y"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Fk-aA-zgR">
                                                             <rect key="frame" x="305" y="6" width="24" height="24"/>
-                                                            <state key="normal" image="nfc_new_comment_l"/>
+                                                            <state key="normal" image="sns_new_cmt_btn"/>
                                                             <connections>
                                                                 <action selector="onClickNewComment:" destination="XBb-Bi-aLc" eventType="touchUpInside" id="4WZ-Sj-dAF"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oYe-hw-Ygy">
                                                             <rect key="frame" x="269" y="6" width="24" height="24"/>
-                                                            <state key="normal" image="nfc_chat"/>
+                                                            <state key="normal" image="sns_chat_btn"/>
                                                             <connections>
                                                                 <action selector="onClickChat:" destination="XBb-Bi-aLc" eventType="touchUpInside" id="3ch-nH-lVH"/>
                                                             </connections>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_red" translatesAutoresizingMaskIntoConstraints="NO" id="BFW-hO-X0F">
-                                                            <rect key="frame" x="10" y="9" width="18" height="18"/>
+                                                            <rect key="frame" x="10" y="12" width="12" height="12"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="18" id="8io-1p-31M"/>
-                                                                <constraint firstAttribute="width" constant="18" id="HQh-vV-o3H"/>
+                                                                <constraint firstAttribute="height" constant="12" id="8io-1p-31M"/>
+                                                                <constraint firstAttribute="width" constant="12" id="HQh-vV-o3H"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHQ-Ib-ebs">
-                                                            <rect key="frame" x="30" y="8" width="37" height="20"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <rect key="frame" x="24" y="11" width="27" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nfc_comment" translatesAutoresizingMaskIntoConstraints="NO" id="2ud-Y9-7Hu">
-                                                            <rect key="frame" x="75" y="9" width="18" height="18"/>
+                                                            <rect key="frame" x="59" y="12" width="12" height="12"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="18" id="SD4-zE-zFd"/>
-                                                                <constraint firstAttribute="width" constant="18" id="emG-8E-qIO"/>
+                                                                <constraint firstAttribute="height" constant="12" id="SD4-zE-zFd"/>
+                                                                <constraint firstAttribute="width" constant="12" id="emG-8E-qIO"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQv-Pa-TDW">
-                                                            <rect key="frame" x="95" y="8" width="37" height="20"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <rect key="frame" x="73" y="11" width="27" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -272,7 +273,6 @@
                                                 <constraint firstItem="nva-jy-5LJ" firstAttribute="top" secondItem="rvM-Ik-LSf" secondAttribute="topMargin" constant="2" id="2i6-O9-lYT"/>
                                                 <constraint firstItem="9Nc-zo-aKH" firstAttribute="centerX" secondItem="rvM-Ik-LSf" secondAttribute="centerX" id="9O2-in-JDN"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="OgI-17-rjM" secondAttribute="trailing" id="9fJ-YW-gQs"/>
-                                                <constraint firstItem="M5l-tS-hMl" firstAttribute="centerX" secondItem="9Nc-zo-aKH" secondAttribute="centerX" id="Aag-KD-rAP"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="0Gc-5N-SP9" secondAttribute="bottom" id="Je4-sG-JhJ"/>
                                                 <constraint firstItem="PR5-Zb-oSJ" firstAttribute="top" secondItem="9Nc-zo-aKH" secondAttribute="bottom" constant="10" id="Okk-jN-cZq"/>
                                                 <constraint firstItem="0Gc-5N-SP9" firstAttribute="centerX" secondItem="rvM-Ik-LSf" secondAttribute="centerX" id="QiB-yi-suR"/>
@@ -282,10 +282,11 @@
                                                 <constraint firstItem="h3x-T2-YtQ" firstAttribute="centerY" secondItem="nva-jy-5LJ" secondAttribute="centerY" id="fER-tz-vDQ"/>
                                                 <constraint firstItem="7IR-hN-hKS" firstAttribute="leading" secondItem="9Nc-zo-aKH" secondAttribute="leading" id="gIu-xX-RJ3"/>
                                                 <constraint firstItem="OgI-17-rjM" firstAttribute="top" secondItem="rvM-Ik-LSf" secondAttribute="topMargin" constant="-6" id="niJ-eg-Mki"/>
-                                                <constraint firstItem="M5l-tS-hMl" firstAttribute="width" secondItem="9Nc-zo-aKH" secondAttribute="width" constant="-12" id="nok-wl-cZs"/>
+                                                <constraint firstItem="M5l-tS-hMl" firstAttribute="width" secondItem="rvM-Ik-LSf" secondAttribute="width" constant="-12" id="ntq-Kx-5hd"/>
                                                 <constraint firstItem="PR5-Zb-oSJ" firstAttribute="centerX" secondItem="9Nc-zo-aKH" secondAttribute="centerX" id="oRF-gc-4hW"/>
                                                 <constraint firstItem="0Gc-5N-SP9" firstAttribute="top" secondItem="PR5-Zb-oSJ" secondAttribute="bottom" constant="6" id="qkf-6J-qAc"/>
                                                 <constraint firstItem="nva-jy-5LJ" firstAttribute="leading" secondItem="h3x-T2-YtQ" secondAttribute="trailing" constant="6" id="rFN-zO-OkV"/>
+                                                <constraint firstItem="M5l-tS-hMl" firstAttribute="centerX" secondItem="rvM-Ik-LSf" secondAttribute="centerX" id="sqX-rT-TqN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -771,12 +772,12 @@
     </scenes>
     <resources>
         <image name="heart_red" width="128" height="128"/>
-        <image name="nfc_chat" width="128" height="128"/>
         <image name="nfc_comment" width="128" height="128"/>
-        <image name="nfc_like" width="128" height="128"/>
         <image name="nfc_new_comment" width="128" height="128"/>
-        <image name="nfc_new_comment_l" width="128" height="128"/>
         <image name="nfc_plus" width="96" height="96"/>
         <image name="share" width="16" height="16"/>
+        <image name="sns_chat_btn" width="128" height="128"/>
+        <image name="sns_like_btn" width="128" height="128"/>
+        <image name="sns_new_cmt_btn" width="128" height="128"/>
     </resources>
 </document>

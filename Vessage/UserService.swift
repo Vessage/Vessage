@@ -409,13 +409,11 @@ extension UserService{
         if users.count > 0{
             callback(keyword: keyword,users)
         }else if keyword.isMobileNumber(){
-            getUserProfileByMobile(keyword, updatedCallback: { (user) -> Void in
-                if let u = user{
-                    callback(keyword: keyword,[u])
-                }else{
-                    callback(keyword: keyword,[])
-                }
-            })
+            if let u = getCachedUserByMobile(keyword){
+                callback(keyword: keyword,[u])
+            }else{
+                callback(keyword: keyword,[])
+            }
         }
     }
 }

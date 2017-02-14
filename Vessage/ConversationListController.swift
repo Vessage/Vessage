@@ -530,7 +530,7 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
 extension ConversationListController{
     
     func flashTips(msg:String) {
-        self.flashTipsView.flashTips(self.view, msg: msg, center: CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160))
+        self.flashTipsView.flashTips(self.view, msg: msg, center: CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160),textColor: UIColor.whiteColor())
     }
     
 }

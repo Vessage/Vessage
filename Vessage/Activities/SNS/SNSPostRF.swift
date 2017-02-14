@@ -64,6 +64,8 @@ class SNSMainBoardData: EVObject {
     var tlks = 0 //Total likes
     var annc:String! //Announcement
     var newer = false //first use sns
+    var alertMsg:String!
+    
     var posts:[SNSPost]!
 }
 

@@ -288,6 +288,8 @@ extension SNSMainViewController{
                         debugPrint("Post Image From Outter")
                     }else if d.newer {
                         self.showNewerAlert()
+                    }else if !String.isNullOrWhiteSpace(d.alertMsg){
+                        self.showAlert("SNS".SNSString, msg: d.alertMsg)
                     }else if (d.posts?.count ?? 0) > 0{
                         self.tryShowShareAlert()
                     }

@@ -12,14 +12,14 @@ class FlashTipsLabel: UILabel {
     var flashDuration:NSTimeInterval = 0.6
     var flashTime:UInt64 = 3600
     
-    func flashTips(container:UIView,msg:String,center:CGPoint? = nil) {
+    func flashTips(container:UIView,msg:String,center:CGPoint? = nil,textColor:UIColor = UIColor.orangeColor()) {
         
         self.removeFromSuperview()
         
         self.clipsToBounds = true
-        self.textColor = UIColor.orangeColor()
+        self.textColor = textColor
         self.textAlignment = .Center
-        self.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.8)
+        self.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
         
         self.text = msg
         self.sizeToFit()

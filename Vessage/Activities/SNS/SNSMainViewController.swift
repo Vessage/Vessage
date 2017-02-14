@@ -129,6 +129,9 @@ extension SNSMainViewController{
         tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjFooterRefresh(_:)))
         tableView?.mj_footer.automaticallyHidden = true
         bottomViewsHidden = true
+        
+        newPostButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(SNSMainViewController.onLongPressNewPost(_:))))
+        
         MobClick.event("SNS_Login")
     }
     
@@ -151,6 +154,19 @@ extension SNSMainViewController{
 
 //MARK: actions
 extension SNSMainViewController{
+    
+    func updatePostState(postId:String,newState:Int) {
+        let typeList = self.posts[listType]
+        var i = 0
+        for psts in typeList {
+            if let index = (psts.indexOf{$0.pid == postId}){
+                self.posts[listType][i][index].st = newState
+                let tableViewSection = i + 1
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: tableViewSection)], withRowAnimation: .None)
+            }
+            i += 1
+        }
+    }
     
     func removePost(postId:String) ->Bool {
         let typeList = self.posts[listType]
@@ -179,6 +195,13 @@ extension SNSMainViewController{
         v.animationMaxToMin(0.1, maxScale: 1.2) {
             let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "SNS".SNSString, message: "POST_NEW_SHARE".SNSString)
             imagePicker.delegate = self
+        }
+    }
+    
+    func onLongPressNewPost(ges:UILongPressGestureRecognizer) {
+        if ges.state == .Began {            
+            let model = generateTimEditorModel(nil)
+            TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
         }
     }
     
@@ -321,7 +344,7 @@ extension SNSMainViewController{
             self.tableView.hidden = false
             self.bottomViewsHidden = true
         }else{
-            self.switchListType(SNSPost.typeNormalPost)
+            self.switchListType(self.listType)
             self.showViews()
         }
         
@@ -446,32 +469,60 @@ extension SNSMainViewController:SNSMainInfoCellDelegate{
 
 //MARK: TIMImageTextContentEditorControllerDelegate
 extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
-    private func generateTimEditorModel(image:UIImage,imageId:String? = nil) -> TIMImageTextContentEditorModel{
+    private func generateTimEditorModel(image:UIImage?,imageId:String? = nil) -> TIMImageTextContentEditorModel{
         let model = TIMImageTextContentEditorModel()
         model.image = image
-        model.editorTitle = "POST_NEW_SHARE".SNSString
-        model.placeHolder = "TEXT_CONTENT_PLACE_HOLDER".SNSString
-        if String.isNullOrWhiteSpace(imageId) == false {
-            model.userInfo = ["imageId":imageId!]
+        if image == nil && String.isNullOrWhiteSpace(imageId) {
+            model.editorTitle = "POST_NEW_SHARE_TXT".SNSString
+        }else{
+            model.editorTitle = "POST_NEW_SHARE".SNSString
         }
+        
+        model.placeHolder = "TEXT_CONTENT_PLACE_HOLDER".SNSString
+        model.userInfo = NSMutableDictionary()
+        if String.isNullOrWhiteSpace(imageId) == false {
+            model.userInfo![TIMImageTextContentEditorModel.imageIdKey] = imageId!
+        }
+        
+        model.userInfo![TIMImageTextContentEditorModel.extraSwitchOnTipsKey] = "PUBLIC_POST_TIPS".SNSString
+        model.userInfo![TIMImageTextContentEditorModel.extraSwitchOffTipsKey] = "PRIVATE_POST_TIPS".SNSString
+        model.userInfo![TIMImageTextContentEditorModel.extraSwitchInitValueKey] = true
+        model.userInfo![TIMImageTextContentEditorModel.extraSwitchLabelTextKey] = "PUBLIC_PRI_LABEL".SNSString
+        model.extraSetup = true
+        
         return model
     }
     
     func imageTextContentEditor(sender: TIMImageTextContentEditorController, newTextContent: String?, model: TIMImageTextContentEditorModel?) {
-        if let imageId = model?.userInfo?["imageId"] as? String{
+        
+        var postState = SNSPost.stateNormal
+        
+        if let publicPost = model?.userInfo?[TIMImageTextContentEditorModel.extraSwitchValueKey] as? Bool {
+            if !publicPost {
+                postState = SNSPost.statePrivate
+            }
+        }
+        
+        
+        if let img = model?.image{
+            self.sendNewPost(img,textContent:newTextContent,postState: postState)
+        }else{
+            
             let tmpPost = SNSPost()
             tmpPost.cmtCnt = 0
-            tmpPost.img = imageId
-            
             if String.isNullOrWhiteSpace(newTextContent) == false{
-                tmpPost.body = EVObject(dictionary: ["txt":newTextContent!]).toMiniJsonString()
+                tmpPost.body = String.miniJsonStringWithDictionary(["txt":newTextContent!])
             }
             
             tmpPost.pid = IdUtil.generateUniqueId()
+            tmpPost.st = postState
+            
+            if let imageId = model?.userInfo?["imageId"] as? String{
+                tmpPost.img = imageId
+            }
+            
             self.posting.insert(tmpPost, atIndex: 0)
             self.pushNewPost(tmpPost)
-        }else if let img = model?.image{
-            self.sendNewPost(img,textContent:newTextContent)
         }
     }
 }
@@ -495,7 +546,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    private func sendNewPost(imageForSend:UIImage,textContent:String?) {
+    private func sendNewPost(imageForSend:UIImage,textContent:String?,postState:Int) {
         let fService = ServiceContainer.getService(FileService)
         if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
             debugPrint("ImageSize:\(imageData.length / 1024)KB")
@@ -512,9 +563,10 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                         let post = SNSPost()
                         post.img = fk.fileId
                         post.pid = taskId
+                        post.st = postState
                         
                         if String.isNullOrWhiteSpace(textContent) == false{
-                            post.body = "{\"txt\":\"\(textContent!)\"}"
+                            post.body = String.miniJsonStringWithDictionary(["txt":textContent!])
                         }
                         
                         self.posting.insert(post, atIndex: 0)
@@ -535,7 +587,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     }
     
     func pushNewPost(tmpPost:SNSPost) {
-        SNSPostManager.instance.newPost(tmpPost.img,body: tmpPost.body, callback: { (post) in
+        SNSPostManager.instance.newPost(tmpPost.img,body: tmpPost.body,state: tmpPost.st, callback: { (post) in
             if let p = post{
                 self.playCheckMark(){
                     self.posting.removeElement{$0.pid == tmpPost.pid}

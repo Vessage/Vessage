@@ -71,6 +71,7 @@ class SNSPostCell: UITableViewCell {
     @IBOutlet weak var textContentLabel: UILabel!
     @IBOutlet weak var likeMarkImage: UIImageView!
     @IBOutlet weak var postInfoLabel: UILabel!
+    @IBOutlet weak var extraInfoLabel: UILabel!
     @IBOutlet weak var likeTipsLabel: UILabel!
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var newCommentButton: UIButton!
@@ -106,8 +107,10 @@ class SNSPostCell: UITableViewCell {
     private func updateCell() {
         if post != nil {
             let nick = rootController?.userService.getUserNotedNameIfExists(post.usrId) ?? post.pster ?? "UNKNOW_NAME".localizedString()
-            let postInfo = "\(nick)\n\(post.getPostDateFriendString())"
-            postInfoLabel?.text = postInfo
+            postInfoLabel?.text = nick
+            
+            updateExtraInfo()
+            
             self.likeTipsLabel?.text = self.post.lc.friendString
             chatButton.hidden = isSelfPost
             newCommentButton.hidden = false
@@ -123,20 +126,29 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
+    private func updateExtraInfo(){
+        if post.st == SNSPost.statePrivate {
+            extraInfoLabel?.text = "\(post.getPostDateFriendString()) \("PRIVATE".SNSString)"
+        }else{
+            extraInfoLabel?.text = post.getPostDateFriendString()
+        }
+    }
+    
     private func measureImageContent() {
         let hiddenImageContent = post?.img == nil
-        self.imageContentView?.hidden = hiddenImageContent
         
         if let constraints = self.imageContentView?.constraints {
             for constraint in constraints {
                 if constraint.identifier == "imageHeight" {
-                    constraint.active = hiddenImageContent
-                }
-                if constraint.identifier == "imageWHRatio" {
-                    constraint.active = !hiddenImageContent
+                    constraint.constant = hiddenImageContent ? 0 : self.contentView.frame.width
                 }
             }
         }
+        
+        contentView.setNeedsUpdateConstraints()
+        contentView.updateConstraintsIfNeeded()
+        
+        self.imageContentView?.hidden = hiddenImageContent
         
     }
     
@@ -177,27 +189,53 @@ class SNSPostCell: UITableViewCell {
 
 extension SNSPostCell{
     
+    private func updatePostState(newState:Int) {
+        let hud = self.rootController!.showActivityHud()
+        SNSPostManager.instance.updatePostState(self.post.pid,state: newState, callback: { (suc) in
+            hud.hideAnimated(true)
+            if suc{
+                self.rootController?.playCheckMark(){
+                    if newState < 0{
+                        self.post.st = newState
+                        self.rootController?.removePost(self.post.pid)
+                    }else{
+                        self.rootController?.updatePostState(self.post.pid,newState: newState)
+                    }
+                }
+            }else{
+                self.rootController?.playCrossMark()
+            }
+        })
+    }
+    
     @IBAction func onClickMore(sender: AnyObject) {
         let alert = UIAlertController.create(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         if isSelfPost {
+            
+            
             let ac = UIAlertAction(title: "DELETE_POST".SNSString, style: .Default, handler: { (ac) in
+                
                 let dtPst = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
-                    let hud = self.rootController!.showActivityHud()
-                    SNSPostManager.instance.deletePost(self.post.pid, callback: { (suc) in
-                        hud.hideAnimated(true)
-                        if suc{
-                            self.rootController?.playCheckMark(){
-                                self.rootController?.removePost(self.post.pid)
-                            }
-                        }else{
-                            self.rootController?.playCrossMark()
-                        }
-                    })
+                    self.updatePostState(SNSPost.stateRemoved)
                 })
                 self.rootController!.showAlert("DELETE_POST".SNSString, msg: "SURE_DELETE_POST".SNSString, actions: [dtPst,ALERT_ACTION_CANCEL])
                 
             })
+            
+            if self.post.st == SNSPost.stateNormal{
+                let setPrivate = UIAlertAction(title: "SET_POST_PRIVATE".SNSString, style: .Default, handler: { (ac) in
+                    self.updatePostState(SNSPost.statePrivate)
+                })
+                alert.addAction(setPrivate)
+                
+            }else if self.post.st == SNSPost.statePrivate{
+                let setPublic = UIAlertAction(title: "SET_POST_PUBLIC".SNSString, style: .Default, handler: { (ac) in
+                    self.updatePostState(SNSPost.stateNormal)
+                })
+                alert.addAction(setPublic)
+            }
+            
             alert.addAction(ac)
         }else{
             let ac = UIAlertAction(title: "REPORT_POST".SNSString, style: .Default, handler: { (ac) in

@@ -16,6 +16,11 @@ class SNSPost: BahamutObject {
     static let typeMyPost = 1
     static let typeSingleUserPost = 2
     
+    static let stateDeleted = -2
+    static let stateRemoved = -1
+    static let statePrivate = 0
+    static let stateNormal = 1
+    
     override func getObjectUniqueIdName() -> String {
         return "pid"
     }
@@ -39,6 +44,9 @@ class SNSPost: BahamutObject {
     var upTs:Int64 = 0 //Update Timespan
     
     var body:String?
+    
+    var st:Int = 1 //State
+    
 }
 
 extension SNSPost{
@@ -199,13 +207,18 @@ class SNSPostNewRequest: BahamutRFRequestBase {
     
     var image:String!{
         didSet{
-            paramenters.updateValue(image, forKey: "image")
+            if let img = self.image{
+                paramenters.updateValue(img, forKey: "image")
+            }
+            
         }
     }
     
     var nick:String!{
         didSet{
-            paramenters.updateValue(nick, forKey: "nick")
+            if let n = nick{
+                paramenters.updateValue(n, forKey: "nick")
+            }
         }
     }
     
@@ -213,6 +226,14 @@ class SNSPostNewRequest: BahamutRFRequestBase {
         didSet{
             if let b = body{
                 paramenters.updateValue(b, forKey: "body")
+            }
+        }
+    }
+    
+    var state:Int?{
+        didSet{
+            if let st = state{
+                paramenters.updateValue("\(st)", forKey: "state")
             }
         }
     }
@@ -227,13 +248,17 @@ class SNSLikePostRequest: BahamutRFRequestBase {
     
     var postId:String!{
         didSet{
-            paramenters.updateValue(postId, forKey: "postId")
+            if let pid = postId{
+                paramenters.updateValue(pid, forKey: "postId")
+            }
         }
     }
     
     var nick:String!{
         didSet{
-            paramenters.updateValue(nick, forKey: "nick")
+            if let n = nick{
+                paramenters.updateValue(n, forKey: "nick")
+            }
         }
     }
     
@@ -248,13 +273,17 @@ class SNSNewCommentRequest: BahamutRFRequestBase {
     
     var postId:String!{
         didSet{
-            paramenters.updateValue(postId, forKey: "postId")
+            if let pid = postId{
+                paramenters.updateValue(pid, forKey: "postId")
+            }
         }
     }
     
     var comment:String!{
         didSet{
-            paramenters.updateValue(comment, forKey: "comment")
+            if let c = comment{
+                paramenters.updateValue(c, forKey: "comment")
+            }
         }
     }
     
@@ -329,6 +358,22 @@ class DeleteSNSPostRequest: BahamutRFRequestBase {
     var postId:String!{
         didSet{
             paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+}
+
+class UpdateSNSPostStateRequest: DeleteSNSPostRequest {
+    override init() {
+        super.init()
+        self.api = "/SNS/PostState"
+        self.method = .PUT
+    }
+    
+    var state:Int!{
+        didSet{
+            if let st = state{
+                paramenters.updateValue("\(st)", forKey: "state")
+            }
         }
     }
 }

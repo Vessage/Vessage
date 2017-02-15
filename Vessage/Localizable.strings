@@ -410,3 +410,7 @@ INVITE = "邀请";
 INVITE_MOBILE_FRIEND_MSG = "我在玩VG聊天，发条消息给你，收到请回复";
 CHAT_WITH_X_AT_D = "正在与 %@ 聊天\n本次对话开始于%@";
 CHAT_WITH_GROUP_X_AT_D = "已经进入群组\n%@";
+
+SEL_OP = "选择操作";
+SAVE_IMG_TO_ALBUM = "保存图片到相册";
+SAVE_IMAGE_ERROR = "保存图片失败";

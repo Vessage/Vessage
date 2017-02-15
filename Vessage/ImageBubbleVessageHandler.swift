@@ -77,7 +77,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
         func onTapImage(ges:UITapGestureRecognizer) {
             if let controller = self.vc {
                 if imageLoaded {
-                    imageView.slideShowFullScreen(controller)
+                    imageView.slideShowFullScreen(controller,allowSaveImage: true)
                 }else{
                     refreshImage()
                 }

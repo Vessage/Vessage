@@ -235,7 +235,7 @@ extension UITableViewCell{
 }
 
 extension UIImageView{
-    func slideShowFullScreen(vc:UIViewController) {
+    func slideShowFullScreen(vc:UIViewController,allowSaveImage:Bool = false) {
         if let img = self.image {
             let slideshow = ImageSlideshow()
             slideshow.setImageInputs([ImageSource(image: img)])
@@ -256,6 +256,9 @@ extension UIImageView{
             ctr.transitioningDelegate = slideshowTransitioningDelegate
             vc.presentViewController(ctr, animated: true){
                 ctr.enableTapViewCloseController()
+                if allowSaveImage{
+                    ctr.enableSaveImageAlert()
+                }
             }
         }
     }
@@ -291,6 +294,31 @@ extension FullScreenSlideshowViewController{
                     g.removeTarget(self, action: #selector(FullScreenSlideshowViewController.onTapView(_:)))
                 }
             })
+        }
+    }
+    
+    func enableSaveImageAlert() {
+        let ges = UILongPressGestureRecognizer(target: self, action: #selector(FullScreenSlideshowViewController.onLongPressView(_:)))
+        self.view.addGestureRecognizer(ges)
+    }
+    
+    func onLongPressView(ges:UILongPressGestureRecognizer) {
+        if ges.state == .Began {
+            let action = UIAlertAction(title: "SAVE_IMG_TO_ALBUM".localizedString(), style: .Default, handler: { (ac) in
+                if let img = self.slideshow.currentSlideshowItem?.imageView.image{
+                    let seltor = #selector(FullScreenSlideshowViewController.didFinishSavingWithError(_:didFinishSavingWithError:contextInfo:))
+                    UIImageWriteToSavedPhotosAlbum(img, self, seltor, nil)
+                }
+            })
+            self.showAlert("SEL_OP".localizedString(), msg: nil, actions: [action,ALERT_ACTION_CANCEL])
+        }
+    }
+    
+    func didFinishSavingWithError(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+        if error == nil{
+            self.playCheckMark()
+        }else{
+            self.showAlert(nil, msg: "SAVE_IMAGE_ERROR".localizedString())
         }
     }
     

@@ -8,7 +8,7 @@
 SNS = "晒&秀";
 DEFAULT_MOTTO = "暂无签名";
 
-SAVE_IMAGE_ERROR = "保存文件失败";
+SAVE_IMAGE_ERROR = "保存图片失败";
 EXIT = "退出";
 OO = "哦";
 GO_CHAT = "进入聊天";

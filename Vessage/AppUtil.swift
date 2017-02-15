@@ -245,15 +245,16 @@ extension UIImageView{
             ctr.pageSelected = { page in
                 slideshow.setScrollViewPage(page, animated: false)
             }
-            ctr.modalTransitionStyle = .CoverVertical
+            ctr.modalTransitionStyle = .CrossDissolve
             // set the initial page
             ctr.initialImageIndex = slideshow.scrollViewPage
             // set the inputs
             ctr.inputs = slideshow.images
             ctr.slideshow.pageControlPosition = .Hidden
             ctr.modalTransitionStyle = .CrossDissolve
-            let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
-            ctr.transitioningDelegate = slideshowTransitioningDelegate
+            //let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
+            //ctr.transitioningDelegate = slideshowTransitioningDelegate
+            ctr.closeButton.hidden = true
             vc.presentViewController(ctr, animated: true){
                 ctr.enableTapViewCloseController()
                 if allowSaveImage{

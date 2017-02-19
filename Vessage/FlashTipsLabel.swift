@@ -19,7 +19,7 @@ class FlashTipsLabel: UILabel {
         self.clipsToBounds = true
         self.textColor = textColor
         self.textAlignment = .Center
-        self.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        self.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.9)
         
         self.text = msg
         self.sizeToFit()

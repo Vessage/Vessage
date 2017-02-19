@@ -276,7 +276,7 @@ extension NFCPostCell{
                 }else{
                     
                     let msg:[String:AnyObject]? = ServiceContainer.getConversationService().existsConversationOfUserId(userId!) ? nil : ["input_text":"NFC_HELLO".niceFaceClubString]
-                    ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: userId!,initMessage: msg)
+                    ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: userId!,createByActivityId:NFCPostManager.activityId,initMessage: msg)
                 }
             })
         }

@@ -283,6 +283,7 @@ extension MNSMainController:UITableViewDelegate,UITableViewDataSource{
         delegate.initMessage = ["input_text":"MNS_HELLO".mnsLocalizedString]
         UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate){ controller in
             controller.accountIdHidden = true
+            controller.snsButtonEnabled = false
         }
     }
 }

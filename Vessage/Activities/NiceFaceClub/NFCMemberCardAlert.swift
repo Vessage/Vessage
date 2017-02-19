@@ -142,7 +142,7 @@ class NFCMemberCardAlert:UIViewController{
                 
                 let msg:[String:AnyObject]? = ServiceContainer.getConversationService().existsConversationOfUserId(userId!) ? nil : ["input_text":"NFC_HELLO".niceFaceClubString]
                 self.navigationController?.setNavigationBarHidden(false, animated: false)
-                ConversationViewController.showConversationViewController(self.navigationController!, userId: userId!,initMessage: msg)
+                ConversationViewController.showConversationViewController(self.navigationController!, userId: userId!,createByActivityId:NFCPostManager.activityId,initMessage: msg)
             }
         })
     }

@@ -140,6 +140,7 @@ extension MYQMainController:UITableViewDelegate,UITableViewDataSource{
         delegate.operateTitle = "LET_ME_ANSWER".MYQLocalizedString
         UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate){ controller in
             controller.accountIdHidden = true
+            controller.snsButtonEnabled = false
         }
     }
 }

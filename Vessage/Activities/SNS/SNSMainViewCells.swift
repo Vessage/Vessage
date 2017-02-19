@@ -271,7 +271,7 @@ extension SNSPostCell{
     @IBAction func onClickChat(sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
-            ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: self.post.usrId)
+            ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: self.post.usrId,createByActivityId:NFCPostManager.activityId)
         }
     }
     

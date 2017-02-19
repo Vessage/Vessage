@@ -269,7 +269,11 @@ extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
         sender.animationMaxToMin(0.2, maxScale: 1.2) { 
             if let pster = comment?.pster{
                 let delegate = UserProfileViewControllerDelegateOpenConversation()
-                UserProfileViewController.showUserProfileViewController(self, userId: pster,delegate: delegate)
+                delegate.createActivityId = SNSPostManager.activityId
+                UserProfileViewController.showUserProfileViewController(self, userId: pster,delegate: delegate){ controller in
+                    controller.accountIdHidden = true
+                    controller.snsButtonEnabled = false
+                }
             }
         }
     }

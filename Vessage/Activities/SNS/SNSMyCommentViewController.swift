@@ -155,7 +155,10 @@ extension SNSMyCommentViewController:SNSMyCommentCellDelegate{
     func snsMyCommentCellDidClickPoster(sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
         if let poster = comment?.pster{
             let delegate = UserProfileViewControllerDelegateOpenConversation()
-            UserProfileViewController.showUserProfileViewController(self, userId: poster,delegate: delegate)
+            UserProfileViewController.showUserProfileViewController(self, userId: poster,delegate: delegate){ controller in
+                controller.accountIdHidden = true
+                controller.snsButtonEnabled = false
+            }
         }
     }
     

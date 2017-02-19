@@ -137,7 +137,10 @@ extension NFCReceivedLikeViewController:NFCLikeCellDelegate{
         if String.isNullOrWhiteSpace(like?.mbId){
             if let userId = like?.usrId{
                 let delegate = UserProfileViewControllerDelegateOpenConversation()
-                UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate)
+                UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate){ controller in
+                    controller.accountIdHidden = true
+                    controller.snsButtonEnabled = false
+                }
             }
             
         }else{

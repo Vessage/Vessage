@@ -136,7 +136,10 @@ extension SNSReceivedLikeViewController:SNSLikeCellDelegate{
     func snsLikeCellDidClickPoster(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         if let userId = like?.usrId{
             let delegate = UserProfileViewControllerDelegateOpenConversation()
-            UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate)
+            UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate){ controller in
+                controller.accountIdHidden = true
+                controller.snsButtonEnabled = false
+            }
         }
     }
     

@@ -28,7 +28,7 @@ class ActivityInfo{
     private(set) var autoClearBadge = false
 }
 
-let SetActivityMiniBadgeAtAppVersion:[String] = ["1004"]
+let SetActivityMiniBadgeAtAppVersion:[String] = []
 let IncActivityBadgeAtAppVersion:[String] = []
 
 let VGActivityNearActivityId = "100"

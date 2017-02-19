@@ -24,12 +24,23 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
     
     private var acMiniBadge:[String:Bool]!
     private var acBadge:[String:Int]!
+    private var registedActivity = [String:ActivityInfo]()
     
     @objc func userLoginInit(userId:String)
     {
         acMiniBadge = (UserSetting.getUserValue("ActivityMiniBadge") as? [String:Bool]) ?? [String:Bool]()
         acBadge = (UserSetting.getUserValue("ActivityBadge") as? [String:Int]) ?? [String:Int]()
         userFirstLaunchVersion()
+        for acArr in ActivityInfoList {
+            for ac in acArr {
+                registedActivity[ac.activityId] = ac
+            }
+        }
+        
+        let nearUserAc = ActivityInfo(activityId: VGActivityNearActivityId, "NEAR_ACTIVE_USER_AC_TITLE".localizedString(), "", "", "", false, true)
+        registedActivity[nearUserAc.activityId] = nearUserAc
+        
+        
         setServiceReady()
     }
     
@@ -153,6 +164,10 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         if autoStore {
             storeBadge()
         }
+    }
+    
+    func getActivityName(id:String) -> String {
+        return registedActivity[id]?.cellTitle ?? "UNKNOW_ACTIVITY".localizedString()
     }
     
     func getActivityBadge(id:String) -> Int {

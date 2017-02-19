@@ -261,6 +261,13 @@ extension ConversationViewController{
                 let startVsg = generateTipsVessage(msg)
                 self.vessages.append(startVsg)
             }
+            
+            if !String.isNullOrWhiteSpace(conversation.acId) {
+                let acName = ServiceContainer.getActivityService().getActivityName(conversation.acId!)
+                let msg = String(format: "FROM_X_AC_TMP_CHAT".localizedString(),acName)
+                self.vessages.append(generateTipsVessage(msg))
+            }
+            
             messageList.reloadData()
         }
     }

@@ -480,16 +480,22 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
                 ConversationViewController.showConversationViewController(self.navigationController!, conversation: c)
             }else if let u = result.user{
                 
+                var snsButtonEnabled = true
+                var accountIdHidden = false
+                
                 if result.type == .userActive ||
                     result.type == .userActiveNear ||
                     result.type == .userNear{
                     openConversationActivityId = VGActivityNearActivityId
                     openConversationBeforeRemoveTs = defaultNearActiveConversationBeforeRemoveTs
+                    snsButtonEnabled = false
+                    accountIdHidden = true
                 }
                 
                 UserProfileViewController.showUserProfileViewController(self, userId: u.userId, delegate: self){ profileVC in
                     MainTabBarController.instance?.tabBar.hidden = true
-                    profileVC.accountIdHidden = true
+                    profileVC.accountIdHidden = accountIdHidden
+                    profileVC.snsButtonEnabled = snsButtonEnabled
                 }
             }else if let mobile = result.mobile{
                 MobClick.event("Vege_OpenSearchResultMobileConversation")

@@ -151,9 +151,15 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
                 if vsg.ts > conversation.lstTs {
                     conversation.lstTs = vsg.ts
                 }
+                
+                if !String.isNullOrWhiteSpace(conversation.acId) {
+                    conversation.acId = nil
+                }
+                
                 conversation.saveModel()
                 self.postNotificationNameWithMainAsync(ConversationService.conversationUpdated, object: self, userInfo: [ConversationUpdatedValue:conversation])
             }
+            
             return index
         }else{
             return nil
@@ -232,7 +238,12 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     }
     
     func getChattingNormalUserIds() -> [String] {
-        return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId)}.map{$0.chatterId}
+        return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId) && String.isNullOrWhiteSpace($0.acId)}.map{$0.chatterId}
+    }
+    
+    func setConversationNormal(conversation:Conversation) {
+        conversation.acId = nil
+        conversation.saveModel()
     }
     
     func removeTimeupedConversations() {

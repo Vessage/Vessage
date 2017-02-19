@@ -63,10 +63,14 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    var snsButtonEnable:Bool = true{
+    var snsButtonEnabled:Bool = true{
         didSet{
-            snsButton?.enabled = snsButtonEnable
+            updateSNSButton()
         }
+    }
+    
+    func updateSNSButton() {
+        snsButton?.enabled = snsButtonEnabled
     }
     
     
@@ -104,7 +108,12 @@ class UserProfileViewController: UIViewController {
     }
     @IBOutlet weak var bcgMaskView: UIView!
     
-    @IBOutlet weak var snsButton: UIButton!
+    @IBOutlet weak var snsButton: UIButton!{
+        didSet{
+            updateSNSButton()
+        }
+    }
+    
     @IBOutlet weak var sexImageView: UIImageView!
     
     @IBOutlet weak var avatarImageView: UIImageView!{
@@ -127,6 +136,7 @@ class UserProfileViewController: UIViewController {
             accountIdLabel.hidden = accountIdHidden
         }
     }
+    
     @IBOutlet weak var nameLabel: LTMorphingLabel!{
         didSet{
             nameLabel.morphingEffect = .Pixelate

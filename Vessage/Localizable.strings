@@ -395,6 +395,7 @@ X_AT_D = "%@ %@";
 TEXT_MESSAGE_HOLDER = "发送文字消息";
 
 SEARCH_FRIENDS = "查找好友、附近的人";
+NEAR_ACTIVE_USER_AC_TITLE = "附近活跃的人";
 SEARCH_FRIENDS_HOLODER = "请输入要查找的VG号或手机";
 
 REFRESH_NEAR_USER_PULLING = "看看附近有谁?";
@@ -414,3 +415,6 @@ CHAT_WITH_GROUP_X_AT_D = "已经进入群组\n%@";
 SEL_OP = "选择操作";
 SAVE_IMG_TO_ALBUM = "保存图片到相册";
 SAVE_IMAGE_ERROR = "保存图片失败";
+
+UNKNOW_ACTIVITY = "未知活动";
+FROM_X_AC_TMP_CHAT = "来自 %@ 的临时对话\n待对方回复后，本对话将会变成正式对话";

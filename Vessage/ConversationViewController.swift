@@ -226,6 +226,7 @@ extension ConversationViewController{
             if let user = userService.getCachedUserProfile(c) {
                 let controller = userService.showUserProfile(self, user: user)
                 controller.accountIdHidden = !String.isNullOrWhiteSpace(conversation?.acId)
+                controller.snsButtonEnabled = !controller.accountIdHidden
                 return
             }
         }

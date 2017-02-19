@@ -89,7 +89,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="预览" id="5L4-U3-Okw">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="m6C-ED-0Zb">
+                        <barButtonItem key="rightBarButtonItem" title="发布" id="m6C-ED-0Zb">
                             <connections>
                                 <action selector="done:" destination="v8d-DI-k22" id="8j0-i4-H9Y"/>
                             </connections>

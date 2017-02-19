@@ -124,7 +124,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = true
-        let conversations = ServiceContainer.getConversationService().conversations.filter{!String.isNullOrEmpty($0.chatterId)}
+        let conversations = ServiceContainer.getConversationService().conversations.filter{!String.isNullOrEmpty($0.chatterId) && String.isNullOrWhiteSpace($0.acId) }
         let userService = ServiceContainer.getUserService()
         activeUsers = userService.activeUsers
         nearUsers = userService.nearUsers

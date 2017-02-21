@@ -522,7 +522,7 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
                     let title = "NO_USER_OF_MOBILE".localizedString()
                     let msg = String(format: "MOBILE_X_INVITE_JOIN_VG".localizedString(), mobile)
                     let invite = UIAlertAction(title: "INVITE".localizedString(), style: .Default, handler: { (ac) in
-                        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+                        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString(),copyLink: true)
                     })
                     
                     self.showAlert(title, msg: msg,actions: [ALERT_ACTION_CANCEL,invite])

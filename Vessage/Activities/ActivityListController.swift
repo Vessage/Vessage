@@ -107,7 +107,7 @@ class ActivityListController: UITableViewController {
     @IBAction func tellFriends(sender: AnyObject) {
         ServiceContainer.getAppService().inviteBadge = false
         setNavigationBadges()
-        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
+        ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString(),copyLink: true)
     }
     
     func onServicesWillLogout(a:NSNotification) {

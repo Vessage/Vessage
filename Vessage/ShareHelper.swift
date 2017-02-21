@@ -64,7 +64,7 @@ class ShareHelper:NSNotificationCenter{
         WXApi.sendReq(req)
     }
     
-    func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString()){
+    func showTellVegeToFriendsAlert(vc:UIViewController,message:String,alertMsg:String! = nil,title:String = "TELL_FRIENDS".localizedString(),copyLink:Bool = false){
         
         let alert = UIAlertController.create(title: title, message: alertMsg, preferredStyle: .ActionSheet)
 
@@ -81,13 +81,26 @@ class ShareHelper:NSNotificationCenter{
         wxTimeLineAction.setValue(UIImage(named: "share_wechat_moment")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(wxTimeLineAction)
         
+        let url = "http://t.cn/RqW8tuW"
+        let accountInfo = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
+        let inviteMsg = "\(message)\n\(url)\n\(accountInfo)"
+        
         let smsAction = UIAlertAction(title: "SMS".localizedString(), style: .Default) { (ac) in
-            let url = "http://t.cn/RqW8tuW"
-            let accountInfo = String(format: "WX_SHARE_TITLE_FORMAT".localizedString(), UserSetting.lastLoginAccountId)
-            vc.showSendSMSTextView([], body: "\(message)\n\(url)\n\(accountInfo)")
+            vc.showSendSMSTextView([], body: inviteMsg)
         }
+        
         smsAction.setValue(UIImage(named: "share_sms")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
         alert.addAction(smsAction)
+        
+        if copyLink {
+            let copyLinkAction = UIAlertAction(title: "COPY_INVITE_LINK".localizedString(), style: .Default, handler: { (ac) in
+                UIPasteboard.generalPasteboard().string = inviteMsg
+                vc.playToast("COPY_INVITE_LINK_SUC".localizedString())
+            })
+            copyLinkAction.setValue(UIImage(named: "share_link_icon")?.imageWithRenderingMode(.AlwaysOriginal), forKey: "image")
+            alert.addAction(copyLinkAction)
+        }
+        
         alert.addAction(ALERT_ACTION_CANCEL)
         MobClick.event("ShareApp_ShowShareAlert")
         vc.showAlert(alert)

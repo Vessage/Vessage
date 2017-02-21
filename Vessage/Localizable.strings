@@ -418,3 +418,6 @@ SAVE_IMAGE_ERROR = "保存图片失败";
 
 UNKNOW_ACTIVITY = "未知活动";
 FROM_X_AC_TMP_CHAT = "来自 %@ 的临时对话\n待对方回复后，本对话将会变成正式对话";
+
+COPY_INVITE_LINK = "复制到剪切板";
+COPY_INVITE_LINK_SUC = "文本已经复制到剪切板";

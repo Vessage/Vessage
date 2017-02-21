@@ -183,7 +183,7 @@ extension SNSMainViewController{
     }
     
     private func shareSNS() {
-        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_SNS_MSG".SNSString, alertMsg: "SHARE_SNS_ALERT_MSG".SNSString, title: "SNS".SNSString)
+        ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_SNS_MSG".SNSString, alertMsg: "SHARE_SNS_ALERT_MSG".SNSString, title: "SNS".SNSString,copyLink: true)
     }
     
     @IBAction func onHomeButtonClick(sender: AnyObject) {

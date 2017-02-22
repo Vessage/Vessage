@@ -33,6 +33,9 @@ class TIMImageTextContentEditorModel {
 }
 
 class TIMImageTextContentEditorController: UIViewController {
+    
+    static var cachedTextContent:String? = nil
+    
     var delegate:TIMImageTextContentEditorControllerDelegate?
     
     @IBOutlet weak var doneButton: UIBarButtonItem!
@@ -71,6 +74,11 @@ class TIMImageTextContentEditorController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TIMImageTextContentEditorController.cachedTextContent = self.textView?.text
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView?.userInteractionEnabled = true
@@ -91,6 +99,8 @@ class TIMImageTextContentEditorController: UIViewController {
         let model = self.propertyModel
         let controller = self
         self.navigationController?.popViewControllerAnimated(true)
+        TIMImageTextContentEditorController.cachedTextContent = nil
+        self.textView.text = nil
         self.delegate?.imageTextContentEditor(controller, newTextContent: newValue, model: model)
     }
     
@@ -98,6 +108,9 @@ class TIMImageTextContentEditorController: UIViewController {
         self.title = model.editorTitle
         self.textView?.placeHolder = model.placeHolder
         self.textView?.text = model.initTextContent
+        if String.isNullOrEmpty(model.initTextContent) && TIMImageTextContentEditorController.cachedTextContent != nil{
+            self.textView?.text = TIMImageTextContentEditorController.cachedTextContent
+        }
         if let img = model.image{
             self.imageView.image = img
         }else if let imageId = model.userInfo?[TIMImageTextContentEditorModel.imageIdKey] as? String{

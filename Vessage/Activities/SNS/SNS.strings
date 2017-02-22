@@ -36,7 +36,7 @@ MY_SNS_POST_WALL_ANC = "小规则:只有最近两周和你聊天的好友才能�
 UNKNOW_DATE_TIME = "失落的时间";
 
 SNS_POST_COMMENT_NAME = "评论";
-DATE_X_LIKE_YOUR_IMG = "%@赞了你的照片";
+DATE_X_LIKE_YOUR_IMG = "%@赞了你的分享";
 DELETE_POST = "删除该照片";
 REPORT_POST = "举报该照片";
 SET_POST_PRIVATE = "设为私密";

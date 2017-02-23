@@ -490,6 +490,9 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
                     openConversationBeforeRemoveTs = defaultNearActiveConversationBeforeRemoveTs
                     snsButtonEnabled = false
                     accountIdHidden = true
+                }else{
+                    openConversationBeforeRemoveTs = ConversationMaxTimeUpMS
+                    openConversationActivityId = nil
                 }
                 
                 UserProfileViewController.showUserProfileViewController(self, userId: u.userId, delegate: self){ profileVC in

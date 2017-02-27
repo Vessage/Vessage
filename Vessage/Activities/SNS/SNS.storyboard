@@ -216,7 +216,7 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nfc_comment" translatesAutoresizingMaskIntoConstraints="NO" id="2ud-Y9-7Hu">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sns_comment" translatesAutoresizingMaskIntoConstraints="NO" id="2ud-Y9-7Hu">
                                                             <rect key="frame" x="59" y="12" width="12" height="12"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="12" id="SD4-zE-zFd"/>
@@ -528,7 +528,7 @@
                                     <constraint firstAttribute="height" constant="48" id="TiW-Ea-yAG"/>
                                     <constraint firstAttribute="width" constant="48" id="qxR-tV-bJ0"/>
                                 </constraints>
-                                <state key="normal" image="nfc_new_comment"/>
+                                <state key="normal" image="sns_new_comment"/>
                                 <connections>
                                     <action selector="onNewCommentClick:" destination="R6L-wP-WQa" eventType="touchUpInside" id="aEx-wK-tLO"/>
                                 </connections>
@@ -780,11 +780,12 @@
     <resources>
         <image name="heart_red" width="128" height="128"/>
         <image name="nfc_comment" width="128" height="128"/>
-        <image name="nfc_new_comment" width="128" height="128"/>
         <image name="nfc_plus" width="96" height="96"/>
         <image name="share" width="16" height="16"/>
         <image name="sns_chat_btn" width="128" height="128"/>
+        <image name="sns_comment" width="128" height="128"/>
         <image name="sns_like_btn" width="128" height="128"/>
         <image name="sns_new_cmt_btn" width="128" height="128"/>
+        <image name="sns_new_comment" width="128" height="128"/>
     </resources>
 </document>

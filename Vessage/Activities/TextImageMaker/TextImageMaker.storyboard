@@ -257,9 +257,6 @@
                                         <integer key="value" value="6"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="shareToNFC:" destination="Ioe-Hc-pKy" eventType="touchUpInside" id="QTu-ZP-3Lu"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NFC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5h0-B0-yqT">
                                 <rect key="frame" x="63" y="483.5" width="32" height="19.5"/>

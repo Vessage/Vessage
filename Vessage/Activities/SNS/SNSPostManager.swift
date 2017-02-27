@@ -196,7 +196,7 @@ extension SNSPostManager{
 extension SNSPostManager{
     
     func godLikePost(postId:String,callback:(Bool)->Void) {
-        let req = GodLikePostRequest()
+        let req = SNSGodLikePostRequest()
         req.postId = postId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
             callback(result.isSuccess)
@@ -204,7 +204,7 @@ extension SNSPostManager{
     }
     
     func godDeletePost(postId:String,callback:(Bool)->Void) {
-        let req = GodDeletePostRequest()
+        let req = SNSGodDeletePostRequest()
         req.postId = postId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
             callback(result.isSuccess)
@@ -212,7 +212,7 @@ extension SNSPostManager{
     }
     
     func godBlockMember(memberId:String,callback:(Bool)->Void) {
-        let req = GodBlockMemberRequest()
+        let req = SNSGodBlockMemberRequest()
         req.memberId = memberId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
             callback(result.isSuccess)

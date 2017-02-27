@@ -82,34 +82,6 @@ class TIMShareAndSaveViewController: UIViewController {
     }
 }
 
-extension TIMShareAndSaveViewController:NFCPostNewImageDelegate{
-    
-    @IBAction func shareToNFC(sender: AnyObject) {
-        if !finished[0] {
-            if let img = image{
-                shareImageToNFC(img)
-            }
-        }else{
-            self.showAlert(nil, msg: "IMAGE_SHARED_ONCE".TIMString)
-        }
-    }
-    
-    func shareImageToNFC(image:UIImage) {
-        if String.isNullOrWhiteSpace(self.postedFileId) == false {
-            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, image: image, sourceName: "TIM".TIMString,delegate: self)
-        }else{
-            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,delegate: self)
-        }
-    }
-    
-    func nfcMainViewController(sender: NFCMainViewController, onImagePosted imageId: String!) {
-        if imageId != nil {
-            finished[0] = true
-            self.postedFileId = imageId
-        }
-    }
-}
-
 extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
     
     @IBAction func shareToSNS(sender: AnyObject) {
@@ -209,3 +181,33 @@ extension TIMShareAndSaveViewController{
         }
     }
 }
+
+/*
+extension TIMShareAndSaveViewController:NFCPostNewImageDelegate{
+    
+    @IBAction func shareToNFC(sender: AnyObject) {
+        if !finished[0] {
+            if let img = image{
+                shareImageToNFC(img)
+            }
+        }else{
+            self.showAlert(nil, msg: "IMAGE_SHARED_ONCE".TIMString)
+        }
+    }
+    
+    func shareImageToNFC(image:UIImage) {
+        if String.isNullOrWhiteSpace(self.postedFileId) == false {
+            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!, image: image, sourceName: "TIM".TIMString,delegate: self)
+        }else{
+            NFCMainViewController.showNFCMainViewControllerWithNewPostImage(self.navigationController!, image: image, sourceName: "TIM".TIMString,delegate: self)
+        }
+    }
+    
+    func nfcMainViewController(sender: NFCMainViewController, onImagePosted imageId: String!) {
+        if imageId != nil {
+            finished[0] = true
+            self.postedFileId = imageId
+        }
+    }
+}
+*/

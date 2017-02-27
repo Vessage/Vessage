@@ -392,7 +392,7 @@ extension UserService{
                 }
             }
             if let aId = user.accountId{
-                if aId.hasBegin(keyword){
+                if aId == keyword{
                     return true
                 }
             }

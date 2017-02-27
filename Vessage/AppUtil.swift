@@ -11,7 +11,6 @@ import AddressBook
 import AddressBookUI
 import MBProgressHUD
 import EVReflection
-import ImageSlideshow
 
 func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mobile:String,personTitle:String)->Void) {
     let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
@@ -47,15 +46,18 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
                 }
             }
             if actions.count > 0{
-                
-                let msg = "CHOOSE_PHONE_NO".localizedString()
-                let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
-                actions.forEach{alertController.addAction($0)}
-                let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { (ac) -> Void in
-                    MobClick.event("Vege_CancelSelectContactMobile")
-                })
-                alertController.addAction(cancel)
-                vc.showAlert(alertController)
+                if actions.count == 1 {
+                    onSelectedMobile(mobile: phoneNos[0], personTitle: title)
+                }else{
+                    let msg = "CHOOSE_PHONE_NO".localizedString()
+                    let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
+                    actions.forEach{alertController.addAction($0)}
+                    let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { (ac) -> Void in
+                        MobClick.event("Vege_CancelSelectContactMobile")
+                    })
+                    alertController.addAction(cancel)
+                    vc.showAlert(alertController)
+                }
                 return
             }
         }
@@ -234,36 +236,7 @@ extension UITableViewCell{
     }
 }
 
-extension UIImageView{
-    func slideShowFullScreen(vc:UIViewController,allowSaveImage:Bool = false) {
-        if let img = self.image {
-            let slideshow = ImageSlideshow()
-            slideshow.setImageInputs([ImageSource(image: img)])
-            slideshow.pageControlPosition = .Hidden
-            let ctr = FullScreenSlideshowViewController()
-            // called when full-screen VC dismissed and used to set the page to our original slideshow
-            ctr.pageSelected = { page in
-                slideshow.setScrollViewPage(page, animated: false)
-            }
-            ctr.modalTransitionStyle = .CrossDissolve
-            // set the initial page
-            ctr.initialImageIndex = slideshow.scrollViewPage
-            // set the inputs
-            ctr.inputs = slideshow.images
-            ctr.slideshow.pageControlPosition = .Hidden
-            ctr.modalTransitionStyle = .CrossDissolve
-            //let slideshowTransitioningDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow, slideshowController: ctr)
-            //ctr.transitioningDelegate = slideshowTransitioningDelegate
-            ctr.closeButton.hidden = true
-            vc.presentViewController(ctr, animated: true){
-                ctr.enableTapViewCloseController()
-                if allowSaveImage{
-                    ctr.enableSaveImageAlert()
-                }
-            }
-        }
-    }
-}
+
 
 extension UITableView{
     func autoRowHeight() {
@@ -272,63 +245,4 @@ extension UITableView{
     }
 }
 
-extension FullScreenSlideshowViewController{
-    func enableTapViewCloseController(hideCloseButton:Bool = true) {
-        if hideCloseButton {
-            self.closeButton.hidden = hideCloseButton
-        }
-        let ges = UITapGestureRecognizer(target: self, action: #selector(FullScreenSlideshowViewController.onTapView(_:)))
-        ges.numberOfTapsRequired = 1
-        self.slideshow.slideshowItems.forEach { (item) in
-            if let iges = item.gestureRecognizer{
-                ges.requireGestureRecognizerToFail(iges)
-            }
-        }
-        self.view.addGestureRecognizer(ges)
-    }
-    
-    func disableTapViewCloseController() {
-        self.closeButton.hidden = false
-        if let gess = self.view.gestureRecognizers{
-            gess.forEach({ (ges) in
-                if let g = ges as? UITapGestureRecognizer{
-                    g.removeTarget(self, action: #selector(FullScreenSlideshowViewController.onTapView(_:)))
-                }
-            })
-        }
-    }
-    
-    func enableSaveImageAlert() {
-        let ges = UILongPressGestureRecognizer(target: self, action: #selector(FullScreenSlideshowViewController.onLongPressView(_:)))
-        self.view.addGestureRecognizer(ges)
-    }
-    
-    func onLongPressView(ges:UILongPressGestureRecognizer) {
-        if ges.state == .Began {
-            let action = UIAlertAction(title: "SAVE_IMG_TO_ALBUM".localizedString(), style: .Default, handler: { (ac) in
-                if let img = self.slideshow.currentSlideshowItem?.imageView.image{
-                    let seltor = #selector(FullScreenSlideshowViewController.didFinishSavingWithError(_:didFinishSavingWithError:contextInfo:))
-                    UIImageWriteToSavedPhotosAlbum(img, self, seltor, nil)
-                }
-            })
-            self.showAlert("SEL_OP".localizedString(), msg: nil, actions: [action,ALERT_ACTION_CANCEL])
-        }
-    }
-    
-    func didFinishSavingWithError(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
-        if error == nil{
-            self.playCheckMark()
-        }else{
-            self.showAlert(nil, msg: "SAVE_IMAGE_ERROR".localizedString())
-        }
-    }
-    
-    func onTapView(tap:UITapGestureRecognizer) {
-        // if pageSelected closure set, send call it with current page
-        if let pageSelected = pageSelected {
-            pageSelected(page: slideshow.scrollViewPage)
-        }
-        
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-}
+

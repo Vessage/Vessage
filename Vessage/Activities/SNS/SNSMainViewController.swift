@@ -199,7 +199,7 @@ extension SNSMainViewController{
     }
     
     func onLongPressNewPost(ges:UILongPressGestureRecognizer) {
-        if ges.state == .Began {            
+        if ges.state == .Began {
             let model = generateTimEditorModel(nil)
             TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
         }

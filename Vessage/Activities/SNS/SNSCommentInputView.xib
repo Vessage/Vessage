@@ -27,7 +27,7 @@
                         <constraint firstAttribute="height" constant="30" id="Wrw-v6-gMB"/>
                         <constraint firstAttribute="width" constant="30" id="nsN-0G-haN"/>
                     </constraints>
-                    <state key="normal" image="nfc_new_comment"/>
+                    <state key="normal" image="sns_new_comment"/>
                     <connections>
                         <action selector="onClickSend:" destination="iN0-l3-epB" eventType="touchUpInside" id="zGc-lH-OgY"/>
                     </connections>
@@ -51,6 +51,6 @@
         </view>
     </objects>
     <resources>
-        <image name="nfc_new_comment" width="128" height="128"/>
+        <image name="sns_new_comment" width="128" height="128"/>
     </resources>
 </document>

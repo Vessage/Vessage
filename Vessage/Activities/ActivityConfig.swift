@@ -40,7 +40,7 @@ let ActivityInfoList = [
     [
         //ActivityInfo(activityId: VGActivityNearActivityId, "Near Active People", "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false),
         
-        ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false),
+        //ActivityInfo(activityId: "1002", "NFC".niceFaceClubString, "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false),
         //ActivityInfo(activityId: "1001", "一起帮帮忙", "littlePaperIcon", "HelpTogether", "HelpTogetherMainController", true,false),
         //ActivityInfo(activityId: "1000", "小纸条", "littlePaperIcon", "LittlePaperMessage", "LittlePaperMainController", false,false),
         ActivityInfo(activityId: "1004", "MNS".mnsLocalizedString, "mns_icon", "MNS", "MNSMainNavigationController", false,false),

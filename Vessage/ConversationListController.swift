@@ -445,7 +445,7 @@ class ConversationListController: UITableViewController {
 }
 
 //MARK: handle click list cell
-private let defaultNearActiveConversationBeforeRemoveTs:Int64 = 1000 * 60 * 60
+private let defaultNearActiveConversationBeforeRemoveTs:Int64 = ConversationMaxTimeUpMS//1000 * 60 * 60
 private var openConversationBeforeRemoveTs:Int64 = ConversationMaxTimeUpMS
 private var openConversationActivityId:String? = nil
 

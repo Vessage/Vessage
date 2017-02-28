@@ -50,6 +50,26 @@ class UserProfileViewControllerDelegateNoteUser : UserProfileViewControllerDeleg
     }
 }
 
+class UserProfileViewControllerDelegateAddConversation: UserProfileViewControllerDelegate {
+    var beforeRemoveTimeSpan:Int64 = ConversationMaxTimeUpMS
+    var createActivityId:String? = nil
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
+        if ServiceContainer.getConversationService().existsConversationOfUserId(profile.userId){
+            sender.playToast("CONVERSATION_EXISTS".localizedString())
+            sender.rightButtonEnabled = false
+        }else{
+            ServiceContainer.getConversationService().openConversationByUserId(profile.userId, beforeRemoveTs: beforeRemoveTimeSpan, createByActivityId: createActivityId)
+            sender.playToast("CONVERSATION_CREATED".localizedString())
+            sender.rightButtonEnabled = false
+        }
+    }
+    
+    func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
+        return "ADD_TO_CONVERSATION_LIST".localizedString()
+    }
+}
+
 class UserProfileViewController: UIViewController {
     var delegate:UserProfileViewControllerDelegate?{
         didSet{
@@ -68,6 +88,13 @@ class UserProfileViewController: UIViewController {
             updateSNSButton()
         }
     }
+    
+    var rightButtonEnabled:Bool = true{
+        didSet{
+            rightButton?.enabled = rightButtonEnabled
+        }
+    }
+    
     
     func updateSNSButton() {
         snsButton?.enabled = snsButtonEnabled
@@ -100,7 +127,11 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var rightButton: UIButton!{
+        didSet{
+            rightButton?.enabled = rightButtonEnabled
+        }
+    }
     @IBOutlet weak var mottoLabel: LTMorphingLabel!{
         didSet{
             mottoLabel.morphingEffect = .Pixelate

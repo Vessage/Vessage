@@ -32,6 +32,12 @@ let SetActivityMiniBadgeAtAppVersion:[String] = []
 let IncActivityBadgeAtAppVersion:[String] = []
 
 let VGActivityNearActivityId = "100"
+let VGActivityGroupChatActivityId = "101"
+
+let VGCoreActivityInfoList = [
+    ActivityInfo(activityId: VGActivityNearActivityId, "NEAR_ACTIVE_USER_AC_TITLE".localizedString(), "", "", "", false,false),
+    ActivityInfo(activityId: VGActivityGroupChatActivityId, "GROUP_CHAT_TITLE".localizedString(), "", "", "", false,false),
+]
 
 let ActivityInfoList = [
     [

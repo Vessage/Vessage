@@ -53,7 +53,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nfc_comment" translatesAutoresizingMaskIntoConstraints="NO" id="36T-hu-Bwd">
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sns_comment" translatesAutoresizingMaskIntoConstraints="NO" id="36T-hu-Bwd">
                                                     <rect key="frame" x="76" y="14" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="1an-Bq-qcq"/>
@@ -779,7 +779,6 @@
     </scenes>
     <resources>
         <image name="heart_red" width="128" height="128"/>
-        <image name="nfc_comment" width="128" height="128"/>
         <image name="nfc_plus" width="96" height="96"/>
         <image name="share" width="16" height="16"/>
         <image name="sns_chat_btn" width="128" height="128"/>

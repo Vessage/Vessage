@@ -250,7 +250,10 @@ extension ChatGroupProfileViewController:UICollectionViewDelegate,UICollectionVi
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let userId = self.chatGroup.chatters[indexPath.row]
         if let user = userService.getCachedUserProfile(userId) {
-            userService.showUserProfile(self, user: user)
+            let delegate = UserProfileViewControllerDelegateAddConversation()
+            delegate.beforeRemoveTimeSpan = ConversationMaxTimeUpMS
+            delegate.createActivityId = VGActivityGroupChatActivityId
+            userService.showUserProfile(self, user: user,delegate: delegate)
         }else{
             userService.fetchUserProfile(userId)
             self.playToast("USER_DATA_NOT_READY_RETRY".localizedString())

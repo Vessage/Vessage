@@ -328,6 +328,7 @@ TELL_FRIEND_MESSAGE = "我发现一个适合好朋友聊天分享的秘密花园
 
 OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "向未注册的手机号发出消息，好友用手机注册后可以收到你的消息~";
+GROUP_CHAT_TITLE = "群聊";
 GROUP_CHAT = "一起聊天吧";
 WX_SHARE_TITLE_FORMAT = "我的VG号:%@";
 SHARE_FUN_APP = "抓到一只好玩的App";
@@ -417,8 +418,12 @@ SAVE_IMG_TO_ALBUM = "保存图片到相册";
 SAVE_IMAGE_ERROR = "保存图片失败";
 
 UNKNOW_ACTIVITY = "未知活动";
-FROM_X_AC_TMP_CHAT = "来自 %@ 的临时对话\n待对方回复后，本对话将会变成正式对话";
+FROM_X_AC_TMP_CHAT = "来自 %@ 的临时对话\n你可以给Ta发一条消息\n待对方回复后，本对话将会变成正式对话";
 
 COPY_INVITE_LINK = "复制到剪切板";
 COPY_INVITE_LINK_SUC = "文本已经复制到剪切板";
 SHARE_TO_SNS = "分享到晒&秀";
+
+ADD_TO_CONVERSATION_LIST = "添加临时对话";
+CONVERSATION_CREATED = "对话已创建";
+CONVERSATION_EXISTS = "对话已存在";

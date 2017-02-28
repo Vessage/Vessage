@@ -37,9 +37,9 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
             }
         }
         
-        let nearUserAc = ActivityInfo(activityId: VGActivityNearActivityId, "NEAR_ACTIVE_USER_AC_TITLE".localizedString(), "", "", "", false, true)
-        registedActivity[nearUserAc.activityId] = nearUserAc
-        
+        for info in VGCoreActivityInfoList {
+            registedActivity[info.activityId] = info
+        }
         
         setServiceReady()
     }

@@ -418,7 +418,7 @@ SAVE_IMG_TO_ALBUM = "保存图片到相册";
 SAVE_IMAGE_ERROR = "保存图片失败";
 
 UNKNOW_ACTIVITY = "未知活动";
-FROM_X_AC_TMP_CHAT = "来自 %@ 的临时对话\n你可以给Ta发一条消息\n待对方回复后，本对话将会变成正式对话";
+FROM_X_AC_TMP_CHAT = "来自 %@ 的临时对话\n\n你可以给Ta发一条消息\n待对方回复后，本对话将会变成正式对话";
 
 COPY_INVITE_LINK = "复制到剪切板";
 COPY_INVITE_LINK_SUC = "文本已经复制到剪切板";

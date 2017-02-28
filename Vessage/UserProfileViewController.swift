@@ -56,11 +56,11 @@ class UserProfileViewControllerDelegateAddConversation: UserProfileViewControlle
     
     func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
         if ServiceContainer.getConversationService().existsConversationOfUserId(profile.userId){
-            sender.playToast("CONVERSATION_EXISTS".localizedString())
+            sender.showAlert("CONVERSATION_EXISTS".localizedString(),msg:nil)
             sender.rightButtonEnabled = false
         }else{
             ServiceContainer.getConversationService().openConversationByUserId(profile.userId, beforeRemoveTs: beforeRemoveTimeSpan, createByActivityId: createActivityId)
-            sender.playToast("CONVERSATION_CREATED".localizedString())
+            sender.showAlert("CONVERSATION_CREATED".localizedString(),msg:nil)
             sender.rightButtonEnabled = false
         }
     }
@@ -77,13 +77,13 @@ class UserProfileViewController: UIViewController {
         }
     }
     
-    var accountIdHidden:Bool = false{
+    var accountIdHidden:Bool = true{
         didSet{
             accountIdLabel?.hidden = accountIdHidden
         }
     }
     
-    var snsButtonEnabled:Bool = true{
+    var snsButtonEnabled:Bool = false{
         didSet{
             updateSNSButton()
         }

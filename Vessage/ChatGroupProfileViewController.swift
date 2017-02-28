@@ -253,7 +253,9 @@ extension ChatGroupProfileViewController:UICollectionViewDelegate,UICollectionVi
             let delegate = UserProfileViewControllerDelegateAddConversation()
             delegate.beforeRemoveTimeSpan = ConversationMaxTimeUpMS
             delegate.createActivityId = VGActivityGroupChatActivityId
-            userService.showUserProfile(self, user: user,delegate: delegate)
+            let controller = userService.showUserProfile(self, user: user,delegate: delegate)
+            controller.accountIdHidden = true
+            controller.snsButtonEnabled = false
         }else{
             userService.fetchUserProfile(userId)
             self.playToast("USER_DATA_NOT_READY_RETRY".localizedString())

@@ -376,7 +376,7 @@
                                                 <constraint firstAttribute="height" constant="42" id="OvD-RN-hgf"/>
                                                 <constraint firstAttribute="width" constant="42" id="crh-Fz-uS2"/>
                                             </constraints>
-                                            <state key="normal" image="nfc_plus"/>
+                                            <state key="normal" image="sns_plus"/>
                                             <connections>
                                                 <action selector="onClickNewPostButton:" destination="agZ-w7-omg" eventType="touchUpInside" id="d0f-zs-wkL"/>
                                             </connections>
@@ -779,12 +779,12 @@
     </scenes>
     <resources>
         <image name="heart_red" width="128" height="128"/>
-        <image name="nfc_plus" width="96" height="96"/>
         <image name="share" width="16" height="16"/>
         <image name="sns_chat_btn" width="128" height="128"/>
         <image name="sns_comment" width="128" height="128"/>
         <image name="sns_like_btn" width="128" height="128"/>
         <image name="sns_new_cmt_btn" width="128" height="128"/>
         <image name="sns_new_comment" width="128" height="128"/>
+        <image name="sns_plus" width="96" height="96"/>
     </resources>
 </document>

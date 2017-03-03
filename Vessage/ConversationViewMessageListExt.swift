@@ -272,7 +272,7 @@ extension ConversationViewController{
         }
     }
     
-    private func generateTipsVessage(msg:String) -> Vessage {
+    func generateTipsVessage(msg:String) -> Vessage {
         let vsg = Vessage()
         var dict = [String:String]()
         dict["msg"] = msg

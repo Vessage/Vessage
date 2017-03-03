@@ -34,7 +34,15 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private(set) var conversation:Conversation!
+    private(set) var conversation:Conversation!{
+        didSet{
+            if let c = conversation {
+                isActivityConversation = !String.isNullOrEmpty(c.acId)
+            }
+        }
+    }
+    
+    private var isActivityConversation = false
     
     private var defaultOtherChatterId:String?{
         return (self.chatGroup?.chatters?.filter{$0 != UserSetting.userId})?.first
@@ -309,6 +317,11 @@ extension ConversationViewController{
             })
         }
         if received.count > 0 {
+            if isActivityConversation {
+                let vsg = generateTipsVessage("TO_BE_NORMAL_CONVERSATION".localizedString())
+                received.insert(vsg, atIndex: 1)
+                isActivityConversation = false
+            }
             messagesListPushReceivedMessages(received)
         }
         outterNewVessageCount += otherConversationVessageCount

@@ -158,7 +158,7 @@ class ConversationListCell:ConversationListCellBase{
                     if fileId != oldValue {
                         imgView.image = getDefaultAvatar(defaultAvatarId,sex: sex)
                         ServiceContainer.getFileService().getImage(iconFileId: fileId, callback: { (image) in
-                            if fileId == self.avatar && image != nil {
+                            if self.avatar != nil && fileId == self.avatar && image != nil {
                                 self.avatarView?.image = image
                             }
                         })

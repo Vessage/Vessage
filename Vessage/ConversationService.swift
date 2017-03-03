@@ -241,11 +241,6 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId) && String.isNullOrWhiteSpace($0.acId)}.map{$0.chatterId}
     }
     
-    func setConversationNormal(conversation:Conversation) {
-        conversation.acId = nil
-        conversation.saveModel()
-    }
-    
     func removeTimeupedConversations() {
         timeupedConversations.removeAll()
     }

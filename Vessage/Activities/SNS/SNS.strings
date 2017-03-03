@@ -14,11 +14,11 @@ OO = "哦";
 GO_CHAT = "进入聊天";
 
 SHARE_SNS_MSG = "我在晒&秀分享照片，只有聊得来的好友才能互相看的分享圈";
-SHARE_SNS_ALERT_MSG = "聊得来的好友才能互相看的分享圈！";
+SHARE_SNS_ALERT_MSG = "邀请好友加入不聊消失的晒&秀";
 
 REFRESH_ERROR = "刷新数据出错";
 NO_POSTS = "没有刷到更多动态了";
-POST_NEW_SHARE = "晒新照片";
+POST_NEW_SHARE = "新的分享";
 POST_NEW_SHARE_TXT = "分享文字";
 POST_NEW_ERROR = "晒新照片出错";
 NO_MEMBER_USERID_FOUND = "找不到该用户>_<";
@@ -57,3 +57,4 @@ TEXT_CONTENT_PLACE_HOLDER = "在这里写下你要说的话";
 PUBLIC_POST_TIPS = "正在和你聊天的人可以看到这次分享，在分享后可以随时把本条内容设为私密";
 PRIVATE_POST_TIPS = "其他人将不会看到本次发布的内容，发布后可以在 \"我的照片\" 找到这条内容并公开";
 PUBLIC_PRI_LABEL = "公开到晒&秀";
+POST_ONLY_TEXT = "仅发布文字";

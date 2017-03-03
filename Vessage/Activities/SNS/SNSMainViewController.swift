@@ -192,17 +192,26 @@ extension SNSMainViewController{
     
     @IBAction func onClickNewPostButton(sender: AnyObject) {
         let v = sender as! UIView
+        
+        let text = UIAlertAction(title:"POST_ONLY_TEXT".SNSString, style: .Default) { _ in
+            self.showNewTextPost()
+        }
+        
         v.animationMaxToMin(0.1, maxScale: 1.2) {
-            let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "SNS".SNSString, message: "POST_NEW_SHARE".SNSString)
+            let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "SNS".SNSString, message: "POST_NEW_SHARE".SNSString,extraAlertAction:[text])
             imagePicker.delegate = self
         }
     }
     
     func onLongPressNewPost(ges:UILongPressGestureRecognizer) {
         if ges.state == .Began {
-            let model = generateTimEditorModel(nil)
-            TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
+            showNewTextPost()
         }
+    }
+    
+    private func showNewTextPost() {
+        let model = generateTimEditorModel(nil)
+        TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
     }
     
     @IBAction func onMyPostButtonClick(sender: AnyObject) {

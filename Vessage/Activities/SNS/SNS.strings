@@ -58,3 +58,5 @@ PUBLIC_POST_TIPS = "正在和你聊天的人可以看到这次分享，在分享
 PRIVATE_POST_TIPS = "其他人将不会看到本次发布的内容，发布后可以在 \"我的照片\" 找到这条内容并公开";
 PUBLIC_PRI_LABEL = "公开到晒&秀";
 POST_ONLY_TEXT = "仅发布文字";
+
+AT_PRIVATE = "到期消失";

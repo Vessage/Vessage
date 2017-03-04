@@ -19,7 +19,7 @@ class TIMImageTextContentEditorModel {
     static let extraSwitchLabelTextKey = "EX_SWITCH_LABEL_TXT"
     
     static let extraSwitchValueKey = "EX_SWITCH_VAR"
-    static let extraAutoPrivateDaysKey = "EX_AUTO_PRIVATE_DAYS"
+    static let extraAutoPrivateSecKey = "EX_AUTO_PRIVATE_SEC"
     
     static let imageIdKey = "IMAGE_ID"
     
@@ -147,6 +147,7 @@ extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControl
                 extraSwitchLabel.text = switchLabelText
             }
             extraAutoPrivateLabel.text = getDescStringFromDays(0)
+            initAutoPrivateAction()
             onExtraSwitchValueChanged(self.extraSwitch)
         }
     }
@@ -164,14 +165,12 @@ extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControl
         }
     }
     
-    func updateAutoPrivateAction() {
-        extraAutoPrivateLabel.hidden = true//!switcher.on
-        extraAutoPrivateNextMark.hidden = true//!switcher.on
-        /*
-         if !switcher.on {
-         self.propertyModel?.userInfo?.removeObjectForKey(TIMImageTextContentEditorModel.extraAutoPrivateDaysKey)
-         }
-         */
+    private func updateAutoPrivateAction() {
+        extraAutoPrivateLabel.hidden = !self.extraSwitch.on
+        extraAutoPrivateNextMark.hidden = !self.extraSwitch.on
+        if !self.extraSwitch.on {
+            self.propertyModel?.userInfo?.removeObjectForKey(TIMImageTextContentEditorModel.extraAutoPrivateSecKey)
+        }
     }
     
     func initAutoPrivateAction() {
@@ -190,11 +189,12 @@ extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControl
     
     func selectAutoPrivateExpireTimeController(sender: SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays: Int, desc: String) {
         extraAutoPrivateLabel.text = desc
-        let key = TIMImageTextContentEditorModel.extraAutoPrivateDaysKey
+        let key = TIMImageTextContentEditorModel.extraAutoPrivateSecKey
+        let ts = autoSetPrivateExpireDays * 24 * 3600
         if let _ = self.propertyModel?.userInfo{
-            self.propertyModel?.userInfo?[key] = autoSetPrivateExpireDays
+            self.propertyModel?.userInfo?[key] = ts
         }else if self.propertyModel != nil{
-            self.propertyModel.userInfo = [key:autoSetPrivateExpireDays]
+            self.propertyModel.userInfo = [key:ts]
         }
     }
 }

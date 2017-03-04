@@ -47,6 +47,8 @@ class SNSPost: BahamutObject {
     
     var st:Int = 1 //State
     
+    var atpv:Int = 0 //Auto Private Ts
+    
 }
 
 extension SNSPost{
@@ -239,6 +241,14 @@ class SNSPostNewRequest: BahamutRFRequestBase {
         didSet{
             if let st = state{
                 paramenters.updateValue("\(st)", forKey: "state")
+            }
+        }
+    }
+    
+    var autoPrivate:Int?{
+        didSet{
+            if let ts = autoPrivate{
+                paramenters.updateValue("\(ts)", forKey: "autoPrivate")
             }
         }
     }

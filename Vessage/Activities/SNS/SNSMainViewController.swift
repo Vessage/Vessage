@@ -514,20 +514,25 @@ extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
             }
         }
         
+        var autoPrivateSec = 0
+        
+        if let sec = model?.userInfo?[TIMImageTextContentEditorModel.extraAutoPrivateSecKey] as? Int{
+            autoPrivateSec = sec
+        }
+        
+        let tmpPost = SNSPost()
+        tmpPost.cmtCnt = 0
+        if String.isNullOrWhiteSpace(newTextContent) == false{
+            tmpPost.body = String.miniJsonStringWithDictionary(["txt":newTextContent!])
+        }
+        
+        tmpPost.pid = IdUtil.generateUniqueId()
+        tmpPost.st = postState
+        tmpPost.atpv = autoPrivateSec
         
         if let img = model?.image{
-            self.sendNewPost(img,textContent:newTextContent,postState: postState)
+            self.sendNewPost(img,post: tmpPost)
         }else{
-            
-            let tmpPost = SNSPost()
-            tmpPost.cmtCnt = 0
-            if String.isNullOrWhiteSpace(newTextContent) == false{
-                tmpPost.body = String.miniJsonStringWithDictionary(["txt":newTextContent!])
-            }
-            
-            tmpPost.pid = IdUtil.generateUniqueId()
-            tmpPost.st = postState
-            
             if let imageId = model?.userInfo?["imageId"] as? String{
                 tmpPost.img = imageId
             }
@@ -557,7 +562,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    private func sendNewPost(imageForSend:UIImage,textContent:String?,postState:Int) {
+    private func sendNewPost(imageForSend:UIImage,post:SNSPost) {
         let fService = ServiceContainer.getService(FileService)
         if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
             debugPrint("ImageSize:\(imageData.length / 1024)KB")
@@ -571,14 +576,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                     ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
                     if let fk = fileKey
                     {
-                        let post = SNSPost()
                         post.img = fk.fileId
-                        post.pid = taskId
-                        post.st = postState
-                        
-                        if String.isNullOrWhiteSpace(textContent) == false{
-                            post.body = String.miniJsonStringWithDictionary(["txt":textContent!])
-                        }
                         
                         self.posting.insert(post, atIndex: 0)
                         dispatch_async(dispatch_get_main_queue(), {
@@ -598,7 +596,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
     }
     
     func pushNewPost(tmpPost:SNSPost) {
-        SNSPostManager.instance.newPost(tmpPost.img,body: tmpPost.body,state: tmpPost.st, callback: { (post) in
+        SNSPostManager.instance.newPost(tmpPost.img,body: tmpPost.body,state: tmpPost.st,autoPrivate: tmpPost.atpv, callback: { (post) in
             if let p = post{
                 self.playCheckMark(){
                     self.posting.removeElement{$0.pid == tmpPost.pid}

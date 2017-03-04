@@ -108,12 +108,13 @@ class SNSPostManager {
         
     }
     
-    func newPost(imageId:String?,body:String?,state:Int,callback:(post:SNSPost?)->Void) {
+    func newPost(imageId:String?,body:String?,state:Int,autoPrivate:Int,callback:(post:SNSPost?)->Void) {
         let req = SNSPostNewRequest()
         req.image = imageId
         req.body = body
         req.state = state
         req.nick = ServiceContainer.getUserService().myProfile.nickName
+        req.autoPrivate = autoPrivate
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SNSPost>) in
             callback(post: result.returnObject)
         }

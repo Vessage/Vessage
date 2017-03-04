@@ -129,6 +129,8 @@ class SNSPostCell: UITableViewCell {
     private func updateExtraInfo(){
         if post.st == SNSPost.statePrivate {
             extraInfoLabel?.text = "\(post.getPostDateFriendString()) \("PRIVATE".SNSString)"
+        }else if post.atpv > 0{
+            extraInfoLabel?.text = "\(post.getPostDateFriendString()) \("AT_PRIVATE".SNSString)"
         }else{
             extraInfoLabel?.text = post.getPostDateFriendString()
         }

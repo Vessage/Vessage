@@ -77,6 +77,8 @@ class SNSPostComment: EVObject {
     var atNick:String! //@UserNick
     var postId:String! //SNS Post Id
     var img:String! //SNS post image
+    var txt:String! //SNS Post Text Content Clip
+    
 }
 
 extension SNSPostComment{
@@ -93,6 +95,7 @@ class SNSPostLike: EVObject {
     var usrId:String! //post like user id
     var nick:String! //post like user nick
     var img:String! //SNS post image
+    var txt:String! //SNS Post Text Content Clip
 }
 
 extension SNSPostLike{

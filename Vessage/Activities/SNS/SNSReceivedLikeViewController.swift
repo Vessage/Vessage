@@ -46,7 +46,9 @@ class SNSReceivedLikeCell: UITableViewCell {
             userInfoLabel.text = nil
             likeUserNickLabel.text = lk.nick
             let timeString = lk.getPostDateFriendString()
-            likeInfoLabel.text = String(format: "DATE_X_LIKE_YOUR_IMG".SNSString, timeString)
+            let infoStr = String(format: "DATE_X_LIKE_YOUR_IMG".SNSString, timeString)
+            let txtClip = String.isNullOrWhiteSpace(lk.txt) ? "" : "  \(lk.txt!)"
+            likeInfoLabel.text = "\(infoStr)\(txtClip)"
             ServiceContainer.getFileService().setImage(self.postImageView, iconFileId: lk.img, defaultImage: UIImage(named:"SNS_post_img_bcg"), callback: nil)
         }
     }

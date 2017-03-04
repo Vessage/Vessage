@@ -19,7 +19,7 @@ SHARE_SNS_ALERT_MSG = "邀请好友加入不聊消失的晒&秀";
 REFRESH_ERROR = "刷新数据出错";
 NO_POSTS = "没有刷到更多动态了";
 POST_NEW_SHARE = "新的分享";
-POST_NEW_SHARE_TXT = "分享文字";
+POST_NEW_SHARE_TXT = "发表文字";
 POST_NEW_ERROR = "晒新照片出错";
 NO_MEMBER_USERID_FOUND = "找不到该用户>_<";
 LIKE_POST_OP_ERROR = "点赞失败>_<";
@@ -36,7 +36,7 @@ MY_SNS_POST_WALL_ANC = "小规则:只有最近两周和你聊天的好友才能�
 UNKNOW_DATE_TIME = "失落的时间";
 
 SNS_POST_COMMENT_NAME = "评论";
-DATE_X_LIKE_YOUR_IMG = "%@赞了你的分享";
+DATE_X_LIKE_YOUR_IMG = "%@赞了分享";
 DELETE_POST = "删除该照片";
 REPORT_POST = "举报该照片";
 SET_POST_PRIVATE = "设为私密";

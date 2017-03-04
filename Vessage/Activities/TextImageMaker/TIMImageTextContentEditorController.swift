@@ -19,6 +19,7 @@ class TIMImageTextContentEditorModel {
     static let extraSwitchLabelTextKey = "EX_SWITCH_LABEL_TXT"
     
     static let extraSwitchValueKey = "EX_SWITCH_VAR"
+    static let extraAutoPrivateDaysKey = "EX_AUTO_PRIVATE_DAYS"
     
     static let imageIdKey = "IMAGE_ID"
     
@@ -51,6 +52,9 @@ class TIMImageTextContentEditorController: UIViewController {
     @IBOutlet weak var extraTipsLabel: UILabel!
     @IBOutlet weak var extraSwitch: UISwitch!
     @IBOutlet weak var extraSwitchLabel: UILabel!
+    
+    @IBOutlet weak var extraAutoPrivateLabel: UILabel!
+    @IBOutlet weak var extraAutoPrivateNextMark: UIImageView!
     
     var propertyModel:TIMImageTextContentEditorModel!
     private var modelSetted = false
@@ -131,7 +135,7 @@ class TIMImageTextContentEditorController: UIViewController {
 }
 
 //MARK: Extra Setup
-extension TIMImageTextContentEditorController{
+extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControllerDelegate{
     private func initExtraSetup() {
         self.extraViewsContainer?.hidden = !self.propertyModel.extraSetup
         if self.propertyModel.extraSetup {
@@ -142,7 +146,7 @@ extension TIMImageTextContentEditorController{
             if let switchLabelText = self.propertyModel.userInfo?[TIMImageTextContentEditorModel.extraSwitchInitValueKey] as? String {
                 extraSwitchLabel.text = switchLabelText
             }
-            
+            extraAutoPrivateLabel.text = getDescStringFromDays(0)
             onExtraSwitchValueChanged(self.extraSwitch)
         }
     }
@@ -155,6 +159,99 @@ extension TIMImageTextContentEditorController{
             }else{
                 extraTipsLabel.text = nil
             }
+
+            updateAutoPrivateAction()
         }
+    }
+    
+    func updateAutoPrivateAction() {
+        extraAutoPrivateLabel.hidden = true//!switcher.on
+        extraAutoPrivateNextMark.hidden = true//!switcher.on
+        /*
+         if !switcher.on {
+         self.propertyModel?.userInfo?.removeObjectForKey(TIMImageTextContentEditorModel.extraAutoPrivateDaysKey)
+         }
+         */
+    }
+    
+    func initAutoPrivateAction() {
+        extraAutoPrivateNextMark?.userInteractionEnabled = true
+        extraAutoPrivateNextMark?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapExtraAutoPrivateView(_:))))
+        
+        extraAutoPrivateLabel?.userInteractionEnabled = true
+        extraAutoPrivateLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapExtraAutoPrivateView(_:))))
+    }
+    
+    func onTapExtraAutoPrivateView(a:UITapGestureRecognizer) {
+        let selController = SelectAutoPrivateExpireTimeController(style: .Plain)
+        selController.delegate = self
+        self.navigationController?.pushViewController(selController, animated: true)
+    }
+    
+    func selectAutoPrivateExpireTimeController(sender: SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays: Int, desc: String) {
+        extraAutoPrivateLabel.text = desc
+        let key = TIMImageTextContentEditorModel.extraAutoPrivateDaysKey
+        if let _ = self.propertyModel?.userInfo{
+            self.propertyModel?.userInfo?[key] = autoSetPrivateExpireDays
+        }else if self.propertyModel != nil{
+            self.propertyModel.userInfo = [key:autoSetPrivateExpireDays]
+        }
+    }
+}
+
+//MARK:SelectAutoPrivateExpireTimeController
+
+private func getDescStringFromDays(days:Int) -> String {
+    if days == 0 {
+        return "NEVER_SET_PRIVATE".TIMString
+    }else if days < 7{
+        return String(format: "SET_PRIV_X_DAYS_LTER".TIMString,days)
+    }else{
+        return String(format: "SET_PRIV_X_WEEKS_LTER".TIMString,days / 7)
+    }
+}
+
+protocol SelectAutoPrivateExpireTimeControllerDelegate {
+    func selectAutoPrivateExpireTimeController(sender:SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays:Int, desc:String)
+}
+
+class SelectAutoPrivateExpireTimeController: UITableViewController {
+    let reuseId = "SelTimeCell"
+    
+    let expiredTimeDays = [0,1,2,3,7,14]
+    
+    var delegate:SelectAutoPrivateExpireTimeControllerDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "SEL_AUTO_PRIV_TIME".TIMString
+        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: reuseId)
+        tableView.tableFooterView = UIView()
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return expiredTimeDays.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(reuseId, forIndexPath: indexPath)
+        cell.contentView.removeAllSubviews()
+        let label = UILabel(frame:cell.bounds)
+        label.frame.origin.x += 13
+        label.frame.size.width -= 20
+        let days = expiredTimeDays[indexPath.row]
+        label.text = getDescStringFromDays(days)
+        cell.contentView.addSubview(label)
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let days = expiredTimeDays[indexPath.row]
+        delegate?.selectAutoPrivateExpireTimeController(self,autoSetPrivateExpireDays: days,desc: getDescStringFromDays(days))
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

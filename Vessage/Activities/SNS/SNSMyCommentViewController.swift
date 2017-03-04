@@ -43,7 +43,8 @@ class SNSMyCommentCell: UITableViewCell {
             commentContentLabel.text = cmt.cmt
             commentPosterNickLabel.text = cmt.psterNk
             let atNick = String.isNullOrWhiteSpace(cmt.atNick) ? "" : "@\(cmt.atNick) "
-            commentInfoLabel.text = "\(atNick)\(cmt.getPostDateFriendString())"
+            let txtClip = String.isNullOrWhiteSpace(cmt.txt) ? "" : "  \(cmt.txt!)"
+            commentInfoLabel.text = "\(atNick)\(cmt.getPostDateFriendString())\(txtClip)"
             ServiceContainer.getFileService().setImage(self.postImageView, iconFileId: cmt.img, defaultImage: UIImage(named:"SNS_post_img_bcg"), callback: nil)
         }
     }

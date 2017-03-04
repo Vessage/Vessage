@@ -13,3 +13,8 @@ SAVE_IMAGE_ERROR = "保持图片出错";
 IMAGE_SHARED_ONCE = "图片已经分享过了";
 IMAGE_SAVED_ONCE = "图片已经保存到相册了";
 IMAGE_NOT_SAVED_OR_SHARED = "图片没有分享或保存\n确定要退出？";
+
+SEL_AUTO_PRIV_TIME = "内容自动设私密";
+NEVER_SET_PRIVATE = "不设置定时私密";
+SET_PRIV_X_DAYS_LTER = "%d天后自动设为私密";
+SET_PRIV_X_WEEKS_LTER = "%d周后自动设为私密";

@@ -392,7 +392,7 @@ class ConversationListController: UITableViewController {
         case ConversationListController.chatImageMgrSection,ConversationListController.conversationSection:
             return 0
         default:
-            return 23
+            return 11
         }
     }
     

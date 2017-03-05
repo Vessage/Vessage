@@ -184,14 +184,7 @@ OLD_NEW_PSW_SAME = "新旧密码相同";
 USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //APP Motto
-"VESSAGE_MOTTO_0" = "让时间重塑朋友圈";
-"VESSAGE_MOTTO_1" = "在此只与聊得来的人分享";
-"VESSAGE_MOTTO_2" = "无好友关系，只关注聊得来的人";
-"VESSAGE_MOTTO_3" = "晒&秀 - 分享多彩生活";
-"VESSAGE_MOTTO_4" = "晒&秀 - 常聊天好友的秘密花园";
-"VESSAGE_MOTTO_5" = "无关系链社交网络";
-"VESSAGE_MOTTO_6" = "不聊消失，再无互相加好友的压力";
-"VESSAGE_MOTTO_7" = "聊得来的人就是最好的听众";
+"VESSAGE_MOTTO_0" = "不聊消失的无关系链社交网络";
 
 //Vege
 APP_NAME = "VG";
@@ -319,19 +312,19 @@ VSG_READED = "已读";
 VSG_UNREADED = "未读";
 
 TELL_FRIENDS = "告诉好友";
-TELL_FRIENDS_ALERT_MSG = "邀请几个常联系好友一起玩更有意思";
+TELL_FRIENDS_ALERT_MSG = "邀请亲密好友一起会更好玩";
 
 WECHAT_SESSION = "微信好友";
 SMS = "短信";
 WECHAT_TIMELINE = "朋友圈";
-TELL_FRIEND_MESSAGE = "我发现一个适合好朋友聊天分享的秘密花园，一起来玩吧！";
+TELL_FRIEND_MESSAGE = "我在用不聊消失的VG聊天！这是我的VG号，一般人我不告诉Ta~";
 
 OPEN_MOBILE_CON_FST_TIPS_TITLE = "提示";
 OPEN_MOBILE_CON_FST_TIPS_MSG = "向未注册的手机号发出消息，好友用手机注册后可以收到你的消息~";
 GROUP_CHAT_TITLE = "群聊";
 GROUP_CHAT = "一起聊天吧";
 WX_SHARE_TITLE_FORMAT = "我的VG号:%@";
-SHARE_FUN_APP = "抓到一只好玩的App";
+SHARE_FUN_APP = "我在用VG聊天，一个无关系链束缚的社交网络，你要加入吗?";
 UNKNOW_VESSAGE_TYPE = "未知的消息类型>_<请点击这里\n升级到最新版本再查看这条消息!";
 NO_VESSAGE_TIPS = "没有消息,点击按钮\开始与Ta聊天";
 CHAT = "聊天";

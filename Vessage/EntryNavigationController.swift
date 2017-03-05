@@ -13,7 +13,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
 
     var launchScr:LaunchScreen!
     let screenWaitTimeInterval = 1.2
-    let mottoCount = 8
+    let mottoCount = 1
     private static var instance:EntryNavigationController!
     
     private var mainViewPresented = false

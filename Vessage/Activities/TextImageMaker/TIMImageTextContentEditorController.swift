@@ -33,7 +33,7 @@ class TIMImageTextContentEditorModel {
     
 }
 
-class TIMImageTextContentEditorController: UIViewController {
+class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
     
     static var cachedTextContent:String? = nil
     
@@ -41,7 +41,12 @@ class TIMImageTextContentEditorController: UIViewController {
     
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textView: BahamutTextView!
+    @IBOutlet weak var textView: BahamutTextView!{
+        didSet{
+            textView.delegate = self
+            updateDoneButton()
+        }
+    }
     
     @IBOutlet weak var extraViewsContainer: UIView!{
         didSet{
@@ -59,10 +64,25 @@ class TIMImageTextContentEditorController: UIViewController {
     var propertyModel:TIMImageTextContentEditorModel!
     private var modelSetted = false
     
+    var allowEmptyText:Bool?{
+        didSet{
+            updateDoneButton()
+        }
+    }
+    
+    private func updateDoneButton() {
+        if let a = allowEmptyText,let btn = navigationItem.rightBarButtonItem,let tv = textView{
+            if a {
+                btn.enabled = true
+            }else if String.isNullOrWhiteSpace(tv.text){
+                btn.enabled = false
+            }
+        }
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         if let model = self.propertyModel{
             if modelSetted == false{
                 modelSetted = true
@@ -87,6 +107,17 @@ class TIMImageTextContentEditorController: UIViewController {
         super.viewDidLoad()
         imageView?.userInteractionEnabled = true
         imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapImageView(_:))))
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        if String.isNullOrWhiteSpace(textView.text) {
+            if let a = allowEmptyText{
+                navigationItem.rightBarButtonItem?.enabled = a
+            }
+            
+        }else{
+            navigationItem.rightBarButtonItem?.enabled = true
+        }
     }
     
     func onTapImageView(ges:UITapGestureRecognizer) {
@@ -115,12 +146,20 @@ class TIMImageTextContentEditorController: UIViewController {
         if String.isNullOrEmpty(model.initTextContent) && TIMImageTextContentEditorController.cachedTextContent != nil{
             self.textView?.text = TIMImageTextContentEditorController.cachedTextContent
         }
+        
+        var allowEmptyTxt = true
+        
         if let img = model.image{
             self.imageView.image = img
         }else if let imageId = model.userInfo?[TIMImageTextContentEditorModel.imageIdKey] as? String{
             ServiceContainer.getFileService().setImage(imageView, iconFileId: imageId)
         }else{
             self.imageView?.constraints.filter{$0.identifier == "width"}.first?.constant = 0
+            allowEmptyTxt = false
+        }
+        
+        if allowEmptyText == nil {
+            allowEmptyText = allowEmptyTxt
         }
         self.initExtraSetup()
     }

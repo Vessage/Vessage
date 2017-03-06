@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,6 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUe-6p-7Xd">
+                                <rect key="frame" x="16" y="326" width="343" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="978-RC-NEL"/>
                                     <constraint firstAttribute="height" constant="16" id="Ega-MH-5Jp"/>
@@ -34,6 +38,7 @@
                                 </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenIcon" translatesAutoresizingMaskIntoConstraints="NO" id="yII-Jg-wpw">
+                                <rect key="frame" x="140" y="204" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="Yzz-R7-CwH"/>
                                     <constraint firstAttribute="height" constant="96" id="xfR-L0-CL3"/>
@@ -56,6 +61,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreenIcon" width="256" height="256"/>
+        <image name="LaunchScreenIcon" width="788" height="788"/>
     </resources>
 </document>

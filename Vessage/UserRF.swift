@@ -7,26 +7,7 @@
 //
 
 import Foundation
-
-class ChatImage: BahamutObject {
-    override func getObjectUniqueIdName() -> String {
-        return "imageId"
-    }
-    
-    var imageId:String!
-    var imageType:String!
-}
-
-class UserChatImages: BahamutObject {
-    override func getObjectUniqueIdName() -> String {
-        return "userId"
-    }
-    
-    var userId:String!
-    var chatImages:[ChatImage]!
-    
-}
-
+ 
 class VessageUser: BahamutObject {
     override func getObjectUniqueIdName() -> String {
         return "userId"
@@ -283,41 +264,6 @@ class ChangeUserSexValueRequest: BahamutRFRequestBase {
     }
 }
 
-class GetUserChatImageRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.method = .GET
-        self.api = "/VessageUsers/ChatImages"
-    }
-    
-    var userId:String!{
-        didSet{
-            self.paramenters["userId"] = userId
-        }
-    }
-}
-
-class UpdateChatImageRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.method = .PUT
-        self.api = "/VessageUsers/ChatImages"
-    }
-    
-    var imageType:String!{
-        didSet{
-            self.paramenters["imageType"] = imageType
-        }
-    }
-    
-    
-    var image:String!{
-        didSet{
-            self.paramenters["image"] = image
-        }
-    }
-}
-
 class ChangeNickRequest: BahamutRFRequestBase {
     override init() {
         super.init()
@@ -346,28 +292,6 @@ class ChangeMottoRequest: BahamutRFRequestBase {
     }
 }
 
-class RegistMobileUserRequest: BahamutRFRequestBase {
-    override init() {
-        super.init()
-        self.method = .POST
-        self.api = "/VessageUsers/NewMobileUser"
-    }
-    
-    var mobile:String!{
-        didSet{
-            self.paramenters["mobile"] = mobile
-        }
-    }
-    
-    var inviteMessage:String!{
-        didSet{
-            if let msg = inviteMessage{
-                self.paramenters["inviteMsg"] = msg
-            }
-        }
-    }
-    
-}
 
 class RegistNewVessageUserRequest: BahamutRFRequestBase{
     override init() {
@@ -411,3 +335,85 @@ class RegistNewVessageUserRequest: BahamutRFRequestBase{
         }
     }
 }
+
+
+//MARK: Deprecated
+/*
+class RegistMobileUserRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .POST
+        self.api = "/VessageUsers/NewMobileUser"
+    }
+    
+    var mobile:String!{
+        didSet{
+            self.paramenters["mobile"] = mobile
+        }
+    }
+    
+    var inviteMessage:String!{
+        didSet{
+            if let msg = inviteMessage{
+                self.paramenters["inviteMsg"] = msg
+            }
+        }
+    }
+    
+}
+ 
+class ChatImage: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "imageId"
+    }
+ 
+    var imageId:String!
+    var imageType:String!
+}
+
+class UserChatImages: BahamutObject {
+    override func getObjectUniqueIdName() -> String {
+        return "userId"
+    }
+    
+    var userId:String!
+    var chatImages:[ChatImage]!
+    
+}
+
+class GetUserChatImageRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .GET
+        self.api = "/VessageUsers/ChatImages"
+    }
+    
+    var userId:String!{
+        didSet{
+            self.paramenters["userId"] = userId
+        }
+    }
+}
+
+class UpdateChatImageRequest: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.method = .PUT
+        self.api = "/VessageUsers/ChatImages"
+    }
+    
+    var imageType:String!{
+        didSet{
+            self.paramenters["imageType"] = imageType
+        }
+    }
+    
+    
+    
+    var image:String!{
+        didSet{
+            self.paramenters["image"] = image
+        }
+    }
+}
+*/

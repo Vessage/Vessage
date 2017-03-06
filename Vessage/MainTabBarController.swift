@@ -118,7 +118,6 @@ class MainTabBarController: UITabBarController,UITabBarControllerDelegate {
             VessageQueue.sharedInstance.initQueue(UserSetting.userId)
             BubbleVessageHandlerManager.loadEmbededHandlers()
             BahamutTaskQueue.defaultInstance.initQueue(UserSetting.userId)
-            BahamutTaskQueue.defaultInstance.useSetChatImageHandlers()
             VessageTimeMachine.instance.initWithUserId(UserSetting.userId)
             
             ServiceContainer.getActivityService().getActivitiesBoardData()

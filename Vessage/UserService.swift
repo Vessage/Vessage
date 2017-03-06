@@ -43,7 +43,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             }
         }
     }
-    private var myChatImages = [ChatImage]()
+    
     private(set) var activeUsers = [VessageUser]()
     private(set) var nearUsers = [VessageUser]()
     
@@ -91,10 +91,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
     private func prepareServiceAndSetReady(){
         self.registUserDeviceToken(VessageSetting.deviceToken)
         self.getActiveUsers()
-        if let images = PersistentManager.sharedInstance.getModel(UserChatImages.self, idValue: self.myProfile.userId)?.chatImages{
-            self.myChatImages = images
-        }
-        self.fetchUserChatImages(self.myProfile.userId)
+        //self.initChatImages()
         self.setServiceReady()
     }
     
@@ -478,9 +475,117 @@ extension UserService{
     }
 }
 
-//MARK: User Chat Images
+//MARK: User Mobile
+class ValidateMobileResult:MsgResult{
+    var newUserId:String!
+}
+
+let defaultTempMobile = "13600000000"
+
 extension UserService{
     
+    var isUserMobileValidated:Bool{
+        return !String.isNullOrWhiteSpace(myProfile?.mobile)
+    }
+    
+    var isTempMobileUser:Bool{
+        return isUserMobileValidated && self.myProfile.mobile == defaultTempMobile
+    }
+    
+    func useTempMobile() {
+        self.myProfile.mobile = defaultTempMobile
+        self.myProfile.saveModel()
+        UserSetting.enableSetting("USE_TMP_MOBILE")
+    }
+    
+    func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
+        UserSetting.disableSetting("USE_TMP_MOBILE")
+        let req = SendMobileVSMSRequest()
+        req.mobile = mobile
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
+            if result.isSuccess{
+                callback(suc: true)
+            }else{
+                callback(suc: false)
+            }
+        }
+        
+    }
+    
+    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,bindExistsAccount:Bool,callback:(suc:Bool,newUserId:String?)->Void){
+        UserSetting.disableSetting("USE_TMP_MOBILE")
+        let req = ValidateMobileVSMSRequest()
+        req.smsAppkey = smsAppkey
+        req.mobile = mobile
+        req.zoneCode = zone
+        req.code = code
+        req.bindExistsAccount = bindExistsAccount
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ValidateMobileResult>) -> Void in
+            if result.isSuccess{
+                
+                if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
+                    #if DEBUG
+                        print("---------------------------------------------")
+                        print("Bind Account:\(self.myProfile.accountId)")
+                        print("Origin UserId:\(self.myProfile.userId)")
+                        print("Replace UserId:\(newUserId)")
+                        print("---------------------------------------------")
+                    #endif
+                    
+                    callback(suc: true, newUserId: newUserId)
+                }else{
+                    self.myProfile.mobile = mobile
+                    self.myProfile.saveModel()
+                    PersistentManager.sharedInstance.saveAll()
+                    callback(suc: true, newUserId: nil)
+                }
+            }else{
+                callback(suc: false,newUserId: nil)
+            }
+        }
+    }
+}
+
+//MARK: Deprecated
+
+/*
+extension UserService{
+    private func registNewUserByMobile(mobile:String,noteName:String,updatedCallback:(user:VessageUser?)->Void) {
+        let req = RegistMobileUserRequest()
+        req.mobile = mobile
+        //req.inviteMessage = "INVITE_MOBILE_FRIEND_MSG".localizedString()
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
+            if result.isFailure{
+                updatedCallback(user: nil)
+            }else if let user = result.returnObject{
+                #if DEBUG
+                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
+                #endif
+                user.nickName = noteName
+                user.lastUpdatedTime = NSDate()
+                user.saveModel()
+                self.setUserNoteName(user.userId, noteName: noteName)
+                PersistentManager.sharedInstance.saveAll()
+                updatedCallback(user: user)
+                self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
+            }else{
+                updatedCallback(user: nil)
+            }
+        }
+    }
+}
+
+//MARK: User Chat Images
+
+extension UserService{
+    
+    private func initChatImages() {
+        if let images = PersistentManager.sharedInstance.getModel(UserChatImages.self, idValue: self.myProfile.userId)?.chatImages{
+            self.myChatImages = images
+        }
+        self.fetchUserChatImages(self.myProfile.userId)
+    }
+ 
     var hasChatImages:Bool{
         return self.myChatImages.count > 0 || self.isUserChatBackgroundIsSeted
     }
@@ -569,101 +674,4 @@ extension UserService{
     }
     
 }
-
-//MARK: User Mobile
-class ValidateMobileResult:MsgResult{
-    var newUserId:String!
-}
-
-let defaultTempMobile = "13600000000"
-
-extension UserService{
-    
-    var isUserMobileValidated:Bool{
-        return !String.isNullOrWhiteSpace(myProfile?.mobile)
-    }
-    
-    var isTempMobileUser:Bool{
-        return isUserMobileValidated && self.myProfile.mobile == defaultTempMobile
-    }
-    
-    func useTempMobile() {
-        self.myProfile.mobile = defaultTempMobile
-        self.myProfile.saveModel()
-        UserSetting.enableSetting("USE_TMP_MOBILE")
-    }
-    
-    func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
-        UserSetting.disableSetting("USE_TMP_MOBILE")
-        let req = SendMobileVSMSRequest()
-        req.mobile = mobile
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
-            if result.isSuccess{
-                callback(suc: true)
-            }else{
-                callback(suc: false)
-            }
-        }
-        
-    }
-    
-    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,bindExistsAccount:Bool,callback:(suc:Bool,newUserId:String?)->Void){
-        UserSetting.disableSetting("USE_TMP_MOBILE")
-        let req = ValidateMobileVSMSRequest()
-        req.smsAppkey = smsAppkey
-        req.mobile = mobile
-        req.zoneCode = zone
-        req.code = code
-        req.bindExistsAccount = bindExistsAccount
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ValidateMobileResult>) -> Void in
-            if result.isSuccess{
-                
-                if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
-                    #if DEBUG
-                        print("---------------------------------------------")
-                        print("Bind Account:\(self.myProfile.accountId)")
-                        print("Origin UserId:\(self.myProfile.userId)")
-                        print("Replace UserId:\(newUserId)")
-                        print("---------------------------------------------")
-                    #endif
-                    
-                    callback(suc: true, newUserId: newUserId)
-                }else{
-                    self.myProfile.mobile = mobile
-                    self.myProfile.saveModel()
-                    PersistentManager.sharedInstance.saveAll()
-                    callback(suc: true, newUserId: nil)
-                }
-            }else{
-                callback(suc: false,newUserId: nil)
-            }
-        }
-    }
-}
-
-//MARK: Deprecated
-extension UserService{
-    private func registNewUserByMobile(mobile:String,noteName:String,updatedCallback:(user:VessageUser?)->Void) {
-        let req = RegistMobileUserRequest()
-        req.mobile = mobile
-        //req.inviteMessage = "INVITE_MOBILE_FRIEND_MSG".localizedString()
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
-            if result.isFailure{
-                updatedCallback(user: nil)
-            }else if let user = result.returnObject{
-                #if DEBUG
-                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
-                #endif
-                user.nickName = noteName
-                user.lastUpdatedTime = NSDate()
-                user.saveModel()
-                self.setUserNoteName(user.userId, noteName: noteName)
-                PersistentManager.sharedInstance.saveAll()
-                updatedCallback(user: user)
-                self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
-            }else{
-                updatedCallback(user: nil)
-            }
-        }
-    }
-}
+*/

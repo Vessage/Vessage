@@ -264,7 +264,6 @@
 		E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */; };
 		E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */; };
 		E7F6F0821D69AB84001CD190 /* BahamutTaskQueueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */; };
-		E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */; };
 		E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -578,7 +577,6 @@
 		E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzeImageSDK.swift; sourceTree = "<group>"; };
 		E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
 		E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueueProtocol.swift; sourceTree = "<group>"; };
-		E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetChatImagesTask.swift; sourceTree = "<group>"; };
 		E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchExtension.swift; sourceTree = "<group>"; };
 		FFA84BED95476A7BC42FA505 /* Pods_iAvatarMessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAvatarMessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1061,7 +1059,6 @@
 				E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */,
 				E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */,
 				E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */,
-				E7F6F0831D6A00D1001CD190 /* SetChatImagesTask.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -1739,7 +1736,6 @@
 				E708AB551C86CB6D0071104E /* UIBarButtonItem+Badge.m in Sources */,
 				E7E237D61C998AEB008FF893 /* BahamutFilmView.swift in Sources */,
 				E708ACA81C8752980071104E /* SignInViewController.swift in Sources */,
-				E7F6F0841D6A00D1001CD190 /* SetChatImagesTask.swift in Sources */,
 				E71BFCF51DE719D600384FCB /* MNSRF.swift in Sources */,
 				E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */,
 				E7682B771E455C85007FDB4B /* ViewPool.swift in Sources */,

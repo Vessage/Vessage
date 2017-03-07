@@ -312,7 +312,7 @@ VSG_READED = "已读";
 VSG_UNREADED = "未读";
 
 TELL_FRIENDS = "告诉好友";
-TELL_FRIENDS_ALERT_MSG = "邀请亲密好友一起会更好玩";
+TELL_FRIENDS_ALERT_MSG = "邀请你的亲密好友一起会更好玩";
 
 WECHAT_SESSION = "微信好友";
 SMS = "短信";

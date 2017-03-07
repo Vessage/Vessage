@@ -198,7 +198,7 @@ extension SNSMainViewController{
         }
         
         v.animationMaxToMin(0.1, maxScale: 1.2) {
-            let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "SNS".SNSString, message: "POST_NEW_SHARE".SNSString,extraAlertAction:[text])
+            let imagePicker = UIImagePickerController.showUIImagePickerAlert(self, title: "POST_NEW_SHARE".SNSString, message: nil,extraAlertAction:[text])
             imagePicker.delegate = self
         }
     }

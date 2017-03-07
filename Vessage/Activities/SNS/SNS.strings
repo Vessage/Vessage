@@ -18,7 +18,7 @@ SHARE_SNS_ALERT_MSG = "邀请好友加入不聊消失的晒&秀";
 
 REFRESH_ERROR = "刷新数据出错";
 NO_POSTS = "没有刷到更多动态了";
-POST_NEW_SHARE = "新的分享";
+POST_NEW_SHARE = "发表新内容";
 POST_NEW_SHARE_TXT = "发表文字";
 POST_NEW_ERROR = "晒新照片出错";
 NO_MEMBER_USERID_FOUND = "找不到该用户>_<";

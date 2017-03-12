@@ -577,6 +577,7 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                     if let fk = fileKey
                     {
                         post.img = fk.fileId
+                        post.pid = taskId
                         
                         self.posting.insert(post, atIndex: 0)
                         dispatch_async(dispatch_get_main_queue(), {

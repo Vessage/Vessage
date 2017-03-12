@@ -68,7 +68,9 @@ class SNSPostCommentCell: UITableViewCell {
     
     func updateCell() {
         if let cmt = comment{
-            commentLabel?.text = cmt.cmt
+            commentLabel?.text = cmt.st >= 0 ? cmt.cmt : "CMT_REMOVED".SNSString
+            commentLabel?.setNeedsUpdateConstraints()
+            commentLabel?.updateConstraints()
             postInfoLabel?.text = "By \(cmt.psterNk)"
             if let atnick = cmt.atNick {
                 atNickLabel?.text = "@\(atnick)"
@@ -200,8 +202,9 @@ extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
             let hud = self.showActivityHud()
             SNSPostManager.instance.newPostComment(self.post.pid, comment: cmt!,senderNick: myNick,atUser: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
                 hud.hideAnimated(true)
-                if posted{
+                if let id = posted{
                     let ncomment = SNSPostComment()
+                    ncomment.id = id
                     ncomment.cmt = cmt
                     ncomment.pster = UserSetting.userId
                     ncomment.psterNk = "ME".localizedString()
@@ -249,6 +252,41 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
         cell.comment = cmt
         cell.delegate = self
         return cell
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let cmt = comments[indexPath.section][indexPath.row]
+        return cmt.st >= 0 && (cmt.pster == UserSetting.userId || post.usrId == UserSetting.userId)
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let cmt = comments[indexPath.section][indexPath.row]
+        let isCmtOwner = cmt.pster == UserSetting.userId
+        
+        if isCmtOwner || post.usrId == UserSetting.userId {
+            let ac = UITableViewRowAction(style: .Normal, title: "RM_PST_CMT".SNSString) { (a, index) in
+                
+                let deleteAction = UIAlertAction(title: "CONFIRM".localizedString(), style: .Default, handler: { (yes) in
+                    let hud = self.showActivityHud()
+                    SNSPostManager.instance.deletePostComment(cmt.postId, cmtId: cmt.id, isCmtOwner: isCmtOwner, callback: { (suc) in
+                        hud.hideAnimated(true)
+                        if suc{
+                            self.comments[indexPath.section][indexPath.row].st = -1
+                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                        }else{
+                            self.playCrossMark()
+                        }
+                    })
+                })
+                
+                self.showAlert("DT_CMT_CONFIRM_ALERT_TITLE".SNSString, msg: "DT_CMT_CONFIRM_ALERT_MSG".SNSString, actions: [deleteAction,ALERT_ACTION_CANCEL])
+                
+                
+            }
+            return [ac]
+        }else{
+            return nil
+        }
     }
 }
 

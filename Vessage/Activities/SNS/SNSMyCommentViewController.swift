@@ -40,7 +40,9 @@ class SNSMyCommentCell: UITableViewCell {
     weak var delegate:SNSMyCommentCellDelegate?
     func updateCell() {
         if let cmt = comment{
-            commentContentLabel.text = cmt.cmt
+            commentContentLabel.text = cmt.st >= 0 ? cmt.cmt : "CMT_REMOVED".SNSString
+            commentContentLabel?.setNeedsUpdateConstraints()
+            commentContentLabel?.updateConstraints()
             commentPosterNickLabel.text = cmt.psterNk
             let atNick = String.isNullOrWhiteSpace(cmt.atNick) ? "" : "@\(cmt.atNick) "
             let txtClip = String.isNullOrWhiteSpace(cmt.txt) ? "" : "  \(cmt.txt!)"
@@ -183,8 +185,9 @@ extension SNSMyCommentViewController:SNSCommentInputViewDelegate{
             let hud = self.showActivityHud()
             SNSPostManager.instance.newPostComment(model.postId, comment: cmt!,senderNick: myNick,atUser: model.pster,atUserNick: model.psterNk, callback: { (posted,msg) in
                 hud.hideAnimated(true)
-                if posted{
+                if let id = posted{
                     let ncomment = SNSPostComment()
+                    ncomment.id = id
                     ncomment.cmt = cmt
                     ncomment.pster = UserSetting.userId
                     ncomment.psterNk = "ME".localizedString()

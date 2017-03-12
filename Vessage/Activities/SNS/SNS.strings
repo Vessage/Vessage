@@ -60,3 +60,7 @@ PUBLIC_PRI_LABEL = "公开到晒&秀";
 POST_ONLY_TEXT = "仅发布文字";
 
 AT_PRIVATE = "过期消失";
+RM_PST_CMT = "删除评论";
+CMT_REMOVED = "评论已删除";
+DT_CMT_CONFIRM_ALERT_TITLE = "确定删除该评论？";
+DT_CMT_CONFIRM_ALERT_MSG = "删除后不可恢复";

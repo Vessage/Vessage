@@ -121,17 +121,25 @@ class SNSPostManager {
         MobClick.event("SNS_NewPost")
     }
     
-    func newPostComment(postId:String,comment:String,senderNick:String!,atUser:String! = nil,atUserNick:String! = nil,callback:(posted:Bool,msg:String?)->Void) {
+    class PostCmtResult: MsgResult {
+        var cmtId:String!
+    }
+    
+    func newPostComment(postId:String,comment:String,senderNick:String!,atUser:String! = nil,atUserNick:String! = nil,callback:(postedCmtId:String?,msg:String?)->Void) {
         let req = SNSNewCommentRequest()
         req.postId = postId
         req.comment = comment
         req.senderNick = senderNick
         req.atUser = atUser
         req.atUserNick = atUserNick
-        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
-            callback(posted: result.isSuccess,msg: result.returnObject?.msg)
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<PostCmtResult>) in
+            if result.isSuccess{
+                MobClick.event("SNS_NewComment")
+                callback(postedCmtId: result.returnObject?.cmtId, msg: result.returnObject?.msg)
+            }else{
+                callback(postedCmtId: nil, msg: result.returnObject?.msg)
+            }
         }
-        MobClick.event("SNS_NewComment")
     }
     
     func getPostComment(postId:String,ts:Int64,callback:(comments:[SNSPostComment]?)->Void) {
@@ -187,6 +195,19 @@ extension SNSPostManager{
     func reportObjectionablePost(postId:String,callback:(Bool)->Void) {
         let req = ReportObjectionableSNSPostRequest()
         req.postId = postId
+        BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
+            callback(result.isSuccess)
+        }
+    }
+}
+
+//MARK: Manage Post Comment
+extension SNSPostManager{
+    func deletePostComment(postId:String,cmtId:String,isCmtOwner:Bool,callback:(Bool)->Void) {
+        let req = DeleteSNSComment()
+        req.cmtId = cmtId
+        req.postId = postId
+        req.cmtOwner = isCmtOwner
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
             callback(result.isSuccess)
         }

@@ -72,6 +72,11 @@ class SNSMainBoardData: EVObject {
 }
 
 class SNSPostComment: EVObject {
+    static let stateNormal = 0
+    static let stateRemoved = -1
+    static let stateDeleted = -2
+    
+    var id:String!
     var cmt:String! //Comment Content
     var ts:Int64 = 0 //Time Span Create
     var psterNk:String! //Poster nick
@@ -80,6 +85,8 @@ class SNSPostComment: EVObject {
     var postId:String! //SNS Post Id
     var img:String! //SNS post image
     var txt:String! //SNS Post Text Content Clip
+    var st:Int = 0
+    
     
 }
 
@@ -403,6 +410,35 @@ class ReportObjectionableSNSPostRequest: BahamutRFRequestBase {
     var postId:String!{
         didSet{
             paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+}
+
+class DeleteSNSComment: BahamutRFRequestBase {
+    override init() {
+        super.init()
+        self.api = "/SNS/Comments"
+        self.method = .DELETE
+    }
+    
+    var postId:String!{
+        didSet{
+            paramenters.updateValue(postId, forKey: "postId")
+        }
+    }
+    
+    var cmtId:String!{
+        didSet{
+            paramenters.updateValue(cmtId, forKey: "cmtId")
+        }
+    }
+    
+    var cmtOwner:Bool!{
+        didSet{
+            if let b = cmtOwner{
+                paramenters.updateValue("\(b)", forKey: "cmtOwner")
+            }
+            
         }
     }
 }

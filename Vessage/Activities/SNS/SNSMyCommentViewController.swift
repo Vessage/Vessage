@@ -36,21 +36,23 @@ class SNSMyCommentCell: UITableViewCell {
             postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:))))
         }
     }
-    weak var comment:SNSPostComment?
+    
+    weak var comment:SNSPostComment?{
+        didSet{
+            updateCell()
+        }
+    }
+    
     weak var delegate:SNSMyCommentCellDelegate?
-    func updateCell() {
+    
+    private func updateCell() {
         if let cmt = comment{
-            commentContentLabel.text = cmt.st >= 0 ? cmt.cmt : "CMT_REMOVED".SNSString
-            commentContentLabel?.setNeedsUpdateConstraints()
-            commentContentLabel?.updateConstraintsIfNeeded()
-            contentView.setNeedsUpdateConstraints()
-            contentView.updateConstraintsIfNeeded()
-            self.setNeedsUpdateConstraints()
-            self.updateConstraintsIfNeeded()
-            commentPosterNickLabel.text = cmt.psterNk
+            commentContentLabel?.text = cmt.getOutputContent()
+            commentPosterNickLabel?.text = cmt.psterNk
+            
             let atNick = String.isNullOrWhiteSpace(cmt.atNick) ? "" : "@\(cmt.atNick) "
             let txtClip = String.isNullOrWhiteSpace(cmt.txt) ? "" : "  \(cmt.txt!)"
-            commentInfoLabel.text = "\(atNick)\(cmt.getPostDateFriendString())\(txtClip)"
+            commentInfoLabel?.text = "\(atNick)\(cmt.getPostDateFriendString())\(txtClip)"
             ServiceContainer.getFileService().setImage(self.postImageView, iconFileId: cmt.img, defaultImage: UIImage(named:"SNS_post_img_bcg"), callback: nil)
         }
     }
@@ -227,9 +229,7 @@ extension SNSMyCommentViewController:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let c = cell as? SNSMyCommentCell{
-            c.updateCell()
-        }
+        cell.contentView.layoutSubviews()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

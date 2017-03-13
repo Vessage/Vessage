@@ -95,6 +95,10 @@ extension SNSPostComment{
         }
         return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
     }
+    
+    func getOutputContent() -> String! {
+        return self.st >= 0 ? self.cmt : "CMT_REMOVED".SNSString
+    }
 }
 
 class SNSPostLike: EVObject {

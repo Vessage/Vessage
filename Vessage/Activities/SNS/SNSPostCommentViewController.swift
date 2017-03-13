@@ -71,13 +71,7 @@ class SNSPostCommentCell: UITableViewCell {
     
     func updateCell() {
         if let cmt = comment{
-            commentLabel?.text = cmt.st >= 0 ? cmt.cmt : "CMT_REMOVED".SNSString
-            commentLabel?.setNeedsUpdateConstraints()
-            commentLabel?.updateConstraintsIfNeeded()
-            contentView.setNeedsUpdateConstraints()
-            contentView.updateConstraintsIfNeeded()
-            self.setNeedsUpdateConstraints()
-            self.updateConstraintsIfNeeded()
+            commentLabel?.text = cmt.getOutputContent()
             postInfoLabel?.text = "By \(cmt.psterNk)"
             if let atnick = cmt.atNick {
                 atNickLabel?.text = "@\(atnick)"
@@ -267,6 +261,10 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         let cmt = comments[indexPath.section][indexPath.row]
         return cmt.st >= 0 && (cmt.pster == UserSetting.userId || post.usrId == UserSetting.userId)
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.contentView.layoutSubviews()
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {

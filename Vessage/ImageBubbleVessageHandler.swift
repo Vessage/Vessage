@@ -45,6 +45,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
             vessage = nil
             imageView.image = nil
             dateTimeLabel.text = nil
+            imageLoaded = false
             loadingIndicator.stopAnimating()
         }
         

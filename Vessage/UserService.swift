@@ -124,6 +124,14 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
+    func clearTempUsers(chattingUserIds:[String]) -> [VessageUser] {
+        var userIds = chattingUserIds.map{$0}
+        userIds.append(myProfile.userId)
+        let tmpUsers = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ $0.userId == nil || !userIds.contains($0.userId)}
+        PersistentManager.sharedInstance.removeModels(tmpUsers)
+        return tmpUsers
+    }
+    
     func getCachedUserByAccountId(accountId:String) -> VessageUser? {
         return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.accountId) && accountId == $0.accountId}.first
     }
@@ -199,9 +207,6 @@ class UserService:NSNotificationCenter, ServiceProtocol {
             if result.isFailure{
                 updatedCallback(user: nil)
             }else if let user = result.returnObject{
-                #if DEBUG
-                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
-                #endif
                 user.lastUpdatedTime = NSDate()
                 user.saveModel()
                 PersistentManager.sharedInstance.saveAll()

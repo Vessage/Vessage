@@ -280,6 +280,9 @@ extension SNSPostCell{
     @IBAction func onClickLike(sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
+            if let uid = self.post?.usrId{
+                ServiceContainer.getConversationService().expireConversation(uid)
+            }
             if SNSPostManager.instance.likedInCached(self.post.pid){
                 self.likeMarkImage.animationMaxToMin(0.3, maxScale: 1.6, completion: nil)
                 return;

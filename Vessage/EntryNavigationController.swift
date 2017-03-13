@@ -144,6 +144,9 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     
     private func showMainView()
     {
+        let chattingUserIds = ServiceContainer.getConversationService().getChattingUserIds()
+        let removedUsers = ServiceContainer.getUserService().clearTempUsers(chattingUserIds)
+        debugLog("Removed Temp Users:\(removedUsers.count)")
         NSTimer.scheduledTimerWithTimeInterval(screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowMainView(_:)), userInfo: nil, repeats: false)
     }
     

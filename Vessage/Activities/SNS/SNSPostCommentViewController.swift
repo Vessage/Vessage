@@ -57,6 +57,9 @@ class SNSPostCommentCell: UITableViewCell {
     }
     
     func onTapCellView(a:UITapGestureRecognizer) {
+        if comment.st < 0 {
+            return
+        }
         if a.view == self.postInfoLabel {
             delegate?.snsPostCommentCellDidClickPostInfo?(a.view as! UILabel,cell: self, comment: comment)
         }else if a.view == self.commentLabel{
@@ -200,6 +203,9 @@ extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
             let myNick = ServiceContainer.getUserService().myProfile.nickName
             let cmtObj = sender.model as? SNSPostComment
             let hud = self.showActivityHud()
+            if let uid = self.post?.usrId{
+                ServiceContainer.getConversationService().expireConversation(uid)
+            }
             SNSPostManager.instance.newPostComment(self.post.pid, comment: cmt!,senderNick: myNick,atUser: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
                 hud.hideAnimated(true)
                 if let id = posted{

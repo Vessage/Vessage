@@ -184,7 +184,7 @@ OLD_NEW_PSW_SAME = "新旧密码相同";
 USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //APP Motto
-"VESSAGE_MOTTO_0" = "不聊消失的无关系链社交网络";
+"VESSAGE_MOTTO_0" = "与聊得来的人分享精彩世界";
 
 //Vege
 APP_NAME = "VG";

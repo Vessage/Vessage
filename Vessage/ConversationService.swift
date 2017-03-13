@@ -166,7 +166,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func setConversationNewestModified(chatterId:String){
+    func expireConversation(chatterId:String){
         let index = conversations.indexOf { (c) -> Bool in
             if let chatter = c.chatterId{
                 if chatter == chatterId{
@@ -239,6 +239,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
     
     func getChattingNormalUserIds() -> [String] {
         return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId) && String.isNullOrWhiteSpace($0.acId)}.map{$0.chatterId}
+    }
+    
+    func getChattingUserIds() -> [String] {
+        return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId)}.map{$0.chatterId!}
     }
     
     func removeTimeupedConversations() {

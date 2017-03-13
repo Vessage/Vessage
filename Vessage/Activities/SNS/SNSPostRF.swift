@@ -86,8 +86,6 @@ class SNSPostComment: EVObject {
     var img:String! //SNS post image
     var txt:String! //SNS Post Text Content Clip
     var st:Int = 0
-    
-    
 }
 
 extension SNSPostComment{

@@ -42,7 +42,11 @@ class SNSMyCommentCell: UITableViewCell {
         if let cmt = comment{
             commentContentLabel.text = cmt.st >= 0 ? cmt.cmt : "CMT_REMOVED".SNSString
             commentContentLabel?.setNeedsUpdateConstraints()
-            commentContentLabel?.updateConstraints()
+            commentContentLabel?.updateConstraintsIfNeeded()
+            contentView.setNeedsUpdateConstraints()
+            contentView.updateConstraintsIfNeeded()
+            self.setNeedsUpdateConstraints()
+            self.updateConstraintsIfNeeded()
             commentPosterNickLabel.text = cmt.psterNk
             let atNick = String.isNullOrWhiteSpace(cmt.atNick) ? "" : "@\(cmt.atNick) "
             let txtClip = String.isNullOrWhiteSpace(cmt.txt) ? "" : "  \(cmt.txt!)"

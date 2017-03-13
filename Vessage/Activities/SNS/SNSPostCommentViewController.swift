@@ -73,7 +73,11 @@ class SNSPostCommentCell: UITableViewCell {
         if let cmt = comment{
             commentLabel?.text = cmt.st >= 0 ? cmt.cmt : "CMT_REMOVED".SNSString
             commentLabel?.setNeedsUpdateConstraints()
-            commentLabel?.updateConstraints()
+            commentLabel?.updateConstraintsIfNeeded()
+            contentView.setNeedsUpdateConstraints()
+            contentView.updateConstraintsIfNeeded()
+            self.setNeedsUpdateConstraints()
+            self.updateConstraintsIfNeeded()
             postInfoLabel?.text = "By \(cmt.psterNk)"
             if let atnick = cmt.atNick {
                 atNickLabel?.text = "@\(atnick)"

@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>3.4.6</string>
 	<key>CFBundleVersion</key>
-	<string>223</string>
+	<string>224</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionMainStoryboard</key>

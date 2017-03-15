@@ -80,7 +80,7 @@ class SNSCommentInputView: UIView,UITextFieldDelegate {
     
     static func instanceFromXib() -> SNSCommentInputView{
         let view = NSBundle.mainBundle().loadNibNamed("SNSCommentInputView", owner: nil, options: nil)![0] as! SNSCommentInputView
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.whiteColor()
         return view
     }
 }

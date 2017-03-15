@@ -16,16 +16,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="写下你的评论" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OZj-55-i1m">
-                    <rect key="frame" x="3" y="6" width="322" height="38"/>
+                    <rect key="frame" x="3" y="6" width="314" height="38"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" returnKeyType="send"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rji-Bk-mO3">
-                    <rect key="frame" x="331" y="10" width="30" height="30"/>
+                    <rect key="frame" x="319" y="4" width="42" height="42"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="Wrw-v6-gMB"/>
-                        <constraint firstAttribute="width" constant="30" id="nsN-0G-haN"/>
+                        <constraint firstAttribute="height" constant="42" id="Wrw-v6-gMB"/>
+                        <constraint firstAttribute="width" constant="42" id="nsN-0G-haN"/>
                     </constraints>
                     <state key="normal" image="sns_new_comment"/>
                     <connections>
@@ -35,7 +35,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="rji-Bk-mO3" firstAttribute="leading" secondItem="OZj-55-i1m" secondAttribute="trailing" constant="6" id="7rK-nL-aWU"/>
+                <constraint firstItem="rji-Bk-mO3" firstAttribute="leading" secondItem="OZj-55-i1m" secondAttribute="trailing" constant="2" id="7rK-nL-aWU"/>
                 <constraint firstItem="OZj-55-i1m" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="HYv-UU-dLi"/>
                 <constraint firstItem="OZj-55-i1m" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="g1c-t1-vgJ"/>
                 <constraint firstAttribute="bottom" secondItem="OZj-55-i1m" secondAttribute="bottom" constant="6" id="nTR-7c-OTI"/>

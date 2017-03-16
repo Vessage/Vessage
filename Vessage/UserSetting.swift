@@ -10,11 +10,7 @@ import Foundation
 
 class UserSetting
 {
-    #if DEBUG
-        static var godMode = true
-    #else
-        static var godMode = false
-    #endif
+    static var godMode = false
     static var isAppstoreReviewing:Bool{
         get{
             return NSUserDefaults.standardUserDefaults().boolForKey("isAppstoreReviewId")

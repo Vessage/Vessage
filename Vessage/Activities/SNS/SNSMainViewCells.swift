@@ -78,8 +78,6 @@ class SNSPostCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
-            imageContentView.layer.borderWidth = 0.3
-            imageContentView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageContentView.userInteractionEnabled = true
             imageContentView.clipsToBounds = true
             imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
@@ -140,12 +138,18 @@ class SNSPostCell: UITableViewCell {
         let hiddenImageContent = post?.img == nil
         
         if let constraints = self.imageContentView?.constraints {
+            let width = hiddenImageContent ? 0 : self.contentView.frame.width
+            let height = hiddenImageContent ? 0 : width
+            
             for constraint in constraints {
                 if constraint.identifier == "imageHeight" {
-                    constraint.constant = hiddenImageContent ? 0 : self.contentView.frame.width
+                    constraint.constant = height
+                }else if constraint.identifier == "imageWidth"{
+                    constraint.constant = width
                 }
             }
         }
+        
         
         contentView.setNeedsUpdateConstraints()
         contentView.updateConstraintsIfNeeded()

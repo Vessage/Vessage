@@ -27,6 +27,7 @@ class ConversationMessageListTipsCell: ConversationMessageListCellBase {
         }else{
             tipsLabel.text = nil
         }
+        ServiceContainer.getVessageService().readVessage(vessage)
     }
     
     override func presentVessage(controller: ConversationViewController, vessage: Vessage) {
@@ -276,6 +277,7 @@ extension ConversationViewController{
         let vsg = Vessage()
         var dict = [String:String]()
         dict["msg"] = msg
+        vsg.vessageId = Vessage.vgRandomVessageId
         vsg.typeId = Vessage.typeTips
         vsg.ts = DateHelper.UnixTimeSpanTotalMilliseconds
         let json = try! NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions(rawValue: 0))
@@ -306,7 +308,7 @@ extension ConversationViewController{
             })
             for value in removedVessages{
                 var removed = false
-                if value.typeId == Vessage.typeFaceText{
+                if value.typeId == Vessage.typeFaceText || value.typeId == Vessage.typeTips{
                     continue
                 }else if let fileId = value.fileId{
                     if value.typeId == Vessage.typeChatVideo{
@@ -315,8 +317,8 @@ extension ConversationViewController{
                         removed = fService.removeFile(fileId, type: .Image)
                     }
                     removed ? debugLog("Vessage File Removed:%@", fileId) : debugLog("Remove Vessage File Fail:%@", fileId)
-                }else{
-                    debugLog("Vessage No File Id:%@", value.vessageId)
+                }else if let vsgId = value.vessageId{
+                    debugLog("Vessage No File Id:%@", vsgId)
                 }
             }
             vService.removeVessages(removedVessages)

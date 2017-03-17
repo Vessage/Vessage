@@ -167,11 +167,13 @@ class TextBubbleVessageHandler: NSObject,BubbleVessageHandler {
     
     func presentContent(vc:UIViewController, vessage: Vessage,contentView:UIView) {
         if let label = contentView as? UILabel {
-            let bodyDict = vessage.getBodyDict()
-            let msg = bodyDict["textMessage"] as? String
-            label.text = msg
+            dispatch_async(dispatch_get_main_queue(), { 
+                let bodyDict = vessage.getBodyDict()
+                let msg = bodyDict["textMessage"] as? String
+                label.text = msg
+                ServiceContainer.getVessageService().readVessage(vessage)
+            })
             
-            ServiceContainer.getVessageService().readVessage(vessage)
         }
     }
     

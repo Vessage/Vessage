@@ -40,7 +40,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tips Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xls-jc-zfQ">
-                                                            <rect key="frame" x="8" y="11" width="304" height="22"/>
+                                                            <rect key="frame" x="31" y="11" width="249" height="22"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -48,10 +48,10 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="Xls-jc-zfQ" firstAttribute="leading" secondItem="8qJ-Hp-8vu" secondAttribute="leadingMargin" id="2zu-0L-XOe"/>
+                                                        <constraint firstItem="Xls-jc-zfQ" firstAttribute="leading" secondItem="8qJ-Hp-8vu" secondAttribute="leadingMargin" constant="23" id="2zu-0L-XOe"/>
                                                         <constraint firstItem="Xls-jc-zfQ" firstAttribute="centerY" secondItem="8qJ-Hp-8vu" secondAttribute="centerY" id="X0p-p9-6IU"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="Xls-jc-zfQ" secondAttribute="bottom" constant="3" id="a3y-r5-z4B"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="Xls-jc-zfQ" secondAttribute="trailing" id="xCj-Ec-z41"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="Xls-jc-zfQ" secondAttribute="trailing" constant="32" id="xCj-Ec-z41"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

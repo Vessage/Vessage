@@ -84,11 +84,10 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         PersistentManager.sharedInstance.refreshCache(Vessage)
     }
     
-    func readVessage(vessage:Vessage,refresh:Bool = true){
-        if !vessage.isReceivedVessage() {
-            return
-        }
-        if vessage.isRead == false{
+    func readVessage(vessage:Vessage,refresh:Bool = true) -> Bool{
+        if vessage.isRead || !vessage.isReceivedVessage() {
+            return false
+        }else {
             vessage.isRead = true
             vsgCntLock.lock()
             if var cnt = notReadVessageCountMap[vessage.sender]{
@@ -104,18 +103,17 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
             vessage.saveModel()
             PersistentManager.sharedInstance.refreshCache(Vessage)
         }
+        return true
     }
     
     func removeVessages(vessages:[Vessage]){
         var removed = [Vessage]()
         for vessage in vessages {
-            if !vessage.isReceivedVessage() {
-                continue
+            if readVessage(vessage,refresh: false){
+                removed.append(vessage)
+                PersistentManager.sharedInstance.removeModel(vessage)
+                postNotificationName(VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
             }
-            readVessage(vessage,refresh: false)
-            removed.append(vessage)
-            PersistentManager.sharedInstance.removeModel(vessage)
-            postNotificationName(VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
         }
         PersistentManager.sharedInstance.refreshCache(Vessage)
         postNotificationName(VessageService.onVessagesRemoved, object: self, userInfo: [VessageServiceNotificationValues:removed])

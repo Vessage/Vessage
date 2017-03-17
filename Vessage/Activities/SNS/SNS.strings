@@ -5,6 +5,7 @@
   Created by AlexChow on 16/8/23.
   Copyright © 2016年 Bahamut. All rights reserved.
 */
+SNS_TITLE = "晒&秀(SNS)";
 SNS = "晒&秀";
 DEFAULT_MOTTO = "暂无签名";
 

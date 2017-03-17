@@ -41,7 +41,7 @@ let VGCoreActivityInfoList = [
 
 let ActivityInfoList = [
     [
-        ActivityInfo(activityId: "1003", "SNS".SNSString, "sns_icon", "SNS", "SNSMainViewController", true,false),
+        ActivityInfo(activityId: "1003", "SNS_TITLE".SNSString, "sns_icon", "SNS", "SNSMainViewController", true,false),
     ],
     [
         //ActivityInfo(activityId: VGActivityNearActivityId, "Near Active People", "nfc_icon", "NiceFaceClub", "NFCMainViewController", true,false),

@@ -9,6 +9,9 @@
 import Foundation
  
 class VessageUser: BahamutObject {
+    static let typeNormal = 0
+    static let typeSubscription = 1
+    
     override func getObjectUniqueIdName() -> String {
         return "userId"
     }
@@ -28,6 +31,7 @@ class VessageUser: BahamutObject {
     var acTs:Int64 = 0
     var location:[Double]!
     
+    var t = 0
     
 }
 

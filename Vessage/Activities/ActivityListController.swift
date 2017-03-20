@@ -87,6 +87,12 @@ class ActivityListController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         setNavigationBadges()
+        MainTabBarController.instance?.tabBar.hidden = false
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        MainTabBarController.instance?.tabBar.hidden = true
     }
     
     deinit{

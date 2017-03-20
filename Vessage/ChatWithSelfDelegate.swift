@@ -7,12 +7,12 @@
 //
 
 import Foundation
-class ChatWithSelfDelegate: ConversationTitleCellDelegate {
+class ChatWithSelfDelegate: ConversationClickCellDelegate {
     static let instance:ChatWithSelfDelegate = {
         return ChatWithSelfDelegate()
     }()
     
-    func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
         let c = Conversation()
         c.chatterId = ServiceContainer.getUserService().myProfile.userId
         c.conversationId = IdUtil.generateUniqueId()

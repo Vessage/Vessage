@@ -12,15 +12,13 @@ import AddressBookUI
 let SHOW_OPEN_MOBILE_CONVERSATION_KEY = "SHOW_OPEN_MOBILE_CONVERSATION_KEY"
 
 //MARK: ConversationListContactCell
-class ConversationListContactCellDelegate:NSObject,ConversationTitleCellDelegate,ABPeoplePickerNavigationControllerDelegate{
+class ConversationListContactCellDelegate:NSObject,ConversationClickCellDelegate,ABPeoplePickerNavigationControllerDelegate{
     
     private var rootController:ConversationListController!
     
-    func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
         self.rootController = controller
-        if !tryShowTips() {
-            showContact()
-        }
+        showContact()
     }
     
     private func tryShowTips()->Bool{
@@ -39,7 +37,6 @@ class ConversationListContactCellDelegate:NSObject,ConversationTitleCellDelegate
     private func showContact(){
         let authStatus = ABAddressBookGetAuthorizationStatus();
         if authStatus == .NotDetermined {
-            
             let action = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
                 if let addressBookRef = ABAddressBookCreateWithOptions(nil , nil){
                     let addressBook = addressBookRef.takeRetainedValue()
@@ -61,7 +58,7 @@ class ConversationListContactCellDelegate:NSObject,ConversationTitleCellDelegate
             })
             self.rootController.showAlert("REQUEST_ACCESS_CONTACT_TITLE".localizedString(), msg: "REQUEST_ACCESS_CONTACT".localizedString(), actions: [action])
         }else if authStatus == .Authorized{
-            showContactView()
+            self.showContactView()
         }else{
             self.showNoPersimissionAlert()
         }
@@ -88,5 +85,9 @@ class ConversationListContactCellDelegate:NSObject,ConversationTitleCellDelegate
                 self.rootController.openConversationWithMobile(mobile, noteName: title)
             })
         }
+    }
+    
+    func peoplePickerNavigationControllerDidCancel(peoplePicker: ABPeoplePickerNavigationController) {
+        peoplePicker.dismissViewControllerAnimated(true, completion: nil)
     }
 }

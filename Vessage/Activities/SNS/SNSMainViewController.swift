@@ -174,7 +174,8 @@ extension SNSMainViewController{
         for psts in typeList {
             if let index = (psts.indexOf{$0.pid == postId}){
                 self.posts[listType][i].removeAtIndex(index)
-                self.tableView.reloadData()
+                let tableViewSection = i + 1
+                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: tableViewSection)], withRowAnimation: .Automatic)
                 return true
             }
             i += 1
@@ -334,7 +335,7 @@ extension SNSMainViewController{
     
     func switchListType(type:Int) {
         if isUserPageMode {
-            self.title = String(format: "X_SNS_POST_WALL".SNSString, specificUserNick ?? "UNKNOW_NAME".localizedString())
+            self.title = specificUserNick ?? "UNKNOW_NAME".localizedString()
         }else{
             self.title = type == SNSPost.typeMyPost ? "MY_SNS_POST_WALL".SNSString : "SNS".SNSString
         }
@@ -603,8 +604,10 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
                 self.playCheckMark(){
                     self.posting.removeElement{$0.pid == tmpPost.pid}
                     self.posts[SNSPost.typeNormalPost].insert([p], atIndex: 0)
-                    self.tableView?.setContentOffset(CGPointZero, animated: true)
-                    self.tableView?.reloadData()
+                    if self.listType == SNSPost.typeNormalPost{
+                        self.tableView.insertSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+                        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1), atScrollPosition: .Bottom, animated: true)
+                    }
                     self.postNewImageDelegate?.snsMainViewController(self, onImagePosted:post?.img ?? tmpPost.img)
                 }
             }else{

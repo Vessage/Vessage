@@ -10,10 +10,10 @@ import UIKit
 
 let maxGroupChatUserCount = 6
 
-class ConversationListGroupChatCellDelegate: NSObject,ConversationTitleCellDelegate,SelectVessageUserViewControllerDelegate {
+class ConversationListGroupChatCellDelegate: NSObject,ConversationClickCellDelegate,SelectVessageUserViewControllerDelegate {
     private var rootController:ConversationListController!
     
-    func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
         self.rootController = controller
         let svuvc = SelectVessageUserViewController.showSelectVessageUserViewController(controller.navigationController!)
         svuvc.delegate = self

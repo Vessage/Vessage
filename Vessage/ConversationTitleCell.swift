@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol ConversationTitleCellDelegate{
-    func conversationTitleCell(sender:ConversationTitleCell,controller:ConversationListController!)
+protocol ConversationClickCellDelegate{
+    func conversationTitleCell(sender:ConversationListCellBase,controller:ConversationListController!)
 }
 
 class ConversationTitleCell:ConversationListCellBase{
@@ -20,7 +20,7 @@ class ConversationTitleCell:ConversationListCellBase{
         delegate = nil
     }
     
-    var delegate:ConversationTitleCellDelegate?
+    var delegate:ConversationClickCellDelegate?
     
     @IBOutlet weak var nextMark: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

@@ -466,9 +466,20 @@ extension ConversationViewController{
     static func showConversationViewController(nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
         if userId == UserSetting.userId {
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
+        }else if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
+            let t = user.t == VessageUser.typeSubscription ? Conversation.typeSubscription : Conversation.typeSingleChat
+            let c = ServiceContainer.getConversationService().openConversationByUserId(user.userId, beforeRemoveTs: beforeRemoveTs, createByActivityId: createByActivityId, type: t)
+            showConversationViewController(nvc, conversation: c,initMessage: initMessage)
         }else{
-            let conversation = ServiceContainer.getConversationService().openConversationByUserId(userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: createByActivityId)
-            ConversationViewController.showConversationViewController(nvc, conversation: conversation, initMessage: initMessage)
+            ServiceContainer.getUserService().getUserProfile(userId, updatedCallback: { (user) in
+                if let u = user{
+                    let t = u.t == VessageUser.typeSubscription ? Conversation.typeSubscription : Conversation.typeSingleChat
+                    let c = ServiceContainer.getConversationService().openConversationByUserId(u.userId, beforeRemoveTs: beforeRemoveTs, createByActivityId: createByActivityId, type: t)
+                    showConversationViewController(nvc, conversation: c,initMessage: initMessage)
+                }else{
+                    nvc.showAlert("USER_DATA_NOT_READY_RETRY".localizedString(), msg: nil)
+                }
+            })
         }
     }
     

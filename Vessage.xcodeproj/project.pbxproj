@@ -123,6 +123,7 @@
 		E75E269E1DE43AD7000D2D38 /* VessageTimeMachine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E75E269C1DE43AD7000D2D38 /* VessageTimeMachine.storyboard */; };
 		E75E269F1DE43AD7000D2D38 /* VessageTimeMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */; };
 		E75E26A11DE43B5C000D2D38 /* TimeMachineVessageListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */; };
+		E767DD2D1E7E85FC005CDA00 /* NavItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E767DD2C1E7E85FC005CDA00 /* NavItemCell.swift */; };
 		E7682B771E455C85007FDB4B /* ViewPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7682B761E455C85007FDB4B /* ViewPool.swift */; };
 		E7682B791E458BD6007FDB4B /* libUMessage_Sdk_1.4.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7682B781E458BD6007FDB4B /* libUMessage_Sdk_1.4.0.a */; };
 		E7682B7B1E458C20007FDB4B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7682B7A1E458C20007FDB4B /* UserNotifications.framework */; };
@@ -189,6 +190,9 @@
 		E7CC54E41D7A6CF200BDE82E /* MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54DE1D7A6CF200BDE82E /* MessageExtension.swift */; };
 		E7CC54E51D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54DF1D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift */; };
 		E7CC54E81D7A6D3F00BDE82E /* ShareChatEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC54E71D7A6D3F00BDE82E /* ShareChatEntity.swift */; };
+		E7CDFECE1E7FDC7A00381B2C /* SubscriptionListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CDFECD1E7FDC7A00381B2C /* SubscriptionListController.swift */; };
+		E7CDFED01E7FDCA300381B2C /* Subscription.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7CDFECF1E7FDCA300381B2C /* Subscription.storyboard */; };
+		E7CDFED21E7FDF2900381B2C /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CDFED11E7FDF2900381B2C /* SubscriptionService.swift */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -426,6 +430,7 @@
 		E75E269C1DE43AD7000D2D38 /* VessageTimeMachine.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VessageTimeMachine.storyboard; sourceTree = "<group>"; };
 		E75E269D1DE43AD7000D2D38 /* VessageTimeMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageTimeMachine.swift; sourceTree = "<group>"; };
 		E75E26A01DE43B5C000D2D38 /* TimeMachineVessageListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeMachineVessageListController.swift; sourceTree = "<group>"; };
+		E767DD2C1E7E85FC005CDA00 /* NavItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavItemCell.swift; sourceTree = "<group>"; };
 		E7682B761E455C85007FDB4B /* ViewPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPool.swift; sourceTree = "<group>"; };
 		E7682B781E458BD6007FDB4B /* libUMessage_Sdk_1.4.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.4.0.a; sourceTree = "<group>"; };
 		E7682B7A1E458C20007FDB4B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -494,6 +499,9 @@
 		E7CC54DE1D7A6CF200BDE82E /* MessageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageExtension.swift; sourceTree = "<group>"; };
 		E7CC54DF1D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareChatEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E7CC54E71D7A6D3F00BDE82E /* ShareChatEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareChatEntity.swift; sourceTree = "<group>"; };
+		E7CDFECD1E7FDC7A00381B2C /* SubscriptionListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListController.swift; sourceTree = "<group>"; };
+		E7CDFECF1E7FDCA300381B2C /* Subscription.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Subscription.storyboard; sourceTree = "<group>"; };
+		E7CDFED11E7FDF2900381B2C /* SubscriptionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -922,6 +930,7 @@
 				E708AC831C86EC6E0071104E /* ServicesConfig.swift */,
 				E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */,
 				E7ABAC6E1D4DCDE100306A69 /* AppService.swift */,
+				E7CDFED11E7FDF2900381B2C /* SubscriptionService.swift */,
 			);
 			name = CoreService;
 			sourceTree = "<group>";
@@ -983,6 +992,7 @@
 				E7F532E11D3A0DEC008078DE /* Conversation.storyboard */,
 				E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */,
 				E7B139D61E06C96500F3D8C9 /* SelectFontViewController.storyboard */,
+				E7CDFECF1E7FDCA300381B2C /* Subscription.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1216,6 +1226,8 @@
 				E79917531D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift */,
 				E7A76A011E304D06009F97D5 /* ConversationTitleCell.swift */,
 				E7A76A031E30568D009F97D5 /* ChatWithSelfDelegate.swift */,
+				E767DD2C1E7E85FC005CDA00 /* NavItemCell.swift */,
+				E7CDFECD1E7FDC7A00381B2C /* SubscriptionListController.swift */,
 			);
 			name = ConversationList;
 			sourceTree = "<group>";
@@ -1554,6 +1566,7 @@
 				E7AC07051E0EC13900AB6770 /* Media.xcassets in Resources */,
 				E7CAD9751D392B3A00765E38 /* AvartarAndFace.xcassets in Resources */,
 				E741094A1DE69AA60030AD1D /* MNS.strings in Resources */,
+				E7CDFED01E7FDCA300381B2C /* Subscription.storyboard in Resources */,
 				E708ACAD1C8754E20071104E /* User.storyboard in Resources */,
 				E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */,
 				E7AC07071E0EC13900AB6770 /* MYQ.strings in Resources */,
@@ -1743,6 +1756,7 @@
 				E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7886A731DC97D3D00368C03 /* SNSPostCommentViewController.swift in Sources */,
+				E7CDFECE1E7FDC7A00381B2C /* SubscriptionListController.swift in Sources */,
 				E75E26A11DE43B5C000D2D38 /* TimeMachineVessageListController.swift in Sources */,
 				E718444D1D498D6B00D3EDEF /* SelectVessageExpandableHeader.swift in Sources */,
 				E7EB9A2F1C87EE9B002F96FB /* AppUtil.swift in Sources */,
@@ -1792,6 +1806,7 @@
 				E7711B0E1D7B2349009D9DCD /* BahamutMessage.xcdatamodeld in Sources */,
 				E72F65FD1CE0878B0094BA10 /* UserCollectionViewController.swift in Sources */,
 				E708AC7F1C86EC160071104E /* UploadBaseExtension.swift in Sources */,
+				E7CDFED21E7FDF2900381B2C /* SubscriptionService.swift in Sources */,
 				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,
 				E7AC07091E0EC13900AB6770 /* MYQRF.swift in Sources */,
 				E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */,
@@ -1837,6 +1852,7 @@
 				E7CC54E21D7A6CF200BDE82E /* MessageEntity+CoreDataProperties.swift in Sources */,
 				E7EF28511D791AFD0064231F /* ActivityListController.swift in Sources */,
 				E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */,
+				E767DD2D1E7E85FC005CDA00 /* NavItemCell.swift in Sources */,
 				E718444B1D498CDC00D3EDEF /* TextChatInputView.swift in Sources */,
 				E775DFB31E10F72000ADB4C1 /* TIMImageTextContentEditorController.swift in Sources */,
 				E7ECF3D61DF86D3A00DAC7BE /* RecordVideoVessageExt.swift in Sources */,

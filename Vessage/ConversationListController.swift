@@ -11,15 +11,17 @@ import MJRefresh
 
 //MARK: ConversationListController
 class ConversationListController: UITableViewController {
-
+/*
     static let chatImageMgrSection = 0
     static let newConversationSection = 1
     static let selfConversationSection = 2
-    static let conversationSection = 3
+     */
+    static let navItemSection = 0
+    static let conversationSection = 1
     
     var ConversationSectionNum:Int{
         //change bcg + new chat + conversations
-        return 4
+        return 2
     }
     
     let conversationService = ServiceContainer.getConversationService()
@@ -112,12 +114,13 @@ class ConversationListController: UITableViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        MainTabBarController.instance?.tabBar.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.tryShowConversationsTimeUpTips()
-        
+        MainTabBarController.instance?.tabBar.hidden = false
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.intervalTimeTaskPerMinute, object: nil)
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.onAppBecomeActive, object: nil)
         
@@ -284,14 +287,9 @@ class ConversationListController: UITableViewController {
         if isSearching{
             return searchResult.count
         }else{
-            switch section {
-            case ConversationListController.chatImageMgrSection:
-                return 0
-            case ConversationListController.newConversationSection:
-                return 2
-            case ConversationListController.selfConversationSection:
-                return 0
-            default:
+            if section == 0 {
+                return 1
+            }else{
                 return conversationService.conversations.count
             }
         }
@@ -308,36 +306,9 @@ class ConversationListController: UITableViewController {
     }
     
     private func normalTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
-        if indexPath.section == ConversationListController.chatImageMgrSection{
-            let cell = tableView.dequeueReusableCellWithIdentifier(ConversationTitleCell.reuseId, forIndexPath: indexPath) as! ConversationTitleCell
-            cell.titleLabel.text = "MANAGE_MY_CHAT_IMAGES".localizedString()
-            cell.iconImageView.image = UIImage(named: "vg_smile")
+        if indexPath.section == 0{
+            let cell = tableView.dequeueReusableCellWithIdentifier(NavItemCell.reuseId, forIndexPath: indexPath) as! NavItemCell
             cell.rootController = self
-            cell.delegate = ChatImageManageCellDelegate.instance
-            return cell
-        }else if indexPath.section == ConversationListController.newConversationSection{
-            if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier(ConversationTitleCell.reuseId, forIndexPath: indexPath) as! ConversationTitleCell
-                cell.titleLabel.text = "SEL_CONTACTS_ITEM".localizedString()
-                cell.iconImageView.image = UIImage(named: "contacts")
-                cell.rootController = self
-                cell.delegate = ConversationListContactCellDelegate()
-                return cell
-            }else{
-                let cell = tableView.dequeueReusableCellWithIdentifier(ConversationTitleCell.reuseId, forIndexPath: indexPath) as! ConversationTitleCell
-                cell.titleLabel.text = "NEW_CHAT_GROUP".localizedString()
-                cell.iconImageView.image = UIImage(named: "group_chat")
-                cell.rootController = self
-                cell.delegate = ConversationListGroupChatCellDelegate()
-                return cell
-            }
-        }else if indexPath.section == ConversationListController.selfConversationSection{
-            let cell = tableView.dequeueReusableCellWithIdentifier(ConversationTitleCell.reuseId, forIndexPath: indexPath) as! ConversationTitleCell
-            let user = ServiceContainer.getUserService().myProfile
-            cell.titleLabel.text = "CHAT_WITH_SELF".localizedString()
-            ServiceContainer.getFileService().setImage(cell.iconImageView, iconFileId: user.avatar,defaultImage: getDefaultAvatar(user.accountId, sex: user.sex))
-            cell.rootController = self
-            cell.delegate = ChatWithSelfDelegate.instance
             return cell
         }
         else{
@@ -384,12 +355,19 @@ class ConversationListController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if isSearching {
+            return 60
+        }
+        
+        if indexPath.section == ConversationListController.navItemSection {
+            return 100
+        }
         return 60
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
-        case ConversationListController.chatImageMgrSection,ConversationListController.conversationSection:
+        case ConversationListController.navItemSection:
             return 0
         default:
             return 11
@@ -469,6 +447,9 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
     }
     
     func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
+        if profile.t == VessageUser.typeSubscription {
+            return "SUBSCRIPT".localizedString()
+        }
         return "CHAT".localizedString()
     }
     

@@ -246,6 +246,9 @@ extension ConversationViewController{
         }
         if !String.isNullOrWhiteSpace(self.conversation.chatterId) {
             let vsgs = vessageService.getNotReadVessages(self.conversation.chatterId)
+            if conversation.type == Conversation.typeSubscription {
+                self.vessages.append(generateTipsVessage("REPLY_ANY_SUBSCRIPT_ACCOUNT".localizedString()))
+            }
             if vsgs.count > 0 {
                 let startVsg = generateTipsVessage(vsgs.first!.getSendTime().toLocalDateTimeSimpleString())
                 self.vessages.append(startVsg)

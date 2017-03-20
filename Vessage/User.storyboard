@@ -655,7 +655,7 @@
                                 <rect key="frame" x="67.5" y="163.5" width="240" height="320"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar_4" translatesAutoresizingMaskIntoConstraints="NO" id="321-dj-l42">
-                                        <rect key="frame" x="72" y="42" width="96" height="96"/>
+                                        <rect key="frame" x="72" y="32" width="96" height="96"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="96" id="dYH-AC-hjx"/>
                                             <constraint firstAttribute="width" constant="96" id="shF-Rb-f4W"/>
@@ -668,13 +668,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AccountId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vb-8H-Hdz" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                        <rect key="frame" x="82" y="180" width="77" height="25"/>
+                                        <rect key="frame" x="82" y="170" width="77" height="25"/>
                                         <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nick" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcg-sh-tNg" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                        <rect key="frame" x="102" y="213" width="36" height="22"/>
+                                        <rect key="frame" x="102" y="203" width="36" height="22"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -717,7 +717,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M4L-Wz-oVC">
-                                        <rect key="frame" x="80" y="150" width="80" height="23"/>
+                                        <rect key="frame" x="80" y="140" width="80" height="23"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sex_middle" translatesAutoresizingMaskIntoConstraints="NO" id="MSe-uC-LBj">
                                                 <rect key="frame" x="10" y="0.0" width="24" height="24"/>
@@ -760,7 +760,7 @@
                                     <constraint firstItem="Tei-Ic-i5l" firstAttribute="height" secondItem="a40-dN-dpe" secondAttribute="height" id="GF5-8M-Lkg"/>
                                     <constraint firstItem="a40-dN-dpe" firstAttribute="leading" secondItem="d8a-SD-6zt" secondAttribute="leading" id="Re0-ox-mFU"/>
                                     <constraint firstAttribute="height" constant="320" id="Sda-y5-ZUt"/>
-                                    <constraint firstItem="321-dj-l42" firstAttribute="top" secondItem="d8a-SD-6zt" secondAttribute="top" constant="42" id="V4P-3i-c9l"/>
+                                    <constraint firstItem="321-dj-l42" firstAttribute="top" secondItem="d8a-SD-6zt" secondAttribute="top" constant="32" id="V4P-3i-c9l"/>
                                     <constraint firstItem="fcg-sh-tNg" firstAttribute="top" secondItem="5vb-8H-Hdz" secondAttribute="bottom" constant="8" symbolic="YES" id="VoM-Gu-DNW"/>
                                     <constraint firstItem="Tei-Ic-i5l" firstAttribute="leading" secondItem="a40-dN-dpe" secondAttribute="trailing" id="Zeh-1R-2NV"/>
                                     <constraint firstItem="321-dj-l42" firstAttribute="centerX" secondItem="d8a-SD-6zt" secondAttribute="centerX" id="bVd-QK-AAp"/>
@@ -781,8 +781,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uU-rx-4Mj" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                <rect key="frame" x="97.5" y="409.5" width="180" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签名" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8uU-rx-4Mj">
+                                <rect key="frame" x="97.5" y="399.5" width="180" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="E6y-ly-NqJ"/>
                                 </constraints>
@@ -888,6 +888,6 @@
         <image name="sex_female" width="32" height="32"/>
         <image name="sex_male" width="32" height="32"/>
         <image name="sex_middle" width="32" height="32"/>
-        <image name="sns_icon" width="128" height="128"/>
+        <image name="sns_icon" width="168" height="168"/>
     </resources>
 </document>

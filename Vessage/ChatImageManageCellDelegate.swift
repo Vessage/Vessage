@@ -8,13 +8,13 @@
 
 import Foundation
 
-class ChatImageManageCellDelegate:ConversationTitleCellDelegate{
+class ChatImageManageCellDelegate:ConversationClickCellDelegate{
     
     static let instance:ChatImageManageCellDelegate = {
        return ChatImageManageCellDelegate()
     }()
     
-    func conversationTitleCell(sender: ConversationTitleCell, controller: ConversationListController!) {
+    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
         /*
         if let c = controller{
             ChatImageMgrViewController.showChatImageMgrVeiwController(c)

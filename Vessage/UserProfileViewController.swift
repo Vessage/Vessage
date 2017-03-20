@@ -35,7 +35,13 @@ class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControl
     }
     
     func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
-        return operateTitle ?? "CHAT".localizedString()
+        if !String.isNullOrWhiteSpace(operateTitle) {
+            return operateTitle!
+        }
+        if profile.t == VessageUser.typeSubscription {
+            return "SUBSCRIPT".localizedString()
+        }
+        return "CHAT".localizedString()
     }
 }
 
@@ -59,7 +65,8 @@ class UserProfileViewControllerDelegateAddConversation: UserProfileViewControlle
             sender.showAlert("CONVERSATION_EXISTS".localizedString(),msg:nil)
             sender.rightButtonEnabled = false
         }else{
-            ServiceContainer.getConversationService().openConversationByUserId(profile.userId, beforeRemoveTs: beforeRemoveTimeSpan, createByActivityId: createActivityId)
+            let type = profile.t == VessageUser.typeSubscription ? Conversation.typeSubscription : Conversation.typeSingleChat
+            ServiceContainer.getConversationService().openConversationByUserId(profile.userId, beforeRemoveTs: beforeRemoveTimeSpan, createByActivityId: createActivityId,type: type)
             sender.showAlert("CONVERSATION_CREATED".localizedString(),msg:nil)
             sender.rightButtonEnabled = false
         }
@@ -106,7 +113,8 @@ class UserProfileViewController: UIViewController {
             let img = getDefaultAvatar(profile.accountId ?? "0",sex:profile.sex)
             ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: profile.avatar, defaultImage: img)
             if let aId = profile.accountId {
-                self.accountIdLabel.text = String(format: "USER_ACCOUNT_FORMAT".localizedString(),aId)
+                let format = profile.t == VessageUser.typeSubscription ? "SUBSCRIPTION_ACCOUNT_FORMAT".localizedString() : "USER_ACCOUNT_FORMAT".localizedString()
+                self.accountIdLabel.text = String(format: format,aId)
                 var name = profile.nickName
                 if let note = ServiceContainer.getUserService().getUserNotedNameIfExists(profile.userId) {
                     if note != name {
@@ -118,7 +126,11 @@ class UserProfileViewController: UIViewController {
                 self.accountIdLabel.text = "MOBILE_USER".localizedString()
                 self.nameLabel.text = ServiceContainer.getUserService().getUserNotedName(profile.userId)
             }
-            self.accountIdLabel.hidden = accountIdHidden
+            if profile.t == VessageUser.typeSubscription {
+                self.accountIdLabel.hidden = false
+            }else{
+                self.accountIdLabel.hidden = accountIdHidden
+            }
             mottoLabel.text = profile.motto ?? "DEFAULT_VGER_MOTTO".localizedString()
             sexImageView.superview?.hidden = false
             avatarImageView.hidden = false
@@ -132,11 +144,7 @@ class UserProfileViewController: UIViewController {
             rightButton?.enabled = rightButtonEnabled
         }
     }
-    @IBOutlet weak var mottoLabel: LTMorphingLabel!{
-        didSet{
-            mottoLabel.morphingEffect = .Pixelate
-        }
-    }
+    @IBOutlet weak var mottoLabel: UILabel!
     @IBOutlet weak var bcgMaskView: UIView!
     
     @IBOutlet weak var snsButton: UIButton!{

@@ -45,15 +45,19 @@ extension Conversation{
 extension Conversation{
     
     func getDisappearString() -> String {
+        
         let minLeft = getConversationTimeUpMinutesLeft()
         if minLeft > 24 * 60 {
             let daysLeft = Int(minLeft / 24 / 60)
-            return String(format: "X_DAYS_DISAPPEAR".localizedString(), daysLeft)
+            let format = Conversation.typeSubscription == type ? "SUBSCRIPTION_X_DAYS_DISAPPEAR".localizedString(): "X_DAYS_DISAPPEAR".localizedString()
+            return String(format:format , daysLeft)
         }else if minLeft > 60 {
+            let format = Conversation.typeSubscription == type ? "SUBSCRIPTION_X_HOURS_DISAPPEAR".localizedString(): "X_DAYS_DISAPPEAR".localizedString()
             let hoursLeft = Int(minLeft / 60)
-            return String(format: "X_HOURS_DISAPPEAR".localizedString(), hoursLeft)
+            return String(format: format, hoursLeft)
         }else{
-            return "DISAPPEAR_IN_ONE_HOUR".localizedString()
+            
+            return VessageUser.typeSubscription == type ? "SUBSCRIPTION_WILL_DISAPPEAR".localizedString() : "DISAPPEAR_IN_ONE_HOUR".localizedString()
         }
     }
     
@@ -208,7 +212,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         if vsg.isGroup {
             return self.addNewConversationWithGroupVessage(vsg,beforeRemoveTs: ConversationMaxTimeUpMS,createByActivityId: nil)
         }else{
-            return self.addNewConversationWithUserId(vsg.sender,beforeRemoveTs: ConversationMaxTimeUpMS,createByActivityId: nil)
+            return self.addNewConversationWithUserId(vsg.sender,beforeRemoveTs: ConversationMaxTimeUpMS,createByActivityId: nil,type: Conversation.typeSingleChat)
         }
     }
     
@@ -238,6 +242,10 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
     
+    func getConversationWithChatterId(chatterId:String) -> Conversation? {
+        return conversations.filter{$0.chatterId == chatterId}.first
+    }
+    
     func getChattingNormalUserIds() -> [String] {
         return conversations.filter{!$0.isGroupChat && !String.isNullOrWhiteSpace($0.chatterId) && String.isNullOrWhiteSpace($0.acId)}.map{$0.chatterId}
     }
@@ -261,12 +269,12 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return (conversations.filter{userId == $0.chatterId ?? ""}).count > 0
     }
     
-    func openConversationByUserId(userId:String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil) -> Conversation {
+    func openConversationByUserId(userId:String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,type:Int = Conversation.typeSingleChat) -> Conversation {
         
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
             return conversation
         }else{
-            let conversation = addNewConversationWithUserId(userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: createByActivityId)
+            let conversation = addNewConversationWithUserId(userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: createByActivityId,type: type)
             self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
             return conversation
         }
@@ -300,11 +308,11 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversation
     }
     
-    private func addNewConversationWithUserId(userId:String,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation {
+    private func addNewConversationWithUserId(userId:String,beforeRemoveTs:Int64,createByActivityId:String?,type:Int) -> Conversation {
         let conversation = Conversation()
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.chatterId = userId
-        conversation.type = Conversation.typeSingleChat
+        conversation.type = type
         conversation.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds + beforeRemoveTs - ConversationMaxTimeUpMS
         conversation.acId = createByActivityId
         conversation.saveModel()

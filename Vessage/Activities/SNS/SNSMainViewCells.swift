@@ -76,6 +76,8 @@ class SNSPostCell: UITableViewCell {
     @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var newCommentButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var contentContainer: UIView! //containerHeight
+    /*
     @IBOutlet weak var imageContentView: UIImageView!{
         didSet{
             imageContentView.userInteractionEnabled = true
@@ -83,6 +85,8 @@ class SNSPostCell: UITableViewCell {
             imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
         }
     }
+    */
+    
     @IBOutlet weak var commentTipsLabel: UILabel!
     
     weak var rootController:SNSMainViewController?
@@ -97,8 +101,8 @@ class SNSPostCell: UITableViewCell {
     }
     
     func onTapImage(ges:UITapGestureRecognizer) {
-        if let vc = self.rootController{
-            self.imageContentView.slideShowFullScreen(vc)
+        if let vc = self.rootController,let imgView = ges.view as? UIImageView{
+            imgView.slideShowFullScreen(vc)
         }
     }
     
@@ -114,10 +118,24 @@ class SNSPostCell: UITableViewCell {
             newCommentButton.hidden = false
             commentTipsLabel.text = self.post.cmtCnt.friendString
             textContentLabel?.text = nil
+            
+            self.imgList = [String]()
+            if !String.isNullOrWhiteSpace(self.post?.img) {
+                imgList.append(self.post.img)
+            }
+            
             if let json = self.post?.body{
                 let dict = EVReflection.dictionaryFromJson(json)
                 if let txt = dict["txt"] as? String{
                     textContentLabel?.text = txt
+                }
+                
+                if let imgs = dict["imgs"] as? [String?] {
+                    for img in imgs {
+                        if !String.isNullOrWhiteSpace(img) {
+                            imgList.append(img!)
+                        }
+                    }
                 }
             }
             measureImageContent()
@@ -134,28 +152,69 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
+    private var imgList:[String]!
+    let defaultBcg = UIImage(named:"nfc_post_img_bcg")
+    
     private func measureImageContent() {
-        let hiddenImageContent = post?.img == nil
+        let hiddenImageContent = imgList.count == 0
         
-        if let constraints = self.imageContentView?.constraints {
-            let width = hiddenImageContent ? 0 : self.contentView.frame.width
-            let height = hiddenImageContent ? 0 : width
+        var itemWidth = hiddenImageContent ? 0 : self.contentContainer.frame.width
+        
+        itemWidth = imgList.count == 1 ? itemWidth / 2 : itemWidth / 3
+        
+        self.contentContainer.removeAllSubviews()
+
+        var x:CGFloat = 0
+        var y:CGFloat = 0
+        let col = imgList.count == 4 ? 2 : 3
+        let span:CGFloat = imgList.count > 1 ? 10 : 0
+        
+        itemWidth -= span
+        
+        for i in 0..<imgList.count {
             
-            for constraint in constraints {
-                if constraint.identifier == "imageHeight" {
-                    constraint.constant = height
-                }else if constraint.identifier == "imageWidth"{
-                    constraint.constant = width
-                }
-            }
+            x = CGFloat(i % col) * (itemWidth + span)
+            y = CGFloat(i / col) * (itemWidth + span)
+            let frame = CGRectMake(x, y, itemWidth, itemWidth)
+            let imgView = UIImageView(frame: frame)
+            imgView.clipsToBounds = true
+            imgView.contentMode = .Center
+            self.contentContainer.addSubview(imgView)
         }
         
-        
+        let contentHeight:CGFloat = y + itemWidth
+        self.contentContainer.constraints.filter{$0.identifier == "containerHeight"}.first?.constant = contentHeight
         contentView.setNeedsUpdateConstraints()
         contentView.updateConstraintsIfNeeded()
         
-        self.imageContentView?.hidden = hiddenImageContent
-        
+        self.contentContainer.hidden = hiddenImageContent
+        updateImageContents()
+    }
+    
+    private func updateImageContents() {
+        if imgList.count == 0 {
+            return
+        }else{
+            for i in 0..<imgList.count {
+                let img = imgList[i]
+                let imgv = self.contentContainer.subviews[i] as! UIImageView
+                ServiceContainer.getFileService().setImage(imgv, iconFileId: img,defaultImage: defaultBcg){ suc in
+                    if suc{
+                        imgv.contentMode = .ScaleAspectFill
+                        imgv.userInteractionEnabled = true
+                        imgv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
+                        
+                        if self.imgList.count == 1,let size = imgv.image?.size where size.height / size.width < 2{
+                            let height = imgv.frame.width / size.width * size.height
+                            imgv.frame.size.height = height
+                            self.contentContainer.constraints.filter{$0.identifier == "containerHeight"}.first?.constant = height
+                            self.contentView.setNeedsUpdateConstraints()
+                            self.contentView.updateConstraintsIfNeeded()
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func updateImage() {
@@ -165,18 +224,6 @@ class SNSPostCell: UITableViewCell {
             ServiceContainer.getFileService().setImage(avatarImageView, iconFileId: user.avatar,defaultImage: defaultAvatar)
         }else{
             avatarImageView.image = UIImage(named:"vg_smile")
-        }
-        
-        imageContentView.contentMode = .Center
-        if let img = post?.img {
-            let defaultBcg = UIImage(named:"nfc_post_img_bcg")
-            ServiceContainer.getFileService().setImage(imageContentView, iconFileId: img,defaultImage: defaultBcg){ suc in
-                if suc{
-                    self.imageContentView.contentMode = .ScaleAspectFill
-                }
-            }
-        }else{
-            imageContentView.image = nil
         }
     }
     
@@ -200,13 +247,11 @@ extension SNSPostCell{
         SNSPostManager.instance.updatePostState(self.post.pid,state: newState, callback: { (suc) in
             hud.hideAnimated(true)
             if suc{
-                self.rootController?.playCheckMark(){
-                    if newState < 0{
-                        self.post.st = newState
-                        self.rootController?.removePost(self.post.pid)
-                    }else{
-                        self.rootController?.updatePostState(self.post.pid,newState: newState)
-                    }
+                if newState < 0{
+                    self.post.st = newState
+                    self.rootController?.removePost(self.post.pid)
+                }else{
+                    self.rootController?.updatePostState(self.post.pid,newState: newState)
                 }
             }else{
                 self.rootController?.playCrossMark()

@@ -234,7 +234,7 @@ class ConversationListCell:ConversationListCellBase{
             }
         }
         let minLeft = NSNumber(double:conversation.getConversationTimeUpMinutesLeft()).integerValue
-        if !conversation.pinned && (minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 != 0) {
+        if conversation.type == Conversation.typeSubscription || !conversation.pinned && (minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 != 0) {
             self.subLine = conversation.getDisappearString()
         }else{
             self.subLine = conversation.getLastUpdatedTime().toFriendlyString()
@@ -269,7 +269,11 @@ class ConversationListCell:ConversationListCellBase{
     
     private func updateWithUser(user:VessageUser){
         self.headLine = self.rootController.userService.getUserNotedNameIfExists(user.userId) ?? user.nickName
-        self.subLine = user.accountId
+        if user.t == VessageUser.typeSubscription {
+            self.subLine = "SUBSCRIPTION_ACCUNT".localizedString()
+        }else{
+            self.subLine = user.accountId
+        }
         self.updateAvatarWithUser(user)
         self.badgeValue = self.rootController.vessageService.getChatterNotReadVessageCount(user.userId)
     }

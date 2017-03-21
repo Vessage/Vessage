@@ -28,6 +28,8 @@ class ConversationListController: UITableViewController {
     let vessageService = ServiceContainer.getVessageService()
     let userService = ServiceContainer.getUserService()
     let groupService = ServiceContainer.getChatGroupService()
+    var conversations = [Conversation]()
+    
     
     //MARK: search property
     var searchResult = [SearchResultModel](){

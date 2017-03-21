@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FR3-Fj-HR0" id="Y9i-sS-bHO">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="76"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fxG-Ak-IvM">
@@ -53,10 +53,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eiq-Xg-QFU">
-                                                    <rect key="frame" x="331" y="20.5" width="36" height="36"/>
+                                                    <rect key="frame" x="335" y="22.5" width="32" height="32"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="Ovp-iB-EdA"/>
-                                                        <constraint firstAttribute="height" constant="36" id="uLb-E9-aWI"/>
+                                                        <constraint firstAttribute="width" constant="32" id="Ovp-iB-EdA"/>
+                                                        <constraint firstAttribute="height" constant="32" id="uLb-E9-aWI"/>
                                                     </constraints>
                                                     <state key="normal" title="+" image="add_gray"/>
                                                     <state key="disabled" image="check_blue"/>
@@ -96,7 +96,9 @@
                             <constraint firstItem="jeE-fe-ZGt" firstAttribute="leading" secondItem="Uhk-eJ-Xgi" secondAttribute="leading" id="ynr-Dk-DMB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="订阅分享号" id="nce-SK-iU4"/>
+                    <navigationItem key="navigationItem" title="订阅分享号" id="nce-SK-iU4">
+                        <barButtonItem key="backBarButtonItem" title="返回" id="2Ue-0S-Hwk"/>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableView" destination="jeE-fe-ZGt" id="dOk-Kk-nqw"/>

@@ -56,7 +56,6 @@ extension Conversation{
             let hoursLeft = Int(minLeft / 60)
             return String(format: format, hoursLeft)
         }else{
-            
             return VessageUser.typeSubscription == type ? "SUBSCRIPTION_WILL_DISAPPEAR".localizedString() : "DISAPPEAR_IN_ONE_HOUR".localizedString()
         }
     }
@@ -79,7 +78,7 @@ extension Conversation{
     }
 }
 
-let ConversationMaxTimeUpMinutes = 14.0 * 24 * 60
+let ConversationMaxTimeUpMinutes = 30.0 * 24 * 60
 let ConversationUpdatedValue = "ConversationUpdatedValue"
 let ConversationMaxTimeUpMS = Int64(ConversationMaxTimeUpMinutes * 60 * 1000)
 
@@ -92,7 +91,7 @@ extension ServiceContainer{
 
 //MARK:ConversationService
 class ConversationService:NSNotificationCenter, ServiceProtocol {
-    static let conversationMaxPinNumber = 6
+    static let conversationMaxPinNumber = 20
     static let conversationListUpdated = "conversationListUpdated"
     static let conversationUpdated = "conversationUpdated"
     

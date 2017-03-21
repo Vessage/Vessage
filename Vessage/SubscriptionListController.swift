@@ -8,6 +8,9 @@
 
 import Foundation
 
+
+typealias OnClickSubscriptionHandler = ((cell:SubscriptionListCell)->Void)
+
 class SubscriptionListCell:UITableViewCell{
     @IBOutlet weak var icon: UIImageView!{
         didSet{
@@ -18,6 +21,11 @@ class SubscriptionListCell:UITableViewCell{
     @IBOutlet weak var headline: UILabel!
     @IBOutlet weak var subline: UILabel!
     @IBOutlet weak var subscriptBtn: UIButton!
+    
+    var model:SubAccount!
+    
+    var onClickSubscriptonHandler:OnClickSubscriptionHandler?
+    
     static let reuesId = "SubscriptionListCell"
     
     var subscripted = false{
@@ -27,7 +35,7 @@ class SubscriptionListCell:UITableViewCell{
     }
     
     @IBAction func onClickSubsciptionBtn(sender: AnyObject) {
-        
+        onClickSubscriptonHandler?(cell: self)
     }
 }
 
@@ -64,7 +72,38 @@ class SubscriptionListController: UIViewController {
     }
 }
 
+private var snsIndex:NSIndexPath?
+
 extension SubscriptionListController:UITableViewDataSource,UITableViewDelegate{
+    func onClickSubscription(cell:SubscriptionListCell) {
+        ServiceContainer.getConversationService().openConversationByUserId(cell.model.id, beforeRemoveTs: ConversationMaxTimeUpMS, createByActivityId: nil, type: Conversation.typeSubscription)
+        ServiceContainer.getActivityService().setActivityMiniBadgeShow(SNSPostManager.activityId)
+        cell.subscripted = true
+    }
+    
+    func onSubscriptOnSNS(a:UIBarButtonItem) {
+        if let index = snsIndex,let cell = self.tableView?.cellForRowAtIndexPath(index) as? SubscriptionListCell{
+            onClickSubscription(cell)
+            a.title = "SUBSCRIPTED".localizedString()
+            a.enabled = false
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SubscriptionListCell{
+            let model = data[indexPath.row]
+            let controller = SNSMainViewController.showUserSNSPostViewController(self.navigationController!, userId: model.id, nick: model.title)
+            if !cell.subscripted {
+                controller.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SUBSCRIPT".localizedString(), style: .Plain, target: self, action: #selector(SubscriptionListController.onSubscriptOnSNS(_:)))
+                snsIndex = indexPath
+            }else{
+                controller.navigationItem.rightBarButtonItem = nil
+                snsIndex = nil
+            }
+            
+        }
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -76,8 +115,10 @@ extension SubscriptionListController:UITableViewDataSource,UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(SubscriptionListCell.reuesId, forIndexPath: indexPath) as! SubscriptionListCell
         let model = data[indexPath.row]
+        cell.model = model
         cell.headline.text = model.title
         cell.subline.text = model.desc
+        cell.onClickSubscriptonHandler = onClickSubscription
         cell.subscripted = conversationService.getConversationWithChatterId(model.id) != nil
         ServiceContainer.getFileService().setImage(cell.icon, iconFileId: model.avatar, defaultImage: defaultIcon, callback: nil)
         return cell

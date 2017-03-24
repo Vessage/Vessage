@@ -106,7 +106,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这就是我的签名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSp-bP-1Ga" customClass="LTMorphingLabel" customModule="LTMorphingLabel">
-                                                    <rect key="frame" x="137.5" y="185" width="100" height="17"/>
+                                                    <rect key="frame" x="26" y="185" width="323" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -129,9 +129,11 @@
                                                 <constraint firstItem="fNl-ND-3K2" firstAttribute="leading" secondItem="NtT-th-h9o" secondAttribute="trailing" id="Tuf-wR-oaA"/>
                                                 <constraint firstItem="Aww-Jv-IS4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CaL-xj-lLZ" secondAttribute="leadingMargin" constant="30" id="ZHT-9r-GwM"/>
                                                 <constraint firstItem="jSp-bP-1Ga" firstAttribute="centerX" secondItem="CaL-xj-lLZ" secondAttribute="centerX" id="a74-Eo-5uw"/>
+                                                <constraint firstItem="jSp-bP-1Ga" firstAttribute="leading" secondItem="CaL-xj-lLZ" secondAttribute="leadingMargin" constant="18" id="enE-Ra-cT9"/>
                                                 <constraint firstItem="fNl-ND-3K2" firstAttribute="centerY" secondItem="T0Z-hc-7ht" secondAttribute="centerY" constant="2" id="fOb-id-cGs"/>
                                                 <constraint firstItem="Aww-Jv-IS4" firstAttribute="top" secondItem="NtT-th-h9o" secondAttribute="bottom" constant="10" id="goH-fC-E6g"/>
                                                 <constraint firstItem="NtT-th-h9o" firstAttribute="centerY" secondItem="CaL-xj-lLZ" secondAttribute="centerY" constant="-48" id="h6X-18-sFf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="jSp-bP-1Ga" secondAttribute="trailing" constant="18" id="syl-wg-bNg"/>
                                                 <constraint firstItem="fNl-ND-3K2" firstAttribute="leading" secondItem="T0Z-hc-7ht" secondAttribute="trailing" constant="6" id="uwO-kr-gDe"/>
                                                 <constraint firstItem="jSp-bP-1Ga" firstAttribute="top" secondItem="T0Z-hc-7ht" secondAttribute="bottom" constant="10" id="ysC-3f-MyQ"/>
                                             </constraints>
@@ -232,7 +234,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jff-tT-Bc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="799" y="472"/>
+            <point key="canvasLocation" x="797.60000000000002" y="471.8140929535233"/>
         </scene>
         <!--修改密码-->
         <scene sceneID="gUz-Pn-rHB">

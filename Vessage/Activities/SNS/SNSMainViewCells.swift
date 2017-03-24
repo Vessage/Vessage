@@ -10,6 +10,7 @@ import Foundation
 import MJRefresh
 import LTMorphingLabel
 import EVReflection
+import SDWebImage
 
 @objc protocol SNSMainInfoCellDelegate {
     optional func snsMainInfoCellDidClickNewComment(sender:UIView,cell:SNSMainInfoCell)
@@ -77,15 +78,6 @@ class SNSPostCell: UITableViewCell {
     @IBOutlet weak var newCommentButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var contentContainer: UIView! //containerHeight
-    /*
-    @IBOutlet weak var imageContentView: UIImageView!{
-        didSet{
-            imageContentView.userInteractionEnabled = true
-            imageContentView.clipsToBounds = true
-            imageContentView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
-        }
-    }
-    */
     
     @IBOutlet weak var commentTipsLabel: UILabel!
     
@@ -191,6 +183,19 @@ class SNSPostCell: UITableViewCell {
         updateImageContents()
     }
     
+    private func onSetedImage(imgv:UIImageView){
+        imgv.contentMode = .ScaleAspectFill
+        imgv.userInteractionEnabled = true
+        imgv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
+        if self.imgList.count == 1,let size = imgv.image?.size where size.height / size.width < 2{
+            let height = imgv.frame.width / size.width * size.height
+            imgv.frame.size.height = height
+            self.contentContainer.constraints.filter{$0.identifier == "containerHeight"}.first?.constant = height
+            self.contentView.setNeedsUpdateConstraints()
+            self.contentView.updateConstraintsIfNeeded()
+        }
+    }
+    
     private func updateImageContents() {
         if imgList.count == 0 {
             return
@@ -198,18 +203,18 @@ class SNSPostCell: UITableViewCell {
             for i in 0..<imgList.count {
                 let img = imgList[i]
                 let imgv = self.contentContainer.subviews[i] as! UIImageView
-                ServiceContainer.getFileService().setImage(imgv, iconFileId: img,defaultImage: defaultBcg){ suc in
-                    if suc{
-                        imgv.contentMode = .ScaleAspectFill
-                        imgv.userInteractionEnabled = true
-                        imgv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
-                        
-                        if self.imgList.count == 1,let size = imgv.image?.size where size.height / size.width < 2{
-                            let height = imgv.frame.width / size.width * size.height
-                            imgv.frame.size.height = height
-                            self.contentContainer.constraints.filter{$0.identifier == "containerHeight"}.first?.constant = height
-                            self.contentView.setNeedsUpdateConstraints()
-                            self.contentView.updateConstraintsIfNeeded()
+                let imgl = img.lowercaseString
+                if imgl.hasPrefix("http://") || imgl.hasPrefix("https://") {
+                    imgv.image = defaultBcg
+                    imgv.sd_setImageWithURL(NSURL(string: img), completed: { (image, error, cacheType, url) in
+                        if error == nil{
+                            self.onSetedImage(imgv)
+                        }
+                    })
+                }else{
+                    ServiceContainer.getFileService().setImage(imgv, iconFileId: img,defaultImage: defaultBcg){ suc in
+                        if suc{
+                            self.onSetedImage(imgv)
                         }
                     }
                 }

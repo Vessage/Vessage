@@ -218,7 +218,7 @@ extension ConversationViewController:UITableViewDelegate,UITableViewDataSource{
         var reuseId = ""
         if vsg.typeId == Vessage.typeTips {
             reuseId = ConversationMessageListTipsCell.reusedId
-        }else if vsg.isMySendingVessage(){
+        }else if vsg.isMySendingVessage() || vsg.getVessageRealSenderId() == UserSetting.userId{
             reuseId = ConversationMessageListRightCell.reusedId
         }else{
             reuseId = ConversationMessageListLeftCell.reusedId
@@ -244,21 +244,39 @@ extension ConversationViewController{
         if vessages.count > 0 {
             return
         }
+        
         if !String.isNullOrWhiteSpace(self.conversation.chatterId) {
             let vsgs = vessageService.getNotReadVessages(self.conversation.chatterId)
             if conversation.type == Conversation.typeSubscription {
                 self.vessages.append(generateTipsVessage("REPLY_ANY_SUBSCRIPT_ACCOUNT".localizedString()))
             }
+            
+            let twoDayAgo = DateHelper.UnixTimeSpanTotalMilliseconds - 24 * 3600 * 1000
+            let bts = vsgs.first?.ts ?? DateHelper.UnixTimeSpanTotalMilliseconds
+            let msgs = VessageTimeMachine.instance.getVessageBefore(self.conversation.chatterId, ts: bts,limit: vsgs.count > 0 ? 2 : 3).filter{$0.vessage.ts > twoDayAgo}.map({ (item) -> Vessage in
+                let vsg = item.vessage!
+                vsg.vessageId = Vessage.vgGenerateVessageId
+                return vsg
+            })
+            if msgs.count > 0 {
+                self.vessages.append(generateTipsVessage(msgs.first!.getSendTime().toLocalDateTimeSimpleString(),ts: msgs.first!.ts))
+                self.vessages.appendContentsOf(msgs)
+            }
+ 
             if vsgs.count > 0 {
-                let startVsg = generateTipsVessage(vsgs.first!.getSendTime().toLocalDateTimeSimpleString())
+                let startVsg = generateTipsVessage(vsgs.first!.getSendTime().toLocalDateTimeSimpleString(),ts: vsgs.first!.ts)
                 self.vessages.append(startVsg)
                 self.vessages.appendContentsOf(vsgs)
             }else if conversation.type == Conversation.typeSingleChat{
-                let nick = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
-                let dateString = NSDate().toLocalDateTimeSimpleString()
-                let msg = String(format: "CHAT_WITH_X_AT_D".localizedString(), nick,dateString)
-                let startVsg = generateTipsVessage(msg)
-                self.vessages.append(startVsg)
+                
+                if msgs.count == 0 {
+                    let nick = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
+                    let dateString = NSDate().toLocalDateTimeSimpleString()
+                    let msg = String(format: "CHAT_WITH_X_AT_D".localizedString(), nick,dateString)
+                    let startVsg = generateTipsVessage(msg)
+                    self.vessages.append(startVsg)
+                }
+                
             }else if conversation.type == Conversation.typeGroupChat{
                 let nick = chatGroup.groupName
                 let msg = String(format: "CHAT_WITH_GROUP_X_AT_D".localizedString(), nick)
@@ -276,13 +294,13 @@ extension ConversationViewController{
         }
     }
     
-    func generateTipsVessage(msg:String) -> Vessage {
+    func generateTipsVessage(msg:String,ts:Int64 = DateHelper.UnixTimeSpanTotalMilliseconds) -> Vessage {
         let vsg = Vessage()
         var dict = [String:String]()
         dict["msg"] = msg
-        vsg.vessageId = Vessage.vgRandomVessageId
+        vsg.vessageId = Vessage.vgGenerateVessageId
         vsg.typeId = Vessage.typeTips
-        vsg.ts = DateHelper.UnixTimeSpanTotalMilliseconds
+        vsg.ts = ts
         let json = try! NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions(rawValue: 0))
         vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
         return vsg
@@ -304,11 +322,12 @@ extension ConversationViewController{
             let vService = ServiceContainer.getVessageService()
             let fService = ServiceContainer.getFileService()
             var removedVessages = [Vessage]()
-            self.vessages.forIndexEach({ (i, element) in
-                if element.isRead{
+            for element in self.vessages{
+                if !element.isVGGenerateVessage(){
                     removedVessages.append(element)
                 }
-            })
+            }
+            
             for value in removedVessages{
                 var removed = false
                 if value.typeId == Vessage.typeFaceText || value.typeId == Vessage.typeTips{

@@ -64,11 +64,6 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
         
         override func playerPlaybackWillStartFromBeginning(player: Player) {
             super.playerPlaybackWillStartFromBeginning(player)
-            if let vsg = self.vessage{
-                if vsg.isRead == false {
-                    ServiceContainer.getVessageService().readVessage(vsg)
-                }
-            }
         }
     }
     

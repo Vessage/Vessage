@@ -100,9 +100,6 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
                         if self.vessage.vessageId == vsg.vessageId{
                             self.imageLoaded = suc
                             self.loadingIndicator.stopAnimating()
-                            if suc{
-                                ServiceContainer.getVessageService().readVessage(vsg)
-                            }
                         }
                     }
                 }

@@ -22,6 +22,7 @@ target "Vessage" do
     
     pod 'ImageSlideshow', '~> 0.6'
     
+    pod 'SDWebImage', '~>3.8'
     #pod 'KDCircularProgress'
 end
 

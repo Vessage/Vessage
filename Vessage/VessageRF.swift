@@ -10,7 +10,7 @@ import Foundation
 
 class Vessage: BahamutObject {
     static let sendingVessageId = "sendingVessageId"
-    static let vgRandomVessageId = "vgRandomVessageId"
+    static let vgGenerateVessageId = "vgGenerateVessageId"
     
     static let typeNoVessage = -2
     static let typeUnknow = -1
@@ -49,11 +49,11 @@ class Vessage: BahamutObject {
     }
     
     func isReceivedVessage() -> Bool {
-        return !isVGRandomVessage() && !isMySendingVessage()
+        return !isVGGenerateVessage() && !isMySendingVessage()
     }
     
-    func isVGRandomVessage() -> Bool {
-        return self.vessageId == Vessage.vgRandomVessageId
+    func isVGGenerateVessage() -> Bool {
+        return self.vessageId == Vessage.vgGenerateVessageId
     }
     
     func isMySendingVessage() -> Bool {

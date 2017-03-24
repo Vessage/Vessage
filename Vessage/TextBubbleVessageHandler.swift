@@ -171,7 +171,6 @@ class TextBubbleVessageHandler: NSObject,BubbleVessageHandler {
                 let bodyDict = vessage.getBodyDict()
                 let msg = bodyDict["textMessage"] as? String
                 label.text = msg
-                ServiceContainer.getVessageService().readVessage(vessage)
             })
             
         }

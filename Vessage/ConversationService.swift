@@ -46,18 +46,32 @@ extension Conversation{
     
     func getDisappearString() -> String {
         
-        let minLeft = getConversationTimeUpMinutesLeft()
-        if minLeft > 24 * 60 {
-            let daysLeft = Int(minLeft / 24 / 60)
-            let format = Conversation.typeSubscription == type ? "SUBSCRIPTION_X_DAYS_DISAPPEAR".localizedString(): "X_DAYS_DISAPPEAR".localizedString()
-            return String(format:format , daysLeft)
-        }else if minLeft > 60 {
-            let format = Conversation.typeSubscription == type ? "SUBSCRIPTION_X_HOURS_DISAPPEAR".localizedString(): "X_DAYS_DISAPPEAR".localizedString()
-            let hoursLeft = Int(minLeft / 60)
-            return String(format: format, hoursLeft)
+        if pinned {
+            if type == Conversation.typeSubscription {
+                return "SUBSCRIPTION_PINNED".localizedString()
+            }else{
+                return getLastUpdatedTime().toFriendlyString()
+            }
         }else{
-            return VessageUser.typeSubscription == type ? "SUBSCRIPTION_WILL_DISAPPEAR".localizedString() : "DISAPPEAR_IN_ONE_HOUR".localizedString()
+            let minLeft = NSNumber(double: getConversationTimeUpMinutesLeft()).integerValue
+            
+            if minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 != 0 {
+                if minLeft > 24 * 60 {
+                    let daysLeft = Int(minLeft / 24 / 60)
+                    let format = Conversation.typeSubscription == type ? "SUBSCRIPTION_X_DAYS_DISAPPEAR".localizedString(): "X_DAYS_DISAPPEAR".localizedString()
+                    return String(format:format , daysLeft)
+                }else if minLeft > 60 {
+                    let format = Conversation.typeSubscription == type ? "SUBSCRIPTION_X_HOURS_DISAPPEAR".localizedString(): "X_DAYS_DISAPPEAR".localizedString()
+                    let hoursLeft = Int(minLeft / 60)
+                    return String(format: format, hoursLeft)
+                }else{
+                    return VessageUser.typeSubscription == type ? "SUBSCRIPTION_WILL_DISAPPEAR".localizedString() : "DISAPPEAR_IN_ONE_HOUR".localizedString()
+                }
+            }else{
+                return getLastUpdatedTime().toFriendlyString()
+            }
         }
+        
     }
     
     func getLastUpdatedTime() -> NSDate {

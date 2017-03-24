@@ -233,12 +233,7 @@ class ConversationListCell:ConversationListCellBase{
                 }
             }
         }
-        let minLeft = NSNumber(double:conversation.getConversationTimeUpMinutesLeft()).integerValue
-        if conversation.type == Conversation.typeSubscription || !conversation.pinned && (minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 != 0) {
-            self.subLine = conversation.getDisappearString()
-        }else{
-            self.subLine = conversation.getLastUpdatedTime().toFriendlyString()
-        }
+        self.subLine = conversation.getDisappearString()
         self.timeupProgressView?.hidden = false
         if let p = conversation.getConversationTimeUpProgressLeft(){
             self.setTimeProgress(p)

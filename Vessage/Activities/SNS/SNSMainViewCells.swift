@@ -122,10 +122,10 @@ class SNSPostCell: UITableViewCell {
                     textContentLabel?.text = txt
                 }
                 
-                if let imgs = dict["imgs"] as? [String?] {
+                if let imgs = dict["imgs"] as? [String!] {
                     for img in imgs {
                         if !String.isNullOrWhiteSpace(img) {
-                            imgList.append(img!)
+                            imgList.append(img)
                         }
                     }
                 }
@@ -203,19 +203,9 @@ class SNSPostCell: UITableViewCell {
             for i in 0..<imgList.count {
                 let img = imgList[i]
                 let imgv = self.contentContainer.subviews[i] as! UIImageView
-                let imgl = img.lowercaseString
-                if imgl.hasPrefix("http://") || imgl.hasPrefix("https://") {
-                    imgv.image = defaultBcg
-                    imgv.sd_setImageWithURL(NSURL(string: img), completed: { (image, error, cacheType, url) in
-                        if error == nil{
-                            self.onSetedImage(imgv)
-                        }
-                    })
-                }else{
-                    ServiceContainer.getFileService().setImage(imgv, iconFileId: img,defaultImage: defaultBcg){ suc in
-                        if suc{
-                            self.onSetedImage(imgv)
-                        }
+                ServiceContainer.getFileService().setImage(imgv, iconFileId: img,defaultImage: defaultBcg){ suc in
+                    if suc{
+                        self.onSetedImage(imgv)
                     }
                 }
             }

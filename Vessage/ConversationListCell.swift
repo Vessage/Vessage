@@ -287,7 +287,11 @@ class ConversationListCell:ConversationListCellBase{
             self.defaultAvatarId = aId
         }
         self.sex = user.sex
-        self.avatar = user.avatar
+        if String.isNullOrWhiteSpace(user.avatar) && user.t == VessageUser.typeSubscription {
+            self.avatar = "subaccount_icon"
+        }else{
+            self.avatar = user.avatar
+        }
     }
     
     //MARK: notifications

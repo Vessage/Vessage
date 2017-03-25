@@ -11,6 +11,7 @@ import AddressBook
 import AddressBookUI
 import MBProgressHUD
 import EVReflection
+import SDWebImage
 
 func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mobile:String,personTitle:String)->Void) {
     let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
@@ -125,12 +126,18 @@ extension FileService
     func setImage(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
     {
         imageView.image = defaultImage
-        getImage(iconFileId: fileId) { (img) in
-            if let image = img{
-                imageView.image = image
-                callback?(suc: true)
-            }else{
-                callback?(suc: false)
+        if let imgl = fileId?.lowercaseString where imgl.hasPrefix("http://") || imgl.hasPrefix("https://") {
+            imageView.sd_setImageWithURL(NSURL(string: fileId), completed: { (image, error, cacheType, url) in
+                callback?(suc:error == nil)
+            })
+        }else{
+            getImage(iconFileId: fileId) { (img) in
+                if let image = img{
+                    imageView.image = image
+                    callback?(suc: true)
+                }else{
+                    callback?(suc: false)
+                }
             }
         }
     }

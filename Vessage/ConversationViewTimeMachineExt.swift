@@ -13,7 +13,7 @@ extension ConversationViewController{
         self.timemachineButton.addGestureRecognizer(tapTimemachineButton)
     }
     
-    func onClickVessageTimeMachineButton(sender: UITapGestureRecognizer) {
+    func onClickVessageTimeMachineButton(_ sender: UITapGestureRecognizer) {
         self.timemachineButton.animationMaxToMin(0.1, maxScale: 1.2, completion: {
             self.showVessageTimeMachineList()
         })
@@ -26,20 +26,20 @@ extension ConversationViewController{
             timeMachineListController = TimeMachineVessageListController.instanceOfController(self.conversation.chatterId, ts: ts)
         }
         let controller = timeMachineListController!
-        controller.modalPresentationStyle = .Popover
+        controller.modalPresentationStyle = .popover
         let viewFrame = self.view.bounds
-        controller.preferredContentSize = CGSizeMake(viewFrame.width * 0.6, viewFrame.height * 0.5)
+        controller.preferredContentSize = CGSize(width: viewFrame.width * 0.6, height: viewFrame.height * 0.5)
         if let ppvc = controller.popoverPresentationController{
             
             ppvc.sourceView = timeButton
-            ppvc.sourceRect = timeButton.bounds
-            ppvc.permittedArrowDirections = .Any
+            ppvc.sourceRect = (timeButton?.bounds)!
+            ppvc.permittedArrowDirections = .any
             ppvc.delegate = self
-            self.presentViewController(controller, animated: true, completion: nil)
+            self.present(controller, animated: true, completion: nil)
         }
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

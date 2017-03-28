@@ -10,22 +10,22 @@ import Foundation
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getAppService() -> AppService{
-        return ServiceContainer.getService(AppService)
+        return ServiceContainer.getService(AppService.self)
     }
 }
 
 let NotifiedFirstLuanchBuildKey = "NotifiedFirstLuanchBuildKey"
 
 //MARK: AppService
-class AppService: NSNotificationCenter,ServiceProtocol
+class AppService: NotificationCenter,ServiceProtocol
 {
-    static let intervalTimeTaskPerMinute = "intervalTimeTaskPerMinute"
+    static let intervalTimeTaskPerMinute = "intervalTimeTaskPerMinute".asNotificationName()
     
-    static let onAppResignActive = "onAppResignActive"
-    static let onAppBecomeActive = "onAppBecomeActive"
+    static let onAppResignActive = "onAppResignActive".asNotificationName()
+    static let onAppBecomeActive = "onAppBecomeActive".asNotificationName()
     
-    static let onAppEnterBackground = "onAppEnterBackground"
-    static let onAppWillEnterForeground = "onAppWillEnterForeground"
+    static let onAppEnterBackground = "onAppEnterBackground".asNotificationName()
+    static let onAppWillEnterForeground = "onAppWillEnterForeground".asNotificationName()
     
     @objc static var ServiceName:String{return "App Service"}
     
@@ -33,21 +33,21 @@ class AppService: NSNotificationCenter,ServiceProtocol
     var inviteBadge:Bool = false
     var settingBadge:Bool = false
     
-    private var intervalTaskTimer:NSTimer?
+    fileprivate var intervalTaskTimer:Timer?
     
-    @objc func appStartInit(appName: String) {
+    @objc func appStartInit(_ appName: String) {
     }
-    @objc func userLoginInit(userId:String)
+    @objc func userLoginInit(_ userId:String)
     {
         self.setServiceReady()
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         self.setServiceNotReady()
     }
     
     var appDelegate:VessageAppDelegate?{
-        return UIApplication.sharedApplication().delegate as? VessageAppDelegate
+        return UIApplication.shared.delegate as? VessageAppDelegate
     }
     
     
@@ -75,25 +75,25 @@ class AppService: NSNotificationCenter,ServiceProtocol
     }
     
     func appEnterBackground(){
-        self.postNotificationName(AppService.onAppEnterBackground, object: self)
+        self.post(name: (AppService.onAppEnterBackground), object: self)
     }
     
     func appWillEnterForeground() {
-        self.postNotificationName(AppService.onAppWillEnterForeground, object: self)
+        self.post(name: (AppService.onAppWillEnterForeground), object: self)
     }
     
     func appResignActive() {
         intervalTaskTimer?.invalidate()
         intervalTaskTimer = nil
-        self.postNotificationName(AppService.onAppResignActive, object: self)
+        self.post(name: (AppService.onAppResignActive), object: self)
     }
     
     func appBecomeActive() {
-        intervalTaskTimer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: #selector(AppService.onIntervalTimerTask(_:)), userInfo: nil, repeats: true)
-        self.postNotificationName(AppService.onAppBecomeActive, object: self)
+        intervalTaskTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(AppService.onIntervalTimerTask(_:)), userInfo: nil, repeats: true)
+        self.post(name: (AppService.onAppBecomeActive), object: self)
     }
     
     func onIntervalTimerTask(_:AnyObject?) {
-        self.postNotificationName(AppService.intervalTimeTaskPerMinute, object: self)
+        self.post(name: (AppService.intervalTimeTaskPerMinute), object: self)
     }
 }

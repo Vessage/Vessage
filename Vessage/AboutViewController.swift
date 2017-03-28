@@ -11,12 +11,12 @@ import MessageUI
 
 class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
 
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
@@ -25,36 +25,34 @@ class AboutViewController: UIViewController,MFMailComposeViewControllerDelegate{
         self.navigationItem.title = "\(VessageConfig.appName) \(VessageConfig.appVersion)"
     }
     
-    @IBAction func onClickPrivacy(sender: AnyObject) {
+    @IBAction func onClickPrivacy(_ sender: AnyObject) {
         showPrivacy()
     }
     
-    
-    
-    private func showPrivacy() {
+    fileprivate func showPrivacy() {
         SimpleBrowser.openUrl(self.navigationController!, url: VessageConfig.bahamutConfig.appPrivacyPage,title: "PRIVACY".localizedString())
     }
     
-    @IBAction func showInAppStore(sender: AnyObject)
+    @IBAction func showInAppStore(_ sender: AnyObject)
     {
-        let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.appStoreId)"
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.appStoreId!)"
+        UIApplication.shared.openURL(URL(string: url)!)
     }
 
-    @IBAction func mailToBahamutSupport(sender: AnyObject) {
+    @IBAction func mailToBahamutSupport(_ sender: AnyObject) {
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
         mail.setSubject("Vege Feedback")
         mail.setToRecipients([VessageConfig.bahamutConfig.bahamutAppEmail])
-        self.presentViewController(mail, animated: true, completion: nil)
+        self.present(mail, animated: true, completion: nil)
 
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
-    static func showAbout(currentViewController:UIViewController)
+    static func showAbout(_ currentViewController:UIViewController)
     {
         let controller = instanceFromStoryBoard()
         if let nvController = currentViewController.navigationController

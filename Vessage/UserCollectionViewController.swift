@@ -33,33 +33,33 @@ class UserCollectionViewCell: UICollectionViewCell {
 class UserCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
     
     var users = [VessageUser]()
-    private var myProfile:VessageUser!
+    fileprivate var myProfile:VessageUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        myProfile = ServiceContainer.getService(UserService).myProfile
+        myProfile = ServiceContainer.getUserService().myProfile
         collectionView?.delegate = self
         collectionView?.reloadData()
         collectionView?.allowsSelection = true
         collectionView?.allowsMultipleSelection = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ServiceContainer.getUserService().addObserver(self, selector: #selector(UserCollectionViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ServiceContainer.getUserService().removeObserver(self)
     }
     
-    func onUserProfileUpdated(a:NSNotification){
+    func onUserProfileUpdated(_ a:Notification){
         if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
             users.forIndexEach({ (i, element) in
                 if element.userId == user.userId{
                     self.users[i] = user
-                    self.collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forRow: i, inSection: 0)])
+                    self.collectionView?.reloadItems(at: [IndexPath(row: i, section: 0)])
                     return
                 }
             })
@@ -68,21 +68,21 @@ class UserCollectionViewController: UICollectionViewController,UICollectionViewD
     
     //MARK: CollectionView Delegate
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return users.count
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(UserCollectionViewCell.reuseId, forIndexPath: indexPath) as! UserCollectionViewCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCollectionViewCell.reuseId, for: indexPath) as! UserCollectionViewCell
         cell.user = users[indexPath.row]
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = users[indexPath.row]
         if myProfile.userId == user.userId {
             self.playToast("ME".localizedString())
@@ -91,11 +91,11 @@ class UserCollectionViewController: UICollectionViewController,UICollectionViewD
         ConversationViewController.showConversationViewController(self.navigationController!, userId: user.userId)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(82, 92)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 82, height: 92)
     }
     
-    static func showUserCollectionViewController(nvc:UINavigationController,users:[VessageUser]) -> UserCollectionViewController{
+    static func showUserCollectionViewController(_ nvc:UINavigationController,users:[VessageUser]) -> UserCollectionViewController{
         let controller = instanceFromStoryBoard("User", identifier: "UserCollectionViewController") as! UserCollectionViewController
         controller.users = users
         nvc.pushViewController(controller, animated: true)

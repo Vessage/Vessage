@@ -11,7 +11,7 @@ import Foundation
 //MARK: SearchResultModel
 class SearchResultModel{
     
-    enum Type {
+    enum `Type` {
         case undefine,userNormal, userActive,userNear,userActiveNear,conversation,mobile
     }
     
@@ -54,16 +54,16 @@ private let activeUserLimit = 8
 extension ConversationListController:UISearchBarDelegate
 {
     
-    private var lastMinuteSearchAccountId:NSNumber{
+    fileprivate var lastMinuteSearchAccountId:NSNumber{
         get{
-            return UserSetting.getUserNumberValue("LST_GET_ANT_ID_M") ?? NSNumber(integer:0)
+            return UserSetting.getUserNumberValue("LST_GET_ANT_ID_M") ?? NSNumber(value: 0 as Int)
         }
         set{
             return UserSetting.setUserNumberValue("LST_GET_ANT_ID_M", value: newValue)
         }
     }
     
-    private var lastMinuteSearchAccountIdCount:Int{
+    fileprivate var lastMinuteSearchAccountIdCount:Int{
         get{
             return UserSetting.getUserIntValue("LST_M_GET_ANT_ID_CNT")
         }
@@ -72,13 +72,13 @@ extension ConversationListController:UISearchBarDelegate
         }
     }
     
-    private var canSearchByAccountId:Bool{
+    fileprivate var canSearchByAccountId:Bool{
         if UserSetting.godMode {
             //return true
         }
         
-        let now = NSDate().totalMinutesSince1970
-        if now.integerValue > lastMinuteSearchAccountId.integerValue{
+        let now = Date().totalMinutesSince1970
+        if now.intValue > lastMinuteSearchAccountId.intValue{
             lastMinuteSearchAccountId = now
             lastMinuteSearchAccountIdCount = 0
             return true
@@ -88,19 +88,19 @@ extension ConversationListController:UISearchBarDelegate
     }
     
     //MARK: search bar delegate
-    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text.hasEnd("\n") {
             if let accoundId = searchBar.text{
-                if accoundId.isBahamutAccount() ?? false{
+                if accoundId.isBahamutAccount() {
                     if nil == userService.getCachedUserByAccountId(accoundId){
                         if canSearchByAccountId {
                             let hud = self.showAnimationHud()
                             userService.getUserProfileByAccountId(accoundId, updatedCallback: { (user) in
-                                hud.hideAnimated(true)
+                                hud.hide(animated: true)
                                 if let u = user{
                                     self.lastMinuteSearchAccountIdCount += 1
                                     let model = SearchResultModel(keyword: accoundId,user: u)
-                                    self.searchResult.insert(model, atIndex: 0)
+                                    self.searchResult.insert(model, at: 0)
                                 }
                             })
                         }else{
@@ -114,7 +114,7 @@ extension ConversationListController:UISearchBarDelegate
         return true
     }
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchResult.removeAll()
         
         var nearActiveUsers = [VessageUser]()
@@ -145,31 +145,31 @@ extension ConversationListController:UISearchBarDelegate
         let naus = nearActiveUsers.map({ (resultUser) -> SearchResultModel in
             return SearchResultModel(keyword: resultUser.accountId,user:resultUser,userType: .userActiveNear)
         })
-        usersModel.appendContentsOf(naus)
+        usersModel.append(contentsOf: naus)
         
         let nus = nearUsers.map({ (resultUser) -> SearchResultModel in
             return SearchResultModel(keyword: resultUser.accountId,user:resultUser,userType: .userNear)
         })
-        usersModel.appendContentsOf(nus)
+        usersModel.append(contentsOf: nus)
         
         let aus = activeUsers.map({ (resultUser) -> SearchResultModel in
             return SearchResultModel(keyword: resultUser.accountId,user:resultUser,userType: .userActive)
         })
-        usersModel.appendContentsOf(aus)
-        searchResult.appendContentsOf(usersModel)
+        usersModel.append(contentsOf: aus)
+        searchResult.append(contentsOf: usersModel)
         
         isSearching = true
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        dispatch_async(dispatch_get_main_queue()) {             
-            if let cancelButton = searchBar.valueForKey("cancelButton") as? UIButton{
-                cancelButton.enabled = true
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        DispatchQueue.main.async {             
+            if let cancelButton = searchBar.value(forKey: "cancelButton") as? UIButton{
+                cancelButton.isEnabled = true
             }
         }
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if GodModeManager.checkGodCode(self, code: searchText) {
             isSearching = false
@@ -182,7 +182,7 @@ extension ConversationListController:UISearchBarDelegate
             let res = conversations.map({ (c) -> SearchResultModel in
                 return SearchResultModel(keyword: searchText,conversation: c)
             })
-            searchResult.appendContentsOf(res)
+            searchResult.append(contentsOf: res)
             let existsUsers = conversations.map({ (c) -> VessageUser in
                 let u = VessageUser()
                 u.userId = c.chatterId
@@ -199,15 +199,15 @@ extension ConversationListController:UISearchBarDelegate
                 
                 let results = resultUsers.filter({ (resultUser) -> Bool in
                     
-                    return !existsUsers.contains({ (eu) -> Bool in
+                    return !existsUsers.contains(where: { (eu) -> Bool in
                         return VessageUser.isTheSameUser(resultUser, userb: eu)
                     })
                 }).map({ (resultUser) -> SearchResultModel in
                     return SearchResultModel(keyword: searchText,user: resultUser)
                 })
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.searchResult.appendContentsOf(results)
+                DispatchQueue.main.async(execute: {
+                    self.searchResult.append(contentsOf: results)
                     if self.searchResult.count == 0 && searchText.isMobileNumber(){
                         let model = SearchResultModel(keyword: searchText,mobile: searchText)
                         self.searchResult.append(model)
@@ -217,7 +217,7 @@ extension ConversationListController:UISearchBarDelegate
         }
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
     }
 }

@@ -18,22 +18,22 @@ class SNSMainViewController: UIViewController {
     let postPageCount = 20
     
     //MARK: Share Outter Source Content
-    private(set) var newImageIdFromOutterSource:String?
-    private(set) var newImageFromOutterSource:UIImage?
-    private(set) var newImageOutterSourceName:String?
-    private(set) var postNewImageDelegate:SNSPostNewImageDelegate?
+    fileprivate(set) var newImageIdFromOutterSource:String?
+    fileprivate(set) var newImageFromOutterSource:UIImage?
+    fileprivate(set) var newImageOutterSourceName:String?
+    fileprivate(set) var postNewImageDelegate:SNSPostNewImageDelegate?
     
     //MARK: Specific User's SNS Posts
     var isUserPageMode:Bool{
         return String.isNullOrWhiteSpace(specificUserId) == false
     }
     
-    private(set) var specificUserId:String?
-    private(set) var specificUserNick:String?
+    fileprivate(set) var specificUserId:String?
+    fileprivate(set) var specificUserNick:String?
     
     let userService = ServiceContainer.getUserService()
     
-    private var originBottomViewHeightConstant:CGFloat!
+    fileprivate var originBottomViewHeightConstant:CGFloat!
     @IBOutlet weak var bottomViewHeight: NSLayoutConstraint!{
         didSet{
             if originBottomViewHeightConstant == nil {
@@ -44,7 +44,7 @@ class SNSMainViewController: UIViewController {
     
     var bottomViewsHidden = false{
         didSet{
-            homeButton?.superview?.superview?.superview?.hidden = bottomViewsHidden
+            homeButton?.superview?.superview?.superview?.isHidden = bottomViewsHidden
             bottomViewHeight?.constant = bottomViewsHidden ? 0 : originBottomViewHeightConstant
         }
     }
@@ -58,15 +58,15 @@ class SNSMainViewController: UIViewController {
         }
     }
     
-    private var postingAnimationImageView:UIImageView!
+    fileprivate var postingAnimationImageView:UIImageView!
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
-    private var posts:[[[SNSPost]]] = [[[SNSPost]](),[[SNSPost]](),[[SNSPost]]()]
+    fileprivate var posts:[[[SNSPost]]] = [[[SNSPost]](),[[SNSPost]](),[[SNSPost]]()]
     
-    private var posting = [SNSPost](){
+    fileprivate var posting = [SNSPost](){
         didSet{
             if posting.count > 0 {
-                postingIndicator?.hidden = false
+                postingIndicator?.isHidden = false
                 postingIndicator?.startAnimating()
             }else{
                 postingIndicator?.stopAnimating()
@@ -74,24 +74,24 @@ class SNSMainViewController: UIViewController {
         }
     }
     
-    private var listTableViewOffset = [CGPointZero,CGPointZero,CGPointZero]
+    fileprivate var listTableViewOffset = [CGPoint.zero,CGPoint.zero,CGPoint.zero]
     
-    private var listType:Int = 0{
+    fileprivate var listType:Int = 0{
         didSet{
             if listType != oldValue {
                 tableView?.mj_footer?.resetNoMoreData()
                 listTableViewOffset[oldValue] = tableView.contentOffset
                 tableView?.setContentOffset(listTableViewOffset[listType], animated: false)
-                dispatch_main_queue_after(100, handler: { 
+                DispatchQueue.main.afterMS(100, handler: { 
                     self.tableView?.reloadData()
                 })
             }
         }
     }
     
-    private var boardData:SNSMainBoardData!
+    fileprivate var boardData:SNSMainBoardData!
     
-    private var showControllerTimes:Int{
+    fileprivate var showControllerTimes:Int{
         get{
             return UserSetting.getUserIntValue("ShowSNSMainView")
         }
@@ -100,11 +100,11 @@ class SNSMainViewController: UIViewController {
         }
     }
     
-    private var tipsLabel:FlashTipsLabel = {
+    fileprivate var tipsLabel:FlashTipsLabel = {
         return FlashTipsLabel()
     }()
     
-    @IBAction func tellFriends(sender: AnyObject) {
+    @IBAction func tellFriends(_ sender: AnyObject) {
         self.shareSNS()
     }
     
@@ -121,13 +121,13 @@ extension SNSMainViewController{
         SNSPostManager.instance.initManager()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.hidden = true
+        tableView.isHidden = true
         tableView.autoRowHeight()
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjHeaderRefresh(_:)))
         tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSMainViewController.mjFooterRefresh(_:)))
-        tableView?.mj_footer.automaticallyHidden = true
+        tableView?.mj_footer.isAutomaticallyHidden = true
         bottomViewsHidden = true
         
         newPostButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(SNSMainViewController.onLongPressNewPost(_:))))
@@ -135,17 +135,17 @@ extension SNSMainViewController{
         MobClick.event("SNS_Login")
     }
     
-    func mjFooterRefresh(a:AnyObject?) {
+    func mjFooterRefresh(_ a:AnyObject?) {
         refreshPosts()
     }
     
-    func mjHeaderRefresh(a:AnyObject?) {
+    func mjHeaderRefresh(_ a:AnyObject?) {
         tableView?.mj_header?.endRefreshing()
         self.posts[listType].removeAll()
         self.refreshPosts()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         start()
@@ -155,27 +155,28 @@ extension SNSMainViewController{
 //MARK: actions
 extension SNSMainViewController{
     
-    func updatePostState(postId:String,newState:Int) {
+    func updatePostState(_ postId:String,newState:Int) {
         let typeList = self.posts[listType]
         var i = 0
         for psts in typeList {
-            if let index = (psts.indexOf{$0.pid == postId}){
+            if let index = (psts.index{$0.pid == postId}){
                 self.posts[listType][i][index].st = newState
                 let tableViewSection = i + 1
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: tableViewSection)], withRowAnimation: .None)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: tableViewSection)], with: .none)
             }
             i += 1
         }
     }
     
-    func removePost(postId:String) ->Bool {
+    @discardableResult
+    func removePost(_ postId:String) ->Bool {
         let typeList = self.posts[listType]
         var i = 0
         for psts in typeList {
-            if let index = (psts.indexOf{$0.pid == postId}){
-                self.posts[listType][i].removeAtIndex(index)
+            if let index = (psts.index{$0.pid == postId}){
+                self.posts[listType][i].remove(at: index)
                 let tableViewSection = i + 1
-                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: tableViewSection)], withRowAnimation: .Automatic)
+                self.tableView.deleteRows(at: [IndexPath(row: index, section: tableViewSection)], with: .automatic)
                 return true
             }
             i += 1
@@ -183,18 +184,18 @@ extension SNSMainViewController{
         return false
     }
     
-    private func shareSNS() {
+    fileprivate func shareSNS() {
         ShareHelper.instance.showTellVegeToFriendsAlert(self, message: "SHARE_SNS_MSG".SNSString, alertMsg: "SHARE_SNS_ALERT_MSG".SNSString, title: "SNS".SNSString,copyLink: true)
     }
     
-    @IBAction func onHomeButtonClick(sender: AnyObject) {
+    @IBAction func onHomeButtonClick(_ sender: AnyObject) {
         switchListType(SNSPost.typeNormalPost)
     }
     
-    @IBAction func onClickNewPostButton(sender: AnyObject) {
+    @IBAction func onClickNewPostButton(_ sender: AnyObject) {
         let v = sender as! UIView
         
-        let text = UIAlertAction(title:"POST_ONLY_TEXT".SNSString, style: .Default) { _ in
+        let text = UIAlertAction(title:"POST_ONLY_TEXT".SNSString, style: .default) { _ in
             self.showNewTextPost()
         }
         
@@ -204,41 +205,41 @@ extension SNSMainViewController{
         }
     }
     
-    func onLongPressNewPost(ges:UILongPressGestureRecognizer) {
-        if ges.state == .Began {
+    func onLongPressNewPost(_ ges:UILongPressGestureRecognizer) {
+        if ges.state == .began {
             showNewTextPost()
         }
     }
     
-    private func showNewTextPost() {
+    fileprivate func showNewTextPost() {
         let model = generateTimEditorModel(nil)
         TIMImageTextContentEditorController.showEditor(self.navigationController!, model: model, delegate: self)
     }
     
-    @IBAction func onMyPostButtonClick(sender: AnyObject) {
+    @IBAction func onMyPostButtonClick(_ sender: AnyObject) {
         self.switchListType(SNSPost.typeMyPost)
     }
     
-    func playPostingIndicatorAnimation(img:UIImage?) {
+    func playPostingIndicatorAnimation(_ img:UIImage?) {
         if img == nil {
             return
         }
         if nil == postingAnimationImageView {
             self.postingAnimationImageView = UIImageView()
-            self.postingAnimationImageView.contentMode = .ScaleAspectFill
+            self.postingAnimationImageView.contentMode = .scaleAspectFill
         }
         let width = self.view.frame.width - 20
         let height = width
         let y = (self.view.frame.height - height) / 2
-        let frame = CGRectMake(0 - width, y, width, height)
+        let frame = CGRect(x: 0 - width, y: y, width: width, height: height)
         self.postingAnimationImageView.frame = frame
         self.postingAnimationImageView.image = img
         self.view.addSubview(postingAnimationImageView)
         
         let animation = CABasicAnimation(keyPath: "position")
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
-        animation.fromValue = NSValue(CGPoint: CGPointMake(self.view.frame.width / 2, self.view.frame.height / 2))
-        animation.toValue = NSValue(CGPoint: CGPointMake(0 + 36, self.view.frame.height - 24))
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: 0 + 36, y: self.view.frame.height - 24))
         animation.duration = 0.6
         
         let animation2 = CABasicAnimation(keyPath: "transform.scale")
@@ -246,14 +247,14 @@ extension SNSMainViewController{
         animation2.toValue = CGFloat(0.01)
         animation2.duration = 0.6
         animation2.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        postingAnimationImageView.layer.addAnimation(animation2, forKey: "postingScale")
-        self.postingAnimationImageView.hidden = false
-        self.postingAnimationImageView?.superview?.bringSubviewToFront(self.postingAnimationImageView)
+        postingAnimationImageView.layer.add(animation2, forKey: "postingScale")
+        self.postingAnimationImageView.isHidden = false
+        self.postingAnimationImageView?.superview?.bringSubview(toFront: self.postingAnimationImageView)
         UIAnimationHelper.playAnimation(self.postingAnimationImageView, animation: animation, key: "movePostingImg") {
-            self.postingAnimationImageView?.frame.size = CGSizeZero
-            self.postingAnimationImageView?.superview?.sendSubviewToBack(self.postingAnimationImageView)
+            self.postingAnimationImageView?.frame.size = CGSize.zero
+            self.postingAnimationImageView?.superview?.sendSubview(toBack: self.postingAnimationImageView)
             self.postingAnimationImageView?.image = nil
-            self.postingAnimationImageView?.hidden = true
+            self.postingAnimationImageView?.isHidden = true
             self.postingAnimationImageView?.removeFromSuperview()
         }
     }
@@ -261,30 +262,30 @@ extension SNSMainViewController{
 
 extension SNSMainViewController{
     
-    private func showViews(){
-        self.tableView.hidden = false
+    fileprivate func showViews(){
+        self.tableView.isHidden = false
         bottomViewsHidden = false
     }
     
-    private func showNewerAlert(){
-        let ok = UIAlertAction(title: "NEWER_ALERT_YES".SNSString, style: .Default) { (ac) in
+    fileprivate func showNewerAlert(){
+        let ok = UIAlertAction(title: "NEWER_ALERT_YES".SNSString, style: .default) { (ac) in
             self.onClickNewPostButton(self.newPostButton)
         }
         
-        let cancel = UIAlertAction(title: "NEWER_ALERT_NO".SNSString, style: .Default) { (ac) in
+        let cancel = UIAlertAction(title: "NEWER_ALERT_NO".SNSString, style: .default) { (ac) in
             
         }
         
         self.showAlert("NEWER_ALERT_TITLE".SNSString, msg: "NEWER_ALERT_MSG".SNSString, actions: [cancel,ok])
     }
     
-    private func refreshPosts() {
+    fileprivate func refreshPosts() {
         let lastPost = posts[listType].last?.last
-        let ts = lastPost?.ts ?? Int64(NSDate().timeIntervalSince1970 * 1000)
+        let ts = lastPost?.ts ?? Int64(Date().timeIntervalSince1970 * 1000)
         let hud:MBProgressHUD? = lastPost == nil ? self.showActivityHud() : nil
         if listType == SNSPost.typeNormalPost && lastPost == nil{
             SNSPostManager.instance.getMainBoardData(postPageCount,callback: { (data) in
-                hud?.hideAnimated(true)
+                hud?.hide(animated: true)
                 if let d = data{
                     self.boardData = d
                     ServiceContainer.getActivityService().clearActivityAllBadge(SNSPostManager.activityId)
@@ -311,7 +312,7 @@ extension SNSMainViewController{
             })
         }else{
             SNSPostManager.instance.getSNSPosts(listType,startTimeSpan: ts, pageCount: postPageCount,specificUserId: specificUserId, callback: { (posts) in
-                hud?.hideAnimated(true)
+                hud?.hide(animated: true)
                 if posts.count > 0{
                     self.posts[self.listType].append(posts)
                 }else{
@@ -323,7 +324,7 @@ extension SNSMainViewController{
         }
     }
     
-    private func setMJFooter(){
+    fileprivate func setMJFooter(){
         if let cnt = posts[listType].last?.count{
             if cnt > 0 && cnt < postPageCount {
                 self.tableView?.mj_footer?.endRefreshingWithNoMoreData()
@@ -333,14 +334,14 @@ extension SNSMainViewController{
         }
     }
     
-    func switchListType(type:Int) {
+    func switchListType(_ type:Int) {
         if isUserPageMode {
             self.title = specificUserNick ?? "UNKNOW_NAME".localizedString()
         }else{
             self.title = type == SNSPost.typeMyPost ? "MY_SNS_POST_WALL".SNSString : "SNS".SNSString
         }
-        homeButton?.enabled = type != SNSPost.typeNormalPost
-        myPostsButton?.enabled = type != SNSPost.typeMyPost
+        homeButton?.isEnabled = type != SNSPost.typeNormalPost
+        myPostsButton?.isEnabled = type != SNSPost.typeMyPost
         self.listType = type
         if posts[listType].count == 0 {
             refreshPosts()
@@ -350,10 +351,10 @@ extension SNSMainViewController{
 
 extension SNSMainViewController{
     
-    private func start(){
+    fileprivate func start(){
         if isUserPageMode {
             self.switchListType(SNSPost.typeSingleUserPost)
-            self.tableView.hidden = false
+            self.tableView.isHidden = false
             self.bottomViewsHidden = true
         }else{
             self.switchListType(self.listType)
@@ -362,7 +363,7 @@ extension SNSMainViewController{
         
     }
     
-    private func tryShowShareAlert(){
+    fileprivate func tryShowShareAlert(){
         showControllerTimes += 1
         let sct = showControllerTimes
         if sct == 3 || sct == 9 || sct == 23 || sct == 42 || sct == 60 {
@@ -373,37 +374,37 @@ extension SNSMainViewController{
 }
 
 extension SNSMainViewController{
-    private func flashTipsLabel(msg:String){
+    fileprivate func flashTipsLabel(_ msg:String){
         let x = self.view.frame.width / 2
         let y = self.tableView.frame.origin.y + self.tableView.frame.height - 32
-        let center = CGPointMake(x, y)
+        let center = CGPoint(x: x, y: y)
         tipsLabel.flashTips(self.view, msg: msg, center: center)
     }
 }
 
 //MARK: UITableViewDelegate
 extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return posts[listType].count + 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return isUserPageMode ? 0 : 1
         }
         return posts[listType][section - 1].count
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 0 {
             return isUserPageMode ? 0 : 10
         }
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(SNSMainInfoCell.reuseId, forIndexPath: indexPath) as! SNSMainInfoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: SNSMainInfoCell.reuseId, for: indexPath) as! SNSMainInfoCell
             cell.newLikesLabel.text = "+\(self.boardData?.nlks.friendString ?? "0")"
             cell.newCmtLabel.text = "+\(self.boardData?.ncmt.friendString ?? "0")"
             cell.delegate = self
@@ -411,12 +412,12 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
             case SNSPost.typeMyPost:
                 cell.announcementLabel.text = "MY_SNS_POST_WALL_ANC".SNSString
             default:
-                let format = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_SNS_ANC".SNSString : self.boardData!.annc
+                let format = String.isNullOrWhiteSpace(self.boardData?.annc) ? "DEFAULT_SNS_ANC".SNSString : self.boardData!.annc!
                 cell.announcementLabel.text = String(format: format, userService.myProfile.nickName)
             }
             return cell
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(SNSPostCell.reuseId, forIndexPath: indexPath) as! SNSPostCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SNSPostCell.reuseId, for: indexPath) as! SNSPostCell
         if let p = postOfIndexPath(indexPath) {
             cell.setSeparatorFullWidth()
             cell.rootController = self
@@ -426,23 +427,23 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.layoutSubviews()
         if let c = cell as? SNSPostCell {
             c.updateImage()
         }
     }
     
-    func postOfIndexPath(indexPath:NSIndexPath) -> SNSPost? {
+    func postOfIndexPath(_ indexPath:IndexPath) -> SNSPost? {
         if posts[listType].count >= indexPath.section && posts[listType][indexPath.section - 1].count > indexPath.row{
             return posts[listType][indexPath.section - 1][indexPath.row]
         }
         return nil
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SNSPostCell{
-            cell.selected = false
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? SNSPostCell{
+            cell.isSelected = false
             if indexPath.section != 0 {
                 if let post = postOfIndexPath(indexPath){
                     SNSPostCommentViewController.showPostCommentViewController(self.navigationController!, post: post).delegate = cell
@@ -455,7 +456,7 @@ extension SNSMainViewController:UITableViewDelegate,UITableViewDataSource{
 //MARK: SNSMainInfoCellDelegate
 extension SNSMainViewController:SNSMainInfoCellDelegate{
 
-    func snsMainInfoCellDidClickNewLikes(sender:UIView,cell:SNSMainInfoCell) {
+    func snsMainInfoCellDidClickNewLikes(_ sender:UIView,cell:SNSMainInfoCell) {
         cell.likeImageView.animationMaxToMin(0.1, maxScale: 1.2) {
             if let cnt = self.boardData?.nlks{
                 self.boardData?.nlks = 0
@@ -467,7 +468,7 @@ extension SNSMainViewController:SNSMainInfoCellDelegate{
         }
     }
     
-    func snsMainInfoCellDidClickNewComment(sender:UIView,cell:SNSMainInfoCell) {
+    func snsMainInfoCellDidClickNewComment(_ sender:UIView,cell:SNSMainInfoCell) {
         cell.newCommentImageView.animationMaxToMin(0.1, maxScale: 1.2) {
             if let cnt = self.boardData?.ncmt{
                 self.boardData?.ncmt = 0
@@ -482,7 +483,7 @@ extension SNSMainViewController:SNSMainInfoCellDelegate{
 
 //MARK: TIMImageTextContentEditorControllerDelegate
 extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
-    private func generateTimEditorModel(image:UIImage?,imageId:String? = nil) -> TIMImageTextContentEditorModel{
+    fileprivate func generateTimEditorModel(_ image:UIImage?,imageId:String? = nil) -> TIMImageTextContentEditorModel{
         let model = TIMImageTextContentEditorModel()
         model.image = image
         if image == nil && String.isNullOrWhiteSpace(imageId) {
@@ -506,7 +507,7 @@ extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
         return model
     }
     
-    func imageTextContentEditor(sender: TIMImageTextContentEditorController, newTextContent: String?, model: TIMImageTextContentEditorModel?) {
+    func imageTextContentEditor(_ sender: TIMImageTextContentEditorController, newTextContent: String?, model: TIMImageTextContentEditorModel?) {
         
         var postState = SNSPost.stateNormal
         
@@ -539,7 +540,7 @@ extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
                 tmpPost.img = imageId
             }
             
-            self.posting.insert(tmpPost, atIndex: 0)
+            self.posting.insert(tmpPost, at: 0)
             self.pushNewPost(tmpPost)
         }
     }
@@ -547,8 +548,8 @@ extension SNSMainViewController:TIMImageTextContentEditorControllerDelegate{
 
 //MARK: UIImagePickerControllerDelegate
 extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDelegate{
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
-        picker.dismissViewControllerAnimated(true) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?){
+        picker.dismiss(animated: true) {
             if min(image.size.width, image.size.height) > 600{
                 let imageForSend = image.size.width < image.size.height ? image.scaleToWidthOf(600) : image.scaleToHeightOf(600)
                 let model = self.generateTimEditorModel(imageForSend)
@@ -560,29 +561,29 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
-    private func sendNewPost(imageForSend:UIImage,post:SNSPost) {
-        let fService = ServiceContainer.getService(FileService)
+    fileprivate func sendNewPost(_ imageForSend:UIImage,post:SNSPost) {
+        let fService = ServiceContainer.getFileService()
         if let imageData = UIImageJPEGRepresentation(imageForSend,0.8){
-            debugPrint("ImageSize:\(imageData.length / 1024)KB")
-            let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.Image)
+            debugPrint("ImageSize:\(imageData.count / 1024)KB")
+            let localPath = PersistentManager.sharedInstance.createTmpFileName(FileType.image)
             
             if PersistentFileHelper.storeFile(imageData, filePath: localPath)
             {
                 let hud = self.showActivityHud()
-                fService.sendFileToAliOSS(localPath, type: FileType.Image, callback: { (taskId, fileKey) -> Void in
-                    hud.hideAnimated(true)
+                fService.sendFileToAliOSS(localPath, type: FileType.image, callback: { (taskId, fileKey) -> Void in
+                    hud.hide(animated: true)
                     ProgressTaskWatcher.sharedInstance.addTaskObserver(taskId, delegate: self)
                     if let fk = fileKey
                     {
                         post.img = fk.fileId
                         post.pid = taskId
                         
-                        self.posting.insert(post, atIndex: 0)
-                        dispatch_async(dispatch_get_main_queue(), {
+                        self.posting.insert(post, at: 0)
+                        DispatchQueue.main.async(execute: {
                             self.playPostingIndicatorAnimation(imageForSend)
                         })
                     }else{
@@ -598,15 +599,15 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         }
     }
     
-    func pushNewPost(tmpPost:SNSPost) {
+    func pushNewPost(_ tmpPost:SNSPost) {
         SNSPostManager.instance.newPost(tmpPost.img,body: tmpPost.body,state: tmpPost.st,autoPrivate: tmpPost.atpv, callback: { (post) in
             if let p = post{
                 self.playCheckMark(){
                     self.posting.removeElement{$0.pid == tmpPost.pid}
-                    self.posts[SNSPost.typeNormalPost].insert([p], atIndex: 0)
+                    self.posts[SNSPost.typeNormalPost].insert([p], at: 0)
                     if self.listType == SNSPost.typeNormalPost{
-                        self.tableView.insertSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
-                        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1), atScrollPosition: .Bottom, animated: true)
+                        self.tableView.insertSections(IndexSet(integer: 1), with: .automatic)
+                        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
                     }
                     self.postNewImageDelegate?.snsMainViewController(self, onImagePosted:post?.img ?? tmpPost.img)
                 }
@@ -616,13 +617,13 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
         })
     }
     
-    func taskCompleted(taskIdentifier: String, result: AnyObject!) {
+    func taskCompleted(_ taskIdentifier: String, result: Any!) {
         if let tmpPost = (posting.filter{$0.pid == taskIdentifier}).first{
             pushNewPost(tmpPost)
         }
     }
     
-    func taskFailed(taskIdentifier: String, result: AnyObject!) {
+    func taskFailed(_ taskIdentifier: String, result: Any!) {
         self.posting.removeElement{$0.pid == taskIdentifier}
         self.playCrossMark("POST_NEW_ERROR".localizedString())
     }
@@ -630,12 +631,12 @@ extension SNSMainViewController:UIImagePickerControllerDelegate,ProgressTaskDele
 
 //MARK: Post New Image From Outter Source
 protocol SNSPostNewImageDelegate {
-    func snsMainViewController(sender:SNSMainViewController, onImagePosted imageId:String!)
+    func snsMainViewController(_ sender:SNSMainViewController, onImagePosted imageId:String!)
 }
 
 extension SNSMainViewController{
     
-    private func clearOutterNewImage(){
+    fileprivate func clearOutterNewImage(){
         newImageIdFromOutterSource = nil
         newImageFromOutterSource = nil
         newImageOutterSourceName = nil
@@ -662,11 +663,12 @@ extension SNSMainViewController{
         return true
     }
     
-    static private func instanceFromStoryBoard() -> SNSMainViewController{
+    static fileprivate func instanceFromStoryBoard() -> SNSMainViewController{
         return instanceFromStoryBoard("SNS", identifier: "SNSMainViewController") as! SNSMainViewController
     }
     
-    static func showUserSNSPostViewController(nvc:UINavigationController,userId:String,nick:String) -> SNSMainViewController{
+    @discardableResult
+    static func showUserSNSPostViewController(_ nvc:UINavigationController,userId:String,nick:String) -> SNSMainViewController{
         let controller = instanceFromStoryBoard()
         controller.specificUserId = userId
         controller.specificUserNick = nick
@@ -674,7 +676,8 @@ extension SNSMainViewController{
         return controller
     }
     
-    static func showSNSMainViewControllerWithNewPostImage(nvc:UINavigationController,imageId:String? = nil,image:UIImage? = nil,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController {
+    @discardableResult
+    static func showSNSMainViewControllerWithNewPostImage(_ nvc:UINavigationController,imageId:String? = nil,image:UIImage? = nil,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController {
         let controller = instanceFromStoryBoard()
         controller.newImageIdFromOutterSource = imageId
         controller.newImageFromOutterSource = image
@@ -682,7 +685,8 @@ extension SNSMainViewController{
         
     }
     
-    private static func showSNSMainViewController(nvc:UINavigationController,controller:SNSMainViewController,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController{
+    @discardableResult
+    fileprivate static func showSNSMainViewController(_ nvc:UINavigationController,controller:SNSMainViewController,sourceName:String,delegate:SNSPostNewImageDelegate?) -> SNSMainViewController{
         controller.newImageOutterSourceName = sourceName
         controller.postNewImageDelegate = delegate
         nvc.pushViewController(controller, animated: true)

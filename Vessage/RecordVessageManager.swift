@@ -13,18 +13,18 @@ import MBProgressHUD
 class RecordVessageManager : RecordVessageVideoControllerProxyBase {
     
     //MARK: Properties
-    private var camera:VessageCamera!
-    private var recordingTimer:NSTimer!
-    private var userClickSend = false
-    private var recording = false{
+    fileprivate var camera:VessageCamera!
+    fileprivate var recordingTimer:Timer!
+    fileprivate var userClickSend = false
+    fileprivate var recording = false{
         didSet{
             updateRecordingProgress()
-            previewRectView?.hidden = !recording
-            recordingFlashView?.hidden = !recording
+            previewRectView?.isHidden = !recording
+            recordingFlashView?.isHidden = !recording
         }
     }
-    private let maxRecordTime:CGFloat = 16
-    private var recordingTime:CGFloat = 0{
+    fileprivate let maxRecordTime:CGFloat = 16
+    fileprivate var recordingTime:CGFloat = 0{
         didSet{
             if recordingProgress != nil{
                 updateRecordingProgress()
@@ -35,7 +35,7 @@ class RecordVessageManager : RecordVessageVideoControllerProxyBase {
             }
         }
     }
-    private var groupAvatarManager:GroupChatAvatarManager!
+    fileprivate var groupAvatarManager:GroupChatAvatarManager!
 }
 
 //MARK: Manager Life Circle
@@ -46,9 +46,9 @@ extension RecordVessageManager{
         groupAvatarManager.refreshFaces()
     }
     
-    override func initManager(controller: RecordVessageVideoController) {
+    override func initManager(_ controller: RecordVessageVideoController) {
         super.initManager(controller)
-        self.recordingTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
+        self.recordingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(RecordVessageManager.recordingFlashing(_:)), userInfo: nil, repeats: true)
         initCamera()
         groupAvatarManager = GroupChatAvatarManager()
         groupAvatarManager.initManager(self.groupFaceImageViewContainer)
@@ -59,10 +59,10 @@ extension RecordVessageManager{
         self.rootController.cancelRecordButton.addGestureRecognizer(tapCancel)
     }
     
-    private func initCamera(){
+    fileprivate func initCamera(){
         camera = VessageCamera()
         camera.delegate = self
-        self.previewRectView.hidden = true
+        self.previewRectView.isHidden = true
         camera.initCamera(rootController,previewView: self.previewRectView)
     }
     
@@ -80,10 +80,10 @@ extension RecordVessageManager{
 //MARK: Chat Backgroud
 
 class GroupChatAvatarManager:NSObject {
-    private var avatarImageGroup = [UIImageView(),UIImageView(),UIImageView(),UIImageView(),UIImageView()]
-    weak private var container:UIView!
+    fileprivate var avatarImageGroup = [UIImageView(),UIImageView(),UIImageView(),UIImageView(),UIImageView()]
+    weak fileprivate var container:UIView!
     var userFaceIds = [String:String?]()
-    func initManager(faceViewsContainer:UIView) {
+    func initManager(_ faceViewsContainer:UIView) {
         ServiceContainer.getUserService().addObserver(self, selector: #selector(GroupChatAvatarManager.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         self.container = faceViewsContainer
     }
@@ -95,14 +95,14 @@ class GroupChatAvatarManager:NSObject {
     }
     
     func hideContainer() {
-        self.container?.hidden = true
+        self.container?.isHidden = true
     }
     
     func showContainer() {
-        self.container?.hidden = false
+        self.container?.isHidden = false
     }
     
-    func onUserProfileUpdated(a:NSNotification) {
+    func onUserProfileUpdated(_ a:Notification) {
         if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
             if userFaceIds.keys.contains(user.userId) {
                 userFaceIds.updateValue(user.mainChatImage, forKey: user.userId)
@@ -111,7 +111,7 @@ class GroupChatAvatarManager:NSObject {
         }
     }
     
-    private func prepareImageView(count:Int){
+    fileprivate func prepareImageView(_ count:Int){
         avatarImageGroup.forEach{
             $0.removeFromSuperview()
             $0.layer.cornerRadius = 0
@@ -126,7 +126,7 @@ class GroupChatAvatarManager:NSObject {
         renderImageViews()
     }
     
-    private func renderImageViews(){
+    fileprivate func renderImageViews(){
         let count = self.userFaceIds.count
         if count == 1 {
             avatarImageGroup[0].frame = self.container.bounds
@@ -135,7 +135,7 @@ class GroupChatAvatarManager:NSObject {
         
         var containerFrame = self.container.bounds
         if count > 1 {
-            containerFrame = CGRectMake(containerFrame.origin.x, containerFrame.origin.y, containerFrame.width, containerFrame.height - 80)
+            containerFrame = CGRect(x: containerFrame.origin.x, y: containerFrame.origin.y, width: containerFrame.width, height: containerFrame.height - 80)
         }
         var width = containerFrame.width / 2
         var height = containerFrame.height / 2
@@ -148,43 +148,43 @@ class GroupChatAvatarManager:NSObject {
                 height = min(width,containerFrame.height)
             }
             diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(0, 0 , diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(containerFrame.width - diam, containerFrame.height - diam , diam, diam)
+            avatarImageGroup[0].frame = CGRect(x: 0, y: 0 , width: diam, height: diam)
+            avatarImageGroup[1].frame = CGRect(x: containerFrame.width - diam, y: containerFrame.height - diam , width: diam, height: diam)
         }else if count == 3{
             diam = min(width, height)
             
-            avatarImageGroup[0].frame = CGRectMake(width - diam, height - diam , diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(width, height - diam , diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(width - diam / 2, height , diam, diam)
+            avatarImageGroup[0].frame = CGRect(x: width - diam, y: height - diam , width: diam, height: diam)
+            avatarImageGroup[1].frame = CGRect(x: width, y: height - diam , width: diam, height: diam)
+            avatarImageGroup[2].frame = CGRect(x: width - diam / 2, y: height , width: diam, height: diam)
         }else if count == 4{
             let diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(width - diam, height - diam , diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(width, height - diam , diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(width - diam, height , diam, diam)
-            avatarImageGroup[3].frame = CGRectMake(width, height , diam, diam)
+            avatarImageGroup[0].frame = CGRect(x: width - diam, y: height - diam , width: diam, height: diam)
+            avatarImageGroup[1].frame = CGRect(x: width, y: height - diam , width: diam, height: diam)
+            avatarImageGroup[2].frame = CGRect(x: width - diam, y: height , width: diam, height: diam)
+            avatarImageGroup[3].frame = CGRect(x: width, y: height , width: diam, height: diam)
         }else if count == 5{
             let diam = min(width, height)
-            avatarImageGroup[0].frame = CGRectMake(0, 0 , diam, diam)
-            avatarImageGroup[1].frame = CGRectMake(containerFrame.width - diam , 0, diam, diam)
-            avatarImageGroup[2].frame = CGRectMake(0, containerFrame.height - diam , diam, diam)
-            avatarImageGroup[3].frame = CGRectMake(containerFrame.width - diam , containerFrame.height - diam, diam, diam)
-            avatarImageGroup[4].frame = CGRectMake(width - diam / 2, height - diam / 2 , diam, diam)
+            avatarImageGroup[0].frame = CGRect(x: 0, y: 0 , width: diam, height: diam)
+            avatarImageGroup[1].frame = CGRect(x: containerFrame.width - diam , y: 0, width: diam, height: diam)
+            avatarImageGroup[2].frame = CGRect(x: 0, y: containerFrame.height - diam , width: diam, height: diam)
+            avatarImageGroup[3].frame = CGRect(x: containerFrame.width - diam , y: containerFrame.height - diam, width: diam, height: diam)
+            avatarImageGroup[4].frame = CGRect(x: width - diam / 2, y: height - diam / 2 , width: diam, height: diam)
         }
     }
     
-    func setFaces(userFaceIds:[String:String?]) {
+    func setFaces(_ userFaceIds:[String:String?]) {
         prepareImageView(userFaceIds.count)
         self.userFaceIds = userFaceIds
         refreshFaces()
     }
     
-    private func refreshFaces(){
+    fileprivate func refreshFaces(){
         let df = getDefaultFace()
         var i = 0
         self.userFaceIds.keys.forEach { (key) in
             let imgView = avatarImageGroup[i]
             let fileId = userFaceIds[key]!
-            imgView.contentMode = String.isNullOrEmpty(fileId) ? .ScaleAspectFit : .ScaleAspectFill
+            imgView.contentMode = String.isNullOrEmpty(fileId) ? .scaleAspectFit : .scaleAspectFill
             imgView.layoutIfNeeded()
             imgView.layer.cornerRadius = self.userFaceIds.count > 1 ? imgView.frame.width / 2 : 0
             imgView.clipsToBounds = self.userFaceIds.count > 1
@@ -196,7 +196,7 @@ class GroupChatAvatarManager:NSObject {
 
 extension RecordVessageManager{
 
-    func onChatGroupUpdated(chatGroup: ChatGroup) {
+    func onChatGroupUpdated(_ chatGroup: ChatGroup) {
         
         var userFaceIds = [String:String?]()
         for userId in chatGroup.chatters {
@@ -209,9 +209,9 @@ extension RecordVessageManager{
             }
         }
         if isGroupChat {
-            noSmileFaceTipsLabel.hidden = true
+            noSmileFaceTipsLabel.isHidden = true
         }else if let chatter = chatterId{
-            noSmileFaceTipsLabel.hidden = userFaceIds.keys.contains(chatter)
+            noSmileFaceTipsLabel.isHidden = userFaceIds.keys.contains(chatter)
         }
         groupAvatarManager.setFaces(userFaceIds)
     }
@@ -221,7 +221,7 @@ extension RecordVessageManager{
 extension RecordVessageManager{
     func onClickCancelRecordButton(_:UITapGestureRecognizer) {
         self.cancelRecord()
-        self.rootController.dismissViewControllerAnimated(true) { 
+        self.rootController.dismiss(animated: true) { 
             self.delegate?.recordVessageVideoControllerCanceled(self.rootController)
         }
     }
@@ -230,18 +230,18 @@ extension RecordVessageManager{
         prepareRecordedVideo()
     }
     
-    private func prepareRecordedVideo()
+    fileprivate func prepareRecordedVideo()
     {
         if !recording {
             return
         }
-        self.rootController.sendRecordButton.userInteractionEnabled = false
+        self.rootController.sendRecordButton.isUserInteractionEnabled = false
         #if DEBUG
             if isInSimulator(){
                 recording = false
-                let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
-                PersistentFileHelper.storeFile(NSData(), filePath: newFilePath)
-                vessageCameraVideoSaved(videoSavedUrl: NSURL(fileURLWithPath: newFilePath))
+                let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.video)
+                PersistentFileHelper.storeFile(Data(), filePath: newFilePath)
+                vessageCameraVideoSaved(videoSavedUrl: URL(fileURLWithPath: newFilePath))
             }else{
                 camera.saveRecordedVideo()
             }
@@ -260,7 +260,7 @@ extension RecordVessageManager:VessageCameraDelegate{
         }
     }
     
-    private func startRecord()
+    fileprivate func startRecord()
     {
         MobClick.event("Vege_RecordVessage")
         #if DEBUG
@@ -274,20 +274,20 @@ extension RecordVessageManager:VessageCameraDelegate{
         #endif
     }
     
-    private func startSimulatorRecord(){
+    fileprivate func startSimulatorRecord(){
         userClickSend = true
         recordingTime = 0
         recording = true
     }
     
-    private func startRealCameraRecord(){
+    fileprivate func startRealCameraRecord(){
         
         if self.camera.cameraInited{
             self.userClickSend = true
             self.camera.resumeCaptureSession()
-            self.rootController.sendRecordButton.hidden = true
-            dispatch_main_queue_after(100, handler: {
-                self.rootController.sendRecordButton.hidden = false
+            self.rootController.sendRecordButton.isHidden = true
+            DispatchQueue.main.afterMS(100, handler: {   
+                self.rootController.sendRecordButton.isHidden = false
                 self.camera.startRecord()
             })
             
@@ -327,25 +327,25 @@ extension RecordVessageManager:VessageCameraDelegate{
     func vessageCameraSessionClosed() {
     }
     
-    func vessageCameraVideoSaved(videoSavedUrl video: NSURL) {
-        self.rootController.sendRecordButton.userInteractionEnabled = true
-        let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.Video)
-        if PersistentFileHelper.moveFile(video.path!, destinationPath: newFilePath)
+    func vessageCameraVideoSaved(videoSavedUrl video: URL) {
+        self.rootController.sendRecordButton.isUserInteractionEnabled = true
+        let newFilePath = PersistentManager.sharedInstance.createTmpFileName(.video)
+        if PersistentFileHelper.moveFile(video.path, destinationPath: newFilePath)
         {
-            self.rootController.dismissViewControllerAnimated(true){
-                self.delegate?.recordVessageVideoController(NSURL(fileURLWithPath: newFilePath), isTimeUp: !self.userClickSend, controller: self.rootController)
+            self.rootController.dismiss(animated: true){
+                self.delegate?.recordVessageVideoController(URL(fileURLWithPath: newFilePath), isTimeUp: !self.userClickSend, controller: self.rootController)
             }
         }else
         {
-            self.rootController.dismissViewControllerAnimated(true, completion: { 
+            self.rootController.dismiss(animated: true, completion: { 
                 self.delegate?.recordVessageVideoControllerSaveVideoError(self.rootController)
             })
         }
     }
     
     func vessageCameraSaveVideoError(saveVideoError msg: String?) {
-        self.rootController.sendRecordButton.userInteractionEnabled = true
-        self.rootController.dismissViewControllerAnimated(true, completion: {
+        self.rootController.sendRecordButton.isUserInteractionEnabled = true
+        self.rootController.dismiss(animated: true, completion: {
             self.delegate?.recordVessageVideoControllerSaveVideoError(self.rootController)
         })
     }
@@ -354,16 +354,16 @@ extension RecordVessageManager:VessageCameraDelegate{
         if recording{
             recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
             recordingTime += 1
-            self.recordingFlashView.hidden = !self.recordingFlashView.hidden
+            self.recordingFlashView.isHidden = !self.recordingFlashView.isHidden
         }else{
-            self.recordingFlashView.hidden = true
+            self.recordingFlashView.isHidden = true
         }
     }
     
-    private func updateRecordingProgress(){
+    fileprivate func updateRecordingProgress(){
         let maxAngle:CGFloat = 360
         let angle = recordingTime / maxRecordTime * maxAngle
         self.recordingProgress?.angle = Double(angle)
-        self.recordingProgress?.hidden = !recording
+        self.recordingProgress?.isHidden = !recording
     }
 }

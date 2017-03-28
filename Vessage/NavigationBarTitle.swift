@@ -32,10 +32,10 @@ class NavigationBarTitle: UIView {
     
     var indicatorHidden:Bool{
         get{
-            return indicatorView.hidden
+            return indicatorView.isHidden
         }
         set{
-            indicatorView?.hidden = newValue
+            indicatorView?.isHidden = newValue
             if newValue {
                 indicatorView?.stopAnimating()
             }else{
@@ -46,8 +46,8 @@ class NavigationBarTitle: UIView {
     
     
     static func instanceFromXib() -> NavigationBarTitle{
-        let view = NSBundle.mainBundle().loadNibNamed("NavigationBarTitle", owner: nil, options: nil)![0] as! NavigationBarTitle
-        view.backgroundColor = UIColor.clearColor()
+        let view = Bundle.main.loadNibNamed("NavigationBarTitle", owner: nil, options: nil)![0] as! NavigationBarTitle
+        view.backgroundColor = UIColor.clear
         return view
     }
 }

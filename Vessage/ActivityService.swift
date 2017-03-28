@@ -15,18 +15,18 @@ let UpdatedActivitiesBadgeValue = "UpdatedActivitiesBadgeValue"
 
 private let AppVersionActivityBadgeKey = "AppVersionActivityBadgeKey"
 
-class ActivityService: NSNotificationCenter, ServiceProtocol
+class ActivityService: NotificationCenter, ServiceProtocol
 {
-    static let onEnabledActivitiesBadgeUpdated = "onEnabledActivitiesBadgeUpdated"
-    static let onEnabledActivityBadgeUpdated = "onEnabledActivityBadgeUpdated"
+    static let onEnabledActivitiesBadgeUpdated = "onEnabledActivitiesBadgeUpdated".asNotificationName()
+    static let onEnabledActivityBadgeUpdated = "onEnabledActivityBadgeUpdated".asNotificationName()
     
     @objc static var ServiceName:String{return "Activity Service"}
     
-    private var acMiniBadge:[String:Bool]!
-    private var acBadge:[String:Int]!
-    private var registedActivity = [String:ActivityInfo]()
+    fileprivate var acMiniBadge:[String:Bool]!
+    fileprivate var acBadge:[String:Int]!
+    fileprivate var registedActivity = [String:ActivityInfo]()
     
-    @objc func userLoginInit(userId:String)
+    @objc func userLoginInit(_ userId:String)
     {
         acMiniBadge = (UserSetting.getUserValue("ActivityMiniBadge") as? [String:Bool]) ?? [String:Bool]()
         acBadge = (UserSetting.getUserValue("ActivityBadge") as? [String:Int]) ?? [String:Int]()
@@ -44,11 +44,11 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         setServiceReady()
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         setServiceNotReady()
     }
     
-    private func storeMiniBadge(){
+    fileprivate func storeMiniBadge(){
         UserSetting.setUserValue("ActivityMiniBadge", value: acMiniBadge)
     }
     
@@ -56,7 +56,7 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         UserSetting.setUserValue("ActivityBadge", value: acBadge)
     }
     
-    private func userFirstLaunchVersion() {
+    fileprivate func userFirstLaunchVersion() {
         let buildVersion = UserSetting.getUserIntValue(AppVersionActivityBadgeKey)
         let currentVersion = VessageConfig.buildVersion
         
@@ -122,31 +122,31 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         }
     }
     
-    func isActivityEnabled(id:String) -> Bool {
+    func isActivityEnabled(_ id:String) -> Bool {
         return true
     }
     
-    func clearActivityMiniBadge(id:String,autoStore:Bool = true) {
-        acMiniBadge.removeValueForKey(id)
+    func clearActivityMiniBadge(_ id:String,autoStore:Bool = true) {
+        acMiniBadge.removeValue(forKey: id)
         self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:false])
         if autoStore {
             storeMiniBadge()
         }
     }
     
-    func clearActivityBadge(id:String,autoStore:Bool = true) {
+    func clearActivityBadge(_ id:String,autoStore:Bool = true) {
         setActivityBadge(id, badgeValue: 0)
         if autoStore {
             storeBadge()
         }
     }
     
-    func clearActivityAllBadge(id:String) {
+    func clearActivityAllBadge(_ id:String) {
         clearActivityBadge(id)
         clearActivityMiniBadge(id)
     }
     
-    func setActivityMiniBadgeShow(id:String,autoStore:Bool = true){
+    func setActivityMiniBadgeShow(_ id:String,autoStore:Bool = true){
         acMiniBadge.updateValue(true, forKey: id)
         self.postNotificationNameWithMainAsync(ActivityService.onEnabledActivityBadgeUpdated, object: self, userInfo: [UpdatedActivityIdValue:id,UpdatedActivityMiniBadgeValue:true])
         if autoStore {
@@ -154,9 +154,9 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         }
     }
     
-    func setActivityBadge(id:String,badgeValue:Int,autoStore:Bool = true) {
+    func setActivityBadge(_ id:String,badgeValue:Int,autoStore:Bool = true) {
         if badgeValue <= 0 {
-            acBadge.removeValueForKey(id)
+            acBadge.removeValue(forKey: id)
         }else{
             acBadge.updateValue(badgeValue, forKey: id)
         }
@@ -166,15 +166,15 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
         }
     }
     
-    func getActivityName(id:String) -> String {
+    func getActivityName(_ id:String) -> String {
         return registedActivity[id]?.cellTitle ?? "UNKNOW_ACTIVITY".localizedString()
     }
     
-    func getActivityBadge(id:String) -> Int {
+    func getActivityBadge(_ id:String) -> Int {
         return acBadge?[id] ?? 0
     }
     
-    func isActivityShowMiniBadge(id:String) -> Bool {
+    func isActivityShowMiniBadge(_ id:String) -> Bool {
         return acMiniBadge?[id] ?? false
     }
 
@@ -183,6 +183,6 @@ class ActivityService: NSNotificationCenter, ServiceProtocol
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getActivityService() -> ActivityService{
-        return ServiceContainer.getService(ActivityService)
+        return ServiceContainer.getService(ActivityService.self)
     }
 }

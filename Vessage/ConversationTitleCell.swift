@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ConversationClickCellDelegate{
-    func conversationTitleCell(sender:ConversationListCellBase,controller:ConversationListController!)
+    func conversationTitleCell(_ sender:ConversationListCellBase,controller:ConversationListController!)
 }
 
 class ConversationTitleCell:ConversationListCellBase{

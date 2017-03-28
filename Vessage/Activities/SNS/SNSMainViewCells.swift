@@ -13,8 +13,8 @@ import EVReflection
 import SDWebImage
 
 @objc protocol SNSMainInfoCellDelegate {
-    optional func snsMainInfoCellDidClickNewComment(sender:UIView,cell:SNSMainInfoCell)
-    optional func snsMainInfoCellDidClickNewLikes(sender:UIView,cell:SNSMainInfoCell)
+    @objc optional func snsMainInfoCellDidClickNewComment(_ sender:UIView,cell:SNSMainInfoCell)
+    @objc optional func snsMainInfoCellDidClickNewLikes(_ sender:UIView,cell:SNSMainInfoCell)
 }
 
 class SNSMainInfoCell: UITableViewCell {
@@ -43,7 +43,7 @@ class SNSMainInfoCell: UITableViewCell {
         }
     }
     
-    func onTapViews(a:UITapGestureRecognizer) {
+    func onTapViews(_ a:UITapGestureRecognizer) {
         if a.view == newCmtLabel || a.view == newCommentImageView {
             delegate?.snsMainInfoCellDidClickNewComment?(a.view!,cell:self)
         }else if a.view == newLikesLabel || a.view == likeImageView{
@@ -57,7 +57,7 @@ class SNSPostCell: UITableViewCell {
     
     @IBOutlet weak var godPanel: UIView!{
         didSet{
-            godPanel.hidden = !UserSetting.godMode
+            godPanel.isHidden = !UserSetting.godMode
         }
     }
     
@@ -66,7 +66,7 @@ class SNSPostCell: UITableViewCell {
             avatarImageView?.layoutIfNeeded()
             avatarImageView?.layer.cornerRadius = avatarImageView.frame.height / 2
             avatarImageView?.layer.borderWidth = 0.2
-            avatarImageView?.layer.borderColor = UIColor.lightGrayColor().CGColor
+            avatarImageView?.layer.borderColor = UIColor.lightGray.cgColor
         }
     }
     @IBOutlet weak var textContentLabel: UILabel!
@@ -88,17 +88,17 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
-    private var isSelfPost:Bool{
+    fileprivate var isSelfPost:Bool{
         return UserSetting.userId == self.post.usrId
     }
     
-    func onTapImage(ges:UITapGestureRecognizer) {
+    func onTapImage(_ ges:UITapGestureRecognizer) {
         if let vc = self.rootController,let imgView = ges.view as? UIImageView{
             imgView.slideShowFullScreen(vc)
         }
     }
     
-    private func updateCell() {
+    fileprivate func updateCell() {
         if post != nil {
             let nick = rootController?.userService.getUserNotedNameIfExists(post.usrId) ?? post.pster ?? "UNKNOW_NAME".localizedString()
             postInfoLabel?.text = nick
@@ -106,8 +106,8 @@ class SNSPostCell: UITableViewCell {
             updateExtraInfo()
             
             self.likeTipsLabel?.text = self.post.lc.friendString
-            chatButton.hidden = isSelfPost
-            newCommentButton.hidden = false
+            chatButton.isHidden = isSelfPost
+            newCommentButton.isHidden = false
             commentTipsLabel.text = self.post.cmtCnt.friendString
             textContentLabel?.text = nil
             
@@ -122,7 +122,7 @@ class SNSPostCell: UITableViewCell {
                     textContentLabel?.text = txt
                 }
                 
-                if let imgs = dict["imgs"] as? [String!] {
+                if let imgs = dict["imgs"] as? [String] {
                     for img in imgs {
                         if !String.isNullOrWhiteSpace(img) {
                             imgList.append(img)
@@ -134,7 +134,7 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
-    private func updateExtraInfo(){
+    fileprivate func updateExtraInfo(){
         if post.st == SNSPost.statePrivate {
             extraInfoLabel?.text = "\(post.getPostDateFriendString()) \("PRIVATE".SNSString)"
         }else if post.atpv > 0{
@@ -144,10 +144,10 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
-    private var imgList:[String]!
+    fileprivate var imgList:[String]!
     let defaultBcg = UIImage(named:"nfc_post_img_bcg")
     
-    private func measureImageContent() {
+    fileprivate func measureImageContent() {
         let hiddenImageContent = imgList.count == 0
         
         var itemWidth = hiddenImageContent ? 0 : self.contentContainer.frame.width
@@ -167,10 +167,10 @@ class SNSPostCell: UITableViewCell {
             
             x = CGFloat(i % col) * (itemWidth + span)
             y = CGFloat(i / col) * (itemWidth + span)
-            let frame = CGRectMake(x, y, itemWidth, itemWidth)
+            let frame = CGRect(x: x, y: y, width: itemWidth, height: itemWidth)
             let imgView = UIImageView(frame: frame)
             imgView.clipsToBounds = true
-            imgView.contentMode = .Center
+            imgView.contentMode = .center
             self.contentContainer.addSubview(imgView)
         }
         
@@ -179,15 +179,15 @@ class SNSPostCell: UITableViewCell {
         contentView.setNeedsUpdateConstraints()
         contentView.updateConstraintsIfNeeded()
         
-        self.contentContainer.hidden = hiddenImageContent
+        self.contentContainer.isHidden = hiddenImageContent
         updateImageContents()
     }
     
-    private func onSetedImage(imgv:UIImageView){
-        imgv.contentMode = .ScaleAspectFill
-        imgv.userInteractionEnabled = true
+    fileprivate func onSetedImage(_ imgv:UIImageView){
+        imgv.contentMode = .scaleAspectFill
+        imgv.isUserInteractionEnabled = true
         imgv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
-        if self.imgList.count == 1,let size = imgv.image?.size where size.height / size.width < 2{
+        if self.imgList.count == 1,let size = imgv.image?.size, size.height / size.width < 2{
             let height = imgv.frame.width / size.width * size.height
             imgv.frame.size.height = height
             self.contentContainer.constraints.filter{$0.identifier == "containerHeight"}.first?.constant = height
@@ -196,7 +196,7 @@ class SNSPostCell: UITableViewCell {
         }
     }
     
-    private func updateImageContents() {
+    fileprivate func updateImageContents() {
         if imgList.count == 0 {
             return
         }else{
@@ -237,10 +237,10 @@ class SNSPostCell: UITableViewCell {
 
 extension SNSPostCell{
     
-    private func updatePostState(newState:Int) {
+    fileprivate func updatePostState(_ newState:Int) {
         let hud = self.rootController!.showActivityHud()
         SNSPostManager.instance.updatePostState(self.post.pid,state: newState, callback: { (suc) in
-            hud.hideAnimated(true)
+            hud.hide(animated: true)
             if suc{
                 if newState < 0{
                     self.post.st = newState
@@ -254,15 +254,15 @@ extension SNSPostCell{
         })
     }
     
-    @IBAction func onClickMore(sender: AnyObject) {
-        let alert = UIAlertController.create(title: nil, message: nil, preferredStyle: .ActionSheet)
+    @IBAction func onClickMore(_ sender: AnyObject) {
+        let alert = UIAlertController.create(title: nil, message: nil, preferredStyle: .actionSheet)
         
         if isSelfPost {
             
             
-            let ac = UIAlertAction(title: "DELETE_POST".SNSString, style: .Default, handler: { (ac) in
+            let ac = UIAlertAction(title: "DELETE_POST".SNSString, style: .default, handler: { (ac) in
                 
-                let dtPst = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+                let dtPst = UIAlertAction(title: "YES".localizedString(), style: .default, handler: { (ac) in
                     self.updatePostState(SNSPost.stateRemoved)
                 })
                 self.rootController!.showAlert("DELETE_POST".SNSString, msg: "SURE_DELETE_POST".SNSString, actions: [dtPst,ALERT_ACTION_CANCEL])
@@ -270,13 +270,13 @@ extension SNSPostCell{
             })
             
             if self.post.st == SNSPost.stateNormal{
-                let setPrivate = UIAlertAction(title: "SET_POST_PRIVATE".SNSString, style: .Default, handler: { (ac) in
+                let setPrivate = UIAlertAction(title: "SET_POST_PRIVATE".SNSString, style: .default, handler: { (ac) in
                     self.updatePostState(SNSPost.statePrivate)
                 })
                 alert.addAction(setPrivate)
                 
             }else if self.post.st == SNSPost.statePrivate{
-                let setPublic = UIAlertAction(title: "SET_POST_PUBLIC".SNSString, style: .Default, handler: { (ac) in
+                let setPublic = UIAlertAction(title: "SET_POST_PUBLIC".SNSString, style: .default, handler: { (ac) in
                     self.updatePostState(SNSPost.stateNormal)
                 })
                 alert.addAction(setPublic)
@@ -284,12 +284,12 @@ extension SNSPostCell{
             
             alert.addAction(ac)
         }else{
-            let ac = UIAlertAction(title: "REPORT_POST".SNSString, style: .Default, handler: { (ac) in
+            let ac = UIAlertAction(title: "REPORT_POST".SNSString, style: .default, handler: { (ac) in
                 
-                let rpPst = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
+                let rpPst = UIAlertAction(title: "YES".localizedString(), style: .default, handler: { (ac) in
                     let hud = self.rootController!.showActivityHud()
                     SNSPostManager.instance.reportObjectionablePost(self.post.pid, callback: { (suc) in
-                        hud.hideAnimated(true)
+                        hud.hide(animated: true)
                         if suc{
                             self.rootController?.playCheckMark()
                         }else{
@@ -307,21 +307,21 @@ extension SNSPostCell{
         self.rootController!.showAlert(alert)
     }
     
-    @IBAction func onClickNewComment(sender: AnyObject) {
+    @IBAction func onClickNewComment(_ sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
             SNSPostCommentViewController.showPostCommentViewController(self.rootController!.navigationController!, post: self.post).delegate = self
         }
     }
     
-    @IBAction func onClickChat(sender: AnyObject) {
+    @IBAction func onClickChat(_ sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
             ConversationViewController.showConversationViewController(self.rootController!.navigationController!, userId: self.post.usrId,createByActivityId:SNSPostManager.activityId)
         }
     }
     
-    @IBAction func onClickLike(sender: AnyObject) {
+    @IBAction func onClickLike(_ sender: AnyObject) {
         let v = sender as! UIView
         v.animationMaxToMin(0.1, maxScale: 1.2) {
             if let uid = self.post?.usrId{
@@ -333,7 +333,7 @@ extension SNSPostCell{
             }
             let hud = self.rootController?.showActivityHud()
             SNSPostManager.instance.likePost(self.post.pid, callback: { (suc) in
-                hud?.hideAnimated(true)
+                hud?.hide(animated: true)
                 if(suc){
                     self.post.lc += 1
                     self.playLikeAnimation()
@@ -348,7 +348,7 @@ extension SNSPostCell{
 
 //MARK: SNSCommentViewControllerDelegate
 extension SNSPostCell:SNSCommentViewControllerDelegate{
-    func snsCommentController(sender: SNSPostCommentViewController, didPostNewComment newComment: SNSPostComment, post: SNSPost) {
+    func snsCommentController(_ sender: SNSPostCommentViewController, didPostNewComment newComment: SNSPostComment, post: SNSPost) {
         if post.pid == self.post.pid {
             self.commentTipsLabel.text = post.cmtCnt.friendString
         }
@@ -357,19 +357,19 @@ extension SNSPostCell:SNSCommentViewControllerDelegate{
 
 //MARK: God Methods
 extension SNSPostCell{
-    @IBAction func godLikeClick(sender: AnyObject) {
+    @IBAction func godLikeClick(_ sender: AnyObject) {
         let hud = self.rootController?.showActivityHud()
         SNSPostManager.instance.godLikePost(post.pid){ suc in
-            hud?.hideAnimated(true)
+            hud?.hide(animated: true)
             suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
         }
     }
     
-    @IBAction func godBlockMemberClick(sender: AnyObject){
-        let ac = UIAlertAction(title: "Yes", style: .Default) { (a) in
+    @IBAction func godBlockMemberClick(_ sender: AnyObject){
+        let ac = UIAlertAction(title: "Yes", style: .default) { (a) in
             let hud = self.rootController?.showActivityHud()
             SNSPostManager.instance.godBlockMember(self.post.usrId) { suc in
-                hud?.hideAnimated(true)
+                hud?.hide(animated: true)
                 suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
             }
         }
@@ -377,11 +377,11 @@ extension SNSPostCell{
         
     }
     
-    @IBAction func godRmPostClick(sender: AnyObject){
-        let ac = UIAlertAction(title: "Yes", style: .Default) { (a) in
+    @IBAction func godRmPostClick(_ sender: AnyObject){
+        let ac = UIAlertAction(title: "Yes", style: .default) { (a) in
             let hud = self.rootController?.showActivityHud()
             SNSPostManager.instance.godDeletePost(self.post.pid) { suc in
-                hud?.hideAnimated(true)
+                hud?.hide(animated: true)
                 suc ? self.rootController?.playCheckMark() : self.rootController?.playCrossMark()
             }
         }

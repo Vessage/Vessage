@@ -15,47 +15,47 @@ let SendedVessageResultModelValue = "SendedVessageResultModelValue"
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getVessageService() -> VessageService{
-        return ServiceContainer.getService(VessageService)
+        return ServiceContainer.getService(VessageService.self)
     }
 }
 
 //MARK: VessageService
-class VessageService:NSNotificationCenter, ServiceProtocol {
-    static let onNewVessageReceived = "onNewVessageReceived"
-    static let onNewVessagesReceived = "onNewVessagesReceived"
+class VessageService:NotificationCenter, ServiceProtocol {
+    static let onNewVessageReceived = "onNewVessageReceived".asNotificationName()
+    static let onNewVessagesReceived = "onNewVessagesReceived".asNotificationName()
     
-    static let onNewVessagePostFinished = "onNewVessagePostFinished"
-    static let onNewVessagePostFinishError = "onNewVessagePostFinishError"
+    static let onNewVessagePostFinished = "onNewVessagePostFinished".asNotificationName()
+    static let onNewVessagePostFinishError = "onNewVessagePostFinishError".asNotificationName()
     
-    static let onVessageRead = "onVessageRead"
-    static let onVessageRemoved = "onVessageRemoved"
-    static let onVessagesRemoved = "onVessagesRemoved"
+    static let onVessageRead = "onVessageRead".asNotificationName()
+    static let onVessageRemoved = "onVessageRemoved".asNotificationName()
+    static let onVessagesRemoved = "onVessagesRemoved".asNotificationName()
     
     @objc static var ServiceName:String {return "Vessage Service"}
     
-    private var notReadVessageCountMap = [String:Int]()
-    private var receivedCheckMap = [String:Int]()
-    private var vsgCntLock = NSRecursiveLock()
+    fileprivate var notReadVessageCountMap = [String:Int]()
+    fileprivate var receivedCheckMap = [String:Int]()
+    fileprivate var vsgCntLock = NSRecursiveLock()
     
-    @objc func appStartInit(appName: String) {
+    @objc func appStartInit(_ appName: String) {
         
     }
     
-    @objc func userLoginInit(userId: String) {
-        dispatch_async(dispatch_get_main_queue()) {
+    @objc func userLoginInit(_ userId: String) {
+        DispatchQueue.main.async {
             self.receivedCheckMap.removeAll()
             self.initNotReadVessageCountMap()
             self.setServiceReady()
         }
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         setServiceNotReady()
     }
     
-    private func initNotReadVessageCountMap(){
+    fileprivate func initNotReadVessageCountMap(){
         var newestVsgMap = [String:Vessage]()
-        let vsgs = PersistentManager.sharedInstance.getAllModel(Vessage)
+        let vsgs = PersistentManager.sharedInstance.getAllModel(Vessage.self)
         vsgCntLock.lock()
         notReadVessageCountMap.removeAll()
         vsgs.forEach { (vsg) in
@@ -81,10 +81,11 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
         vsgCntLock.unlock()
         PersistentManager.sharedInstance.saveAll()
-        PersistentManager.sharedInstance.refreshCache(Vessage)
+        PersistentManager.sharedInstance.refreshCache(Vessage.self)
     }
     
-    func readVessage(vessage:Vessage,refresh:Bool = true) -> Bool{
+    @discardableResult
+    func readVessage(_ vessage:Vessage,refresh:Bool = true) -> Bool{
         if vessage.isRead || !vessage.isReceivedVessage() {
             return false
         }else {
@@ -101,32 +102,32 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
         if refresh{
             vessage.saveModel()
-            PersistentManager.sharedInstance.refreshCache(Vessage)
+            PersistentManager.sharedInstance.refreshCache(Vessage.self)
         }
         return true
     }
     
-    func removeVessages(vessages:[Vessage]){
+    func removeVessages(_ vessages:[Vessage]){
         var removed = [Vessage]()
         for vessage in vessages {
             if readVessage(vessage,refresh: false){
                 removed.append(vessage)
                 PersistentManager.sharedInstance.removeModel(vessage)
-                postNotificationName(VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
+                post(name: VessageService.onVessageRemoved, object: self, userInfo: [VessageServiceNotificationValue:vessage])
             }
         }
-        PersistentManager.sharedInstance.refreshCache(Vessage)
-        postNotificationName(VessageService.onVessagesRemoved, object: self, userInfo: [VessageServiceNotificationValues:removed])
+        PersistentManager.sharedInstance.refreshCache(Vessage.self)
+        post(name: VessageService.onVessagesRemoved, object: self, userInfo: [VessageServiceNotificationValues:removed])
     }
     
-    func newVessageFromServer(completion:(()->Void)? = nil){
+    func newVessageFromServer(_ completion:(()->Void)? = nil){
         
         //prepare received vessages check map
-        let keySet = receivedCheckMap.keys.map{$0}.reverse()
+        let keySet = receivedCheckMap.keys.map{$0}.reversed()
         for key in keySet {
             let x = receivedCheckMap[key]
             if x == 1{
-                receivedCheckMap.removeValueForKey(key)
+                receivedCheckMap.removeValue(forKey: key)
             }else{
                 receivedCheckMap[key] = 1
             }
@@ -138,14 +139,14 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
             if var vsgs = result.returnObject{
                 if vsgs.count > 0{
                     self.vsgCntLock.lock()
-                    vsgs.sortInPlace({ (a, b) -> Bool in
+                    vsgs.sort(by: { (a, b) -> Bool in
                         a.ts < b.ts
                     })
                     vsgs.saveBahamutObjectModels()
                     PersistentManager.sharedInstance.saveAll()
-                    PersistentManager.sharedInstance.refreshCache(Vessage)
+                    PersistentManager.sharedInstance.refreshCache(Vessage.self)
                     for vsg in vsgs{
-                        let key = "\(vsg.vessageId)_\(vsg.sender)_\(vsg.ts)".md5
+                        let key = "\(vsg.vessageId!)_\(vsg.sender!)_\(vsg.ts)".md5
                         
                         if !self.receivedCheckMap.keys.contains(key){
                             newVessages.append(vsg)
@@ -155,14 +156,14 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
                                 self.notReadVessageCountMap[vsg.sender] = 1
                             }
                             
-                            self.postNotificationName(VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
+                            self.post(name: VessageService.onNewVessageReceived, object: self, userInfo: [VessageServiceNotificationValue:vsg])
                         }
                         self.receivedCheckMap[key] = 0
                     }
                     
                     self.notifyVessageGot()
                     if newVessages.count > 0{
-                        self.postNotificationName(VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
+                        self.post(name: VessageService.onNewVessagesReceived, object: self, userInfo: [VessageServiceNotificationValues:newVessages])
                         SystemSoundHelper.playSound(1003)
                     }
                     self.vsgCntLock.unlock()
@@ -172,29 +173,29 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    private func notifyVessageGot(){
+    fileprivate func notifyVessageGot(){
         let req = NotifyGotNewVessagesRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
         }
     }
     
-    func getCachedNewestVessage(chatterId:String) -> Vessage?{
-        var vsgs = PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{ !String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId }
-        vsgs.sortInPlace { (a, b) -> Bool in
+    func getCachedNewestVessage(_ chatterId:String) -> Vessage?{
+        var vsgs = PersistentManager.sharedInstance.getAllModelFromCache(Vessage.self).filter{ !String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId }
+        vsgs.sort { (a, b) -> Bool in
             a.ts > b.ts
         }
         return vsgs.first
     }
     
-    func getChatterNotReadVessageCount(chatterId:String) -> Int{
+    func getChatterNotReadVessageCount(_ chatterId:String) -> Int{
         if let cnt = notReadVessageCountMap[chatterId] {
             return cnt
         }
         return notReadVessageCountMap[chatterId] ?? 0
     }
     
-    func getNotReadVessages(chatterId:String) -> [Vessage]{
-        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }.sort({ (a, b) -> Bool in
+    func getNotReadVessages(_ chatterId:String) -> [Vessage]{
+        return PersistentManager.sharedInstance.getAllModelFromCache(Vessage.self).filter{$0.isRead == false && (!String.isNullOrWhiteSpace($0.sender) && $0.sender == chatterId) }.sorted(by: { (a, b) -> Bool in
             a.ts < b.ts
         })
     }
@@ -204,24 +205,24 @@ class VessageService:NSNotificationCenter, ServiceProtocol {
 
 //MARK: Send Vessage
 extension VessageService{
-    private func sendVessageToMobile(receiverMobile:String,vessage:Vessage,callback:(vessageId:String?)->Void){
+    fileprivate func sendVessageToMobile(_ receiverMobile:String,vessage:Vessage,callback:@escaping (_ vessageId:String?)->Void){
         let req = SendNewVessageToMobileRequest()
         req.receiverMobile = receiverMobile
         sendVessage(req, vessage: vessage) { (vessageId) -> Void in
-            callback(vessageId: vessageId)
+            callback(vessageId)
         }
     }
     
-    func sendVessageToUser(receiverId:String?,vessage:Vessage, callback:(vessageId:String?)->Void){
+    func sendVessageToUser(_ receiverId:String?,vessage:Vessage, callback:@escaping (_ vessageId:String?)->Void){
         let req = SendNewVessageToUserRequest()
         req.receiverId = receiverId
         req.isGroup = vessage.isGroup
         sendVessage(req, vessage: vessage) { (vessageId) -> Void in
-            callback(vessageId: vessageId)
+            callback(vessageId)
         }
     }
     
-    private func sendVessage(req:SendNewVessageRequestBase,vessage:Vessage,callback:(vessageId:String?)->Void){
+    fileprivate func sendVessage(_ req:SendNewVessageRequestBase,vessage:Vessage,callback:@escaping (_ vessageId:String?)->Void){
         req.extraInfo = vessage.extraInfo
         req.fileId = vessage.fileId
         req.typeId = vessage.typeId
@@ -230,21 +231,21 @@ extension VessageService{
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SendVessageResultModel>) -> Void in
             if let vrm = result.returnObject{
                 vrm.saveModel()
-                callback(vessageId: vrm.vessageId)
+                callback(vrm.vessageId)
             }else{
-                callback(vessageId: nil)
+                callback(nil)
             }
         }
     }
     
-    private func getSendVessageResult(vessageId:String) -> SendVessageResultModel?{
+    fileprivate func getSendVessageResult(_ vessageId:String) -> SendVessageResultModel?{
         return PersistentManager.sharedInstance.getModel(SendVessageResultModel.self, idValue: vessageId)
     }
     
-    func finishSendVessage(vessageId:String,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
+    func finishSendVessage(_ vessageId:String,callback:(_ finished:Bool,_ sendVessageResultModel:SendVessageResultModel?)->Void) {
         let m = getSendVessageResult(vessageId)
-        callback(finished: true, sendVessageResultModel: m)
-        var userInfo = [NSObject:AnyObject]()
+        callback(true, m)
+        var userInfo = [AnyHashable: Any]()
         if m != nil {
             PersistentManager.sharedInstance.removeModel(m!)
             userInfo.updateValue(m!, forKey: SendedVessageResultModelValue)
@@ -253,7 +254,7 @@ extension VessageService{
         MobClick.event("Vege_TotalPostVessages")
     }
     
-    func cancelSendVessage(vessageId:String){
+    func cancelSendVessage(_ vessageId:String){
         if let m = getSendVessageResult(vessageId){
             let req = CancelSendVessageRequest()
             req.vessageId = m.vessageId
@@ -267,7 +268,7 @@ extension VessageService{
 
 //MARK: Deprecated
 extension VessageService{
-    private func finishSendVessage(vessageId:String,fileId:String,callback:(finished:Bool,sendVessageResultModel:SendVessageResultModel?)->Void) {
+    fileprivate func finishSendVessage(_ vessageId:String,fileId:String,callback:@escaping (_ finished:Bool,_ sendVessageResultModel:SendVessageResultModel?)->Void) {
         if let m = getSendVessageResult(vessageId){
             let req = FinishSendVessageRequest()
             req.vessageId = m.vessageId
@@ -279,10 +280,10 @@ extension VessageService{
                 if result.isSuccess{
                     MobClick.event("Vege_TotalPostVessages")
                     PersistentManager.sharedInstance.removeModel(m)
-                    callback(finished: true, sendVessageResultModel: m)
+                    callback(true, m)
                     self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinished, object: self, userInfo:userInfo)
                 }else{
-                    callback(finished: false, sendVessageResultModel: m)
+                    callback(false, m)
                     self.postNotificationNameWithMainAsync(VessageService.onNewVessagePostFinishError, object: self, userInfo:userInfo)
                 }
             })

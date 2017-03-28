@@ -14,18 +14,18 @@ let SHOW_OPEN_MOBILE_CONVERSATION_KEY = "SHOW_OPEN_MOBILE_CONVERSATION_KEY"
 //MARK: ConversationListContactCell
 class ConversationListContactCellDelegate:NSObject,ConversationClickCellDelegate,ABPeoplePickerNavigationControllerDelegate{
     
-    private var rootController:ConversationListController!
+    fileprivate var rootController:ConversationListController!
     
-    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
+    func conversationTitleCell(_ sender: ConversationListCellBase, controller: ConversationListController!) {
         self.rootController = controller
         showContact()
     }
     
-    private func tryShowTips()->Bool{
+    fileprivate func tryShowTips()->Bool{
         if UserSetting.isSettingEnable(SHOW_OPEN_MOBILE_CONVERSATION_KEY) {
             return false
         }else{
-            let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+            let ok = UIAlertAction(title: "OK".localizedString(), style: .default, handler: { (ac) in
                 self.showContact()
             })
             self.rootController.showAlert("OPEN_MOBILE_CON_FST_TIPS_TITLE".localizedString(), msg: "OPEN_MOBILE_CON_FST_TIPS_MSG".localizedString(), actions: [ok])
@@ -34,14 +34,14 @@ class ConversationListContactCellDelegate:NSObject,ConversationClickCellDelegate
         }
     }
     
-    private func showContact(){
+    fileprivate func showContact(){
         let authStatus = ABAddressBookGetAuthorizationStatus();
-        if authStatus == .NotDetermined {
-            let action = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+        if authStatus == .notDetermined {
+            let action = UIAlertAction(title: "OK".localizedString(), style: .default, handler: { (ac) in
                 if let addressBookRef = ABAddressBookCreateWithOptions(nil , nil){
                     let addressBook = addressBookRef.takeRetainedValue()
                     ABAddressBookRequestAccessWithCompletion(addressBook, { (granted, error) in
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             if error != nil{
                                 self.showNoPersimissionAlert()
                             }else if granted {
@@ -57,37 +57,37 @@ class ConversationListContactCellDelegate:NSObject,ConversationClickCellDelegate
                 }
             })
             self.rootController.showAlert("REQUEST_ACCESS_CONTACT_TITLE".localizedString(), msg: "REQUEST_ACCESS_CONTACT".localizedString(), actions: [action])
-        }else if authStatus == .Authorized{
+        }else if authStatus == .authorized{
             self.showContactView()
         }else{
             self.showNoPersimissionAlert()
         }
     }
     
-    private func showNoPersimissionAlert(){
+    fileprivate func showNoPersimissionAlert(){
         self.rootController.showAlert("NO_CONTACT_PERSIMISSION_TITLE".localizedString(), msg: "NO_CONTACT_PERSIMISSION".localizedString())
     }
     
-    private func showContactView(){
+    fileprivate func showContactView(){
         let controller = ABPeoplePickerNavigationController()
         controller.peoplePickerDelegate = self
         let hud = self.rootController.showAnimationHud()
-        self.rootController.presentViewController(controller, animated: true) { () -> Void in
+        self.rootController.present(controller, animated: true) { () -> Void in
             MobClick.event("Vege_OpenContactView")
             hud.hideAsync(true)
         }
     }
     
     //MARK: ABPeoplePickerNavigationControllerDelegate
-    func peoplePickerNavigationController(peoplePicker: ABPeoplePickerNavigationController, didSelectPerson person: ABRecord) {
-        peoplePicker.dismissViewControllerAnimated(true) { () -> Void in
+    func peoplePickerNavigationController(_ peoplePicker: ABPeoplePickerNavigationController, didSelectPerson person: ABRecord) {
+        peoplePicker.dismiss(animated: true) { () -> Void in
             selectPersonMobile(self.rootController,person: person, onSelectedMobile: { (mobile,title) in
                 self.rootController.openConversationWithMobile(mobile, noteName: title)
             })
         }
     }
     
-    func peoplePickerNavigationControllerDidCancel(peoplePicker: ABPeoplePickerNavigationController) {
-        peoplePicker.dismissViewControllerAnimated(true, completion: nil)
+    func peoplePickerNavigationControllerDidCancel(_ peoplePicker: ABPeoplePickerNavigationController) {
+        peoplePicker.dismiss(animated: true, completion: nil)
     }
 }

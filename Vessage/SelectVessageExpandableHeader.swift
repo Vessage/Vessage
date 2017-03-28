@@ -12,17 +12,17 @@ class SelectVessageExpandableHeader: UIView {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var icon: UIImageView!{
         didSet{
-            icon?.hidden = expanded
+            icon?.isHidden = expanded
         }
     }
     var expanded = false{
         didSet{
-            icon?.hidden = expanded
+            icon?.isHidden = expanded
         }
     }
     
     static func instanceFromXib() -> SelectVessageExpandableHeader{
-        return NSBundle.mainBundle().loadNibNamed("SelectVessageExpandableHeader", owner: nil, options: nil)![0] as! SelectVessageExpandableHeader
+        return Bundle.main.loadNibNamed("SelectVessageExpandableHeader", owner: nil, options: nil)![0] as! SelectVessageExpandableHeader
     }
     
 }

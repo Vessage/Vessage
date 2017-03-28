@@ -13,106 +13,106 @@ class UserSetting
     static var godMode = false
     static var isAppstoreReviewing:Bool{
         get{
-            return NSUserDefaults.standardUserDefaults().boolForKey("isAppstoreReviewId")
+            return UserDefaults.standard.bool(forKey: "isAppstoreReviewId")
         }
         set{
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: "isAppstoreReviewId")
+            UserDefaults.standard.set(newValue, forKey: "isAppstoreReviewId")
         }
     }
     
     static var lastLoginAccountId:String!{
         get{
-            return NSUserDefaults.standardUserDefaults().valueForKey("lastLoginAccountId") as? String
+            return UserDefaults.standard.value(forKey: "lastLoginAccountId") as? String
         }
         set{
             if AppleStoreReviewAccountIds.contains(newValue)
             {
                 isAppstoreReviewing = true
             }
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "lastLoginAccountId")
+            UserDefaults.standard.setValue(newValue, forKey: "lastLoginAccountId")
         }
     }
     
     static var isUserLogined:Bool{
         get{
-        return NSUserDefaults.standardUserDefaults().boolForKey("isUserLogined")
+        return UserDefaults.standard.bool(forKey: "isUserLogined")
         }
         set{
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: "isUserLogined")
+            UserDefaults.standard.set(newValue, forKey: "isUserLogined")
         }
     }
     
-    private static var _userId:String!
+    fileprivate static var _userId:String!
     static var userId:String!{
         get{
         if _userId == nil{
-        _userId = NSUserDefaults.standardUserDefaults().valueForKey("userId") as? String
+        _userId = UserDefaults.standard.value(forKey: "userId") as? String
         }
         return _userId
         }
         set{
             _userId = newValue
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "userId")
+            UserDefaults.standard.setValue(newValue, forKey: "userId")
         }
     }
     
     static var token:String!{
         get{
-        return NSUserDefaults.standardUserDefaults().valueForKey("token") as? String
+        return UserDefaults.standard.value(forKey: "token") as? String
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "token")
+            UserDefaults.standard.setValue(newValue, forKey: "token")
         }
     }
     
-    static func getSettingKey(setting:String) -> String{
-        return "\(UserSetting.lastLoginAccountId):\(setting)"
+    static func getSettingKey(_ setting:String) -> String{
+        return "\(UserSetting.lastLoginAccountId!):\(setting)"
     }
     
-    static func isSettingEnable(setting:String) -> Bool{
-        return NSUserDefaults.standardUserDefaults().boolForKey(getSettingKey(setting))
+    static func isSettingEnable(_ setting:String) -> Bool{
+        return UserDefaults.standard.bool(forKey: getSettingKey(setting))
     }
     
-    static func setSetting(setting:String,enable:Bool)
+    static func setSetting(_ setting:String,enable:Bool)
     {
-        NSUserDefaults.standardUserDefaults().setBool(enable, forKey: getSettingKey(setting))
+        UserDefaults.standard.set(enable, forKey: getSettingKey(setting))
     }
     
-    static func enableSetting(setting:String)
+    static func enableSetting(_ setting:String)
     {
         setSetting(setting, enable: true)
     }
     
-    static func disableSetting(setting:String)
+    static func disableSetting(_ setting:String)
     {
         setSetting(setting, enable: false)
     }
     
-    static func setUserIntValue(setting:String,value:Int){
+    static func setUserIntValue(_ setting:String,value:Int){
         let key = getSettingKey(setting)
-        NSUserDefaults.standardUserDefaults().setInteger(value, forKey: key)
+        UserDefaults.standard.set(value, forKey: key)
     }
     
-    static func getUserIntValue(setting:String) -> Int{
+    static func getUserIntValue(_ setting:String) -> Int{
         let key = getSettingKey(setting)
-        return NSUserDefaults.standardUserDefaults().integerForKey(key)
+        return UserDefaults.standard.integer(forKey: key)
     }
     
-    static func getUserNumberValue(setting:String) -> NSNumber?{
+    static func getUserNumberValue(_ setting:String) -> NSNumber?{
         return getUserValue(setting) as? NSNumber
     }
     
-    static func setUserNumberValue(setting:String,value:NSNumber){
+    static func setUserNumberValue(_ setting:String,value:NSNumber){
         setUserValue(setting, value: value)
     }
     
-    static func setUserValue(setting:String,value:AnyObject){
+    static func setUserValue(_ setting:String,value:Any){
         let key = getSettingKey(setting)
-        NSUserDefaults.standardUserDefaults().setObject(value, forKey: key)
+        UserDefaults.standard.set(value, forKey: key)
     }
     
-    static func getUserValue(setting:String) -> AnyObject?{
+    static func getUserValue(_ setting:String) -> Any?{
         let key = getSettingKey(setting)
-        return NSUserDefaults.standardUserDefaults().objectForKey(key)
+        return UserDefaults.standard.object(forKey: key)
     }
 }

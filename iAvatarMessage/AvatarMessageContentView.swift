@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 protocol AvatarMessageContentContainerDelegate{
-    func avatarMessageContentContainerWidth(container:AvatarMessageContentContainer) -> CGFloat
-    func avatarMessageContentView(container:AvatarMessageContentContainer) -> UIView
-    func avatarMessageContentViewContentSize(container:AvatarMessageContentContainer,containerWidth:CGFloat,contentView:UIView) -> CGSize
+    func avatarMessageContentContainerWidth(_ container:AvatarMessageContentContainer) -> CGFloat
+    func avatarMessageContentView(_ container:AvatarMessageContentContainer) -> UIView
+    func avatarMessageContentViewContentSize(_ container:AvatarMessageContentContainer,containerWidth:CGFloat,contentView:UIView) -> CGSize
 }
 
 class AvatarMessageContentContainer: UIView {
@@ -20,16 +20,16 @@ class AvatarMessageContentContainer: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         bubbleView = BezierBubbleView()
-        bubbleView.bubbleViewLayer.fillColor = UIColor.lightGrayColor().CGColor
+        bubbleView.bubbleViewLayer.fillColor = UIColor.lightGray.cgColor
         self.addSubview(bubbleView)
         avatarImageView = UIImageView()
-        avatarImageView.contentMode = .ScaleAspectFill
-        self.backgroundColor = UIColor.clearColor()
+        avatarImageView.contentMode = .scaleAspectFill
+        self.backgroundColor = UIColor.clear
         self.addSubview(avatarImageView)
     }
     
     convenience init() {
-        self.init(frame:CGRectZero)
+        self.init(frame:CGRect.zero)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,28 +40,28 @@ class AvatarMessageContentContainer: UIView {
     
     var avatarSize:CGFloat = 72
     
-    private(set) var avatarImageView: UIImageView!
+    fileprivate(set) var avatarImageView: UIImageView!
     
-    private(set) var bubbleView:BezierBubbleView!
-    private(set) var contentView:UIView!
+    fileprivate(set) var bubbleView:BezierBubbleView!
+    fileprivate(set) var contentView:UIView!
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first{
-            let curP = touch.locationInView(self)
-            let preP = touch.previousLocationInView(self)
+            let curP = touch.location(in: self)
+            let preP = touch.previousLocation(in: self)
             let offsetX = curP.x - preP.x;
             let offsetY = curP.y - preP.y
             if moveAvatarWithTranslation(offsetX,ty: offsetY){
                 return
             }
         }
-        super.touchesMoved(touches, withEvent: event)
+        super.touchesMoved(touches, with: event)
     }
 }
 
 //Horizontal Bubble
 extension AvatarMessageContentContainer{
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         if let d = delegate{
             avatarImageView.clipsToBounds = true
             avatarImageView.frame.size = CGSize(width: avatarSize, height: avatarSize)
@@ -77,7 +77,7 @@ extension AvatarMessageContentContainer{
             
             let contentSize = d.avatarMessageContentViewContentSize(self, containerWidth: contentMaxWidth,contentView: contentView)
             contentView.frame.size = contentSize
-            contentView.frame.origin = CGPointZero
+            contentView.frame.origin = CGPoint.zero
             
             contentView.layoutIfNeeded()
             
@@ -85,7 +85,7 @@ extension AvatarMessageContentContainer{
             avatarImageView.frame.origin.y = 0
             
             
-            let bubbleViewSize = bubbleView.sizeOfContentSize(contentSize, direction: .Right(startYRatio: 0.5))
+            let bubbleViewSize = bubbleView.sizeOfContentSize(contentSize, direction: .right(startYRatio: 0.5))
             bubbleView.frame.size = bubbleViewSize
 
             bubbleView.frame.origin.x = avatarImageView.frame.origin.x + avatarImageView.frame.width + 6
@@ -97,20 +97,20 @@ extension AvatarMessageContentContainer{
             self.frame.size.width += 10
             bubbleView.layoutIfNeeded()
         }
-        super.drawRect(rect)
+        super.draw(rect)
     }
     
-    private func setBubbleMarkPoint(){
+    fileprivate func setBubbleMarkPoint(){
         var midPoint:CGFloat = 0
         if self.bubbleView.frame.height < self.avatarSize{
             midPoint = 0.5
         }else{
             midPoint = (self.avatarImageView.frame.origin.y + self.avatarImageView.frame.height / 2 - bubbleView.frame.origin.y) / (bubbleView.frame.size.height)
         }
-        self.bubbleView.bubbleDirection = .Right(startYRatio: Float(midPoint))
+        self.bubbleView.bubbleDirection = .right(startYRatio: Float(midPoint))
     }
     
-    private func moveAvatarWithTranslation(tx:CGFloat,ty:CGFloat) -> Bool {
+    fileprivate func moveAvatarWithTranslation(_ tx:CGFloat,ty:CGFloat) -> Bool {
         if ty == 0 {
             return false
         }

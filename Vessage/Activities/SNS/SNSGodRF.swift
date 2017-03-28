@@ -11,7 +11,7 @@ class SNSGodLikePostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/GodLikePost"
-        self.method = .POST
+        self.method = .post
     }
     
     var postId:String!{
@@ -25,7 +25,7 @@ class SNSGodDeletePostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/GodDeletePost"
-        self.method = .DELETE
+        self.method = .delete
     }
     
     var postId:String!{
@@ -39,7 +39,7 @@ class SNSGodBlockMemberRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/GodBlockMember"
-        self.method = .POST
+        self.method = .post
     }
     
     var memberId:String!{

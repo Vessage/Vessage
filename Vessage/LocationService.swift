@@ -9,12 +9,12 @@
 import Foundation
 import CoreLocation
 
-class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDelegate
+class LocationService:NotificationCenter,ServiceProtocol,CLLocationManagerDelegate
 {
     @objc static var ServiceName:String{return "Location Service"}
-    static let hereUpdated = "hereUpdated"
-    private var locationManager:CLLocationManager!
-    @objc func appStartInit(appName:String) {
+    static let hereUpdated = "hereUpdated".asNotificationName()
+    fileprivate var locationManager:CLLocationManager!
+    @objc func appStartInit(_ appName:String) {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
@@ -22,7 +22,7 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
         locationManager.requestWhenInUseAuthorization()
     }
     
-    func userLoginInit(userId: String) {
+    func userLoginInit(_ userId: String) {
         self.locationManager.startUpdatingLocation()
         self.setServiceReady()
     }
@@ -36,8 +36,8 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
         self.locationManager.startUpdatingLocation()
     }
     
-    private var _here:CLLocation!
-    private(set) var here:CLLocation!{
+    fileprivate var _here:CLLocation!
+    fileprivate(set) var here:CLLocation!{
         get{
             #if DEBUG
                 if _here == nil && isInSimulator() {
@@ -67,13 +67,16 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
     }
     
     //MARK: CLLocationManagerDelegate
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        here = newLocation
-        self.postNotificationName(LocationService.hereUpdated, object: self)
-        self.locationManager.stopUpdatingLocation()
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let newLocation = locations.last{
+            here = newLocation
+            self.post(name: LocationService.hereUpdated, object: self)
+            self.locationManager.stopUpdatingLocation()
+        }
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
     }
 }
@@ -81,6 +84,6 @@ class LocationService:NSNotificationCenter,ServiceProtocol,CLLocationManagerDele
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getLocationService() -> LocationService {
-        return ServiceContainer.getService(LocationService)
+        return ServiceContainer.getService(LocationService.self)
     }
 }

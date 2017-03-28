@@ -12,7 +12,7 @@ class ChatWithSelfDelegate: ConversationClickCellDelegate {
         return ChatWithSelfDelegate()
     }()
     
-    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
+    func conversationTitleCell(_ sender: ConversationListCellBase, controller: ConversationListController!) {
         let c = Conversation()
         c.chatterId = ServiceContainer.getUserService().myProfile.userId
         c.conversationId = IdUtil.generateUniqueId()

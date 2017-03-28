@@ -18,13 +18,13 @@ class AppRequestBase: BahamutRFRequestBase {
     
     var buildVersion:Int!{
         didSet{
-            self.paramenters["buildVersion"] = "\(buildVersion)"
+            self.paramenters["buildVersion"] = "\(buildVersion!)"
         }
     }
     
     var oldBuildVersion:Int!{
         didSet{
-            self.paramenters["oldBuildVersion"] = "\(oldBuildVersion)"
+            self.paramenters["oldBuildVersion"] = "\(oldBuildVersion!)"
         }
     }
 }
@@ -32,7 +32,7 @@ class AppRequestBase: BahamutRFRequestBase {
 class AppFirstLaunchRequest: AppRequestBase {
     override init() {
         super.init()
-        self.method = .POST
+        self.method = .post
         self.api = "/App/FirstLaunch"
     }
 }

@@ -11,9 +11,9 @@ import UIKit
 let maxGroupChatUserCount = 6
 
 class ConversationListGroupChatCellDelegate: NSObject,ConversationClickCellDelegate,SelectVessageUserViewControllerDelegate {
-    private var rootController:ConversationListController!
+    fileprivate var rootController:ConversationListController!
     
-    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
+    func conversationTitleCell(_ sender: ConversationListCellBase, controller: ConversationListController!) {
         self.rootController = controller
         let svuvc = SelectVessageUserViewController.showSelectVessageUserViewController(controller.navigationController!)
         svuvc.delegate = self
@@ -23,7 +23,7 @@ class ConversationListGroupChatCellDelegate: NSObject,ConversationClickCellDeleg
         svuvc.title = "SELECT_GROUP_CHAT_PEOPLE".localizedString()
     }
     
-    func canSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {
+    func canSelect(_ sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {
         if selectedUsers.count > maxGroupChatUserCount {
             sender.playToast("GROUP_CHAT_PEOPLE_NUM_LIMIT".localizedString())
             return false
@@ -35,11 +35,11 @@ class ConversationListGroupChatCellDelegate: NSObject,ConversationClickCellDeleg
         }
     }
     
-    func onFinishSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
+    func onFinishSelect(_ sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
         let groupName = String(format: "GROUP_CHAT_WITH_X_X_PEOPLE".localizedString(), selectedUsers.first!.nickName,"\(selectedUsers.count + 1)")
         let hud = self.rootController.showAnimationHud()
         ServiceContainer.getChatGroupService().createChatGroup(groupName,userIds: selectedUsers.map{$0.userId}){ chatGroup in
-            hud.hideAnimated(true)
+            hud.hide(animated: true)
             if let cg = chatGroup{
                 let conversation = ServiceContainer.getConversationService().openConversationByGroup(cg)
                 ConversationViewController.showConversationViewController(self.rootController.navigationController!, conversation: conversation)

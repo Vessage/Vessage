@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import KDCircularProgress
 
 protocol RecordVessageVideoControllerDelegate{
-    func recordVessageVideoControllerCanceled(controller:RecordVessageVideoController)
-    func recordVessageVideoControllerSaveVideoError(controller:RecordVessageVideoController)
-    func recordVessageVideoController(videoSavedUrl:NSURL,isTimeUp:Bool, controller:RecordVessageVideoController)
+    func recordVessageVideoControllerCanceled(_ controller:RecordVessageVideoController)
+    func recordVessageVideoControllerSaveVideoError(_ controller:RecordVessageVideoController)
+    func recordVessageVideoController(_ videoSavedUrl:URL,isTimeUp:Bool, controller:RecordVessageVideoController)
 }
 
 class RecordVessageVideoControllerProxyBase :NSObject{
@@ -47,7 +48,7 @@ class RecordVessageVideoControllerProxyBase :NSObject{
     }
     
     
-    func initManager(controller: RecordVessageVideoController){
+    func initManager(_ controller: RecordVessageVideoController){
         self.rootController = controller
     }
 }
@@ -62,21 +63,21 @@ class RecordVessageVideoController: UIViewController {
     //MARK: Record Views
     @IBOutlet weak var sendRecordButton: UIButton!{
         didSet{
-            sendRecordButton.hidden = true
+            sendRecordButton.isHidden = true
         }
     }
     @IBOutlet weak var cancelRecordButton: UIButton!
     
     @IBOutlet weak var previewRectView: UIView!{
         didSet{
-            previewRectView.backgroundColor = UIColor.clearColor()
+            previewRectView.backgroundColor = UIColor.clear
         }
     }
     
     @IBOutlet weak var recordingProgress: KDCircularProgress!{
         didSet{
             recordingProgress.layoutIfNeeded()
-            recordingProgress.hidden = true
+            recordingProgress.isHidden = true
         }
     }
     
@@ -84,15 +85,15 @@ class RecordVessageVideoController: UIViewController {
         didSet{
             recordingFlashView.layoutIfNeeded()
             recordingFlashView.layer.cornerRadius = recordingFlashView.frame.size.height / 2
-            recordingFlashView.hidden = true
+            recordingFlashView.isHidden = true
         }
     }
     
     @IBOutlet weak var noSmileFaceTipsLabel: UILabel!
     @IBOutlet weak var groupFaceContainer: UIView!
     
-    private(set) var recordVessageManager:RecordVessageManager!
-    private(set) var isRecording:Bool = false
+    fileprivate(set) var recordVessageManager:RecordVessageManager!
+    fileprivate(set) var isRecording:Bool = false
     @IBOutlet weak var recordViewContainer: UIView!
     
     var chatGroup:ChatGroup!
@@ -103,9 +104,9 @@ class RecordVessageVideoController: UIViewController {
         recordVessageManager.initManager(self)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        ServiceContainer.getAppService().addObserver(self, selector: #selector(RecordVessageVideoController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
+        ServiceContainer.getAppService().addObserver(self, selector: #selector(RecordVessageVideoController.onAppResignActive(_:)), name:AppService.onAppResignActive, object: nil)
         if let cg = chatGroup{
             recordViewContainer.layoutIfNeeded()
             recordVessageManager?.onChatGroupUpdated(cg)
@@ -113,12 +114,12 @@ class RecordVessageVideoController: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         recordVessageManager.openCamera()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ServiceContainer.getAppService().removeObserver(self)
         recordVessageManager.onReleaseManager()
@@ -127,18 +128,18 @@ class RecordVessageVideoController: UIViewController {
     func onAppResignActive(_:AnyObject?) {
         if isRecording {
             self.recordVessageManager.cancelRecord()
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }
 
 extension RecordVessageVideoController{
-    static func startRecordVideo(vc:UIViewController,isGroupChat:Bool,chatGroup:ChatGroup, delegate:RecordVessageVideoControllerDelegate){
+    static func startRecordVideo(_ vc:UIViewController,isGroupChat:Bool,chatGroup:ChatGroup, delegate:RecordVessageVideoControllerDelegate){
         let controller = instanceFromStoryBoard("Conversation", identifier: "RecordVessageVideoController") as! RecordVessageVideoController
         controller.delegate = delegate
         controller.isGroupChat = isGroupChat
         controller.chatGroup = chatGroup
-        vc.presentViewController(controller, animated: true) {
+        vc.present(controller, animated: true) {
         }
     }
 }

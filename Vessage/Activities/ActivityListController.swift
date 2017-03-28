@@ -8,7 +8,7 @@
 
 class ActivityListCell: UITableViewCell {
     static let reuseId = "ActivityListCell"
-    private weak var rootController:ActivityListController!
+    fileprivate weak var rootController:ActivityListController!
     var activityInfo:ActivityInfo!{
         didSet{
             badgeValue = 0
@@ -27,7 +27,7 @@ class ActivityListCell: UITableViewCell {
     }
     @IBOutlet weak var badgeLabel: UILabel!{
         didSet{
-            badgeLabel.hidden = true
+            badgeLabel.isHidden = true
             badgeLabel.clipsToBounds = true
             badgeLabel.layer.cornerRadius = 10
         }
@@ -38,7 +38,7 @@ class ActivityListCell: UITableViewCell {
             miniBadgeView.clipsToBounds = true
             miniBadgeView.layoutIfNeeded()
             miniBadgeView.layer.cornerRadius = miniBadgeView.frame.height / 2
-            miniBadgeView.hidden = !showMiniBadge
+            miniBadgeView.isHidden = !showMiniBadge
         }
     }
     
@@ -51,7 +51,7 @@ class ActivityListCell: UITableViewCell {
     var showMiniBadge = false{
         didSet{
             if miniBadgeView != nil{
-                miniBadgeView.hidden = !showMiniBadge
+                miniBadgeView.isHidden = !showMiniBadge
             }
         }
     }
@@ -65,9 +65,9 @@ class ActivityListCell: UITableViewCell {
 //MARK:ActivityListController
 class ActivityListController: UITableViewController {
     
-    private(set) var activityService:ActivityService!
+    fileprivate(set) var activityService:ActivityService!
     
-    private var activities = [[ActivityInfo]]()
+    fileprivate var activities = [[ActivityInfo]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,23 +76,23 @@ class ActivityListController: UITableViewController {
         self.navigationItem.title = "EXTRA_SERVICE_DISPLAY_NAME".localizedString()
         self.activityService = ServiceContainer.getActivityService()
         self.tableView.tableFooterView = UIView()
-        self.tableView.scrollEnabled = false
+        self.tableView.isScrollEnabled = false
         self.tableView.allowsSelection = true
         self.tableView.allowsMultipleSelection = false
         self.activityService.addObserver(self, selector: #selector(ActivityListController.onActivityBadgeUpdated(_:)), name: ActivityService.onEnabledActivityBadgeUpdated, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(ActivityListController.onServicesWillLogout(_:)), name: ServiceContainer.OnServicesWillLogout, object: nil)
-        activities.appendContentsOf(activityService.getEnabledActivities())
+        activities.append(contentsOf: activityService.getEnabledActivities())
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setNavigationBadges()
-        MainTabBarController.instance?.tabBar.hidden = false
+        MainTabBarController.instance?.tabBar.isHidden = false
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        MainTabBarController.instance?.tabBar.hidden = true
+        MainTabBarController.instance?.tabBar.isHidden = true
     }
     
     deinit{
@@ -101,7 +101,7 @@ class ActivityListController: UITableViewController {
         #endif
     }
     
-    private func setNavigationBadges() {
+    fileprivate func setNavigationBadges() {
         let appService = ServiceContainer.getAppService()
         if appService.inviteBadge {
             navigationItem.rightBarButtonItem?.showMiniBadge()
@@ -110,18 +110,18 @@ class ActivityListController: UITableViewController {
         }
     }
     
-    @IBAction func tellFriends(sender: AnyObject) {
+    @IBAction func tellFriends(_ sender: AnyObject) {
         ServiceContainer.getAppService().inviteBadge = false
         setNavigationBadges()
         ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString(),copyLink: true)
     }
     
-    func onServicesWillLogout(a:NSNotification) {
+    func onServicesWillLogout(_ a:Notification) {
         ServiceContainer.instance.removeObserver(self)
         self.activityService.removeObserver(self)
     }
 
-    func onActivityBadgeUpdated(a:NSNotification){
+    func onActivityBadgeUpdated(_ a:Notification){
         for cell in self.tableView.visibleCells{
             if let c = cell as? ActivityListCell{
                 if let id = a.userInfo?[UpdatedActivityIdValue] as? String{
@@ -134,44 +134,44 @@ class ActivityListController: UITableViewController {
     }
     
     //MARK: Table View Delegate
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return activities.count
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if ActivityInfoList.count > 1 {
-            tableView.separatorStyle = .SingleLine
+            tableView.separatorStyle = .singleLine
         }else{
-            tableView.separatorStyle = .None
+            tableView.separatorStyle = .none
         }
         return activities[section].count
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 11
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         openActivity(indexPath)
     }
     
-    private func openActivity(indexPath:NSIndexPath){
+    fileprivate func openActivity(_ indexPath:IndexPath){
         let activityInfo = activities[indexPath.section][indexPath.row]
         let controller = UIViewController.instanceFromStoryBoard(activityInfo.storyBoardName, identifier: activityInfo.controllerIdentifier)
         if(activityInfo.isPushController){
             controller.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(controller, animated: true)
         }else{
-            self.presentViewController(controller, animated: true, completion: nil)
+            self.present(controller, animated: true, completion: nil)
         }
         if activityInfo.autoClearBadge {
             ServiceContainer.getActivityService().clearActivityAllBadge(activityInfo.activityId)
         }
-        MobClick.event("Vege_OpenActivity_\(activityInfo.activityId)")
+        MobClick.event("Vege_OpenActivity_\(activityInfo.activityId!)")
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ActivityListCell.reuseId, forIndexPath: indexPath) as! ActivityListCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ActivityListCell.reuseId, for: indexPath) as! ActivityListCell
         cell.rootController = self
         cell.activityInfo = activities[indexPath.section][indexPath.row]
         cell.setSeparatorFullWidth()

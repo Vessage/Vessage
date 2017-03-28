@@ -22,11 +22,12 @@ class SendVessageTaskSteps {
 
 class PostVessageHandler :SendVessageQueueStepHandler {
     static let stepKey = "PostVessage"
-    override func doTask(vessageQueue:VessageQueue,task: SendVessageQueueTask) {
-        ServiceContainer.getVessageService().sendVessageToUser(task.receiverId, vessage: task.vessage){ vessageId in
+    override func doTask(_ vessageQueue:VessageQueue,task: SendVessageQueueTask) {
+        let vsg = task.vessage!
+        ServiceContainer.getVessageService().sendVessageToUser(task.receiverId, vessage: vsg){ vessageId in
             if let vsgId = vessageId{
+                task.vessage = vsg.copyToObject(Vessage.self)
                 task.vessage.vessageId = vsgId
-                task.saveModel()
                 vessageQueue.nextStep(task)
             }else{
                 vessageQueue.doTaskStepError(task, message: "POST_VESSAGE_ERROR")
@@ -37,17 +38,16 @@ class PostVessageHandler :SendVessageQueueStepHandler {
 
 class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
     static let stepKey = "SendAliOSSFile"
-    private var uploadDict = [String:SendVessageQueueTask]()
+    fileprivate var uploadDict = [String:SendVessageQueueTask]()
     
     override func releaseHandler() {
         uploadDict.removeAll()
     }
     
-    override func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
-        ServiceContainer.getFileService().sendFileToAliOSS(task.filePath, type: .NoType) { (uploadTaskId, fileKey) -> Void in
-            if fileKey != nil{
-                task.vessage.fileId = fileKey.fileId
-                task.saveModel()
+    override func doTask(_ vessageQueue: VessageQueue, task: SendVessageQueueTask) {
+        ServiceContainer.getFileService().sendFileToAliOSS(task.filePath, type: .noType) { (uploadTaskId, fileKey) -> Void in
+            if let fk = fileKey{
+                task.vessage.fileId = fk.fileId
                 self.uploadDict[uploadTaskId] = task
                 ProgressTaskWatcher.sharedInstance.addTaskObserver(uploadTaskId, delegate: self)
             }else{
@@ -56,19 +56,21 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
         }
     }
     
-    @objc func taskProgress(taskIdentifier: String, persent: Float) {
+    @objc func taskProgress(_ taskIdentifier: String, persent: Float) {
         if let task = uploadDict[taskIdentifier]{
             VessageQueue.sharedInstance.notifyTaskStepProgress(task, stepIndex: task.currentStep, stepProgress: persent / 100)
         }
     }
     
-    @objc func taskCompleted(taskIdentifier: String, result: AnyObject!) {
-        if let task = uploadDict.removeValueForKey(taskIdentifier){
-            VessageQueue.sharedInstance.nextStep(task)
+    @objc func taskCompleted(_ taskIdentifier: String, result: Any!) {
+        if let task = uploadDict.removeValue(forKey: taskIdentifier){
+            DispatchQueue.main.async {
+                VessageQueue.sharedInstance.nextStep(task)
+            }
         }
     }
     
-    @objc func taskFailed(taskIdentifier: String, result: AnyObject!) {
+    @objc func taskFailed(_ taskIdentifier: String, result: Any!) {
         if let task = uploadDict[taskIdentifier]{
             VessageQueue.sharedInstance.doTaskStepError(task, message: "UPLOAD_FILE_ERROR")
         }
@@ -78,7 +80,7 @@ class SendAliOSSFileHandler: SendVessageQueueStepHandler,ProgressTaskDelegate {
 class FinishNormalVessageHandler: SendVessageQueueStepHandler {
     static let stepKey = "FinishNormalVessage"
     
-    override func doTask(vessageQueue: VessageQueue, task: SendVessageQueueTask) {
+    override func doTask(_ vessageQueue: VessageQueue, task: SendVessageQueueTask) {
         ServiceContainer.getVessageService().finishSendVessage(task.vessage.vessageId) { (finished, sendVessageResultModel) in
             if finished{
                 vessageQueue.nextStep(task)

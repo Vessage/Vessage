@@ -7,34 +7,34 @@
 //
 
 import Foundation
-public class RegistUserDeviceRequest : BahamutRFRequestBase {
+open class RegistUserDeviceRequest : BahamutRFRequestBase {
     
-    public static let DEVICE_TYPE_IOS = "iOS"
+    open static let DEVICE_TYPE_IOS = "iOS"
     
     override init(){
         super.init()
-        self.method = .POST
+        self.method = .post
         self.api = "/VessageUsers/UserDevice"
     }
     
-    public func setDeviceToken(deviceToken:String){
+    open func setDeviceToken(_ deviceToken:String){
         self.paramenters["deviceToken"] = deviceToken
     }
     
-    public func setDeviceType(deviceType:String){
+    open func setDeviceType(_ deviceType:String){
         self.paramenters["deviceType"] = deviceType
     }
 }
 
-public class RemoveUserDeviceRequest : BahamutRFRequestBase {
+open class RemoveUserDeviceRequest : BahamutRFRequestBase {
     
     override init() {
         super.init()
-        self.method = .DELETE
+        self.method = .delete
         self.api = "/VessageUsers/UserDevice"
     }
     
-    public func setDeviceToken(deviceToken:String){
+    open func setDeviceToken(_ deviceToken:String){
         self.paramenters["deviceToken"] = deviceToken
     }
 }

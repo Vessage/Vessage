@@ -9,7 +9,7 @@
 import UIKit
 
 class LaunchScreen {
-    private(set) var view:UIView!
+    fileprivate(set) var view:UIView!
     var mottoLabel:UILabel{
         return view.viewWithTag(1) as! UILabel
     }

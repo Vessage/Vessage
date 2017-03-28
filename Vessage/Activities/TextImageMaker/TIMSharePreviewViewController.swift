@@ -10,7 +10,7 @@ import UIKit
 
 class TIMSharePreviewViewController: UIViewController {
 
-    private static var font:UIFont?
+    fileprivate static var font:UIFont?
     @IBOutlet weak var fontSizeSlider: UISlider!
     @IBOutlet weak var bcgCollectionView: UICollectionView!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -32,9 +32,9 @@ class TIMSharePreviewViewController: UIViewController {
                 let descs = createFontDescWithFontName(fontName)
                 CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil, { (state, progressDict) -> Bool in
                     switch state{
-                    case .WillBeginDownloading:
+                    case .willBeginDownloading:
                         return false
-                    case .DidFinish:
+                    case .didFinish:
                         if let newFont = UIFont(name: fontName, size: self.shareTextContentLabel?.font?.pointSize ?? cgFontSize){
                             self.shareTextContentLabel?.font = newFont
                         }
@@ -48,17 +48,17 @@ class TIMSharePreviewViewController: UIViewController {
         bcgCollectionView.allowsSelection = true
     }
     
-    @IBAction func onClickFont(sender: AnyObject) {
+    @IBAction func onClickFont(_ sender: AnyObject) {
         SelectFontViewController.showSelectFontViewController(self.navigationController!, delegate: self)
     }
 
-    @IBAction func onSliderValueChanged(sender: AnyObject) {
+    @IBAction func onSliderValueChanged(_ sender: AnyObject) {
         let newSize = fontSizeSlider.value
-        shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(newSize))
-        UserSetting.setUserNumberValue(cachedFontSizeKey, value: NSNumber(float: newSize))
+        shareTextContentLabel.font = shareTextContentLabel.font.withSize(CGFloat(newSize))
+        UserSetting.setUserNumberValue(cachedFontSizeKey, value: NSNumber(value: newSize as Float))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         shareTextContentLabel.text = shareTextContent
         bcgCollectionView.delegate = self
@@ -66,32 +66,32 @@ class TIMSharePreviewViewController: UIViewController {
         
         if let fontSize = UserSetting.getUserNumberValue(cachedFontSizeKey){
             if fontSize.floatValue > fontSizeSlider.minimumValue {
-                shareTextContentLabel.font = shareTextContentLabel.font.fontWithSize(CGFloat(fontSize.floatValue))
+                shareTextContentLabel.font = shareTextContentLabel.font.withSize(CGFloat(fontSize.floatValue))
             }
             fontSizeSlider.setValue(fontSize.floatValue, animated: true)
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let index = UserSetting.getUserIntValue(selectedStyleIndexKey)
-        bcgCollectionView.selectItemAtIndexPath(NSIndexPath.init(forRow: index, inSection: 0), animated: true, scrollPosition: .CenteredHorizontally)
+        bcgCollectionView.selectItem(at: IndexPath.init(row: index, section: 0), animated: true, scrollPosition: .centeredHorizontally)
         setStyle(index)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let controller = segue.destinationViewController as? TIMShareAndSaveViewController{
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? TIMShareAndSaveViewController{
             controller.image = shareTextContentLabel.superview?.viewToImage()
         }
     }
 }
 
 extension TIMSharePreviewViewController:SelectFontViewControllerDelegate{
-    func selectFontViewController(ender: SelectFontViewController, onSelectedFont font: UIFont) {
+    func selectFontViewController(_ ender: SelectFontViewController, onSelectedFont font: UIFont) {
         let fontSize = self.shareTextContentLabel.font.pointSize
         TIMSharePreviewViewController.font = font
         UserSetting.setUserValue(cachedFontKey, value: font.fontName)
-        self.shareTextContentLabel.font = font.fontWithSize(fontSize)
+        self.shareTextContentLabel.font = font.withSize(fontSize)
     }
 }
 
@@ -112,26 +112,26 @@ private let TIMDefaultStyles = [
 ]
 
 extension TIMSharePreviewViewController:UICollectionViewDelegate,UICollectionViewDataSource{
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return TIMDefaultStyles.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(TIMBackgroundItemCell.reuseId, forIndexPath: indexPath) as! TIMBackgroundItemCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TIMBackgroundItemCell.reuseId, for: indexPath) as! TIMBackgroundItemCell
         cell.imageView.image = UIImage(named: TIMDefaultStyles[indexPath.row]["bcg"]!)
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         UserSetting.setUserIntValue(selectedStyleIndexKey, value: indexPath.row)
         setStyle(indexPath.row)
     }
     
-    func setStyle(index:Int) {
+    func setStyle(_ index:Int) {
         if index >= 0 && index < TIMDefaultStyles.count {
             let dict = TIMDefaultStyles[index]
             if let imgName = dict["bcg"],let img = UIImage(named:imgName){
@@ -148,16 +148,16 @@ class TIMBackgroundItemCell: UICollectionViewCell {
     static let reuseId = "TIMBackgroundItemCell"
     @IBOutlet weak var imageView: UIImageView!{
         didSet{
-            selected = false
+            isSelected = false
         }
     }
-    override var selected: Bool{
+    override var isSelected: Bool{
         didSet{
-            if selected {
-                imageView?.layer.borderColor = UIColor.orangeColor().CGColor
+            if isSelected {
+                imageView?.layer.borderColor = UIColor.orange.cgColor
                 imageView?.layer.borderWidth = 1
             }else{
-                imageView?.layer.borderColor = UIColor.lightGrayColor().CGColor
+                imageView?.layer.borderColor = UIColor.lightGray.cgColor
                 imageView?.layer.borderWidth = 0.5
             }
         }

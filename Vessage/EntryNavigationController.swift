@@ -14,25 +14,25 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     var launchScr:LaunchScreen!
     let screenWaitTimeInterval = 1.2
     let mottoCount = 1
-    private static var instance:EntryNavigationController!
+    fileprivate static var instance:EntryNavigationController!
     
-    private var mainViewPresented = false
+    fileprivate var mainViewPresented = false
     
     //MARK: life circle
     override func viewDidLoad() {
         super.viewDidLoad()
         EntryNavigationController.instance = self
-        UIApplication.sharedApplication().delegate?.window!?.rootViewController = self
+        UIApplication.shared.delegate?.window!?.rootViewController = self
         ServiceContainer.instance.initContainer("Vege", services: ServicesConfig)
         setWaitingScreen()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setRandomMotto()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.addSubview(launchScr.view)
         self.mainViewPresented = false
@@ -44,19 +44,19 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         ServiceContainer.instance.removeObserver(self)
     }
 
-    private func setWaitingScreen() {
-        self.view.backgroundColor = UIColor.whiteColor()
+    fileprivate func setWaitingScreen() {
+        self.view.backgroundColor = UIColor.white
         if launchScr == nil {
             launchScr = LaunchScreen.getInstanceFromStroyboard()
         }
         self.view.addSubview(launchScr.view)
         ColorSets.themeColor = UIColor(hexString: "#00ADFF")
         launchScr.mottoLabel.updateConstraints()
-        launchScr.mottoLabel.hidden = false
+        launchScr.mottoLabel.isHidden = false
         setRandomMotto()
     }
     
-    private func setRandomMotto(){
+    fileprivate func setRandomMotto(){
         let motto = "VESSAGE_MOTTO_\(random() % mottoCount)".localizedString()
         launchScr.mottoLabel.text = motto
     }
@@ -66,7 +66,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         allServiceReadyGo()
     }
     
-    private func allServiceReadyGo(){
+    fileprivate func allServiceReadyGo(){
         ServiceContainer.instance.removeObserver(self)
         let userService = ServiceContainer.getUserService()
         let isUserMobileValidated = userService.isUserMobileValidated
@@ -90,19 +90,19 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         logoutWithAlert("USER_APP_TOKEN_TIMEOUT".localizedString())
     }
     
-    private func logoutWithAlert(msg:String){
+    fileprivate func logoutWithAlert(_ msg:String){
         BahamutRFKit.sharedInstance.removeObserver(self)
         
-        let alert = UIAlertController(title: nil, message: msg , preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .Default, handler: { (action) -> Void in
-            self.popToRootViewControllerAnimated(false)
+        let alert = UIAlertController(title: nil, message: msg , preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .default, handler: { (action) -> Void in
+            self.popToRootViewController(animated: false)
             ServiceContainer.instance.userLogout()
             EntryNavigationController.start()
         }))
         self.showAlert(alert)
     }
     
-    func onHereLocationUpdated(_:NSNotification) {
+    func onHereLocationUpdated(_:Notification) {
         let locationService = ServiceContainer.getLocationService()
         if let hereLocation = locationService.hereLocationString{
             ServiceContainer.getUserService().getNearUsers(hereLocation,checkTime:true)
@@ -114,7 +114,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         logoutWithAlert("OTHER_DEVICE_HAD_LOGIN".localizedString())
     }
     
-    private func go()
+    fileprivate func go()
     {
         if UserSetting.isUserLogined
         {
@@ -132,9 +132,9 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         }
     }
     
-    private func showSignView()
+    fileprivate func showSignView()
     {
-        NSTimer.scheduledTimerWithTimeInterval(screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowSignView(_:)), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowSignView(_:)), userInfo: nil, repeats: false)
     }
     
     func waitTimeShowSignView(_:AnyObject?)
@@ -142,12 +142,12 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         SignInViewController.showSignInViewController(self)
     }
     
-    private func showMainView()
+    fileprivate func showMainView()
     {
         let chattingUserIds = ServiceContainer.getConversationService().getChattingUserIds()
         let removedUsers = ServiceContainer.getUserService().clearTempUsers(chattingUserIds)
         debugLog("Removed Temp Users:\(removedUsers.count)")
-        NSTimer.scheduledTimerWithTimeInterval(screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowMainView(_:)), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: screenWaitTimeInterval, target: self, selector: #selector(EntryNavigationController.waitTimeShowMainView(_:)), userInfo: nil, repeats: false)
     }
     
     func waitTimeShowMainView(_:AnyObject?)
@@ -161,14 +161,14 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
     }
 
     //MARK: handle Bahamut Cmd
-    func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
+    func handleBahamutCmd(_ method: String, args: [String], object: AnyObject?) {
         
     }
     
     static func start()
     {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            UIApplication.sharedApplication().delegate?.window!?.rootViewController = EntryNavigationController.instance
+        DispatchQueue.main.async(execute: { () -> Void in
+            UIApplication.shared.delegate?.window!?.rootViewController = EntryNavigationController.instance
             if !EntryNavigationController.instance.mainViewPresented{
                 EntryNavigationController.instance.go()
             }
@@ -178,27 +178,27 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
 
 //MARK:ValidateMobileViewController Delegate
 extension EntryNavigationController{
-    func validateMobile(sender: ValidateMobileViewController, rebindedNewUserId: String) {
+    func validateMobile(_ sender: ValidateMobileViewController, rebindedNewUserId: String) {
         ServiceContainer.getAccountService().reBindUserId(rebindedNewUserId)
     }
     
-    func validateMobileCancel(sender: ValidateMobileViewController) {
-        let ignore = UIAlertAction(title: "IGNORE_SETUP_MOBILE".localizedString(), style: .Default) { (ac) in
+    func validateMobileCancel(_ sender: ValidateMobileViewController) {
+        let ignore = UIAlertAction(title: "IGNORE_SETUP_MOBILE".localizedString(), style: .default) { (ac) in
             ServiceContainer.getUserService().useTempMobile()
-            sender.dismissViewControllerAnimated(true, completion: nil)
+            sender.dismiss(animated: true, completion: nil)
         }
-        let resume = UIAlertAction(title: "CONTINUE_SETUP_MOBILE".localizedString(), style: .Cancel) { (ac) in
+        let resume = UIAlertAction(title: "CONTINUE_SETUP_MOBILE".localizedString(), style: .cancel) { (ac) in
             
         }
         self.showAlert("CANCEL_SETUP_MOBILE_TITLE".localizedString(), msg: "CANCEL_SETUP_MOBILE_MSG".localizedString(), actions: [resume,ignore])
         
     }
     
-    func validateMobileIsTryBindExistsUser(sender: ValidateMobileViewController) -> Bool {
+    func validateMobileIsTryBindExistsUser(_ sender: ValidateMobileViewController) -> Bool {
         return true
     }
     
-    func validateMobile(sender: ValidateMobileViewController, suc: Bool) {
+    func validateMobile(_ sender: ValidateMobileViewController, suc: Bool) {
         
     }
     

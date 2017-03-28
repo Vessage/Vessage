@@ -56,7 +56,7 @@ extension SNSPost{
         if ts <= 0 {
             return "UNKNOW_DATE_TIME".SNSString
         }
-        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
+        return Date(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
     }
 }
 
@@ -93,7 +93,7 @@ extension SNSPostComment{
         if ts <= 0 {
             return "UNKNOW_DATE_TIME".SNSString
         }
-        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
+        return Date(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString()
     }
     
     func getOutputContent() -> String! {
@@ -110,16 +110,16 @@ class SNSPostLike: EVObject {
 }
 
 extension SNSPostLike{
-    func getPostDateFriendString(formatter:NSDateFormatter! = nil) -> String {
+    func getPostDateFriendString(_ formatter:DateFormatter! = nil) -> String {
         if ts <= 0 {
             return "UNKNOW_DATE_TIME".SNSString
         }
         var fmt = formatter
         if formatter == nil{
-            fmt = NSDateFormatter()
-            fmt.dateFormat = ""
+            fmt = DateFormatter()
+            fmt?.dateFormat = ""
         }
-        return NSDate(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString(fmt)
+        return Date(timeIntervalSince1970: Double(ts) / 1000).toFriendlyString(fmt)
     }
 }
 
@@ -128,7 +128,7 @@ class GetSNSMainBoardDataRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/SNSMainBoardData"
-        self.method = .GET
+        self.method = .get
     }
     
     var postCnt:Int = 20{
@@ -148,7 +148,7 @@ class GetSNSMainBoardDataRequest: BahamutRFRequestBase {
     var focusIds:[String]!{
         didSet{
             if let ids = focusIds{
-                self.paramenters["focusIds"] = ids.joinWithSeparator(",")
+                self.paramenters["focusIds"] = ids.joined(separator: ",")
             }
         }
     }
@@ -179,7 +179,7 @@ class GetSNSPostReqeust: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/Posts"
-        self.method = .GET
+        self.method = .get
     }
 }
 
@@ -187,7 +187,7 @@ class GetSNSNewMemberPostRequest: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/NewMemberPost"
-        self.method = .GET
+        self.method = .get
     }
 }
 
@@ -195,7 +195,7 @@ class GetMySNSPostRequest: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/MyPost"
-        self.method = .GET
+        self.method = .get
     }
 }
 
@@ -203,7 +203,7 @@ class GetUserSNSPostRequest: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/UserPosts"
-        self.method = .GET
+        self.method = .get
     }
     
     var userId:String!{
@@ -218,7 +218,7 @@ class SNSPostNewRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/NewPost"
-        self.method = .POST
+        self.method = .post
     }
     
     var image:String!{
@@ -267,7 +267,7 @@ class SNSLikePostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/LikePost"
-        self.method = .POST
+        self.method = .post
     }
     
     var postId:String!{
@@ -292,7 +292,7 @@ class SNSNewCommentRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/PostComments"
-        self.method = .POST
+        self.method = .post
     }
     
     var postId:String!{
@@ -346,7 +346,7 @@ class GetSNSPostCommentRequest: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/PostComments"
-        self.method = .GET
+        self.method = .get
     }
     
     var postId:String!{
@@ -360,7 +360,7 @@ class GetSNSMyReceivedLikesRequest: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/ReceivedLikes"
-        self.method = .GET
+        self.method = .get
     }
 }
 
@@ -368,7 +368,7 @@ class GetSNSMyCommentsRequest: GetSNSValuesRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/MyComments"
-        self.method = .GET
+        self.method = .get
     }
 }
 
@@ -376,7 +376,7 @@ class DeleteSNSPostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/Posts"
-        self.method = .DELETE
+        self.method = .delete
     }
     
     var postId:String!{
@@ -390,7 +390,7 @@ class UpdateSNSPostStateRequest: DeleteSNSPostRequest {
     override init() {
         super.init()
         self.api = "/SNS/PostState"
-        self.method = .PUT
+        self.method = .put
     }
     
     var state:Int!{
@@ -406,7 +406,7 @@ class ReportObjectionableSNSPostRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/ObjectionablePosts"
-        self.method = .PUT
+        self.method = .put
     }
     
     var postId:String!{
@@ -420,7 +420,7 @@ class DeleteSNSComment: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/SNS/Comments"
-        self.method = .DELETE
+        self.method = .delete
     }
     
     var postId:String!{

@@ -12,20 +12,20 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
         return ViewPool<VessageContentVideoPlayer>()
     }()
     
-    static let defaultSize = CGSizeMake(168, 226)
+    static let defaultSize = CGSize(width: 168, height: 226)
     
     class VessageContentVideoPlayer: BahamutFilmView,BahamutFilmViewDelegate {
-        private var dateTimeLabel:UILabel!
+        fileprivate var dateTimeLabel:UILabel!
         weak var vessage:Vessage!
-        func initVessageContentPlayer(vc:UIViewController,vessage:Vessage) {
+        func initVessageContentPlayer(_ vc:UIViewController,vessage:Vessage) {
             self.autoPlay = false
             self.isPlaybackLoops = false
             self.isMute = false
             self.showTimeLine = false
             self.delegate = self
             dateTimeLabel = UILabel()
-            dateTimeLabel.textColor = UIColor.whiteColor()
-            dateTimeLabel.font = UIFont.systemFontOfSize(10)
+            dateTimeLabel.textColor = UIColor.white
+            dateTimeLabel.font = UIFont.systemFont(ofSize: 10)
             self.addSubview(dateTimeLabel)
         }
         
@@ -35,39 +35,39 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
             filePath = nil
         }
         
-        private func updateDateLabel(date:NSDate) {
+        fileprivate func updateDateLabel(_ date:Date) {
             dateTimeLabel.text = date.toFriendlyString()
             refreshDateLabel()
         }
         
-        private func refreshDateLabel(){
+        fileprivate func refreshDateLabel(){
             dateTimeLabel.sizeToFit()
             if let spv = dateTimeLabel.superview{
                 dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
                 dateTimeLabel.frame.origin.y = spv.frame.height - 2 - dateTimeLabel.frame.height
-                spv.bringSubviewToFront(dateTimeLabel)
+                spv.bringSubview(toFront: dateTimeLabel)
             }
         }
         
         
-        func bahamutFilmViewOnDraw(sender: BahamutFilmView, rect: CGRect) {
+        func bahamutFilmViewOnDraw(_ sender: BahamutFilmView, rect: CGRect) {
             if let d = vessage?.getSendTime(){
-                updateDateLabel(d)
+                updateDateLabel(d as Date)
             }
         }
         
-        override func playerPlaybackDidEnd(player: Player) {
+        override func playerPlaybackDidEnd(_ player: Player) {
             super.playerPlaybackDidEnd(player)
             self.filePath = nil
             self.filePath = self.vessage?.fileId
         }
         
-        override func playerPlaybackWillStartFromBeginning(player: Player) {
+        override func playerPlaybackWillStartFromBeginning(_ player: Player) {
             super.playerPlaybackWillStartFromBeginning(player)
         }
     }
     
-    func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
+    func getContentView(_ vc:UIViewController,vessage: Vessage) -> UIView {
         if let view = VideoBubbleVessageHandler.viewPool.getFreeView() {
             view.initVessageContentPlayer(vc, vessage: vessage)
             return view
@@ -79,7 +79,7 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
         }
     }
     
-    func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
+    func getContentViewSize(_ vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
         let defaultWidth = VideoBubbleVessageHandler.defaultSize.width
         let defaultHeight = VideoBubbleVessageHandler.defaultSize.height
         if maxLimitedSize.width >= defaultWidth && maxLimitedSize.height >= defaultHeight {
@@ -89,17 +89,17 @@ class VideoBubbleVessageHandler: BubbleVessageHandler {
         }else if maxLimitedSize.width > maxLimitedSize.height{
             return CGSize(width: maxLimitedSize.height * defaultWidth / defaultHeight, height: maxLimitedSize.height)
         }
-        return CGSizeZero
+        return CGSize.zero
     }
     
-    func presentContent(vc:UIViewController, vessage: Vessage,contentView:UIView) {
+    func presentContent(_ vc:UIViewController, vessage: Vessage,contentView:UIView) {
         if let videoPlayer = contentView as? VessageContentVideoPlayer{
             if vessage.isMySendingVessage() {
                 videoPlayer.fileFetcher = FilePathFileFetcher.shareInstance
             }else{
-                videoPlayer.fileFetcher = ServiceContainer.getFileService().getFileFetcherOfFileId(.Video)
+                videoPlayer.fileFetcher = ServiceContainer.getFileService().getFileFetcherOfFileId(.video)
             }
-            UIView.transitionWithView(videoPlayer, duration: 0.3, options: .TransitionCrossDissolve, animations: nil){ flag in
+            UIView.transition(with: videoPlayer, duration: 0.3, options: .transitionCrossDissolve, animations: nil){ flag in
                 videoPlayer.filePath = vessage.fileId
             }
         }

@@ -28,7 +28,7 @@ class GetMNSMainInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/MNS/MainInfo"
-        self.method = .GET
+        self.method = .get
     }
     
     var location:String!{
@@ -44,7 +44,7 @@ class UpdateMNSAnnounceRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/MNS/MidNightAnnc"
-        self.method = .PUT
+        self.method = .put
     }
     
     var midNightAnnounce:String!{

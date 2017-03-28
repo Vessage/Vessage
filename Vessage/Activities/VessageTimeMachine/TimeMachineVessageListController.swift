@@ -28,23 +28,23 @@ class TimeMachineVessageListController: UIViewController {
     var items = [[VessageTimeMachineItem]](){
         didSet{
             updateTipsLabel()
-            tableView?.scrollEnabled = items.count > 0
+            tableView?.isScrollEnabled = items.count > 0
             tableView?.reloadData()
             if let item = items.first {
                 if item.count > 0 {
                     let animated = items.count == 1
-                    let path = NSIndexPath(forRow: item.count - 1,inSection:0)
-                    dispatch_after(200, queue: dispatch_get_main_queue(), handler: {
-                        self.tableView.scrollToRowAtIndexPath(path, atScrollPosition: .Bottom, animated: animated)
+                    let path = IndexPath(row: item.count - 1,section:0)
+                    DispatchQueue.main.afterMS(200, handler: { 
+                        self.tableView.scrollToRow(at: path, at: .bottom, animated: animated)
                     })
                 }
             }
         }
     }
     
-    private func updateTipsLabel() {
-        noVessagesTipsLabel.hidden = items.count > 0
-        titleLabel.hidden = items.count == 0
+    fileprivate func updateTipsLabel() {
+        noVessagesTipsLabel.isHidden = items.count > 0
+        titleLabel.isHidden = items.count == 0
     }
 }
 
@@ -53,16 +53,16 @@ extension TimeMachineVessageListController{
     override func viewDidLoad() {
         super.viewDidLoad()
         let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(TimeMachineVessageListController.onPullTableView(_:)))
-        header.lastUpdatedTimeLabel.hidden = true
-        header.stateLabel.hidden = true
-        tableView.scrollEnabled = false
+        header?.lastUpdatedTimeLabel.isHidden = true
+        header?.stateLabel.isHidden = true
+        tableView.isScrollEnabled = false
         tableView.mj_header = header
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
         
     }
-    private func firstLoadData(){
+    fileprivate func firstLoadData(){
         if items.count == 0 {
             tableView.delegate = self
             tableView.dataSource = self
@@ -76,12 +76,12 @@ extension TimeMachineVessageListController{
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         firstLoadData()
     }
     
-    static func instanceOfController(chatterId:String,ts:Int64) -> TimeMachineVessageListController{
+    static func instanceOfController(_ chatterId:String,ts:Int64) -> TimeMachineVessageListController{
         let controller = instanceFromStoryBoard("VessageTimeMachine", identifier: "TimeMachineVessageListController") as! TimeMachineVessageListController
         controller.chatterId = chatterId
         controller.timeSpan = ts
@@ -91,10 +91,10 @@ extension TimeMachineVessageListController{
 
 //MARK: Actions
 extension TimeMachineVessageListController{
-    func onPullTableView(sender:AnyObject) {
+    func onPullTableView(_ sender:AnyObject) {
         if let ts = items.first?.first?.vessage?.ts {
             let item = VessageTimeMachine.instance.getVessageBefore(chatterId, ts: ts)
-            items.insert(item, atIndex: 0)
+            items.insert(item, at: 0)
         }
         tableView.mj_header.endRefreshing()
     }
@@ -102,16 +102,16 @@ extension TimeMachineVessageListController{
 
 //MARK:UITableViewDelegate
 extension TimeMachineVessageListController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return items.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items[section].count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(TimeMachineVessageCell.reuseId, forIndexPath: indexPath) as! TimeMachineVessageCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TimeMachineVessageCell.reuseId, for: indexPath) as! TimeMachineVessageCell
         let item = items[indexPath.section][indexPath.row]
         cell.headLine.text = item.getVessageTimeMachineTitle()
         cell.subline.text = item.getSubline()

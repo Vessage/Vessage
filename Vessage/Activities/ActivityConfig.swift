@@ -19,13 +19,13 @@ class ActivityInfo{
         self.autoClearBadge = autoClearBadge
     }
     
-    private(set) var activityId:String!
-    private(set) var cellTitle:String!
-    private(set) var cellIconName:String!
-    private(set) var storyBoardName:String!
-    private(set) var controllerIdentifier:String!
-    private(set) var isPushController:Bool = false
-    private(set) var autoClearBadge = false
+    fileprivate(set) var activityId:String!
+    fileprivate(set) var cellTitle:String!
+    fileprivate(set) var cellIconName:String!
+    fileprivate(set) var storyBoardName:String!
+    fileprivate(set) var controllerIdentifier:String!
+    fileprivate(set) var isPushController:Bool = false
+    fileprivate(set) var autoClearBadge = false
 }
 
 let SetActivityMiniBadgeAtAppVersion:[String] = []

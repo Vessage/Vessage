@@ -10,14 +10,14 @@ import Foundation
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getSubscriptionService() -> SubscriptionService{
-        return ServiceContainer.getService(SubscriptionService)
+        return ServiceContainer.getService(SubscriptionService.self)
     }
 }
 
 class GetSubscriptionAccountsRequest:BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/Subscription"
     }
 }
@@ -32,19 +32,19 @@ class SubAccount: BahamutObject {
 class SubscriptionService: ServiceProtocol {
     @objc static var ServiceName:String {return "Subscription Service"}
     
-    @objc func appStartInit(appName: String) {
+    @objc func appStartInit(_ appName: String) {
         
     }
     
-    @objc func userLoginInit(userId: String) {
+    @objc func userLoginInit(_ userId: String) {
         self.setServiceReady()
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         setServiceNotReady()
     }
     
-    func getOnlineSubscriptionAccounts(callback:([SubAccount]?)->Void) {
+    func getOnlineSubscriptionAccounts(_ callback:@escaping ([SubAccount]?)->Void) {
         let req = GetSubscriptionAccountsRequest()
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[SubAccount]>) in
             callback(result.returnObject)

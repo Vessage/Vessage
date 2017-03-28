@@ -24,7 +24,7 @@ class VessageUser: BahamutObject {
     var avatar:String!
     var mobile:String!
     
-    var lastUpdatedTime:NSDate!
+    var lastUpdatedTime:Date!
     
     var sex = 0
     
@@ -36,14 +36,14 @@ class VessageUser: BahamutObject {
 }
 
 extension VessageUser{
-    static func getUnLoadedUser(userId:String) -> VessageUser{
+    static func getUnLoadedUser(_ userId:String) -> VessageUser{
         let user = VessageUser()
         user.userId = userId
         user.nickName = "UNLOADED_USER".localizedString()
         return user
     }
     
-    static func isTheSameUser(usera:VessageUser?,userb:VessageUser?) ->Bool{
+    static func isTheSameUser(_ usera:VessageUser?,userb:VessageUser?) ->Bool{
         if let a = usera{
             if let b = userb{
                 if !String.isNullOrWhiteSpace(a.userId) && !String.isNullOrWhiteSpace(b.userId) && a.userId == b.userId{
@@ -58,7 +58,7 @@ extension VessageUser{
 class GetUserInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers"
     }
     
@@ -68,7 +68,7 @@ class GetUserInfoRequest: BahamutRFRequestBase {
     
     var userId:String!{
         didSet{
-            self.api = "/VessageUsers/UserId/\(userId)"
+            self.api = "/VessageUsers/UserId/\(userId!)"
         }
     }
 }
@@ -76,14 +76,14 @@ class GetUserInfoRequest: BahamutRFRequestBase {
 class GetUsersProfileRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/Profiles"
     }
     
     var userIds:[String]!{
         didSet{
             if let us = userIds {
-                self.paramenters["userIds"] = us.joinWithSeparator(",")
+                self.paramenters["userIds"] = us.joined(separator: ",")
             }
         }
     }
@@ -103,14 +103,14 @@ class MobileMatchedUser: BahamutObject {
 class MatchUsersWithMobileRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/MatchMobileProfiles"
     }
     
     var mobiles:[String]!{
         didSet{
             if let us = mobiles {
-                self.paramenters["mobiles"] = us.joinWithSeparator(",")
+                self.paramenters["mobiles"] = us.joined(separator: ",")
             }
         }
     }
@@ -119,7 +119,7 @@ class MatchUsersWithMobileRequest: BahamutRFRequestBase {
 class GetNearUsersInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/Near"
     }
     
@@ -134,7 +134,7 @@ class GetNearUsersInfoRequest: BahamutRFRequestBase {
 class GetActiveUsersInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/Active"
     }
 }
@@ -142,13 +142,13 @@ class GetActiveUsersInfoRequest: BahamutRFRequestBase {
 class GetUserInfoByAccountIdRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/AccountId"
     }
     
     var accountId:String!{
         didSet{
-            self.api = "/VessageUsers/AccountId/\(accountId)"
+            self.api = "/VessageUsers/AccountId/\(accountId!)"
         }
     }
 }
@@ -156,7 +156,7 @@ class GetUserInfoByAccountIdRequest: BahamutRFRequestBase {
 class GetUserInfoByMobileRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/Mobile"
     }
     
@@ -170,7 +170,7 @@ class GetUserInfoByMobileRequest: BahamutRFRequestBase {
 class SendMobileVSMSRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .POST
+        self.method = .post
         self.api = "/VessageUsers/SendMobileVSMS"
         
     }
@@ -185,7 +185,7 @@ class SendMobileVSMSRequest: BahamutRFRequestBase {
 class ValidateMobileVSMSRequest: BahamutRFRequestBase{
     override init() {
         super.init()
-        self.method = .POST
+        self.method = .post
         self.api = "/VessageUsers/ValidateMobileVSMS"
         
     }
@@ -227,7 +227,7 @@ class ValidateMobileVSMSRequest: BahamutRFRequestBase{
 class ChangeAvatarRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/VessageUsers/Avatar"
     }
     
@@ -241,7 +241,7 @@ class ChangeAvatarRequest: BahamutRFRequestBase {
 class ChangeMainChatImageRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/VessageUsers/MainChatImage"
     }
     
@@ -255,7 +255,7 @@ class ChangeMainChatImageRequest: BahamutRFRequestBase {
 class ChangeUserSexValueRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/VessageUsers/SexValue"
     }
     
@@ -271,7 +271,7 @@ class ChangeUserSexValueRequest: BahamutRFRequestBase {
 class ChangeNickRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/VessageUsers/Nick"
     }
     
@@ -285,7 +285,7 @@ class ChangeNickRequest: BahamutRFRequestBase {
 class ChangeMottoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/VessageUsers/Motto"
     }
     
@@ -300,7 +300,7 @@ class ChangeMottoRequest: BahamutRFRequestBase {
 class RegistNewVessageUserRequest: BahamutRFRequestBase{
     override init() {
         super.init()
-        self.method = .POST
+        self.method = .post
         self.api = "/NewUsers"
     }
     
@@ -346,7 +346,7 @@ class RegistNewVessageUserRequest: BahamutRFRequestBase{
 class RegistMobileUserRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .POST
+        self.method = .post
         self.api = "/VessageUsers/NewMobileUser"
     }
     
@@ -388,7 +388,7 @@ class UserChatImages: BahamutObject {
 class GetUserChatImageRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/VessageUsers/ChatImages"
     }
     
@@ -402,7 +402,7 @@ class GetUserChatImageRequest: BahamutRFRequestBase {
 class UpdateChatImageRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/VessageUsers/ChatImages"
     }
     

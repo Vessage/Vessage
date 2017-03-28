@@ -11,15 +11,15 @@ import AssetsLibrary
 
 class TIMShareAndSaveViewController: UIViewController {
 
-    private var finished = [Bool](count: 4, repeatedValue: false)
-    private var postedFileId:String?
+    fileprivate var finished = [Bool](repeating: false, count: 4)
+    fileprivate var postedFileId:String?
     
     @IBOutlet weak var imageView: UIImageView!
-    private var vgMaskLabel:UILabel!{
+    fileprivate var vgMaskLabel:UILabel!{
         didSet{
             vgMaskLabel.text = "VG聊天"
-            vgMaskLabel.font = UIFont(name: "ChalkboardSE-Regular",size: 10) ?? UIFont.systemFontOfSize(10)
-            vgMaskLabel.textColor = UIColor.lightTextColor()
+            vgMaskLabel.font = UIFont(name: "ChalkboardSE-Regular",size: 10) ?? UIFont.systemFont(ofSize: 10)
+            vgMaskLabel.textColor = UIColor.lightText
         }
     }
     
@@ -31,23 +31,23 @@ class TIMShareAndSaveViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView?.userInteractionEnabled = true
+        imageView?.isUserInteractionEnabled = true
         imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMShareAndSaveViewController.onTapImageView(_:))))
         imageView?.image = image
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    private func getOutterAppImage() -> UIImage?{
+    fileprivate func getOutterAppImage() -> UIImage?{
         if vgMaskLabel == nil {
             vgMaskLabel = UILabel()
         }
         vgMaskLabel.sizeToFit()
         self.imageView.addSubview(vgMaskLabel)
-        vgMaskLabel.frame.origin = CGPointMake(6, imageView.frame.height - 2 - vgMaskLabel.frame.height)
+        vgMaskLabel.frame.origin = CGPoint(x: 6, y: imageView.frame.height - 2 - vgMaskLabel.frame.height)
         if let img = self.imageView.viewToImage(){
             vgMaskLabel.removeFromSuperview()
             return img
@@ -56,11 +56,11 @@ class TIMShareAndSaveViewController: UIViewController {
         return nil
     }
     
-    func onTapImageView(ges:UITapGestureRecognizer) {
+    func onTapImageView(_ ges:UITapGestureRecognizer) {
         self.imageView?.slideShowFullScreen(self)
     }
     
-    @IBAction func onClickDone(sender: AnyObject) {
+    @IBAction func onClickDone(_ sender: AnyObject) {
         var finish = false
         for f in finished {
             if f {
@@ -68,10 +68,10 @@ class TIMShareAndSaveViewController: UIViewController {
             }
         }
         if finish {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }else{
-            let ok = UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (ac) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+            let ok = UIAlertAction(title: "YES".localizedString(), style: .default, handler: { (ac) in
+                self.dismiss(animated: true, completion: nil)
             })
             self.showAlert(nil, msg: "IMAGE_NOT_SAVED_OR_SHARED".TIMString, actions: [ok,ALERT_ACTION_CANCEL])
         }
@@ -84,7 +84,7 @@ class TIMShareAndSaveViewController: UIViewController {
 
 extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
     
-    @IBAction func shareToSNS(sender: AnyObject) {
+    @IBAction func shareToSNS(_ sender: AnyObject) {
         if !finished[1] {
             if let img = image{
                 shareImageToSNS(img)
@@ -94,7 +94,7 @@ extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
         }
     }
     
-    func shareImageToSNS(image:UIImage) {
+    func shareImageToSNS(_ image:UIImage) {
         if String.isNullOrWhiteSpace(self.postedFileId) == false {
             SNSMainViewController.showSNSMainViewControllerWithNewPostImage(self.navigationController!, imageId: self.postedFileId!,image: image, sourceName: "TIM".TIMString,delegate: self)
         }else{
@@ -102,7 +102,7 @@ extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
         }
     }
     
-    func snsMainViewController(sender: SNSMainViewController, onImagePosted imageId: String!) {
+    func snsMainViewController(_ sender: SNSMainViewController, onImagePosted imageId: String!) {
         if imageId != nil {
             finished[1] = true
             self.postedFileId = imageId
@@ -112,7 +112,7 @@ extension TIMShareAndSaveViewController:SNSPostNewImageDelegate{
 
 extension TIMShareAndSaveViewController{
     
-    @IBAction func shareToWXSession(sender: AnyObject) {
+    @IBAction func shareToWXSession(_ sender: AnyObject) {
         if !finished[2] {
             if let img = getOutterAppImage(){
                 shareImageToWxSession(img)
@@ -125,7 +125,7 @@ extension TIMShareAndSaveViewController{
     }
     
     
-    func shareImageToWxSession(image:UIImage) {
+    func shareImageToWxSession(_ image:UIImage) {
         let msg = WXMediaMessage()
         let ext = WXImageObject()
         ext.imageData = UIImageJPEGRepresentation(image, 1)
@@ -136,12 +136,12 @@ extension TIMShareAndSaveViewController{
         req.message = msg
         req.scene = Int32(WXSceneTimeline.rawValue)
         MobClick.event("TIM_ShareWX")
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TIMShareAndSaveViewController.onWXShareResponse(_:)), name: OnWXShareResponse, object: nil)
-        WXApi.sendReq(req)
+        NotificationCenter.default.addObserver(self, selector: #selector(TIMShareAndSaveViewController.onWXShareResponse(_:)), name: NSNotification.Name(rawValue: OnWXShareResponse), object: nil)
+        WXApi.send(req)
     }
     
-    func onWXShareResponse(a:NSNotification) {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    func onWXShareResponse(_ a:Notification) {
+        NotificationCenter.default.removeObserver(self)
         if let resp = a.userInfo?[kWXShareResponseValue] as? SendMessageToWXResp {
             if resp.errCode == WXSuccess.rawValue{
                 finished[2]  = true
@@ -158,7 +158,7 @@ extension TIMShareAndSaveViewController{
 extension TIMShareAndSaveViewController{
     
     
-    @IBAction func saveImage(sender: AnyObject) {
+    @IBAction func saveImage(_ sender: AnyObject) {
         if !finished[3] {
             if let img = getOutterAppImage(){
                 let seltor = #selector(TIMShareAndSaveViewController.didFinishSavingWithError(_:didFinishSavingWithError:contextInfo:))
@@ -172,7 +172,7 @@ extension TIMShareAndSaveViewController{
         
     }
     
-    func didFinishSavingWithError(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    func didFinishSavingWithError(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if error == nil{
             self.playCheckMark()
             finished[3] = true

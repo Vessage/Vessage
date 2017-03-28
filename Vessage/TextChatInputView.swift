@@ -9,12 +9,12 @@
 import Foundation
 
 @objc protocol TextChatInputViewDelegate {
-    optional func textChatInputViewDidClickSend(sender:AnyObject?,textField:UITextView)
-    optional func textChatInputViewDidClickChatImage(sender:AnyObject?)
-    optional func textChatInputViewDidEndEditing(textField: UITextView)
-    optional func textChatInputViewChanged(textField: UITextView)
-    optional func textChatInputViewDidBeginEditing(textField: UITextView)
-    optional func textChatInputViewDidPasteboardImageChanged(newImage:UIImage)
+    @objc optional func textChatInputViewDidClickSend(_ sender:AnyObject?,textField:UITextView)
+    @objc optional func textChatInputViewDidClickChatImage(_ sender:AnyObject?)
+    @objc optional func textChatInputViewDidEndEditing(_ textField: UITextView)
+    @objc optional func textChatInputViewChanged(_ textField: UITextView)
+    @objc optional func textChatInputViewDidBeginEditing(_ textField: UITextView)
+    @objc optional func textChatInputViewDidPasteboardImageChanged(_ newImage:UIImage)
 }
 
 class TextChatInputView: UIView,UITextViewDelegate {
@@ -24,54 +24,51 @@ class TextChatInputView: UIView,UITextViewDelegate {
             inputTextField.placeHolder = "TEXT_MESSAGE_HOLDER".localizedString()
         }
     }
-    private var defaultSendButtonColor:UIColor = UIColor(hexString: "#00BFFF")
+    fileprivate var defaultSendButtonColor:UIColor = UIColor(hexString: "#00BFFF")
     @IBOutlet weak var sendButton: UIButton!
     
     weak var delegate:TextChatInputViewDelegate?
     
-    private var pasteboardImageDesc:String?
+    fileprivate var pasteboardImageDesc:String?
     
-    @IBAction func onClickSendButton(sender: AnyObject) {
+    @IBAction func onClickSendButton(_ sender: AnyObject) {
         if let handler = delegate?.textChatInputViewDidClickSend{
-            dispatch_async(dispatch_get_main_queue(), {
-                handler(sender,textField: self.inputTextField)
+            DispatchQueue.main.async(execute: {
+                handler(sender,self.inputTextField)
                 self.refreshSendButtonColor()
             })
         }
     }
     
-    @IBAction func onClickChatImageButton(sender: AnyObject) {
+    @IBAction func onClickChatImageButton(_ sender: AnyObject) {
         self.delegate?.textChatInputViewDidClickChatImage?(sender)
     }
     
     //MARK:UITextFieldDelegate
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         refreshSendButtonColor()
-        if let image = UIPasteboard.generalPasteboard().image{
-            image.description
-        }
         delegate?.textChatInputViewDidBeginEditing?(textView)
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         self.delegate?.textChatInputViewChanged?(textView)
         refreshSendButtonColor()
     }
     
     func refreshSendButtonColor(){
         let enable = !String.isNullOrEmpty(inputTextField.text)
-        sendButton.enabled = enable
-        sendButton.backgroundColor = enable ? defaultSendButtonColor : UIColor.lightGrayColor()
+        sendButton.isEnabled = enable
+        sendButton.backgroundColor = enable ? defaultSendButtonColor : UIColor.lightGray
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         delegate?.textChatInputViewDidEndEditing?(textView)
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             if let handler = delegate?.textChatInputViewDidClickSend{
-                handler(textView,textField: textView)
+                handler(textView,textView)
                 self.refreshSendButtonColor()
             }
             return false
@@ -80,8 +77,8 @@ class TextChatInputView: UIView,UITextViewDelegate {
     }
 
     static func instanceFromXib() -> TextChatInputView{
-        let view = NSBundle.mainBundle().loadNibNamed("TextChatInputView", owner: nil, options: nil)![0] as! TextChatInputView
-        view.backgroundColor = UIColor.clearColor()
+        let view = Bundle.main.loadNibNamed("TextChatInputView", owner: nil, options: nil)![0] as! TextChatInputView
+        view.backgroundColor = UIColor.clear
         return view
     }
 }

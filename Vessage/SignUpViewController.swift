@@ -39,25 +39,25 @@ class SignUpViewController: UIViewController {
         #endif
     }
     
-    private func showIndicator(){
+    fileprivate func showIndicator(){
         self.refreshingIndicator.startAnimating()
-        self.refreshingIndicator.hidden = false
-        self.signupButton.hidden = true
-        self.view.userInteractionEnabled =  false
+        self.refreshingIndicator.isHidden = false
+        self.signupButton.isHidden = true
+        self.view.isUserInteractionEnabled =  false
     }
     
-    private func hideIndicator(){
+    fileprivate func hideIndicator(){
         self.refreshingIndicator.stopAnimating()
-        self.signupButton.hidden = false
-        self.view.userInteractionEnabled = true
+        self.signupButton.isHidden = false
+        self.view.isUserInteractionEnabled = true
     }
 
     //MARK: actions
-    @IBAction func whatsVG(sender: AnyObject) {
+    @IBAction func whatsVG(_ sender: AnyObject) {
         SimpleBrowser.openUrl(self, url: "http://bahamut.cn/whatsvg.html", title: "WHATS_VG".localizedString())
     }
     
-    @IBAction func signUp(sender: AnyObject) {
+    @IBAction func signUp(_ sender: AnyObject) {
         self.hideKeyBoard()
         if checkRegistValid()
         {
@@ -66,19 +66,21 @@ class SignUpViewController: UIViewController {
                 if isSuc
                 {
                     MobClick.event("Vege_RegistedNewUser")
-                    self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                        let userInfo = [RegistAccountIDValue:registResult.accountId,RegistAccountPasswordValue:self.passwordTextField.text!]
-                        NSNotificationCenter.defaultCenter().postNotificationName(RegistAccountCompleted, object: self, userInfo: userInfo)
+                    self.dismiss(animated: false, completion: { () -> Void in
+                        let userInfo = [RegistAccountIDValue:registResult!.accountId,RegistAccountPasswordValue:self.passwordTextField.text!]
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: RegistAccountCompleted), object: self, userInfo: userInfo)
                     })
                 }else{
                     self.hideIndicator()
-                    self.playToast(errorMsg.localizedString())
+                    if let msg = errorMsg?.localizedString(){
+                        self.playToast(msg)
+                    }
                 }
             }
         }
     }
     
-    private func checkRegistValid() -> Bool{
+    fileprivate func checkRegistValid() -> Bool{
         if (userNameTextField.text ?? "" ).isUsername(){
             if (passwordTextField.text ?? "" ).isPassword(){
                 return true
@@ -94,16 +96,16 @@ class SignUpViewController: UIViewController {
         return false
     }
     
-    @IBAction func showSignIn(sender: AnyObject) {
-        self.dismissViewControllerAnimated(false) { () -> Void in
+    @IBAction func showSignIn(_ sender: AnyObject) {
+        self.dismiss(animated: false) { () -> Void in
             
         }
     }
     
-    static func showSignUpViewController(vc:UIViewController)
+    static func showSignUpViewController(_ vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("AccountSign", identifier: "SignUpViewController") as! SignUpViewController
-        vc.presentViewController(controller, animated: false) { () -> Void in
+        vc.present(controller, animated: false) { () -> Void in
             
         }
     }

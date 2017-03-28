@@ -12,13 +12,13 @@ import YUCIHighPassSkinSmoothing
 
 //MARK:VessageCamera Delegate
 @objc protocol VessageCameraDelegate{
-    optional func vessageCameraVideoSaved(videoSavedUrl video:NSURL)
-    optional func vessageCameraSaveVideoError(saveVideoError msg:String?)
-    optional func vessageCameraImage(image:UIImage)
-    optional func vessageCameraReady()
-    optional func vessageCameraSessionClosed()
-    optional func vessageCameraDidStartRecord()
-    optional func vessageCameraDidStopRecord()
+    @objc optional func vessageCameraVideoSaved(videoSavedUrl video:URL)
+    @objc optional func vessageCameraSaveVideoError(saveVideoError msg:String?)
+    @objc optional func vessageCameraImage(_ image:UIImage)
+    @objc optional func vessageCameraReady()
+    @objc optional func vessageCameraSessionClosed()
+    @objc optional func vessageCameraDidStartRecord()
+    @objc optional func vessageCameraDidStopRecord()
 }
 
 //MARK:VessageCamera
@@ -26,32 +26,32 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
     
     weak var delegate:VessageCameraDelegate?
     var isRecordVideo:Bool = true
-    private(set) var cameraInited = false
+    fileprivate(set) var cameraInited = false
     var cameraRunning:Bool{
-        return captureSession?.running ?? false
+        return captureSession?.isRunning ?? false
     }
-    private var rootViewController:UIViewController!
-    private var view:UIView!
-    private var captureSession: AVCaptureSession!
-    private var previewLayer: CALayer!
-    private var filter: CIFilter!
-    private lazy var context: CIContext = {
-        let eaglContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
+    fileprivate var rootViewController:UIViewController!
+    fileprivate var view:UIView!
+    fileprivate var captureSession: AVCaptureSession!
+    fileprivate var previewLayer: CALayer!
+    fileprivate var filter: CIFilter!
+    fileprivate lazy var context: CIContext = {
+        let eaglContext = EAGLContext(api: EAGLRenderingAPI.openGLES2)
         let options = [kCIContextWorkingColorSpace : NSNull()]
-        return CIContext(EAGLContext: eaglContext, options: options)
+        return CIContext(eaglContext: eaglContext!, options: options)
     }()
-    private var ciImage: CIImage!
+    fileprivate var ciImage: CIImage!
     
     // 标记人脸
     var enableFaceMark = false
-    private var faceLayer: CALayer?
-    private var faceObject: AVMetadataFaceObject?
-    private(set) var detectedFaces = false
+    fileprivate var faceLayer: CALayer?
+    fileprivate var faceObject: AVMetadataFaceObject?
+    fileprivate(set) var detectedFaces = false
     
-    private var assetWriter: AVAssetWriter?
-    private var assetWriterPixelBufferInput: AVAssetWriterInputPixelBufferAdaptor?
-    private var assetWriterAudioInput:AVAssetWriterInput!
-    private var isWriting = false{
+    fileprivate var assetWriter: AVAssetWriter?
+    fileprivate var assetWriterPixelBufferInput: AVAssetWriterInputPixelBufferAdaptor?
+    fileprivate var assetWriterAudioInput:AVAssetWriterInput!
+    fileprivate var isWriting = false{
         didSet{
             if oldValue != isWriting{
                 if isWriting{
@@ -66,23 +66,23 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             }
         }
     }
-    private var currentSampleTime: CMTime?
-    private var currentVideoDimensions: CMVideoDimensions?
+    fileprivate var currentSampleTime: CMTime?
+    fileprivate var currentVideoDimensions: CMVideoDimensions?
     
-    private var audioCompressionSettings:[String:AnyObject]?
+    fileprivate var audioCompressionSettings:[String:AnyObject]?
     
-    func initCamera(rootViewController:UIViewController,previewView:UIView){
+    func initCamera(_ rootViewController:UIViewController,previewView:UIView){
         self.rootViewController = rootViewController
         self.view = previewView
         previewLayer = CALayer()
         previewLayer.contentsGravity = kCAGravityResizeAspectFill
-        previewLayer.anchorPoint = CGPointZero
+        previewLayer.anchorPoint = CGPoint.zero
         previewLayer.bounds = view.bounds
-        previewLayer.backgroundColor = UIColor.blackColor().CGColor
-        self.view.layer.insertSublayer(previewLayer, atIndex: 0)
+        previewLayer.backgroundColor = UIColor.black.cgColor
+        self.view.layer.insertSublayer(previewLayer, at: 0)
         if TARGET_IPHONE_SIMULATOR == Int32("1") {
             self.rootViewController.playToast("Simulator No Camera");
-            self.previewLayer.hidden = true
+            self.previewLayer.isHidden = true
             return
         } else {
             setupCaptureSession()
@@ -97,35 +97,35 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         #endif
     }
     
-    private func initFilter(){
+    fileprivate func initFilter(){
         #if RELEASE
         filter = CIFilter(name: "YUCIHighPassSkinSmoothing",withInputParameters: ["inputAmount":0.7])
         #endif
     }
     
     //MARK: notification
-    private func initNotification(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VessageCamera.didSessionStartRunning(_:)), name: AVCaptureSessionDidStartRunningNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VessageCamera.didSessionStopRunning(_:)), name: AVCaptureSessionDidStopRunningNotification, object: nil)
+    fileprivate func initNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(VessageCamera.didSessionStartRunning(_:)), name: NSNotification.Name.AVCaptureSessionDidStartRunning, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(VessageCamera.didSessionStopRunning(_:)), name: NSNotification.Name.AVCaptureSessionDidStopRunning, object: nil)
     }
     
-    func didSessionStartRunning(a:NSNotification){
+    func didSessionStartRunning(_ a:Notification){
         if let handler = delegate?.vessageCameraReady{
             handler()
         }
     }
     
-    func didSessionStopRunning(a:NSNotification){
+    func didSessionStopRunning(_ a:Notification){
         if let handler = delegate?.vessageCameraSessionClosed{
             handler()
         }
     }
     
-    func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    func viewWillTransitionToSize(_ size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         previewLayer.bounds.size = size
     }
     
-    private func setupCaptureSession() {
+    fileprivate func setupCaptureSession() {
         captureSession = AVCaptureSession()
         captureSession.beginConfiguration()
         captureSession.sessionPreset = isRecordVideo ? AVCaptureSessionPresetMedium : AVCaptureSessionPresetPhoto
@@ -135,17 +135,17 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         captureSession.commitConfiguration()
     }
     
-    private func setupVideoSession(){
-        let queue = dispatch_queue_create("VMCQueue", DISPATCH_QUEUE_SERIAL)
+    fileprivate func setupVideoSession(){
+        let queue = DispatchQueue(label: "VMCQueue", attributes: [])
         
         //视频
-        let captureDevice = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo).filter{$0.position == AVCaptureDevicePosition.Front}.first as! AVCaptureDevice
+        let captureDevice = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo).filter{($0 as AnyObject).position == AVCaptureDevicePosition.front}.first as! AVCaptureDevice
         let deviceInput = try! AVCaptureDeviceInput(device: captureDevice)
         if captureSession.canAddInput(deviceInput) {
             captureSession.addInput(deviceInput)
         }
         let dataOutput = AVCaptureVideoDataOutput()
-        dataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey : Int(kCVPixelFormatType_32BGRA)]
+        dataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable : Int(kCVPixelFormatType_32BGRA)]
         dataOutput.alwaysDiscardsLateVideoFrames = true
         
         if captureSession.canAddOutput(dataOutput) {
@@ -153,18 +153,18 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         }
         dataOutput.setSampleBufferDelegate(self, queue: queue)
         //MARK: 调整方向为自然方向
-        let con = dataOutput.connectionWithMediaType(AVMediaTypeVideo)
-        con.videoMirrored = true
-        con.videoOrientation = .LandscapeRight
+        let con = dataOutput.connection(withMediaType: AVMediaTypeVideo)
+        con?.isVideoMirrored = true
+        con?.videoOrientation = .landscapeRight
     }
     
-    private func setupAudioSession(){
+    fileprivate func setupAudioSession(){
         if !isRecordVideo{
             return
         }
         
         //声音
-        let captureAudioDev = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
+        let captureAudioDev = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio)
         let audioInput = try! AVCaptureDeviceInput(device: captureAudioDev)
         if captureSession.canAddInput(audioInput){
             captureSession.addInput(audioInput)
@@ -176,15 +176,15 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         }
         
         //音频与视频的队列需要分开，否则加入滤镜后没有声音输出
-        let aqueue = dispatch_queue_create("VMCAQueue", DISPATCH_QUEUE_SERIAL)
+        let aqueue = DispatchQueue(label: "VMCAQueue", attributes: [])
         audioOutput.setSampleBufferDelegate(self, queue: aqueue)
     }
     
-    private func setupFaceDetect(){
+    fileprivate func setupFaceDetect(){
         // 为了检测人脸
         if enableFaceMark{
             let metadataOutput = AVCaptureMetadataOutput()
-            metadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
+            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             
             if captureSession.canAddOutput(metadataOutput) {
                 captureSession.addOutput(metadataOutput)
@@ -207,17 +207,18 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             self.rootViewController = nil
             captureSession?.stopRunning()
             captureSession = nil
-            NSNotificationCenter.defaultCenter().removeObserver(self)
+            NotificationCenter.default.removeObserver(self)
         }
         
     }
     
     // MARK: - Video Records
+    @discardableResult
     func startRecord()->Bool{
         if isWriting == false{
             createWriter()
             assetWriter?.startWriting()
-            assetWriter?.startSessionAtSourceTime(currentSampleTime!)
+            assetWriter?.startSession(atSourceTime: currentSampleTime!)
             isWriting = true
             return true
         }
@@ -228,10 +229,10 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         if ciImage == nil || isWriting {
             return
         }
-        faceLayer?.hidden = true
+        faceLayer?.isHidden = true
         captureSession.stopRunning()
-        let cgImage = context.createCGImage(ciImage, fromRect: ciImage.extent)
-        let image = UIImage(CGImage: cgImage!)
+        let cgImage = context.createCGImage(ciImage, from: ciImage.extent)
+        let image = UIImage(cgImage: cgImage!)
         if let saveHandler = self.delegate?.vessageCameraImage{
             saveHandler(image)
         }
@@ -251,15 +252,15 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             self.isWriting = false
             assetWriterPixelBufferInput = nil
             if let saveHandler = self.delegate?.vessageCameraVideoSaved{
-                assetWriter?.finishWritingWithCompletionHandler({ () -> Void in
-                    let avAssets = AVURLAsset(URL: self.tmpFilmURL)
+                assetWriter?.finishWriting(completionHandler: { () -> Void in
+                    let avAssets = AVURLAsset(url: self.tmpFilmURL)
                     let exportSession = AVAssetExportSession(asset: avAssets, presetName: AVAssetExportPresetMediumQuality)
                     self.checkForAndDeleteFile(self.tmpCompressedFilmURL)
                     exportSession?.outputURL = self.tmpCompressedFilmURL
                     exportSession?.outputFileType = AVFileTypeMPEG4
                     exportSession?.shouldOptimizeForNetworkUse = true
-                    exportSession?.exportAsynchronouslyWithCompletionHandler({ () -> Void in
-                        saveHandler(videoSavedUrl: self.tmpCompressedFilmURL)
+                    exportSession?.exportAsynchronously(completionHandler: { () -> Void in
+                        saveHandler(self.tmpCompressedFilmURL)
                     })
                 })
             }
@@ -276,25 +277,25 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         }
     }
     
-    var tmpFilmURL:NSURL {
+    var tmpFilmURL:URL {
         let tempDir = NSTemporaryDirectory()
-        let url = NSURL(fileURLWithPath: tempDir).URLByAppendingPathComponent("tmpVessage.mp4")
-        return url!
+        let url = URL(fileURLWithPath: tempDir).appendingPathComponent("tmpVessage.mp4")
+        return url
     }
     
-    var tmpCompressedFilmURL:NSURL{
+    var tmpCompressedFilmURL:URL{
         let tempDir = NSTemporaryDirectory()
-        let url = NSURL(fileURLWithPath: tempDir).URLByAppendingPathComponent("tmpVessageC.mp4")
-        return url!
+        let url = URL(fileURLWithPath: tempDir).appendingPathComponent("tmpVessageC.mp4")
+        return url
     }
     
-    func checkForAndDeleteFile(url:NSURL) {
-        let fm = NSFileManager.defaultManager()
-        let exist = fm.fileExistsAtPath(url.path!)
+    func checkForAndDeleteFile(_ url:URL) {
+        let fm = FileManager.default
+        let exist = fm.fileExists(atPath: url.path)
         
         if exist {
             do {
-                try fm.removeItemAtURL(url)
+                try fm.removeItem(at: url)
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
@@ -305,7 +306,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         self.checkForAndDeleteFile(self.tmpFilmURL)
         
         do {
-            assetWriter = try AVAssetWriter(URL: tmpFilmURL, fileType: AVFileTypeMPEG4)
+            assetWriter = try AVAssetWriter(outputURL: tmpFilmURL, fileType: AVFileTypeMPEG4)
         } catch let error as NSError {
             print("创建writer失败")
             print(error.localizedDescription)
@@ -318,24 +319,24 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             AVVideoCodecKey : AVVideoCodecH264,
             AVVideoWidthKey : Int(width),
             AVVideoHeightKey : Int(height)
-        ]
+        ] as [String : Any]
         
-        let assetWriterVideoInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: outputSettings as? [String : AnyObject])
+        let assetWriterVideoInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: outputSettings)
         assetWriterVideoInput.expectsMediaDataInRealTime = true
-        assetWriterVideoInput.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
+        assetWriterVideoInput.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2.0))
         
         let sourcePixelBufferAttributesDictionary = [
             String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_32BGRA),
             String(kCVPixelBufferWidthKey) : Int(width),
             String(kCVPixelBufferHeightKey) : Int(height),
             String(kCVPixelFormatOpenGLESCompatibility) : kCFBooleanTrue
-        ]
+        ] as [String : Any]
         
         assetWriterPixelBufferInput = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: assetWriterVideoInput,
             sourcePixelBufferAttributes: sourcePixelBufferAttributesDictionary)
         
-        if assetWriter!.canAddInput(assetWriterVideoInput) {
-            assetWriter!.addInput(assetWriterVideoInput)
+        if assetWriter!.canAdd(assetWriterVideoInput) {
+            assetWriter!.add(assetWriterVideoInput)
         } else {
             print("不能添加视频writer的input \(assetWriterVideoInput)")
         }
@@ -344,23 +345,23 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         //声音writer
         if audioCompressionSettings == nil{
             self.audioCompressionSettings = [
-                AVFormatIDKey : NSNumber(unsignedInt: kAudioFormatMPEG4AAC),
-                AVNumberOfChannelsKey : NSNumber(unsignedInt: 1),
-                AVSampleRateKey :  NSNumber(double: 44100),
-                AVEncoderBitRateKey : NSNumber(int: 64000)
+                AVFormatIDKey : NSNumber(value: kAudioFormatMPEG4AAC as UInt32),
+                AVNumberOfChannelsKey : NSNumber(value: 1 as UInt32),
+                AVSampleRateKey :  NSNumber(value: 44100 as Double),
+                AVEncoderBitRateKey : NSNumber(value: 64000 as Int32)
             ]
         }
         self.assetWriterAudioInput = AVAssetWriterInput(mediaType: AVMediaTypeAudio, outputSettings: audioCompressionSettings)
         assetWriterAudioInput.expectsMediaDataInRealTime = true
-        if assetWriter!.canAddInput(assetWriterAudioInput){
-            assetWriter!.addInput(assetWriterAudioInput)
+        if assetWriter!.canAdd(assetWriterAudioInput){
+            assetWriter!.add(assetWriterAudioInput)
         }else{
             print("不能添加音频writer的input \(assetWriterAudioInput)")
         }
     }
     
     // MARK: - AVCaptureVideo/AudioDataOutputSampleBufferDelegate
-    func captureOutput(captureOutput: AVCaptureOutput!,didOutputSampleBuffer sampleBuffer: CMSampleBuffer!,fromConnection connection: AVCaptureConnection!) {
+    func captureOutput(_ captureOutput: AVCaptureOutput!,didOutputSampleBuffer sampleBuffer: CMSampleBuffer!,from connection: AVCaptureConnection!) {
         autoreleasepool {
             if captureOutput is AVCaptureVideoDataOutput{
                 if let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer){
@@ -374,20 +375,20 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         }
     }
     
-    private func setAudioCompressSetting(sampleBuffer: CMSampleBuffer!){
+    fileprivate func setAudioCompressSetting(_ sampleBuffer: CMSampleBuffer!){
         if self.audioCompressionSettings != nil{
             return
         }
         if let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer){
             let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
             if (asbd != nil) {
-                let channels = asbd.memory.mChannelsPerFrame
-                let sampleRate = asbd.memory.mSampleRate
+                let channels = asbd?.pointee.mChannelsPerFrame
+                let sampleRate = asbd?.pointee.mSampleRate
                 self.audioCompressionSettings = [
-                    AVFormatIDKey : NSNumber(unsignedInt: kAudioFormatMPEG4AAC),
-                    AVNumberOfChannelsKey : NSNumber(unsignedInt: channels),
-                    AVSampleRateKey :  NSNumber(double: sampleRate),
-                    AVEncoderBitRateKey : NSNumber(int: 64000)
+                    AVFormatIDKey : NSNumber(value: kAudioFormatMPEG4AAC as UInt32),
+                    AVNumberOfChannelsKey : NSNumber(value: channels! as UInt32),
+                    AVSampleRateKey :  NSNumber(value: sampleRate! as Double),
+                    AVEncoderBitRateKey : NSNumber(value: 64000 as Int32)
                 ]
             }else{
                 print("No AudioFormatDescription")
@@ -395,17 +396,17 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         }
     }
     
-    private func writeAudioMedia(sampleBuffer:CMSampleBufferRef){
-        if self.assetWriterAudioInput.readyForMoreMediaData{
-            self.assetWriterAudioInput.appendSampleBuffer(sampleBuffer)
+    fileprivate func writeAudioMedia(_ sampleBuffer:CMSampleBuffer){
+        if self.assetWriterAudioInput.isReadyForMoreMediaData{
+            self.assetWriterAudioInput.append(sampleBuffer)
         }
     }
     
-    private func writeVideoMedia(sampleBuffer:CMSampleBuffer,imageBuffer:CVImageBuffer){
+    fileprivate func writeVideoMedia(_ sampleBuffer:CMSampleBuffer,imageBuffer:CVImageBuffer){
         let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)!
         self.currentVideoDimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
         self.currentSampleTime = CMSampleBufferGetOutputPresentationTimeStamp(sampleBuffer)
-        var outputImage = CIImage(CVPixelBuffer: imageBuffer)
+        var outputImage = CIImage(cvPixelBuffer: imageBuffer)
         
         if self.filter != nil {
             self.filter.setValue(outputImage, forKey: kCIInputImageKey)
@@ -414,14 +415,14 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         
         // 录制视频的处理
         if self.isWriting {
-            if self.assetWriterPixelBufferInput?.assetWriterInput.readyForMoreMediaData == true {
+            if self.assetWriterPixelBufferInput?.assetWriterInput.isReadyForMoreMediaData == true {
                 var newPixelBuffer: CVPixelBuffer? = nil
                 
                 CVPixelBufferPoolCreatePixelBuffer(nil, self.assetWriterPixelBufferInput!.pixelBufferPool!, &newPixelBuffer)
                 
-                self.context.render(outputImage, toCVPixelBuffer: newPixelBuffer!, bounds: outputImage.extent, colorSpace: nil)
+                self.context.render(outputImage, to: newPixelBuffer!, bounds: outputImage.extent, colorSpace: nil)
                 
-                let success = self.assetWriterPixelBufferInput?.appendPixelBuffer(newPixelBuffer!, withPresentationTime: self.currentSampleTime!)
+                let success = self.assetWriterPixelBufferInput?.append(newPixelBuffer!, withPresentationTime: self.currentSampleTime!)
                 
                 if success == false {
                     print("Pixel Buffer没有附加成功")
@@ -429,35 +430,35 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
             }
         }
         
-        let orientation = UIDevice.currentDevice().orientation
+        let orientation = UIDevice.current.orientation
         var t: CGAffineTransform!
-        if orientation == UIDeviceOrientation.Portrait {
-            t = CGAffineTransformMakeRotation(CGFloat(-M_PI / 2.0))
-        } else if orientation == UIDeviceOrientation.PortraitUpsideDown {
-            t = CGAffineTransformMakeRotation(CGFloat(M_PI / 2.0))
-        } else if (orientation == UIDeviceOrientation.LandscapeRight) {
-            t = CGAffineTransformMakeRotation(CGFloat(M_PI))
+        if orientation == UIDeviceOrientation.portrait {
+            t = CGAffineTransform(rotationAngle: CGFloat(-M_PI / 2.0))
+        } else if orientation == UIDeviceOrientation.portraitUpsideDown {
+            t = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2.0))
+        } else if (orientation == UIDeviceOrientation.landscapeRight) {
+            t = CGAffineTransform(rotationAngle: CGFloat(M_PI))
         } else {
-            t = CGAffineTransformMakeRotation(0)
+            t = CGAffineTransform(rotationAngle: 0)
         }
-        outputImage = outputImage.imageByApplyingTransform(t)
+        outputImage = outputImage.applying(t)
         
-        let cgImage = self.context.createCGImage(outputImage, fromRect: outputImage.extent)
+        let cgImage = self.context.createCGImage(outputImage, from: outputImage.extent)
         self.ciImage = outputImage
         
-        dispatch_sync(dispatch_get_main_queue(), {
+        DispatchQueue.main.sync(execute: {
             self.previewLayer.contents = cgImage
         })
     }
     
     // MARK: - AVCaptureMetadataOutputObjectsDelegate
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         //识别到的第一张脸
         if let faceObject = metadataObjects?.first as? AVMetadataFaceObject{
             detectedFaces = true
             if faceLayer == nil {
                 faceLayer = CALayer()
-                faceLayer?.borderColor = UIColor.redColor().CGColor
+                faceLayer?.borderColor = UIColor.red.cgColor
                 faceLayer?.borderWidth = 1
                 view.layer.addSublayer(faceLayer!)
             }
@@ -472,6 +473,6 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         }else if detectedFaces{
             detectedFaces = false
         }
-        faceLayer?.hidden = !detectedFaces
+        faceLayer?.isHidden = !detectedFaces
     }
 }

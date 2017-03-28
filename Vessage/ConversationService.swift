@@ -53,7 +53,7 @@ extension Conversation{
                 return getLastUpdatedTime().toFriendlyString()
             }
         }else{
-            let minLeft = NSNumber(double: getConversationTimeUpMinutesLeft()).integerValue
+            let minLeft = NSNumber(value: getConversationTimeUpMinutesLeft() as Double).intValue
             
             if minLeft < Int(ConversationMaxTimeUpMinutes / 2) || minLeft % 3 != 0 {
                 if minLeft > 24 * 60 {
@@ -74,12 +74,12 @@ extension Conversation{
         
     }
     
-    func getLastUpdatedTime() -> NSDate {
+    func getLastUpdatedTime() -> Date {
         if lstTs <= 0 {
             lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
             saveModel()
         }
-        return NSDate(timeIntervalSince1970: Double(lstTs) / 1000)
+        return Date(timeIntervalSince1970: Double(lstTs) / 1000)
     }
     
     func getConversationTimeUpMinutesLeft() -> Double{
@@ -99,55 +99,55 @@ let ConversationMaxTimeUpMS = Int64(ConversationMaxTimeUpMinutes * 60 * 1000)
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getConversationService() -> ConversationService{
-        return ServiceContainer.getService(ConversationService)
+        return ServiceContainer.getService(ConversationService.self)
     }
 }
 
 //MARK:ConversationService
-class ConversationService:NSNotificationCenter, ServiceProtocol {
+class ConversationService:NotificationCenter, ServiceProtocol {
     static let conversationMaxPinNumber = 20
-    static let conversationListUpdated = "conversationListUpdated"
-    static let conversationUpdated = "conversationUpdated"
+    static let conversationListUpdated = "conversationListUpdated".asNotificationName()
+    static let conversationUpdated = "conversationUpdated".asNotificationName()
     
     @objc static var ServiceName:String {return "Conversation Service"}
     
-    @objc func appStartInit(appName: String) {
+    @objc func appStartInit(_ appName: String) {
         
     }
     
-    @objc func userLoginInit(userId: String) {
-        dispatch_async(dispatch_get_main_queue()) { 
+    @objc func userLoginInit(_ userId: String) {
+        DispatchQueue.main.async { 
             self.setServiceReady()
             self.refreshConversations()
         }
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         conversations.removeAll()
         setServiceNotReady()
     }
     
-    private(set) var conversations = [Conversation]()
-    private(set) var timeupedConversations = [Conversation]()
+    fileprivate(set) var conversations = [Conversation]()
+    fileprivate(set) var timeupedConversations = [Conversation]()
     
-    func indexOfConversationOfUser(user:VessageUser) -> Int?{
-        let updatedIndex = conversations.indexOf { (c) -> Bool in
+    func indexOfConversationOfUser(_ user:VessageUser) -> Int?{
+        let updatedIndex = conversations.index { (c) -> Bool in
             return ConversationService.isConversationWithUser(c, user: user)
         }
         return updatedIndex
     }
     
-    static func isConversationWithUser(c:Conversation,user:VessageUser) -> Bool{
+    static func isConversationWithUser(_ c:Conversation,user:VessageUser) -> Bool{
         let cu = VessageUser()
         cu.userId = c.chatterId
         return VessageUser.isTheSameUser(cu, userb: user)
     }
     
-    static func isConversationWithChatGroup(c:Conversation,group:ChatGroup) -> Bool{
+    static func isConversationWithChatGroup(_ c:Conversation,group:ChatGroup) -> Bool{
         return c.isGroupChat && c.chatterId == group.groupId
     }
     
-    static func isConversationVessage(c:Conversation,vsg:Vessage) -> Bool{
+    static func isConversationVessage(_ c:Conversation,vsg:Vessage) -> Bool{
         if let chatterId = c.chatterId{
             if vsg.sender == chatterId{
                 if vsg.ts > c.lstTs {
@@ -159,8 +159,9 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return false
     }
     
-    private func updateConversationWithVessage(vsg:Vessage) -> Int?{
-        if let index = (conversations.indexOf { ConversationService.isConversationVessage($0, vsg: vsg)}){
+    @discardableResult
+    fileprivate func updateConversationWithVessage(_ vsg:Vessage) -> Int?{
+        if let index = (conversations.index { ConversationService.isConversationVessage($0, vsg: vsg)}){
             let conversation = conversations[index]
             if !conversation.isGroupChat {
                 if conversation.chatterId == nil{
@@ -184,8 +185,8 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func expireConversation(chatterId:String){
-        let index = conversations.indexOf { (c) -> Bool in
+    func expireConversation(_ chatterId:String){
+        let index = conversations.index { (c) -> Bool in
             if let chatter = c.chatterId{
                 if chatter == chatterId{
                     return true
@@ -196,17 +197,18 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         setConversationNewestModifiedAt(index)
     }
     
-    private func setConversationNewestModifiedAt(index:Int?){
+    fileprivate func setConversationNewestModifiedAt(_ index:Int?){
         if let i = index{
-            let c = conversations.removeAtIndex(i)
+            let c = conversations.remove(at: i)
             c.lstTs = DateHelper.UnixTimeSpanTotalMilliseconds
             c.saveModel()
-            conversations.insert(c, atIndex: 0)
+            conversations.insert(c, at: 0)
             self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
         }
     }
     
-    func updateConversationListWithVessagesReturnNewConversations(vsgs:[Vessage]) -> [Conversation] {
+    @discardableResult
+    func updateConversationListWithVessagesReturnNewConversations(_ vsgs:[Vessage]) -> [Conversation] {
         var newConversations = [Conversation]()
         vsgs.forEach { (element) in
             if let _ = self.updateConversationWithVessage(element){
@@ -221,7 +223,8 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return newConversations
     }
     
-    private func createConverationWithVessage(vsg:Vessage) -> Conversation{
+    @discardableResult
+    fileprivate func createConverationWithVessage(_ vsg:Vessage) -> Conversation{
         if vsg.isGroup {
             return self.addNewConversationWithGroupVessage(vsg,beforeRemoveTs: ConversationMaxTimeUpMS,createByActivityId: nil)
         }else{
@@ -229,16 +232,16 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    private func refreshConversations(){
+    fileprivate func refreshConversations(){
         conversations.removeAll()
         timeupedConversations.removeAll()
-        var cons = PersistentManager.sharedInstance.getAllModel(Conversation)
+        var cons = PersistentManager.sharedInstance.getAllModel(Conversation.self)
         let timeUpCons = cons.removeElement { c -> Bool in
             return c.getConversationTimeUpMinutesLeft() < 3
         }
-        timeupedConversations.appendContentsOf(timeUpCons)
+        timeupedConversations.append(contentsOf: timeUpCons)
         PersistentManager.sharedInstance.removeModels(timeUpCons)
-        conversations.appendContentsOf(cons)
+        conversations.append(contentsOf: cons)
         sortConversationList()
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
@@ -250,12 +253,12 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
             }
             return c.getConversationTimeUpMinutesLeft() < 3
         }
-        timeupedConversations.appendContentsOf(timeUpCons)
+        timeupedConversations.append(contentsOf: timeUpCons)
         PersistentManager.sharedInstance.removeModels(timeUpCons)
         self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
     }
     
-    func getConversationWithChatterId(chatterId:String) -> Conversation? {
+    func getConversationWithChatterId(_ chatterId:String) -> Conversation? {
         return conversations.filter{$0.chatterId == chatterId}.first
     }
     
@@ -271,18 +274,19 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         timeupedConversations.removeAll()
     }
     
-    private func sortConversationList(){
-        conversations.sortInPlace { (a, b) -> Bool in
+    fileprivate func sortConversationList(){
+        conversations.sort { (a, b) -> Bool in
             a.lstTs > b.lstTs
         }
     }
  
     
-    func existsConversationOfUserId(userId:String) -> Bool {
+    func existsConversationOfUserId(_ userId:String) -> Bool {
         return (conversations.filter{userId == $0.chatterId ?? ""}).count > 0
     }
     
-    func openConversationByUserId(userId:String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,type:Int = Conversation.typeSingleChat) -> Conversation {
+    @discardableResult
+    func openConversationByUserId(_ userId:String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,type:Int = Conversation.typeSingleChat) -> Conversation {
         
         if let conversation = (conversations.filter{userId == $0.chatterId ?? ""}).first{
             return conversation
@@ -293,7 +297,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func openConversationByGroup(group:ChatGroup,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil) -> Conversation {
+    func openConversationByGroup(_ group:ChatGroup,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil) -> Conversation {
         if let conversation = (conversations.filter{group.groupId == $0.chatterId ?? ""}).first{
             return conversation
         }
@@ -309,7 +313,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversation
     }
     
-    private func addNewConversationWithGroupVessage(vsg:Vessage,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation{
+    fileprivate func addNewConversationWithGroupVessage(_ vsg:Vessage,beforeRemoveTs:Int64,createByActivityId:String?) -> Conversation{
         let conversation = Conversation()
         conversation.chatterId = vsg.sender
         conversation.type = Conversation.typeGroupChat
@@ -321,7 +325,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversation
     }
     
-    private func addNewConversationWithUserId(userId:String,beforeRemoveTs:Int64,createByActivityId:String?,type:Int) -> Conversation {
+    fileprivate func addNewConversationWithUserId(_ userId:String,beforeRemoveTs:Int64,createByActivityId:String?,type:Int) -> Conversation {
         let conversation = Conversation()
         conversation.conversationId = IdUtil.generateUniqueId()
         conversation.chatterId = userId
@@ -333,7 +337,8 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         return conversation
     }
     
-    func removeConversation(conversationId:String) -> Bool{
+    @discardableResult
+    func removeConversation(_ conversationId:String) -> Bool{
         if let c = (self.conversations.removeElement{$0.conversationId == conversationId}).first{
             PersistentManager.sharedInstance.removeModel(c)
             self.postNotificationNameWithMainAsync(ConversationService.conversationListUpdated, object: self,userInfo: nil)
@@ -343,7 +348,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func searchConversation(keyword:String)->[Conversation]{
+    func searchConversation(_ keyword:String)->[Conversation]{
         let result = conversations.filter{ c in
             return false
         }
@@ -353,7 +358,7 @@ class ConversationService:NSNotificationCenter, ServiceProtocol {
 
 //MARK:Pin Conversation
 extension ConversationService{
-    func pinConversation(conversation:Conversation) -> Bool {
+    func pinConversation(_ conversation:Conversation) -> Bool {
         if conversation.pinned  {
             return true
         }
@@ -367,7 +372,7 @@ extension ConversationService{
         return true
     }
     
-    func unpinConversation(conversation:Conversation) -> Bool {
+    func unpinConversation(_ conversation:Conversation) -> Bool {
         if !conversation.pinned {
             return true
         }

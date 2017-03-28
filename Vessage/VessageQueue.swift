@@ -9,14 +9,14 @@
 import Foundation
 
 class VessageQueue: BahamutTaskQueue {
-    static let onPushNewVessageTask = "onPushNewVessageTask"
+    static let onPushNewVessageTask = "onPushNewVessageTask".asNotificationName()
     
     static var sharedInstance:VessageQueue = {
         return VessageQueue()
     }()
     
-    private var extraInfoString:String!
-    override func initQueue(userId: String) {
+    fileprivate var extraInfoString:String!
+    override func initQueue(_ userId: String) {
         super.initQueue(userId)
         refreshExtraInfoString()
         var stepHandlers = [String:BahamutTaskQueueStepHandler]()
@@ -31,7 +31,7 @@ class VessageQueue: BahamutTaskQueue {
         super.releaseQueue()
     }
     
-    private func refreshExtraInfoString(){
+    fileprivate func refreshExtraInfoString(){
         let userService = ServiceContainer.getUserService()
         let sendNick = userService.myProfile.nickName
         let extraInfo = VessageExtraInfoModel()
@@ -40,25 +40,29 @@ class VessageQueue: BahamutTaskQueue {
         extraInfoString = extraInfo.toMiniJsonString()
     }
     
-    func pushNewVessageTo(receiverId:String?,isGroup:Bool,vessage:Vessage,taskSteps:[String],uploadFileUrl:NSURL? = nil){
+    func pushNewVessageTo(_ receiverId:String?,isGroup:Bool,vessage:Vessage,taskSteps:[String],uploadFileUrl:URL? = nil){
         let queueTask = SendVessageQueueTask()
-        let vsg = vessage
+        let vsg = Vessage()
+        vsg.body = vessage.body
+        vsg.extraInfo = vessage.extraInfo
+        vsg.typeId = vessage.typeId
         vsg.vessageId = Vessage.sendingVessageId
         vsg.isGroup = isGroup
         vsg.extraInfo = extraInfoString
         vsg.isRead = true
+        vsg.fileId = vessage.fileId
         vsg.sender = vessage.isGroup ? receiverId : UserSetting.userId
         if vessage.isGroup{
             vsg.gSender = UserSetting.userId
         }
-        vsg.ts = NSDate().totalSecondsSince1970.longLongValue * 1000
+        vsg.ts = Date().totalSecondsSince1970.int64Value * 1000
         
         queueTask.steps = taskSteps
         queueTask.receiverId = receiverId
-        queueTask.filePath = uploadFileUrl?.path!
+        queueTask.filePath = uploadFileUrl?.path
         queueTask.vessage = vsg
         pushTask(queueTask)
         MobClick.event("Vege_ConfirmSendVessage")
-        self.postNotificationNameWithMainAsync(VessageQueue.onPushNewVessageTask, object: self, userInfo: [kBahamutQueueTaskValue:queueTask])
+        self.post(name: VessageQueue.onPushNewVessageTask, object: self, userInfo: [kBahamutQueueTaskValue:queueTask])
     }
 }

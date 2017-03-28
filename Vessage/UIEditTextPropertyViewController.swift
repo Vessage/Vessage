@@ -11,7 +11,7 @@ import UIKit
 
 protocol UIEditTextPropertyViewControllerDelegate
 {
-    func editPropertySave(sender:UIEditTextPropertyViewController,propertyIdentifier:String!,newValue:String!,userInfo:[String:AnyObject?]?)
+    func editPropertySave(_ sender:UIEditTextPropertyViewController,propertyIdentifier:String!,newValue:String!,userInfo:[String:AnyObject?]?)
 }
 
 class UIEditTextPropertySet
@@ -36,10 +36,10 @@ class UIEditTextPropertyViewController: UIViewController
 
     @IBOutlet weak var propertyValueTextView: BahamutTextView!{
         didSet{
-            propertyValueTextView.backgroundColor = UIColor.clearColor()
+            propertyValueTextView.backgroundColor = UIColor.clear
             propertyValueTextView.layer.cornerRadius = 7
             propertyValueTextView.layer.borderWidth = 1
-            propertyValueTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
+            propertyValueTextView.layer.borderColor = UIColor.lightGray.cgColor
         }
     }
     @IBOutlet weak var propertyValueTextField: UITextField!
@@ -54,12 +54,12 @@ class UIEditTextPropertyViewController: UIViewController
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    private func updateTextValueView()
+    fileprivate func updateTextValueView()
     {
         if model.isOneLineValue {
             propertyValueTextField.text = model?.propertyValue
@@ -67,13 +67,13 @@ class UIEditTextPropertyViewController: UIViewController
             propertyValueTextView.text = model?.propertyValue
         }
         
-        propertyValueTextView.hidden = model.isOneLineValue
-        propertyValueTextField.hidden = !model.isOneLineValue
+        propertyValueTextView.isHidden = model.isOneLineValue
+        propertyValueTextField.isHidden = !model.isOneLineValue
         propertyValueTextField.placeholder = model?.valueTextViewHolder
         propertyValueTextView.placeHolder = model?.valueTextViewHolder
     }
     
-    private var newPropertyValue:String!{
+    fileprivate var newPropertyValue:String!{
         get{
             if model.isOneLineValue
             {
@@ -92,7 +92,7 @@ class UIEditTextPropertyViewController: UIViewController
         }
     }
     
-    @IBAction func save(sender: AnyObject)
+    @IBAction func save(_ sender: AnyObject)
     {
         
         if String.isNullOrEmpty(newPropertyValue) {
@@ -102,7 +102,7 @@ class UIEditTextPropertyViewController: UIViewController
             }
         }else if let valueRegex = model.valueRegex
         {
-            if !(newPropertyValue =~ valueRegex)
+            if !(newPropertyValue.isRegexMatch(pattern:valueRegex))
             {
                 self.playToast( model.illegalValueMessage ?? "ILLEGLE_VALUE".localizedString())
                 return
@@ -111,10 +111,11 @@ class UIEditTextPropertyViewController: UIViewController
         
         
         delegate?.editPropertySave(self,propertyIdentifier: model.propertyIdentifier,newValue: newPropertyValue,userInfo: model.userInfo)
-        self.navigationController?.popViewControllerAnimated(true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
-    static func showEditPropertyViewController(currentNavigationController:UINavigationController,propertySet:UIEditTextPropertySet,controllerTitle:String,delegate:UIEditTextPropertyViewControllerDelegate) -> UIEditTextPropertyViewController
+    @discardableResult
+    static func showEditPropertyViewController(_ currentNavigationController:UINavigationController,propertySet:UIEditTextPropertySet,controllerTitle:String,delegate:UIEditTextPropertyViewControllerDelegate) -> UIEditTextPropertyViewController
     {
         let controller = instanceFromStoryBoard()
         controller.title = controllerTitle
@@ -126,7 +127,7 @@ class UIEditTextPropertyViewController: UIViewController
     
     static func instanceFromStoryBoard() -> UIEditTextPropertyViewController
     {
-        return instanceFromStoryBoard("Component", identifier: "editTextPropertyViewController",bundle: NSBundle.mainBundle()) as! UIEditTextPropertyViewController
+        return instanceFromStoryBoard("Component", identifier: "editTextPropertyViewController",bundle: Bundle.main) as! UIEditTextPropertyViewController
     }
     
 }

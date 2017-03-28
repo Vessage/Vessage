@@ -57,62 +57,62 @@ class VessageSetting{
     
     static var loginApi:String{
         get{
-        if let api = NSUserDefaults.standardUserDefaults().valueForKey("loginApi") as? String{
+        if let api = UserDefaults.standard.value(forKey: "loginApi") as? String{
         return api
         }
             return VessageConfig.bahamutConfig.accountLoginApiUrl
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey:"loginApi")
+            UserDefaults.standard.setValue(newValue, forKey:"loginApi")
         }
     }
     
     static var registAccountApi:String{
         get{
-        if let api = NSUserDefaults.standardUserDefaults().valueForKey("registAccountApi") as? String{
+        if let api = UserDefaults.standard.value(forKey: "registAccountApi") as? String{
         return api
         }
         return VessageConfig.bahamutConfig.accountRegistApiUrl
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey:"registAccountApi")
+            UserDefaults.standard.setValue(newValue, forKey:"registAccountApi")
         }
     }
     
     static var apiServerUrl:String!{
         get{
-        return NSUserDefaults.standardUserDefaults().valueForKey("apiServerUrl") as? String
+        return UserDefaults.standard.value(forKey: "apiServerUrl") as? String
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "apiServerUrl")
+            UserDefaults.standard.setValue(newValue, forKey: "apiServerUrl")
         }
     }
     
     static var fileApiServer:String!{
         get{
-        return NSUserDefaults.standardUserDefaults().valueForKey("fileApiServer") as? String
+        return UserDefaults.standard.value(forKey: "fileApiServer") as? String
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "fileApiServer")
+            UserDefaults.standard.setValue(newValue, forKey: "fileApiServer")
         }
     }
     
     static var chicagoServerHost:String!{
         get{
-        return NSUserDefaults.standardUserDefaults().valueForKey("chicagoServerHost") as? String
+        return UserDefaults.standard.value(forKey: "chicagoServerHost") as? String
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "chicagoServerHost")
+            UserDefaults.standard.setValue(newValue, forKey: "chicagoServerHost")
         }
     }
     
     static var chicagoServerHostPort:UInt16{
         get{
-        let port = NSUserDefaults.standardUserDefaults().integerForKey("chicagoServerHostPort")
+        let port = UserDefaults.standard.integer(forKey: "chicagoServerHostPort")
         return UInt16(port)
         }
         set{
-            NSUserDefaults.standardUserDefaults().setValue(Int(newValue), forKey: "chicagoServerHostPort")
+            UserDefaults.standard.setValue(Int(newValue), forKey: "chicagoServerHostPort")
         }
     }
 }
@@ -122,7 +122,7 @@ class VessageConfig{
     static var appKey:String { return bahamutConfig.appkey }
     static var bahamutConfig:BahamutConfigObject!
     static var appVersion:String{
-        if let infoDic = NSBundle.mainBundle().infoDictionary
+        if let infoDic = Bundle.main.infoDictionary
         {
             let version = infoDic["CFBundleShortVersionString"] as! String
             return version
@@ -131,7 +131,7 @@ class VessageConfig{
     }
     
     static var buildVersion:Int{
-        if let infoDic = NSBundle.mainBundle().infoDictionary
+        if let infoDic = Bundle.main.infoDictionary
         {
             let version = infoDic["CFBundleVersion"] as! String
             return Int(version) ?? 1

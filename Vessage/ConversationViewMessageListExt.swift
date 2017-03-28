@@ -11,8 +11,8 @@ import Foundation
 
 class ConversationMessageListCellBase: UITableViewCell {
     func initCell() {}
-    func presentVessage(controller:ConversationViewController,vessage:Vessage) {}
-    func setContentView(controller:ConversationViewController,vessage:Vessage) {}
+    func presentVessage(_ controller:ConversationViewController,vessage:Vessage) {}
+    func setContentView(_ controller:ConversationViewController,vessage:Vessage) {}
 }
 
 class ConversationMessageListTipsCell: ConversationMessageListCellBase {
@@ -20,7 +20,7 @@ class ConversationMessageListTipsCell: ConversationMessageListCellBase {
     
     @IBOutlet weak var tipsLabel: UILabel!
     
-    override func setContentView(controller: ConversationViewController, vessage: Vessage) {
+    override func setContentView(_ controller: ConversationViewController, vessage: Vessage) {
         if let msg = vessage.getBodyDict()["msg"] as? String{
             tipsLabel.text = msg
             
@@ -30,7 +30,7 @@ class ConversationMessageListTipsCell: ConversationMessageListCellBase {
         ServiceContainer.getVessageService().readVessage(vessage)
     }
     
-    override func presentVessage(controller: ConversationViewController, vessage: Vessage) {
+    override func presentVessage(_ controller: ConversationViewController, vessage: Vessage) {
         contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
     }
@@ -58,10 +58,10 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
         return false
     }
     
-    override func setContentView(controller:ConversationViewController,vessage:Vessage) {
+    override func setContentView(_ controller:ConversationViewController,vessage:Vessage) {
         
         if bubbleView.superview == nil {
-            bubbleView.bubbleDirection = .Right(startYRatio: 0)
+            bubbleView.bubbleDirection = .right(startYRatio: 0)
             contentContainerView?.addSubview(bubbleView)
         }
         let handler = BubbleVessageHandlerManager.getBubbleVessageHandler(vessage)
@@ -70,12 +70,13 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
         measureSize(handler, controller: controller, vessage: vessage)
     }
     
-    override func presentVessage(controller:ConversationViewController,vessage:Vessage) {
+    override func presentVessage(_ controller:ConversationViewController,vessage:Vessage) {
         setAvatar(controller, vessage: vessage)
         refreshContent(controller, vessage: vessage)
     }
     
-    func measureSize(handler:BubbleVessageHandler,controller:ConversationViewController,vessage:Vessage) -> (UIView,CGSize,CGSize) {
+    @discardableResult
+    func measureSize(_ handler:BubbleVessageHandler,controller:ConversationViewController,vessage:Vessage) -> (UIView,CGSize,CGSize) {
         let view = bubbleView.getContentView()!
         
         let container = contentContainerView!
@@ -95,14 +96,14 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
         let maxSize = bubbleView.maxContentSizeOf(bubbleViewMaxSize)
         
         let contentSize = handler.getContentViewSize(controller, vessage: vessage, maxLimitedSize: maxSize,contentView: view)
-        let bubbleViewSize = bubbleView.sizeOfContentSize(contentSize, direction: .Left(startYRatio: 0))
+        let bubbleViewSize = bubbleView.sizeOfContentSize(contentSize, direction: .left(startYRatio: 0))
         let constraint = container.constraints.filter{$0.identifier == "height"}.first
         constraint?.constant = bubbleViewSize.height
         
         return (view,bubbleViewSize,contentSize)
     }
     
-    private func refreshContent(controller:ConversationViewController,vessage:Vessage){
+    fileprivate func refreshContent(_ controller:ConversationViewController,vessage:Vessage){
         if let container = contentContainerView{
 
             let handler = BubbleVessageHandlerManager.getBubbleVessageHandler(vessage)
@@ -112,13 +113,13 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
             let midPoint = avatarImageView!.frame.height / 2
             let ratio = Float(midPoint / bubbleViewSize.height)
             if isLeftCell {
-                bubbleView.bubbleDirection = .Right(startYRatio: ratio)
+                bubbleView.bubbleDirection = .right(startYRatio: ratio)
             }else{
-                bubbleView.bubbleDirection = .Left(startYRatio: ratio)
+                bubbleView.bubbleDirection = .left(startYRatio: ratio)
             }
             
             bubbleView.frame.size = bubbleViewSize
-            view.frame = CGRect(origin: CGPointZero, size: contentSize)
+            view.frame = CGRect(origin: CGPoint.zero, size: contentSize)
             
             bubbleView.frame.origin.y = 0
             bubbleView.frame.origin.x = isLeftCell ? 0 : container.frame.size.width - bubbleViewSize.width
@@ -131,11 +132,11 @@ class ConversationMessageListCell: ConversationMessageListCellBase {
             self.setNeedsLayout()
             self.layoutIfNeeded()
             
-            contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+            contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         }
     }
     
-    private func setAvatar(controller:ConversationViewController,vessage:Vessage){
+    fileprivate func setAvatar(_ controller:ConversationViewController,vessage:Vessage){
         if let imgView = avatarImageView,let userId = vessage.getVessageRealSenderId(),let user = controller.userDict[userId]{
             ServiceContainer.getFileService().setImage(imgView, iconFileId: user.avatar,defaultImage: getDefaultAvatar(user.accountId, sex: user.sex))
         }else{
@@ -148,14 +149,14 @@ class ConversationMessageListLeftCell: ConversationMessageListCell {
     
     static let reusedId = "ConversationMessageListLeftCell"
     
-    static let bubbleColor = UIColor.whiteColor().adjustedHueColor(0.8)
+    static let bubbleColor = UIColor.white.adjustedHueColor(0.8)
     
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var avatarImgView: UIImageView!
     
     override func initCell() {
         super.initCell()
-        bubbleView.bubbleViewLayer.fillColor = ConversationMessageListLeftCell.bubbleColor.CGColor
+        bubbleView.bubbleViewLayer.fillColor = ConversationMessageListLeftCell.bubbleColor.cgColor
     }
     
     override var isLeftCell: Bool{
@@ -173,14 +174,14 @@ class ConversationMessageListLeftCell: ConversationMessageListCell {
 class ConversationMessageListRightCell: ConversationMessageListCell {
     static let reusedId = "ConversationMessageListRightCell"
     
-    static let bubbleColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
+    static let bubbleColor = UIColor.blue.withAlphaComponent(0.6)
     
     @IBOutlet weak var avatarImgView: UIImageView!
     @IBOutlet weak var contentContainer: UIView!
     
     override func initCell() {
         super.initCell()
-        bubbleView.bubbleViewLayer.fillColor = ConversationMessageListRightCell.bubbleColor.CGColor
+        bubbleView.bubbleViewLayer.fillColor = ConversationMessageListRightCell.bubbleColor.cgColor
     }
     
     override var avatarImageView: UIImageView?{
@@ -194,26 +195,26 @@ class ConversationMessageListRightCell: ConversationMessageListCell {
 
 
 extension ConversationViewController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return vessages.count
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let mc = cell as? ConversationMessageListCellBase{
             let vsg = vessages[indexPath.row]
             mc.presentVessage(self, vessage: vsg)
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vsg = vessages[indexPath.row]
         var reuseId = ""
         if vsg.typeId == Vessage.typeTips {
@@ -223,7 +224,7 @@ extension ConversationViewController:UITableViewDelegate,UITableViewDataSource{
         }else{
             reuseId = ConversationMessageListLeftCell.reusedId
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseId, forIndexPath: indexPath) as! ConversationMessageListCellBase
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as! ConversationMessageListCellBase
         cell.initCell()
         cell.setContentView(self, vessage: vsg)
         return cell
@@ -260,18 +261,18 @@ extension ConversationViewController{
             })
             if msgs.count > 0 {
                 self.vessages.append(generateTipsVessage(msgs.first!.getSendTime().toLocalDateTimeSimpleString(),ts: msgs.first!.ts))
-                self.vessages.appendContentsOf(msgs)
+                self.vessages.append(contentsOf: msgs)
             }
  
             if vsgs.count > 0 {
                 let startVsg = generateTipsVessage(vsgs.first!.getSendTime().toLocalDateTimeSimpleString(),ts: vsgs.first!.ts)
                 self.vessages.append(startVsg)
-                self.vessages.appendContentsOf(vsgs)
+                self.vessages.append(contentsOf: vsgs)
             }else if conversation.type == Conversation.typeSingleChat{
                 
                 if msgs.count == 0 {
                     let nick = ServiceContainer.getUserService().getUserNotedName(conversation.chatterId)
-                    let dateString = NSDate().toLocalDateTimeSimpleString()
+                    let dateString = Date().toLocalDateTimeSimpleString()
                     let msg = String(format: "CHAT_WITH_X_AT_D".localizedString(), nick,dateString)
                     let startVsg = generateTipsVessage(msg)
                     self.vessages.append(startVsg)
@@ -279,7 +280,7 @@ extension ConversationViewController{
                 
             }else if conversation.type == Conversation.typeGroupChat{
                 let nick = chatGroup.groupName
-                let msg = String(format: "CHAT_WITH_GROUP_X_AT_D".localizedString(), nick)
+                let msg = String(format: "CHAT_WITH_GROUP_X_AT_D".localizedString(), nick!)
                 let startVsg = generateTipsVessage(msg)
                 self.vessages.append(startVsg)
             }
@@ -294,31 +295,31 @@ extension ConversationViewController{
         }
     }
     
-    func generateTipsVessage(msg:String,ts:Int64 = DateHelper.UnixTimeSpanTotalMilliseconds) -> Vessage {
+    func generateTipsVessage(_ msg:String,ts:Int64 = DateHelper.UnixTimeSpanTotalMilliseconds) -> Vessage {
         let vsg = Vessage()
         var dict = [String:String]()
         dict["msg"] = msg
         vsg.vessageId = Vessage.vgGenerateVessageId
         vsg.typeId = Vessage.typeTips
         vsg.ts = ts
-        let json = try! NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions(rawValue: 0))
-        vsg.body = String(data: json, encoding: NSUTF8StringEncoding)
+        let json = try! JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions(rawValue: 0))
+        vsg.body = String(data: json, encoding: String.Encoding.utf8)
         return vsg
     }
     
-    func messagesListPushReceivedMessages(received:[Vessage]) {
+    func messagesListPushReceivedMessages(_ received:[Vessage]) {
         var row = vessages.count - 1
-        vessages.appendContentsOf(received)
-        let indexPaths = received.map { (v) -> NSIndexPath in
+        vessages.append(contentsOf: received)
+        let indexPaths = received.map { (v) -> IndexPath in
             row += 1
-            return NSIndexPath(forRow: row, inSection: 0)
+            return IndexPath(row: row, section: 0)
         }
-        messageList.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
-        messageList.scrollToRowAtIndexPath(indexPaths.first!, atScrollPosition: .Middle, animated: true)
+        messageList.insertRows(at: indexPaths, with: .fade)
+        messageList.scrollToRow(at: indexPaths.first!, at: .middle, animated: true)
     }
     
     func removeReadedVessages() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let vService = ServiceContainer.getVessageService()
             let fService = ServiceContainer.getFileService()
             var removedVessages = [Vessage]()
@@ -334,9 +335,9 @@ extension ConversationViewController{
                     continue
                 }else if let fileId = value.fileId{
                     if value.typeId == Vessage.typeChatVideo{
-                        removed = fService.removeFile(fileId, type: .Video)
+                        removed = fService.removeFile(fileId, type: .video)
                     }else if value.typeId == Vessage.typeImage{
-                        removed = fService.removeFile(fileId, type: .Image)
+                        removed = fService.removeFile(fileId, type: .image)
                     }
                     removed ? debugLog("Vessage File Removed:%@", fileId) : debugLog("Remove Vessage File Fail:%@", fileId)
                 }else if let vsgId = value.vessageId{

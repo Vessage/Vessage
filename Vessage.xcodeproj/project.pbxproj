@@ -14,7 +14,6 @@
 		E702FF761DE82D3D003F2B85 /* iAvatarMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E702FF691DE82D3D003F2B85 /* iAvatarMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E702FF811DE82F0F003F2B85 /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */; };
 		E702FF881DE836BB003F2B85 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E702FF871DE836BB003F2B85 /* String+MD5.swift */; };
-		E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */; };
 		E708AB3D1C86CAA50071104E /* VessageAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */; };
 		E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AB3E1C86CAA50071104E /* ConversationViewController.swift */; };
 		E708AB421C86CAA50071104E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E708AB401C86CAA50071104E /* Main.storyboard */; };
@@ -265,7 +264,6 @@
 		E7F6DD171DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */; };
 		E7F6DD181DF00CD7007EC49A /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */; };
 		E7F6DD1B1DF00D89007EC49A /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */; };
-		E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */; };
 		E7F6F0801D69AB72001CD190 /* BahamutTaskQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */; };
 		E7F6F0821D69AB84001CD190 /* BahamutTaskQueueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */; };
 		E7FFB0B01D686E8700BE2C5E /* SearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */; };
@@ -307,7 +305,6 @@
 		E702FF731DE82D3D003F2B85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
 		E702FF871DE836BB003F2B85 /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
-		E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		E708AB391C86CAA50071104E /* Vessage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vessage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VessageAppDelegate.swift; sourceTree = "<group>"; };
 		E708AB3E1C86CAA50071104E /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -582,7 +579,6 @@
 		E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
 		E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
 		E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
-		E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzeImageSDK.swift; sourceTree = "<group>"; };
 		E7F6F07F1D69AB72001CD190 /* BahamutTaskQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueue.swift; sourceTree = "<group>"; };
 		E7F6F0811D69AB84001CD190 /* BahamutTaskQueueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutTaskQueueProtocol.swift; sourceTree = "<group>"; };
 		E7FFB0AF1D686E8700BE2C5E /* SearchExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchExtension.swift; sourceTree = "<group>"; };
@@ -861,7 +857,6 @@
 		E708ABF31C86D6F20071104E /* RestfulAPI */ = {
 			isa = PBXGroup;
 			children = (
-				E7F6F0721D6943B6001CD190 /* AnalyzeImageSDK.swift */,
 				E7EB9A301C87EEFF002F96FB /* UserRF.swift */,
 				E75A70351C8C09360029F0BD /* VessageRF.swift */,
 				E72D0BEF1CDE4C3F0036B4B2 /* UserDeviceTokenRF.swift */,
@@ -876,7 +871,6 @@
 			isa = PBXGroup;
 			children = (
 				E7F6DC851DF00967007EC49A /* ImageUtil.swift */,
-				E70899A71D9E312F004C3B24 /* KDCircularProgress.swift */,
 				E708ABF71C86D7B70071104E /* DynamicColor */,
 				E7E237D21C998AEB008FF893 /* BahamutFilmView */,
 				E708ABF51C86D7B70071104E /* ColorUtil.swift */,
@@ -1484,12 +1478,13 @@
 					E702FF681DE82D3D003F2B85 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 2BW6TGDJAV;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					E708AB381C86CAA50071104E = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 2BW6TGDJAV;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1722,7 +1717,6 @@
 				E7CC54E51D7A6CF200BDE82E /* ShareChatEntity+CoreDataProperties.swift in Sources */,
 				E7AE41C61D4AD96F005A25D6 /* TextVessageExt.swift in Sources */,
 				E708AB731C86CE1D0071104E /* RegexUtil.swift in Sources */,
-				E7F6F0731D6943B6001CD190 /* AnalyzeImageSDK.swift in Sources */,
 				E708AC771C86EC160071104E /* FetchAliOSSExtension.swift in Sources */,
 				E74C48EE1DE52E2400903270 /* VTMRecord.swift in Sources */,
 				E708AB961C86CF8A0071104E /* PersistentManager.swift in Sources */,
@@ -1787,7 +1781,6 @@
 				E7A36C7F1E44CA0B00054CD0 /* ChatSendContentConfirmController.swift in Sources */,
 				E708AB6D1C86CE1D0071104E /* BahamutObject.swift in Sources */,
 				E7D7C4541DE91C5200D962D4 /* Integer+FriendlyString.swift in Sources */,
-				E70899A81D9E312F004C3B24 /* KDCircularProgress.swift in Sources */,
 				E708AC921C871B610071104E /* VessageService.swift in Sources */,
 				E7C387F11C982F640096AF85 /* ConversationListCell.swift in Sources */,
 				E7F1BB331D33387C00D1C899 /* BahamutConfigJson.swift in Sources */,
@@ -1958,7 +1951,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1980,7 +1973,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.bahamut.Vessage.iAvatarMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -2030,7 +2023,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2074,7 +2067,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2116,6 +2109,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2156,6 +2150,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Vessage/Bridge-Header.h";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

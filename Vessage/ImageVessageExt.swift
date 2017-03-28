@@ -18,10 +18,10 @@ extension ConversationViewController:UIImagePickerControllerDelegate,ChatSendCon
         self.sendImageButton.addGestureRecognizer(tapSendImage)
     }
     
-    func onClickImageButton(sender: UITapGestureRecognizer) {
-        self.view.userInteractionEnabled = false
+    func onClickImageButton(_ sender: UITapGestureRecognizer) {
+        self.view.isUserInteractionEnabled = false
         self.sendImageButton.animationMaxToMin(0.1, maxScale: 1.2) {
-            self.view.userInteractionEnabled = true
+            self.view.isUserInteractionEnabled = true
             if self.outChatGroup {
                 self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
             }else {
@@ -36,9 +36,9 @@ extension ConversationViewController:UIImagePickerControllerDelegate,ChatSendCon
     }
     
     //MARK:UIImagePickerControllerDelegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        picker.dismissViewControllerAnimated(true)
+        picker.dismiss(animated: true)
         {
             ChatSendContentConfirmController.showConfirmView(self, contentImage: image, delegate: self)
             
@@ -46,10 +46,10 @@ extension ConversationViewController:UIImagePickerControllerDelegate,ChatSendCon
     }
     
     //MARK:ChatSendContentConfirmControllerDelegate
-    func chatSendContentConfirmControllerSend(sender: ChatSendContentConfirmController, contentImage: UIImage?) {
+    func chatSendContentConfirmControllerSend(_ sender: ChatSendContentConfirmController, contentImage: UIImage?) {
         if let cimg = contentImage{
             let image = cimg.scaleToWidthOf(ImageVessageImageWidth, quality: ImageVessageImageQuality)
-            let localPath = PersistentManager.sharedInstance.createTmpFileName(.Image)
+            let localPath = PersistentManager.sharedInstance.createTmpFileName(.image)
             let imageData = UIImageJPEGRepresentation(image,1)
             if PersistentFileHelper.storeFile(imageData!, filePath: localPath)
             {
@@ -58,7 +58,8 @@ extension ConversationViewController:UIImagePickerControllerDelegate,ChatSendCon
                 let vsg = Vessage()
                 vsg.typeId = Vessage.typeImage
                 vsg.body = self.getSendVessageBodyString([:])
-                let url = NSURL(fileURLWithPath: localPath)
+                vsg.fileId = localPath
+                let url = URL(fileURLWithPath: localPath)
                 VessageQueue.sharedInstance.pushNewVessageTo(chatterId,isGroup: self.isGroupChat, vessage: vsg,taskSteps:SendVessageTaskSteps.fileVessageSteps, uploadFileUrl: url)
             }else{
                 self.playCrossMark("PROCESS_IMAGE_ERROR".localizedString())
@@ -66,7 +67,7 @@ extension ConversationViewController:UIImagePickerControllerDelegate,ChatSendCon
         }
     }
     
-    func chatSendContentConfirmControllerCancel(sender: ChatSendContentConfirmController) {
+    func chatSendContentConfirmControllerCancel(_ sender: ChatSendContentConfirmController) {
         
     }
 }

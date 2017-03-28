@@ -14,7 +14,7 @@ class ChatImageManageCellDelegate:ConversationClickCellDelegate{
        return ChatImageManageCellDelegate()
     }()
     
-    func conversationTitleCell(sender: ConversationListCellBase, controller: ConversationListController!) {
+    func conversationTitleCell(_ sender: ConversationListCellBase, controller: ConversationListController!) {
         /*
         if let c = controller{
             ChatImageMgrViewController.showChatImageMgrVeiwController(c)

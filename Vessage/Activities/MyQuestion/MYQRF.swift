@@ -28,7 +28,7 @@ class GetMYQMainInfoRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/MYQ/MainInfo"
-        self.method = .GET
+        self.method = .get
     }
     
     var location:String!{
@@ -44,7 +44,7 @@ class UpdateMYQuestionRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/MYQ/Question"
-        self.method = .PUT
+        self.method = .put
     }
     
     var question:String!{

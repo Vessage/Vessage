@@ -13,7 +13,7 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
     func initChatImageButton() {
         self.textChatInputView = TextChatInputView.instanceFromXib()
         self.textChatInputView.layoutIfNeeded()
-        self.textChatInputView.frame.origin = CGPointZero
+        self.textChatInputView.frame.origin = CGPoint.zero
         
         
         let tapFaceText = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.onClickFaceTextButton(_:)))
@@ -22,40 +22,40 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
         self.messageList.addGestureRecognizer(tap)
         
         self.textChatInputView.delegate = self
-        textChatInputResponderTextFiled = UITextField(frame: CGRectMake(-10,-10,10,10))
-        textChatInputView.inputTextField.returnKeyType = .Send
+        textChatInputResponderTextFiled = UITextField(frame: CGRect(x: -10,y: -10,width: 10,height: 10))
+        textChatInputView.inputTextField.returnKeyType = .send
         self.view.addSubview(textChatInputResponderTextFiled)
         self.textChatInputResponderTextFiled.inputAccessoryView = textChatInputView
     }
     
-    func onTapInputView(ges:UITapGestureRecognizer) {
+    func onTapInputView(_ ges:UITapGestureRecognizer) {
         self.hideKeyBoard()
     }
     
     //MARK: TextChatInputViewDelegate
-    func textChatInputViewDidBeginEditing(textField: UITextView) {
+    func textChatInputViewDidBeginEditing(_ textField: UITextView) {
         textChatInputViewChanged(textField)
     }
     
-    func textChatInputViewChanged(textField: UITextView) {
+    func textChatInputViewChanged(_ textField: UITextView) {
 
     }
     
-    func textChatInputViewDidEndEditing(textField: UITextView) {
+    func textChatInputViewDidEndEditing(_ textField: UITextView) {
         textChatInputResponderTextFiled.resignFirstResponder()
     }
     
-    func textChatInputViewDidClickSend(sender: AnyObject?, textField: UITextView) {
+    func textChatInputViewDidClickSend(_ sender: AnyObject?, textField: UITextView) {
         sendImageChatVessage()
     }
     
-    func textChatInputViewDidClickChatImage(sender: AnyObject?) {
+    func textChatInputViewDidClickChatImage(_ sender: AnyObject?) {
         //self.showChatImagesMrgController(1)
     }
     
     //MARK: actions
     
-    func onClickFaceTextButton(sender: UITapGestureRecognizer) {
+    func onClickFaceTextButton(_ sender: UITapGestureRecognizer) {
         self.sendFaceTextButton.animationMaxToMin(0.1, maxScale: 1.2) {
             if self.outChatGroup{
                 self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
@@ -65,6 +65,7 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
         }
     }
     
+    @discardableResult
     func tryShowTextChatInputView() -> Bool{
         self.textChatInputResponderTextFiled.becomeFirstResponder()
         self.textChatInputView.inputTextField.becomeFirstResponder()
@@ -80,7 +81,7 @@ extension ConversationViewController:TextChatInputViewDelegate,UIPopoverPresenta
     }
  */
     
-    private func sendImageChatVessage() {
+    fileprivate func sendImageChatVessage() {
         self.setProgressSending()
         let textMessage = self.textChatInputView.inputTextField.text
         self.textChatInputView.inputTextField.text = nil

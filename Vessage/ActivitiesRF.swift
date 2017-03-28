@@ -17,7 +17,7 @@ class ActivityBoardData: BahamutObject {
 class GetActivitiesBoardDataRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/Activities/BoardData"
     }
 }

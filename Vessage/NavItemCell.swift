@@ -9,17 +9,17 @@
 import Foundation
 
 protocol NavItemCellDelegate{
-    func navItemCellOnClickContactItem(sender:NavItemCell)
-    func navItemCellOnClickGroupItem(sender:NavItemCell)
-    func navItemCellOnClickSubscriptionItem(sender:NavItemCell)
+    func navItemCellOnClickContactItem(_ sender:NavItemCell)
+    func navItemCellOnClickGroupItem(_ sender:NavItemCell)
+    func navItemCellOnClickSubscriptionItem(_ sender:NavItemCell)
 }
 
 class NavItemCell: ConversationListCellBase {
     static let reuseId = "NavItemCell"
     var delegate:NavItemCellDelegate?
     
-    private var groupDelegate = ConversationListGroupChatCellDelegate()
-    private var contactDelegate = ConversationListContactCellDelegate()
+    fileprivate var groupDelegate = ConversationListGroupChatCellDelegate()
+    fileprivate var contactDelegate = ConversationListContactCellDelegate()
     
     
     @IBOutlet weak var contactItem: UIView!{
@@ -40,7 +40,7 @@ class NavItemCell: ConversationListCellBase {
         }
     }
     
-    func onClickItem(a:UITapGestureRecognizer) {
+    func onClickItem(_ a:UITapGestureRecognizer) {
         if a.view == contactItem {
             contactDelegate.conversationTitleCell(self, controller: rootController)
             delegate?.navItemCellOnClickContactItem(self)

@@ -9,14 +9,14 @@
 import Foundation
 
 protocol BubbleVessageHandler {
-    func getContentViewSize(vc:UIViewController,vessage:Vessage,maxLimitedSize:CGSize,contentView:UIView) -> CGSize
-    func getContentView(vc:UIViewController,vessage:Vessage) -> UIView
-    func presentContent(vc:UIViewController,vessage:Vessage,contentView:UIView)
+    func getContentViewSize(_ vc:UIViewController,vessage:Vessage,maxLimitedSize:CGSize,contentView:UIView) -> CGSize
+    func getContentView(_ vc:UIViewController,vessage:Vessage) -> UIView
+    func presentContent(_ vc:UIViewController,vessage:Vessage,contentView:UIView)
 }
 
 class TipsBubbleVessageHandler:NSObject, BubbleVessageHandler {
     
-    func getVessageTipsMessage(vessage:Vessage) -> String {
+    func getVessageTipsMessage(_ vessage:Vessage) -> String {
         let dict = vessage.getBodyDict()
         if let locMsg = dict["locMsg"] as? String{
             return locMsg
@@ -27,23 +27,23 @@ class TipsBubbleVessageHandler:NSObject, BubbleVessageHandler {
         }
     }
     
-    func presentContent(vc:UIViewController, vessage: Vessage, contentView: UIView) {
+    func presentContent(_ vc:UIViewController, vessage: Vessage, contentView: UIView) {
         
     }
     
-    func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
+    func getContentView(_ vc:UIViewController,vessage: Vessage) -> UIView {
         let label = UILabel()
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }
     
-    func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
+    func getContentViewSize(_ vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize,contentView:UIView) -> CGSize {
         if let label = contentView as? UILabel {
             label.text = getVessageTipsMessage(vessage)
             return label.sizeThatFits(maxLimitedSize)
         }
-        return CGSizeZero
+        return CGSize.zero
     }
 }
 
@@ -51,22 +51,22 @@ private let NoBubbleVessageHandlerInstance:NoBubbleVessageHandler = NoBubbleVess
 private let UnknowBubbleVessageHandlerInstance:UnknowBubbleVessageHandler = UnknowBubbleVessageHandler()
 
 class NoBubbleVessageHandler:TipsBubbleVessageHandler {
-    override func getVessageTipsMessage(vessage: Vessage) -> String {
+    override func getVessageTipsMessage(_ vessage: Vessage) -> String {
         return "NO_VESSAGE_TIPS".localizedString()
     }
 }
 
 class UnknowBubbleVessageHandler:TipsBubbleVessageHandler {
     
-    override func getVessageTipsMessage(vessage: Vessage) -> String {
+    override func getVessageTipsMessage(_ vessage: Vessage) -> String {
         return "UNKNOW_VESSAGE_TYPE".localizedString()
     }
     
-    override func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
+    override func getContentView(_ vc:UIViewController,vessage: Vessage) -> UIView {
         let label = UILabel()
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.numberOfLines = 0
-        label.userInteractionEnabled = true
+        label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UnknowBubbleVessageHandler.onTapContentView(_:))))
         return label
     }
@@ -75,20 +75,20 @@ class UnknowBubbleVessageHandler:TipsBubbleVessageHandler {
         #if DEBUG
             debugLog("Go Appstore")
         #else
-            let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.appStoreId)"
-            UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+            let url = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=\(VessageConfig.bahamutConfig.appStoreId!)"
+            UIApplication.shared.openURL(URL(string: url)!)
         #endif
     }
 }
 
 class BubbleVessageHandlerManager {
-    private static var handlerMap = [Int:BubbleVessageHandler]()
+    fileprivate static var handlerMap = [Int:BubbleVessageHandler]()
     
     static func release(){
         handlerMap.removeAll()
     }
     
-    static func registHandler<T:BubbleVessageHandler>(vessageType:Int,handler:T){
+    static func registHandler<T:BubbleVessageHandler>(_ vessageType:Int,handler:T){
         handlerMap.updateValue(handler, forKey: vessageType)
     }
     
@@ -96,7 +96,7 @@ class BubbleVessageHandlerManager {
         return NoBubbleVessageHandlerInstance
     }
     
-    static func getBubbleVessageHandler(vessage:Vessage) -> BubbleVessageHandler{
+    static func getBubbleVessageHandler(_ vessage:Vessage) -> BubbleVessageHandler{
         if let handler = handlerMap[vessage.typeId]{
             return handler
         }

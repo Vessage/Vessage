@@ -13,7 +13,7 @@ class DeveloperMainPanelController: UIViewController
     
     @IBOutlet weak var godModeSwitch: UISwitch!{
         didSet{
-            godModeSwitch.on = UserSetting.godMode
+            godModeSwitch.isOn = UserSetting.godMode
         }
     }
     @IBOutlet weak var deviceTokenLabel: UILabel!{
@@ -22,58 +22,58 @@ class DeveloperMainPanelController: UIViewController
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         deviceTokenLabel.text = "DeviceToken:\(VessageSetting.deviceToken)"
     }
     
-    func onTapDeviceTokenLabel(sender:AnyObject) {
-        UIPasteboard.generalPasteboard().setValue(VessageSetting.deviceToken, forPasteboardType: "public.utf8-plain-text")
+    func onTapDeviceTokenLabel(_ sender:AnyObject) {
+        UIPasteboard.general.setValue(VessageSetting.deviceToken, forPasteboardType: "public.utf8-plain-text")
         self.playToast("Device Token Copied")
     }
     
-    @IBAction func clearAllData(sender: AnyObject)
+    @IBAction func clearAllData(_ sender: AnyObject)
     {
         PersistentManager.sharedInstance.clearCache()
         PersistentManager.sharedInstance.clearRootDir()
     }
     
-    @IBAction func use168Server(sender: AnyObject)
+    @IBAction func use168Server(_ sender: AnyObject)
     {
         VessageSetting.loginApi = "http://192.168.1.168:8086/Account/AjaxLogin"
         VessageSetting.registAccountApi = "http://192.168.1.168:8086/Account/AjaxRegist"
         self.playToast("Change to 168")
     }
     
-    @IBAction func use67Server(sender: AnyObject)
+    @IBAction func use67Server(_ sender: AnyObject)
     {
         VessageSetting.loginApi = "http://192.168.1.67:8086/Account/AjaxLogin"
         VessageSetting.registAccountApi = "http://192.168.1.67:8086/Account/AjaxRegist"
         self.playToast("Change to 67")
     }
     
-    @IBAction func closePanel(sender: AnyObject)
+    @IBAction func closePanel(_ sender: AnyObject)
     {
-        self.dismissViewControllerAnimated(false) { () -> Void in
+        self.dismiss(animated: false) { () -> Void in
             
         }
     }
     
-    @IBAction func godModeChanged(sender: AnyObject) {
-        UserSetting.godMode = godModeSwitch.on
+    @IBAction func godModeChanged(_ sender: AnyObject) {
+        UserSetting.godMode = godModeSwitch.isOn
     }
     
-    @IBAction func useRemoteServer(sender: AnyObject)
+    @IBAction func useRemoteServer(_ sender: AnyObject)
     {
         VessageSetting.loginApi = "http://auth.bahamut.cn:8086/Account/AjaxLogin"
         VessageSetting.registAccountApi = "http://auth.bahamut.cn:8086/Account/AjaxRegist"
         self.playToast("Change to remote")
     }
     
-    static func isShowDeveloperPanel(controller:UIViewController,id:String,psw: String) -> Bool{
+    static func isShowDeveloperPanel(_ controller:UIViewController,id:String,psw: String) -> Bool{
         if "\(id)\(psw)".sha256 == VessageConfig.bahamutConfig.godModeCode
         {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            DispatchQueue.main.async { () -> Void in
                 UserSetting.isAppstoreReviewing = false
                 DeveloperMainPanelController.showDeveloperMainPanel(controller)
             }
@@ -84,11 +84,11 @@ class DeveloperMainPanelController: UIViewController
         }
     }
     
-    private static func showDeveloperMainPanel(viewController:UIViewController)
+    fileprivate static func showDeveloperMainPanel(_ viewController:UIViewController)
     {
         let controller = instanceFromStoryBoard("DeveloperPanel", identifier: "DeveloperMainPanelController")
         let navController = UINavigationController(rootViewController: controller)
-        viewController.presentViewController(navController, animated: true) { () -> Void in
+        viewController.present(navController, animated: true) { () -> Void in
             
         }
     }
@@ -96,7 +96,7 @@ class DeveloperMainPanelController: UIViewController
 }
 
 class GodModeManager {
-    static func checkGodCode(vc:UIViewController,code:String) -> Bool{
+    static func checkGodCode(_ vc:UIViewController,code:String) -> Bool{
         let testModeStrs = code.split(">")
         if testModeStrs.count == 2 {
             if DeveloperMainPanelController.isShowDeveloperPanel(vc, id: testModeStrs[0], psw: testModeStrs[1]){
@@ -115,11 +115,11 @@ class GodModeManager {
         }
         
         #if DEBUG
-            if code.lowercaseString == "autorefreshoff" {
+            if code.lowercased() == "autorefreshoff" {
                 vc.showAlert("God Mode", msg: "Auto Refresh Off")
                 ConversationListController.autoRefreshData = false
                 return true
-            }else if code.lowercaseString == "autorefreshon"{
+            }else if code.lowercased() == "autorefreshon"{
                 vc.showAlert("God Mode", msg: "Auto Refresh On")
                 ConversationListController.autoRefreshData = true
                 return true

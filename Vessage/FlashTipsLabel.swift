@@ -9,17 +9,17 @@
 import Foundation
 class FlashTipsLabel: UILabel {
     
-    var flashDuration:NSTimeInterval = 0.6
+    var flashDuration:TimeInterval = 0.6
     var flashTime:UInt64 = 3600
     
-    func flashTips(container:UIView,msg:String,center:CGPoint? = nil,textColor:UIColor = UIColor.orangeColor()) {
+    func flashTips(_ container:UIView,msg:String,center:CGPoint? = nil,textColor:UIColor = UIColor.orange) {
         
         self.removeFromSuperview()
         
         self.clipsToBounds = true
         self.textColor = textColor
-        self.textAlignment = .Center
-        self.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.9)
+        self.textAlignment = .center
+        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.9)
         
         self.text = msg
         self.sizeToFit()
@@ -31,7 +31,7 @@ class FlashTipsLabel: UILabel {
         
         self.layer.cornerRadius = self.frame.height / 2
         
-        self.center = center == nil ? CGPointMake(container.frame.width / 2, container.frame.height / 2) : center!
+        self.center = center == nil ? CGPoint(x: container.frame.width / 2, y: container.frame.height / 2) : center!
         container.addSubview(self)
         UIAnimationHelper.flashView(self, duration: flashDuration, autoStop: true, stopAfterMs: flashTime){
             self.removeFromSuperview()

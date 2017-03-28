@@ -44,16 +44,16 @@ class VessageTimeMachine :NSObject{
     static let coreDataModelId = "VessageTimeMachine"
     static let recordEntityName = "VTMRecord"
     
-    private var coreDb:CoreDataManager!
+    fileprivate var coreDb:CoreDataManager!
     
     static var instance:VessageTimeMachine = {
        return VessageTimeMachine()
     }()
     
-    func initWithUserId(userId:String){
+    func initWithUserId(_ userId:String){
         coreDb = CoreDataManager()
-        let url = ServiceContainer.getFileService().documentsPathUrl.URLByAppendingPathComponent("vtimemachine.sqlite")!
-        coreDb.initManager(VessageTimeMachine.coreDataModelId, dbFileUrl: url, momdBundle: NSBundle.mainBundle())
+        let url = ServiceContainer.getFileService().documentsPathUrl.appendingPathComponent("vtimemachine.sqlite")
+        coreDb.initManager(VessageTimeMachine.coreDataModelId, dbFileUrl: url, momdBundle: Bundle.main)
         ServiceContainer.getVessageService().addObserver(self, selector: #selector(VessageTimeMachine.onVessagesRemoved(_:)), name: VessageService.onVessagesRemoved, object: nil)
         VessageQueue.sharedInstance.addObserver(self, selector: #selector(VessageTimeMachine.onNewVessagePushed(_:)), name: VessageQueue.onPushNewVessageTask, object: nil)
         
@@ -65,7 +65,7 @@ class VessageTimeMachine :NSObject{
         coreDb.deinitManager()
     }
     
-    func onNewVessagePushed(a:NSNotification) {
+    func onNewVessagePushed(_ a:Notification) {
         if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if let vsg = task.vessage {
                 pushRecord(task.receiverId, vessage: vsg)
@@ -74,7 +74,7 @@ class VessageTimeMachine :NSObject{
         }
     }
     
-    func onVessagesRemoved(a:NSNotification) {
+    func onVessagesRemoved(_ a:Notification) {
         if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
             for vsg in vsgs {
                 pushRecord(vsg.sender, vessage: vsg)
@@ -83,13 +83,13 @@ class VessageTimeMachine :NSObject{
         }
     }
     
-    func getVessageBefore(chatter:String,ts:Int64,limit:Int = 20) -> [VessageTimeMachineItem] {
+    func getVessageBefore(_ chatter:String,ts:Int64,limit:Int = 20) -> [VessageTimeMachineItem] {
         let predict = NSPredicate(format: "chatterId = '\(chatter)' and mtime < \(ts)")
         let sort = NSSortDescriptor(key: "mtime", ascending: false)
         let resultSet = coreDb.getCells(VessageTimeMachine.recordEntityName, predicate: predict,limit: limit,sortDescriptors:[sort]).map { (model) -> VTMRecord in
             return model as! VTMRecord
-            }.sort({ (a, b) -> Bool in
-                a.mtime.longLongValue < b.mtime.longLongValue
+            }.sorted(by: { (a, b) -> Bool in
+                a.mtime.int64Value < b.mtime.int64Value
             }).map { (record) -> VessageTimeMachineItem in
                 let item = VessageTimeMachineItem()
                 item.chatter = record.chatterId
@@ -99,12 +99,12 @@ class VessageTimeMachine :NSObject{
         return resultSet
     }
     
-    private func pushRecord(chatter:String,vessage:Vessage) {
+    fileprivate func pushRecord(_ chatter:String,vessage:Vessage) {
         let mobj = coreDb.insertNewCell(VessageTimeMachine.recordEntityName)
         if let obj = mobj as? VTMRecord{
             obj.chatterId = chatter
-            obj.ctime = NSNumber(longLong: DateHelper.UnixTimeSpanTotalMilliseconds)
-            obj.mtime = NSNumber(longLong: vessage.ts)
+            obj.ctime = NSNumber(value: DateHelper.UnixTimeSpanTotalMilliseconds as Int64)
+            obj.mtime = NSNumber(value: vessage.ts as Int64)
             obj.modelValue = vessage.toMiniJsonString()
         }
     }

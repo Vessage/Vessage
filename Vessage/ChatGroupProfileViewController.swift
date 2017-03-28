@@ -17,16 +17,16 @@ class ChatGroupProfileCellBase: UITableViewCell {
 
 class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewControllerDelegate {
 
-    private(set) var chatGroup:ChatGroup!{
+    fileprivate(set) var chatGroup:ChatGroup!{
         didSet{
             if chatGroup.hosters.contains(UserSetting.userId) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ChatGroupProfileViewController.addUserToGroup(_:)))
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ChatGroupProfileViewController.addUserToGroup(_:)))
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
             }
         }
     }
     let userService = ServiceContainer.getUserService()
-    let fileService = ServiceContainer.getService(FileService)
+    let fileService = ServiceContainer.getFileService()
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -35,7 +35,7 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
             tableView.estimatedRowHeight = tableView.rowHeight
             tableView.rowHeight = UITableViewAutomaticDimension
             tableView.tableFooterView = UIView()
-            tableView.tableFooterView?.backgroundColor = UIColor.clearColor()
+            tableView.tableFooterView?.backgroundColor = UIColor.clear
         }
     }
     
@@ -52,24 +52,24 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ServiceContainer.getChatGroupService().addObserver(self, selector: #selector(ChatGroupProfileViewController.onChatGroupUpdated(_:)), name: ChatGroupService.OnChatGroupUpdated, object: nil)
         userService.addObserver(self, selector: #selector(ChatGroupProfileViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ServiceContainer.getChatGroupService().removeObserver(self)
         userService.removeObserver(self)
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         collectionViewHeight.constant = collectionView.contentSize.height
     }
     
-    func onChatGroupUpdated(a:NSNotification){
+    func onChatGroupUpdated(_ a:Notification){
         if let g = a.userInfo?[kChatGroupValue] as? ChatGroup{
             if g.groupId == self.chatGroup.groupId {
                 self.chatGroup = g
@@ -79,15 +79,15 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
         }
     }
     
-    func onUserProfileUpdated(a:NSNotification) {
+    func onUserProfileUpdated(_ a:Notification) {
         if let user = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
-            if let index = (chatGroup.chatters.indexOf{$0 == user.userId}){
-                collectionView.reloadItemsAtIndexPaths([NSIndexPath(forRow:index,inSection: 0)])
+            if let index = (chatGroup.chatters.index{$0 == user.userId}){
+                collectionView.reloadItems(at: [IndexPath(row:index,section: 0)])
             }
         }
     }
     
-    func addUserToGroup(sender: AnyObject) {
+    func addUserToGroup(_ sender: AnyObject) {
         let controller = SelectVessageUserViewController.showSelectVessageUserViewController(self.navigationController!)
         controller.delegate = self
         controller.allowsMultipleSelection = false
@@ -96,7 +96,7 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
         controller.title = "SELECT_GROUP_CHAT_PEOPLE".localizedString()
     }
     
-    func canSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {
+    func canSelect(_ sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) -> Bool {
         if selectedUsers.count + chatGroup.chatters.count > maxGroupChatUserCount {
             sender.playToast("GROUP_CHAT_PEOPLE_NUM_LIMIT".localizedString())
             return false
@@ -111,8 +111,8 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
         }
     }
     
-    func onFinishSelect(sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
-        let selectUserId = selectedUsers.first!.userId
+    func onFinishSelect(_ sender: SelectVessageUserViewController, selectedUsers: [VessageUser]) {
+        let selectUserId = selectedUsers.first!.userId!
         ServiceContainer.getChatGroupService().addUserJoinChatGroup(chatGroup.groupId, userId: selectUserId){ suc in
             if suc{
                 self.playCheckMark("ADD_USER_TO_GROUP_SUCCESS".localizedString())
@@ -121,7 +121,7 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
             }
         }
     }
-    static func showProfileViewController(vc:UINavigationController, chatGroup:ChatGroup){
+    static func showProfileViewController(_ vc:UINavigationController, chatGroup:ChatGroup){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ChatGroupProfileViewController") as! ChatGroupProfileViewController
         controller.chatGroup = chatGroup
         vc.pushViewController(controller, animated: true)
@@ -130,16 +130,16 @@ class ChatGroupProfileViewController: UIViewController,SelectVessageUserViewCont
 
 extension ChatGroupProfileViewController{
     
-    private func showEditGroupNameAlert(){
+    fileprivate func showEditGroupNameAlert(){
         let title = "EDIT_GROUP_CHAT_NAME".localizedString()
-        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .Alert)
-        alertController.addTextFieldWithConfigurationHandler({ (textfield) -> Void in
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alertController.addTextField(configurationHandler: { (textfield) -> Void in
             textfield.placeholder = "GROUP_CHAT_NAME".localizedString()
-            textfield.borderStyle = .None
+            textfield.borderStyle = .none
             textfield.text = self.chatGroup.groupName
         })
         
-        let yes = UIAlertAction(title: "YES".localizedString() , style: .Default, handler: { (action) -> Void in
+        let yes = UIAlertAction(title: "YES".localizedString() , style: .default, handler: { (action) -> Void in
             let newNoteName = alertController.textFields?[0].text ?? ""
             if String.isNullOrEmpty(newNoteName)
             {
@@ -147,7 +147,7 @@ extension ChatGroupProfileViewController{
             }else{
                 let hud = self.showAnimationHud()
                 ServiceContainer.getChatGroupService().editChatGroupName(self.chatGroup.groupId, inviteCode: self.chatGroup.inviteCode, newName: newNoteName){ suc in
-                    hud.hideAnimated(true)
+                    hud.hide(animated: true)
                     if suc{
                         self.playCheckMark("GROUP_NAME_EDITED".localizedString())
                     }else{
@@ -156,7 +156,7 @@ extension ChatGroupProfileViewController{
                 }
             }
         })
-        let no = UIAlertAction(title: "NO".localizedString(), style: .Cancel,handler:nil)
+        let no = UIAlertAction(title: "NO".localizedString(), style: .cancel,handler:nil)
         alertController.addAction(no)
         alertController.addAction(yes)
         self.showAlert(alertController)
@@ -165,13 +165,13 @@ extension ChatGroupProfileViewController{
 
 extension ChatGroupProfileViewController{
     func exitChatGroup() {
-        let okAction = UIAlertAction(title: "YES".localizedString(), style: .Default) { (ac) in
+        let okAction = UIAlertAction(title: "YES".localizedString(), style: .default) { (ac) in
             let hud = self.showAnimationHud()
             ServiceContainer.getChatGroupService().quitChatGroup(self.chatGroup.groupId){ suc in
-                hud.hideAnimated(true)
+                hud.hide(animated: true)
                 if suc{
                     self.playToast("YOU_EXITED_GROUP_CHAT".localizedString()){
-                        self.navigationController?.popViewControllerAnimated(true)
+                        let _ = self.navigationController?.popViewController(animated: true)
                     }
                 }else{
                     self.playCrossMark("EXITING_GROUP_CHAT_ERROR".localizedString())
@@ -185,34 +185,34 @@ extension ChatGroupProfileViewController{
 
 //MARK: Table View Delegate
 extension ChatGroupProfileViewController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier(GroupNameCell.reuseId, forIndexPath: indexPath) as! GroupNameCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: GroupNameCell.reuseId, for: indexPath) as! GroupNameCell
             cell.rootController = self
             cell.groupName.text = chatGroup.groupName
             return cell
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("ExitGroupChatCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ExitGroupChatCell", for: indexPath)
             cell.setSeparatorFullWidth()
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.cellForRowAtIndexPath(indexPath)?.selected = false
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.isSelected = false
         if indexPath.section == 0{
             showEditGroupNameAlert()
         }else if indexPath.section == 1{
@@ -224,19 +224,19 @@ extension ChatGroupProfileViewController:UITableViewDelegate,UITableViewDataSour
 
 //MARK: Users CollectionView
 extension ChatGroupProfileViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = chatGroup.chatters?.count {
             return count
         }
         return 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(GroupUserCollectionCell.reuseId, forIndexPath: indexPath) as! GroupUserCollectionCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupUserCollectionCell.reuseId, for: indexPath) as! GroupUserCollectionCell
         let userId = self.chatGroup.chatters[indexPath.row]
         if let user = userService.getCachedUserProfile(userId) {
             self.updateCell(cell, user: user)
@@ -247,7 +247,7 @@ extension ChatGroupProfileViewController:UICollectionViewDelegate,UICollectionVi
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let userId = self.chatGroup.chatters[indexPath.row]
         if let user = userService.getCachedUserProfile(userId) {
             let delegate = UserProfileViewControllerDelegateAddConversation()
@@ -262,15 +262,15 @@ extension ChatGroupProfileViewController:UICollectionViewDelegate,UICollectionVi
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(60, 80)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 60, height: 80)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     
-    private func updateCell(cell:GroupUserCollectionCell,user:VessageUser){
+    fileprivate func updateCell(_ cell:GroupUserCollectionCell,user:VessageUser){
         fileService.setImage(cell.avatar, iconFileId: user.avatar,defaultImage: getDefaultAvatar(user.accountId ?? "",sex: user.sex))
         cell.nick.text = userService.getUserNotedName(user.userId)
     }

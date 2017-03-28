@@ -52,9 +52,9 @@ class ConversationListController: UITableViewController {
                     searchBar.endEditing(false)
                 }
             }
-            self.navigationItem.leftBarButtonItem?.enabled = !isSearching
-            self.navigationItem.rightBarButtonItem?.enabled = !isSearching
-            MainTabBarController.instance?.tabBar.hidden = isSearching
+            self.navigationItem.leftBarButtonItem?.isEnabled = !isSearching
+            self.navigationItem.rightBarButtonItem?.isEnabled = !isSearching
+            MainTabBarController.instance?.tabBar.isHidden = isSearching
             self.searchBar.placeholder = ( isSearching ? "SEARCH_FRIENDS_HOLODER":"SEARCH_FRIENDS").localizedString()
         }
     }
@@ -66,7 +66,7 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    private var flashTipsView:FlashTipsLabel = {
+    fileprivate var flashTipsView:FlashTipsLabel = {
        return FlashTipsLabel()
     }()
     
@@ -75,16 +75,16 @@ class ConversationListController: UITableViewController {
     static var autoRefreshData:Bool = false{
         didSet{
             if autoRefreshData && getDataTimer == nil{
-                getDataTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(ConversationListController.onDebugGetData(_:)), userInfo: nil, repeats: true)
+                getDataTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(ConversationListController.onDebugGetData(_:)), userInfo: nil, repeats: true)
             }else{
                 getDataTimer?.invalidate()
                 getDataTimer = nil
             }
         }
     }
-    private static var getDataTimer:NSTimer!
-    static func onDebugGetData(_:NSTimer) {
-        dispatch_async(dispatch_get_main_queue()) {
+    private static var getDataTimer:Timer!
+    static func onDebugGetData(_:Timer) {
+        DispatchQueue.main.async {
             ServiceContainer.getVessageService().newVessageFromServer()
         }
     }
@@ -108,28 +108,28 @@ class ConversationListController: UITableViewController {
         #endif
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.backBarButtonItem?.title = VessageConfig.appName
         PersistentManager.sharedInstance.saveAll()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        MainTabBarController.instance?.tabBar.hidden = true
+        MainTabBarController.instance?.tabBar.isHidden = true
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tryShowConversationsTimeUpTips()
-        MainTabBarController.instance?.tabBar.hidden = false
+        MainTabBarController.instance?.tabBar.isHidden = false
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.intervalTimeTaskPerMinute, object: nil)
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationListController.onTimerRefreshList(_:)), name: AppService.onAppBecomeActive, object: nil)
         
         setNavigationBadges()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ServiceContainer.getAppService().removeObserver(self)
     }
@@ -140,23 +140,23 @@ class ConversationListController: UITableViewController {
     }
     #endif
     
-    private func initMJRefreshHeader() {
+    fileprivate func initMJRefreshHeader() {
         let mjHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(ConversationListController.refreshNewUsers(_:)))
-        mjHeader.setTitle("REFRESH_NEAR_USER_PULLING".localizedString(), forState: .Pulling)
-        mjHeader.setTitle("REFRESH_NEAR_USER_REFRESHING".localizedString(), forState: .Refreshing)
-        mjHeader.setTitle("REFRESH_NEAR_USER_IDLE".localizedString(), forState: .Idle)
-        mjHeader.setTitle("REFRESH_NEAR_USER_WILL_REFRESH".localizedString(), forState: .WillRefresh)
-        mjHeader.arrowView.hidden = true
+        mjHeader?.setTitle("REFRESH_NEAR_USER_PULLING".localizedString(), for: .pulling)
+        mjHeader?.setTitle("REFRESH_NEAR_USER_REFRESHING".localizedString(), for: .refreshing)
+        mjHeader?.setTitle("REFRESH_NEAR_USER_IDLE".localizedString(), for: .idle)
+        mjHeader?.setTitle("REFRESH_NEAR_USER_WILL_REFRESH".localizedString(), for: .willRefresh)
+        mjHeader?.arrowView.isHidden = true
 
-        mjHeader.lastUpdatedTimeLabel.hidden = true
+        mjHeader?.lastUpdatedTimeLabel.isHidden = true
         self.tableView.mj_header = mjHeader
     }
     
-    private var refreshedNewUserTime:NSDate!
-    private let refreshNewUserIntervalMinutes = 10.0
-    func refreshNewUsers(sender:AnyObject) {
+    fileprivate var refreshedNewUserTime:Date!
+    fileprivate let refreshNewUserIntervalMinutes = 10.0
+    func refreshNewUsers(_ sender:AnyObject) {
         if refreshedNewUserTime == nil || abs(refreshedNewUserTime.totalMinutesSinceNow.doubleValue) > refreshNewUserIntervalMinutes {
-            self.refreshedNewUserTime = NSDate()
+            self.refreshedNewUserTime = Date()
             let locationService = ServiceContainer.getLocationService()
             if let hereLocation = locationService.hereLocationString{
                 ServiceContainer.getUserService().getNearUsers(hereLocation,checkTime: false)
@@ -169,7 +169,7 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    private func initObservers(){
+    fileprivate func initObservers(){
         conversationService.addObserver(self, selector: #selector(ConversationListController.onConversationListUpdated(_:)), name: ConversationService.conversationListUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationListController.onNewVessagesReceived(_:)), name: VessageService.onNewVessagesReceived, object: nil)
         
@@ -177,7 +177,7 @@ class ConversationListController: UITableViewController {
         
     }
     
-    private func releaseController(){
+    fileprivate func releaseController(){
         ServiceContainer.getAppService().removeObserver(self)
         VessageQueue.sharedInstance.removeObserver(self)
         ServiceContainer.instance.removeObserver(self)
@@ -189,14 +189,14 @@ class ConversationListController: UITableViewController {
         #endif
     }
     
-    private func setNavigationBadges() {
+    fileprivate func setNavigationBadges() {
         let appService = ServiceContainer.getAppService()
         appService.appQABadge ? navigationItem.leftBarButtonItem?.showMiniBadge() : navigationItem.leftBarButtonItem?.hideMiniBadge()
         appService.settingBadge ? navigationItem.rightBarButtonItem?.showMiniBadge() : navigationItem.rightBarButtonItem?.hideMiniBadge()
     }
     
-    private func tryShowConversationsTimeUpTips() {
-        if UIApplication.sharedApplication().applicationState == .Active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
+    fileprivate func tryShowConversationsTimeUpTips() {
+        if UIApplication.shared.applicationState == .active && self.navigationController?.topViewController == self && self.presentedViewController == nil{
             if conversationService.timeupedConversations.count > 0 {
                 
                 let msg = String(format: "X_TIMEUPED_CONVERSATION_REMOVED".localizedString(), "\(conversationService.timeupedConversations.count)")
@@ -221,16 +221,16 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    func onServicesWillLogout(a:NSNotification) {
+    func onServicesWillLogout(_ a:Notification) {
         releaseController()
     }
     
-    func onConversationListUpdated(a:NSNotification){
+    func onConversationListUpdated(_ a:Notification){
         self.tryShowConversationsTimeUpTips()
         self.tableView.reloadData()
     }
     
-    func onNewVessagesReceived(a:NSNotification){
+    func onNewVessagesReceived(_ a:Notification){
         if let vsgs = a.userInfo?[VessageServiceNotificationValues] as? [Vessage]{
             vsgs.forEach({ (vsg) in
                 if !vsg.isGroup{
@@ -246,27 +246,27 @@ class ConversationListController: UITableViewController {
     }
     
     //MARK: actions
-    @IBAction func showUserSetting(sender: AnyObject) {
+    @IBAction func showUserSetting(_ sender: AnyObject) {
         ServiceContainer.getAppService().settingBadge = false
         UserSettingViewController.showUserSettingViewController(self.navigationController!,basicMode: false)
     }
     
-    @IBAction func onClickQA(sender: AnyObject) {
+    @IBAction func onClickQA(_ sender: AnyObject) {
         if let nvc = self.navigationController{
             ServiceContainer.getAppService().appQABadge = false
             SimpleBrowser.openUrl(nvc, url: "http://bahamut.cn/VGQA.html", title: "Q&A")
         }
     }
     
-    private func removeConversation(conversationId:String,message:String?){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+    fileprivate func removeConversation(_ conversationId:String,message:String?){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .default) { (action) -> Void in
             self.conversationService.removeConversation(conversationId)
         }
-        let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
+        let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .cancel, handler: nil)
         self.showAlert("ASK_REMOVE_CONVERSATION_TITLE".localizedString(), msg: message, actions: [okAction,cancel])
     }
     
-    func handleConversationListCellItem(cell:ConversationListCell){
+    func handleConversationListCellItem(_ cell:ConversationListCell){
         if let conversation = cell.originModel as? Conversation{
             MobClick.event("Vege_OpenConversation")
             ConversationViewController.showConversationViewController(self.navigationController!,conversation: conversation)
@@ -276,7 +276,7 @@ class ConversationListController: UITableViewController {
     }
     
     //MARK: table view delegate
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if self.isSearching{
             return 1
         }else{
@@ -284,7 +284,7 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if isSearching{
             return searchResult.count
@@ -297,8 +297,8 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    private func searchingTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
-        let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
+    fileprivate func searchingTableView(_ tableView: UITableView, indexPath: IndexPath) -> ConversationListCellBase{
+        let lc = tableView.dequeueReusableCell(withIdentifier: ConversationListCell.reuseId, for: indexPath) as! ConversationListCell
         lc.subLineLabel.morphingEnabled = tableViewEndDecelerating
         let sr = searchResult[indexPath.row]
         lc.rootController = self
@@ -307,14 +307,14 @@ class ConversationListController: UITableViewController {
         return lc
     }
     
-    private func normalTableView(tableView: UITableView, indexPath: NSIndexPath) -> ConversationListCellBase{
+    fileprivate func normalTableView(_ tableView: UITableView, indexPath: IndexPath) -> ConversationListCellBase{
         if indexPath.section == 0{
-            let cell = tableView.dequeueReusableCellWithIdentifier(NavItemCell.reuseId, forIndexPath: indexPath) as! NavItemCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: NavItemCell.reuseId, for: indexPath) as! NavItemCell
             cell.rootController = self
             return cell
         }
         else{
-            let lc = tableView.dequeueReusableCellWithIdentifier(ConversationListCell.reuseId, forIndexPath: indexPath) as! ConversationListCell
+            let lc = tableView.dequeueReusableCell(withIdentifier: ConversationListCell.reuseId, for: indexPath) as! ConversationListCell
             lc.subLineLabel.morphingEnabled = tableViewEndDecelerating
             let conversation = conversationService.conversations[indexPath.row]
             lc.rootController = self
@@ -327,36 +327,36 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    private var tableViewEndDecelerating = true
+    fileprivate var tableViewEndDecelerating = true
     
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         tableViewEndDecelerating = false
     }
     
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         tableViewEndDecelerating = true
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:UITableViewCell!
         if isSearching{
             cell = searchingTableView(tableView, indexPath: indexPath)
         }else{
             cell = normalTableView(tableView, indexPath: indexPath)
         }
-        cell.selected = false
+        cell.isSelected = false
         cell.setSeparatorFullWidth()
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ConversationListCellBase{
-            cell.selected = false
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? ConversationListCellBase{
+            cell.isSelected = false
             cell.onCellClicked()
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if isSearching {
             return 60
         }
@@ -367,7 +367,7 @@ class ConversationListController: UITableViewController {
         return 60
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case ConversationListController.navItemSection:
             return 0
@@ -376,36 +376,36 @@ class ConversationListController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if isSearching == false && indexPath.section == ConversationListController.conversationSection{
             return true
         }
         return false
     }
     
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if isSearching == false && indexPath.section == ConversationListController.conversationSection{
             
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ConversationListCell{
+            if let cell = tableView.cellForRow(at: indexPath) as? ConversationListCell{
                 if let conversation = cell.originModel as? Conversation{
-                    let acRemove = UITableViewRowAction(style: .Default, title: "REMOVE".localizedString(), handler: { (ac, indexPath) -> Void in
+                    let acRemove = UITableViewRowAction(style: .default, title: "REMOVE".localizedString(), handler: { (ac, indexPath) -> Void in
                         self.removeConversation(conversation.conversationId,message: cell.headLineLabel.text)
                     })
                     
                     var acPin:UITableViewRowAction? = nil
                     if conversation.pinned {
-                        acPin = UITableViewRowAction(style: .Default, title: "UNPIN".localizedString(), handler: { (ac, indexPath) in
+                        acPin = UITableViewRowAction(style: .default, title: "UNPIN".localizedString(), handler: { (ac, indexPath) in
                             if self.conversationService.unpinConversation(conversation){
                                 SystemSoundHelper.keyTock()
-                                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+                                tableView.reloadRows(at: [indexPath], with: .right)
                             }
                         })
                     }else{
-                        acPin = UITableViewRowAction(style: .Default, title: "PIN".localizedString(), handler: { (ac, indexPath) in
+                        acPin = UITableViewRowAction(style: .default, title: "PIN".localizedString(), handler: { (ac, indexPath) in
                             
                             if self.conversationService.pinConversation(conversation){
                                 SystemSoundHelper.keyTink()
-                                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+                                tableView.reloadRows(at: [indexPath], with: .right)
                             }else{
                                 self.playToast(String(format: "MAX_PIN_X_LIMITED".localizedString(), "\(ConversationService.conversationMaxPinNumber)"))
                             }
@@ -419,7 +419,7 @@ class ConversationListController: UITableViewController {
         return nil
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
     }
 }
@@ -431,31 +431,31 @@ private var openConversationActivityId:String? = nil
 
 extension ConversationListController:UserProfileViewControllerDismissedDelegate{
     
-    func userProfileViewControllerDismissed(sender: UserProfileViewController) {
-        MainTabBarController.instance?.tabBar.hidden = false
+    func userProfileViewControllerDismissed(_ sender: UserProfileViewController) {
+        MainTabBarController.instance?.tabBar.isHidden = false
     }
     
-    func userProfileViewController(sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
+    func userProfileViewController(_ sender: UserProfileViewController, rightButtonClicked profile: VessageUser) {
         if let userId = profile.userId{
             let beforeRemoveTs = openConversationBeforeRemoveTs
             openConversationBeforeRemoveTs = ConversationMaxTimeUpMS
             let acId = openConversationActivityId
             openConversationActivityId = nil
-            sender.dismissViewControllerAnimated(true, completion: {
-                MainTabBarController.instance?.tabBar.hidden = false
+            sender.dismiss(animated: true, completion: {
+                MainTabBarController.instance?.tabBar.isHidden = false
                 ConversationViewController.showConversationViewController(self.navigationController!, userId : userId,beforeRemoveTs: beforeRemoveTs,createByActivityId: acId)
             })
         }
     }
     
-    func userProfileViewController(sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
+    func userProfileViewController(_ sender: UserProfileViewController, rightButtonTitle profile: VessageUser) -> String {
         if profile.t == VessageUser.typeSubscription {
             return "SUBSCRIPT".localizedString()
         }
         return "CHAT".localizedString()
     }
     
-    func handleSearchResult(cell:ConversationListCell){
+    func handleSearchResult(_ cell:ConversationListCell){
         isSearching = false
         if let result = cell.originModel as? SearchResultModel{
             MobClick.event("Vege_OpenSearchResultConversation")
@@ -479,7 +479,7 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
                 }
                 
                 UserProfileViewController.showUserProfileViewController(self, userId: u.userId, delegate: self){ profileVC in
-                    MainTabBarController.instance?.tabBar.hidden = true
+                    MainTabBarController.instance?.tabBar.isHidden = true
                     profileVC.accountIdHidden = accountIdHidden
                     profileVC.snsButtonEnabled = snsButtonEnabled
                 }
@@ -490,24 +490,24 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
         }
     }
     
-    func openConversationWithMobile(mobile:String,noteName:String?) {
+    func openConversationWithMobile(_ mobile:String,noteName:String?) {
         if let user = self.userService.getCachedUserByMobile(mobile){
             ConversationViewController.showConversationViewController(self.navigationController!, userId: user.userId)
         }else{
             let hud = self.showAnimationHud()
             self.userService.fetchUserProfileByMobile(mobile, lastUpdatedTime: nil, updatedCallback: { (user) in
-                hud.hideAnimated(true)
+                hud.hide(animated: true)
                 if let u = user{
                     
                     openConversationBeforeRemoveTs = ConversationMaxTimeUpMS
                     openConversationActivityId = nil
                     UserProfileViewController.showUserProfileViewController(self, userProfile: u, delegate: self)
-                    MainTabBarController.instance?.tabBar.hidden = true
+                    MainTabBarController.instance?.tabBar.isHidden = true
                     
                 }else{
                     let title = "NO_USER_OF_MOBILE".localizedString()
                     let msg = String(format: "MOBILE_X_INVITE_JOIN_VG".localizedString(), mobile)
-                    let invite = UIAlertAction(title: "INVITE".localizedString(), style: .Default, handler: { (ac) in
+                    let invite = UIAlertAction(title: "INVITE".localizedString(), style: .default, handler: { (ac) in
                         ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString(),copyLink: true)
                     })
                     
@@ -521,8 +521,8 @@ extension ConversationListController:UserProfileViewControllerDismissedDelegate{
 //MARK: Flash Tips
 extension ConversationListController{
     
-    func flashTips(msg:String) {
-        self.flashTipsView.flashTips(self.view, msg: msg, center: CGPointMake(self.view.frame.width / 2, self.view.frame.height - 160),textColor: UIColor.whiteColor())
+    func flashTips(_ msg:String) {
+        self.flashTipsView.flashTips(self.view, msg: msg, center: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height - 160),textColor: UIColor.white)
     }
     
 }

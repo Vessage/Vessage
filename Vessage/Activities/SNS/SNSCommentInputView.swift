@@ -10,8 +10,8 @@
 import Foundation
 
 @objc protocol SNSCommentInputViewDelegate {
-    optional func commentInputViewDidClickSend(sender:SNSCommentInputView,textField:UITextField)
-    optional func commentInputViewDidEndEditing(sender:SNSCommentInputView,textField:UITextField)
+    @objc optional func commentInputViewDidClickSend(_ sender:SNSCommentInputView,textField:UITextField)
+    @objc optional func commentInputViewDidEndEditing(_ sender:SNSCommentInputView,textField:UITextField)
 }
 
 class SNSCommentInputView: UIView,UITextFieldDelegate {
@@ -30,10 +30,10 @@ class SNSCommentInputView: UIView,UITextFieldDelegate {
     
     var model:AnyObject?
     
-    private var responseView:UIView?
+    fileprivate var responseView:UIView?
     
     
-    func showInputView(responseView:UIView?,model:AnyObject?,atUserNick:String?) {
+    func showInputView(_ responseView:UIView?,model:AnyObject?,atUserNick:String?) {
         self.model = model
         self.atUserNick = atUserNick
         self.responseView = responseView
@@ -56,17 +56,17 @@ class SNSCommentInputView: UIView,UITextFieldDelegate {
     
     weak var delegate:SNSCommentInputViewDelegate?
     
-    @IBAction func onClickSend(sender: AnyObject) {
+    @IBAction func onClickSend(_ sender: AnyObject) {
         if let handler = delegate?.commentInputViewDidClickSend{
-            dispatch_async(dispatch_get_main_queue(), {
-                handler(self,textField: self.inputTextField)
+            DispatchQueue.main.async(execute: {
+                handler(self,self.inputTextField)
             })
         }
     }
     
     //MARK:UITextFieldDelegate
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "\n" {
             onClickSend(sendButton)
             return false
@@ -74,13 +74,13 @@ class SNSCommentInputView: UIView,UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.commentInputViewDidEndEditing?(self, textField: textField)
     }
     
     static func instanceFromXib() -> SNSCommentInputView{
-        let view = NSBundle.mainBundle().loadNibNamed("SNSCommentInputView", owner: nil, options: nil)![0] as! SNSCommentInputView
-        view.backgroundColor = UIColor.whiteColor()
+        let view = Bundle.main.loadNibNamed("SNSCommentInputView", owner: nil, options: nil)![0] as! SNSCommentInputView
+        view.backgroundColor = UIColor.white
         return view
     }
 }

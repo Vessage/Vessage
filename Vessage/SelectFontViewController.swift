@@ -39,10 +39,10 @@ private let fontConfigList = [
 ]
 
 extension UIFont{
-    private static func loadFontWith(fontName:String,size:CGFloat = 12.0) -> UIFont?{
+    fileprivate static func loadFontWith(_ fontName:String,size:CGFloat = 12.0) -> UIFont?{
         if let font = UIFont(name: fontName, size: size) {
-            if (font.fontName.compare(fontName) == .OrderedSame ||
-                font.familyName.compare(fontName) == .OrderedSame) {
+            if (font.fontName.compare(fontName) == .orderedSame ||
+                font.familyName.compare(fontName) == .orderedSame) {
                 return font
             }
         }
@@ -50,19 +50,20 @@ extension UIFont{
     }
 }
 
-func createFontDescWithFontName(fontName:String) -> NSMutableArray{
+func createFontDescWithFontName(_ fontName:String) -> NSMutableArray{
     // Creat a dictionary with the font's PostScript name.
-    let attrs = NSDictionary(object: fontName, forKey: kCTFontNameAttribute as String)
+    let attrs = NSDictionary(object: fontName, forKey: kCTFontNameAttribute as String as String as NSCopying)
     // Creat a new font descriptor reference from the attributtes dictionary
-    let desc = CTFontDescriptorCreateWithAttributes(attrs as CFDictionaryRef)
+    let desc = CTFontDescriptorCreateWithAttributes(attrs as CFDictionary)
     
     var descs = NSMutableArray()
     descs = NSMutableArray(capacity: 0)
-    descs.addObject(desc)
+    descs.add(desc)
     return descs
 }
 
-private func matchFont(fontName:String,handler:CTFontDescriptorProgressHandler? = nil) -> Bool {
+@discardableResult
+private func matchFont(_ fontName:String,handler:CTFontDescriptorProgressHandler? = nil) -> Bool {
     let descs = createFontDescWithFontName(fontName)
     return CTFontDescriptorMatchFontDescriptorsWithProgressHandler(descs, nil) {
         (state: CTFontDescriptorMatchingState, progressParameter: CFDictionary) -> Bool in
@@ -95,7 +96,7 @@ class FontItemCell: UITableViewCell {
 }
 
 protocol SelectFontViewControllerDelegate {
-    func selectFontViewController(ender:SelectFontViewController,onSelectedFont font:UIFont)
+    func selectFontViewController(_ ender:SelectFontViewController,onSelectedFont font:UIFont)
 }
 
 class SelectFontViewController: UIViewController {
@@ -103,12 +104,12 @@ class SelectFontViewController: UIViewController {
     
     @IBOutlet weak var doneBarItem: UIBarButtonItem!
     
-    @IBAction func onDoneClick(sender: AnyObject) {
+    @IBAction func onDoneClick(_ sender: AnyObject) {
         if let index = self.tableView.indexPathForSelectedRow{
-            if let cell = tableView.cellForRowAtIndexPath(index) as? FontItemCell {
+            if let cell = tableView.cellForRow(at: index) as? FontItemCell {
                 if cell.fontIsReady {
                     self.delegate?.selectFontViewController(self, onSelectedFont: cell.fontDemoLabel.font)
-                    self.navigationController?.popViewControllerAnimated(true)
+                    let _ = self.navigationController?.popViewController(animated: true)
                 }else{
                     self.showAlert(nil, msg: "FONT_IS_NOT_READY".localizedString())
                 }
@@ -127,26 +128,26 @@ class SelectFontViewController: UIViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.allowsMultipleSelection = false
         self.tableView.allowsSelection = true
-        self.tableView.tableFooterView?.backgroundColor = UIColor.whiteColor()
+        self.tableView.tableFooterView?.backgroundColor = UIColor.white
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView?.reloadData()
     }
 }
 
 extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fontConfigList.count + 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(FontItemCell.reuseId, forIndexPath: indexPath) as! FontItemCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: FontItemCell.reuseId, for: indexPath) as! FontItemCell
         if indexPath.row == 0 {
             cell.isSystemDefaultFont = true
         }else{
@@ -154,22 +155,22 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
             let info = fontConfigList[indexPath.row - 1]
             cell.fontDict = info
         }
-        cell.checkedImage.hidden = true
+        cell.checkedImage.isHidden = true
         cell.setSeparatorFullWidth()
         cell.setFontNameIfExists()
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? FontItemCell{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? FontItemCell{
             if cell.fontIsReady{
-                cell.checkedImage.hidden = false
+                cell.checkedImage.isHidden = false
             }else if indexPath.row > 0{
                 let info = fontConfigList[indexPath.row - 1]
                 let title = String(format: "DOWNLOAD_FONT_X".localizedString(),info["display"]!)
                 let msg = String(format: "DOWNLOAD_FONT_X_SIZE_MSG".localizedString(),info["size"]!)
-                let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .Alert)
-                let ok = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) in
+                let alert = UIAlertController.create(title: title, message: msg, preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK".localizedString(), style: .default, handler: { (ac) in
                     cell.asynchronousSetFontsName()
                 })
                 alert.addAction(ok)
@@ -179,19 +180,20 @@ extension SelectFontViewController:UITableViewDelegate,UITableViewDataSource{
         }
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? FontItemCell{
-            cell.checkedImage.hidden = true
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? FontItemCell{
+            cell.checkedImage.isHidden = true
         }
     }
 }
 
 extension FontItemCell{
     
-    private func setFontNameIfExists() -> Bool{
+    @discardableResult
+    fileprivate func setFontNameIfExists() -> Bool{
         if isSystemDefaultFont {
             self.fontDemoLabel.text = "DEFAULT".localizedString()
-            self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
+            self.fontDemoLabel.font = UIFont.systemFont(ofSize: 18.0)
             self.fontIsReady = true
             return true
         }
@@ -199,11 +201,11 @@ extension FontItemCell{
         self.fontDemoLabel.text = fontDict?["display"]
         if let fontName = fontDict?["name"]{
             if let font = UIFont.loadFontWith(fontName) {
-                self.fontDemoLabel.font = font.fontWithSize(18.0)
+                self.fontDemoLabel.font = font.withSize(18.0)
                 self.fontIsReady = true
                 return true
             }else{
-                self.fontDemoLabel.font = UIFont.systemFontOfSize(18.0)
+                self.fontDemoLabel.font = UIFont.systemFont(ofSize: 18.0)
                 self.fontIsReady = false
                 self.asynchronousSetFontsName(false)
                 return false
@@ -212,7 +214,7 @@ extension FontItemCell{
         return false
     }
     
-    private func asynchronousSetFontsName(autoDownload:Bool = true) {
+    fileprivate func asynchronousSetFontsName(_ autoDownload:Bool = true) {
         
         if self.fontDict == nil || self.fontDict?["name"] == nil{
             return
@@ -221,14 +223,14 @@ extension FontItemCell{
         
         matchFont(fontName) { (state, progressParameter) -> Bool in
             let parameter = progressParameter as NSDictionary
-            let progressValue = parameter.objectForKey(kCTFontDescriptorMatchingPercentage)?.doubleValue
+            let progressValue = (parameter.object(forKey: kCTFontDescriptorMatchingPercentage) as AnyObject).doubleValue
             
             switch state {
-            case .DidBegin:
+            case .didBegin:
                 debugPrint("Begin Matching")
                 
-            case .DidFinish:
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            case .didFinish:
+                DispatchQueue.main.async(execute: { () -> Void in
                     // display the sample text for the newly downloaded font
                     if let name = self.fontDict?["name"]{
                         if fontName == name{
@@ -236,8 +238,8 @@ extension FontItemCell{
                                 self.statusLabel.text = nil
                                 self.fontDemoLabel.font = font
                                 self.fontIsReady = true
-                                if self.selected{
-                                    self.checkedImage?.hidden = false
+                                if self.isSelected{
+                                    self.checkedImage?.isHidden = false
                                 }
                             }
                         }
@@ -245,16 +247,16 @@ extension FontItemCell{
                 })
                 
                 
-            case .WillBeginDownloading:
+            case .willBeginDownloading:
                 if !autoDownload{
                     return false
                 }
                 self.statusLabel.text = String(format: "DOWNLOADING".localizedString(), "")
                 debugPrint("Begin Downloading")
-            case .DidFinishDownloading:
+            case .didFinishDownloading:
                 debugPrint("Finish Downloading")
-            case .Downloading:
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            case .downloading:
+                DispatchQueue.main.async(execute: { () -> Void in
                     if let name = self.fontDict?["name"]{
                         if fontName == name{
                             if let progress = progressValue{
@@ -264,8 +266,8 @@ extension FontItemCell{
                     }
                 })
                 
-            case .DidFailWithError:
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            case .didFailWithError:
+                DispatchQueue.main.async(execute: { () -> Void in
                     if let name = self.fontDict?["name"]{
                         if fontName == name{
                             // display the sample text for the newly downloaded font
@@ -284,7 +286,7 @@ extension FontItemCell{
 }
 
 extension SelectFontViewController{
-    static func showSelectFontViewController(nvc:UINavigationController,delegate:SelectFontViewControllerDelegate){
+    static func showSelectFontViewController(_ nvc:UINavigationController,delegate:SelectFontViewControllerDelegate){
         let controller = instanceFromStoryBoard("SelectFontViewController", identifier: "SelectFontViewController") as! SelectFontViewController
         controller.delegate = delegate
         nvc.pushViewController(controller, animated: true)

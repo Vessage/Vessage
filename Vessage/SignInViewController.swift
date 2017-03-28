@@ -41,22 +41,22 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
         #endif
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ServiceContainer.instance.addObserver(self, selector: #selector(SignInViewController.onInitServices(_:)), name: ServiceContainer.OnAllServicesReady, object: nil)
         ServiceContainer.instance.addObserver(self, selector: #selector(SignInViewController.onInitServiceFailed(_:)), name: ServiceContainer.OnServiceInitFailed, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SignInViewController.onRegistAccountCompleted(_:)), name: RegistAccountCompleted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SignInViewController.onRegistAccountCompleted(_:)), name: NSNotification.Name(rawValue: RegistAccountCompleted), object: nil)
         self.loginInfoTextField.text = UserSetting.lastLoginAccountId
         self.passwordTextField.text = nil
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         ServiceContainer.instance.removeObserver(self)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if UserSetting.isSettingEnable("FirstLogined") == false{
             UserSetting.setSetting("FirstLogined", enable: true)
@@ -67,14 +67,14 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
     }
     
     //MARK: notifications
-    func onRegistAccountCompleted(a:NSNotification)
+    func onRegistAccountCompleted(_ a:Notification)
     {
         if let accountId = a.userInfo?[RegistAccountIDValue] as? String{
             if let password = a.userInfo?[RegistAccountPasswordValue] as? String{
                 self.loginInfoTextField.text = accountId
                 self.passwordTextField.text = password
                 
-                let action = UIAlertAction(title: "OK".localizedString(), style:.Cancel){ action in
+                let action = UIAlertAction(title: "OK".localizedString(), style:.cancel){ action in
                     self.login(self)
                 }
                 self.showAlert("REGIST_SUC_TITLE".localizedString(), msg: String(format: "REGIST_SUC_MSG".localizedString(), accountId),actions: [action])
@@ -83,11 +83,11 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
         }
     }
     
-    func onInitServices(a:NSNotification){
-        self.dismissViewControllerAnimated(false, completion: nil)
+    func onInitServices(_ a:Notification){
+        self.dismiss(animated: false, completion: nil)
     }
     
-    func onInitServiceFailed(a:NSNotification){
+    func onInitServiceFailed(_ a:Notification){
         hideIndicator()
         if let reason = a.userInfo?[InitServiceFailedReason] as? String{
             self.playToast(reason.localizedString())
@@ -95,7 +95,7 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
     }
     
     //MARK: TextField Delegate
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "\n" {
             if textField == self.loginInfoTextField {
                 self.passwordTextField.becomeFirstResponder()
@@ -107,7 +107,7 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
     }
     
     //MARK: actions
-    private func loginWith(userInfo:String,psw:String){
+    fileprivate func loginWith(_ userInfo:String,psw:String){
         if DeveloperMainPanelController.isShowDeveloperPanel(self,id:userInfo,psw:psw){
             return
         }
@@ -117,16 +117,18 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
         BahamutRFKit.sharedInstance.loginBahamutAccount(VessageSetting.loginApi, accountInfo: userInfo, passwordOrigin: psw) { (isSuc, errorMsg, loginResult) -> Void in
             if isSuc
             {
-                self.validateToken(loginResult)
+                self.validateToken(loginResult!)
             }else
             {
                 self.hideIndicator()
-                self.playToast(errorMsg.localizedString())
+                if let msg = errorMsg?.localizedString(){
+                    self.playToast(msg)
+                }
             }
         }
     }
     
-    @IBAction func login(sender: AnyObject) {
+    @IBAction func login(_ sender: AnyObject) {
         if (loginInfoTextField.text ?? "" ).isUsername(){
             if (passwordTextField.text ?? "" ).isPassword(){
                 self.loginWith(loginInfoTextField.text!, psw: passwordTextField.text!)
@@ -141,20 +143,20 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
         
     }
     
-    private func showIndicator(){
+    fileprivate func showIndicator(){
         self.refreshingIndicator.startAnimating()
-        self.refreshingIndicator.hidden = false
-        self.loginButton.hidden = true
-        self.view.userInteractionEnabled = false
+        self.refreshingIndicator.isHidden = false
+        self.loginButton.isHidden = true
+        self.view.isUserInteractionEnabled = false
     }
     
-    private func hideIndicator(){
+    fileprivate func hideIndicator(){
         self.refreshingIndicator.stopAnimating()
-        self.loginButton.hidden = false
-        self.view.userInteractionEnabled = true
+        self.loginButton.isHidden = false
+        self.view.isUserInteractionEnabled = true
     }
     
-    private func validateToken(loginedResult:LoginResult)
+    fileprivate func validateToken(_ loginedResult:LoginResult)
     {
         let accountService = ServiceContainer.getAccountService()
         self.showIndicator()
@@ -167,17 +169,17 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
             }
             
             }) { (registValidateResult) -> Void in
-                self.registNewUser(loginedResult,registValidateResult:registValidateResult)
+                self.registNewUser(loginedResult,registValidateResult:registValidateResult!)
         }
     }
     
-    private func registNewUser(loginedResult:LoginResult, registValidateResult:ValidateResult)
+    fileprivate func registNewUser(_ loginedResult:LoginResult, registValidateResult:ValidateResult)
     {
         let registModel = RegistNewUserModel()
         registModel.accessToken = loginedResult.accessToken
         registModel.registUserServer = registValidateResult.registAPIServer
         registModel.accountId = loginedResult.accountID
-        registModel.region = VessageSetting.contry.lowercaseString
+        registModel.region = VessageSetting.contry.lowercased()
         
         let newUser = VessageUser()
         newUser.motto = "Vessage Is Video Message"
@@ -196,14 +198,14 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
         }
     }
 
-    @IBAction func showSignUp(sender: AnyObject) {
+    @IBAction func showSignUp(_ sender: AnyObject) {
         SignUpViewController.showSignUpViewController(self)
     }
     
-    static func showSignInViewController(vc:UIViewController)
+    static func showSignInViewController(_ vc:UIViewController)
     {
         let controller = instanceFromStoryBoard("AccountSign", identifier: "SignInViewController") as! SignInViewController
-        vc.presentViewController(controller, animated: false) { () -> Void in
+        vc.present(controller, animated: false) { () -> Void in
             
         }
     }

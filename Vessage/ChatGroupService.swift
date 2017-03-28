@@ -10,7 +10,7 @@ import Foundation
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getChatGroupService() -> ChatGroupService{
-        return ServiceContainer.getService(ChatGroupService)
+        return ServiceContainer.getService(ChatGroupService.self)
     }
 }
 
@@ -18,27 +18,27 @@ extension ServiceContainer{
 let kChatGroupValue = "kChatGroupValue"
 
 //MARK: ChatGroupService
-class ChatGroupService: NSNotificationCenter,ServiceProtocol
+class ChatGroupService: NotificationCenter,ServiceProtocol
 {
     @objc static var ServiceName:String{return "ChatGroup Service"}
-    static let OnChatGroupUpdated = "OnChatGroupUpdated"
-    static let OnQuitChatGroup = "OnQuitChatGroup"
-    @objc func appStartInit(appName: String) {
+    static let OnChatGroupUpdated = "OnChatGroupUpdated".asNotificationName()
+    static let OnQuitChatGroup = "OnQuitChatGroup".asNotificationName()
+    @objc func appStartInit(_ appName: String) {
     }
-    @objc func userLoginInit(userId:String)
+    @objc func userLoginInit(_ userId:String)
     {
         self.setServiceReady()
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         self.setServiceNotReady()
     }
     
-    func getChatGroup(groupId:String) -> ChatGroup? {
+    func getChatGroup(_ groupId:String) -> ChatGroup? {
         return PersistentManager.sharedInstance.getModel(ChatGroup.self, idValue: groupId)
     }
     
-    func fetchChatGroup(groupId:String,callback:((ChatGroup?)->Void)? = nil) {
+    func fetchChatGroup(_ groupId:String,callback:((ChatGroup?)->Void)? = nil) {
         let req = GetGroupChatRequest()
         req.groupId = groupId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<ChatGroup>) in
@@ -57,7 +57,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         }
     }
     
-    func createChatGroup(groupName:String,userIds:[String],callback:((ChatGroup?)->Void)) {
+    func createChatGroup(_ groupName:String,userIds:[String],callback:@escaping ((ChatGroup?)->Void)) {
         let req = CreateGroupChatRequest()
         req.groupName = groupName
         req.groupUsers = userIds
@@ -75,7 +75,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         }
     }
     
-    func addUserJoinChatGroup(groupId:String,userId:String,callback:(Bool)->Void) {
+    func addUserJoinChatGroup(_ groupId:String,userId:String,callback:@escaping (Bool)->Void) {
         let req = AddUserJoinGroupChatRequest()
         req.groupId = groupId
         req.userId = userId
@@ -93,7 +93,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         }
     }
     
-    func joinChatGroup(groupId:String,inviteCode:String) {
+    func joinChatGroup(_ groupId:String,inviteCode:String) {
         let req = JoinGroupChatRequest()
         req.groupId = groupId
         req.inviteCode = inviteCode
@@ -108,7 +108,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         }
     }
     
-    func quitChatGroup(groupId:String,callback:(Bool)->Void) {
+    func quitChatGroup(_ groupId:String,callback:@escaping (Bool)->Void) {
         let req = QuitGroupChatRequest()
         req.groupId = groupId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
@@ -124,7 +124,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
         }
     }
     
-    func editChatGroupName(groupId:String,inviteCode:String,newName:String,callback:(Bool)->Void) {
+    func editChatGroupName(_ groupId:String,inviteCode:String,newName:String,callback:@escaping (Bool)->Void) {
         let req = EditGroupNameRequest()
         req.groupId = groupId
         req.inviteCode = inviteCode
@@ -143,7 +143,7 @@ class ChatGroupService: NSNotificationCenter,ServiceProtocol
     
     
     //Unavailable
-    private func kickUserFromChatGroup(groupId:String,userId:String) {
+    fileprivate func kickUserFromChatGroup(_ groupId:String,userId:String) {
         let req = KickUserOutRequest()
         req.groupId = groupId
         req.userId = userId

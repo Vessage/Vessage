@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias SaveSexValueHandler = (newValue:Int)->Void
+typealias SaveSexValueHandler = (_ newValue:Int)->Void
 let maxSexValue:Float = 100
 let minSexValue:Float = -100
 
@@ -16,8 +16,8 @@ let minSexValue:Float = -100
 class UserSexValueViewController: UIViewController {
     
     @IBOutlet weak var bcgMaskView: UIView!
-    private var originValue = 0
-    private(set) var sexValue = 0{
+    fileprivate var originValue = 0
+    fileprivate(set) var sexValue = 0{
         didSet{
             refresh()
         }
@@ -38,19 +38,19 @@ class UserSexValueViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sexValueSlider.superview?.layer.cornerRadius = 10
-        self.sexValueSlider.superview?.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.sexValueSlider.superview?.layer.borderColor = UIColor.lightGray.cgColor
         self.sexValueSlider.superview?.layer.borderWidth = 0.3
-        bcgMaskView.hidden = true
+        bcgMaskView.isHidden = true
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.bcgMaskView.hidden = false
+        self.bcgMaskView.isHidden = false
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.bcgMaskView.hidden = true
+        self.bcgMaskView.isHidden = true
     }
     
     deinit{
@@ -59,42 +59,42 @@ class UserSexValueViewController: UIViewController {
         #endif
     }
     
-    private func refresh(){
-        sexValueSlider?.value = NSNumber(integer: sexValue).floatValue
+    fileprivate func refresh(){
+        sexValueSlider?.value = NSNumber(value: sexValue as Int).floatValue
         ServiceContainer.getUserService().setUserSexImageView(self.sexValueImageView, sexValue: sexValue)
-        saveButton?.enabled = originValue != sexValue
+        saveButton?.isEnabled = originValue != sexValue
     }
     
-    @IBAction func onSlideChanged(sender: AnyObject) {
-        self.sexValue = NSNumber(float: self.sexValueSlider.value).integerValue
+    @IBAction func onSlideChanged(_ sender: AnyObject) {
+        self.sexValue = NSNumber(value: self.sexValueSlider.value as Float).intValue
     }
     
-    @IBAction func close(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func close(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func confirm(sender: AnyObject) {
+    @IBAction func confirm(_ sender: AnyObject) {
         let newValue = sexValue
-        self.dismissViewControllerAnimated(true, completion: {
-            self.saveSexValueHandler?(newValue: newValue)
+        self.dismiss(animated: true, completion: {
+            self.saveSexValueHandler?(newValue)
         })
     }
     
-    static func showSexValueViewController(vc:UIViewController, sexValue:Int,handler:SaveSexValueHandler){
+    static func showSexValueViewController(_ vc:UIViewController, sexValue:Int,handler:@escaping SaveSexValueHandler){
         let controller = instanceFromStoryBoard("User", identifier: "UserSexValueViewController") as! UserSexValueViewController
         controller.originValue = sexValue
         controller.providesPresentationContextTransitionStyle = true
         controller.definesPresentationContext = true
-        controller.modalPresentationStyle = .OverCurrentContext
+        controller.modalPresentationStyle = .overCurrentContext
         controller.saveSexValueHandler = handler
-        vc.presentViewController(controller, animated: true) {
+        vc.present(controller, animated: true) {
             controller.sexValue = sexValue
         }
     }
 }
 
 extension UserService{
-    func setUserSexImageView(imageView:UIImageView?,sexValue:Int) {
+    func setUserSexImageView(_ imageView:UIImageView?,sexValue:Int) {
         let sexImgMinAlpha:CGFloat = 0.1
         
         if sexValue == 0 {

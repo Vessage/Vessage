@@ -11,7 +11,7 @@ import EVReflection
 
 extension String{
     var SNSString:String{
-        return LocalizedString(self, tableName: "SNS", bundle: NSBundle.mainBundle())
+        return LocalizedString(self, tableName: "SNS", bundle: Bundle.main)
     }
 }
 
@@ -39,9 +39,9 @@ class SNSPostManager {
         likedPost.removeAll()
     }
     
-    private var likedPost = [String:Bool]()
+    fileprivate var likedPost = [String:Bool]()
     
-    func getMainBoardData(postCnt:Int,callback:(data:SNSMainBoardData?)->Void) {
+    func getMainBoardData(_ postCnt:Int,callback:@escaping (_ data:SNSMainBoardData?)->Void) {
 
         let req = GetSNSMainBoardDataRequest()
         req.postCnt = postCnt
@@ -52,15 +52,15 @@ class SNSPostManager {
         req.focusIds = userIds
         req.location = ServiceContainer.getLocationService().hereShortString
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SNSMainBoardData>) in
-            callback(data: result.returnObject)
+            callback(result.returnObject)
         }
     }
     
-    func getSNSNormalPosts(startTimeSpan:Int64,pageCount:Int,callback:(posts:[SNSPost])->Void) {
+    func getSNSNormalPosts(_ startTimeSpan:Int64,pageCount:Int,callback:@escaping (_ posts:[SNSPost])->Void) {
         getSNSPosts(SNSPost.typeNormalPost, startTimeSpan: startTimeSpan, pageCount: pageCount, callback: callback)
     }
     
-    func getSNSPosts(type:Int,startTimeSpan:Int64,pageCount:Int,specificUserId:String? = nil,callback:(posts:[SNSPost])->Void) {
+    func getSNSPosts(_ type:Int,startTimeSpan:Int64,pageCount:Int,specificUserId:String? = nil,callback:@escaping (_ posts:[SNSPost])->Void) {
 
         let req:GetSNSValuesRequestBase!
         if type == SNSPost.typeMyPost {
@@ -78,22 +78,22 @@ class SNSPostManager {
         getSNSPosts(req, callback: callback)
     }
     
-    func getSNSPosts(req:GetSNSValuesRequestBase,callback:(posts:[SNSPost])->Void) {
+    func getSNSPosts(_ req:GetSNSValuesRequestBase,callback:@escaping (_ posts:[SNSPost])->Void) {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[SNSPost]>) in
             if let ps = result.returnObject{
-                callback(posts: ps)
+                callback(ps)
             }else{
-                callback(posts: [])
+                callback([])
             }
             
         }
     }
     
-    func likedInCached(postId:String) -> Bool {
+    func likedInCached(_ postId:String) -> Bool {
         return likedPost[postId] ?? false
     }
     
-    func likePost(postId:String,callback:(suc:Bool)->Void) {
+    func likePost(_ postId:String,callback:@escaping (_ suc:Bool)->Void) {
 
         let req = SNSLikePostRequest()
         req.postId = postId
@@ -103,12 +103,12 @@ class SNSPostManager {
                 self.likedPost.updateValue(true, forKey: postId)
                 MobClick.event("SNS_LikePost")
             }
-            callback(suc: result.isSuccess)
+            callback(result.isSuccess)
         }
         
     }
     
-    func newPost(imageId:String?,body:String?,state:Int,autoPrivate:Int,callback:(post:SNSPost?)->Void) {
+    func newPost(_ imageId:String?,body:String?,state:Int,autoPrivate:Int,callback:@escaping (_ post:SNSPost?)->Void) {
         let req = SNSPostNewRequest()
         req.image = imageId
         req.body = body
@@ -116,7 +116,7 @@ class SNSPostManager {
         req.nick = ServiceContainer.getUserService().myProfile.nickName
         req.autoPrivate = autoPrivate
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<SNSPost>) in
-            callback(post: result.returnObject)
+            callback(result.returnObject)
         }
         MobClick.event("SNS_NewPost")
     }
@@ -125,7 +125,7 @@ class SNSPostManager {
         var cmtId:String!
     }
     
-    func newPostComment(postId:String,comment:String,senderNick:String!,atUser:String! = nil,atUserNick:String! = nil,callback:(postedCmtId:String?,msg:String?)->Void) {
+    func newPostComment(_ postId:String,comment:String,senderNick:String!,atUser:String! = nil,atUserNick:String! = nil,callback:@escaping (_ postedCmtId:String?,_ msg:String?)->Void) {
         let req = SNSNewCommentRequest()
         req.postId = postId
         req.comment = comment
@@ -135,38 +135,38 @@ class SNSPostManager {
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<PostCmtResult>) in
             if result.isSuccess{
                 MobClick.event("SNS_NewComment")
-                callback(postedCmtId: result.returnObject?.cmtId, msg: result.returnObject?.msg)
+                callback(result.returnObject?.cmtId, result.returnObject?.msg)
             }else{
-                callback(postedCmtId: nil, msg: result.returnObject?.msg)
+                callback(nil, result.returnObject?.msg)
             }
         }
     }
     
-    func getPostComment(postId:String,ts:Int64,callback:(comments:[SNSPostComment]?)->Void) {
+    func getPostComment(_ postId:String,ts:Int64,callback:@escaping (_ comments:[SNSPostComment]?)->Void) {
 
         let req = GetSNSPostCommentRequest()
         req.postId = postId
         req.ts = ts
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[SNSPostComment]>) in
-            callback(comments: result.returnObject)
+            callback(result.returnObject)
         }
     }
     
-    func getMyComments(ts:Int64,cnt:Int,callback:(comments:[SNSPostComment]?)->Void) {
+    func getMyComments(_ ts:Int64,cnt:Int,callback:@escaping (_ comments:[SNSPostComment]?)->Void) {
         let req = GetSNSMyCommentsRequest()
         req.cnt = cnt
         req.ts = ts
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[SNSPostComment]>) in
-            callback(comments: result.returnObject)
+            callback(result.returnObject)
         }
     }
     
-    func getMyReceivedLikes(ts:Int64,cnt:Int,callback:(comments:[SNSPostLike]?)->Void) {
+    func getMyReceivedLikes(_ ts:Int64,cnt:Int,callback:@escaping (_ comments:[SNSPostLike]?)->Void) {
         let req = GetSNSMyReceivedLikesRequest()
         req.ts = ts
         req.cnt = cnt
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[SNSPostLike]>) in
-            callback(comments: result.returnObject)
+            callback(result.returnObject)
         }
     }
     
@@ -174,7 +174,7 @@ class SNSPostManager {
 
 //MARK: Manage Post
 extension SNSPostManager{
-    func updatePostState(postId:String,state:Int,callback:(Bool)->Void) {
+    func updatePostState(_ postId:String,state:Int,callback:@escaping (Bool)->Void) {
         var req:BahamutRFRequestBase!
         if state < 0 {
             let r = DeleteSNSPostRequest()
@@ -192,7 +192,7 @@ extension SNSPostManager{
         }
     }
     
-    func reportObjectionablePost(postId:String,callback:(Bool)->Void) {
+    func reportObjectionablePost(_ postId:String,callback:@escaping (Bool)->Void) {
         let req = ReportObjectionableSNSPostRequest()
         req.postId = postId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
@@ -203,7 +203,7 @@ extension SNSPostManager{
 
 //MARK: Manage Post Comment
 extension SNSPostManager{
-    func deletePostComment(postId:String,cmtId:String,isCmtOwner:Bool,callback:(Bool)->Void) {
+    func deletePostComment(_ postId:String,cmtId:String,isCmtOwner:Bool,callback:@escaping (Bool)->Void) {
         let req = DeleteSNSComment()
         req.cmtId = cmtId
         req.postId = postId
@@ -217,7 +217,7 @@ extension SNSPostManager{
 //MARK: God Methods
 extension SNSPostManager{
     
-    func godLikePost(postId:String,callback:(Bool)->Void) {
+    func godLikePost(_ postId:String,callback:@escaping (Bool)->Void) {
         let req = SNSGodLikePostRequest()
         req.postId = postId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
@@ -225,7 +225,7 @@ extension SNSPostManager{
         }
     }
     
-    func godDeletePost(postId:String,callback:(Bool)->Void) {
+    func godDeletePost(_ postId:String,callback:@escaping (Bool)->Void) {
         let req = SNSGodDeletePostRequest()
         req.postId = postId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in
@@ -233,7 +233,7 @@ extension SNSPostManager{
         }
     }
     
-    func godBlockMember(memberId:String,callback:(Bool)->Void) {
+    func godBlockMember(_ memberId:String,callback:@escaping (Bool)->Void) {
         let req = SNSGodBlockMemberRequest()
         req.memberId = memberId
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { result in

@@ -12,7 +12,7 @@ import LTMorphingLabel
 
 extension String{
     var MYQLocalizedString:String{
-        return LocalizedString(self, tableName: "MYQ", bundle: NSBundle.mainBundle())
+        return LocalizedString(self, tableName: "MYQ", bundle: Bundle.main)
     }
 }
 
@@ -33,27 +33,27 @@ class MYQMainController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var myContentButton: UIBarButtonItem!{
         didSet{
-            myContentButton.enabled = mainInfo != nil
+            myContentButton.isEnabled = mainInfo != nil
         }
     }
     
-    private var userService = ServiceContainer.getUserService()
+    fileprivate var userService = ServiceContainer.getUserService()
     
-    static private let MYQNotificationName = "MYQNotify"
+    static fileprivate let MYQNotificationName = "MYQNotify"
     
-    private var userQuestions = [MYQInfo](){
+    fileprivate var userQuestions = [MYQInfo](){
         didSet{
             tableView?.reloadData()
         }
     }
     
-    private var mainInfo:MYQMainInfo!{
+    fileprivate var mainInfo:MYQMainInfo!{
         didSet{
             userQuestions.removeAll()
             if let u = mainInfo?.usrQues{
-                userQuestions.appendContentsOf(u)
+                userQuestions.append(contentsOf: u)
             }
-            myContentButton.enabled = mainInfo != nil
+            myContentButton.isEnabled = mainInfo != nil
         }
     }
 }
@@ -66,7 +66,7 @@ extension MYQMainController{
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
-        tableView.tableFooterView?.hidden = true
+        tableView.tableFooterView?.isHidden = true
         let tableViewMJHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(MYQMainController.onPullTableViewHeader(_:)))
         tableView.mj_header = tableViewMJHeader
         tableView.delegate = self
@@ -74,12 +74,12 @@ extension MYQMainController{
         ServiceContainer.getActivityService().clearActivityAllBadge(MYQMainController.activityId)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getMainInfoData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
@@ -88,12 +88,12 @@ extension MYQMainController{
         getMainInfoData()
     }
     
-    @IBAction func onBackItemClicked(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true
+    @IBAction func onBackItemClicked(_ sender: AnyObject) {
+        self.dismiss(animated: true
             , completion: nil)
     }
     
-    @IBAction func onMyContentClicked(sender: AnyObject) {
+    @IBAction func onMyContentClicked(_ sender: AnyObject) {
         let property = UIEditTextPropertySet()
         property.illegalValueMessage = "QUES_CONTENT_LIMIT".MYQLocalizedString
         property.isOneLineValue = false
@@ -109,25 +109,25 @@ extension MYQMainController{
 }
 
 extension MYQMainController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userQuestions.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MYQPostCell.resuseId, forIndexPath: indexPath) as! MYQPostCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MYQPostCell.resuseId, for: indexPath) as! MYQPostCell
         let ques = userQuestions[indexPath.row]
         cell.contentLabel.text = ques.ques
         cell.nickLabel.text = userService.getUserNotedNameIfExists(ques.userId) ?? ques.nick
         return  cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell?.selected = false
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.isSelected = false
         let user = userQuestions[indexPath.row]
         if user.userId == UserSetting.userId {
             onMyContentClicked(self.myContentButton)
@@ -135,7 +135,7 @@ extension MYQMainController:UITableViewDelegate,UITableViewDataSource{
         }
         let delegate = UserProfileViewControllerDelegateOpenConversation()
         delegate.beforeRemoveTimeSpan = noChatConversationLeftTimeSpan
-        delegate.initMessage = ["input_text":"MYQ_HELLO".MYQLocalizedString]
+        delegate.initMessage = ["input_text":"MYQ_HELLO".MYQLocalizedString as AnyObject]
         delegate.createActivityId = MYQMainController.activityId
         delegate.operateTitle = "LET_ME_ANSWER".MYQLocalizedString
         UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate){ controller in
@@ -148,13 +148,13 @@ extension MYQMainController:UITableViewDelegate,UITableViewDataSource{
 
 extension MYQMainController:UIEditTextPropertyViewControllerDelegate{
     
-    func editPropertySave(sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
+    func editPropertySave(_ sender: UIEditTextPropertyViewController, propertyIdentifier: String!, newValue: String!, userInfo: [String : AnyObject?]?) {
         if propertyIdentifier == "QUES_CONTENT" {
             let hud = self.showActivityHud()
             let req = UpdateMYQuestionRequest()
             req.question = newValue
             BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MYQMainInfo>) in
-                hud.hideAnimated(true)
+                hud.hide(animated: true)
                 if result.isSuccess{
                     let myUserId = UserSetting.userId!
                     self.mainInfo.usrQues?.removeElement{myUserId == $0.userId}
@@ -169,7 +169,7 @@ extension MYQMainController:UIEditTextPropertyViewControllerDelegate{
                         if self.mainInfo.usrQues == nil{
                             self.mainInfo.usrQues = []
                         }
-                        self.mainInfo.usrQues.insert(myQuestion, atIndex: 0)
+                        self.mainInfo.usrQues.insert(myQuestion, at: 0)
                     }
                     self.playCheckMark()
                 }else{
@@ -179,12 +179,12 @@ extension MYQMainController:UIEditTextPropertyViewControllerDelegate{
         }
     }
     
-    private func getMainInfoData() {
+    fileprivate func getMainInfoData() {
         let hud = self.showActivityHud()
         let req = GetMYQMainInfoRequest()
         req.location = ServiceContainer.getLocationService().hereShortString
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MYQMainInfo>) in
-            hud.hideAnimated(true)
+            hud.hide(animated: true)
             self.tableView.mj_header.endRefreshing()
             if result.isSuccess{
                 self.mainInfo = result.returnObject
@@ -197,8 +197,8 @@ extension MYQMainController:UIEditTextPropertyViewControllerDelegate{
         }
     }
     
-    private func showNewerAlert(){
-        let ac = UIAlertAction(title: "POST_QUESTION".MYQLocalizedString, style: .Default) { (ac) in
+    fileprivate func showNewerAlert(){
+        let ac = UIAlertAction(title: "POST_QUESTION".MYQLocalizedString, style: .default) { (ac) in
             self.onMyContentClicked(self.myContentButton)
         }
         self.showAlert("MYQ".MYQLocalizedString, msg: "MYQ_NEWER_MESSAGE".MYQLocalizedString, actions: [ac])

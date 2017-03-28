@@ -10,16 +10,16 @@ import Foundation
 import MJRefresh
 
 @objc protocol SNSLikeCellDelegate {
-    optional func snsLikeCellDidClickLikeInfo(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
-    optional func snsLikeCellDidClickImage(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
-    optional func snsLikeCellDidClickPoster(sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
+    @objc optional func snsLikeCellDidClickLikeInfo(_ sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
+    @objc optional func snsLikeCellDidClickImage(_ sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
+    @objc optional func snsLikeCellDidClickPoster(_ sender:UIView,cell:SNSReceivedLikeCell,like:SNSPostLike?)
 }
 
 class SNSReceivedLikeCell: UITableViewCell {
     static let reuseId = "SNSReceivedLikeCell"
     @IBOutlet weak var postImageView: UIImageView!{
         didSet{
-            postImageView.contentMode = .ScaleAspectFill
+            postImageView.contentMode = .scaleAspectFill
             postImageView.clipsToBounds = true
             postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSReceivedLikeCell.onTapViews(_:))))
         }
@@ -53,7 +53,7 @@ class SNSReceivedLikeCell: UITableViewCell {
         }
     }
     
-    func onTapViews(ges:UITapGestureRecognizer) {
+    func onTapViews(_ ges:UITapGestureRecognizer) {
         if ges.view == postImageView {
             delegate?.snsLikeCellDidClickImage?(ges.view!, cell: self, like: like)
         }else if ges.view == likeUserNickLabel || ges.view == userInfoLabel{
@@ -66,9 +66,9 @@ class SNSReceivedLikeCell: UITableViewCell {
 
 class SNSReceivedLikeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    private var likes = [[SNSPostLike]]()
-    private var initCount = 0
-    private var userService = ServiceContainer.getUserService()
+    fileprivate var likes = [[SNSPostLike]]()
+    fileprivate var initCount = 0
+    fileprivate var userService = ServiceContainer.getUserService()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
@@ -83,12 +83,12 @@ class SNSReceivedLikeViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    func loadInitLikes(count:Int) {
+    func loadInitLikes(_ count:Int) {
         initCount = count
         likes.removeAll()
         let hud = self.showActivityHud()
         SNSPostManager.instance.getMyReceivedLikes(DateHelper.UnixTimeSpanTotalMilliseconds, cnt: count) { (likes) in
-            hud.hideAnimated(true)
+            hud.hide(animated: true)
             if let lks = likes{
                 self.likes.append(lks)
                 self.tableView.reloadData()
@@ -96,7 +96,7 @@ class SNSReceivedLikeViewController: UIViewController {
         }
     }
     
-    func mjFooterRefresh(a:AnyObject?) {
+    func mjFooterRefresh(_ a:AnyObject?) {
         if let last = likes.last?.last{
             SNSPostManager.instance.getMyReceivedLikes(last.ts, cnt: 20, callback: { (likes) in
                 if let lks = likes{
@@ -114,7 +114,7 @@ class SNSReceivedLikeViewController: UIViewController {
         }
     }
     
-    func mjHeaderRefresh(a:AnyObject?) {
+    func mjHeaderRefresh(_ a:AnyObject?) {
         tableView.mj_header.endRefreshing()
         if self.likes.count == 0 {
             loadInitLikes(initCount)
@@ -129,13 +129,13 @@ class SNSReceivedLikeViewController: UIViewController {
 
 //MARL:SNSLikeCellDelegate
 extension SNSReceivedLikeViewController:SNSLikeCellDelegate{
-    func snsLikeCellDidClickImage(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
+    func snsLikeCellDidClickImage(_ sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         if let imgv = sender as? UIImageView{
             imgv.slideShowFullScreen(self)
         }
     }
     
-    func snsLikeCellDidClickPoster(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
+    func snsLikeCellDidClickPoster(_ sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         if let userId = like?.usrId{
             let delegate = UserProfileViewControllerDelegateOpenConversation()
             UserProfileViewController.showUserProfileViewController(self, userId: userId,delegate: delegate){ controller in
@@ -145,29 +145,29 @@ extension SNSReceivedLikeViewController:SNSLikeCellDelegate{
         }
     }
     
-    func snsLikeCellDidClickLikeInfo(sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
+    func snsLikeCellDidClickLikeInfo(_ sender: UIView, cell: SNSReceivedLikeCell, like: SNSPostLike?) {
         snsLikeCellDidClickPoster(sender, cell: cell, like: like)
     }
 }
 
 //MARK:TableView Delegate
 extension SNSReceivedLikeViewController:UITableViewDelegate,UITableViewDataSource{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return likes.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return likes[section].count
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let c = cell as? SNSReceivedLikeCell{
             c.updateCell()
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SNSReceivedLikeCell.reuseId, forIndexPath: indexPath) as! SNSReceivedLikeCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SNSReceivedLikeCell.reuseId, for: indexPath) as! SNSReceivedLikeCell
         let like = likes[indexPath.section][indexPath.row]
         if let noteName = userService.getUserNotedNameIfExists(like.usrId) {
             like.nick = noteName

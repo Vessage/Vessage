@@ -7,19 +7,19 @@
 //
 
 import Foundation
-public class ViewPool<T:UIView> {
+open class ViewPool<T:UIView> {
     
-    private var views = [T]()
+    fileprivate var views = [T]()
     
     public convenience init() {
         self.init(initViews: [])
     }
     
     public init(initViews:[T]) {
-        views.appendContentsOf(initViews)
+        views.append(contentsOf: initViews)
     }
     
-    public func getFreeView() -> T?{
+    open func getFreeView() -> T?{
         for v in views {
             if v.superview == nil {
                 return v
@@ -28,22 +28,23 @@ public class ViewPool<T:UIView> {
         return nil
     }
     
-    public func pushNewPooledView(v:T) -> T{
+    @discardableResult
+    open func pushNewPooledView(_ v:T) -> T{
         views.append(v)
         return v
     }
     
-    public func clearPool(){
+    open func clearPool(){
         views.removeAll()
     }
     
-    public func removeAllPooledViews() -> [T]{
+    open func removeAllPooledViews() -> [T]{
         let arr = views.map{$0}
         views.removeAll()
         return arr
     }
     
-    public func removePooledView(pooledView:T) -> T?{
+    open func removePooledView(_ pooledView:T) -> T?{
         for v in views {
             if v == pooledView {
                 return v

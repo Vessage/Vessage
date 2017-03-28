@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TIMImageTextContentEditorControllerDelegate {
-    func imageTextContentEditor(sender:TIMImageTextContentEditorController,newTextContent:String?,model:TIMImageTextContentEditorModel?)
+    func imageTextContentEditor(_ sender:TIMImageTextContentEditorController,newTextContent:String?,model:TIMImageTextContentEditorModel?)
 }
 
 class TIMImageTextContentEditorModel {
@@ -50,7 +50,7 @@ class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
     
     @IBOutlet weak var extraViewsContainer: UIView!{
         didSet{
-            extraViewsContainer?.hidden = true
+            extraViewsContainer?.isHidden = true
         }
     }
     
@@ -62,7 +62,7 @@ class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var extraAutoPrivateNextMark: UIImageView!
     
     var propertyModel:TIMImageTextContentEditorModel!
-    private var modelSetted = false
+    fileprivate var modelSetted = false
     
     var allowEmptyText:Bool?{
         didSet{
@@ -70,17 +70,17 @@ class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
         }
     }
     
-    private func updateDoneButton() {
+    fileprivate func updateDoneButton() {
         if let a = allowEmptyText,let btn = navigationItem.rightBarButtonItem,let tv = textView{
             if a {
-                btn.enabled = true
+                btn.isEnabled = true
             }else if String.isNullOrWhiteSpace(tv.text){
-                btn.enabled = false
+                btn.isEnabled = false
             }
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let model = self.propertyModel{
@@ -91,55 +91,55 @@ class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if String.isNullOrWhiteSpace(self.textView?.text) {
             self.textView?.becomeFirstResponder()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TIMImageTextContentEditorController.cachedTextContent = self.textView?.text
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView?.userInteractionEnabled = true
+        imageView?.isUserInteractionEnabled = true
         imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapImageView(_:))))
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if String.isNullOrWhiteSpace(textView.text) {
             if let a = allowEmptyText{
-                navigationItem.rightBarButtonItem?.enabled = a
+                navigationItem.rightBarButtonItem?.isEnabled = a
             }
             
         }else{
-            navigationItem.rightBarButtonItem?.enabled = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
     
-    func onTapImageView(ges:UITapGestureRecognizer) {
+    func onTapImageView(_ ges:UITapGestureRecognizer) {
         self.imageView?.slideShowFullScreen(self)
     }
     
-    @IBAction func done(sender: AnyObject) {
+    @IBAction func done(_ sender: AnyObject) {
         let newValue = self.textView?.text
         if self.propertyModel.userInfo == nil{
-            self.propertyModel.userInfo = [TIMImageTextContentEditorModel.extraSwitchValueKey:extraSwitch.on]
+            self.propertyModel.userInfo = [TIMImageTextContentEditorModel.extraSwitchValueKey:extraSwitch.isOn]
         }else{
-            self.propertyModel.userInfo?[TIMImageTextContentEditorModel.extraSwitchValueKey] = extraSwitch.on
+            self.propertyModel.userInfo?[TIMImageTextContentEditorModel.extraSwitchValueKey] = extraSwitch.isOn
         }
         let model = self.propertyModel
         let controller = self
-        self.navigationController?.popViewControllerAnimated(true)
+        let _ = self.navigationController?.popViewController(animated: true)
         TIMImageTextContentEditorController.cachedTextContent = nil
         self.textView.text = nil
         self.delegate?.imageTextContentEditor(controller, newTextContent: newValue, model: model)
     }
     
-    private func setPropertiesWithModel(model:TIMImageTextContentEditorModel){
+    fileprivate func setPropertiesWithModel(_ model:TIMImageTextContentEditorModel){
         self.title = model.editorTitle
         self.textView?.placeHolder = model.placeHolder
         self.textView?.text = model.initTextContent
@@ -164,7 +164,8 @@ class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
         self.initExtraSetup()
     }
     
-    static func showEditor(nvc:UINavigationController,model:TIMImageTextContentEditorModel,delegate:TIMImageTextContentEditorControllerDelegate)->TIMImageTextContentEditorController{
+    @discardableResult
+    static func showEditor(_ nvc:UINavigationController,model:TIMImageTextContentEditorModel,delegate:TIMImageTextContentEditorControllerDelegate)->TIMImageTextContentEditorController{
         let controller = instanceFromStoryBoard("TIMContentEditorController", identifier: "TIMImageTextContentEditorController") as! TIMImageTextContentEditorController
         controller.delegate = delegate
         nvc.pushViewController(controller, animated: true)
@@ -175,8 +176,8 @@ class TIMImageTextContentEditorController: UIViewController,UITextViewDelegate {
 
 //MARK: Extra Setup
 extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControllerDelegate{
-    private func initExtraSetup() {
-        self.extraViewsContainer?.hidden = !self.propertyModel.extraSetup
+    fileprivate func initExtraSetup() {
+        self.extraViewsContainer?.isHidden = !self.propertyModel.extraSetup
         if self.propertyModel.extraSetup {
             if let on = self.propertyModel.userInfo?[TIMImageTextContentEditorModel.extraSwitchInitValueKey] as? Bool {
                 self.extraSwitch.setOn(on, animated: false)
@@ -191,9 +192,9 @@ extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControl
         }
     }
     
-    @IBAction func onExtraSwitchValueChanged(sender: AnyObject) {
+    @IBAction func onExtraSwitchValueChanged(_ sender: AnyObject) {
         if let switcher = sender as? UISwitch {
-            let key = switcher.on ? TIMImageTextContentEditorModel.extraSwitchOnTipsKey : TIMImageTextContentEditorModel.extraSwitchOffTipsKey
+            let key = switcher.isOn ? TIMImageTextContentEditorModel.extraSwitchOnTipsKey : TIMImageTextContentEditorModel.extraSwitchOffTipsKey
             if let tips = propertyModel?.userInfo?[key] as? String{
                 extraTipsLabel.text = tips
             }else{
@@ -204,29 +205,29 @@ extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControl
         }
     }
     
-    private func updateAutoPrivateAction() {
-        extraAutoPrivateLabel.hidden = !self.extraSwitch.on
-        extraAutoPrivateNextMark.hidden = !self.extraSwitch.on
-        if !self.extraSwitch.on {
-            self.propertyModel?.userInfo?.removeObjectForKey(TIMImageTextContentEditorModel.extraAutoPrivateSecKey)
+    fileprivate func updateAutoPrivateAction() {
+        extraAutoPrivateLabel.isHidden = !self.extraSwitch.isOn
+        extraAutoPrivateNextMark.isHidden = !self.extraSwitch.isOn
+        if !self.extraSwitch.isOn {
+            self.propertyModel?.userInfo?.removeObject(forKey: TIMImageTextContentEditorModel.extraAutoPrivateSecKey)
         }
     }
     
     func initAutoPrivateAction() {
-        extraAutoPrivateNextMark?.userInteractionEnabled = true
+        extraAutoPrivateNextMark?.isUserInteractionEnabled = true
         extraAutoPrivateNextMark?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapExtraAutoPrivateView(_:))))
         
-        extraAutoPrivateLabel?.userInteractionEnabled = true
+        extraAutoPrivateLabel?.isUserInteractionEnabled = true
         extraAutoPrivateLabel?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(TIMImageTextContentEditorController.onTapExtraAutoPrivateView(_:))))
     }
     
-    func onTapExtraAutoPrivateView(a:UITapGestureRecognizer) {
-        let selController = SelectAutoPrivateExpireTimeController(style: .Plain)
+    func onTapExtraAutoPrivateView(_ a:UITapGestureRecognizer) {
+        let selController = SelectAutoPrivateExpireTimeController(style: .plain)
         selController.delegate = self
         self.navigationController?.pushViewController(selController, animated: true)
     }
     
-    func selectAutoPrivateExpireTimeController(sender: SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays: Int, desc: String) {
+    func selectAutoPrivateExpireTimeController(_ sender: SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays: Int, desc: String) {
         extraAutoPrivateLabel.text = desc
         let key = TIMImageTextContentEditorModel.extraAutoPrivateSecKey
         let ts = autoSetPrivateExpireDays * 24 * 3600
@@ -240,7 +241,7 @@ extension TIMImageTextContentEditorController:SelectAutoPrivateExpireTimeControl
 
 //MARK:SelectAutoPrivateExpireTimeController
 
-private func getDescStringFromDays(days:Int) -> String {
+private func getDescStringFromDays(_ days:Int) -> String {
     if days == 0 {
         return "NEVER_SET_PRIVATE".TIMString
     }else if days < 7{
@@ -251,7 +252,7 @@ private func getDescStringFromDays(days:Int) -> String {
 }
 
 protocol SelectAutoPrivateExpireTimeControllerDelegate {
-    func selectAutoPrivateExpireTimeController(sender:SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays:Int, desc:String)
+    func selectAutoPrivateExpireTimeController(_ sender:SelectAutoPrivateExpireTimeController, autoSetPrivateExpireDays:Int, desc:String)
 }
 
 class SelectAutoPrivateExpireTimeController: UITableViewController {
@@ -264,20 +265,20 @@ class SelectAutoPrivateExpireTimeController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "SEL_AUTO_PRIV_TIME".TIMString
-        tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: reuseId)
+        tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: reuseId)
         tableView.tableFooterView = UIView()
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return expiredTimeDays.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseId, forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
         cell.contentView.removeAllSubviews()
         let label = UILabel(frame:cell.bounds)
         label.frame.origin.x += 13
@@ -288,9 +289,9 @@ class SelectAutoPrivateExpireTimeController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let days = expiredTimeDays[indexPath.row]
         delegate?.selectAutoPrivateExpireTimeController(self,autoSetPrivateExpireDays: days,desc: getDescStringFromDays(days))
-        self.navigationController?.popViewControllerAnimated(true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
 }

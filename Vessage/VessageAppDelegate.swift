@@ -8,13 +8,14 @@
 
 import UIKit
 import Alamofire
+import EVReflection
 
 @UIApplicationMain
 class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
             print("App:\(VessageConfig.appName)")
             print("Version:\(VessageConfig.appVersion)")
@@ -32,28 +33,28 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
         return true
     }
     
-    private func configureSmsSDK()
+    fileprivate func configureSmsSDK()
     {
         SMSSDK.registerApp(VessageConfig.bahamutConfig.smsSDKAppkey, withSecret: VessageConfig.bahamutConfig.smsSDKSecretKey)
         SMSSDK.enableAppContactFriends(false)
     }
     
-    private func configureBahamutCmd()
+    fileprivate func configureBahamutCmd()
     {
         BahamutCmd.signBahamutCmdSchema("vessage")
     }
     
-    private func configureAliOSSManager()
+    fileprivate func configureAliOSSManager()
     {
         AliOSSManager.sharedInstance.initManager(VessageConfig.bahamutConfig.aliOssAccessKey, aliOssSecretKey: VessageConfig.bahamutConfig.aliOssSecretKey)
         AliOSSManager.sharedInstance.openSSL = true
     }
     
-    private func configContryAndLang()
+    fileprivate func configContryAndLang()
     {
-        let countryCode = NSLocale.currentLocale().objectForKey(NSLocaleCountryCode)
-        VessageSetting.contry = countryCode!.description
-        if(countryCode!.description == "CN")
+        let countryCode = (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode)
+        VessageSetting.contry = (countryCode! as AnyObject).description
+        if((countryCode! as AnyObject).description == "CN")
         {
             VessageSetting.lang = "ch"
         }else{
@@ -61,7 +62,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
         }
     }
     
-    private func configureBahamutRFKit()
+    fileprivate func configureBahamutRFKit()
     {
         BahamutRFKit.appkey = VessageConfig.appKey
         BahamutRFKit.appVersion = VessageConfig.appVersion
@@ -69,15 +70,16 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
         BahamutRFKit.platform = "ios"
     }
     
-    private func configureVessageConfig()
+    fileprivate func configureVessageConfig()
     {
-        let config = BahamutConfigObject(dictionary: BahamutConfigJson)
+        let config = BahamutConfigObject.fromDictionary(dict: BahamutConfigJson as NSDictionary, BahamutConfigObject())
+        //let config = BahamutConfigObject(dictionary: BahamutConfigJson)
         VessageConfig.bahamutConfig = config
     }
     
     
     //MARK: Umeng
-    private func configureUmeng()
+    fileprivate func configureUmeng()
     {
         #if RELEASE
             UMAnalyticsConfig.sharedInstance().appKey = VessageConfig.bahamutConfig.umengAppkey
@@ -90,19 +92,19 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     
     //MARK: APNS and UMessage
     
-    private func configureUMessage(launchOptions: [NSObject: AnyObject]?)
+    fileprivate func configureUMessage(_ launchOptions: [AnyHashable: Any]?)
     {
         if let options = launchOptions{
-            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: options,httpsenable: true)
+            UMessage.start(withAppkey: VessageConfig.bahamutConfig.umengAppkey, launchOptions: options,httpsenable: true)
         }else{
-            UMessage.startWithAppkey(VessageConfig.bahamutConfig.umengAppkey, launchOptions: [NSObject: AnyObject](),httpsenable: true)
+            UMessage.start(withAppkey: VessageConfig.bahamutConfig.umengAppkey, launchOptions: [AnyHashable: Any](),httpsenable: true)
         }
         UMessage.registerForRemoteNotifications()
         UMessage.setAutoAlert(true)
         if #available(iOS 10.0, *) {
-            let center = UNUserNotificationCenter.currentNotificationCenter()
+            let center = UNUserNotificationCenter.current()
             center.delegate = self
-            center.requestAuthorizationWithOptions([UNAuthorizationOptions.Alert,UNAuthorizationOptions.Badge,UNAuthorizationOptions.Sound,UNAuthorizationOptions.CarPlay]) { (granted, err) in
+            center.requestAuthorization(options: [UNAuthorizationOptions.alert,UNAuthorizationOptions.badge,UNAuthorizationOptions.sound,UNAuthorizationOptions.carPlay]) { (granted, err) in
             }
         } else {
             // Fallback on earlier versions
@@ -112,19 +114,19 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     
     //MARK: App Delegate
     
-    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        return WXApi.handleOpenURL(url, delegate: self)
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
     }
     
-    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        return WXApi.handleOpenURL(url, delegate: self)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         VessageSetting.deviceToken = deviceToken.description
-            .stringByReplacingOccurrencesOfString("<", withString: "")
-            .stringByReplacingOccurrencesOfString(">", withString: "")
-            .stringByReplacingOccurrencesOfString(" ", withString: "")
+            .replacingOccurrences(of: "<", with: "")
+            .replacingOccurrences(of: ">", with: "")
+            .replacingOccurrences(of: " ", with: "")
         
         if ServiceContainer.isAllServiceReady{
             ServiceContainer.getUserService().registUserDeviceToken(VessageSetting.deviceToken)
@@ -133,10 +135,10 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     }
     
     @available(iOS 10.0, *)
-    func userNotificationCenter(center: UNUserNotificationCenter, didReceiveNotificationResponse response: UNNotificationResponse, withCompletionHandler completionHandler: () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         if let trigger = response.notification.request.trigger {
-            if trigger.isKindOfClass(UNPushNotificationTrigger){
+            if trigger.isKind(of: UNPushNotificationTrigger.self){
                 //应用处于后台时的远程推送接受
                 //必须加这句代码
                 UMessage.didReceiveRemoteNotification(userInfo)
@@ -148,22 +150,22 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     }
     
     @available(iOS 10.0, *)
-    func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
         if let trigger = notification.request.trigger {
-            if trigger.isKindOfClass(UNPushNotificationTrigger){
+            if trigger.isKind(of: UNPushNotificationTrigger.self){
                 //应用处于后台时的远程推送接受
                 //必须加这句代码
                 handleActiveNotificatino(userInfo)
             }else{
                 //应用处于前台时的本地推送接受
-                completionHandler([.Alert,.Badge,.Sound])
+                completionHandler([.alert,.badge,.sound])
             }
         }
         
     }
     
-    private func handleActiveNotificatino(userInfo: [NSObject : AnyObject]){
+    fileprivate func handleActiveNotificatino(_ userInfo: [AnyHashable: Any]){
         if let customCmd = userInfo["custom"] as? String{
             if ServiceContainer.isAllServiceReady{
                 switch customCmd {
@@ -179,36 +181,36 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     
     
     //handle iOS9- Notification
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         
-        switch UIApplication.sharedApplication().applicationState {
-        case .Active:
+        switch UIApplication.shared.applicationState {
+        case .active:
             handleActiveNotificatino(userInfo)
         default:
             UMessage.didReceiveRemoteNotification(userInfo)
         }
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
     }
     
     //MARK: life circle
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         ServiceContainer.getAppService().appResignActive()
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         ServiceContainer.getAppService().appEnterBackground()
         PersistentManager.sharedInstance.saveAll()
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         ServiceContainer.getAppService().appWillEnterForeground()
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         ServiceContainer.getAppService().appBecomeActive()
         if ServiceContainer.isAllServiceReady{
@@ -219,7 +221,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
         }
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         PersistentManager.sharedInstance.saveAll()
     }
@@ -230,11 +232,11 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
 let OnWXShareResponse = "OnWXShareResponse"
 let kWXShareResponseValue = "kWXShareResponseValue"
 extension VessageAppDelegate:WXApiDelegate{
-    private func configureWX() {
+    fileprivate func configureWX() {
         WXApi.registerApp(VessageConfig.bahamutConfig.wechatAppkey)
     }
     
-    func onReq(req: BaseReq!) {
+    func onReq(_ req: BaseReq!) {
         if req is GetMessageFromWXReq
         {
             #if DEBUG
@@ -250,11 +252,8 @@ extension VessageAppDelegate:WXApiDelegate{
             
             let msg = temp.message
             
-            //显示微信传过来的内容
-            let obj = msg.mediaObject
-            
             let strTitle = "微信请求App显示内容"
-            let strMsg = String(format: "标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n\n", msg.title, msg.description, obj.extInfo, msg.thumbData.length)
+            let strMsg = String(format: "标题：%@ \n内容：%@", msg!.title, msg!.description)
             
             #if DEBUG
                 print(strTitle)
@@ -274,9 +273,9 @@ extension VessageAppDelegate:WXApiDelegate{
         }
     }
     
-    func onResp(resp: BaseResp!) {
+    func onResp(_ resp: BaseResp!) {
         if let res = resp as? SendMessageToWXResp{
-            NSNotificationCenter.defaultCenter().postNotificationName(OnWXShareResponse, object: self, userInfo: [kWXShareResponseValue:res])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: OnWXShareResponse), object: self, userInfo: [kWXShareResponseValue:res])
         }
     }
 

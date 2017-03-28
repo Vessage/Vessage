@@ -10,25 +10,25 @@ import Foundation
 import ImageSlideshow
 
 extension UIImageView{
-    func slideShowFullScreen(vc:UIViewController,allowSaveImage:Bool = false,extraActions:[UIAlertAction]? = nil) {
+    func slideShowFullScreen(_ vc:UIViewController,allowSaveImage:Bool = false,extraActions:[UIAlertAction]? = nil) {
         if let img = self.image {
             let slideshow = ImageSlideshow()
             slideshow.setImageInputs([ImageSource(image: img)])
-            slideshow.pageControlPosition = .Hidden
+            slideshow.pageControlPosition = .hidden
             let ctr = FullScreenSlideshowViewController()
             // called when full-screen VC dismissed and used to set the page to our original slideshow
             ctr.pageSelected = { page in
                 slideshow.setScrollViewPage(page, animated: false)
             }
-            ctr.modalTransitionStyle = .CrossDissolve
+            ctr.modalTransitionStyle = .crossDissolve
             // set the initial page
-            ctr.initialImageIndex = slideshow.scrollViewPage
+            ctr.initialPage =  slideshow.scrollViewPage
             // set the inputs
             ctr.inputs = slideshow.images
-            ctr.slideshow.pageControlPosition = .Hidden
-            ctr.modalTransitionStyle = .CrossDissolve
-            ctr.closeButton.hidden = true
-            vc.presentViewController(ctr, animated: true){
+            ctr.slideshow.pageControlPosition = .hidden
+            ctr.modalTransitionStyle = .crossDissolve
+            ctr.closeButton.isHidden = true
+            vc.present(ctr, animated: true){
                 ctr.enableTapViewCloseController()
                 if allowSaveImage{
                     ctr.enableLongPressImageAlert(allowSaveImage, extraAction: extraActions)
@@ -41,22 +41,22 @@ extension UIImageView{
 private var extraAlertActions = [UIAlertAction]()
 
 extension FullScreenSlideshowViewController{
-    func enableTapViewCloseController(hideCloseButton:Bool = true) {
+    func enableTapViewCloseController(_ hideCloseButton:Bool = true) {
         if hideCloseButton {
-            self.closeButton.hidden = hideCloseButton
+            self.closeButton.isHidden = hideCloseButton
         }
         let ges = UITapGestureRecognizer(target: self, action: #selector(FullScreenSlideshowViewController.onTapView(_:)))
         ges.numberOfTapsRequired = 1
         self.slideshow.slideshowItems.forEach { (item) in
             if let iges = item.gestureRecognizer{
-                ges.requireGestureRecognizerToFail(iges)
+                ges.require(toFail: iges)
             }
         }
         self.view.addGestureRecognizer(ges)
     }
     
     func disableTapViewCloseController() {
-        self.closeButton.hidden = false
+        self.closeButton.isHidden = false
         if let gess = self.view.gestureRecognizers{
             gess.forEach({ (ges) in
                 if let g = ges as? UITapGestureRecognizer{
@@ -66,11 +66,11 @@ extension FullScreenSlideshowViewController{
         }
     }
     
-    func enableLongPressImageAlert(enableSaveImage:Bool,extraAction:[UIAlertAction]? = nil) {
+    func enableLongPressImageAlert(_ enableSaveImage:Bool,extraAction:[UIAlertAction]? = nil) {
         extraAlertActions.removeAll()
         
         if enableSaveImage {
-            let action = UIAlertAction(title: "SAVE_IMG_TO_ALBUM".localizedString(), style: .Default, handler: { (ac) in
+            let action = UIAlertAction(title: "SAVE_IMG_TO_ALBUM".localizedString(), style: .default, handler: { (ac) in
                 if let img = self.slideshow.currentSlideshowItem?.imageView.image{
                     let seltor = #selector(FullScreenSlideshowViewController.didFinishSavingWithError(_:didFinishSavingWithError:contextInfo:))
                     UIImageWriteToSavedPhotosAlbum(img, self, seltor, nil)
@@ -80,23 +80,23 @@ extension FullScreenSlideshowViewController{
         }
         
         if let acs = extraAction{
-            extraAlertActions.appendContentsOf(acs)
+            extraAlertActions.append(contentsOf: acs)
         }
         
         let ges = UILongPressGestureRecognizer(target: self, action: #selector(FullScreenSlideshowViewController.onLongPressView(_:)))
         self.view.addGestureRecognizer(ges)
     }
     
-    func onLongPressView(ges:UILongPressGestureRecognizer) {
-        if ges.state == .Began {
+    func onLongPressView(_ ges:UILongPressGestureRecognizer) {
+        if ges.state == .began {
             var actions = [UIAlertAction]()
-            actions.appendContentsOf(extraAlertActions)
+            actions.append(contentsOf: extraAlertActions)
             actions.append(ALERT_ACTION_CANCEL)
             self.showAlert("SEL_OP".localizedString(), msg: nil, actions:actions)
         }
     }
     
-    func didFinishSavingWithError(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    func didFinishSavingWithError(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if error == nil{
             self.playCheckMark()
         }else{
@@ -104,12 +104,12 @@ extension FullScreenSlideshowViewController{
         }
     }
     
-    func onTapView(tap:UITapGestureRecognizer) {
+    func onTapView(_ tap:UITapGestureRecognizer) {
         // if pageSelected closure set, send call it with current page
         if let pageSelected = pageSelected {
-            pageSelected(page: slideshow.scrollViewPage)
+            pageSelected(slideshow.scrollViewPage)
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

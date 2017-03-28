@@ -9,7 +9,7 @@
 import Foundation
 
 
-typealias OnClickSubscriptionHandler = ((cell:SubscriptionListCell)->Void)
+typealias OnClickSubscriptionHandler = ((_ cell:SubscriptionListCell)->Void)
 
 class SubscriptionListCell:UITableViewCell{
     @IBOutlet weak var icon: UIImageView!{
@@ -30,12 +30,12 @@ class SubscriptionListCell:UITableViewCell{
     
     var subscripted = false{
         didSet{
-            subscriptBtn?.enabled = !subscripted
+            subscriptBtn?.isEnabled = !subscripted
         }
     }
     
-    @IBAction func onClickSubsciptionBtn(sender: AnyObject) {
-        onClickSubscriptonHandler?(cell: self)
+    @IBAction func onClickSubsciptionBtn(_ sender: AnyObject) {
+        onClickSubscriptonHandler?(self)
     }
 }
 
@@ -43,8 +43,8 @@ class SubscriptionListController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     let defaultIcon = UIImage(named: "nav_subaccount_icon")
-    private var data = [SubAccount]()
-    private let conversationService = ServiceContainer.getConversationService()
+    fileprivate var data = [SubAccount]()
+    fileprivate let conversationService = ServiceContainer.getConversationService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,48 +53,49 @@ class SubscriptionListController: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if data.count == 0 {
             ServiceContainer.getSubscriptionService().getOnlineSubscriptionAccounts { (result) in
                 if let arr = result{
-                    self.data.appendContentsOf(arr)
+                    self.data.append(contentsOf: arr)
                     self.tableView.reloadData()
                 }
             }
         }
     }
     
-    static func showSubscriptioList(nav:UINavigationController) -> SubscriptionListController{
+    @discardableResult
+    static func showSubscriptioList(_ nav:UINavigationController) -> SubscriptionListController{
         let c = instanceFromStoryBoard("Subscription", identifier: "SubscriptionListController") as! SubscriptionListController
         nav.pushViewController(c, animated: true)
         return c
     }
 }
 
-private var snsIndex:NSIndexPath?
+private var snsIndex:IndexPath?
 
 extension SubscriptionListController:UITableViewDataSource,UITableViewDelegate{
-    func onClickSubscription(cell:SubscriptionListCell) {
+    func onClickSubscription(_ cell:SubscriptionListCell) {
         ServiceContainer.getConversationService().openConversationByUserId(cell.model.id, beforeRemoveTs: ConversationMaxTimeUpMS, createByActivityId: nil, type: Conversation.typeSubscription)
         ServiceContainer.getActivityService().setActivityMiniBadgeShow(SNSPostManager.activityId)
         cell.subscripted = true
     }
     
-    func onSubscriptOnSNS(a:UIBarButtonItem) {
-        if let index = snsIndex,let cell = self.tableView?.cellForRowAtIndexPath(index) as? SubscriptionListCell{
+    func onSubscriptOnSNS(_ a:UIBarButtonItem) {
+        if let index = snsIndex,let cell = self.tableView?.cellForRow(at: index) as? SubscriptionListCell{
             onClickSubscription(cell)
             a.title = "SUBSCRIPTED".localizedString()
-            a.enabled = false
+            a.isEnabled = false
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SubscriptionListCell{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? SubscriptionListCell{
             let model = data[indexPath.row]
             let controller = SNSMainViewController.showUserSNSPostViewController(self.navigationController!, userId: model.id, nick: model.title)
             if !cell.subscripted {
-                controller.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SUBSCRIPT".localizedString(), style: .Plain, target: self, action: #selector(SubscriptionListController.onSubscriptOnSNS(_:)))
+                controller.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "SUBSCRIPT".localizedString(), style: .plain, target: self, action: #selector(SubscriptionListController.onSubscriptOnSNS(_:)))
                 snsIndex = indexPath
             }else{
                 controller.navigationItem.rightBarButtonItem = nil
@@ -104,16 +105,16 @@ extension SubscriptionListController:UITableViewDataSource,UITableViewDelegate{
         }
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SubscriptionListCell.reuesId, forIndexPath: indexPath) as! SubscriptionListCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SubscriptionListCell.reuesId, for: indexPath) as! SubscriptionListCell
         let model = data[indexPath.row]
         cell.model = model
         cell.headline.text = model.title

@@ -25,7 +25,7 @@ class GetGroupChatRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats"
-        self.method = .GET
+        self.method = .get
     }
     
     override func getMaxRequestCount() -> Int32 {
@@ -43,7 +43,7 @@ class CreateGroupChatRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats/CreateGroupChat"
-        self.method = .POST
+        self.method = .post
     }
     
     var groupName:String!{
@@ -54,7 +54,7 @@ class CreateGroupChatRequest: BahamutRFRequestBase {
     
     var groupUsers:[String]!{
         didSet{
-            self.paramenters["groupUsers"] = groupUsers.joinWithSeparator(",")
+            self.paramenters["groupUsers"] = groupUsers.joined(separator: ",")
         }
     }
     
@@ -64,7 +64,7 @@ class AddUserJoinGroupChatRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats/AddUserJoinGroupChat"
-        self.method = .POST
+        self.method = .post
     }
     
     var groupId:String!{
@@ -85,7 +85,7 @@ class JoinGroupChatRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats/JoinGroupChat"
-        self.method = .POST
+        self.method = .post
     }
     
     var groupId:String!{
@@ -106,7 +106,7 @@ class QuitGroupChatRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats/QuitGroupChat"
-        self.method = .DELETE
+        self.method = .delete
     }
     
     var groupId:String!{
@@ -121,7 +121,7 @@ class KickUserOutRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats/KickUserOut"
-        self.method = .DELETE
+        self.method = .delete
     }
     
     var groupId:String!{
@@ -141,7 +141,7 @@ class EditGroupNameRequest: BahamutRFRequestBase {
     override init() {
         super.init()
         self.api = "/GroupChats/EditGroupName"
-        self.method = .PUT
+        self.method = .put
     }
     
     var groupId:String!{

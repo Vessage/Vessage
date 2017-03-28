@@ -13,36 +13,36 @@ import Photos
 extension String
 {
     func localizedString() -> String{
-        return NSLocalizedString(self, tableName: "Locolized", bundle: NSBundle.mainBundle(), value: "", comment: "")
+        return NSLocalizedString(self, tableName: "Locolized", bundle: Bundle.main, value: "", comment: "")
     }
 }
 
 private let contentMinHeight:CGFloat = 32
 private let contentMinWidth:CGFloat = 48
 
-private let contentTextSizeMin:Float = Float(UIFont.systemFontSize())
-private let contentTextSizeMax:Float = Float(UIFont.systemFontSize()) + 30
+private let contentTextSizeMin:Float = Float(UIFont.systemFontSize)
+private let contentTextSizeMax:Float = Float(UIFont.systemFontSize) + 30
 
 private let avatarSizeMin:Float = 64
 private let avatarSizeMax:Float = 128
 
-private let whiteColor = UIColor.whiteColor()
+private let whiteColor = UIColor.white
 
 private let contentColorSet = [
-    (bubble:UIColor.lightGrayColor(),text:whiteColor),
-    (bubble:UIColor.blueColor(),text:whiteColor),
-    (bubble:UIColor.greenColor(),text:whiteColor),
-    (bubble:UIColor.darkGrayColor(),text:whiteColor),
-    (bubble:UIColor.blackColor(),text:whiteColor),
+    (bubble:UIColor.lightGray,text:whiteColor),
+    (bubble:UIColor.blue,text:whiteColor),
+    (bubble:UIColor.green,text:whiteColor),
+    (bubble:UIColor.darkGray,text:whiteColor),
+    (bubble:UIColor.black,text:whiteColor),
     
-    (bubble:UIColor(hexString: "#f1fafa"),text:UIColor.darkGrayColor()),
-    (bubble:UIColor(hexString: "#e8ffe8"),text:UIColor.darkGrayColor()),
-    (bubble:UIColor(hexString: "#e8e8ff"),text:UIColor.blackColor()),
-    (bubble:UIColor(hexString: "#8080c0"),text:UIColor.yellowColor()),
-    (bubble:UIColor(hexString: "#e8d098"),text:UIColor.blueColor()),
+    (bubble:UIColor(hexString: "#f1fafa"),text:UIColor.darkGray),
+    (bubble:UIColor(hexString: "#e8ffe8"),text:UIColor.darkGray),
+    (bubble:UIColor(hexString: "#e8e8ff"),text:UIColor.black),
+    (bubble:UIColor(hexString: "#8080c0"),text:UIColor.yellow),
+    (bubble:UIColor(hexString: "#e8d098"),text:UIColor.blue),
     
-    (bubble:UIColor(hexString: "#efefda"),text:UIColor.redColor()),
-    (bubble:UIColor(hexString: "#f2fld7"),text:UIColor.redColor()),
+    (bubble:UIColor(hexString: "#efefda"),text:UIColor.red),
+    (bubble:UIColor(hexString: "#f2fld7"),text:UIColor.red),
     
     (bubble:UIColor(hexString: "#336699"),text:whiteColor),
     (bubble:UIColor(hexString: "#6699cc"),text:whiteColor),
@@ -51,35 +51,35 @@ private let contentColorSet = [
     (bubble:UIColor(hexString: "#479ac7"),text:whiteColor),
     (bubble:UIColor(hexString: "#00b271"),text:whiteColor),
     
-    (bubble:UIColor(hexString: "#fbfbea"),text:UIColor.blackColor()),
-    (bubble:UIColor(hexString: "#d5f3f4"),text:UIColor.blackColor()),
-    (bubble:UIColor(hexString: "#d7fff0"),text:UIColor.blackColor()),
-    (bubble:UIColor(hexString: "#f0dad2"),text:UIColor.blackColor()),
-    (bubble:UIColor(hexString: "#ddf3ff"),text:UIColor.blackColor()),
+    (bubble:UIColor(hexString: "#fbfbea"),text:UIColor.black),
+    (bubble:UIColor(hexString: "#d5f3f4"),text:UIColor.black),
+    (bubble:UIColor(hexString: "#d7fff0"),text:UIColor.black),
+    (bubble:UIColor(hexString: "#f0dad2"),text:UIColor.black),
+    (bubble:UIColor(hexString: "#ddf3ff"),text:UIColor.black),
 ]
 
 //MARK:MessagesViewController
 class MessagesViewController: MSMessagesAppViewController {
     
-    private let cachedAvatarUrl:NSURL = {
-        let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first!
-        return NSURL(fileURLWithPath: cacheDir).URLByAppendingPathComponent("iavartar.png")!
+    fileprivate let cachedAvatarUrl:URL = {
+        let cacheDir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
+        return URL(fileURLWithPath: cacheDir).appendingPathComponent("iavartar.png")
     }()
     
-    private let tmpStickerUrl:NSURL = {
-        let cacheDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).first!
-        return NSURL(fileURLWithPath: cacheDir).URLByAppendingPathComponent("iavartar_tmp_sticker.png")!
+    fileprivate let tmpStickerUrl:URL = {
+        let cacheDir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
+        return URL(fileURLWithPath: cacheDir).appendingPathComponent("iavartar_tmp_sticker.png")
     }()
     
-    private enum SliderMode:Int {
+    fileprivate enum SliderMode:Int {
         case
-        AvatarSize = 0,
-        TextSize = 1,
-        BubbleColor = 2
+        avatarSize = 0,
+        textSize = 1,
+        bubbleColor = 2
     }
-    private let sliderModeCount = 3
+    fileprivate let sliderModeCount = 3
     
-    private var sliderMode = SliderMode.AvatarSize{
+    fileprivate var sliderMode = SliderMode.avatarSize{
         didSet{
             if bottomSlider != nil && oldValue != sliderMode {
                 updateSlider()
@@ -92,7 +92,7 @@ class MessagesViewController: MSMessagesAppViewController {
         didSet{
             inputTextView.clipsToBounds = true
             inputTextView.layer.borderWidth = 0.6
-            inputTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
+            inputTextView.layer.borderColor = UIColor.lightGray.cgColor
             inputTextView.layer.cornerRadius = 6
             inputTextView.placeHolder = "INPUT_VIEW_PLACE_HOLDER".localizedString()
         }
@@ -105,8 +105,8 @@ class MessagesViewController: MSMessagesAppViewController {
     @IBOutlet weak var messageContent: UIView!
     @IBOutlet weak var flashMessageLabel: UILabel!
     
-    private var contentContainer:AvatarMessageContentContainer!
-    private var textMessageLabel:UILabel!
+    fileprivate var contentContainer:AvatarMessageContentContainer!
+    fileprivate var textMessageLabel:UILabel!
     
     var inputText:String?{
         get{
@@ -117,19 +117,19 @@ class MessagesViewController: MSMessagesAppViewController {
         }
     }
     
-    private var messageContentColorIndex:Int{
+    fileprivate var messageContentColorIndex:Int{
         get{
-            return NSUserDefaults.standardUserDefaults().integerForKey("messageContentColorIndex")
+            return UserDefaults.standard.integer(forKey: "messageContentColorIndex")
         }
         set{
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: "messageContentColorIndex")
+            UserDefaults.standard.set(newValue, forKey: "messageContentColorIndex")
         }
     }
     
-    private var avatarSize:Float{
+    fileprivate var avatarSize:Float{
         get{
             
-            let size = NSUserDefaults.standardUserDefaults().floatForKey("avatarSize")
+            let size = UserDefaults.standard.float(forKey: "avatarSize")
             if size < avatarSizeMin {
                 return avatarSizeMin
             }
@@ -139,13 +139,13 @@ class MessagesViewController: MSMessagesAppViewController {
             return size
         }
         set{
-            NSUserDefaults.standardUserDefaults().setFloat(newValue, forKey: "avatarSize")
+            UserDefaults.standard.set(newValue, forKey: "avatarSize")
         }
     }
     
-    private var textSize:Float{
+    fileprivate var textSize:Float{
         get{
-            let size = NSUserDefaults.standardUserDefaults().floatForKey("textSize")
+            let size = UserDefaults.standard.float(forKey: "textSize")
             if size < contentTextSizeMin {
                 return contentTextSizeMin
             }
@@ -155,11 +155,11 @@ class MessagesViewController: MSMessagesAppViewController {
             return size
         }
         set{
-            NSUserDefaults.standardUserDefaults().setFloat(newValue, forKey: "textSize")
+            UserDefaults.standard.set(newValue, forKey: "textSize")
         }
     }
     
-    private var messageContentColor:(bubble:UIColor,text:UIColor){
+    fileprivate var messageContentColor:(bubble:UIColor,text:UIColor){
         let index = messageContentColorIndex
         if index >= 0 && index < contentColorSet.count{
             return contentColorSet[index]
@@ -171,31 +171,32 @@ class MessagesViewController: MSMessagesAppViewController {
     
     @IBOutlet weak var bottom: NSLayoutConstraint!
     
-    @IBAction func onSliderValueChanged(sender: AnyObject) {
+    @IBAction func onSliderValueChanged(_ sender: AnyObject) {
         updateSliderValue()
         refreshViews()
     }
     
-    @IBAction func onClickAvatarButton(sender: AnyObject) {
+    @IBAction func onClickAvatarButton(_ sender: AnyObject) {
         showImagePickerForAvatar()
     }
     
-    @IBAction func onClickSliderChangeButton(sender: AnyObject) {
+    @IBAction func onClickSliderChangeButton(_ sender: AnyObject) {
         sliderMode = SliderMode(rawValue: (sliderMode.rawValue + 1) % sliderModeCount)!
     }
     
-    @IBAction func onClickSend(sender: AnyObject) {
-        if let contentImage = contentContainer.viewToImage(),let data = UIImagePNGRepresentation(contentImage),let conversation = activeConversation,let filePath = tmpStickerUrl.absoluteString{
+    @IBAction func onClickSend(_ sender: AnyObject) {
+        if let contentImage = contentContainer.viewToImage(),let data = UIImagePNGRepresentation(contentImage),let conversation = activeConversation{
+                let filePath = tmpStickerUrl.absoluteString
                 debugPrint("FilePath:\(filePath)")
                 do{
-                    try data.writeToURL(tmpStickerUrl, options: .DataWritingAtomic)
+                    try data.write(to: tmpStickerUrl, options: .atomic)
                     let sticker = try MSSticker(contentsOfFileURL: tmpStickerUrl,localizedDescription: "")
                     
-                    conversation.insertSticker(sticker, completionHandler: { (err) in
+                    conversation.insert(sticker, completionHandler: { (err) in
                         if let e = err{
                             print(e)
                         }else{
-                            self.requestPresentationStyle(.Compact)
+                            self.requestPresentationStyle(.compact)
                         }
                     })
                 }catch let err as NSError{
@@ -205,33 +206,33 @@ class MessagesViewController: MSMessagesAppViewController {
         }
     }
     
-    private func refreshViews(){
+    fileprivate func refreshViews(){
         messageContent.layoutIfNeeded()
         contentContainer.frame = self.messageContent.bounds
-        compactTipsView.hidden = presentationStyle == .Expanded
-        messageContent.hidden = presentationStyle == .Compact
+        compactTipsView.isHidden = presentationStyle == .expanded
+        messageContent.isHidden = presentationStyle == .compact
         contentContainer.layoutIfNeeded()
         for bottomView in sendButton.superview!.subviews{
-            bottomView.userInteractionEnabled = presentationStyle == .Expanded
+            bottomView.isUserInteractionEnabled = presentationStyle == .expanded
         }
-        sendButton.userInteractionEnabled = true
+        sendButton.isUserInteractionEnabled = true
         if String.isNullOrEmpty(inputText){
-            messageContent.hidden = true
-            sendButton.enabled = false
-            bottomSlider.hidden = true
-            sliderButton.hidden = true
+            messageContent.isHidden = true
+            sendButton.isEnabled = false
+            bottomSlider.isHidden = true
+            sliderButton.isHidden = true
             #if VERSION_LITE
                 if presentationStyle == .Expanded {
                     showGDTBanner()
                 }
             #endif
         }else{
-            compactTipsView.hidden = true
-            bottomSlider.hidden = false
-            sliderButton.hidden = false
+            compactTipsView.isHidden = true
+            bottomSlider.isHidden = false
+            sliderButton.isHidden = false
             textMessageLabel?.text = inputText
-            sendButton.enabled = true
-            contentContainer.drawRect(self.messageContent.bounds)
+            sendButton.isEnabled = true
+            contentContainer.draw(self.messageContent.bounds)
             #if VERSION_LITE
                 hideGDTBanner()
             #endif
@@ -241,15 +242,15 @@ class MessagesViewController: MSMessagesAppViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideFlashTips()
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor.clear
         inputTextView.delegate = self
-        inputTextView.returnKeyType = .Send
+        inputTextView.returnKeyType = .send
         textMessageLabel = UILabel()
-        textMessageLabel.textAlignment = .Left
+        textMessageLabel.textAlignment = .left
         textMessageLabel.numberOfLines = 0
-        textMessageLabel.font = UIFont.systemFontOfSize(20)
+        textMessageLabel.font = UIFont.systemFont(ofSize: 20)
         
-        self.contentContainer = AvatarMessageContentContainer(frame: CGRectZero)
+        self.contentContainer = AvatarMessageContentContainer(frame: CGRect.zero)
         self.contentContainer.delegate = self
         
         self.bottomSlider.setValue(Float(contentContainer.avatarSize), animated: true)
@@ -260,12 +261,12 @@ class MessagesViewController: MSMessagesAppViewController {
         
         let bottomView = self.sendButton?.superview
         bottomView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MessagesViewController.onTapView(_:))))
-        bottomView?.userInteractionEnabled = true
+        bottomView?.isUserInteractionEnabled = true
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        bottomView?.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
+        bottomView?.backgroundColor = UIColor.white
         
-        if let data = NSData(contentsOfURL: cachedAvatarUrl),let avatar = UIImage(data: data){
+        if let data = try? Data(contentsOf: cachedAvatarUrl),let avatar = UIImage(data: data){
             updateAvatar(avatar)
         }else{
             updateAvatar(UIImage(named: "face")!)
@@ -274,7 +275,7 @@ class MessagesViewController: MSMessagesAppViewController {
         updateSliderValue()
         
         contentContainer.avatarSize = CGFloat(avatarSize)
-        textMessageLabel.font = textMessageLabel.font.fontWithSize(CGFloat(textSize))
+        textMessageLabel.font = textMessageLabel.font.withSize(CGFloat(textSize))
         updateBubbleColors()
         
         #if VERSION_LITE
@@ -284,32 +285,32 @@ class MessagesViewController: MSMessagesAppViewController {
         refreshViews()
     }
     
-    func onTapView(a:UITapGestureRecognizer) {
-        if presentationStyle == .Compact {
-            requestPresentationStyle(.Expanded)
+    func onTapView(_ a:UITapGestureRecognizer) {
+        if presentationStyle == .compact {
+            requestPresentationStyle(.expanded)
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MessagesViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(MessagesViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
-        requestPresentationStyle(.Expanded)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.onKeyboardHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(MessagesViewController.onKeyBoardShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        requestPresentationStyle(.expanded)
         refreshViews()
         #if VERSION_LITE
             onGDTViewWillAppear()
         #endif
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         #if VERSION_LITE
             onGDTViewWillDisappear()
         #endif
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         refreshViews()
     }
@@ -323,30 +324,31 @@ class MessagesViewController: MSMessagesAppViewController {
 //MARK: Slider Mode
 extension MessagesViewController{
     
-    private func updateBubbleColors() -> (bubble:UIColor,text:UIColor){
+    @discardableResult
+    fileprivate func updateBubbleColors() -> (bubble:UIColor,text:UIColor){
         let colorTuple = messageContentColor
         textMessageLabel.textColor = colorTuple.text
-        contentContainer.bubbleView.bubbleViewLayer.fillColor = colorTuple.bubble.CGColor
+        contentContainer.bubbleView.bubbleViewLayer.fillColor = colorTuple.bubble.cgColor
         return colorTuple
     }
     
-    private func updateSliderValue(){
+    fileprivate func updateSliderValue(){
         switch sliderMode {
-        case .AvatarSize:
+        case .avatarSize:
             let ats = bottomSlider.value
             avatarSize = ats
             contentContainer.avatarSize = CGFloat(ats)
             bottomSlider.minimumTrackTintColor = nil
             bottomSlider.maximumTrackTintColor = nil
             bottomSlider.thumbTintColor = nil
-        case .TextSize:
+        case .textSize:
             let ts = bottomSlider.value
             textSize = ts
-            textMessageLabel.font = textMessageLabel.font.fontWithSize(CGFloat(ts))
+            textMessageLabel.font = textMessageLabel.font.withSize(CGFloat(ts))
             bottomSlider.minimumTrackTintColor = nil
             bottomSlider.maximumTrackTintColor = nil
             bottomSlider.thumbTintColor = nil
-        case .BubbleColor:
+        case .bubbleColor:
             let index =  Int(bottomSlider.value)
             messageContentColorIndex = index
             let colorTuple = updateBubbleColors()
@@ -362,23 +364,23 @@ extension MessagesViewController{
         }
     }
     
-    private func updateSlider(){
+    fileprivate func updateSlider(){
         switch sliderMode {
-        case .AvatarSize:
+        case .avatarSize:
             bottomSlider.minimumValue = avatarSizeMin
             bottomSlider.maximumValue = avatarSizeMax
             bottomSlider.setValue(avatarSize, animated: true)
-            sliderButton.setImage(UIImage(named: "avatar_size_btn")!, forState: .Normal)
-        case .TextSize:
+            sliderButton.setImage(UIImage(named: "avatar_size_btn")!, for: UIControlState())
+        case .textSize:
             bottomSlider.minimumValue = contentTextSizeMin
             bottomSlider.maximumValue = contentTextSizeMax
             bottomSlider.setValue(textSize, animated: true)
-            sliderButton.setImage(UIImage(named: "text_size_btn")!, forState: .Normal)
-        case .BubbleColor:
+            sliderButton.setImage(UIImage(named: "text_size_btn")!, for: UIControlState())
+        case .bubbleColor:
             bottomSlider.minimumValue = 0
             bottomSlider.maximumValue = Float(contentColorSet.count - 1)
             bottomSlider.setValue(Float(messageContentColorIndex), animated: true)
-            sliderButton.setImage(UIImage(named: "bubble_color_btn")!, forState: .Normal)
+            sliderButton.setImage(UIImage(named: "bubble_color_btn")!, for: UIControlState())
         }
     }
 }
@@ -386,7 +388,7 @@ extension MessagesViewController{
 //MARK: Update Avatar Message Content
 extension MessagesViewController:AvatarMessageContentContainerDelegate{
     
-    func avatarMessageContentView(container: AvatarMessageContentContainer) -> UIView {
+    func avatarMessageContentView(_ container: AvatarMessageContentContainer) -> UIView {
         return self.textMessageLabel
     }
     
@@ -395,13 +397,13 @@ extension MessagesViewController:AvatarMessageContentContainerDelegate{
         return width > 600 ? 600 : width
     }
     
-    func avatarMessageContentContainerWidth(container: AvatarMessageContentContainer) -> CGFloat {
+    func avatarMessageContentContainerWidth(_ container: AvatarMessageContentContainer) -> CGFloat {
         return containerWidth
     }
     
-    func avatarMessageContentViewContentSize(container: AvatarMessageContentContainer, containerWidth: CGFloat,contentView:UIView) -> CGSize {
+    func avatarMessageContentViewContentSize(_ container: AvatarMessageContentContainer, containerWidth: CGFloat,contentView:UIView) -> CGSize {
         if let label = contentView as? UILabel{
-            var contentSize = textMessageLabel.sizeThatFits(CGSizeMake(containerWidth - 2 * 6 - 10, UIScreen.mainScreen().bounds.height))
+            var contentSize = textMessageLabel.sizeThatFits(CGSize(width: containerWidth - 2 * 6 - 10, height: UIScreen.main.bounds.height))
 
             if contentSize.height < contentMinHeight || contentSize.width < contentMinWidth {
                 if contentSize.height < contentMinHeight{
@@ -410,21 +412,21 @@ extension MessagesViewController:AvatarMessageContentContainerDelegate{
                 if contentSize.width < contentMinWidth {
                     contentSize.width = contentMinWidth
                 }
-                label.textAlignment = .Center
+                label.textAlignment = .center
             }else{
-                label.textAlignment = .Left
+                label.textAlignment = .left
             }
             debugPrint("contentSize:\(contentSize)")
             return contentSize
         }
-        return CGSizeZero
+        return CGSize.zero
     }
     
 }
 
 //MARK: Flash Tips
 extension MessagesViewController{
-    func flashTips(msg:String,timeMS:UInt64 = 3600) {
+    func flashTips(_ msg:String,timeMS:UInt64 = 3600) {
         if let view = flashMessageLabel?.superview{
             flashMessageLabel?.text = msg
             showFlashTips()
@@ -436,26 +438,27 @@ extension MessagesViewController{
     }
     
     func showFlashTips() {
-        flashMessageLabel?.superview?.hidden = false
+        flashMessageLabel?.superview?.isHidden = false
     }
     
     func hideFlashTips() {
-        flashMessageLabel?.superview?.hidden = true
+        flashMessageLabel?.superview?.isHidden = true
     }
 }
 
 
 //MARK: Update Avatar
-import ImagePickerSheetController
+
 extension MessagesViewController{
     func showImagePickerForAvatar() {
+        /*
         let controller = ImagePickerSheetController(mediaType: .Image)
         controller.maximumSelection = 1
         
-        func selectImage(action:ImagePickerAction, numberOfPhotos:Int){
+        func selectImage(_ action:ImagePickerAction, numberOfPhotos:Int){
             if numberOfPhotos > 0{
                 if let asset = controller.selectedImageAssets.first{
-                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(120, 128), contentMode: .AspectFill, options: nil, resultHandler: { (image, userInfo) in
+                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSize(width: 120, height: 128), contentMode: .AspectFill, options: nil, resultHandler: { (image, userInfo) in
                         if let img = image{
                             self.setAvatar(img)
                         }else{
@@ -471,12 +474,13 @@ extension MessagesViewController{
         }))
         
         self.presentViewController(controller, animated: true, completion: nil)
+ */
     }
     
-    func setAvatar(image:UIImage) {
+    func setAvatar(_ image:UIImage) {
         if let pngData = UIImagePNGRepresentation(image){
             do{
-                try pngData.writeToURL(cachedAvatarUrl, options: .DataWritingAtomic)
+                try pngData.write(to: cachedAvatarUrl, options: .atomic)
             }catch let err as NSError{
                 flashTips("PREPARE_DATA_ERROR".localizedString())
                 print(err)
@@ -486,16 +490,16 @@ extension MessagesViewController{
         flashTips("AVATAR_UPDATED".localizedString())
     }
     
-    func updateAvatar(image:UIImage) {
+    func updateAvatar(_ image:UIImage) {
         self.contentContainer?.avatarImageView?.image = image
-        self.avatarButton?.setImage(image, forState: .Normal)
-        self.avatarButton?.imageView?.contentMode = .ScaleAspectFill
+        self.avatarButton?.setImage(image, for: UIControlState())
+        self.avatarButton?.imageView?.contentMode = .scaleAspectFill
     }
 }
 
 //MARK: Input Text View Delegate
 extension MessagesViewController:UITextViewDelegate{
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             onClickSend(textView)
             return false
@@ -503,22 +507,22 @@ extension MessagesViewController:UITextViewDelegate{
         return true
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         refreshViews()
     }
 }
 
 //MARK: Keyboard
 extension MessagesViewController{
-    func onKeyBoardShown(a:NSNotification) {
+    func onKeyBoardShown(_ a:Notification) {
         if let value = a.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue{
-            bottom?.constant = value.CGRectValue().height
+            bottom?.constant = value.cgRectValue.height
             self.view.updateConstraints()
             self.view.layoutIfNeeded()
         }
     }
     
-    func onKeyboardHidden(a:NSNotification) {
+    func onKeyboardHidden(_ a:Notification) {
         bottom?.constant = 0
         self.view.updateConstraints()
         self.view.layoutIfNeeded()
@@ -527,15 +531,15 @@ extension MessagesViewController{
 
 // MARK: - Conversation Handling
 extension MessagesViewController{
-    override func willBecomeActiveWithConversation(conversation: MSConversation) {
-        requestPresentationStyle(.Expanded)
+    override func willBecomeActive(with conversation: MSConversation) {
+        requestPresentationStyle(.expanded)
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
         
         // Use this method to configure the extension and restore previously stored state.
     }
     
-    override func didResignActiveWithConversation(conversation: MSConversation) {
+    override func didResignActive(with conversation: MSConversation) {
         // Called when the extension is about to move from the active to inactive state.
         // This will happen when the user dissmises the extension, changes to a different
         // conversation or quits Messages.
@@ -545,37 +549,37 @@ extension MessagesViewController{
         // in case it is terminated later.
     }
     
-    override func didReceiveMessage(message: MSMessage, conversation: MSConversation) {
+    override func didReceive(_ message: MSMessage, conversation: MSConversation) {
         // Called when a message arrives that was generated by another instance of this
         // extension on a remote device.
         
         // Use this method to trigger UI updates in response to the message.
     }
     
-    override func didStartSendingMessage(message: MSMessage, conversation: MSConversation) {
+    override func didStartSending(_ message: MSMessage, conversation: MSConversation) {
         // Called when the user taps the send button.
         self.inputText = nil
         self.refreshViews()
     }
     
-    override func didCancelSendingMessage(message: MSMessage, conversation: MSConversation) {
+    override func didCancelSending(_ message: MSMessage, conversation: MSConversation) {
         // Called when the user deletes the message without sending it.
         
         // Use this to clean up state related to the deleted message.
     }
     
-    override func willTransitionToPresentationStyle(presentationStyle: MSMessagesAppPresentationStyle) {
+    override func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         // Called before the extension transitions to a new presentation style.
        
         // Use this method to prepare for the change in presentation style.
     }
     
-    override func didTransitionToPresentationStyle(presentationStyle: MSMessagesAppPresentationStyle) {
+    override func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         // Called after the extension transitions to a new presentation style.
         refreshViews()
-        if presentationStyle == .Compact {
+        if presentationStyle == .compact {
             bottom?.constant = 0
-        }else if presentationStyle == .Expanded{
+        }else if presentationStyle == .expanded{
             if String.isNullOrEmpty(self.inputText) {
                 self.inputTextView?.becomeFirstResponder()
             }

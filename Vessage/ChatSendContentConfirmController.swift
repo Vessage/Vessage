@@ -9,8 +9,8 @@
 import Foundation
 
 protocol ChatSendContentConfirmControllerDelegate {
-    func chatSendContentConfirmControllerCancel(sender:ChatSendContentConfirmController)
-    func chatSendContentConfirmControllerSend(sender:ChatSendContentConfirmController,contentImage:UIImage?)
+    func chatSendContentConfirmControllerCancel(_ sender:ChatSendContentConfirmController)
+    func chatSendContentConfirmControllerSend(_ sender:ChatSendContentConfirmController,contentImage:UIImage?)
 }
 
 class ChatSendContentConfirmController: UIViewController {
@@ -18,11 +18,11 @@ class ChatSendContentConfirmController: UIViewController {
     @IBOutlet weak var contentView: UIImageView!{
         didSet{
             contentView.clipsToBounds = true
-            contentView.contentMode = .ScaleAspectFill
+            contentView.contentMode = .scaleAspectFill
             contentView.image = contentImage
             let tapContentView = UITapGestureRecognizer(target: self, action: #selector(ChatSendContentConfirmController.onTapContentView(_:)))
             contentView.addGestureRecognizer(tapContentView)
-            contentView.userInteractionEnabled = true
+            contentView.isUserInteractionEnabled = true
         }
     }
     
@@ -36,46 +36,47 @@ class ChatSendContentConfirmController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bcgMaskView.hidden = true
+        bcgMaskView.isHidden = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.bcgMaskView.hidden = true
+        self.bcgMaskView.isHidden = true
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.bcgMaskView.hidden = false
+        self.bcgMaskView.isHidden = false
     }
     
-    @IBAction func onCancelClick(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true) {
+    @IBAction func onCancelClick(_ sender: AnyObject) {
+        self.dismiss(animated: true) {
             self.delegate?.chatSendContentConfirmControllerCancel(self)
         }
     }
     
-    func onTapContentView(ges:UITapGestureRecognizer) {
+    func onTapContentView(_ ges:UITapGestureRecognizer) {
         contentView.slideShowFullScreen(self)
     }
     
-    @IBAction func onSendClick(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true) { 
+    @IBAction func onSendClick(_ sender: AnyObject) {
+        self.dismiss(animated: true) { 
             self.delegate?.chatSendContentConfirmControllerSend(self,contentImage: self.contentImage)
         }
     }
     
-    static func showConfirmView(vc:UIViewController,contentImage:UIImage,delegate:ChatSendContentConfirmControllerDelegate) -> ChatSendContentConfirmController {
+    @discardableResult
+    static func showConfirmView(_ vc:UIViewController,contentImage:UIImage,delegate:ChatSendContentConfirmControllerDelegate) -> ChatSendContentConfirmController {
         let controller = instanceFromStoryBoard("Conversation", identifier: "ChatSendContentConfirmController") as! ChatSendContentConfirmController
         controller.delegate = delegate
         controller.contentImage = contentImage
@@ -83,9 +84,9 @@ class ChatSendContentConfirmController: UIViewController {
         let nvc = UINavigationController(rootViewController: controller)
         nvc.providesPresentationContextTransitionStyle = true
         nvc.definesPresentationContext = true
-        nvc.modalPresentationStyle = .OverCurrentContext
+        nvc.modalPresentationStyle = .overCurrentContext
         
-        vc.presentViewController(nvc, animated: true, completion: nil)
+        vc.present(nvc, animated: true, completion: nil)
         return controller
     }
 }

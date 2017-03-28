@@ -13,25 +13,25 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
         return ViewPool<ImageVessageContainer>()
     }()
     class ImageVessageContainer: UIView {
-        private var imageLoaded = false
-        weak private var vessage:Vessage!
-        weak private var vc:UIViewController?
+        fileprivate var imageLoaded = false
+        weak fileprivate var vessage:Vessage!
+        weak fileprivate var vc:UIViewController?
         
-        private var imageView:UIImageView
-        private var dateTimeLabel:UILabel
-        private var loadingIndicator:UIActivityIndicatorView
+        fileprivate var imageView:UIImageView
+        fileprivate var dateTimeLabel:UILabel
+        fileprivate var loadingIndicator:UIActivityIndicatorView
         
         override init(frame: CGRect) {
             self.dateTimeLabel = UILabel()
-            self.dateTimeLabel.textColor = UIColor.whiteColor()
-            self.dateTimeLabel.font = UIFont.systemFontOfSize(10)
+            self.dateTimeLabel.textColor = UIColor.white
+            self.dateTimeLabel.font = UIFont.systemFont(ofSize: 10)
             self.imageView = UIImageView()
             self.loadingIndicator = UIActivityIndicatorView()
             self.loadingIndicator.hidesWhenStopped = true
             self.loadingIndicator.stopAnimating()
             imageView.clipsToBounds = true
-            imageView.userInteractionEnabled = true
-            imageView.contentMode = .ScaleAspectFill
+            imageView.isUserInteractionEnabled = true
+            imageView.contentMode = .scaleAspectFill
             super.init(frame: frame)
             self.addSubview(imageView)
             self.addSubview(loadingIndicator)
@@ -49,25 +49,25 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
             loadingIndicator.stopAnimating()
         }
         
-        override func drawRect(rect: CGRect) {
-            super.drawRect(rect)
+        override func draw(_ rect: CGRect) {
+            super.draw(rect)
             imageView.frame.size = rect.size
             let x = (rect.width - 20) / 2
             let y = (rect.height - 20) / 2
-            self.loadingIndicator.frame = CGRectMake(x, y, 20, 20)
+            self.loadingIndicator.frame = CGRect(x: x, y: y, width: 20, height: 20)
             if let spv = dateTimeLabel.superview{
                 dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
                 dateTimeLabel.frame.origin.y = spv.frame.height - 2 - dateTimeLabel.frame.height
             }
         }
         
-        func initVessageContentView(vc:UIViewController,vessage:Vessage) {
+        func initVessageContentView(_ vc:UIViewController,vessage:Vessage) {
             self.vc = vc
             self.vessage = vessage
             self.imageLoaded = false
         }
         
-        private func updateDateLabel() {
+        fileprivate func updateDateLabel() {
             dateTimeLabel.sizeToFit()
             if let spv = dateTimeLabel.superview{
                 dateTimeLabel.frame.origin.x = spv.frame.width - 6 - dateTimeLabel.frame.width
@@ -75,7 +75,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
             }
         }
         
-        func onTapImage(ges:UITapGestureRecognizer) {
+        func onTapImage(_ ges:UITapGestureRecognizer) {
             if let controller = self.vc {
                 if imageLoaded {
                     imageView.slideShowFullScreen(controller,allowSaveImage: true)
@@ -85,7 +85,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
             }
         }
         
-        private func refreshImage(){
+        fileprivate func refreshImage(){
             if let vsg = self.vessage{
                 self.dateTimeLabel.text = vsg.getSendTime()?.toFriendlyString()
                 self.dateTimeLabel.layoutIfNeeded()
@@ -109,7 +109,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
         }
         
         convenience init() {
-            self.init(frame:CGRectZero)
+            self.init(frame:CGRect.zero)
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -117,9 +117,9 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
         }
     }
     
-    static let defaultSize = CGSizeMake(128, 168)
+    static let defaultSize = CGSize(width: 128, height: 168)
     
-    func getContentViewSize(vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize, contentView: UIView) -> CGSize {
+    func getContentViewSize(_ vc:UIViewController,vessage: Vessage, maxLimitedSize: CGSize, contentView: UIView) -> CGSize {
         let defaultWidth = ImageBubbleVessageHandler.defaultSize.width
         let defaultHeight = ImageBubbleVessageHandler.defaultSize.height
         
@@ -130,10 +130,10 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
         }else if maxLimitedSize.width > maxLimitedSize.height{
             return CGSize(width: maxLimitedSize.height * defaultWidth / defaultHeight, height: maxLimitedSize.height)
         }
-        return CGSizeZero
+        return CGSize.zero
     }
     
-    func getContentView(vc:UIViewController,vessage: Vessage) -> UIView {
+    func getContentView(_ vc:UIViewController,vessage: Vessage) -> UIView {
         if let view = ImageBubbleVessageHandler.viewPool.getFreeView() {
             view.initVessageContentView(vc, vessage: vessage)
             return view
@@ -145,7 +145,7 @@ class ImageBubbleVessageHandler: NSObject,BubbleVessageHandler {
         }
     }
     
-    func presentContent(vc:UIViewController, vessage: Vessage, contentView: UIView) {
+    func presentContent(_ vc:UIViewController, vessage: Vessage, contentView: UIView) {
         if let c = contentView as? ImageVessageContainer{
             c.refreshImage()
         }

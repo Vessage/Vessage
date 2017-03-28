@@ -17,11 +17,11 @@ class AnalyzeImageSDK {
         return VessageConfig.bahamutConfig.faceDetectSubscriptionKey![Int(arc4random()) % VessageConfig.bahamutConfig.faceDetectSubscriptionKey.count]
     }
     
-    func detectFace(picUrl:String) {
+    func detectFace(_ picUrl:String) {
         let url = "https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true"
         let headers = ["Content-Type":"application/json","Ocp-Apim-Subscription-Key":subscriptionKey]
         let data = "{\"url\":\"\(picUrl)\"}".toUTF8EncodingData()!
-        Alamofire.upload(.POST, url, headers: headers, data: data).responseJSON { (response) in
+        Alamofire.upload(.post, url, headers: headers, data: data).responseJSON { (response) in
             
         }
     }

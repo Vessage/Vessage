@@ -10,8 +10,8 @@ import AddressBook
 import AddressBookUI
 
 @objc protocol SelectVessageUserViewControllerDelegate {
-    func onFinishSelect(sender:SelectVessageUserViewController, selectedUsers:[VessageUser])
-    func canSelect(sender:SelectVessageUserViewController, selectedUsers:[VessageUser]) -> Bool
+    func onFinishSelect(_ sender:SelectVessageUserViewController, selectedUsers:[VessageUser])
+    func canSelect(_ sender:SelectVessageUserViewController, selectedUsers:[VessageUser]) -> Bool
 }
 
 class SelectVessageUserContactCell: UITableViewCell {
@@ -22,10 +22,10 @@ class SelectVessageUserContactCell: UITableViewCell {
 class SelectVessageUserListCell: UITableViewCell {
     static let reuseId = "SelectVessageUserListCell"
     
-    override var selected: Bool{
+    override var isSelected: Bool{
         didSet{
             if checkedImage != nil{
-                checkedImage.hidden = !selected
+                checkedImage.isHidden = !isSelected
             }
         }
     }
@@ -45,7 +45,7 @@ class SelectVessageUserListCell: UITableViewCell {
     
     @IBOutlet weak var checkedImage: UIImageView!{
         didSet{
-            checkedImage.hidden = !selected
+            checkedImage.isHidden = !isSelected
         }
     }
     @IBOutlet weak var nickLabel: UILabel!
@@ -63,9 +63,9 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     let SECTION_ACTIVE_USER = 1
     let SECTION_NEAR_USER = 2
     let SECTION_CONTACT_USER = 3
-    private var userInfos = [VessageUser](){
+    fileprivate var userInfos = [VessageUser](){
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_CONTACT_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_CONTACT_USER), with: .automatic)
         }
     }
     
@@ -80,45 +80,45 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     
     var showActiveUsers:Bool = false{
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_ACTIVE_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_ACTIVE_USER), with: .automatic)
         }
     }
     
     var showNearUsers:Bool = false{
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_NEAR_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_NEAR_USER), with: .automatic)
         }
     }
     
-    private var activeUsers = [VessageUser](){
+    fileprivate var activeUsers = [VessageUser](){
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_ACTIVE_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_ACTIVE_USER), with: .automatic)
         }
     }
     
-    private var nearUsers = [VessageUser](){
+    fileprivate var nearUsers = [VessageUser](){
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_NEAR_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_NEAR_USER), with: .automatic)
         }
     }
     
-    private var activeUserExpanded = false{
+    fileprivate var activeUserExpanded = false{
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_ACTIVE_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_ACTIVE_USER), with: .automatic)
         }
     }
     
-    private var nearUserExpanded = false{
+    fileprivate var nearUserExpanded = false{
         didSet{
-            tableView?.reloadSections(NSIndexSet(index: SECTION_NEAR_USER), withRowAnimation: .Automatic)
+            tableView?.reloadSections(IndexSet(integer: SECTION_NEAR_USER), with: .automatic)
         }
     }
     
-    private var contactUserHeader = SelectVessageExpandableHeader.instanceFromXib()
+    fileprivate var contactUserHeader = SelectVessageExpandableHeader.instanceFromXib()
     
-    private var activeUserHeader = SelectVessageExpandableHeader.instanceFromXib()
+    fileprivate var activeUserHeader = SelectVessageExpandableHeader.instanceFromXib()
     
-    private var nearUserHeader = SelectVessageExpandableHeader.instanceFromXib()
+    fileprivate var nearUserHeader = SelectVessageExpandableHeader.instanceFromXib()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,7 +170,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         #endif
     }
 
-    @IBAction func finishSelect(sender: AnyObject) {
+    @IBAction func finishSelect(_ sender: AnyObject) {
         if let dg = delegate{
             var selectedUsers = [VessageUser]()
             if let rows = tableView.indexPathsForSelectedRows{
@@ -182,20 +182,20 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
                 }
             }
             if dg.canSelect(self, selectedUsers: selectedUsers) {
-                self.navigationController?.popViewControllerAnimated(true)
+                let _ = self.navigationController?.popViewController(animated: true)
                 dg.onFinishSelect(self, selectedUsers: selectedUsers)
             }
         }else{
-            self.navigationController?.popViewControllerAnimated(true)
+            let _ = self.navigationController?.popViewController(animated: true)
         }
         
     }
     
-    private func showContactView(){
+    fileprivate func showContactView(){
         let controller = ABPeoplePickerNavigationController()
         controller.peoplePickerDelegate = self
         let hud = self.showAnimationHud()
-        self.presentViewController(controller, animated: true) { () -> Void in
+        self.present(controller, animated: true) { () -> Void in
             MobClick.event("Vege_OpenContactView")
             hud.hideAsync(true)
         }
@@ -210,24 +210,24 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     }
     
     //MARK: ABPeoplePickerNavigationControllerDelegate
-    func peoplePickerNavigationController(peoplePicker: ABPeoplePickerNavigationController, didSelectPerson person: ABRecord) {
-        peoplePicker.dismissViewControllerAnimated(true) { () -> Void in
+    func peoplePickerNavigationController(_ peoplePicker: ABPeoplePickerNavigationController, didSelectPerson person: ABRecord) {
+        peoplePicker.dismiss(animated: true) { () -> Void in
             selectPersonMobile(self,person: person, onSelectedMobile: { (mobile,title) in
                 let userService = ServiceContainer.getUserService()
                 let user = userService.getCachedUserByMobile(mobile)
                 if user == nil{
                     let hud = self.showAnimationHud()
                     userService.fetchUserProfileByMobile(mobile, lastUpdatedTime: nil, updatedCallback: { (mUser) in
-                        hud.hideAnimated(true)
+                        hud.hide(animated: true)
                         if let u = mUser{
-                            self.userInfos.insert(u, atIndex: 0)
-                            let indexPath = NSIndexPath(forRow: 0,inSection: self.SECTION_CONTACT_USER)
-                            self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
-                            self.tableView(self.tableView, didSelectRowAtIndexPath: indexPath)
+                            self.userInfos.insert(u, at: 0)
+                            let indexPath = IndexPath(row: 0,section: self.SECTION_CONTACT_USER)
+                            self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+                            self.tableView(self.tableView, didSelectRowAt: indexPath)
                         }else{
                             let title = "NO_USER_OF_MOBILE".localizedString()
                             let msg = String(format: "MOBILE_X_INVITE_JOIN_VG".localizedString(), mobile)
-                            let invite = UIAlertAction(title: "INVITE".localizedString(), style: .Default, handler: { (ac) in
+                            let invite = UIAlertAction(title: "INVITE".localizedString(), style: .default, handler: { (ac) in
                                 ShareHelper.instance.showTellVegeToFriendsAlert(self,message: "TELL_FRIEND_MESSAGE".localizedString(),alertMsg: "TELL_FRIENDS_ALERT_MSG".localizedString())
                             })
                             
@@ -236,27 +236,27 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
                     })
                     
                 }else{
-                    var indexPath = NSIndexPath(forRow: 0,inSection: self.SECTION_CONTACT_USER)
-                    if let index = self.userInfos.indexOf({ (u) -> Bool in
+                    var indexPath = IndexPath(row: 0,section: self.SECTION_CONTACT_USER)
+                    if let index = self.userInfos.index(where: { (u) -> Bool in
                         VessageUser.isTheSameUser(u, userb: user)
                     }){
-                        indexPath = NSIndexPath(forRow: index,inSection: self.SECTION_CONTACT_USER)
+                        indexPath = IndexPath(row: index,section: self.SECTION_CONTACT_USER)
                     }else{
-                        self.userInfos.insert(user!, atIndex: 0)
+                        self.userInfos.insert(user!, at: 0)
                     }
-                    self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
-                    self.tableView(self.tableView, didSelectRowAtIndexPath: indexPath)
+                    self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+                    self.tableView(self.tableView, didSelectRowAt: indexPath)
                 }
             })
         }
     }
     
     //MARK: Table View delegate
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == SECTION_CHOOSE_MOBILE {
             return 1
         }else if section == SECTION_ACTIVE_USER {
@@ -268,16 +268,16 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         }
     }
     
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath){
-            cell.selected = false
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath){
+            cell.isSelected = false
         }
         updateDoneButton()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell?.selected = indexPath != 0
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.isSelected = indexPath.section != 0
         if indexPath.section == SECTION_CHOOSE_MOBILE {
             showContactView()
         }else{
@@ -285,19 +285,19 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         }
     }
     
-    private func updateDoneButton(){
+    fileprivate func updateDoneButton(){
         var count = 0
         if let rows = tableView.indexPathsForSelectedRows {
-            self.navigationItem.rightBarButtonItem?.enabled = rows.count > 0
+            self.navigationItem.rightBarButtonItem?.isEnabled = rows.count > 0
             count = rows.count
         }else{
-            self.navigationItem.rightBarButtonItem?.enabled = false
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         
         self.navigationItem.rightBarButtonItem?.title = "CONFIRM".localizedString() + (count > 0 ? "(\(count))" : "")
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == SECTION_CHOOSE_MOBILE {
             return super.tableView(tableView, viewForHeaderInSection: section)
         }else if section == SECTION_CONTACT_USER{
@@ -320,7 +320,7 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         return nil
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == SECTION_CHOOSE_MOBILE {
             return super.tableView(tableView, heightForHeaderInSection: section)
         }else if section == SECTION_CONTACT_USER{
@@ -340,11 +340,11 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         return 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == SECTION_CHOOSE_MOBILE {
-            return tableView.dequeueReusableCellWithIdentifier(SelectVessageUserContactCell.reuseId, forIndexPath: indexPath)
+            return tableView.dequeueReusableCell(withIdentifier: SelectVessageUserContactCell.reuseId, for: indexPath)
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(SelectVessageUserListCell.reuseId, forIndexPath: indexPath) as! SelectVessageUserListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectVessageUserListCell.reuseId, for: indexPath) as! SelectVessageUserListCell
         if indexPath.section == SECTION_ACTIVE_USER {
             cell.user = activeUsers[indexPath.row]
         }else if(indexPath.section == SECTION_NEAR_USER){
@@ -353,11 +353,11 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
         else{
             cell.user = userInfos[indexPath.row]
         }
-        cell.selected = false
+        cell.isSelected = false
         return cell
     }
     
-    static func showSelectVessageUserViewController(nvc:UINavigationController) -> SelectVessageUserViewController{
+    static func showSelectVessageUserViewController(_ nvc:UINavigationController) -> SelectVessageUserViewController{
         let controller = instanceFromStoryBoard("User", identifier: "SelectVessageUserViewController") as! SelectVessageUserViewController
         nvc.pushViewController(controller, animated: true)
         return controller

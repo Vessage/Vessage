@@ -11,13 +11,13 @@ import MJRefresh
 import MBProgressHUD
 
 @objc protocol SNSPostCommentCellDelegate {
-    optional func snsPostCommentCellDidClickComment(sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
-    optional func snsPostCommentCellDidClick(sender:UIView,cell:SNSPostCommentCell,comment:SNSPostComment?)
-    optional func snsPostCommentCellDidClickPostInfo(sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
+    @objc optional func snsPostCommentCellDidClickComment(_ sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
+    @objc optional func snsPostCommentCellDidClick(_ sender:UIView,cell:SNSPostCommentCell,comment:SNSPostComment?)
+    @objc optional func snsPostCommentCellDidClickPostInfo(_ sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
 }
 
 protocol SNSCommentViewControllerDelegate {
-    func snsCommentController(sender:SNSPostCommentViewController, didPostNewComment newComment:SNSPostComment,post:SNSPost)
+    func snsCommentController(_ sender:SNSPostCommentViewController, didPostNewComment newComment:SNSPostComment,post:SNSPost)
 }
 
 class SNSPostCommentCell: UITableViewCell {
@@ -34,29 +34,29 @@ class SNSPostCommentCell: UITableViewCell {
             updateCell()
         }
     }
-    private var inited = false
+    fileprivate var inited = false
     @IBOutlet weak var atNickLabel: UILabel!
     @IBOutlet weak var postInfoLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     
-    private func initCell() {
+    fileprivate func initCell() {
         if inited == false {
             let cmtGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
             let pstGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
             let cellGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
-            cellGes.requireGestureRecognizerToFail(cmtGes)
-            cellGes.requireGestureRecognizerToFail(pstGes)
+            cellGes.require(toFail: cmtGes)
+            cellGes.require(toFail: pstGes)
             self.commentLabel.addGestureRecognizer(cmtGes)
             self.postInfoLabel.addGestureRecognizer(pstGes)
             self.contentView.addGestureRecognizer(cellGes)
-            atNickLabel.userInteractionEnabled = true
-            postInfoLabel.userInteractionEnabled = true
-            commentLabel.userInteractionEnabled = true
+            atNickLabel.isUserInteractionEnabled = true
+            postInfoLabel.isUserInteractionEnabled = true
+            commentLabel.isUserInteractionEnabled = true
             inited = true
         }
     }
     
-    func onTapCellView(a:UITapGestureRecognizer) {
+    func onTapCellView(_ a:UITapGestureRecognizer) {
         if comment.st < 0 {
             return
         }
@@ -72,13 +72,13 @@ class SNSPostCommentCell: UITableViewCell {
     func updateCell() {
         if let cmt = comment{
             commentLabel?.text = cmt.getOutputContent()
-            postInfoLabel?.text = "By \(cmt.psterNk)"
+            postInfoLabel?.text = "By \(cmt.psterNk ?? "")"
             if let atnick = cmt.atNick {
                 atNickLabel?.text = "@\(atnick)"
-                atNickLabel?.hidden = false
+                atNickLabel?.isHidden = false
             }else{
                 atNickLabel?.text = nil
-                atNickLabel?.hidden = true
+                atNickLabel?.isHidden = true
             }
         }
     }
@@ -87,18 +87,18 @@ class SNSPostCommentCell: UITableViewCell {
 class SNSPostCommentViewController: UIViewController {
     var delegate:SNSCommentViewControllerDelegate?
     
-    private var post:SNSPost!
+    fileprivate var post:SNSPost!
     
-    private var comments = [[SNSPostComment]](){
+    fileprivate var comments = [[SNSPostComment]](){
         didSet{
             self.tableView?.reloadData()
         }
     }
     
-    private var responseTextField = UITextField(frame:CGRectZero)
-    private var commentInputView = SNSCommentInputView.instanceFromXib()
+    fileprivate var responseTextField = UITextField(frame:CGRect.zero)
+    fileprivate var commentInputView = SNSCommentInputView.instanceFromXib()
     
-    private var userService = ServiceContainer.getUserService()
+    fileprivate var userService = ServiceContainer.getUserService()
     
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -115,14 +115,14 @@ class SNSPostCommentViewController: UIViewController {
         tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSPostCommentViewController.mjFooterRefresh(_:)))
         self.view.addSubview(responseTextField)
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentViewController.onTapView(_:))))
-        responseTextField.hidden = true
+        responseTextField.isHidden = true
         responseTextField.inputAccessoryView = commentInputView
         commentInputView.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         refreshPostComments(){
             if self.comments.count == 0{
@@ -131,7 +131,7 @@ class SNSPostCommentViewController: UIViewController {
         }
     }
     
-    func onTapView(ges:UITapGestureRecognizer) {
+    func onTapView(_ ges:UITapGestureRecognizer) {
         hideCommentInputView()
     }
     
@@ -141,19 +141,19 @@ class SNSPostCommentViewController: UIViewController {
         self.hideKeyBoard()
     }
     
-    @IBAction func onNewCommentClick(sender: AnyObject) {
+    @IBAction func onNewCommentClick(_ sender: AnyObject) {
         showNewCommentInputView(nil,atUserNick: nil)
     }
     
-    func showNewCommentInputView(model:AnyObject?,atUserNick:String?) {
+    func showNewCommentInputView(_ model:AnyObject?,atUserNick:String?) {
         commentInputView.showInputView(responseTextField, model: model, atUserNick: atUserNick)
     }
     
-    func mjFooterRefresh(a:AnyObject?) {
+    func mjFooterRefresh(_ a:AnyObject?) {
         refreshPostComments()
     }
     
-    func mjHeaderRefresh(a:AnyObject?) {
+    func mjHeaderRefresh(_ a:AnyObject?) {
         if self.comments.count > 0 {
             tableView.mj_header.endRefreshing()
         }else{
@@ -161,12 +161,12 @@ class SNSPostCommentViewController: UIViewController {
         }
     }
 
-    func refreshPostComments(callback:(()->Void)? = nil) {
+    func refreshPostComments(_ callback:(()->Void)? = nil) {
         let ts:Int64 = self.comments.last?.last?.ts ?? 0
         let hud:MBProgressHUD? = ts == 0 ? self.showActivityHud() : nil
         
         SNSPostManager.instance.getPostComment(self.post.pid, ts: ts) { (comments) in
-            hud?.hideAnimated(true)
+            hud?.hide(animated: true)
             if hud == nil{
                 self.tableView?.mj_footer?.endRefreshing()
             }else{
@@ -183,7 +183,7 @@ class SNSPostCommentViewController: UIViewController {
         }
     }
     
-    static func showPostCommentViewController(vc:UINavigationController, post:SNSPost) -> SNSPostCommentViewController{
+    static func showPostCommentViewController(_ vc:UINavigationController, post:SNSPost) -> SNSPostCommentViewController{
         let controller = instanceFromStoryBoard("SNS", identifier: "SNSPostCommentViewController") as! SNSPostCommentViewController
         controller.post = post
         vc.pushViewController(controller, animated: true)
@@ -193,7 +193,7 @@ class SNSPostCommentViewController: UIViewController {
 
 //MARK: SNSCommentInputViewDelegate
 extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
-    func commentInputViewDidClickSend(sender: SNSCommentInputView, textField: UITextField) {
+    func commentInputViewDidClickSend(_ sender: SNSCommentInputView, textField: UITextField) {
         let cmt = textField.text
         if !String.isNullOrWhiteSpace(cmt) {
             textField.text = nil
@@ -205,7 +205,7 @@ extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
                 ServiceContainer.getConversationService().expireConversation(uid)
             }
             SNSPostManager.instance.newPostComment(self.post.pid, comment: cmt!,senderNick: myNick,atUser: cmtObj?.pster,atUserNick: cmtObj?.psterNk, callback: { (posted,msg) in
-                hud.hideAnimated(true)
+                hud.hide(animated: true)
                 if let id = posted{
                     let ncomment = SNSPostComment()
                     ncomment.id = id
@@ -230,23 +230,23 @@ extension SNSPostCommentViewController:SNSCommentInputViewDelegate{
         }
     }
     
-    func commentInputViewDidEndEditing(sender: SNSCommentInputView, textField: UITextField) {
+    func commentInputViewDidEndEditing(_ sender: SNSCommentInputView, textField: UITextField) {
         responseTextField.resignFirstResponder()
     }
 }
 
 //MARK:UITableViewDelegate
 extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate{
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return comments.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return comments[section].count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SNSPostCommentCell.reuseId, forIndexPath: indexPath) as! SNSPostCommentCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SNSPostCommentCell.reuseId, for: indexPath) as! SNSPostCommentCell
         let cmt = comments[indexPath.section][indexPath.row]
         
         if let noteName = userService.getUserNotedNameIfExists(cmt.pster) {
@@ -258,29 +258,29 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
         return cell
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         let cmt = comments[indexPath.section][indexPath.row]
         return cmt.st >= 0 && (cmt.pster == UserSetting.userId || post.usrId == UserSetting.userId)
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.contentView.layoutSubviews()
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let cmt = comments[indexPath.section][indexPath.row]
         let isCmtOwner = cmt.pster == UserSetting.userId
         
         if isCmtOwner || post.usrId == UserSetting.userId {
-            let ac = UITableViewRowAction(style: .Normal, title: "RM_PST_CMT".SNSString) { (a, index) in
+            let ac = UITableViewRowAction(style: .normal, title: "RM_PST_CMT".SNSString) { (a, index) in
                 
-                let deleteAction = UIAlertAction(title: "CONFIRM".localizedString(), style: .Default, handler: { (yes) in
+                let deleteAction = UIAlertAction(title: "CONFIRM".localizedString(), style: .default, handler: { (yes) in
                     let hud = self.showActivityHud()
                     SNSPostManager.instance.deletePostComment(cmt.postId, cmtId: cmt.id, isCmtOwner: isCmtOwner, callback: { (suc) in
-                        hud.hideAnimated(true)
+                        hud.hide(animated: true)
                         if suc{
                             self.comments[indexPath.section][indexPath.row].st = -1
-                            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                            self.tableView.reloadRows(at: [indexPath], with: .automatic)
                         }else{
                             self.playCrossMark()
                         }
@@ -301,17 +301,17 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
 //MARK:SNSPostCommentCellDelegate
 extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
     
-    func snsPostCommentCellDidClick(sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
+    func snsPostCommentCellDidClick(_ sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         hideCommentInputView()
     }
     
-    func snsPostCommentCellDidClickComment(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
+    func snsPostCommentCellDidClickComment(_ sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         if let cmt = comment{
             showNewCommentInputView(cmt, atUserNick: cmt.psterNk)
         }
     }
     
-    func snsPostCommentCellDidClickPostInfo(sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
+    func snsPostCommentCellDidClickPostInfo(_ sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         sender.animationMaxToMin(0.2, maxScale: 1.2) { 
             if let pster = comment?.pster{
                 let delegate = UserProfileViewControllerDelegateOpenConversation()

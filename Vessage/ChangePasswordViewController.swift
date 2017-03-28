@@ -12,7 +12,7 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate
     
     @IBOutlet weak var newPasswordTextField: UITextField!
     @IBOutlet weak var oldPasswordTextField: UITextField!
-    @IBAction func changePassword(sender: AnyObject) {
+    @IBAction func changePassword(_ sender: AnyObject) {
         let newPsw = newPasswordTextField.text ?? ""
         let oldPsw = oldPasswordTextField.text ?? ""
         if String.isNullOrWhiteSpace(oldPsw)
@@ -23,24 +23,24 @@ class ChangePasswordViewController: UIViewController,UITextFieldDelegate
         {
             showAlert("OLD_NEW_PSW_SAME".localizedString(), msg: nil, actions: [ALERT_ACTION_I_SEE])
         }
-        else if newPsw =~ "^[A-Za-z0-9_\\@\\!\\#\\$\\%\\^\\&\\*\\.\\~]{6,23}$"
+        else if newPsw.isRegexMatch(pattern:"^[A-Za-z0-9_\\@\\!\\#\\$\\%\\^\\&\\*\\.\\~]{6,23}$")
         {
             showAlert("CONFIRM_PSW".localizedString(), msg: newPsw, actions: [
-                UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (action) -> Void in
+                UIAlertAction(title: "YES".localizedString(), style: .default, handler: { (action) -> Void in
                     let hud = self.showAnimationHud()
                     ServiceContainer.getAccountService().changePassword(oldPsw, newPsw: newPsw) { (isSuc,msg) -> Void in
                         hud.hideAsync(true)
                         if isSuc
                         {
                             self.showAlert(msg?.localizedString() ?? "CHANGE_PASSWORD_SUCCESS".localizedString(), msg: nil)
-                            self.navigationController?.popViewControllerAnimated(true)
+                            let _ = self.navigationController?.popViewController(animated: true)
                         }else
                         {
                             self.showAlert(msg?.localizedString() ?? "CHANGE_PASSWORD_ERROR".localizedString(), msg: nil)
                         }
                     }
                 }),
-                UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
+                UIAlertAction(title: "CANCEL".localizedString(), style: .cancel, handler: nil)
                 ])
             
         }else

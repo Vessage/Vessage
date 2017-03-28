@@ -12,15 +12,15 @@ import UIKit
 class ConversationViewController: UIViewController {
     
     //MARK: Properties
-    private var needSetChatImageIfNotExists = true
+    fileprivate var needSetChatImageIfNotExists = true
     
-    private var isNotRegistFriend = false
+    fileprivate var isNotRegistFriend = false
     
     var isGroupChat:Bool{
         return conversation.isGroupChat
     }
     
-    private(set) var outterNewVessageCount:Int = 0{
+    fileprivate(set) var outterNewVessageCount:Int = 0{
         didSet{
             let backBtn = UIBarButtonItem()
             var title = "\(VessageConfig.appName)"
@@ -34,7 +34,7 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private(set) var conversation:Conversation!{
+    fileprivate(set) var conversation:Conversation!{
         didSet{
             if let c = conversation {
                 isActivityConversation = !String.isNullOrEmpty(c.acId)
@@ -42,13 +42,13 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private var isActivityConversation = false
+    fileprivate var isActivityConversation = false
     
-    private var defaultOtherChatterId:String?{
+    fileprivate var defaultOtherChatterId:String?{
         return (self.chatGroup?.chatters?.filter{$0 != UserSetting.userId})?.first
     }
     
-    private(set) var chatGroup:ChatGroup!{
+    fileprivate(set) var chatGroup:ChatGroup!{
         didSet{
             if let _ = chatGroup {
                 outChatGroup = !chatGroup.chatters.contains(UserSetting.userId)
@@ -61,7 +61,7 @@ class ConversationViewController: UIViewController {
         }
     }
     
-    private(set) var outChatGroup = true
+    fileprivate(set) var outChatGroup = true
     
     var controllerTitle:String!{
         didSet{
@@ -70,7 +70,7 @@ class ConversationViewController: UIViewController {
     }
     let conversationService = ServiceContainer.getConversationService()
     let userService = ServiceContainer.getUserService()
-    let fileService = ServiceContainer.getService(FileService)
+    let fileService = ServiceContainer.getFileService()
     let vessageService = ServiceContainer.getVessageService()
     let chatGroupService = ServiceContainer.getChatGroupService()
     
@@ -89,30 +89,30 @@ class ConversationViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     
     //MARK: flash tips properties
-    private var flashTipsView:FlashTipsLabel = {
+    fileprivate var flashTipsView:FlashTipsLabel = {
         return FlashTipsLabel()
     }()
     
-    private var baseVessageBodyDict:[String:AnyObject]{
+    fileprivate var baseVessageBodyDict:[String:AnyObject]{
         let dict = [String:AnyObject]()
         return dict
     }
     
-    func getSendVessageBodyString(values:[String:AnyObject?],withBaseDict:Bool = true) -> String? {
-        var bodyDict = withBaseDict ? baseVessageBodyDict : [String:AnyObject]()
+    func getSendVessageBodyString(_ values:[String:Any?],withBaseDict:Bool = true) -> String? {
+        var bodyDict = withBaseDict ? baseVessageBodyDict : [String:Any]()
         values.forEach { (key,value) in
             if let v = value{
-                bodyDict.updateValue(v, forKey: key)
+                bodyDict[key] = v
             }
         }
-        let json = try! NSJSONSerialization.dataWithJSONObject(bodyDict, options: NSJSONWritingOptions(rawValue: 0))
-        return String(data: json, encoding: NSUTF8StringEncoding)
+        let json = try! JSONSerialization.data(withJSONObject: bodyDict, options: JSONSerialization.WritingOptions(rawValue: 0))
+        return String(data: json, encoding: String.Encoding.utf8)
     }
     
     var textChatInputView:TextChatInputView!
     var textChatInputResponderTextFiled:UITextField!
     
-    private var initMessage:[String:AnyObject]!
+    fileprivate var initMessage:[String:AnyObject]!
     
     deinit{
         #if DEBUG
@@ -123,15 +123,15 @@ class ConversationViewController: UIViewController {
 }
 
 extension ConversationViewController{
-    func onKeyBoardShown(a:NSNotification) {
-        let rect = self.view.convertRect(self.textChatInputView.sendButton.frame, fromView: self.textChatInputView)
+    func onKeyBoardShown(_ a:Notification) {
+        let rect = self.view.convert(self.textChatInputView.sendButton.frame, from: self.textChatInputView)
         
         let constant = self.view.frame.height - rect.origin.y - self.textChatInputView.frame.height + 10
         self.vessageViewContainer.constraints.filter{$0.identifier == "messageListBottom"}.first?.constant = constant
         self.messageList.updateConstraintsIfNeeded()
     }
     
-    func onKeyboardHidden(a:NSNotification) {
+    func onKeyboardHidden(_ a:Notification) {
         self.hideKeyBoard()
         self.vessageViewContainer.constraints.filter{$0.identifier == "messageListBottom"}.first?.constant = 0
     }
@@ -149,33 +149,33 @@ extension ConversationViewController{
         initMessageList()
         
         addObservers()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .Plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: isGroupChat ? "user_group":"userInfo"), style: .plain, target: self, action: #selector(ConversationViewController.clickRightBarItem(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.themeColor
         outterNewVessageCount = 0
         resetTitle()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         BahamutCmdManager.sharedInstance.registHandler(self)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         BahamutCmdManager.sharedInstance.removeHandler(self)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ConversationViewController.onKeyboardHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(ConversationViewController.onKeyBoardShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         ServiceContainer.getAppService().addObserver(self, selector: #selector(ConversationViewController.onAppResignActive(_:)), name: AppService.onAppResignActive, object: nil)
         handleInitMessage()
         messageListLoadMessages()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    private func handleInitMessage(){
+    fileprivate func handleInitMessage(){
         if let t = initMessage?["input_text"] as? String{
             if tryShowTextChatInputView(){
                 textChatInputView.inputTextField.insertText(t)
@@ -184,16 +184,16 @@ extension ConversationViewController{
         initMessage = nil
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if !(self.navigationController?.viewControllers.contains(self) ?? false) {
             releaseController()
         }
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
         ServiceContainer.getAppService().removeObserver(self)
     }
     
-    private func releaseController(){
+    fileprivate func releaseController(){
         self.removeObservers()
         self.conversation = nil
         self.chatGroup = nil
@@ -201,19 +201,19 @@ extension ConversationViewController{
         removeReadedVessages()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 }
 
 //MARK: Actions
 extension ConversationViewController{
     
-    func onBackItemClick(sender:AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    func onBackItemClick(_ sender:AnyObject) {
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func clickRightBarItem(sender: AnyObject) {
+    func clickRightBarItem(_ sender: AnyObject) {
         if outChatGroup {
             self.flashTips("NOT_IN_CHAT_GROUP".localizedString())
         }else if isGroupChat {
@@ -225,11 +225,11 @@ extension ConversationViewController{
     
     
     
-    private func showChatGroupProfile(){
+    fileprivate func showChatGroupProfile(){
         ChatGroupProfileViewController.showProfileViewController(self.navigationController!, chatGroup: self.chatGroup)
     }
     
-    private func showChatterProfile(){
+    fileprivate func showChatterProfile(){
         if let c = defaultOtherChatterId{
             if let user = userService.getCachedUserProfile(c) {
                 let controller = userService.showUserProfile(self, user: user)
@@ -246,7 +246,7 @@ extension ConversationViewController{
 //MARK: Observer & Notifications
 extension ConversationViewController{
     
-    private func addObservers(){
+    fileprivate func addObservers(){
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserNoteNameUpdated(_:)), name: UserService.userNoteNameUpdated, object: nil)
         userService.addObserver(self, selector: #selector(ConversationViewController.onUserProfileUpdated(_:)), name: UserService.userProfileUpdated, object: nil)
         vessageService.addObserver(self, selector: #selector(ConversationViewController.onNewVessagesReveiced(_:)), name: VessageService.onNewVessagesReceived, object: nil)
@@ -255,7 +255,7 @@ extension ConversationViewController{
         addSendVessageObservers()
     }
     
-    private func removeObservers(){
+    fileprivate func removeObservers(){
         userService.removeObserver(self)
         vessageService.removeObserver(self)
         chatGroupService.removeObserver(self)
@@ -266,7 +266,7 @@ extension ConversationViewController{
         hideKeyBoard()
     }
     
-    func onUserNoteNameUpdated(a:NSNotification) {
+    func onUserNoteNameUpdated(_ a:Notification) {
         if let userId = a.userInfo?[UserProfileUpdatedUserIdValue] as? String{
             if userId == self.conversation.chatterId {
                 if let note = a.userInfo?[UserNoteNameUpdatedValue] as? String{
@@ -276,7 +276,7 @@ extension ConversationViewController{
         }
     }
     
-    func onQuitChatGroup(a:NSNotification) {
+    func onQuitChatGroup(_ a:Notification) {
         if let group = a.userInfo?[kChatGroupValue] as? ChatGroup{
             if isGroupChat && group.groupId == self.chatGroup.groupId {
                 outChatGroup = true
@@ -284,7 +284,7 @@ extension ConversationViewController{
         }
     }
     
-    func onChatGroupUpdated(a:NSNotification){
+    func onChatGroupUpdated(_ a:Notification){
         if let group = a.userInfo?[kChatGroupValue] as? ChatGroup{
             if isGroupChat && group.groupId == self.chatGroup.groupId {
                 self.chatGroup = group
@@ -293,7 +293,7 @@ extension ConversationViewController{
         }
     }
     
-    func onUserProfileUpdated(a:NSNotification){
+    func onUserProfileUpdated(_ a:Notification){
         if let chatter = a.userInfo?[UserProfileUpdatedUserValue] as? VessageUser{
             if let chatterids = self.chatGroup?.chatters{
                 if chatterids.contains(chatter.userId) {
@@ -303,7 +303,7 @@ extension ConversationViewController{
         }
     }
     
-    func onNewVessagesReveiced(a:NSNotification){
+    func onNewVessagesReveiced(_ a:Notification){
         var otherConversationVessageCount = 0
         var received = [Vessage]()
         
@@ -319,7 +319,7 @@ extension ConversationViewController{
         if received.count > 0 {
             if isActivityConversation {
                 let vsg = generateTipsVessage("TO_BE_NORMAL_CONVERSATION".localizedString())
-                received.insert(vsg, atIndex: 1)
+                received.insert(vsg, at: 1)
                 isActivityConversation = false
             }
             messagesListPushReceivedMessages(received)
@@ -364,14 +364,11 @@ extension ConversationViewController{
         VessageQueue.sharedInstance.removeObserver(self)
     }
     
-    func onNewVessagePushed(a:NSNotification) {
+    func onNewVessagePushed(_ a:Notification) {
         if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation.chatterId {
                 if let vsg = task.vessage {
                     let newVsg = vsg.copyToObject(Vessage.self)
-                    if vsg.isMySendingVessage() {
-                        newVsg.fileId = task.filePath
-                    }
                     messagesListPushReceivedMessages([newVsg])
                 }
             }
@@ -379,23 +376,23 @@ extension ConversationViewController{
         }
     }
     
-    func onVessageSending(a:NSNotification){
+    func onVessageSending(_ a:Notification){
         
         if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
                 if let persent = a.userInfo?[kBahamutQueueTaskProgressValue] as? Float{
-                    self.progressView.hidden = false
+                    self.progressView.isHidden = false
                     self.progressView.setProgress(persent, animated: true)
                 }
             }
         }
     }
     
-    func onVessageSendError(a:NSNotification){
+    func onVessageSendError(_ a:Notification){
         
         if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
-                self.progressView.hidden = true
+                self.progressView.isHidden = true
                 self.controllerTitle = "VESSAGE_SEND_FAIL".localizedString()
                 if let msg = a.userInfo?[kBahamutQueueTaskMessageValue] as? String{
                     retrySendTask(task, errorMessage: msg)
@@ -404,24 +401,24 @@ extension ConversationViewController{
         }
     }
     
-    private func retrySendTask(task:SendVessageQueueTask,errorMessage:String){
-        let okAction = UIAlertAction(title: "OK".localizedString(), style: .Default) { (action) -> Void in
+    fileprivate func retrySendTask(_ task:SendVessageQueueTask,errorMessage:String){
+        let okAction = UIAlertAction(title: "OK".localizedString(), style: .default) { (action) -> Void in
             self.controllerTitle = "VESSAGE_SENDING".localizedString()
             VessageQueue.sharedInstance.startTask(task)
         }
-        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel) { (action) -> Void in
+        let cancelAction = UIAlertAction(title: "CANCEL".localizedString(), style: .cancel) { (action) -> Void in
             VessageQueue.sharedInstance.cancelTask(task, message: "USER_CANCELED")
             self.playCrossMark("CANCEL".localizedString())
         }
         self.showAlert("RETRY_SEND_VESSAGE_TITLE".localizedString(), msg: errorMessage.localizedString(), actions: [okAction,cancelAction])
     }
     
-    func onVessageSended(a:NSNotification){
+    func onVessageSended(_ a:Notification){
         
         if let task = a.userInfo?[kBahamutQueueTaskValue] as? SendVessageQueueTask{
             if task.receiverId == self.conversation?.chatterId {
                 self.controllerTitle = "VESSAGE_SENDED".localizedString()
-                NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: 0.8, target: self, selector: #selector(ConversationViewController.resetTitle(_:)), userInfo: nil, repeats: false)
                 if isNotRegistFriend{
                     self.showSendTellFriendAlert()
                 }
@@ -431,7 +428,7 @@ extension ConversationViewController{
     
     func resetTitle(_:AnyObject? = nil) {
         if let con = self.conversation {
-            self.progressView.hidden = true
+            self.progressView.isHidden = true
             if isGroupChat {
                 self.controllerTitle = chatGroup.groupName
             }else{
@@ -441,16 +438,16 @@ extension ConversationViewController{
     }
     
     func setProgressSending() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.progressView.progress = 0.1
-            self.progressView.hidden = false
+            self.progressView.isHidden = false
             self.controllerTitle = "VESSAGE_SENDING".localizedString()
         }
     }
     
-    private func showSendTellFriendAlert(){
+    fileprivate func showSendTellFriendAlert(){
         if let userId = defaultOtherChatterId{
-            let send = UIAlertAction(title: "OK".localizedString(), style: .Default, handler: { (ac) -> Void in
+            let send = UIAlertAction(title: "OK".localizedString(), style: .default, handler: { (ac) -> Void in
                 let contentText = String(format: "NOTIFY_SMS_FORMAT".localizedString(),"")
                 ShareHelper.instance.showTellTextMsgToFriendsAlert(self, content: contentText)
             })
@@ -463,7 +460,7 @@ extension ConversationViewController{
 //MARK: Show ConversationViewController Extension
 extension ConversationViewController{
     
-    static func showConversationViewController(nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
+    static func showConversationViewController(_ nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
         if userId == UserSetting.userId {
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
         }else if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
@@ -483,7 +480,7 @@ extension ConversationViewController{
         }
     }
     
-    static func showConversationViewController(nvc:UINavigationController,conversation:Conversation,initMessage:[String:AnyObject]? = nil)
+    static func showConversationViewController(_ nvc:UINavigationController,conversation:Conversation,initMessage:[String:AnyObject]? = nil)
     {
         if String.isNullOrEmpty(conversation.chatterId) {
             nvc.playToast("NO_SUCH_USER".localizedString())
@@ -494,7 +491,7 @@ extension ConversationViewController{
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getChatGroupService().fetchChatGroup(conversation.chatterId){ group in
-                        hud.hideAnimated(true)
+                        hud.hide(animated: true)
                         if let g = group{
                             self.showConversationView(nvc, conversation: conversation, group: g,refreshGroup: false,initMessage: initMessage)
                         }else{
@@ -508,7 +505,7 @@ extension ConversationViewController{
                 }else{
                     let hud = nvc.showAnimationHud()
                     ServiceContainer.getUserService().getUserProfile(conversation.chatterId, updatedCallback: { (u) in
-                        hud.hideAnimated(true)
+                        hud.hide(animated: true)
                         if let updatedUser = u{
                             showConversationView(nvc,conversation: conversation,user: updatedUser,refreshUser: false,initMessage: initMessage)
                         }else{
@@ -521,7 +518,7 @@ extension ConversationViewController{
         
     }
     
-    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,group:ChatGroup,refreshGroup:Bool,initMessage:[String:AnyObject]?){
+    fileprivate static func showConversationView(_ nvc:UINavigationController,conversation:Conversation,group:ChatGroup,refreshGroup:Bool,initMessage:[String:AnyObject]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatGroup = group
@@ -532,7 +529,7 @@ extension ConversationViewController{
         }
     }
     
-    private static func showConversationView(nvc:UINavigationController,conversation:Conversation,user:VessageUser,refreshUser:Bool,initMessage:[String:AnyObject]?){
+    fileprivate static func showConversationView(_ nvc:UINavigationController,conversation:Conversation,user:VessageUser,refreshUser:Bool,initMessage:[String:AnyObject]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         if String.isNullOrWhiteSpace(user.accountId){
@@ -560,8 +557,8 @@ extension ConversationViewController{
 //MARK: Flash Tips
 extension ConversationViewController{
     
-    func flashTips(msg:String) {
-        let center = CGPointMake(self.vessageViewContainer.frame.width / 2,self.vessageViewContainer.frame.height / 2)
+    func flashTips(_ msg:String) {
+        let center = CGPoint(x: self.vessageViewContainer.frame.width / 2,y: self.vessageViewContainer.frame.height / 2)
         self.flashTipsView.flashTips(self.view, msg: msg, center: center)
     }
     
@@ -578,7 +575,7 @@ extension ConversationViewController{
 
 //MARK:HandleBahamutCmdDelegate
 extension ConversationViewController:HandleBahamutCmdDelegate{
-    func handleBahamutCmd(method: String, args: [String], object: AnyObject?) {
+    func handleBahamutCmd(_ method: String, args: [String], object: AnyObject?) {
         
     }
 }

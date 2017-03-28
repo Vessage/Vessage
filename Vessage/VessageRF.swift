@@ -60,9 +60,9 @@ class Vessage: BahamutObject {
         return self.vessageId == Vessage.sendingVessageId
     }
     
-    func getSendTime()->NSDate!{
+    func getSendTime()->Date!{
         if ts > 0 {
-            return NSDate(timeIntervalSince1970: Double(ts) / 1000)
+            return Date(timeIntervalSince1970: Double(ts) / 1000)
         }else{
             return nil
         }
@@ -71,7 +71,7 @@ class Vessage: BahamutObject {
     func getBodyDict() -> [String:AnyObject] {
         if let data = self.body?.toUTF8EncodingData(){
             do{
-                if let dict = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String : AnyObject]{
+                if let dict = try JSONSerialization.jsonObject(with: data as Data, options: .allowFragments) as? [String : AnyObject]{
                     return dict
                 }
             }catch{
@@ -80,6 +80,7 @@ class Vessage: BahamutObject {
         }
         return [String:AnyObject]()
     }
+    
 }
 
 class VessageExtraInfoModel:BahamutObject{
@@ -107,7 +108,7 @@ extension Vessage{
 class GetNewVessagesRequest: BahamutRFRequestBase {
     override init() {
         super.init()
-        self.method = .GET
+        self.method = .get
         self.api = "/Vessages/New"
     }
 }
@@ -115,7 +116,7 @@ class GetNewVessagesRequest: BahamutRFRequestBase {
 class NotifyGotNewVessagesRequest:BahamutRFRequestBase{
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/Vessages/Got"
     }
 }
@@ -124,7 +125,7 @@ class SendNewVessageRequestBase:BahamutRFRequestBase{
     
     override init() {
         super.init()
-        self.method = .POST
+        self.method = .post
     }
     
     var extraInfo:String!{
@@ -211,7 +212,7 @@ class CancelSendVessageRequest:BahamutRFRequestBase{
     
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/Vessages/CancelSendVessage"
     }
     
@@ -232,7 +233,7 @@ class FinishSendVessageRequest:CancelSendVessageRequest{
     
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/Vessages/FinishSendVessage"
     }
     
@@ -246,13 +247,13 @@ class FinishSendVessageRequest:CancelSendVessageRequest{
 class SetVessageRead:BahamutRFRequestBase{
     override init() {
         super.init()
-        self.method = .PUT
+        self.method = .put
         self.api = "/Vessages/Read"
     }
     
     var vessageId:String!{
         didSet{
-            self.api = "/Vessages/Read/\(vessageId)"
+            self.api = "/Vessages/Read/\(vessageId!)"
         }
     }
 }

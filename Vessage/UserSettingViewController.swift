@@ -11,7 +11,7 @@ import MBProgressHUD
 
 extension UserService
 {
-    func showMyDetailView(currentViewController:UIViewController)
+    func showMyDetailView(_ currentViewController:UIViewController)
     {
         let controller = UserSettingViewController.instanceFromStoryBoard()
         currentViewController.navigationController?.pushViewController(controller, animated: true)
@@ -35,7 +35,7 @@ class MyDetailTextPropertyCell:UITableViewCell
             
             if editableMark != nil
             {
-                editableMark.hidden = !info!.editable
+                editableMark.isHidden = !info!.editable
             }
         }
     }
@@ -53,7 +53,7 @@ class MyDetailTextPropertyCell:UITableViewCell
         didSet{
             if let i = info
             {
-                editableMark.hidden = !i.editable
+                editableMark.isHidden = !i.editable
             }
         }
     }
@@ -93,18 +93,18 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.backgroundColor = UIColor.lightTextColor()
+        tableView.backgroundColor = UIColor.lightText
         myProfile = ServiceContainer.getUserService().myProfile
         self.tableView.alpha = 0.1
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         initPropertySet()
         tableView.reloadData()
-        UIView.animateWithDuration(0.3) { 
+        UIView.animate(withDuration: 0.3, animations: { 
             self.tableView.alpha = 1
-        }
+        }) 
     }
     
     deinit{
@@ -113,9 +113,9 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         #endif
     }
     
-    private(set) var myProfile:VessageUser!
+    fileprivate(set) var myProfile:VessageUser!
     
-    private func initPropertySet()
+    fileprivate func initPropertySet()
     {
         textPropertyCells.removeAll()
         var propertySet = UIEditTextPropertySet()
@@ -132,7 +132,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         if ServiceContainer.getUserService().isTempMobileUser {
             propertySet.propertyValue = "NOT_SET".localizedString()
         }else if let mobile = myProfile.mobile{
-            let length = mobile.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+            let length = mobile.lengthOfBytes(using: String.Encoding.utf8)
             let subfix = mobile.substringFromIndex(length - 4)
             propertySet.propertyValue = "***\(subfix)"
         }else{
@@ -142,34 +142,34 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         
     }
     
-    func logout(sender: AnyObject)
+    func logout(_ sender: AnyObject)
     {
         let alert = UIAlertController(title: "LOGOUT_CONFIRM_TITLE".localizedString(),
-            message: "USER_DATA_WILL_SAVED".localizedString(), preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "YES".localizedString(), style: .Default) { _ in
+            message: "USER_DATA_WILL_SAVED".localizedString(), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "YES".localizedString(), style: .default) { _ in
             self.logout()
             })
-        alert.addAction(UIAlertAction(title: "NO".localizedString(), style: .Cancel) { _ in
+        alert.addAction(UIAlertAction(title: "NO".localizedString(), style: .cancel) { _ in
             self.cancelLogout()
             })
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private func cancelLogout()
+    fileprivate func cancelLogout()
     {
         
     }
     
-    private func logout()
+    fileprivate func logout()
     {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        let _ = self.navigationController?.popToRootViewController(animated: true)
         ServiceContainer.instance.userLogout()
         EntryNavigationController.start()
     }
     
     //MARK: table view delegate
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 0
         }
@@ -183,12 +183,12 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
             tableView.dataSource = self
             tableView.delegate = self
             let uiview = UIView()
-            uiview.backgroundColor = UIColor.lightTextColor()
+            uiview.backgroundColor = UIColor.lightText
             tableView.tableFooterView = uiview
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 0
         {
             return 200
@@ -196,14 +196,14 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         return UITableViewAutomaticDimension
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         if basicMode {
             return textPropertyCells.count > 0 ? 1 : 0
         }
         return textPropertyCells.count > 0 ? 2 : 0
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //user infos + about + clear tmp file + exit account
         if section == 0
         {
@@ -215,7 +215,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var resultCell:UITableViewCell!
         if indexPath.section == 0
         {
@@ -226,21 +226,21 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
             {
                 resultCell = getTextPropertyCell(indexPath.row - 1)
             }else{
-                resultCell = tableView.dequeueReusableCellWithIdentifier(MyDetailTextPropertyCell.reuseIdentifier, forIndexPath: indexPath)
+                resultCell = tableView.dequeueReusableCell(withIdentifier: MyDetailTextPropertyCell.reuseIdentifier, for: indexPath)
             }
         }else
         {
             if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.clearCacheCellReuseId,forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: UserSettingViewController.clearCacheCellReuseId,for: indexPath)
                 cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.clearTempDir(_:))))
                 resultCell = cell
             }else if indexPath.row == 1{
-                let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.aboutAppReuseId,forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: UserSettingViewController.aboutAppReuseId,for: indexPath)
                 cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.aboutApp(_:))))
                 resultCell = cell
             }else{
                 
-                let cell = tableView.dequeueReusableCellWithIdentifier(UserSettingViewController.exitAccountCellReuseId,forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: UserSettingViewController.exitAccountCellReuseId,for: indexPath)
                 cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UserSettingViewController.logout(_:))))
                 resultCell = cell
             }
@@ -262,12 +262,12 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
     {
         let actions =
         [
-            UIAlertAction(title: "YES".localizedString(), style: .Default, handler: { (action) -> Void in
+            UIAlertAction(title: "YES".localizedString(), style: .default, handler: { (action) -> Void in
                 PersistentManager.sharedInstance.clearFileCacheFiles()
                 PersistentManager.sharedInstance.resetTmpDir()
                 self.showAlert("CLEAR_CACHE_SUCCESS".localizedString() , msg: "")
             }),
-            UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: nil)
+            UIAlertAction(title: "CANCEL".localizedString(), style: .cancel, handler: nil)
         ]
         showAlert("CONFIRM_CLEAR_CACHE_TITLE".localizedString() , msg: nil, actions: actions)
     }
@@ -275,7 +275,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
     //MARK: Avatar
     func getAvatarCell() -> MyDetailAvatarCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailAvatarCell.reuseIdentifier) as! MyDetailAvatarCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MyDetailAvatarCell.reuseIdentifier) as! MyDetailAvatarCell
         
         let defaultAvatar = getDefaultAvatar(myProfile.accountId, sex: myProfile.sex)
         ServiceContainer.getFileService().setImage(cell.avatarImageView, iconFileId: myProfile.avatar,defaultImage: defaultAvatar)
@@ -296,11 +296,11 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
     //MARK: Property Cell
     var textPropertyCells:[MyDetailCellModel] = [MyDetailCellModel]()
     
-    func getTextPropertyCell(index:Int) -> MyDetailTextPropertyCell
+    func getTextPropertyCell(_ index:Int) -> MyDetailTextPropertyCell
     {
         let info = textPropertyCells[index]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(MyDetailTextPropertyCell.reuseIdentifier) as! MyDetailTextPropertyCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MyDetailTextPropertyCell.reuseIdentifier) as! MyDetailTextPropertyCell
         if info.selector != nil
         {
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: info.selector))
@@ -309,7 +309,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         return cell
     }
     
-    static func showUserSettingViewController(navController:UINavigationController,basicMode:Bool = true){
+    static func showUserSettingViewController(_ navController:UINavigationController,basicMode:Bool = true){
         let controller = instanceFromStoryBoard()
         controller.basicMode = basicMode
         navController.pushViewController(controller, animated: true)
@@ -325,18 +325,18 @@ extension UserSettingViewController:ValidateMobileViewControllerDelegate{
     func bindMobile(_:UITapGestureRecognizer)
     {
         let controller = ValidateMobileViewController.showValidateMobileViewController(self,delegate: self)
-        controller.exitButton?.setTitle("CANCEL".localizedString(), forState: .Normal)
+        controller.exitButton?.setTitle("CANCEL".localizedString(), for: UIControlState())
     }
     
-    func validateMobileCancel(sender: ValidateMobileViewController) {
-        sender.dismissViewControllerAnimated(true, completion: nil)
+    func validateMobileCancel(_ sender: ValidateMobileViewController) {
+        sender.dismiss(animated: true, completion: nil)
     }
     
-    func validateMobileIsTryBindExistsUser(sender: ValidateMobileViewController) -> Bool {
+    func validateMobileIsTryBindExistsUser(_ sender: ValidateMobileViewController) -> Bool {
         return false
     }
     
-    func validateMobile(sender: ValidateMobileViewController, suc: Bool) {
+    func validateMobile(_ sender: ValidateMobileViewController, suc: Bool) {
         self.tableView.reloadData()
     }
 }

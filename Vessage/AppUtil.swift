@@ -13,10 +13,10 @@ import MBProgressHUD
 import EVReflection
 import SDWebImage
 
-func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mobile:String,personTitle:String)->Void) {
-    let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() ?? ""
-    let lname = ABRecordCopyValue(person, kABPersonLastNameProperty)?.takeRetainedValue() ?? ""
-    let title = "\(lname!)\(fname!)"
+func selectPersonMobile(_ vc:UIViewController,person:ABRecord,onSelectedMobile:@escaping (_ mobile:String,_ personTitle:String)->Void) {
+    let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() as? String ?? ""
+    let lname = ABRecordCopyValue(person, kABPersonLastNameProperty)?.takeRetainedValue() as? String ?? ""
+    let title = "\(lname)\(fname)"
     if let phones = ABRecordCopyValue(person, kABPersonPhoneProperty)?.takeRetainedValue(){
         if ABMultiValueGetCount(phones) > 0{
             var actions = [UIAlertAction]()
@@ -24,22 +24,22 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
             for i in 0 ..< ABMultiValueGetCount(phones){
                 
                 let phoneLabel = ABMultiValueCopyLabelAtIndex(phones, i).takeRetainedValue()
-                    as CFStringRef;
+                    as CFString;
                 let localizedPhoneLabel = ABAddressBookCopyLocalizedLabel(phoneLabel)
                     .takeRetainedValue() as String
                 
                 let value = ABMultiValueCopyValueAtIndex(phones, i)
-                var phone = value.takeRetainedValue() as! String
-                phone = phone.stringByReplacingOccurrencesOfString("+86", withString: "").stringByReplacingOccurrencesOfString("-", withString: "")
+                var phone = value?.takeRetainedValue() as! String
+                phone = phone.replacingOccurrences(of: "+86", with: "").replacingOccurrences(of: "-", with: "")
                 if(phone.hasBegin("86")){
                     phone = phone.substringFromIndex(2)
                 }
                 if phone.isMobileNumber(){
                     phoneNos.append(phone)
-                    let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .Default, handler: { (action) -> Void in
-                        if let i = actions.indexOf(action){
+                    let action = UIAlertAction(title: "\(localizedPhoneLabel):\(phone)", style: .default, handler: { (action) -> Void in
+                        if let i = actions.index(of: action){
                             MobClick.event("Vege_SelectContactMobile")
-                            onSelectedMobile(mobile: phoneNos[i],personTitle: title)
+                            onSelectedMobile(phoneNos[i],title)
                             
                         }
                     })
@@ -48,12 +48,12 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
             }
             if actions.count > 0{
                 if actions.count == 1 {
-                    onSelectedMobile(mobile: phoneNos[0], personTitle: title)
+                    onSelectedMobile(phoneNos[0], title)
                 }else{
                     let msg = "CHOOSE_PHONE_NO".localizedString()
-                    let alertController = UIAlertController(title: title, message: msg, preferredStyle: .Alert)
+                    let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
                     actions.forEach{alertController.addAction($0)}
-                    let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { (ac) -> Void in
+                    let cancel = UIAlertAction(title: "CANCEL".localizedString(), style: .cancel, handler: { (ac) -> Void in
                         MobClick.event("Vege_CancelSelectContactMobile")
                     })
                     alertController.addAction(cancel)
@@ -69,7 +69,7 @@ func selectPersonMobile(vc:UIViewController,person:ABRecord,onSelectedMobile:(mo
 extension String
 {
     func localizedString() -> String{
-        return NSLocalizedString(self, tableName: "Localizable", bundle: NSBundle.mainBundle(), value: "", comment: "")
+        return NSLocalizedString(self, tableName: "Localizable", bundle: Bundle.main, value: "", comment: "")
     }
 }
 
@@ -79,7 +79,7 @@ func getDefaultFace() -> UIImage {
     return UIImage(named: "default_face")!
 }
 
-func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId,sex:Int = 0) -> UIImage {
+func getDefaultAvatar(_ accountId:String = UserSetting.lastLoginAccountId,sex:Int = 0) -> UIImage {
     
     if let id = Int(accountId){
         var index = 0
@@ -97,58 +97,58 @@ func getDefaultAvatar(accountId:String = UserSetting.lastLoginAccountId,sex:Int 
 
 extension FileService
 {
-    func getImage(iconFileId fileId:String!,callback:((image:UIImage?)->Void))
+    func getImage(iconFileId fileId:String!,callback:@escaping ((_ image:UIImage?)->Void))
     {
         if String.isNullOrWhiteSpace(fileId) == false
         {
-            if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: NSBundle.mainBundle())
+            if let uiimage =  PersistentManager.sharedInstance.getImage( fileId ,bundle: Bundle.main)
             {
-                callback(image: uiimage)
+                callback(uiimage)
             }else
             {
-                self.fetchFile(fileId, fileType: FileType.Image, callback: { (filePath) -> Void in
+                self.fetchFile(fileId, fileType: FileType.image, callback: { (filePath) -> Void in
                     if filePath != nil
                     {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            let image = PersistentManager.sharedInstance.getImage(fileId,bundle: NSBundle.mainBundle())
-                            callback(image: image)
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            let image = PersistentManager.sharedInstance.getImage(fileId,bundle: Bundle.main)
+                            callback(image)
                         })
                     }else{
-                        callback(image: nil)
+                        callback(nil)
                     }
                 })
             }
         }else{
-            callback(image: nil)
+            callback(nil)
         }
     }
     
-    func setImage(imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((suc:Bool)->Void)! = nil)
+    func setImage(_ imageView:UIImageView,iconFileId fileId:String!, defaultImage:UIImage? = getDefaultAvatar(),callback:((_ suc:Bool)->Void)! = nil)
     {
         imageView.image = defaultImage
-        if let imgl = fileId?.lowercaseString where imgl.hasPrefix("http://") || imgl.hasPrefix("https://") {
-            imageView.sd_setImageWithURL(NSURL(string: fileId), completed: { (image, error, cacheType, url) in
-                callback?(suc:error == nil)
+        if let imgl = fileId?.lowercased(), imgl.hasPrefix("http://") || imgl.hasPrefix("https://") {
+            imageView.sd_setImage(with: URL(string: fileId), completed: { (image, error, cacheType, url) in
+                callback?(error == nil)
             })
         }else{
             getImage(iconFileId: fileId) { (img) in
                 if let image = img{
                     imageView.image = image
-                    callback?(suc: true)
+                    callback?(true)
                 }else{
-                    callback?(suc: false)
+                    callback?(false)
                 }
             }
         }
     }
     
-    func setImage(button:UIButton,iconFileId fileId:String!)
+    func setImage(_ button:UIButton,iconFileId fileId:String!)
     {
         let image = UIImage(named: "defaultAvatar")
-        button.setImage(image, forState: .Normal)
+        button.setImage(image, for: UIControlState())
         getImage(iconFileId: fileId) { (img) in
             if let image = img{
-                button.setImage(image, forState: .Normal)
+                button.setImage(image, for: UIControlState())
             }
         }
     }
@@ -157,17 +157,17 @@ extension FileService
 extension String{
     func isBahamutAccount() -> Bool{
         if let aId = Int(self) {
-            return (aId >= 10000 && aId <= 20000) || (self =~ "^\\d{6,9}$" && aId >= 147258)
+            return (aId >= 10000 && aId <= 20000) || (self.isRegexMatch(pattern:"^\\d{6,9}$") && aId >= 147258)
         }
         return false
     }
 }
 
 
-func setBadgeLabelValue(badgeLabel:UILabel!,value:Int!,autoHide:Bool = true){
+func setBadgeLabelValue(_ badgeLabel:UILabel!,value:Int!,autoHide:Bool = true){
     badgeLabel?.text = intToBadgeString(value)
     if autoHide {
-        badgeLabel?.hidden = badgeLabel?.text == nil
+        badgeLabel?.isHidden = badgeLabel?.text == nil
     }else{
         badgeLabel?.text = badgeLabel?.text ?? "0"
     }
@@ -189,7 +189,7 @@ extension UIBarButtonItem{
         badgeOriginY = 2
         badge.clipsToBounds = true
         badgeValue = " "
-        badge.frame.size = CGSizeMake(8, 8)
+        badge.frame.size = CGSize(width: 8, height: 8)
         badge.layer.cornerRadius = 4
     }
     
@@ -200,7 +200,7 @@ extension UIBarButtonItem{
 
 extension UIViewController{
     
-    func showAnimationHud(title:String! = "",message:String! = "",async:Bool = true,completionHandler: HudHiddenCompletedHandler! = nil) -> MBProgressHUD {
+    func showAnimationHud(_ title:String! = "",message:String! = "",async:Bool = true,completionHandler: HudHiddenCompletedHandler! = nil) -> MBProgressHUD {
         /*
         let imv = UIImageView(frame: CGRectMake(0, 0, 64, 46))
         imv.animationImages = hudSpinImageArray
@@ -225,21 +225,21 @@ func getRandomConversationBackground() -> UIImage {
 extension EVObject{
     func toMiniJsonString() -> String {
         let json = toJsonString()
-        return json.split("\n").map{$0.trim()}.joinWithSeparator(" ")
+        return json.split("\n").map{$0.trim()}.joined(separator: " ")
     }
 }
 
 extension EVReflection{
-    static func toMiniJsonString(theObject:NSObject)->String{
-        return EVReflection.toJsonString(theObject).split("\n").map{$0.trim()}.joinWithSeparator(" ")
+    static func toMiniJsonString(_ theObject:NSObject)->String{
+        return EVReflection.toJsonString(theObject).split("\n").map{$0.trim()}.joined(separator: " ")
     }
 }
 
 extension UITableViewCell{
     func setSeparatorFullWidth() {
         self.preservesSuperviewLayoutMargins = false
-        self.separatorInset = UIEdgeInsetsZero
-        self.layoutMargins = UIEdgeInsetsZero
+        self.separatorInset = UIEdgeInsets.zero
+        self.layoutMargins = UIEdgeInsets.zero
     }
 }
 

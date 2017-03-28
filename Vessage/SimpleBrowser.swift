@@ -33,12 +33,12 @@ class SimpleBrowser: UIViewController,UIWebViewDelegate
         super.viewDidLoad()
         webView = UIWebView(frame: self.view.bounds)
         self.view.addSubview(webView)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "BACK".localizedString(), style: .Plain, target: self, action: #selector(SimpleBrowser.back(_:)))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "BACK".localizedString(), style: .plain, target: self, action: #selector(SimpleBrowser.back(_:)))
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(SimpleBrowser.swipeLeft(_:)))
-        leftSwipe.direction = .Left
+        leftSwipe.direction = .left
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(SimpleBrowser.swipeRight(_:)))
-        rightSwipe.direction = .Right
+        rightSwipe.direction = .right
         
         self.webView.addGestureRecognizer(leftSwipe)
         self.webView.addGestureRecognizer(rightSwipe)
@@ -54,29 +54,29 @@ class SimpleBrowser: UIViewController,UIWebViewDelegate
         self.webView.goBack()
     }
     
-    func back(sender: AnyObject)
+    func back(_ sender: AnyObject)
     {
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    private func loadUrl()
+    fileprivate func loadUrl()
     {
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: url)!))
+        webView.loadRequest(URLRequest(url: URL(string: url)!))
     }
     
     //"SimpleBrowser"
-    
-    static func openUrl(currentViewController:UIViewController,url:String,title:String?) -> SimpleBrowser
+    @discardableResult
+    static func openUrl(_ currentViewController:UIViewController,url:String,title:String?) -> SimpleBrowser
     {
         let controller = SimpleBrowser()
         let navController = UINavigationController(rootViewController: controller)
         
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             if let cnvc = currentViewController as? UINavigationController{
                 navController.navigationBar.barStyle = cnvc.navigationBar.barStyle
             }
             controller.title = title
-            currentViewController.presentViewController(navController, animated: true, completion: {
+            currentViewController.present(navController, animated: true, completion: {
                 controller.url = url;
             })
         }

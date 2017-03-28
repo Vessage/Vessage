@@ -11,7 +11,7 @@ import Foundation
 //MARK: ServiceContainer DI
 extension ServiceContainer{
     static func getUserService() -> UserService{
-        return ServiceContainer.getService(UserService)
+        return ServiceContainer.getService(UserService.self)
     }
 }
 
@@ -22,19 +22,20 @@ let UserChatImagesUpdatedValue = "UserChatImagesUpdatedValue"
 let USER_LATER_SET_CHAT_BCG_KEY = "SET_CHAT_BCG_LATER"
 
 //MARK:UserService
-class UserService:NSNotificationCenter, ServiceProtocol {
-    static let userProfileUpdated = "userProfileUpdated"
-    static let userNoteNameUpdated = "userNoteNameUpdated"
-    static let userChatImagesUpdated = "userChatImagesUpdated"
-    static let myChatImagesUpdated = "myChatImagesUpdated"
+class UserService:NotificationCenter, ServiceProtocol {
+    static let userProfileUpdated = "userProfileUpdated".asNotificationName()
+    static let userNoteNameUpdated = "userNoteNameUpdated".asNotificationName()
+    static let userChatImagesUpdated = "userChatImagesUpdated".asNotificationName()
+    static let myChatImagesUpdated = "myChatImagesUpdated".asNotificationName()
+    
     @objc static var ServiceName:String {return "User Service"}
     
-    private var forceGetUserProfileOnce:Bool = false
-    private let notUpdateUserInMinutes:Double = 18
-    private let getActiveUserIntervalHours = 6.0
-    private let getNearUserIntervalHours = 1.0
-    private var userNotedNames = [String:String]()
-    private(set) var myProfile:VessageUser!{
+    fileprivate var forceGetUserProfileOnce:Bool = false
+    fileprivate let notUpdateUserInMinutes:Double = 18
+    fileprivate let getActiveUserIntervalHours = 6.0
+    fileprivate let getNearUserIntervalHours = 1.0
+    fileprivate var userNotedNames = [String:String]()
+    fileprivate(set) var myProfile:VessageUser!{
         didSet{
             if let _ = myProfile{
                 if !isUserMobileValidated && UserSetting.isSettingEnable("USE_TMP_MOBILE") {
@@ -44,20 +45,20 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    private(set) var activeUsers = [VessageUser]()
-    private(set) var nearUsers = [VessageUser]()
+    fileprivate(set) var activeUsers = [VessageUser]()
+    fileprivate(set) var nearUsers = [VessageUser]()
     
     var isUserChatBackgroundIsSeted:Bool{
         return !String.isNullOrWhiteSpace(myProfile?.mainChatImage)
     }
     
-    @objc func userLoginInit(userId: String) {
-        dispatch_async(dispatch_get_main_queue()) { 
+    @objc func userLoginInit(_ userId: String) {
+        DispatchQueue.main.async { 
             self.initServiceData(userId)
         }
     }
     
-    @objc func userLogout(userId: String) {
+    @objc func userLogout(_ userId: String) {
         setServiceNotReady()
         activeUsers.removeAll()
         nearUsers.removeAll()
@@ -67,7 +68,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         forceGetUserProfileOnce = true
     }
     
-    private func initServiceData(userId: String){
+    fileprivate func initServiceData(_ userId: String){
         myProfile = initMyProfile({ (user) -> Void in
             if user != nil{
                 if self.myProfile == nil{
@@ -88,116 +89,122 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    private func prepareServiceAndSetReady(){
+    fileprivate func prepareServiceAndSetReady(){
         self.registUserDeviceToken(VessageSetting.deviceToken)
         self.getActiveUsers()
         //self.initChatImages()
         self.setServiceReady()
     }
     
-    private func initMyProfile(updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
+    @discardableResult
+    fileprivate func initMyProfile(_ updatedCallback:@escaping (_ user:VessageUser?)->Void) -> VessageUser?{
         let req = GetUserInfoRequest()
         let user = PersistentManager.sharedInstance.getModel(VessageUser.self, idValue: UserSetting.userId)
         setForeceGetUserProfileIgnoreTimeLimit()
         getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
-            updatedCallback(user: user)
+            updatedCallback(user)
         }
         return user
     }
     
-    func getCachedUserByMobile(mobile:String) -> VessageUser? {
+    @discardableResult
+    func getCachedUserByMobile(_ mobile:String) -> VessageUser? {
         let mobileHash = mobile.md5
-        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.mobile) && (mobile == $0.mobile || mobileHash == $0.mobile)}.first
+        return PersistentManager.sharedInstance.getAllModel(VessageUser.self).filter{ !String.isNullOrWhiteSpace($0.mobile) && (mobile == $0.mobile || mobileHash == $0.mobile)}.first
     }
     
-    func getUserProfileByMobile(mobile:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
+    @discardableResult
+    func getUserProfileByMobile(_ mobile:String,updatedCallback:@escaping (_ user:VessageUser?)->Void) -> VessageUser?{
         let result:VessageUser? = getCachedUserByMobile(mobile)
-        fetchUserProfileByMobile(mobile, lastUpdatedTime: result?.lastUpdatedTime,updatedCallback: updatedCallback)
+        fetchUserProfileByMobile(mobile, lastUpdatedTime: result?.lastUpdatedTime as Date?,updatedCallback: updatedCallback)
         return result
     }
     
-    func fetchUserProfileByMobile(mobile:String,lastUpdatedTime:NSDate?,updatedCallback:(user:VessageUser?)->Void){
+    func fetchUserProfileByMobile(_ mobile:String,lastUpdatedTime:Date?,updatedCallback:@escaping (_ user:VessageUser?)->Void){
         let req = GetUserInfoByMobileRequest()
         req.mobile = mobile
         getUserProfileByReq(lastUpdatedTime, req: req){ user in
-            updatedCallback(user: user)
+            updatedCallback(user)
         }
     }
     
-    func clearTempUsers(chattingUserIds:[String]) -> [VessageUser] {
+    @discardableResult
+    func clearTempUsers(_ chattingUserIds:[String]) -> [VessageUser] {
         var userIds = chattingUserIds.map{$0}
         userIds.append(myProfile.userId)
-        let tmpUsers = PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ $0.userId == nil || !userIds.contains($0.userId)}
+        let tmpUsers = PersistentManager.sharedInstance.getAllModel(VessageUser.self).filter{ $0.userId == nil || !userIds.contains($0.userId)}
         PersistentManager.sharedInstance.removeModels(tmpUsers)
         return tmpUsers
     }
     
-    func getCachedUserByAccountId(accountId:String) -> VessageUser? {
-        return PersistentManager.sharedInstance.getAllModel(VessageUser).filter{ !String.isNullOrWhiteSpace($0.accountId) && accountId == $0.accountId}.first
+    func getCachedUserByAccountId(_ accountId:String) -> VessageUser? {
+        return PersistentManager.sharedInstance.getAllModel(VessageUser.self).filter{ !String.isNullOrWhiteSpace($0.accountId) && accountId == $0.accountId}.first
     }
     
-    func fetchUserByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void){
+    func fetchUserByAccountId(_ accountId:String,updatedCallback:@escaping (_ user:VessageUser?)->Void){
         let req = GetUserInfoByAccountIdRequest()
         req.accountId = accountId
         getUserProfileByReq(nil, req: req){ user in
-            updatedCallback(user: user)
+            updatedCallback(user)
         }
     }
     
-    func getUserProfileByAccountId(accountId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
+    @discardableResult
+    func getUserProfileByAccountId(_ accountId:String,updatedCallback:@escaping (_ user:VessageUser?)->Void) -> VessageUser?{
         
         let user = getCachedUserByAccountId(accountId)
         let req = GetUserInfoByAccountIdRequest()
         req.accountId = accountId
-        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
-            updatedCallback(user: user)
+        getUserProfileByReq(user?.lastUpdatedTime as Date?, req: req){ user in
+            updatedCallback(user)
         }
         return user
     }
     
-    func getCachedUserProfile(userId:String) -> VessageUser?{
+    func getCachedUserProfile(_ userId:String) -> VessageUser?{
         return PersistentManager.sharedInstance.getModel(VessageUser.self, idValue: userId)
     }
     
-    func deleteCachedUsers(userIds:[String]) {
+    func deleteCachedUsers(_ userIds:[String]) {
         PersistentManager.sharedInstance.removeModels(VessageUser(), idArray: userIds)
     }
     
-    func fetchUserProfile(userId:String){
+    func fetchUserProfile(_ userId:String){
         setForeceGetUserProfileIgnoreTimeLimit()
         let req = GetUserInfoRequest()
         req.userId = userId
         getUserProfileByReq(nil, req: req){ user in}
     }
     
-    func getUserProfile(userId:String) -> VessageUser? {
+    func getUserProfile(_ userId:String) -> VessageUser? {
         return getUserProfile(userId) { (user) in
             
         }
     }
     
-    func getUserProfile(userId:String,updatedCallback:(user:VessageUser?)->Void) -> VessageUser?{
+    @discardableResult
+    func getUserProfile(_ userId:String,updatedCallback:@escaping (_ user:VessageUser?)->Void) -> VessageUser?{
         
         let user = getCachedUserProfile(userId)
         let req = GetUserInfoRequest()
         req.userId = userId
-        getUserProfileByReq(user?.lastUpdatedTime, req: req){ user in
-            updatedCallback(user: user)
+        getUserProfileByReq(user?.lastUpdatedTime as Date?, req: req){ user in
+            updatedCallback(user)
         }
         return user
     }
     
-    func fetchLatestUserProfile(cachedUser:VessageUser){
+    func fetchLatestUserProfile(_ cachedUser:VessageUser){
         let req = GetUserInfoRequest()
         req.userId = cachedUser.userId
-        getUserProfileByReq(cachedUser.lastUpdatedTime, req: req){ user in
+        getUserProfileByReq(cachedUser.lastUpdatedTime as Date?, req: req){ user in
         }
     }
     
-    private func getUserProfileByReq(lastUpdatedTime:NSDate?,req:BahamutRFRequestBase,updatedCallback:(user:VessageUser?)->Void){
+    fileprivate func getUserProfileByReq(_ lastUpdatedTime:Date?,req:BahamutRFRequestBase,updatedCallback:@escaping (_ user:VessageUser?)->Void){
         if forceGetUserProfileOnce == false{
             if let lt = lastUpdatedTime{
-                if NSDate().totalMinutesSince1970.doubleValue - lt.totalMinutesSince1970.doubleValue < notUpdateUserInMinutes{
+                if Date().totalMinutesSince1970.doubleValue - lt.totalMinutesSince1970.doubleValue < notUpdateUserInMinutes{
                     return
                 }
             }
@@ -205,20 +212,20 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         forceGetUserProfileOnce = false
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<VessageUser>) -> Void in
             if result.isFailure{
-                updatedCallback(user: nil)
+                updatedCallback(nil)
             }else if let user = result.returnObject{
-                user.lastUpdatedTime = NSDate()
+                user.lastUpdatedTime = NSDate() as Date!
                 user.saveModel()
                 PersistentManager.sharedInstance.saveAll()
-                updatedCallback(user: user)
+                updatedCallback(user)
                 self.postNotificationNameWithMainAsync(UserService.userProfileUpdated, object: self, userInfo: [UserProfileUpdatedUserValue:user])
             }else{
-                updatedCallback(user: nil)
+                updatedCallback(nil)
             }
         }
     }
     
-    func fetchUserProfilesByUserIds(userIds:[String],callback:(([VessageUser]?)->Void)?) {
+    func fetchUserProfilesByUserIds(_ userIds:[String],callback:(([VessageUser]?)->Void)?) {
         if userIds.count == 0 {
             callback?([])
         }else{
@@ -241,7 +248,7 @@ class UserService:NSNotificationCenter, ServiceProtocol {
         }
     }
     
-    func matchUserProfilesByMobiles(mobiles:[String],callback:(([MobileMatchedUser]?)->Void)?) {
+    func matchUserProfilesByMobiles(_ mobiles:[String],callback:(([MobileMatchedUser]?)->Void)?) {
         if mobiles.count == 0 {
             callback?([])
         }else{
@@ -264,11 +271,11 @@ class UserService:NSNotificationCenter, ServiceProtocol {
 //MARK: Fetch Special Users
 extension UserService{
     
-    func getActiveUsers(checkTime:Bool = false,callback:(([VessageUser])->Void)? = nil){
+    func getActiveUsers(_ checkTime:Bool = false,callback:(([VessageUser])->Void)? = nil){
         let key = "GET_ACTIVE_USERS_TIME"
         if checkTime{
             if let time = UserSetting.getUserNumberValue(key){
-                if NSDate().totalHoursSince1970.doubleValue - time.doubleValue < getActiveUserIntervalHours{
+                if Date().totalHoursSince1970.doubleValue - time.doubleValue < getActiveUserIntervalHours{
                     return
                 }
             }
@@ -277,7 +284,7 @@ extension UserService{
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
             if result.isSuccess{
                 if let activeUsers = result.returnObject{
-                    UserSetting.setUserNumberValue(key, value: NSDate().totalHoursSince1970)
+                    UserSetting.setUserNumberValue(key, value: Date().totalHoursSince1970)
                     self.activeUsers = activeUsers
                 }
             }else{
@@ -287,11 +294,11 @@ extension UserService{
         }
     }
     
-    func getNearUsers(location:String,checkTime:Bool = true,callback:(([VessageUser])->Void)? = nil){
+    func getNearUsers(_ location:String,checkTime:Bool = true,callback:(([VessageUser])->Void)? = nil){
         let key = "GET_NEAR_USERS_TIME"
         if checkTime{
             if let time = UserSetting.getUserNumberValue(key){
-                if NSDate().totalHoursSince1970.doubleValue - time.doubleValue < getNearUserIntervalHours{
+                if Date().totalHoursSince1970.doubleValue - time.doubleValue < getNearUserIntervalHours{
                     return
                 }
             }
@@ -301,7 +308,7 @@ extension UserService{
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<[VessageUser]>) in
             if result.isSuccess{
                 if let nearUsers = result.returnObject{
-                    UserSetting.setUserNumberValue(key, value: NSDate().totalHoursSince1970)
+                    UserSetting.setUserNumberValue(key, value: Date().totalHoursSince1970)
                     self.nearUsers = nearUsers
                 }
             }else{
@@ -315,28 +322,28 @@ extension UserService{
 
 //MARK: User Note Name
 extension UserService{
-    func getUserNotedNameIfExists(userId:String) -> String? {
+    func getUserNotedNameIfExists(_ userId:String) -> String? {
         if userId == UserSetting.userId {
             return "ME".localizedString()
         }
         return userNotedNames[userId] ?? getCachedUserProfile(userId)?.nickName
     }
     
-    func getUserNotedName(userId:String) -> String {
+    func getUserNotedName(_ userId:String) -> String {
         return getUserNotedNameIfExists(userId) ?? "UNLOADED_USER".localizedString()
     }
     
-    func setUserNoteName(userId:String,noteName:String){
+    func setUserNoteName(_ userId:String,noteName:String){
         userNotedNames[userId] = noteName
         UserSetting.setUserValue("UserNotedNames", value: userNotedNames)
-        self.postNotificationName(UserService.userNoteNameUpdated, object: self, userInfo: [UserProfileUpdatedUserIdValue:userId,UserNoteNameUpdatedValue:noteName])
+        self.post(name: (UserService.userNoteNameUpdated), object: self, userInfo: [UserProfileUpdatedUserIdValue:userId,UserNoteNameUpdatedValue:noteName])
     }
 }
 
 //MARK: User Device Token
 let registDeviceTokenIntervalDays = 13.0
 extension UserService{
-    func registUserDeviceToken(deviceToken:String!, checkTime:Bool = false){
+    func registUserDeviceToken(_ deviceToken:String!, checkTime:Bool = false){
         let key = "USER_REGIST_DEVICE_TOKEN_TIME"
         
         if String.isNullOrEmpty(deviceToken){
@@ -344,7 +351,7 @@ extension UserService{
         }
         if checkTime {
             if let time = UserSetting.getUserNumberValue(key){
-                if NSDate().totalDaysSince1970.doubleValue - time.doubleValue < registDeviceTokenIntervalDays{
+                if Date().totalDaysSince1970.doubleValue - time.doubleValue < registDeviceTokenIntervalDays{
                     return
                 }
             }
@@ -354,14 +361,14 @@ extension UserService{
         req.setDeviceType(RegistUserDeviceRequest.DEVICE_TYPE_IOS)
         req.setDeviceToken(deviceToken)
         #if DEBUG
-            print("Registing Device Token:\(deviceToken)")
+            print("Registing Device Token:\(deviceToken!)")
         #endif
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) in
             if result.isSuccess{
                 #if DEBUG
                     print("Registed Device Token")
                 #endif
-                UserSetting.setUserNumberValue(key, value: NSDate().totalDaysSince1970)
+                UserSetting.setUserNumberValue(key, value: Date().totalDaysSince1970)
             }else{
                 #if DEBUG
                     print("Regist Device Token Failure")
@@ -370,7 +377,7 @@ extension UserService{
         }
     }
     
-    func removeUserDeviceTokenFromServer(deviceToken:String!){
+    func removeUserDeviceTokenFromServer(_ deviceToken:String!){
         let req = RemoveUserDeviceRequest()
         req.setDeviceToken(deviceToken)
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) in
@@ -380,11 +387,11 @@ extension UserService{
 
 //MARK: Search User
 extension UserService{
-    func searchUser(keyword:String,callback:(keyword:String,[VessageUser])->Void){
+    func searchUser(_ keyword:String,callback:(_ keyword:String,[VessageUser])->Void){
         if keyword == UserSetting.lastLoginAccountId{
             return
         }
-        let users = PersistentManager.sharedInstance.getAllModel(VessageUser).filter { (user) -> Bool in
+        let users = PersistentManager.sharedInstance.getAllModel(VessageUser.self).filter { (user) -> Bool in
             if self.myProfile.userId == user.userId{
                 return false
             }
@@ -399,22 +406,22 @@ extension UserService{
                 }
             }
             if let nickName = user.nickName{
-                if nickName.containsString(keyword){
+                if nickName.contains(keyword){
                     return true
                 }
             }
             if let noteName = userNotedNames[user.userId]{
-                return noteName.containsString(keyword)
+                return noteName.contains(keyword)
             }
             return false
         }
         if users.count > 0{
-            callback(keyword: keyword,users)
+            callback(keyword,users)
         }else if keyword.isMobileNumber(){
             if let u = getCachedUserByMobile(keyword){
-                callback(keyword: keyword,[u])
+                callback(keyword,[u])
             }else{
-                callback(keyword: keyword,[])
+                callback(keyword,[])
             }
         }
     }
@@ -422,7 +429,7 @@ extension UserService{
 
 //MARK: User Profile
 extension UserService{
-    func changeUserNickName(newNickName:String,callback:(Bool)->Void){
+    func changeUserNickName(_ newNickName:String,callback:@escaping (Bool)->Void){
         let req = ChangeNickRequest()
         req.nick = newNickName
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
@@ -435,7 +442,7 @@ extension UserService{
     }
     
     
-    func setMyAvatar(avatar:String,callback:(Bool)->Void){
+    func setMyAvatar(_ avatar:String,callback:@escaping (Bool)->Void){
         let req = ChangeAvatarRequest()
         req.avatar = avatar
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
@@ -447,7 +454,7 @@ extension UserService{
         }
     }
     
-    func changeUserMotto(newMotto:String,callback:(Bool)->Void) {
+    func changeUserMotto(_ newMotto:String,callback:@escaping (Bool)->Void) {
         let req = ChangeMottoRequest()
         req.motto = newMotto
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result) -> Void in
@@ -463,7 +470,7 @@ extension UserService{
 
 //MARK: Sex Value
 extension UserService{
-    func setUserSexValue(newValue:Int,callback:(Bool)->Void){
+    func setUserSexValue(_ newValue:Int,callback:@escaping (Bool)->Void){
         if newValue == self.myProfile.sex {
             callback(true)
         }else{
@@ -503,21 +510,21 @@ extension UserService{
         UserSetting.enableSetting("USE_TMP_MOBILE")
     }
     
-    func sendValidateMobilSMS(mobile:String,callback:(suc:Bool)->Void){
+    func sendValidateMobilSMS(_ mobile:String,callback:@escaping (_ suc:Bool)->Void){
         UserSetting.disableSetting("USE_TMP_MOBILE")
         let req = SendMobileVSMSRequest()
         req.mobile = mobile
         BahamutRFKit.sharedInstance.getBahamutClient().execute(req) { (result:SLResult<MsgResult>) -> Void in
             if result.isSuccess{
-                callback(suc: true)
+                callback(true)
             }else{
-                callback(suc: false)
+                callback(false)
             }
         }
         
     }
     
-    func validateMobile(smsAppkey:String!,mobile:String!,zone:String!, code:String!,bindExistsAccount:Bool,callback:(suc:Bool,newUserId:String?)->Void){
+    func validateMobile(_ smsAppkey:String!,mobile:String!,zone:String!, code:String!,bindExistsAccount:Bool,callback:@escaping (_ suc:Bool,_ newUserId:String?)->Void){
         UserSetting.disableSetting("USE_TMP_MOBILE")
         let req = ValidateMobileVSMSRequest()
         req.smsAppkey = smsAppkey
@@ -531,21 +538,21 @@ extension UserService{
                 if let newUserId = result.returnObject?.newUserId{ //this mobile was received the others message,bind the mobile account registed by server
                     #if DEBUG
                         print("---------------------------------------------")
-                        print("Bind Account:\(self.myProfile.accountId)")
-                        print("Origin UserId:\(self.myProfile.userId)")
+                        print("Bind Account:\(self.myProfile.accountId!)")
+                        print("Origin UserId:\(self.myProfile.userId!)")
                         print("Replace UserId:\(newUserId)")
                         print("---------------------------------------------")
                     #endif
                     
-                    callback(suc: true, newUserId: newUserId)
+                    callback(true, newUserId)
                 }else{
                     self.myProfile.mobile = mobile
                     self.myProfile.saveModel()
                     PersistentManager.sharedInstance.saveAll()
-                    callback(suc: true, newUserId: nil)
+                    callback(true, nil)
                 }
             }else{
-                callback(suc: false,newUserId: nil)
+                callback(false,nil)
             }
         }
     }
@@ -564,7 +571,7 @@ extension UserService{
                 updatedCallback(user: nil)
             }else if let user = result.returnObject{
                 #if DEBUG
-                    print("AccountId=\(user.accountId),UserId=\(user.userId)")
+                    print("AccountId=\(user.accountId!),UserId=\(user.userId!)")
                 #endif
                 user.nickName = noteName
                 user.lastUpdatedTime = NSDate()

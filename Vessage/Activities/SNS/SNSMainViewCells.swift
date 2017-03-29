@@ -120,6 +120,8 @@ class SNSPostCell: UITableViewCell {
                 let dict = EVReflection.dictionaryFromJson(json)
                 if let txt = dict["txt"] as? String{
                     textContentLabel?.text = txt
+                    textContentLabel?.setNeedsUpdateConstraints()
+                    textContentLabel?.updateConstraintsIfNeeded()
                 }
                 
                 if let imgs = dict["imgs"] as? [String] {
@@ -187,13 +189,13 @@ class SNSPostCell: UITableViewCell {
         imgv.contentMode = .scaleAspectFill
         imgv.isUserInteractionEnabled = true
         imgv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCell.onTapImage(_:))))
+        
         if self.imgList.count == 1,let size = imgv.image?.size, size.height / size.width < 2{
-            let height = imgv.frame.width / size.width * size.height
-            imgv.frame.size.height = height
-            self.contentContainer.constraints.filter{$0.identifier == "containerHeight"}.first?.constant = height
-            self.contentView.setNeedsUpdateConstraints()
-            self.contentView.updateConstraintsIfNeeded()
+            let height = imgv.frame.height
+            let width = height / size.height * size.width
+            imgv.frame.size.width = width
         }
+ 
     }
     
     fileprivate func updateImageContents() {

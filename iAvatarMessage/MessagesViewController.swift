@@ -448,17 +448,17 @@ extension MessagesViewController{
 
 
 //MARK: Update Avatar
-
+import ImagePickerSheetController
 extension MessagesViewController{
     func showImagePickerForAvatar() {
-        /*
-        let controller = ImagePickerSheetController(mediaType: .Image)
+        
+        let controller = ImagePickerSheetController(mediaType: .image)
         controller.maximumSelection = 1
         
         func selectImage(_ action:ImagePickerAction, numberOfPhotos:Int){
             if numberOfPhotos > 0{
                 if let asset = controller.selectedImageAssets.first{
-                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSize(width: 120, height: 128), contentMode: .AspectFill, options: nil, resultHandler: { (image, userInfo) in
+                    PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 120, height: 128), contentMode: .aspectFill, options: nil, resultHandler: { (image, userInfo) in
                         if let img = image{
                             self.setAvatar(img)
                         }else{
@@ -470,11 +470,11 @@ extension MessagesViewController{
         }
         
         controller.addAction(ImagePickerAction(title: "SELECT_IMAGE_SOURCE_TITLE".localizedString(), secondaryTitle: "CONFIRM".localizedString(), handler: { _ in}, secondaryHandler: selectImage))
-        controller.addAction(ImagePickerAction(title: "CANCEL".localizedString(), style: .Cancel, handler: { _ in
+        controller.addAction(ImagePickerAction(title: "CANCEL".localizedString(), style: .cancel, handler: { _ in
         }))
         
-        self.presentViewController(controller, animated: true, completion: nil)
- */
+        self.present(controller, animated: true, completion: nil)
+ 
     }
     
     func setAvatar(_ image:UIImage) {

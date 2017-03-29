@@ -81,8 +81,8 @@ class SignUpViewController: UIViewController {
     }
     
     fileprivate func checkRegistValid() -> Bool{
-        if (userNameTextField.text ?? "" ).isUsername(){
-            if (passwordTextField.text ?? "" ).isPassword(){
+        if let username = userNameTextField.text,username.isUsername(){
+            if let psw = passwordTextField.text,psw.isPassword(){
                 return true
             }else{
                 passwordTextField.shakeAnimationForView()

@@ -9,13 +9,43 @@
 import Foundation
 import ImageSlideshow
 
+class FullScreenSlideshowViewControllerEx: FullScreenSlideshowViewController {
+    private var shown = false{
+        didSet{
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        shown = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        shown = true
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation{
+        return .none
+    }
+    
+    override var prefersStatusBarHidden: Bool{
+        if shown {
+            return true
+        }else{
+            return false
+        }
+    }
+}
+
 extension UIImageView{
+    
     func slideShowFullScreen(_ vc:UIViewController,allowSaveImage:Bool = false,extraActions:[UIAlertAction]? = nil) {
         if let img = self.image {
             let slideshow = ImageSlideshow()
             slideshow.setImageInputs([ImageSource(image: img)])
             slideshow.pageControlPosition = .hidden
-            let ctr = FullScreenSlideshowViewController()
+            let ctr = FullScreenSlideshowViewControllerEx()
             // called when full-screen VC dismissed and used to set the page to our original slideshow
             ctr.pageSelected = { page in
                 slideshow.setScrollViewPage(page, animated: false)
@@ -26,7 +56,6 @@ extension UIImageView{
             // set the inputs
             ctr.inputs = slideshow.images
             ctr.slideshow.pageControlPosition = .hidden
-            ctr.modalTransitionStyle = .crossDissolve
             ctr.closeButton.isHidden = true
             vc.present(ctr, animated: true){
                 ctr.enableTapViewCloseController()

@@ -28,5 +28,5 @@ target "Vessage" do
 end
 
 target "iAvatarMessage" do
-    #pod 'ImagePickerSheetController', '~> 0.9.1'
+    pod 'ImagePickerSheetController', '~> 0.9.1'
 end

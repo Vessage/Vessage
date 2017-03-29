@@ -280,7 +280,7 @@ extension MNSMainController:UITableViewDelegate,UITableViewDataSource{
         let delegate = UserProfileViewControllerDelegateOpenConversation()
         delegate.beforeRemoveTimeSpan = noChatConversationLeftTimeSpan
         delegate.createActivityId = MNSMainController.activityId
-        delegate.initMessage = ["input_text":"MNS_HELLO".mnsLocalizedString as AnyObject]
+        delegate.initMessage = ["input_text":"MNS_HELLO".mnsLocalizedString]
         UserProfileViewController.showUserProfileViewController(self, userId: user.userId, delegate: delegate){ controller in
             controller.accountIdHidden = true
             controller.snsButtonEnabled = false

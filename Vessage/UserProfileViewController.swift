@@ -22,7 +22,7 @@ class UserProfileViewControllerDelegateOpenConversation : UserProfileViewControl
     
     var operateTitle:String?
     
-    var initMessage:[String:AnyObject]?
+    var initMessage:[String:Any]?
     
     var beforeRemoveTimeSpan:Int64 = ConversationMaxTimeUpMS
     

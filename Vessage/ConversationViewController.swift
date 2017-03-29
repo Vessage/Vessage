@@ -112,7 +112,7 @@ class ConversationViewController: UIViewController {
     var textChatInputView:TextChatInputView!
     var textChatInputResponderTextFiled:UITextField!
     
-    fileprivate var initMessage:[String:AnyObject]!
+    fileprivate var initMessage:[String:Any]!
     
     deinit{
         #if DEBUG
@@ -460,7 +460,7 @@ extension ConversationViewController{
 //MARK: Show ConversationViewController Extension
 extension ConversationViewController{
     
-    static func showConversationViewController(_ nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,initMessage:[String:AnyObject]? = nil) {
+    static func showConversationViewController(_ nvc:UINavigationController,userId: String,beforeRemoveTs:Int64 = ConversationMaxTimeUpMS,createByActivityId:String? = nil,initMessage:[String:Any]? = nil) {
         if userId == UserSetting.userId {
             nvc.playToast("CANT_CHAT_WITH_YOURSELF".localizedString())
         }else if let user = ServiceContainer.getUserService().getCachedUserProfile(userId){
@@ -480,7 +480,7 @@ extension ConversationViewController{
         }
     }
     
-    static func showConversationViewController(_ nvc:UINavigationController,conversation:Conversation,initMessage:[String:AnyObject]? = nil)
+    static func showConversationViewController(_ nvc:UINavigationController,conversation:Conversation,initMessage:[String:Any]? = nil)
     {
         if String.isNullOrEmpty(conversation.chatterId) {
             nvc.playToast("NO_SUCH_USER".localizedString())
@@ -518,7 +518,7 @@ extension ConversationViewController{
         
     }
     
-    fileprivate static func showConversationView(_ nvc:UINavigationController,conversation:Conversation,group:ChatGroup,refreshGroup:Bool,initMessage:[String:AnyObject]?){
+    fileprivate static func showConversationView(_ nvc:UINavigationController,conversation:Conversation,group:ChatGroup,refreshGroup:Bool,initMessage:[String:Any]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         controller.chatGroup = group
@@ -529,7 +529,7 @@ extension ConversationViewController{
         }
     }
     
-    fileprivate static func showConversationView(_ nvc:UINavigationController,conversation:Conversation,user:VessageUser,refreshUser:Bool,initMessage:[String:AnyObject]?){
+    fileprivate static func showConversationView(_ nvc:UINavigationController,conversation:Conversation,user:VessageUser,refreshUser:Bool,initMessage:[String:Any]?){
         let controller = instanceFromStoryBoard("Conversation", identifier: "ConversationViewController") as! ConversationViewController
         controller.conversation = conversation
         if String.isNullOrWhiteSpace(user.accountId){

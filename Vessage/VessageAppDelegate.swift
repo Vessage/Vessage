@@ -86,7 +86,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
             MobClick.setAppVersion(VessageConfig.appVersion)
             MobClick.setEncryptEnabled(true)
             MobClick.setLogEnabled(false)
-            MobClick.startWithConfigure(UMAnalyticsConfig.sharedInstance())
+            MobClick.start(withConfigure: UMAnalyticsConfig.sharedInstance())
         #endif
     }
     

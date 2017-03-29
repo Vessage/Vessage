@@ -277,10 +277,12 @@ class SelectVessageUserViewController: UITableViewController,ABPeoplePickerNavig
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.isSelected = indexPath.section != 0
         if indexPath.section == SECTION_CHOOSE_MOBILE {
+            cell?.isSelected = false
+            tableView.deselectRow(at: indexPath, animated: true)
             showContactView()
         }else{
+            cell?.isSelected = true
             updateDoneButton()
         }
     }

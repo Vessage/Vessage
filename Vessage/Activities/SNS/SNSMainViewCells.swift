@@ -98,10 +98,14 @@ class SNSPostCell: UITableViewCell,TTTAttributedLabelDelegate {
         return UserSetting.userId == self.post.usrId
     }
     
-    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         if let c = rootController{
             SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
         }
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        attributedLabel(label, didSelectLinkWith: url)
     }
     
     func onTapImage(_ ges:UITapGestureRecognizer) {

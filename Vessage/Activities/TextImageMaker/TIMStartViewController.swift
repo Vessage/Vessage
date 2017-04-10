@@ -42,16 +42,25 @@ class TIMStartViewController: UIViewController,UITextViewDelegate {
     //MARK:UITextViewDelegate
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if let txt = textView.text,let index = txt.index(txt.startIndex,offsetBy: TIMTextLengthLimit,limitedBy:txt.endIndex){
+            let ss = txt.substring(to: index)
+            textView.text = ss
+            return false
+        }
+        return true
+        /*
         if textView.text.lengthOfBytes(using: String.Encoding.utf8) > TIMTextLengthLimit{
+            textView.text.substring(to: <#T##String.Index#>)
              textView.text = textView.text.substringToIndex(TIMTextLengthLimit)
             return false
         }
         return true
+ */
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text.lengthOfBytes(using: String.Encoding.utf8) > TIMTextLengthLimit{
-            textView.text = textView.text.substringToIndex(TIMTextLengthLimit)
+        if let txt = textView.text,let index = txt.index(txt.startIndex,offsetBy: TIMTextLengthLimit,limitedBy:txt.endIndex){
+            textView.text = txt.substring(to: index)
         }
     }
     

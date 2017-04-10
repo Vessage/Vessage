@@ -11,6 +11,7 @@ import MJRefresh
 import LTMorphingLabel
 import EVReflection
 import SDWebImage
+import TTTAttributedLabel
 
 @objc protocol SNSMainInfoCellDelegate {
     @objc optional func snsMainInfoCellDidClickNewComment(_ sender:UIView,cell:SNSMainInfoCell)
@@ -52,7 +53,7 @@ class SNSMainInfoCell: UITableViewCell {
     }
 }
 
-class SNSPostCell: UITableViewCell {
+class SNSPostCell: UITableViewCell,TTTAttributedLabelDelegate {
     static let reuseId = "SNSPostCell"
     
     @IBOutlet weak var godPanel: UIView!{
@@ -69,7 +70,12 @@ class SNSPostCell: UITableViewCell {
             avatarImageView?.layer.borderColor = UIColor.lightGray.cgColor
         }
     }
-    @IBOutlet weak var textContentLabel: UILabel!
+    @IBOutlet weak var textContentLabel: TTTAttributedLabel!{
+        didSet{
+            textContentLabel.delegate = self
+            textContentLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+        }
+    }
     @IBOutlet weak var likeMarkImage: UIImageView!
     @IBOutlet weak var postInfoLabel: UILabel!
     @IBOutlet weak var extraInfoLabel: UILabel!
@@ -90,6 +96,12 @@ class SNSPostCell: UITableViewCell {
     
     fileprivate var isSelfPost:Bool{
         return UserSetting.userId == self.post.usrId
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        if let c = rootController{
+            SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
+        }
     }
     
     func onTapImage(_ ges:UITapGestureRecognizer) {

@@ -64,7 +64,6 @@ class AccountService: ServiceProtocol
     }
     
     @objc func userLogout(_ userId: String) {
-        MobClick.profileSignOff()
         UserSetting.token = nil
         UserSetting.isUserLogined = false
         VessageSetting.fileApiServer = nil
@@ -118,7 +117,6 @@ class AccountService: ServiceProtocol
             }else if error == nil{
                 self.setLogined(validateResult!)
                 callback(true, "")
-                MobClick.profileSignIn(withPUID: UserSetting.lastLoginAccountId)
             }else{
                 callback(false, "VALIDATE_ACCTOKEN_FAILED".localizedString())
             }

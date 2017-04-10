@@ -9,18 +9,20 @@
 import Foundation
 import MJRefresh
 import MBProgressHUD
+import TTTAttributedLabel
 
 @objc protocol SNSPostCommentCellDelegate {
     @objc optional func snsPostCommentCellDidClickComment(_ sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
     @objc optional func snsPostCommentCellDidClick(_ sender:UIView,cell:SNSPostCommentCell,comment:SNSPostComment?)
     @objc optional func snsPostCommentCellDidClickPostInfo(_ sender:UILabel,cell:SNSPostCommentCell,comment:SNSPostComment?)
+    func snsPostCommentCellRootController(_ sender:SNSPostCommentCell) -> UIViewController?
 }
 
 protocol SNSCommentViewControllerDelegate {
     func snsCommentController(_ sender:SNSPostCommentViewController, didPostNewComment newComment:SNSPostComment,post:SNSPost)
 }
 
-class SNSPostCommentCell: UITableViewCell {
+class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
     
     static let reuseId = "SNSPostCommentCell"
     
@@ -37,7 +39,18 @@ class SNSPostCommentCell: UITableViewCell {
     fileprivate var inited = false
     @IBOutlet weak var atNickLabel: UILabel!
     @IBOutlet weak var postInfoLabel: UILabel!
-    @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var commentLabel: TTTAttributedLabel!{
+        didSet{
+            commentLabel.delegate = self
+            commentLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+        }
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        if let c = delegate?.snsPostCommentCellRootController(self){
+            SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
+        }
+    }
     
     fileprivate func initCell() {
         if inited == false {
@@ -300,6 +313,9 @@ extension SNSPostCommentViewController:UITableViewDataSource,UITableViewDelegate
 
 //MARK:SNSPostCommentCellDelegate
 extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
+    func snsPostCommentCellRootController(_ sender: SNSPostCommentCell) -> UIViewController? {
+        return self
+    }
     
     func snsPostCommentCellDidClick(_ sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
         hideCommentInputView()

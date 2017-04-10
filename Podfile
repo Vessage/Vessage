@@ -25,6 +25,8 @@ target "Vessage" do
     pod 'SDWebImage'#, '~>3.8'
     
     pod 'KDCircularProgress'
+    
+    pod 'TTTAttributedLabel'
 end
 
 target "iAvatarMessage" do

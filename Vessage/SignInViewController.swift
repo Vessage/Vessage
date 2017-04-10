@@ -162,6 +162,7 @@ class SignInViewController: UIViewController,UITextFieldDelegate {
         self.showIndicator()
         accountService.validateAccessToken(loginedResult.appServiceUrl, accountId: loginedResult.accountID, accessToken: loginedResult.accessToken, callback: { (loginSuccess, message) -> Void in
             if loginSuccess{
+                MobClick.profileSignIn(withPUID: loginedResult.accountID)
                 self.showIndicator()
             }else{
                 self.hideIndicator()

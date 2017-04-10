@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import TTTAttributedLabel
 
-class TextFullScreen: UIViewController {
+class TextFullScreen: UIViewController,TTTAttributedLabelDelegate {
     fileprivate var scrollView:UIScrollView!
-    fileprivate var textLabel:UILabel!
+    fileprivate var textLabel:TTTAttributedLabel!
     fileprivate var dateTimeLabel:UILabel!
     
     var date:Date?{
@@ -31,19 +32,25 @@ class TextFullScreen: UIViewController {
         self.view.backgroundColor = UIColor.white
         self.scrollView = UIScrollView()
         self.view.addSubview(scrollView)
-        self.textLabel = UILabel()
-        self.textLabel.numberOfLines = 0
-        
-        self.scrollView.addSubview(textLabel)
-        self.dateTimeLabel = UILabel()
-        self.dateTimeLabel.textColor = UIColor.lightGray
-        self.view.addSubview(dateTimeLabel)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(TextFullScreen.onTap(_:)))
         self.view.addGestureRecognizer(tap)
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(TextFullScreen.longPress(_:)))
         self.view.addGestureRecognizer(longPress)
         
+        self.textLabel = TTTAttributedLabel(frame: self.view.bounds)
+        self.textLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+        self.textLabel.delegate = self
+        self.textLabel.numberOfLines = 0
+        
+        self.scrollView.addSubview(textLabel)
+        self.dateTimeLabel = UILabel()
+        self.dateTimeLabel.textColor = UIColor.lightGray
+        self.view.addSubview(dateTimeLabel)
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        SimpleBrowser.openUrl(self, url: url.absoluteString, title: nil)
     }
     
     func onTap(_ ges:UIGestureRecognizer) {
@@ -102,11 +109,13 @@ class TextBubbleVessageHandler: NSObject,BubbleVessageHandler {
         return ViewPool<VessageContentLabel>()
     }()
     
-    class VessageContentLabel: UILabel {
+    class VessageContentLabel: TTTAttributedLabel,TTTAttributedLabelDelegate {
         weak var vc:UIViewController!
         weak var vessage:Vessage!
         
         func initLabel(_ vc:UIViewController,vessage: Vessage){
+            self.delegate = self
+            self.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
             self.vc = vc
             self.vessage = vessage
             self.numberOfLines = 0
@@ -123,6 +132,12 @@ class TextBubbleVessageHandler: NSObject,BubbleVessageHandler {
             setNeedsLayout()
             layoutIfNeeded()
             super.removeFromSuperview()
+        }
+        
+        func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+            if let c = vc{
+                SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
+            }
         }
         
         func onTapTextLabel(_ ges:UITapGestureRecognizer) {

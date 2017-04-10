@@ -132,8 +132,7 @@ class UserSettingViewController: UIViewController,UITableViewDataSource,UITableV
         if ServiceContainer.getUserService().isTempMobileUser {
             propertySet.propertyValue = "NOT_SET".localizedString()
         }else if let mobile = myProfile.mobile{
-            let length = mobile.lengthOfBytes(using: String.Encoding.utf8)
-            let subfix = mobile.substringFromIndex(length - 4)
+            let subfix = mobile.substring(from: mobile.index(mobile.endIndex, offsetBy: -4, limitedBy: mobile.startIndex)!)
             propertySet.propertyValue = "***\(subfix)"
         }else{
             propertySet.propertyValue = "NOT_SET".localizedString()

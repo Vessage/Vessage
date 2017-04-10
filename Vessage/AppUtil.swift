@@ -32,7 +32,7 @@ func selectPersonMobile(_ vc:UIViewController,person:ABRecord,onSelectedMobile:@
                 var phone = value?.takeRetainedValue() as! String
                 phone = phone.replacingOccurrences(of: "+86", with: "").replacingOccurrences(of: "-", with: "")
                 if(phone.hasBegin("86")){
-                    phone = phone.substringFromIndex(2)
+                    phone = phone.substring(from: phone.index(phone.startIndex, offsetBy: 2))
                 }
                 if phone.isMobileNumber(){
                     phoneNos.append(phone)
@@ -234,22 +234,4 @@ extension EVReflection{
         return EVReflection.toJsonString(theObject).split("\n").map{$0.trim()}.joined(separator: " ")
     }
 }
-
-extension UITableViewCell{
-    func setSeparatorFullWidth() {
-        self.preservesSuperviewLayoutMargins = false
-        self.separatorInset = UIEdgeInsets.zero
-        self.layoutMargins = UIEdgeInsets.zero
-    }
-}
-
-
-
-extension UITableView{
-    func autoRowHeight() {
-        self.estimatedRowHeight = self.rowHeight
-        self.rowHeight = UITableViewAutomaticDimension
-    }
-}
-
 

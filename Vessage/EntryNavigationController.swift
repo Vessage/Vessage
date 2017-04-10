@@ -97,6 +97,7 @@ class EntryNavigationController: UINavigationController,HandleBahamutCmdDelegate
         alert.addAction(UIAlertAction(title: "I_SEE".localizedString(), style: .default, handler: { (action) -> Void in
             self.popToRootViewController(animated: false)
             ServiceContainer.instance.userLogout()
+            MobClick.profileSignOff()
             EntryNavigationController.start()
         }))
         self.showAlert(alert)

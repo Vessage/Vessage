@@ -9,17 +9,21 @@
 import Foundation
 import MJRefresh
 import ImageSlideshow
+import TTTAttributedLabel
 
 @objc protocol SNSMyCommentCellDelegate {
     @objc optional func snsMyCommentCellDidClickContent(_ sender:UIView,cell:SNSMyCommentCell,comment:SNSPostComment?)
     @objc optional func snsMyCommentCellDidClickImage(_ sender:UIView,cell:SNSMyCommentCell,comment:SNSPostComment?)
     @objc optional func snsMyCommentCellDidClickPoster(_ sender:UIView,cell:SNSMyCommentCell,comment:SNSPostComment?)
+    func snsMyCommentCellRootController(cell:SNSMyCommentCell) -> UIViewController?
 }
 
-class SNSMyCommentCell: UITableViewCell {
+class SNSMyCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
     static let reuseId = "SNSMyCommentCell"
-    @IBOutlet weak var commentContentLabel: UILabel!{
+    @IBOutlet weak var commentContentLabel: TTTAttributedLabel!{
         didSet{
+            commentContentLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+            commentContentLabel.delegate = self
             commentContentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:))))
         }
     }
@@ -54,6 +58,12 @@ class SNSMyCommentCell: UITableViewCell {
             let txtClip = String.isNullOrWhiteSpace(cmt.txt) ? "" : "  \(cmt.txt!)"
             commentInfoLabel?.text = "\(atNick)\(cmt.getPostDateFriendString())\(txtClip)"
             ServiceContainer.getFileService().setImage(self.postImageView, iconFileId: cmt.img, defaultImage: UIImage(named:"SNS_post_img_bcg"), callback: nil)
+        }
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        if let c = delegate?.snsMyCommentCellRootController(cell: self){
+            SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
         }
     }
     
@@ -155,6 +165,10 @@ class SNSMyCommentViewController: UIViewController {
 
 //MARK:SNSMyCommentCellDelegate
 extension SNSMyCommentViewController:SNSMyCommentCellDelegate{
+    func snsMyCommentCellRootController(cell: SNSMyCommentCell) -> UIViewController? {
+        return self
+    }
+
     func snsMyCommentCellDidClickImage(_ sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
         if let imgV = cell.postImageView {
             imgV.slideShowFullScreen(self)

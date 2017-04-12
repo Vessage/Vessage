@@ -66,7 +66,7 @@ class UserSetting
     }
     
     static func getSettingKey(_ setting:String) -> String{
-        return "\(UserSetting.lastLoginAccountId!):\(setting)"
+        return "\(UserSetting.lastLoginAccountId ?? "no_login"):\(setting)"
     }
     
     static func isSettingEnable(_ setting:String) -> Bool{

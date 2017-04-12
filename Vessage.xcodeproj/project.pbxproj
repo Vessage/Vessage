@@ -459,6 +459,7 @@
 		E7886A601DC97D3D00368C03 /* SNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = SNS.strings; sourceTree = "<group>"; };
 		E7886A801DC9DE9700368C03 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		E78EA59B1DBB0E6000C49B9C /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		E793EB251E9CFBE700FD8CB5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBrowser.swift; sourceTree = "<group>"; };
 		E79917531D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageManageCellDelegate.swift; sourceTree = "<group>"; };
 		E79CAB731D9DEC3500FB0F6D /* Vessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vessage.entitlements; sourceTree = "<group>"; };
@@ -641,6 +642,7 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E793EB251E9CFBE700FD8CB5 /* CoreData.framework */,
 				E7682B7A1E458C20007FDB4B /* UserNotifications.framework */,
 				E79F4AAD1E07631F008B99EE /* CFNetwork.framework */,
 				E73CFF891D655E39002A63C6 /* CoreMedia.framework */,

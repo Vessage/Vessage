@@ -123,7 +123,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        VessageSetting.deviceToken = deviceToken.description
+        VessageSetting.deviceToken = NSData(data: deviceToken).description
             .replacingOccurrences(of: "<", with: "")
             .replacingOccurrences(of: ">", with: "")
             .replacingOccurrences(of: " ", with: "")

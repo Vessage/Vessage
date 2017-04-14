@@ -24,7 +24,7 @@ class DeveloperMainPanelController: UIViewController
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        deviceTokenLabel.text = "DeviceToken:\(VessageSetting.deviceToken)"
+        deviceTokenLabel.text = "DeviceToken:\(VessageSetting.deviceToken ?? "No Device Token")"
     }
     
     func onTapDeviceTokenLabel(_ sender:AnyObject) {

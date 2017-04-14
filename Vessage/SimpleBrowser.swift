@@ -20,6 +20,8 @@ class SimpleBrowser: UIViewController,UIWebViewDelegate
         }
     }
     
+    var useCustomTitle = true
+    
     var url:String!{
         didSet{
             if url != nil && webView != nil
@@ -64,12 +66,22 @@ class SimpleBrowser: UIViewController,UIWebViewDelegate
         webView.loadRequest(URLRequest(url: URL(string: url)!))
     }
     
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        if useCustomTitle {
+            if let title = webView.stringByEvaluatingJavaScript(from: "document.title"){
+                self.title = title
+            }
+        }
+    }
+    
     //"SimpleBrowser"
     @discardableResult
     static func openUrl(_ currentViewController:UIViewController,url:String,title:String?) -> SimpleBrowser
     {
         let controller = SimpleBrowser()
         let navController = UINavigationController(rootViewController: controller)
+        
+        controller.useCustomTitle = String.isNullOrWhiteSpace(title)
         
         DispatchQueue.main.async { () -> Void in
             if let cnvc = currentViewController as? UINavigationController{

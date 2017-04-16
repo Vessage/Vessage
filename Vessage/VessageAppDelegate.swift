@@ -95,9 +95,9 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
     fileprivate func configureUMessage(_ launchOptions: [AnyHashable: Any]?)
     {
         if let options = launchOptions{
-            UMessage.start(withAppkey: VessageConfig.bahamutConfig.umengAppkey, launchOptions: options,httpsenable: true)
+            UMessage.start(withAppkey: VessageConfig.bahamutConfig.umengAppkey, launchOptions: options,httpsEnable: true)
         }else{
-            UMessage.start(withAppkey: VessageConfig.bahamutConfig.umengAppkey, launchOptions: [AnyHashable: Any](),httpsenable: true)
+            UMessage.start(withAppkey: VessageConfig.bahamutConfig.umengAppkey, launchOptions: [AnyHashable: Any](),httpsEnable: true)
         }
         UMessage.registerForRemoteNotifications()
         UMessage.setAutoAlert(true)

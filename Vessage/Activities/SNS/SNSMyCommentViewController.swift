@@ -51,7 +51,7 @@ class SNSMyCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
     
     fileprivate func updateCell() {
         if let cmt = comment{
-            commentContentLabel?.text = cmt.getOutputContent()
+            commentContentLabel?.setTextAndSimplifyUrl(text: cmt.getOutputContent())
             commentPosterNickLabel?.text = cmt.psterNk
             
             let atNick = String.isNullOrWhiteSpace(cmt.atNick) ? "" : "@\(cmt.atNick!) "

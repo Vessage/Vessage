@@ -135,7 +135,7 @@ class SNSPostCell: UITableViewCell,TTTAttributedLabelDelegate {
             if let json = self.post?.body{
                 let dict = EVReflection.dictionaryFromJson(json)
                 if let txt = dict["txt"] as? String{
-                    textContentLabel?.text = txt
+                    textContentLabel?.setTextAndSimplifyUrl(text: txt)
                     textContentLabel?.setNeedsUpdateConstraints()
                     textContentLabel?.updateConstraintsIfNeeded()
                 }

@@ -112,6 +112,7 @@
 		E741094A1DE69AA60030AD1D /* MNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E74109491DE69AA60030AD1D /* MNS.strings */; };
 		E741094B1DE6F0DB0030AD1D /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AEAFB11D6173EC0009B821 /* UserProfileViewController.swift */; };
 		E74237EF1E2C6DAB0084DEF2 /* FlashTipsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74237EE1E2C6DAB0084DEF2 /* FlashTipsLabel.swift */; };
+		E7483EA51EA3D68B000D689E /* SimpleBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7483EA41EA3D68B000D689E /* SimpleBrowser.swift */; };
 		E74B97761E8D4F800044D7E0 /* TableViewEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74B97751E8D4F800044D7E0 /* TableViewEx.swift */; };
 		E74C48EE1DE52E2400903270 /* VTMRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74C48EC1DE52E2400903270 /* VTMRecord.swift */; };
 		E74C48F21DE541CC00903270 /* VessageTimeMachine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E74C48F01DE541CC00903270 /* VessageTimeMachine.xcdatamodeld */; };
@@ -154,7 +155,6 @@
 		E7886A7A1DC97D3D00368C03 /* SNS.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7886A601DC97D3D00368C03 /* SNS.strings */; };
 		E7886A811DC9DE9700368C03 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7886A801DC9DE9700368C03 /* Media.xcassets */; };
 		E78EA59C1DBB0E6000C49B9C /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EA59B1DBB0E6000C49B9C /* Math.swift */; };
-		E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */; };
 		E79917541D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79917531D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift */; };
 		E79E183D1D349EB1008C32E5 /* GroupChatRF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */; };
 		E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E183F1D34A0D1008C32E5 /* ChatGroupService.swift */; };
@@ -418,6 +418,7 @@
 		E74109471DE694970030AD1D /* MNSMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNSMainController.swift; sourceTree = "<group>"; };
 		E74109491DE69AA60030AD1D /* MNS.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MNS.strings; sourceTree = "<group>"; };
 		E74237EE1E2C6DAB0084DEF2 /* FlashTipsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashTipsLabel.swift; sourceTree = "<group>"; };
+		E7483EA41EA3D68B000D689E /* SimpleBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBrowser.swift; sourceTree = "<group>"; };
 		E74B97751E8D4F800044D7E0 /* TableViewEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewEx.swift; sourceTree = "<group>"; };
 		E74C48EC1DE52E2400903270 /* VTMRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTMRecord.swift; sourceTree = "<group>"; };
 		E74C48F11DE541CC00903270 /* VessageTimeMachine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VessageTimeMachine.xcdatamodel; sourceTree = "<group>"; };
@@ -460,7 +461,6 @@
 		E7886A801DC9DE9700368C03 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		E78EA59B1DBB0E6000C49B9C /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		E793EB251E9CFBE700FD8CB5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBrowser.swift; sourceTree = "<group>"; };
 		E79917531D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatImageManageCellDelegate.swift; sourceTree = "<group>"; };
 		E79CAB731D9DEC3500FB0F6D /* Vessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vessage.entitlements; sourceTree = "<group>"; };
 		E79E183C1D349EB1008C32E5 /* GroupChatRF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatRF.swift; sourceTree = "<group>"; };
@@ -874,6 +874,7 @@
 		E708ABF41C86D7B70071104E /* BahamutUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				E7483EA41EA3D68B000D689E /* SimpleBrowser.swift */,
 				E7F6DC851DF00967007EC49A /* ImageUtil.swift */,
 				E708ABF71C86D7B70071104E /* DynamicColor */,
 				E7E237D21C998AEB008FF893 /* BahamutFilmView */,
@@ -1014,7 +1015,6 @@
 		E708ACA31C8752440071104E /* AppMain */ = {
 			isa = PBXGroup;
 			children = (
-				E7968C291DBC5AAA00D9219E /* SimpleBrowser.swift */,
 				E708AB3C1C86CAA50071104E /* VessageAppDelegate.swift */,
 				E708AC991C872F030071104E /* UserSetting.swift */,
 				E708AC971C872DFC0071104E /* VessageConfig.swift */,
@@ -1753,7 +1753,6 @@
 				E7EF28501D791AFD0064231F /* ActivityConfig.swift in Sources */,
 				E7682B771E455C85007FDB4B /* ViewPool.swift in Sources */,
 				E7AD24881D4CAD0300F266D8 /* VessageQueueProtocal.swift in Sources */,
-				E7968C2A1DBC5AAA00D9219E /* SimpleBrowser.swift in Sources */,
 				E708AB741C86CE1D0071104E /* StringHelper.swift in Sources */,
 				E7886A731DC97D3D00368C03 /* SNSPostCommentViewController.swift in Sources */,
 				E7CDFECE1E7FDC7A00381B2C /* SubscriptionListController.swift in Sources */,
@@ -1764,6 +1763,7 @@
 				E7886A6F1DC97D3D00368C03 /* SNSMainViewController.swift in Sources */,
 				E7E237D71C998AEB008FF893 /* Player.swift in Sources */,
 				E71DF77C1D39117700311855 /* GroupChatCellTableViewCellDelegate.swift in Sources */,
+				E7483EA51EA3D68B000D689E /* SimpleBrowser.swift in Sources */,
 				E7CC54E41D7A6CF200BDE82E /* MessageExtension.swift in Sources */,
 				E7EB9A3F1C880282002F96FB /* ValidateMobileViewController.swift in Sources */,
 				E7AC07081E0EC13900AB6770 /* MYQMainController.swift in Sources */,

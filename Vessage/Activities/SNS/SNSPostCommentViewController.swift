@@ -84,7 +84,7 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
     
     func updateCell() {
         if let cmt = comment{
-            commentLabel?.text = cmt.getOutputContent()
+            commentLabel?.setTextAndSimplifyUrl(text: cmt.getOutputContent())
             postInfoLabel?.text = "By \(cmt.psterNk ?? "")"
             if let atnick = cmt.atNick {
                 atNickLabel?.text = "@\(atnick)"

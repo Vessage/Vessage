@@ -73,6 +73,7 @@ UNKNOW_ERROR = "发生未知错误";
 UNKNOW_TIME = "消失的时间";
 PRIVACY = "隐私政策";
 DEFAULT = "默认";
+URL_LINK = "网页链接";
 
 //System
 SETTING = "Setting";
@@ -127,36 +128,9 @@ USER_NAME_TIPS = "用户名需要2到18位数字或中英文字符!";
 PASSWORD_TIPS = "密码为6到18个字符!";
 
 
-//UserSettingViewController
-USER_DATA_NOT_READY_RETRY = "用户数据没准备好，请稍后重试";
-NICK = "昵称";
-NICK_REGEX_TIPS = "昵称必须是1到23个字符";
-LEVEL = "等级";
-JOIN = "注册时间";
-ACCOUNT_ID = "账号";
-MOTTO = "签名";
-LOGOUT_CONFIRM_TITLE = "确定退出?";
-USER_DATA_WILL_SAVED = "用户数据将会保留,以便下次登录使用";
-CONFIRM_CLEAR_CACHE_TITLE = "确定清除所有缓存文件?";
-CLEAR_CACHE_SUCCESS = "清除缓存成功!";
-SET_KEY_FAILED = "修改%@出错";
-MODIFY_KEY_SUC = "修改%@成功!";
-
-CHANGE_AVATAR = "修改头像";
-TAKE_NEW_PHOTO = "拍照";
-SELECT_PHOTO = "从相册中选择";
-SET_PROFILE_VIDEO_SUC = "设置个人视频成功";
-SET_PROFILE_VIDEO_FAILED = "设置个人视频失败";
-SET_AVATAR_SUC = "设置头像成功";
-SET_AVATAR_FAILED = "设置头像失败";
-
-//
+//Bahamut Command
 UNKNOW_BAHAMUT_CMD = "非法命令";
 BAHAMUT_CMD_TIMEOUT = "命令已经失效";
-
-//notification format
-ACTIVITY_UPDATED_NOTIFICATION = "奇趣活动有更新!";
-NEW_VMSG_NOTIFICATION = "你收到新的VG消息!";
 
 REGIST_FAILED = "注册失败";
 REGIST_SUC = "注册成功";
@@ -186,6 +160,10 @@ USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 //APP Motto
 "VESSAGE_MOTTO_0" = "与聊得来的人分享精彩世界";
 
+//notification format
+ACTIVITY_UPDATED_NOTIFICATION = "奇趣活动有更新!";
+NEW_VMSG_NOTIFICATION = "你收到新的VG消息!";
+
 //Vege
 APP_NAME = "VG";
 WHATS_VG = "VG是什么?";
@@ -199,8 +177,30 @@ USER_ACCOUNT_FORMAT = "VG号:%@";
 SET_CHAT_BCG_FAILED = "设置失败";
 SET_CHAT_BCG_SUCCESS = "设置成功";
 
-OPEN_NEW_CHAT_WITH_MOBILE = "查找手机号";
+//UserSettingViewController
+USER_DATA_NOT_READY_RETRY = "用户数据没准备好，请稍后重试";
+NICK = "昵称";
+NICK_REGEX_TIPS = "昵称必须是1到23个字符";
+LEVEL = "等级";
+JOIN = "注册时间";
+ACCOUNT_ID = "账号";
+MOTTO = "签名";
+LOGOUT_CONFIRM_TITLE = "确定退出?";
+USER_DATA_WILL_SAVED = "用户数据将会保留,以便下次登录使用";
+CONFIRM_CLEAR_CACHE_TITLE = "确定清除所有缓存文件?";
+CLEAR_CACHE_SUCCESS = "清除缓存成功!";
+SET_KEY_FAILED = "修改%@出错";
+MODIFY_KEY_SUC = "修改%@成功!";
 
+CHANGE_AVATAR = "修改头像";
+TAKE_NEW_PHOTO = "拍照";
+SELECT_PHOTO = "从相册中选择";
+SET_PROFILE_VIDEO_SUC = "设置个人视频成功";
+SET_PROFILE_VIDEO_FAILED = "设置个人视频失败";
+SET_AVATAR_SUC = "设置头像成功";
+SET_AVATAR_FAILED = "设置头像失败";
+
+OPEN_NEW_CHAT_WITH_MOBILE = "查找手机号";
 CANT_CHAT_WITH_YOURSELF = "不能和自己对话>_<";
 
 CHOOSE_PHONE_NO = "选择手机号";
@@ -431,3 +431,4 @@ SUBSCRIPTION_X_HOURS_DISAPPEAR = "订阅将在%d小时后过期";
 SUBSCRIPTION_WILL_DISAPPEAR = "订阅即将过期";
 REPLY_ANY_SUBSCRIPT_ACCOUNT = "回复 \"DY\"、\"订阅\" 可续订分享号\n\n回复其他内容与对方聊天";
 SUBSCRIPTION_PINNED = "长期订阅";
+

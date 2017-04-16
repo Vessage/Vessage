@@ -12,6 +12,7 @@ import AddressBookUI
 import MBProgressHUD
 import EVReflection
 import SDWebImage
+import TTTAttributedLabel
 
 func selectPersonMobile(_ vc:UIViewController,person:ABRecord,onSelectedMobile:@escaping (_ mobile:String,_ personTitle:String)->Void) {
     let fname = ABRecordCopyValue(person, kABPersonFirstNameProperty)?.takeRetainedValue() as? String ?? ""
@@ -235,3 +236,17 @@ extension EVReflection{
     }
 }
 
+extension TTTAttributedLabel{
+    func setTextAndSimplifyUrl(text:String) {
+        let (content,urlRanges,urls) = StringHelper.getSimplifyURLAttributeString(origin: text, urlTips: "URL_LINK".localizedString())
+        
+        if let ct = content,let ranges = urlRanges,let links = urls{
+            self.text = ct
+            for i in 0..<min(ranges.count, links.count) {
+                let _ = self.addLink(to: URL(string: links[i]), with: ranges[i])
+            }
+        }else{
+            self.text = text
+        }
+    }
+}

@@ -50,9 +50,6 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         if let c = delegate?.snsPostCommentCellRootController(self){
             SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
         }
-        for ges in (label.gestureRecognizers?.filter{$0 is UITapGestureRecognizer} ?? []){
-            ges.cancelsTouchesInView = true
-        }
     }
     
     func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
@@ -64,6 +61,9 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
             let cmtGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
             let pstGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
             let cellGes = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentCell.onTapCellView(_:)))
+            cmtGes.delegate = self
+            pstGes.delegate = self
+            cellGes.delegate = self
             cellGes.require(toFail: cmtGes)
             cellGes.require(toFail: pstGes)
             self.commentLabel.addGestureRecognizer(cmtGes)
@@ -76,6 +76,13 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         }
     }
     
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let label = touch.view as? TTTAttributedLabel{
+            return !label.containslink(at: touch.location(in: label))
+        }
+        return true
+    }
+    
     func onTapCellView(_ a:UITapGestureRecognizer) {
         if comment.st < 0 {
             return
@@ -83,12 +90,7 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         if a.view == self.postInfoLabel {
             delegate?.snsPostCommentCellDidClickPostInfo?(a.view as! UILabel,cell: self, comment: comment)
         }else if a.view == self.commentLabel{
-            let p = a.location(in: self.commentLabel)
-            if self.commentLabel.containslink(at: p){
-                a.cancelsTouchesInView = false
-            }else{
-                delegate?.snsPostCommentCellDidClickComment?(a.view as! UILabel,cell: self, comment: comment)
-            }
+            delegate?.snsPostCommentCellDidClickComment?(a.view as! UILabel,cell: self, comment: comment)
         }else if a.view == self.contentView{
             delegate?.snsPostCommentCellDidClick?(a.view!,cell: self, comment: comment)
         }
@@ -109,7 +111,7 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
     }
 }
 
-class SNSPostCommentViewController: UIViewController {
+class SNSPostCommentViewController: UIViewController,UIGestureRecognizerDelegate {
     var delegate:SNSCommentViewControllerDelegate?
     
     fileprivate var post:SNSPost!
@@ -139,12 +141,21 @@ class SNSPostCommentViewController: UIViewController {
         tableView.mj_header = MJRefreshGifHeader(refreshingTarget: self, refreshingAction: #selector(SNSPostCommentViewController.mjHeaderRefresh(_:)))
         tableView.mj_footer = MJRefreshAutoFooter(refreshingTarget: self, refreshingAction: #selector(SNSPostCommentViewController.mjFooterRefresh(_:)))
         self.view.addSubview(responseTextField)
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentViewController.onTapView(_:))))
+        let ges = UITapGestureRecognizer(target: self, action: #selector(SNSPostCommentViewController.onTapView(_:)))
+        ges.delegate = self
+        self.view.addGestureRecognizer(ges)
         responseTextField.isHidden = true
         responseTextField.inputAccessoryView = commentInputView
         commentInputView.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let label = touch.view as? TTTAttributedLabel{
+            return !label.containslink(at: touch.location(in: label))
+        }
+        return true
     }
     
     override func viewDidAppear(_ animated: Bool) {

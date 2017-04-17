@@ -24,20 +24,26 @@ class SNSMyCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         didSet{
             commentContentLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
             commentContentLabel.delegate = self
-            commentContentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:))))
+            let ges = UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:)))
+            ges.delegate = self
+            commentContentLabel.addGestureRecognizer(ges)
         }
     }
     @IBOutlet weak var commentInfoLabel: UILabel!
     @IBOutlet weak var commentPosterNickLabel: UILabel!{
         didSet{
-            commentPosterNickLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:))))
+            let ges = UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:)))
+            ges.delegate = self
+            commentPosterNickLabel.addGestureRecognizer(ges)
         }
     }
     @IBOutlet weak var postImageView: UIImageView!{
         didSet{
             postImageView.contentMode = .scaleAspectFill
             postImageView.clipsToBounds = true
-            postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:))))
+            let ges = UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentCell.onTapViews(_:)))
+            ges.delegate = self
+            postImageView.addGestureRecognizer(ges)
         }
     }
     
@@ -65,23 +71,22 @@ class SNSMyCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         if let c = delegate?.snsMyCommentCellRootController(cell:self){
             SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
         }
-        for ges in (label.gestureRecognizers?.filter{$0 is UITapGestureRecognizer} ?? []){
-            ges.cancelsTouchesInView = true
-        }
     }
     
     func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
         attributedLabel(label, didSelectLinkWith: url)
     }
     
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let label = touch.view as? TTTAttributedLabel{
+            return !label.containslink(at: touch.location(in: label))
+        }
+        return true
+    }
+    
     func onTapViews(_ ges:UITapGestureRecognizer) {
         if ges.view == commentContentLabel {
-            let p = ges.location(in: self.commentContentLabel)
-            if self.commentContentLabel.containslink(at: p){
-                ges.cancelsTouchesInView = false
-            }else{
-                delegate?.snsMyCommentCellDidClickContent?(ges.view!, cell: self, comment: comment)
-            }
+            delegate?.snsMyCommentCellDidClickContent?(ges.view!, cell: self, comment: comment)
         }else if ges.view == commentPosterNickLabel{
             delegate?.snsMyCommentCellDidClickPoster?(ges.view!, cell: self, comment: comment)
         }else if ges.view == postImageView{
@@ -90,7 +95,7 @@ class SNSMyCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
     }
 }
 
-class SNSMyCommentViewController: UIViewController {
+class SNSMyCommentViewController: UIViewController,UIGestureRecognizerDelegate {
     @IBOutlet weak var tableView: UITableView!
     fileprivate var responseTextField = UITextField(frame:CGRect.zero)
     fileprivate var commentInputView = SNSCommentInputView.instanceFromXib()
@@ -111,10 +116,19 @@ class SNSMyCommentViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         self.view.addSubview(responseTextField)
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentViewController.onTapView(_:))))
+        let ges = UITapGestureRecognizer(target: self, action: #selector(SNSMyCommentViewController.onTapView(_:)))
+        ges.delegate = self
+        self.view.addGestureRecognizer(ges)
         responseTextField.isHidden = true
         responseTextField.inputAccessoryView = commentInputView
         commentInputView.delegate = self
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if let label = touch.view as? TTTAttributedLabel{
+            return !label.containslink(at: touch.location(in: label))
+        }
+        return true
     }
     
     func onTapView(_ ges:UITapGestureRecognizer) {

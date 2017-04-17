@@ -54,10 +54,6 @@ class AppService: NotificationCenter,ServiceProtocol
     func trySendFirstLaunchToServer() {
         let buildVersion = UserSetting.getUserIntValue(NotifiedFirstLuanchBuildKey)
         if buildVersion < VessageConfig.buildVersion {
-            appQABadge = true
-            inviteBadge = true
-            settingBadge = true
-            
             let req = AppFirstLaunchRequest()
             req.buildVersion = VessageConfig.buildVersion
             req.oldBuildVersion = buildVersion

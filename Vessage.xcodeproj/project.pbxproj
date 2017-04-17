@@ -199,7 +199,6 @@
 		E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5721C9A785600DD7D9B /* ChangePasswordViewController.swift */; };
 		E7D2D5761C9A785600DD7D9B /* UIEditTextPropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */; };
 		E7D2D5781C9A8EFB00DD7D9B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */; };
-		E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */; };
 		E7D7C42F1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */; };
 		E7D7C4331DE915A200D962D4 /* BahamutCommonLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */; };
 		E7D7C4381DE9169000D962D4 /* CommonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D7C4371DE9169000D962D4 /* CommonExtension.swift */; };
@@ -509,7 +508,6 @@
 		E7D2D5731C9A785600DD7D9B /* UIEditTextPropertyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEditTextPropertyViewController.swift; sourceTree = "<group>"; };
 		E7D2D5771C9A8EFB00DD7D9B /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		E7D518191DBD86A3007F6A5D /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
-		E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FaceTextChatBubbles.xcassets; sourceTree = "<group>"; };
 		E7D7C42E1DE9136600D962D4 /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
 		E7D7C4321DE915A200D962D4 /* BahamutCommonLocalized.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahamutCommonLocalized.swift; sourceTree = "<group>"; };
 		E7D7C4371DE9169000D962D4 /* CommonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtension.swift; sourceTree = "<group>"; };
@@ -911,7 +909,6 @@
 			isa = PBXGroup;
 			children = (
 				E7560B2E1DDAC2F4007AA496 /* HudSpin.xcassets */,
-				E7D5182B1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets */,
 				E7CAD9741D392B3A00765E38 /* AvartarAndFace.xcassets */,
 				E708AB431C86CAA50071104E /* Assets.xcassets */,
 			);
@@ -1554,7 +1551,6 @@
 				E7F216641CFBD35E00447DA9 /* README.txt in Resources */,
 				E7BB1F5B1D476CAF00324FFD /* TextChatInputView.xib in Resources */,
 				E7E9377A1D16DAB0001484F4 /* SelectVessageExpandableHeader.xib in Resources */,
-				E7D5182C1DBD98D1007F6A5D /* FaceTextChatBubbles.xcassets in Resources */,
 				E708AB471C86CAA50071104E /* LaunchScreen.storyboard in Resources */,
 				E7AC07061E0EC13900AB6770 /* MYQ.storyboard in Resources */,
 				E77363521E1F654900C25D10 /* Media.xcassets in Resources */,

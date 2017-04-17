@@ -241,7 +241,7 @@ extension TTTAttributedLabel{
         let (content,urlRanges,urls) = StringHelper.getSimplifyURLAttributeString(origin: text, urlTips: "URL_LINK".localizedString())
         
         if let ct = content,let ranges = urlRanges,let links = urls{
-            self.text = ct
+            self.attributedText = NSAttributedString(string: ct)
             for i in 0..<min(ranges.count, links.count) {
                 let _ = self.addLink(to: URL(string: links[i]), with: ranges[i])
             }

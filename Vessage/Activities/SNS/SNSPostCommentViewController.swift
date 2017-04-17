@@ -46,10 +46,17 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         }
     }
     
-    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         if let c = delegate?.snsPostCommentCellRootController(self){
             SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
         }
+        for ges in (label.gestureRecognizers?.filter{$0 is UITapGestureRecognizer} ?? []){
+            ges.cancelsTouchesInView = true
+        }
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        attributedLabel(label, didSelectLinkWith: url)
     }
     
     fileprivate func initCell() {
@@ -76,7 +83,12 @@ class SNSPostCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         if a.view == self.postInfoLabel {
             delegate?.snsPostCommentCellDidClickPostInfo?(a.view as! UILabel,cell: self, comment: comment)
         }else if a.view == self.commentLabel{
-            delegate?.snsPostCommentCellDidClickComment?(a.view as! UILabel,cell: self, comment: comment)
+            let p = a.location(in: self.commentLabel)
+            if self.commentLabel.containslink(at: p){
+                a.cancelsTouchesInView = false
+            }else{
+                delegate?.snsPostCommentCellDidClickComment?(a.view as! UILabel,cell: self, comment: comment)
+            }
         }else if a.view == self.contentView{
             delegate?.snsPostCommentCellDidClick?(a.view!,cell: self, comment: comment)
         }
@@ -318,13 +330,15 @@ extension SNSPostCommentViewController:SNSPostCommentCellDelegate{
     }
     
     func snsPostCommentCellDidClick(_ sender: UIView, cell: SNSPostCommentCell, comment: SNSPostComment?) {
-        hideCommentInputView()
+        if self.commentInputView.inputTextField.isEditing {
+            hideCommentInputView()
+        }else if let cmt = comment{
+            showNewCommentInputView(cmt, atUserNick: cmt.psterNk)
+        }
     }
     
     func snsPostCommentCellDidClickComment(_ sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {
-        if let cmt = comment{
-            showNewCommentInputView(cmt, atUserNick: cmt.psterNk)
-        }
+        snsPostCommentCellDidClick(sender, cell: cell, comment: comment)
     }
     
     func snsPostCommentCellDidClickPostInfo(_ sender: UILabel, cell: SNSPostCommentCell, comment: SNSPostComment?) {

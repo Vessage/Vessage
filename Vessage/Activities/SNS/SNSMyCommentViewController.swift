@@ -61,15 +61,27 @@ class SNSMyCommentCell: UITableViewCell,TTTAttributedLabelDelegate {
         }
     }
     
-    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
-        if let c = delegate?.snsMyCommentCellRootController(cell: self){
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        if let c = delegate?.snsMyCommentCellRootController(cell:self){
             SimpleBrowser.openUrl(c, url: url.absoluteString, title: nil)
         }
+        for ges in (label.gestureRecognizers?.filter{$0 is UITapGestureRecognizer} ?? []){
+            ges.cancelsTouchesInView = true
+        }
+    }
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didLongPressLinkWith url: URL!, at point: CGPoint) {
+        attributedLabel(label, didSelectLinkWith: url)
     }
     
     func onTapViews(_ ges:UITapGestureRecognizer) {
         if ges.view == commentContentLabel {
-            delegate?.snsMyCommentCellDidClickContent?(ges.view!, cell: self, comment: comment)
+            let p = ges.location(in: self.commentContentLabel)
+            if self.commentContentLabel.containslink(at: p){
+                ges.cancelsTouchesInView = false
+            }else{
+                delegate?.snsMyCommentCellDidClickContent?(ges.view!, cell: self, comment: comment)
+            }
         }else if ges.view == commentPosterNickLabel{
             delegate?.snsMyCommentCellDidClickPoster?(ges.view!, cell: self, comment: comment)
         }else if ges.view == postImageView{
@@ -186,7 +198,9 @@ extension SNSMyCommentViewController:SNSMyCommentCellDelegate{
     }
     
     func snsMyCommentCellDidClickContent(_ sender: UIView, cell: SNSMyCommentCell, comment: SNSPostComment?) {
-        if let cmt = comment {
+        if commentInputView.inputTextField.isEditing {
+            hideCommentInputView()
+        }else if let cmt = comment {
             showNewCommentInputView(cmt, atUserNick: comment?.psterNk)
         }
         

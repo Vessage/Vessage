@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FR3-Fj-HR0" id="Y9i-sS-bHO">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fxG-Ak-IvM">
@@ -58,8 +58,8 @@
                                                         <constraint firstAttribute="width" constant="32" id="Ovp-iB-EdA"/>
                                                         <constraint firstAttribute="height" constant="32" id="uLb-E9-aWI"/>
                                                     </constraints>
-                                                    <state key="normal" title="+" image="add_gray"/>
-                                                    <state key="disabled" image="check_blue"/>
+                                                    <state key="normal" image="heart_gray"/>
+                                                    <state key="disabled" image="heart_red"/>
                                                     <connections>
                                                         <action selector="onClickSubsciptionBtn:" destination="FR3-Fj-HR0" eventType="touchUpInside" id="diZ-iZ-ywj"/>
                                                     </connections>
@@ -110,7 +110,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add_gray" width="193" height="193"/>
-        <image name="check_blue" width="16" height="16"/>
+        <image name="heart_gray" width="128" height="128"/>
+        <image name="heart_red" width="128" height="128"/>
     </resources>
 </document>

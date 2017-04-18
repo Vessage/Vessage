@@ -37,7 +37,7 @@ class ConversationListContactCellDelegate:NSObject,ConversationClickCellDelegate
     fileprivate func showContact(){
         let authStatus = ABAddressBookGetAuthorizationStatus();
         if authStatus == .notDetermined {
-            let action = UIAlertAction(title: "OK".localizedString(), style: .default, handler: { (ac) in
+            let action = UIAlertAction(title: "REQ_PERMISSION".localizedString(), style: .default, handler: { (ac) in
                 if let addressBookRef = ABAddressBookCreateWithOptions(nil , nil){
                     let addressBook = addressBookRef.takeRetainedValue()
                     ABAddressBookRequestAccessWithCompletion(addressBook, { (granted, error) in
@@ -56,7 +56,7 @@ class ConversationListContactCellDelegate:NSObject,ConversationClickCellDelegate
                     self.showNoPersimissionAlert()
                 }
             })
-            self.rootController.showAlert("REQUEST_ACCESS_CONTACT_TITLE".localizedString(), msg: "REQUEST_ACCESS_CONTACT".localizedString(), actions: [action])
+            self.rootController.showAlert("REQUEST_ACCESS_CONTACT_TITLE".localizedString(), msg: "REQUEST_ACCESS_CONTACT".localizedString(), actions: [action,ALERT_ACTION_CANCEL])
         }else if authStatus == .authorized{
             self.showContactView()
         }else{

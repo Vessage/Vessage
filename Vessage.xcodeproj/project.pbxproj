@@ -179,6 +179,7 @@
 		E7B320F41D61B8DA000FB5B0 /* UserSexValueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */; };
 		E7B320F61D61C561000FB5B0 /* MyDetailAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */; };
 		E7B33A4E1CFD1FE7002A755E /* RecordVessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */; };
+		E7BB03761EA4967E00809650 /* TTTAttributedLabelEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BB03751EA4967E00809650 /* TTTAttributedLabelEx.swift */; };
 		E7BB1F5B1D476CAF00324FFD /* TextChatInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */; };
 		E7BCC39E1C8EFAD2009C7CEA /* VessageQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */; };
 		E7BFC38F1CDAF1A900CDB392 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */; };
@@ -487,6 +488,7 @@
 		E7B320F31D61B8DA000FB5B0 /* UserSexValueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSexValueViewController.swift; sourceTree = "<group>"; };
 		E7B320F51D61C561000FB5B0 /* MyDetailAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDetailAvatarCell.swift; sourceTree = "<group>"; };
 		E7B33A4D1CFD1FE7002A755E /* RecordVessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordVessageManager.swift; sourceTree = "<group>"; };
+		E7BB03751EA4967E00809650 /* TTTAttributedLabelEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabelEx.swift; sourceTree = "<group>"; };
 		E7BB1F5A1D476CAF00324FFD /* TextChatInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextChatInputView.xib; sourceTree = "<group>"; };
 		E7BCC39D1C8EFAD2009C7CEA /* VessageQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VessageQueue.swift; sourceTree = "<group>"; };
 		E7BFC38E1CDAF1A900CDB392 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				E7D7C4531DE91C5200D962D4 /* Integer+FriendlyString.swift */,
 				E7D7C4551DE924D000D962D4 /* BahamutCommon.xcassets */,
 				E74B97751E8D4F800044D7E0 /* TableViewEx.swift */,
+				E7BB03751EA4967E00809650 /* TTTAttributedLabelEx.swift */,
 			);
 			name = BahamutUIKit;
 			path = ../../../bahamut/Bahamut/Bahamut/BahamutUIKit;
@@ -1694,6 +1697,7 @@
 				E7D2D5751C9A785600DD7D9B /* ChangePasswordViewController.swift in Sources */,
 				E79917541D60D9CF002C42C2 /* ChatImageManageCellDelegate.swift in Sources */,
 				E7886A741DC97D3D00368C03 /* SNSPostManager.swift in Sources */,
+				E7BB03761EA4967E00809650 /* TTTAttributedLabelEx.swift in Sources */,
 				E7E237D11C9950CE008FF893 /* ConversationListContactCellDelegate.swift in Sources */,
 				E708AC041C86D7B70071104E /* UIColor.swift in Sources */,
 				E708AB5A1C86CD6D0071104E /* ConversationListController.swift in Sources */,

@@ -238,15 +238,7 @@ extension EVReflection{
 
 extension TTTAttributedLabel{
     func setTextAndSimplifyUrl(text:String) {
-        let (content,urlRanges,urls) = StringHelper.getSimplifyURLAttributeString(origin: text, urlTips: "URL_LINK".localizedString())
-        
-        if let ct = content,let ranges = urlRanges,let links = urls{
-            self.attributedText = NSAttributedString(string: ct)
-            for i in 0..<min(ranges.count, links.count) {
-                let _ = self.addLink(to: URL(string: links[i]), with: ranges[i])
-            }
-        }else{
-            self.text = text
-        }
+        let holder = "URL_LINK".localizedString()
+        self.setTextAndSimplifyUrl(text: text, linkHolder: holder,attchLinkMark:true)
     }
 }

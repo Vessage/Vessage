@@ -292,10 +292,11 @@ SEL_CONTACTS_ITEM = "查找手机联系人";
 NEW_CHAT_GROUP = "新建小群组";
 MANAGE_MY_CHAT_IMAGES = "我的聊天大头贴";
 
-REQUEST_ACCESS_CONTACT_TITLE = "获取通讯录权限";
-REQUEST_ACCESS_CONTACT = "打开新的对话需要获取联系人手机号码";
+REQUEST_ACCESS_CONTACT_TITLE = "查找手机联系人";
+REQUEST_ACCESS_CONTACT = "需要申请通讯录权限\nVG不会上传你的通讯录数据\n仅使用单个号码进行单向加密匹配好友\n\n详细隐私政策请看:\n个人设置-关于";
 NO_CONTACT_PERSIMISSION_TITLE = "没有通讯录权限";
 NO_CONTACT_PERSIMISSION = "请在系统设置找到VG的应用选项并开启通讯录权限，然后再打开App";
+REQ_PERMISSION = "申请权限";
 
 NO_HUMEN_FACES_DETECTED = "请露脸~~";
 UNLOADED_USER = "佚名";

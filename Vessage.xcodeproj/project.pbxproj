@@ -161,6 +161,8 @@
 		E79F4AAE1E07631F008B99EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E79F4AAD1E07631F008B99EE /* CFNetwork.framework */; };
 		E7A36C7F1E44CA0B00054CD0 /* ChatSendContentConfirmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A36C7E1E44CA0B00054CD0 /* ChatSendContentConfirmController.swift */; };
 		E7A414061E63D25B009FB962 /* FullScreenSlideshowViewControllerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A414051E63D25B009FB962 /* FullScreenSlideshowViewControllerEx.swift */; };
+		E7A425171ECF555E006BD0B4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A425161ECF555E006BD0B4 /* AudioToolbox.framework */; };
+		E7A425191ECF5572006BD0B4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A425181ECF5572006BD0B4 /* CoreAudio.framework */; };
 		E7A76A021E304D06009F97D5 /* ConversationTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A76A011E304D06009F97D5 /* ConversationTitleCell.swift */; };
 		E7A76A041E30568D009F97D5 /* ChatWithSelfDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7A76A031E30568D009F97D5 /* ChatWithSelfDelegate.swift */; };
 		E7ABAC6F1D4DCDE100306A69 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ABAC6E1D4DCDE100306A69 /* AppService.swift */; };
@@ -468,6 +470,8 @@
 		E79F4AAD1E07631F008B99EE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E7A36C7E1E44CA0B00054CD0 /* ChatSendContentConfirmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSendContentConfirmController.swift; sourceTree = "<group>"; };
 		E7A414051E63D25B009FB962 /* FullScreenSlideshowViewControllerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenSlideshowViewControllerEx.swift; sourceTree = "<group>"; };
+		E7A425161ECF555E006BD0B4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E7A425181ECF5572006BD0B4 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		E7A76A011E304D06009F97D5 /* ConversationTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTitleCell.swift; sourceTree = "<group>"; };
 		E7A76A031E30568D009F97D5 /* ChatWithSelfDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWithSelfDelegate.swift; sourceTree = "<group>"; };
 		E7ABAC6E1D4DCDE100306A69 /* AppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
@@ -602,6 +606,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7A425191ECF5572006BD0B4 /* CoreAudio.framework in Frameworks */,
+				E7A425171ECF555E006BD0B4 /* AudioToolbox.framework in Frameworks */,
 				E7682B7B1E458C20007FDB4B /* UserNotifications.framework in Frameworks */,
 				E79F4AAE1E07631F008B99EE /* CFNetwork.framework in Frameworks */,
 				E70CD4E01D371682003779B5 /* CoreTelephony.framework in Frameworks */,
@@ -642,6 +648,8 @@
 		B024D79892B85EA4D71592BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E7A425181ECF5572006BD0B4 /* CoreAudio.framework */,
+				E7A425161ECF555E006BD0B4 /* AudioToolbox.framework */,
 				E793EB251E9CFBE700FD8CB5 /* CoreData.framework */,
 				E7682B7A1E458C20007FDB4B /* UserNotifications.framework */,
 				E79F4AAD1E07631F008B99EE /* CFNetwork.framework */,

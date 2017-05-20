@@ -254,7 +254,7 @@ class UserProfileViewController: UIViewController {
             if userId == profile.userId {
                 if let note = a.userInfo?[UserNoteNameUpdatedValue] as? String{
                     if profile.nickName != note {
-                        self.nameLabel.text = "\(profile.nickName)(\(note))"
+                        self.nameLabel.text = "\(profile.nickName ?? "")(\(note))"
                     }else{
                         self.nameLabel.text = profile.nickName
                     }

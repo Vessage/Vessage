@@ -33,6 +33,7 @@ class FlashTipsLabel: UILabel {
         
         self.center = center == nil ? CGPoint(x: container.frame.width / 2, y: container.frame.height / 2) : center!
         container.addSubview(self)
+        self.layer.removeAllAnimations()
         UIAnimationHelper.flashView(self, duration: flashDuration, autoStop: true, stopAfterMs: flashTime){
             self.removeFromSuperview()
         }

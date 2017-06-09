@@ -158,7 +158,7 @@ OLD_NEW_PSW_SAME = "新旧密码相同";
 USER_APP_TOKEN_TIMEOUT = "用户认证已经超时了，请重新登录吧~";
 
 //APP Motto
-"VESSAGE_MOTTO_0" = "与聊得来的人分享精彩世界";
+"VESSAGE_MOTTO_0" = "聊得来就留下，聊不来会消失";
 
 //notification format
 ACTIVITY_UPDATED_NOTIFICATION = "奇趣活动有更新!";

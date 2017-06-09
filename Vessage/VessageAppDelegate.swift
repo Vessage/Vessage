@@ -143,7 +143,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
                 //必须加这句代码
                 UMessage.didReceiveRemoteNotification(userInfo)
             }else{
-                //应用处于前台时的本地推送接受
+                //应用处于后台时的本地推送接受
                 completionHandler()
             }
         }
@@ -154,7 +154,7 @@ class VessageAppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationC
         let userInfo = notification.request.content.userInfo
         if let trigger = notification.request.trigger {
             if trigger.isKind(of: UNPushNotificationTrigger.self){
-                //应用处于后台时的远程推送接受
+                //应用处于前台时的远程推送接受
                 //必须加这句代码
                 handleActiveNotificatino(userInfo)
             }else{

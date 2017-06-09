@@ -4,13 +4,13 @@ PODS:
     - Alamofire
     - EVReflection
   - AliyunOSSiOS (2.6.0)
-  - EVReflection (4.8.2):
-    - EVReflection/Core (= 4.8.2)
-  - EVReflection/Core (4.8.2)
+  - EVReflection (4.16.3):
+    - EVReflection/Core (= 4.16.3)
+  - EVReflection/Core (4.16.3)
   - ImagePickerSheetController (0.9.1)
-  - ImageSlideshow (1.2.0):
-    - ImageSlideshow/Core (= 1.2.0)
-  - ImageSlideshow/Core (1.2.0)
+  - ImageSlideshow (1.3.2):
+    - ImageSlideshow/Core (= 1.3.2)
+  - ImageSlideshow/Core (1.3.2)
   - KDCircularProgress (1.5.2)
   - LTMorphingLabel (0.5.0)
   - MBProgressHUD (1.0.0)
@@ -20,7 +20,7 @@ PODS:
   - SDWebImage/Core (4.0.0)
   - TTTAttributedLabel (2.0.0)
   - UMengAnalytics (4.2.4)
-  - Vivid (0.8)
+  - Vivid (0.9)
   - YUCIHighPassSkinSmoothing (1.4):
     - Vivid
 
@@ -44,9 +44,9 @@ SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireJsonToObjects: 2f652417f69ca86f229b704cdd00370bb892af45
   AliyunOSSiOS: '058b038cc82000dadb8f8e3893a97243124f2898'
-  EVReflection: '0951547baf234bf0083de3a43d4b67cb00e5e90b'
+  EVReflection: 78a60b3c628a2e765652cdc554a903a3e40b16c8
   ImagePickerSheetController: 3c58c9fee6dcf36485222358a021f6b734f997ba
-  ImageSlideshow: c1395dcf33f7dba407fd21df0e8c315e8941e209
+  ImageSlideshow: a68a76fc618ebd2b7481ce355ad67d7097203976
   KDCircularProgress: 12f677b2deb02409ab48c6cae1898d146b8ad549
   LTMorphingLabel: bc170be74b219b7dae0e5543a44676d16da70ff7
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -54,7 +54,7 @@ SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UMengAnalytics: ef8d45f94c0e5771dc364cf6a5731d9d3b101da2
-  Vivid: 65d28aba89fc750fceda8172c8b233f27d0ac18b
+  Vivid: 0fde7409beac71224deb151dd78f98a5bb860497
   YUCIHighPassSkinSmoothing: 8418fd1bf605ec22b647c57745b863b352f72097
 
 PODFILE CHECKSUM: f24187513779c3592d48016d366ae60921511fe8

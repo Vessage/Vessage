@@ -323,7 +323,7 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         
         let assetWriterVideoInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: outputSettings)
         assetWriterVideoInput.expectsMediaDataInRealTime = true
-        assetWriterVideoInput.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2.0))
+        assetWriterVideoInput.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2.0))
         
         let sourcePixelBufferAttributesDictionary = [
             String(kCVPixelBufferPixelFormatTypeKey) : Int(kCVPixelFormatType_32BGRA),
@@ -433,11 +433,11 @@ class VessageCamera:NSObject,AVCaptureVideoDataOutputSampleBufferDelegate , AVCa
         let orientation = UIDevice.current.orientation
         var t: CGAffineTransform!
         if orientation == UIDeviceOrientation.portrait {
-            t = CGAffineTransform(rotationAngle: CGFloat(-M_PI / 2.0))
+            t = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2.0))
         } else if orientation == UIDeviceOrientation.portraitUpsideDown {
-            t = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2.0))
+            t = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2.0))
         } else if (orientation == UIDeviceOrientation.landscapeRight) {
-            t = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+            t = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         } else {
             t = CGAffineTransform(rotationAngle: 0)
         }

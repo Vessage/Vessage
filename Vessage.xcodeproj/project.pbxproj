@@ -55,7 +55,6 @@
 		E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */; };
 		E708AC071C86D7B70071104E /* SystemSoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */; };
 		E708AC081C86D7B70071104E /* ToastHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFD1C86D7B70071104E /* ToastHelper.swift */; };
-		E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */; };
 		E708AC0A1C86D7B70071104E /* UICollectionViewFlowLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */; };
 		E708AC0B1C86D7B70071104E /* UserGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC001C86D7B70071104E /* UserGuide.swift */; };
 		E708AC761C86EC160071104E /* AliOSSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E708AC671C86EC160071104E /* AliOSSManager.swift */; };
@@ -196,6 +195,10 @@
 		E7CDFECE1E7FDC7A00381B2C /* SubscriptionListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CDFECD1E7FDC7A00381B2C /* SubscriptionListController.swift */; };
 		E7CDFED01E7FDCA300381B2C /* Subscription.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7CDFECF1E7FDCA300381B2C /* Subscription.storyboard */; };
 		E7CDFED21E7FDF2900381B2C /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CDFED11E7FDF2900381B2C /* SubscriptionService.swift */; };
+		E7D0BFE71EE9881D00D55562 /* UIView+Boom.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BFE51EE9881D00D55562 /* UIView+Boom.m */; };
+		E7D0BFEC1EE99EF900D55562 /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BFE91EE99EF900D55562 /* UIAnimationHelper.swift */; };
+		E7D0BFED1EE99EF900D55562 /* UIView+Boom.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BFEB1EE99EF900D55562 /* UIView+Boom.m */; };
+		E7D0BFEE1EE99F2A00D55562 /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0BFE91EE99EF900D55562 /* UIAnimationHelper.swift */; };
 		E7D2D56E1C9A776500DD7D9B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */; };
 		E7D2D5701C9A77B900DD7D9B /* Component.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */; };
 		E7D2D5741C9A785600DD7D9B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */; };
@@ -263,7 +266,6 @@
 		E7F6DD0F1DF00CD7007EC49A /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCFC1DF00CD7007EC49A /* ImageUtil.swift */; };
 		E7F6DD101DF00CD7007EC49A /* Integer+FriendlyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DCFD1DF00CD7007EC49A /* Integer+FriendlyString.swift */; };
 		E7F6DD131DF00CD7007EC49A /* SystemSoundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD001DF00CD7007EC49A /* SystemSoundHelper.swift */; };
-		E7F6DD151DF00CD7007EC49A /* UIAnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD021DF00CD7007EC49A /* UIAnimationHelper.swift */; };
 		E7F6DD171DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */; };
 		E7F6DD181DF00CD7007EC49A /* UIView+RemoveChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */; };
 		E7F6DD1B1DF00D89007EC49A /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */; };
@@ -359,7 +361,6 @@
 		E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardAdjustHelper.swift; sourceTree = "<group>"; };
 		E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSoundHelper.swift; sourceTree = "<group>"; };
 		E708ABFD1C86D7B70071104E /* ToastHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastHelper.swift; sourceTree = "<group>"; };
-		E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
 		E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewFlowLayouts.swift; sourceTree = "<group>"; };
 		E708AC001C86D7B70071104E /* UserGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserGuide.swift; sourceTree = "<group>"; };
 		E708AC671C86EC160071104E /* AliOSSManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliOSSManager.swift; sourceTree = "<group>"; };
@@ -507,6 +508,12 @@
 		E7CDFECD1E7FDC7A00381B2C /* SubscriptionListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListController.swift; sourceTree = "<group>"; };
 		E7CDFECF1E7FDCA300381B2C /* Subscription.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Subscription.storyboard; sourceTree = "<group>"; };
 		E7CDFED11E7FDF2900381B2C /* SubscriptionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
+		E7D0BFE31EE9881D00D55562 /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
+		E7D0BFE41EE9881D00D55562 /* UIView+Boom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Boom.h"; sourceTree = "<group>"; };
+		E7D0BFE51EE9881D00D55562 /* UIView+Boom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Boom.m"; sourceTree = "<group>"; };
+		E7D0BFE91EE99EF900D55562 /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
+		E7D0BFEA1EE99EF900D55562 /* UIView+Boom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Boom.h"; sourceTree = "<group>"; };
+		E7D0BFEB1EE99EF900D55562 /* UIView+Boom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Boom.m"; sourceTree = "<group>"; };
 		E7D2D56D1C9A776500DD7D9B /* UserSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 		E7D2D56F1C9A77B900DD7D9B /* Component.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Component.storyboard; sourceTree = "<group>"; };
 		E7D2D5711C9A785600DD7D9B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -582,7 +589,6 @@
 		E7F6DCFC1DF00CD7007EC49A /* ImageUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtil.swift; sourceTree = "<group>"; };
 		E7F6DCFD1DF00CD7007EC49A /* Integer+FriendlyString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Integer+FriendlyString.swift"; sourceTree = "<group>"; };
 		E7F6DD001DF00CD7007EC49A /* SystemSoundHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSoundHelper.swift; sourceTree = "<group>"; };
-		E7F6DD021DF00CD7007EC49A /* UIAnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAnimationHelper.swift; sourceTree = "<group>"; };
 		E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImagePicker+SourceAlert.swift"; sourceTree = "<group>"; };
 		E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RemoveChildView.swift"; sourceTree = "<group>"; };
 		E7F6DD1A1DF00D89007EC49A /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -882,6 +888,7 @@
 		E708ABF41C86D7B70071104E /* BahamutUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				E7D0BFE81EE99EF900D55562 /* Animation */,
 				E7483EA41EA3D68B000D689E /* SimpleBrowser.swift */,
 				E7F6DC851DF00967007EC49A /* ImageUtil.swift */,
 				E708ABF71C86D7B70071104E /* DynamicColor */,
@@ -893,7 +900,6 @@
 				E708ABFB1C86D7B70071104E /* KeyboardAdjustHelper.swift */,
 				E708ABFC1C86D7B70071104E /* SystemSoundHelper.swift */,
 				E708ABFD1C86D7B70071104E /* ToastHelper.swift */,
-				E708ABFE1C86D7B70071104E /* UIAnimationHelper.swift */,
 				E708ABFF1C86D7B70071104E /* UICollectionViewFlowLayouts.swift */,
 				E708AC001C86D7B70071104E /* UserGuide.swift */,
 				E702FF801DE82F0F003F2B85 /* UIView+RemoveChildView.swift */,
@@ -1252,6 +1258,26 @@
 			path = Message;
 			sourceTree = "<group>";
 		};
+		E7D0BFE21EE9881D00D55562 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				E7D0BFE31EE9881D00D55562 /* UIAnimationHelper.swift */,
+				E7D0BFE41EE9881D00D55562 /* UIView+Boom.h */,
+				E7D0BFE51EE9881D00D55562 /* UIView+Boom.m */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		E7D0BFE81EE99EF900D55562 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				E7D0BFE91EE99EF900D55562 /* UIAnimationHelper.swift */,
+				E7D0BFEA1EE99EF900D55562 /* UIView+Boom.h */,
+				E7D0BFEB1EE99EF900D55562 /* UIView+Boom.m */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		E7D7C4361DE915CF00D962D4 /* Arch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1403,12 +1429,12 @@
 		E7F6DCF11DF00CD7007EC49A /* BahamutUIKit */ = {
 			isa = PBXGroup;
 			children = (
+				E7D0BFE21EE9881D00D55562 /* Animation */,
 				E7F6DCF21DF00CD7007EC49A /* BahamutCommon.xcassets */,
 				E7F6DCF81DF00CD7007EC49A /* DynamicColor */,
 				E7F6DCFC1DF00CD7007EC49A /* ImageUtil.swift */,
 				E7F6DCFD1DF00CD7007EC49A /* Integer+FriendlyString.swift */,
 				E7F6DD001DF00CD7007EC49A /* SystemSoundHelper.swift */,
-				E7F6DD021DF00CD7007EC49A /* UIAnimationHelper.swift */,
 				E7F6DD041DF00CD7007EC49A /* UIImagePicker+SourceAlert.swift */,
 				E7F6DD051DF00CD7007EC49A /* UIView+RemoveChildView.swift */,
 			);
@@ -1446,6 +1472,7 @@
 				E702FF661DE82D3D003F2B85 /* Frameworks */,
 				E702FF671DE82D3D003F2B85 /* Resources */,
 				C575ACF28ED1C6A03128C8D1 /* [CP] Copy Pods Resources */,
+				E77DEEFF1EEA23CE007FD71E /* Remove Framework */,
 			);
 			buildRules = (
 			);
@@ -1663,6 +1690,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAvatarMessage/Pods-iAvatarMessage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E77DEEFF1EEA23CE007FD71E /* Remove Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Remove Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1670,8 +1711,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7D0BFEE1EE99F2A00D55562 /* UIAnimationHelper.swift in Sources */,
 				E7F6DCA01DF00B07007EC49A /* BezierBubble.swift in Sources */,
 				E7F6DCE71DF00CC2007EC49A /* Math.swift in Sources */,
+				E7D0BFE71EE9881D00D55562 /* UIView+Boom.m in Sources */,
 				E7F6DD0F1DF00CD7007EC49A /* ImageUtil.swift in Sources */,
 				E7F6DD1B1DF00D89007EC49A /* MessagesViewController.swift in Sources */,
 				E7F6DD101DF00CD7007EC49A /* Integer+FriendlyString.swift in Sources */,
@@ -1685,7 +1728,6 @@
 				E7F6DCE41DF00CC2007EC49A /* CommonValueCast.swift in Sources */,
 				E7F6DCE81DF00CC2007EC49A /* RegexUtil.swift in Sources */,
 				E77A93681DF076DC00511C4B /* BahamutTextView.swift in Sources */,
-				E7F6DD151DF00CD7007EC49A /* UIAnimationHelper.swift in Sources */,
 				E7F6DCE31DF00CC2007EC49A /* CommonExtension.swift in Sources */,
 				E7F6DD0C1DF00CD7007EC49A /* HSL.swift in Sources */,
 				E7F6DCE51DF00CC2007EC49A /* DateHelper.swift in Sources */,
@@ -1725,6 +1767,7 @@
 				E708ABEE1C86D3DB0071104E /* AliOSSFile.swift in Sources */,
 				E708AC7A1C86EC160071104E /* UploadBahamutFireExtension.swift in Sources */,
 				E708AB9C1C86CF8A0071104E /* LocalFilesExtension.swift in Sources */,
+				E7D0BFED1EE99EF900D55562 /* UIView+Boom.m in Sources */,
 				E708AB701C86CE1D0071104E /* CommonValueCast.swift in Sources */,
 				E708AB6C1C86CE1D0071104E /* ArrayUtil.swift in Sources */,
 				E708AB981C86CF8A0071104E /* CoreDataManager.swift in Sources */,
@@ -1817,7 +1860,6 @@
 				E79E18401D34A0D1008C32E5 /* ChatGroupService.swift in Sources */,
 				E7AC07091E0EC13900AB6770 /* MYQRF.swift in Sources */,
 				E73CF7CD1CE4E9D9005EF7BB /* ActivitiesRF.swift in Sources */,
-				E708AC091C86D7B70071104E /* UIAnimationHelper.swift in Sources */,
 				E756CBC11DB05BB00017E4A3 /* ImageVessageExt.swift in Sources */,
 				E708AC061C86D7B70071104E /* KeyboardAdjustHelper.swift in Sources */,
 				E7EB9A3D1C87F783002F96FB /* BahamutCmdManager.swift in Sources */,
@@ -1834,6 +1876,7 @@
 				E708AC901C871A850071104E /* UserService.swift in Sources */,
 				E708AB9A1C86CF8A0071104E /* BahamutLocalFile.xcdatamodeld in Sources */,
 				E708AB3F1C86CAA50071104E /* ConversationViewController.swift in Sources */,
+				E7D0BFEC1EE99EF900D55562 /* UIAnimationHelper.swift in Sources */,
 				E78002561DC200F200DB18E2 /* BubbleVessageHandler.swift in Sources */,
 				E7B139CD1E061C1F00F3D8C9 /* TIMStartViewController.swift in Sources */,
 				E72E25821D6B2FFD00DA6E5C /* UIView+AEScaningEffect.m in Sources */,
@@ -1949,6 +1992,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B38C41DD9A8963B20266F798 /* Pods-iAvatarMessage.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1973,6 +2017,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 72258C8A2163FF70EFC32F4D /* Pods-iAvatarMessage.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
